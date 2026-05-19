@@ -59,9 +59,7 @@ A component should expose a unified API while internally rendering platform-spec
 Example:
 
 ```html id="zkx0ka"
-<af-button variant="primary">
-  Save
-</af-button>
+<af-button variant="primary"> Save </af-button>
 ```
 
 Internally:
@@ -71,7 +69,7 @@ Internally:
 
 Consumers should not care about rendering engines.
 
-------
+---
 
 # Semantic Components
 
@@ -92,7 +90,7 @@ BAD:
 
 Never encode visual appearance into component naming.
 
-------
+---
 
 # Component Responsibilities
 
@@ -104,7 +102,7 @@ Each component should have:
 
 Avoid giant multi-purpose components.
 
-------
+---
 
 # Composition Over Inheritance
 
@@ -121,7 +119,7 @@ Avoid:
 - Base UI classes
 - Over-abstracted hierarchies
 
-------
+---
 
 # Public API Stability
 
@@ -136,7 +134,7 @@ Public APIs should remain:
 - Stable
 - Minimal
 
-------
+---
 
 # Component API Philosophy
 
@@ -166,7 +164,7 @@ BAD:
 
 Vendor implementation details must remain internal.
 
-------
+---
 
 # Design Token Philosophy
 
@@ -186,7 +184,7 @@ All styling should derive from:
 argfit-ui-core/tokens
 ```
 
-------
+---
 
 # Responsive Philosophy
 
@@ -204,7 +202,7 @@ Prefer:
 - Adaptive rendering
 - Shared responsive utilities
 
-------
+---
 
 # Desktop Philosophy
 
@@ -222,7 +220,7 @@ Desktop experiences should feel:
 - Efficient
 - Enterprise-grade
 
-------
+---
 
 # Mobile Philosophy
 
@@ -241,7 +239,7 @@ Mobile experiences should feel:
 - Fast
 - Gesture-aware
 
-------
+---
 
 # Visual Philosophy
 
@@ -259,17 +257,17 @@ The system should NEVER visually feel like:
 - Default Ionic
 - Generic Tailwind templates
 
-------
+---
 
 # Component Categories
 
 The system is divided into categories.
 
-------
+---
 
 ## Base Components
 
-Reusable primitives.
+Reusable semantic components.
 
 Examples:
 
@@ -279,7 +277,22 @@ Examples:
 - Badge
 - Avatar
 
-------
+---
+
+## Primitive Building Blocks
+
+Small vendor-agnostic pieces used to compose higher-level components.
+
+Examples:
+
+- VisuallyHidden
+- FocusTrap
+- Portal
+- Disclosure
+
+Primitives may depend on core tokens and shared types, but they must not depend on PrimeNG, Ionic, desktop, mobile, or adaptive implementations.
+
+---
 
 ## Layout Components
 
@@ -293,7 +306,7 @@ Examples:
 - Section
 - Grid
 
-------
+---
 
 ## Data Components
 
@@ -307,7 +320,7 @@ Examples:
 - Charts
 - Timeline
 
-------
+---
 
 ## Feedback Components
 
@@ -321,7 +334,7 @@ Examples:
 - LoadingState
 - ErrorState
 
-------
+---
 
 ## Navigation Components
 
@@ -334,7 +347,7 @@ Examples:
 - BottomNavigation
 - Breadcrumbs
 
-------
+---
 
 # Component Size Philosophy
 
@@ -352,7 +365,7 @@ If a component becomes too large:
 - Split state
 - Split behavior
 
-------
+---
 
 # Internal Vendor Usage
 
@@ -362,7 +375,7 @@ They are implementation details.
 
 The architecture should allow future replacement if necessary.
 
-------
+---
 
 # Accessibility Philosophy
 
@@ -376,7 +389,7 @@ All components should support:
 - Semantic HTML
 - Screen readers
 
-------
+---
 
 # Performance Philosophy
 
@@ -393,7 +406,7 @@ Avoid:
 - Giant signal chains
 - Unnecessary wrappers
 
-------
+---
 
 # Agent Guidelines
 
@@ -416,7 +429,7 @@ When uncertain:
 - Prefer consistency
 - Prefer semantic naming
 
-------
+---
 
 # Long-Term Vision
 

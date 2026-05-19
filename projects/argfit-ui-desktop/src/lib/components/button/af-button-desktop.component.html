@@ -1,0 +1,30 @@
+<button
+  pButton
+  [pButtonUnstyled]="true"
+  class="af-button-desktop"
+  [class.af-button-desktop--primary]="variant() === 'primary'"
+  [class.af-button-desktop--secondary]="variant() === 'secondary'"
+  [class.af-button-desktop--ghost]="variant() === 'ghost'"
+  [class.af-button-desktop--danger]="variant() === 'danger'"
+  [class.af-button-desktop--sm]="size() === 'sm'"
+  [class.af-button-desktop--md]="size() === 'md'"
+  [class.af-button-desktop--lg]="size() === 'lg'"
+  [class.af-button-desktop--full]="fullWidth()"
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  (click)="onClick($event)"
+>
+  @if (loading()) {
+    <span class="af-button-desktop__spinner" aria-hidden="true"></span>
+  }
+
+  <span class="af-button-desktop__content">
+    @if (label(); as buttonLabel) {
+      {{ buttonLabel }}
+    } @else {
+      <ng-content />
+    }
+  </span>
+</button>

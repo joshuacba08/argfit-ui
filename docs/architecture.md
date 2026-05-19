@@ -37,6 +37,7 @@ The architecture aims to provide:
 graph TD
 
 CORE[argfit-ui-core]
+PRIMITIVES[argfit-ui-primitives]
 
 DESKTOP[argfit-ui-desktop]
 MOBILE[argfit-ui-mobile]
@@ -45,8 +46,11 @@ ADAPTIVE[argfit-ui-adaptive]
 
 SHOWCASE[showcase]
 
-CORE --> DESKTOP
-CORE --> MOBILE
+CORE --> PRIMITIVES
+
+PRIMITIVES --> DESKTOP
+PRIMITIVES --> MOBILE
+PRIMITIVES --> ADAPTIVE
 
 DESKTOP --> ADAPTIVE
 MOBILE --> ADAPTIVE
@@ -55,6 +59,28 @@ ADAPTIVE --> SHOWCASE
 ```
 
 # Layer Responsibilities
+
+# Package Import Contract
+
+Angular project names remain:
+
+```txt
+argfit-ui-core
+argfit-ui-primitives
+argfit-ui-desktop
+argfit-ui-mobile
+argfit-ui-adaptive
+```
+
+Public package imports use scoped names:
+
+```ts
+import { AfPlatformService } from '@argfit-ui/core';
+import { AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
+import { AfButton } from '@argfit-ui/adaptive';
+```
+
+The scoped package names are the public contract. The Angular project names are workspace implementation details.
 
 # 1. argfit-ui-core
 
@@ -77,7 +103,7 @@ It MUST NOT depend on:
 - Ionic
 - Desktop/mobile implementations
 
-------
+---
 
 ## Internal Structure
 
@@ -90,9 +116,33 @@ core/
   utils/
 ```
 
-------
+---
 
-# 2. argfit-ui-desktop
+# 2. argfit-ui-primitives
+
+The primitives layer contains small vendor-agnostic building blocks shared by desktop, mobile, and adaptive packages.
+
+Responsibilities:
+
+- Accessibility helpers
+- Low-level UI building blocks
+- Shared structural primitives
+- Composition utilities that need Angular templates
+
+The primitives layer MAY depend on core.
+
+It MUST NOT depend on:
+
+- PrimeNG
+- Ionic
+- Desktop/mobile implementations
+- Adaptive implementations
+
+Primitives are not vendor wrappers. They are the smallest reusable ArgFit UI pieces that higher-level components can compose.
+
+---
+
+# 3. argfit-ui-desktop
 
 The desktop layer provides desktop-oriented implementations using PrimeNG internally.
 
@@ -109,7 +159,7 @@ PrimeNG is considered an internal rendering engine.
 
 Public APIs MUST remain vendor-independent.
 
-------
+---
 
 ## Desktop Philosophy
 
@@ -121,9 +171,9 @@ Desktop experiences should feel:
 - Enterprise-oriented
 - Keyboard-friendly
 
-------
+---
 
-# 3. argfit-ui-mobile
+# 4. argfit-ui-mobile
 
 The mobile layer provides mobile-native implementations using Ionic internally.
 
@@ -140,7 +190,7 @@ Ionic is considered an internal rendering engine.
 
 Public APIs MUST remain vendor-independent.
 
-------
+---
 
 ## Mobile Philosophy
 
@@ -152,9 +202,9 @@ Mobile experiences should feel:
 - Gesture-aware
 - Responsive
 
-------
+---
 
-# 4. argfit-ui-adaptive
+# 5. argfit-ui-adaptive
 
 The adaptive layer orchestrates rendering decisions.
 
@@ -177,7 +227,7 @@ Internally:
 - Desktop → PrimeNG implementation
 - Mobile → Ionic implementation
 
-------
+---
 
 # Adaptive Philosophy
 
@@ -190,9 +240,9 @@ Adaptive components should:
 
 Adaptive components orchestrate UI decisions, not application behavior.
 
-------
+---
 
-# 5. showcase
+# 6. showcase
 
 The showcase application serves as:
 
@@ -208,7 +258,7 @@ Responsibilities:
 - Display adaptive behavior
 - Provide usage examples
 
-------
+---
 
 # Rendering Flow
 
@@ -226,7 +276,7 @@ DESKTOP --> PRIMENG[PrimeNG]
 MOBILE --> IONIC[Ionic]
 ```
 
-------
+---
 
 # Design System Architecture
 
@@ -234,7 +284,7 @@ The design system is token-driven.
 
 All visual values must originate from the token system.
 
-------
+---
 
 # Token Categories
 
@@ -249,7 +299,7 @@ motion
 breakpoints
 ```
 
-------
+---
 
 # Styling Strategy
 
@@ -260,7 +310,7 @@ The styling architecture uses:
 - Design tokens
 - Minimal SCSS
 
-------
+---
 
 # Theme Architecture
 
@@ -277,7 +327,7 @@ Example:
 
 Themes should be swappable without changing component logic.
 
-------
+---
 
 # Platform Detection
 
@@ -295,7 +345,7 @@ mobile
 auto
 ```
 
-------
+---
 
 # Public API Philosophy
 
@@ -315,7 +365,7 @@ BAD:
 
 The public API must remain stable regardless of internal implementation changes.
 
-------
+---
 
 # Component Architecture
 
@@ -331,7 +381,7 @@ component/
 
 Avoid giant multi-responsibility components.
 
-------
+---
 
 # State Philosophy
 
@@ -349,7 +399,7 @@ Prefer:
 - Small state scopes
 - Explicit inputs/outputs
 
-------
+---
 
 # Long-Term Vision
 
@@ -361,7 +411,7 @@ ArgFit UI aims to evolve into:
 - A public engineering showcase
 - A scalable design system
 
-------
+---
 
 # Future Planned Systems
 
@@ -377,7 +427,7 @@ Planned future capabilities:
 - Adaptive analytics components
 - Advanced data visualization systems
 
-------
+---
 
 # Architectural Principles
 
@@ -391,3 +441,20 @@ The system prioritizes:
 - Adaptability
 
 All future HUs should respect these principles.
+
+---
+
+# Current Vertical Slice
+
+The first implemented component slice is:
+
+```txt
+AfButton
+  core: shared button types, tokens, theme service, platform service
+  primitives: shared vendor-agnostic helpers such as AfVisuallyHiddenComponent
+  desktop: PrimeNG directive used internally with ArgFit styling
+  mobile: Ionic standalone button used internally with ArgFit styling
+  adaptive: public af-button API that delegates by platform
+```
+
+This slice is the reference pattern for the next components.

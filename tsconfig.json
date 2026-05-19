@@ -4,10 +4,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "argfit-ui-adaptive": ["./dist/argfit-ui-adaptive"],
-      "argfit-ui-core": ["./dist/argfit-ui-core"],
-      "argfit-ui-desktop": ["./dist/argfit-ui-desktop"],
-      "argfit-ui-mobile": ["./dist/argfit-ui-mobile"]
+      "@argfit-ui/adaptive": ["./dist/argfit-ui-adaptive"],
+      "@argfit-ui/core": ["./dist/argfit-ui-core"],
+      "@argfit-ui/desktop": ["./dist/argfit-ui-desktop"],
+      "@argfit-ui/mobile": ["./dist/argfit-ui-mobile"],
+      "@argfit-ui/primitives": ["./dist/argfit-ui-primitives"]
     },
     "strict": true,
     "noImplicitOverride": true,
@@ -34,6 +35,12 @@
     },
     {
       "path": "./projects/argfit-ui-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/argfit-ui-primitives/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/argfit-ui-primitives/tsconfig.spec.json"
     },
     {
       "path": "./projects/argfit-ui-desktop/tsconfig.lib.json"

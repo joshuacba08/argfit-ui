@@ -1,0 +1,13 @@
+{
+  "name": "@argfit-ui/primitives",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@argfit-ui/core": "0.0.1",
+    "@angular/common": "^21.2.0",
+    "@angular/core": "^21.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

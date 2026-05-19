@@ -54,6 +54,7 @@ The system should support:
 
 ```txt id="jlwm9i"
 argfit-ui-core
+argfit-ui-primitives
 argfit-ui-desktop
 argfit-ui-mobile
 argfit-ui-adaptive
@@ -71,7 +72,7 @@ The roadmap prioritizes:
 5. Reusability before customization
 6. Adaptive architecture before advanced UX
 
-------
+---
 
 # Phase 0 — Workspace Foundation
 
@@ -81,24 +82,25 @@ Create the foundational architecture.
 
 ## Status
 
-IN PROGRESS
+COMPLETED
 
-------
+---
 
 ## Tasks
 
--  Create Angular workspace
--  Install PrimeNG
--  Install Ionic Angular
--  Configure TailwindCSS
--  Create core library
--  Create desktop library
--  Create mobile library
--  Create adaptive library
--  Create showcase app
--  Create architectural documentation
+- Create Angular workspace
+- Install PrimeNG
+- Install Ionic Angular
+- Configure TailwindCSS
+- Create core library
+- Create primitives library
+- Create desktop library
+- Create mobile library
+- Create adaptive library
+- Create showcase app
+- Create architectural documentation
 
-------
+---
 
 # Phase 1 — Core System
 
@@ -106,47 +108,73 @@ IN PROGRESS
 
 Build the shared foundation.
 
+## Status
+
+IN PROGRESS
+
 ## Planned Systems
 
 ### Design Tokens
 
--  Colors
--  Typography
--  Radius
--  Spacing
--  Elevation
--  Motion
--  Breakpoints
+- Colors — initial slice complete
+- Typography — initial slice complete
+- Radius — initial slice complete
+- Spacing — initial slice complete
+- Elevation — initial slice complete
+- Motion — initial slice complete
+- Breakpoints — initial slice complete
 
-------
+---
 
 ### Theme System
 
--  CSS variable architecture
--  Dark theme
--  Theme switching
--  Theme service
+- CSS variable architecture — initial slice complete
+- Dark theme — initial slice complete
+- Theme switching
+- Theme service — initial slice complete
 
-------
+---
 
 ### Platform System
 
--  PlatformService
--  Desktop detection
--  Mobile detection
--  Adaptive helpers
+- AfPlatformService — initial slice complete
+- Desktop detection — initial slice complete
+- Mobile detection — initial slice complete
+- Adaptive helpers — initial slice complete
 
-------
+---
 
 ### Utilities
 
--  Shared utilities
--  Shared types
--  Responsive helpers
+- Shared utilities
+- Shared types
+- Responsive helpers
 
-------
+---
 
-# Phase 2 — Desktop Foundation
+# Phase 2 — Primitive Foundation
+
+# Goal
+
+Create vendor-agnostic building blocks that higher-level components can compose.
+
+## Status
+
+IN PROGRESS
+
+## Planned Primitives
+
+- AfVisuallyHiddenComponent — initial slice complete
+- Focus management helpers
+- Disclosure primitives
+- Portal/overlay foundations
+- Shared loading and status primitives
+
+Primitive code may depend on `@argfit-ui/core`, but must not depend on PrimeNG, Ionic, desktop, mobile, or adaptive packages.
+
+---
+
+# Phase 3 — Desktop Foundation
 
 # Goal
 
@@ -156,32 +184,32 @@ Create desktop-oriented rendering.
 
 ### Base Components
 
--  AfButtonDesktop
--  AfCardDesktop
--  AfInputDesktop
--  AfDialogDesktop
--  AfBadgeDesktop
+- AfButtonDesktop — initial slice complete
+- AfCardDesktop
+- AfInputDesktop
+- AfDialogDesktop
+- AfBadgeDesktop
 
-------
+---
 
 ### Layout Components
 
--  AfSidebarDesktop
--  AfTopbarDesktop
--  AfPageShellDesktop
--  AfGridDesktop
+- AfSidebarDesktop
+- AfTopbarDesktop
+- AfPageShellDesktop
+- AfGridDesktop
 
-------
+---
 
 ### Data Components
 
--  AfMetricCardDesktop
--  AfAnalyticsCardDesktop
--  AfDataTableDesktop
+- AfMetricCardDesktop
+- AfAnalyticsCardDesktop
+- AfDataTableDesktop
 
-------
+---
 
-# Phase 3 — Mobile Foundation
+# Phase 4 — Mobile Foundation
 
 # Goal
 
@@ -191,30 +219,30 @@ Create mobile-native rendering.
 
 ### Base Components
 
--  AfButtonMobile
--  AfCardMobile
--  AfInputMobile
--  AfModalMobile
+- AfButtonMobile — initial slice complete
+- AfCardMobile
+- AfInputMobile
+- AfModalMobile
 
-------
+---
 
 ### Navigation Components
 
--  AfBottomTabsMobile
--  AfMobileHeader
--  AfMobileShell
+- AfBottomTabsMobile
+- AfMobileHeader
+- AfMobileShell
 
-------
+---
 
 ### Data Components
 
--  AfMetricCardMobile
--  AfAnalyticsCardMobile
--  AfMobileList
+- AfMetricCardMobile
+- AfAnalyticsCardMobile
+- AfMobileList
 
-------
+---
 
-# Phase 4 — Adaptive Layer
+# Phase 5 — Adaptive Layer
 
 # Goal
 
@@ -222,15 +250,15 @@ Expose unified adaptive APIs.
 
 ## Planned Components
 
--  AfButton
--  AfCard
--  AfInput
--  AfDialog
--  AfPageShell
--  AfSidebar
--  AfMetricCard
+- AfButton — initial slice complete
+- AfCard
+- AfInput
+- AfDialog
+- AfPageShell
+- AfSidebar
+- AfMetricCard
 
-------
+---
 
 # Adaptive Goals
 
@@ -241,9 +269,9 @@ Adaptive components should:
 - Remain lightweight
 - Expose stable APIs
 
-------
+---
 
-# Phase 5 — Showcase Platform
+# Phase 6 — Showcase Platform
 
 # Goal
 
@@ -253,20 +281,20 @@ Transform showcase into:
 - Portfolio platform
 - Demo environment
 
-------
+---
 
 ## Planned Features
 
--  Component gallery
--  Theme preview
--  Adaptive demos
--  Responsive playground
--  Code examples
--  Documentation pages
+- Component gallery
+- Theme preview
+- Adaptive demos
+- Responsive playground
+- Code examples
+- Documentation pages
 
-------
+---
 
-# Phase 6 — Enterprise Systems
+# Phase 7 — Enterprise Systems
 
 # Goal
 
@@ -274,70 +302,70 @@ Build advanced enterprise features.
 
 ## Planned Systems
 
--  Data visualization components
--  Dashboard blocks
--  Advanced tables
--  Analytics widgets
--  Complex forms
--  Entity management systems
+- Data visualization components
+- Dashboard blocks
+- Advanced tables
+- Analytics widgets
+- Complex forms
+- Entity management systems
 
-------
+---
 
-# Phase 7 — Premium Ecosystem
+# Phase 8 — Premium Ecosystem
 
 # Goal
 
 Monetization layer.
 
-------
+---
 
 ## Planned Products
 
 ### Premium Themes
 
--  Trading theme
--  Healthcare theme
--  Analytics theme
--  Corporate theme
+- Trading theme
+- Healthcare theme
+- Analytics theme
+- Corporate theme
 
-------
+---
 
 ### Premium Blocks
 
--  CRM blocks
--  ERP blocks
--  Analytics blocks
--  Monitoring blocks
+- CRM blocks
+- ERP blocks
+- Analytics blocks
+- Monitoring blocks
 
-------
+---
 
 ### Premium Templates
 
--  Admin dashboard
--  SaaS shell
--  Analytics platform
--  Mobile starter
+- Admin dashboard
+- SaaS shell
+- Analytics platform
+- Mobile starter
 
-------
+---
 
-# Phase 8 — Tooling
+# Phase 9 — Tooling
 
 # Goal
 
 Developer productivity systems.
 
-------
+---
 
 ## Planned Systems
 
--  Storybook integration
--  CLI generators
--  Visual regression testing
--  Figma token sync
--  Theme builder
--  Design token pipelines
+- Storybook integration
+- CLI generators
+- Visual regression testing
+- Figma token sync
+- Theme builder
+- Design token pipelines
 
-------
+---
 
 # Long-Term Vision
 
@@ -349,7 +377,7 @@ ArgFit UI should evolve into:
 - A monetizable UI product
 - A public engineering showcase
 
-------
+---
 
 # Strategic Principles
 
@@ -363,7 +391,7 @@ Future decisions should prioritize:
 - Vendor abstraction
 - Long-term scalability
 
-------
+---
 
 # Important Reminder
 

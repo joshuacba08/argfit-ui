@@ -80,7 +80,7 @@ Examples:
 - `AfSidebar`
 - `AfMetricCard`
 
-------
+---
 
 # Internal Components
 
@@ -100,7 +100,7 @@ Examples:
 - `AfButtonMobile`
 - `AfButtonAdaptive`
 
-------
+---
 
 # File Naming
 
@@ -121,7 +121,7 @@ AfButton.ts
 PlatformService.ts
 ```
 
-------
+---
 
 # Folder Structure
 
@@ -137,7 +137,7 @@ feature/
 
 Avoid flat giant folders.
 
-------
+---
 
 # Component Structure
 
@@ -151,7 +151,7 @@ component/
   af-button.types.ts
 ```
 
-------
+---
 
 # Type Naming
 
@@ -172,7 +172,7 @@ Type1
 ButtonType
 ```
 
-------
+---
 
 # Service Naming
 
@@ -187,7 +187,7 @@ Examples:
 - `PlatformService`
 - `ThemeService`
 
-------
+---
 
 # Signal Conventions
 
@@ -207,7 +207,7 @@ BAD:
 readonly data = signal();
 ```
 
-------
+---
 
 # Inputs and Outputs
 
@@ -227,7 +227,7 @@ BAD:
 @Input() variant: any;
 ```
 
-------
+---
 
 # Styling Conventions
 
@@ -245,7 +245,7 @@ Avoid:
 - Random utility duplication
 - Inline hardcoded values
 
-------
+---
 
 # Token Usage
 
@@ -271,7 +271,7 @@ BAD:
 background: #121212;
 ```
 
-------
+---
 
 # Responsive Conventions
 
@@ -283,7 +283,7 @@ Responsive behavior should be:
 
 Avoid random media queries inside components.
 
-------
+---
 
 # Adaptive Conventions
 
@@ -307,7 +307,7 @@ BAD:
 Huge adaptive component with all logic inside
 ```
 
-------
+---
 
 # PrimeNG Conventions
 
@@ -325,7 +325,7 @@ DO NOT:
 - Leak PrimeNG types
 - Couple consumers to PrimeNG
 
-------
+---
 
 # Ionic Conventions
 
@@ -342,7 +342,7 @@ DO NOT:
 - Leak Ionic APIs publicly
 - Force Ionic patterns into desktop
 
-------
+---
 
 # Import Conventions
 
@@ -351,7 +351,8 @@ Prefer clean imports.
 GOOD:
 
 ```
-import { PlatformService } from '@argfit-ui/core';
+import { AfPlatformService } from '@argfit-ui/core';
+import { AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
 ```
 
 Avoid deep relative chains.
@@ -359,10 +360,18 @@ Avoid deep relative chains.
 BAD:
 
 ```
-import { PlatformService } from '../../../../services';
+import { AfPlatformService } from '../../../../services';
 ```
 
-------
+Layer imports should follow the dependency direction:
+
+```txt
+core -> primitives -> desktop/mobile -> adaptive -> showcase
+```
+
+`primitives` may import from `core`, but must not import PrimeNG, Ionic, desktop, mobile, or adaptive packages.
+
+---
 
 # Performance Conventions
 
@@ -379,7 +388,7 @@ Avoid:
 - Over-rendering
 - Deep nested templates
 
-------
+---
 
 # Accessibility Conventions
 
@@ -392,7 +401,7 @@ All components should support:
 
 Accessibility is mandatory.
 
-------
+---
 
 # Documentation Conventions
 
@@ -405,7 +414,7 @@ All public components should include:
 - Variants
 - Accessibility notes
 
-------
+---
 
 # Agent Conventions
 
@@ -428,7 +437,7 @@ When uncertain:
 - Prefer simplicity
 - Prefer reuse
 
-------
+---
 
 # Long-Term Goal
 

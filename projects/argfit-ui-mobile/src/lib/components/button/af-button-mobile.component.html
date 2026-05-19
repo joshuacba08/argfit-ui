@@ -1,0 +1,29 @@
+<ion-button
+  class="af-button-mobile"
+  [class.af-button-mobile--primary]="variant() === 'primary'"
+  [class.af-button-mobile--secondary]="variant() === 'secondary'"
+  [class.af-button-mobile--ghost]="variant() === 'ghost'"
+  [class.af-button-mobile--danger]="variant() === 'danger'"
+  [class.af-button-mobile--sm]="size() === 'sm'"
+  [class.af-button-mobile--md]="size() === 'md'"
+  [class.af-button-mobile--lg]="size() === 'lg'"
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [expand]="fullWidth() ? 'block' : undefined"
+  [attr.aria-label]="ariaLabel() ?? label()"
+  [attr.aria-labelledby]="ariaLabel() || label() ? null : contentId"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  (click)="onClick($event)"
+>
+  @if (loading()) {
+    <ion-spinner class="af-button-mobile__spinner" name="crescent" aria-hidden="true" />
+  }
+
+  <span class="af-button-mobile__content" [id]="contentId">
+    @if (label(); as buttonLabel) {
+      {{ buttonLabel }}
+    } @else {
+      <ng-content />
+    }
+  </span>
+</ion-button>

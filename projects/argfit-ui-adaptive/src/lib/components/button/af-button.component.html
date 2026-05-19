@@ -1,0 +1,29 @@
+<span #projectedContent class="af-button__projected-content" aria-hidden="true">
+  <ng-content />
+</span>
+
+@if (isMobile()) {
+  <af-button-mobile
+    [variant]="variant()"
+    [size]="size()"
+    [type]="type()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [fullWidth]="fullWidth()"
+    [label]="normalizeProjectedLabel(projectedContent.textContent)"
+    [ariaLabel]="ariaLabel()"
+    (pressed)="onPressed($event)"
+  />
+} @else {
+  <af-button-desktop
+    [variant]="variant()"
+    [size]="size()"
+    [type]="type()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [fullWidth]="fullWidth()"
+    [label]="normalizeProjectedLabel(projectedContent.textContent)"
+    [ariaLabel]="ariaLabel()"
+    (pressed)="onPressed($event)"
+  />
+}

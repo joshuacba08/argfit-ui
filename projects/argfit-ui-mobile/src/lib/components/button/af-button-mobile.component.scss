@@ -1,0 +1,97 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+:host(.af-button-host-full) {
+  display: flex;
+  width: 100%;
+}
+
+.af-button-mobile {
+  --border-radius: var(--af-radius-lg);
+  --border-style: solid;
+  --border-width: 1px;
+  --box-shadow: none;
+  --padding-end: var(--af-button-padding-x-md);
+  --padding-start: var(--af-button-padding-x-md);
+  font-family: var(--af-font-family);
+  font-size: var(--af-font-size-md);
+  font-weight: var(--af-font-weight-semibold);
+  margin: 0;
+  min-height: var(--af-button-height-lg);
+  text-transform: none;
+}
+
+.af-button-mobile::part(native) {
+  min-height: var(--af-button-height-lg);
+}
+
+.af-button-mobile:focus-visible::part(native) {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-button-mobile--sm {
+  --padding-end: var(--af-button-padding-x-sm);
+  --padding-start: var(--af-button-padding-x-sm);
+  font-size: var(--af-font-size-sm);
+  min-height: var(--af-button-height-md);
+}
+
+.af-button-mobile--sm::part(native) {
+  min-height: var(--af-button-height-md);
+}
+
+.af-button-mobile--lg {
+  --padding-end: var(--af-button-padding-x-lg);
+  --padding-start: var(--af-button-padding-x-lg);
+  min-height: calc(var(--af-button-height-lg) + var(--af-space-1));
+}
+
+.af-button-mobile--lg::part(native) {
+  min-height: calc(var(--af-button-height-lg) + var(--af-space-1));
+}
+
+.af-button-mobile--primary {
+  --background: var(--af-primary);
+  --background-activated: var(--af-primary-active);
+  --background-hover: var(--af-primary-hover);
+  --border-color: transparent;
+  --color: var(--af-primary-contrast);
+}
+
+.af-button-mobile--secondary {
+  --background: var(--af-bg-interactive);
+  --background-activated: var(--af-secondary);
+  --background-hover: var(--af-secondary-hover);
+  --border-color: var(--af-border);
+  --color: var(--af-text-main);
+}
+
+.af-button-mobile--ghost {
+  --background: transparent;
+  --background-activated: var(--af-primary-soft);
+  --background-hover: var(--af-primary-soft);
+  --border-color: transparent;
+  --color: var(--af-text-muted);
+}
+
+.af-button-mobile--danger {
+  --background: var(--af-danger);
+  --background-activated: var(--af-danger);
+  --background-hover: var(--af-danger-hover);
+  --border-color: transparent;
+  --color: var(--af-text-inverse);
+}
+
+.af-button-mobile__content {
+  align-items: center;
+  display: inline-flex;
+  min-width: 0;
+}
+
+.af-button-mobile__spinner {
+  height: 1em;
+  margin-inline-end: var(--af-button-gap);
+  width: 1em;
+}

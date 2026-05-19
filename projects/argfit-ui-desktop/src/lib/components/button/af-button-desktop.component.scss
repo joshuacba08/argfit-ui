@@ -1,0 +1,118 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+:host(.af-button-host-full) {
+  display: flex;
+  width: 100%;
+}
+
+.af-button-desktop {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--af-font-family);
+  font-size: var(--af-font-size-sm);
+  font-weight: var(--af-font-weight-semibold);
+  gap: var(--af-button-gap);
+  justify-content: center;
+  line-height: var(--af-line-height-tight);
+  min-height: var(--af-button-height-md);
+  outline: none;
+  padding-inline: var(--af-button-padding-x-md);
+  transition:
+    background-color var(--af-motion-fast) var(--af-motion-ease),
+    border-color var(--af-motion-fast) var(--af-motion-ease),
+    box-shadow var(--af-motion-fast) var(--af-motion-ease),
+    color var(--af-motion-fast) var(--af-motion-ease);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.af-button-desktop:focus-visible {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-button-desktop--full {
+  width: 100%;
+}
+
+.af-button-desktop--sm {
+  min-height: var(--af-button-height-sm);
+  padding-inline: var(--af-button-padding-x-sm);
+}
+
+.af-button-desktop--lg {
+  min-height: var(--af-button-height-lg);
+  padding-inline: var(--af-button-padding-x-lg);
+}
+
+.af-button-desktop--primary {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+.af-button-desktop--primary:hover:not(:disabled) {
+  background: var(--af-primary-hover);
+}
+
+.af-button-desktop--secondary {
+  background: var(--af-bg-interactive);
+  border-color: var(--af-border);
+  color: var(--af-text-main);
+}
+
+.af-button-desktop--secondary:hover:not(:disabled) {
+  background: var(--af-secondary);
+  border-color: var(--af-secondary-hover);
+  color: var(--af-text-main);
+}
+
+.af-button-desktop--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--af-text-muted);
+}
+
+.af-button-desktop--ghost:hover:not(:disabled) {
+  background: var(--af-primary-soft);
+  color: var(--af-primary-hover);
+}
+
+.af-button-desktop--danger {
+  background: var(--af-danger);
+  color: var(--af-text-inverse);
+}
+
+.af-button-desktop--danger:hover:not(:disabled) {
+  background: var(--af-danger-hover);
+}
+
+.af-button-desktop:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.af-button-desktop__content {
+  align-items: center;
+  display: inline-flex;
+  min-width: 0;
+}
+
+.af-button-desktop__spinner {
+  animation: af-button-spin var(--af-motion-slow) linear infinite;
+  border: 2px solid currentColor;
+  border-radius: var(--af-radius-pill);
+  border-top-color: transparent;
+  height: 1em;
+  width: 1em;
+}
+
+@keyframes af-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

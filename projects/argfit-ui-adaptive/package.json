@@ -1,7 +1,10 @@
 {
-  "name": "argfit-ui-adaptive",
+  "name": "@argfit-ui/adaptive",
   "version": "0.0.1",
   "peerDependencies": {
+    "@argfit-ui/core": "0.0.1",
+    "@argfit-ui/desktop": "0.0.1",
+    "@argfit-ui/mobile": "0.0.1",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0"
   },

@@ -58,6 +58,7 @@ Public APIs must represent product concepts, not implementation details.
 
 ```txt
 core
+primitives
 desktop
 mobile
 adaptive
@@ -82,8 +83,29 @@ The core layer MUST NOT depend on:
 - PrimeNG
 - Ionic
 - Vendor-specific implementations
+- ArgFit implementation packages
 
-------
+---
+
+## primitives
+
+Contains:
+
+- Accessibility helpers
+- Low-level Angular UI primitives
+- Shared structural building blocks
+- Composition utilities used by higher-level components
+
+The primitives layer may depend on core.
+
+The primitives layer MUST NOT depend on:
+
+- PrimeNG
+- Ionic
+- Desktop/mobile implementations
+- Adaptive implementations
+
+---
 
 ## desktop
 
@@ -95,7 +117,7 @@ Contains:
 
 Desktop components may internally use PrimeNG, but MUST NOT expose PrimeNG APIs publicly.
 
-------
+---
 
 ## mobile
 
@@ -108,7 +130,7 @@ Contains:
 
 Mobile components may internally use Ionic, but MUST NOT expose Ionic APIs publicly.
 
-------
+---
 
 ## adaptive
 
@@ -122,7 +144,7 @@ Adaptive components decide WHAT to render.
 
 They MUST NOT contain business logic.
 
-------
+---
 
 ## showcase
 
@@ -135,7 +157,7 @@ Contains:
 
 The showcase application is also part of the public portfolio.
 
-------
+---
 
 # Angular Rules
 
@@ -153,7 +175,7 @@ ALWAYS:
 - Use OnPush change detection
 - Use modern Angular control flow (`@if`, `@for`)
 
-------
+---
 
 ## Forbidden Patterns
 
@@ -169,7 +191,7 @@ NEVER:
 - Create giant components
 - Couple business logic to UI rendering
 
-------
+---
 
 # Design System Rules
 
@@ -193,7 +215,7 @@ The design system is:
 - Responsive
 - Touch-friendly
 
-------
+---
 
 # Design Tokens
 
@@ -211,10 +233,22 @@ NEVER hardcode:
 Use tokens from:
 
 ```
-argfit-ui-core/tokens
+@argfit-ui/core
 ```
 
-------
+Public package imports MUST use:
+
+```txt
+@argfit-ui/core
+@argfit-ui/primitives
+@argfit-ui/desktop
+@argfit-ui/mobile
+@argfit-ui/adaptive
+```
+
+Do not introduce new public imports using unscoped package names.
+
+---
 
 # Adaptive Component Philosophy
 
@@ -235,7 +269,7 @@ Internally:
 
 The adaptive layer MUST remain lightweight.
 
-------
+---
 
 # Public API Rules
 
@@ -253,7 +287,7 @@ DO NOT:
 - Leak Ionic types
 - Leak vendor implementation details
 
-------
+---
 
 # Component Naming Rules
 
@@ -272,7 +306,7 @@ Examples:
 - `AfPageShell`
 - `AfSidebar`
 
-------
+---
 
 # File Organization
 
@@ -288,7 +322,7 @@ feature/
 
 Avoid flat giant folders.
 
-------
+---
 
 # Styling Rules
 
@@ -299,7 +333,7 @@ Avoid flat giant folders.
 - Design tokens
 - Minimal custom SCSS
 
-------
+---
 
 ## Forbidden Styling Patterns
 
@@ -310,7 +344,7 @@ NEVER:
 - Use random spacing values
 - Create component-specific color systems
 
-------
+---
 
 # Performance Rules
 
@@ -329,7 +363,7 @@ Avoid:
 - Excessive nesting
 - Large reactive chains
 
-------
+---
 
 # Accessibility Rules
 
@@ -343,7 +377,7 @@ All components should support:
 
 Accessibility is not optional.
 
-------
+---
 
 # Documentation Rules
 
@@ -356,7 +390,7 @@ All public components MUST include:
 - Variants
 - Accessibility notes
 
-------
+---
 
 # Agent Behavior Rules
 
@@ -375,7 +409,7 @@ When unsure:
 - Prefer consistency
 - Prefer reuse
 
-------
+---
 
 # Long-Term Vision
 
@@ -388,4 +422,3 @@ ArgFit UI aims to become:
 - A public technical portfolio
 
 All architectural decisions should support long-term scalability and maintainability.
-

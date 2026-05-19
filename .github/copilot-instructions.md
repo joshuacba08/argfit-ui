@@ -32,11 +32,22 @@ The repository is divided into layers:
 
 ```txt
 argfit-ui-core
+argfit-ui-primitives
 argfit-ui-desktop
 argfit-ui-mobile
 argfit-ui-adaptive
 showcase
 ```
+
+Public imports use scoped packages:
+
+```ts
+import { AfPlatformService } from '@argfit-ui/core';
+import { AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
+import { AfButton } from '@argfit-ui/adaptive';
+```
+
+Do not create new public imports with unscoped package names.
 
 # Layer Responsibilities
 
@@ -56,10 +67,35 @@ Do NOT import:
 
 - PrimeNG
 - Ionic
+- ArgFit implementation packages
 
 inside core.
 
-------
+---
+
+## primitives
+
+Contains small vendor-agnostic building blocks shared by the implementation layers.
+
+Examples:
+
+- Accessibility helpers
+- Structural primitives
+- Low-level composition utilities
+
+Primitives may depend on `@argfit-ui/core`.
+
+Do NOT import:
+
+- PrimeNG
+- Ionic
+- `@argfit-ui/desktop`
+- `@argfit-ui/mobile`
+- `@argfit-ui/adaptive`
+
+inside primitives.
+
+---
 
 ## desktop
 
@@ -69,7 +105,7 @@ PrimeNG should remain an internal implementation detail.
 
 Do NOT expose PrimeNG APIs publicly.
 
-------
+---
 
 ## mobile
 
@@ -79,7 +115,7 @@ Ionic should remain an internal implementation detail.
 
 Do NOT expose Ionic APIs publicly.
 
-------
+---
 
 ## adaptive
 
@@ -94,7 +130,7 @@ Adaptive components MUST remain lightweight.
 
 Avoid business logic in adaptive components.
 
-------
+---
 
 # Angular Rules
 
@@ -114,7 +150,7 @@ Never:
 - Use legacy Angular patterns
 - Create giant components
 
-------
+---
 
 # Component Philosophy
 
@@ -133,7 +169,7 @@ BAD:
 - AfIonButton
 - AfPrimeWrapper
 
-------
+---
 
 # Styling Rules
 
@@ -151,7 +187,7 @@ Avoid:
 
 All visual values should derive from tokens.
 
-------
+---
 
 # Design System
 
@@ -164,7 +200,7 @@ The system is:
 
 Avoid making the UI feel like default PrimeNG or default Ionic.
 
-------
+---
 
 # Adaptive Philosophy
 
@@ -185,7 +221,7 @@ Internally:
 
 Consumers should not care about rendering engines.
 
-------
+---
 
 # Preferred Development Style
 
@@ -204,7 +240,7 @@ Avoid:
 - Deep inheritance
 - Massive abstractions
 
-------
+---
 
 # Naming Rules
 
@@ -222,7 +258,7 @@ Examples:
 
 Use kebab-case for files.
 
-------
+---
 
 # Long-Term Vision
 
@@ -234,3 +270,5 @@ ArgFit UI aims to become:
 - A public engineering portfolio
 
 All generated code should align with this vision.
+
+Run `pnpm guard:architecture` after changing imports across libraries.

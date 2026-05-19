@@ -131,7 +131,7 @@ Background
 
 Each layer should slightly increase contrast and separation.
 
-------
+---
 
 # Core Tokens
 
@@ -144,7 +144,7 @@ Each layer should slightly increase contrast and separation.
 --af-bg-overlay
 ```
 
-------
+---
 
 ## Text Tokens
 
@@ -155,7 +155,7 @@ Each layer should slightly increase contrast and separation.
 --af-text-disabled
 ```
 
-------
+---
 
 ## Primary Tokens
 
@@ -166,7 +166,7 @@ Each layer should slightly increase contrast and separation.
 --af-primary-contrast
 ```
 
-------
+---
 
 ## Status Tokens
 
@@ -177,7 +177,7 @@ Each layer should slightly increase contrast and separation.
 --af-info
 ```
 
-------
+---
 
 ## Border Tokens
 
@@ -187,7 +187,7 @@ Each layer should slightly increase contrast and separation.
 --af-border-strong
 ```
 
-------
+---
 
 ## Radius Tokens
 
@@ -199,7 +199,7 @@ Each layer should slightly increase contrast and separation.
 --af-radius-xl
 ```
 
-------
+---
 
 ## Shadow Tokens
 
@@ -211,7 +211,7 @@ Each layer should slightly increase contrast and separation.
 
 Shadows should remain subtle.
 
-------
+---
 
 # Typography
 
@@ -226,7 +226,7 @@ Typography should feel:
 
 Avoid overly decorative typography.
 
-------
+---
 
 # Typography Hierarchy
 
@@ -244,7 +244,7 @@ Characteristics:
 - Tight hierarchy
 - High contrast
 
-------
+---
 
 ## Body Text
 
@@ -261,7 +261,7 @@ Characteristics:
 - Compact
 - Consistent spacing
 
-------
+---
 
 ## Metric Typography
 
@@ -277,7 +277,7 @@ Examples:
 - KPI numbers
 - Percentages
 
-------
+---
 
 # Spacing System
 
@@ -298,7 +298,7 @@ Example:
 
 Avoid arbitrary spacing values.
 
-------
+---
 
 # Layout Philosophy
 
@@ -309,7 +309,7 @@ Layouts should prioritize:
 - Breathing room
 - Predictable spacing
 
-------
+---
 
 # Desktop Layout Philosophy
 
@@ -320,7 +320,7 @@ Desktop interfaces prioritize:
 - Multi-panel layouts
 - Fast scanning
 
-------
+---
 
 # Mobile Layout Philosophy
 
@@ -331,7 +331,7 @@ Mobile interfaces prioritize:
 - Vertical flow
 - Simplicity
 
-------
+---
 
 # Card Philosophy
 
@@ -350,7 +350,7 @@ Cards should avoid:
 - Heavy borders
 - Large shadows
 
-------
+---
 
 # Motion Philosophy
 
@@ -368,7 +368,7 @@ Transitions should communicate:
 - Hierarchy
 - Focus
 
-------
+---
 
 # Iconography
 
@@ -381,7 +381,7 @@ Icons should feel:
 
 Avoid inconsistent icon styles.
 
-------
+---
 
 # Chart Philosophy
 
@@ -398,7 +398,7 @@ Avoid:
 - Decorative chart effects
 - Unnecessary animations
 
-------
+---
 
 # Interaction Philosophy
 
@@ -409,7 +409,7 @@ Interactive elements should provide:
 - Predictable feedback
 - Strong accessibility
 
-------
+---
 
 # Accessibility Rules
 
@@ -422,7 +422,7 @@ The design system must support:
 
 Accessibility is mandatory.
 
-------
+---
 
 # Responsive Philosophy
 
@@ -432,7 +432,7 @@ Desktop and mobile should not simply scale.
 
 They should adapt.
 
-------
+---
 
 # Theme Philosophy
 
@@ -445,7 +445,7 @@ Themes should be:
 
 Themes should not require component rewrites.
 
-------
+---
 
 # Long-Term Vision
 
@@ -457,6 +457,3 @@ The design system aims to become:
 - A recognizable technical identity
 
 All future visual decisions should align with this direction.
-
-
-

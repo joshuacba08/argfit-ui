@@ -1,59 +1,53 @@
-# ArgfitUi
+# ArgFit UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile workflows.
 
-## Development server
+The public API is semantic and vendor-independent. Desktop implementations use PrimeNG internally, mobile implementations use Ionic internally, and adaptive components expose a unified Angular API.
 
-To start a local development server, run:
+## Packages
 
-```bash
-ng serve
+```txt
+@argfit-ui/core
+@argfit-ui/primitives
+@argfit-ui/desktop
+@argfit-ui/mobile
+@argfit-ui/adaptive
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Workspace Projects
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```txt
+argfit-ui-core
+argfit-ui-primitives
+argfit-ui-desktop
+argfit-ui-mobile
+argfit-ui-adaptive
+showcase
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Development
 
 ```bash
-ng generate --help
+pnpm install
+pnpm build:all
+pnpm test:all
+pnpm start
 ```
 
-## Building
-
-To build the project run:
+## Architecture Guard
 
 ```bash
-ng build
+pnpm guard:architecture
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The guard blocks vendor leakage across library boundaries. For example, `core` cannot import PrimeNG or Ionic, and `adaptive` cannot import either vendor directly.
 
-## Running unit tests
+## First Vertical Slice
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+`AfButton` is the reference implementation:
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- shared API types, tokens, theme service, and platform service in `@argfit-ui/core`
+- vendor-agnostic accessibility primitives in `@argfit-ui/primitives`
+- PrimeNG-backed desktop rendering in `@argfit-ui/desktop`
+- Ionic-backed mobile rendering in `@argfit-ui/mobile`
+- public adaptive API in `@argfit-ui/adaptive`

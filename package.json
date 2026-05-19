@@ -3,8 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "pnpm build:libs && ng serve",
     "build": "ng build",
+    "build:core": "ng build argfit-ui-core",
+    "build:primitives": "ng build argfit-ui-primitives",
+    "build:desktop": "ng build argfit-ui-desktop",
+    "build:mobile": "ng build argfit-ui-mobile",
+    "build:adaptive": "ng build argfit-ui-adaptive",
+    "build:libs": "pnpm build:core && pnpm build:primitives && pnpm build:desktop && pnpm build:mobile && pnpm build:adaptive",
+    "build:all": "pnpm build:libs && ng build showcase",
+    "guard:architecture": "node tools/architecture-guard.mjs",
+    "test:all": "pnpm build:libs && pnpm guard:architecture && ng test argfit-ui-core --watch=false && ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
