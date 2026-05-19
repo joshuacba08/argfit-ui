@@ -42,3 +42,33 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# pnpm
+.pnpm-store
+
+# Turbo / Monorepo
+.turbo
+
+# Storybook
+storybook-static
+
+# Testing
+/playwright-report
+/test-results
+
+# Build artifacts
+*.tsbuildinfo
+
+# Tailwind cache
+.tailwindcache
+
+# OS generated
+Desktop.ini
