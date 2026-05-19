@@ -3,13 +3,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { provideArgfitUi } from '@argfit-ui/core';
 
-import { AfCardComponent } from './af-card.component';
 import {
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardHeaderDirective,
-  AfCardTitleDirective,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardHeaderDirective,
+    AfCardTitleDirective,
 } from './af-card-slots.directive';
+import { AfCardComponent } from './af-card.component';
 
 @Component({
   imports: [

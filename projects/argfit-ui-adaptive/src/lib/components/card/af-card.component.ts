@@ -1,18 +1,18 @@
-import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  input,
-  output,
-} from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import {
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    input,
+    output,
+} from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfCardDensity,
-  type AfCardTone,
-  type AfCardVariant,
+    AfPlatformService,
+    type AfCardDensity,
+    type AfCardTone,
+    type AfCardVariant,
 } from '@argfit-ui/core';
 import { AfCardDesktopComponent } from '@argfit-ui/desktop';
 import { AfCardMobileComponent } from '@argfit-ui/mobile';

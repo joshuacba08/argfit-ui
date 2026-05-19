@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
 import {
-  AfButton,
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardFooterDirective,
-  AfCardHeaderDirective,
-  AfCardSubtitleDirective,
-  AfCardTitleDirective,
+    AfButton,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardFooterDirective,
+    AfCardHeaderDirective,
+    AfCardSubtitleDirective,
+    AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
 import {
     AfPlatformService,

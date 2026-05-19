@@ -1,10 +1,10 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import type { AfCardDensity, AfCardTone, AfCardVariant } from '@argfit-ui/core';

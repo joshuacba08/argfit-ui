@@ -10,3 +10,4 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 2. [HU-002 — Theme Runtime y Estilos Base](./HU-002-theme-runtime-base-styles.md)
 3. [HU-003 — Accessibility Primitives](./HU-003-accessibility-primitives.md)
 4. [HU-004 — AfCard Vertical Slice](./HU-004-af-card.md)
+5. [HU-005 — AfInput Vertical Slice](./HU-005-af-input.md)
