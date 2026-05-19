@@ -188,6 +188,7 @@ Create desktop-oriented rendering.
 ### Base Components
 
 - AfButtonDesktop — initial slice complete
+- HU-004 — [AfCard vertical slice](./hus/HU-004-af-card.md) — ready for implementation
 - AfCardDesktop
 - AfInputDesktop
 - AfDialogDesktop

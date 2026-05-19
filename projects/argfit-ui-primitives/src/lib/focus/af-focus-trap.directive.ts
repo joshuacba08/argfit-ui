@@ -1,3 +1,4 @@
+import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ContentChild,
@@ -12,7 +13,6 @@ import {
   input,
   type OnDestroy,
 } from '@angular/core';
-import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 
 import { AfFocusInitialDirective } from './af-focus-initial.directive';
 
