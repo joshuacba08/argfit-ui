@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
 import { AfButton } from '@argfit-ui/adaptive';
-import { AfPlatformService, type AfPlatformPreference } from '@argfit-ui/core';
+import {
+  AfPlatformService,
+  AfThemeService,
+  type AfPlatformPreference,
+} from '@argfit-ui/core';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +16,16 @@ import { AfPlatformService, type AfPlatformPreference } from '@argfit-ui/core';
 })
 export class App {
   protected readonly platform = inject(AfPlatformService);
+  protected readonly theme = inject(AfThemeService);
   protected readonly lastAction = signal('Idle');
 
   protected setPlatform(preference: AfPlatformPreference): void {
     this.platform.setPreference(preference);
+  }
+
+  protected toggleTheme(): void {
+    this.theme.toggleTheme();
+    this.recordAction(`Theme → ${this.theme.currentThemeName()}`);
   }
 
   protected recordAction(action: string): void {

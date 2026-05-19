@@ -6,27 +6,40 @@
       <p>One semantic Angular API rendered through desktop and mobile engines.</p>
     </div>
 
-    <div class="platform-switch" aria-label="Platform preview">
+    <div class="showcase-controls">
+      <div class="platform-switch" aria-label="Platform preview">
+        <button
+          type="button"
+          [class.is-active]="platform.preference() === 'auto'"
+          (click)="setPlatform('auto')"
+        >
+          Auto
+        </button>
+        <button
+          type="button"
+          [class.is-active]="platform.platform() === 'desktop'"
+          (click)="setPlatform('desktop')"
+        >
+          Desktop
+        </button>
+        <button
+          type="button"
+          [class.is-active]="platform.platform() === 'mobile'"
+          (click)="setPlatform('mobile')"
+        >
+          Mobile
+        </button>
+      </div>
+
       <button
         type="button"
-        [class.is-active]="platform.preference() === 'auto'"
-        (click)="setPlatform('auto')"
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-pressed]="theme.isDarkTheme()"
+        aria-label="Toggle theme"
       >
-        Auto
-      </button>
-      <button
-        type="button"
-        [class.is-active]="platform.platform() === 'desktop'"
-        (click)="setPlatform('desktop')"
-      >
-        Desktop
-      </button>
-      <button
-        type="button"
-        [class.is-active]="platform.platform() === 'mobile'"
-        (click)="setPlatform('mobile')"
-      >
-        Mobile
+        <span class="theme-toggle__label">Theme</span>
+        <span class="theme-toggle__value">{{ theme.currentThemeName() }}</span>
       </button>
     </div>
   </header>

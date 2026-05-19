@@ -167,6 +167,7 @@ IN PROGRESS
 ## Planned Primitives
 
 - AfVisuallyHiddenComponent — initial slice complete
+- HU-003 — [Accessibility primitives](./hus/HU-003-accessibility-primitives.md) — ready for implementation
 - Focus management helpers
 - Disclosure primitives
 - Portal/overlay foundations

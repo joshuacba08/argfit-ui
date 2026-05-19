@@ -1,3 +1,11 @@
+/* ─────────────────────────────────────────────────────────────────
+   ArgFit UI — Showcase global styles
+
+   Token sources live in @argfit-ui/core. This file only consumes them
+   and loads brand fonts (libraries must not import remote fonts).
+   ───────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Exo+2:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @import 'tailwindcss';
 @import '@ionic/angular/css/core.css';
 @import '@ionic/angular/css/normalize.css';
@@ -11,11 +19,56 @@
 
 html {
   background: var(--af-bg-main);
-  color-scheme: dark;
 }
 
 body {
   background: var(--af-bg-main);
   color: var(--af-text-main);
+  font-family: var(--af-font-body);
+  font-size: var(--af-text-base);
+  line-height: var(--af-leading-normal);
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--af-font-display);
+  letter-spacing: var(--af-tracking-tight);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--af-font-mono);
+}
+
+::selection {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--af-scrollbar-thumb);
+  border-radius: var(--af-radius-pill);
 }

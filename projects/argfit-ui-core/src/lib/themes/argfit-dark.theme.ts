@@ -9,6 +9,7 @@ import type { AfThemeDefinition } from './theme.types';
  */
 export const ARGFIT_DARK_THEME: AfThemeDefinition = {
   name: 'argfit-dark',
+  kind: 'dark',
   tokens: {
     ...AF_BASE_THEME_TOKENS,
 

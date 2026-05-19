@@ -10,6 +10,7 @@ import type { AfThemeDefinition } from './theme.types';
  */
 export const ARGFIT_LIGHT_THEME: AfThemeDefinition = {
   name: 'argfit-light',
+  kind: 'light',
   tokens: {
     ...AF_BASE_THEME_TOKENS,
 
