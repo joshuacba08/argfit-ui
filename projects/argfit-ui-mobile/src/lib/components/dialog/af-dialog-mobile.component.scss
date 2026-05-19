@@ -1,0 +1,218 @@
+/* ─────────────────────────────────────────────────────────────────
+   AfDialogMobileComponent
+   Encapsulation: None — all rules namespaced under .af-dialog-mobile.
+   Touch-first: bottom sheet by default, fullscreen for long forms.
+   ───────────────────────────────────────────────────────────────── */
+
+.af-dialog-mobile {
+  display: contents;
+}
+
+.af-dialog-mobile__backdrop {
+  background: rgba(10, 22, 40, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  inset: 0;
+  position: fixed;
+  z-index: 1000;
+  animation: af-dialog-mobile-fade var(--af-duration-fast, 180ms) var(--af-ease-out, ease-out);
+}
+
+.af-dialog-mobile__backdrop[data-presentation='sheet'] {
+  align-items: flex-end;
+  justify-content: stretch;
+}
+
+.af-dialog-mobile__backdrop[data-presentation='fullscreen'] {
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.af-dialog-mobile__panel {
+  background: var(--af-bg-elevated);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--af-font-body);
+  gap: var(--af-space-3);
+  outline: none;
+  overflow: hidden;
+  padding: var(--af-space-2) var(--af-space-4) max(var(--af-space-5), env(safe-area-inset-bottom));
+  position: relative;
+  width: 100%;
+  animation: af-dialog-mobile-rise var(--af-duration-normal, 260ms)
+    var(--af-ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.af-dialog-mobile__panel[data-presentation='sheet'] {
+  border-radius: var(--af-radius-xl) var(--af-radius-xl) 0 0;
+  border-top: 1px solid var(--af-border-soft);
+  max-height: 90vh;
+}
+
+.af-dialog-mobile__panel[data-presentation='fullscreen'] {
+  border-radius: 0;
+  height: 100vh;
+  max-height: 100vh;
+  padding-top: max(var(--af-space-4), env(safe-area-inset-top));
+}
+
+.af-dialog-mobile__panel[data-tone='danger'] {
+  box-shadow: inset 0 3px 0 0 var(--af-danger);
+}
+
+.af-dialog-mobile__grabber {
+  align-self: center;
+  background: var(--af-border-strong, var(--af-border));
+  border-radius: var(--af-radius-pill);
+  flex: 0 0 auto;
+  height: 4px;
+  margin: var(--af-space-2) 0 var(--af-space-1);
+  width: 40px;
+}
+
+.af-dialog-mobile__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  padding: var(--af-space-2) 0 var(--af-space-1);
+}
+
+.af-dialog-mobile__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-1);
+  min-width: 0;
+}
+
+.af-dialog-mobile__title {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-line-height-tight);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.af-dialog-mobile__panel[data-tone='danger'] .af-dialog-mobile__title {
+  color: var(--af-danger);
+}
+
+.af-dialog-mobile__description {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-dialog-mobile__close {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: var(--af-text-xl);
+  height: 40px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 40px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.af-dialog-mobile__close:active {
+  background: var(--af-bg-interactive, var(--af-bg-surface));
+  color: var(--af-text-main);
+}
+
+.af-dialog-mobile__close:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-dialog-mobile__body {
+  color: var(--af-text-main);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--af-space-3);
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--af-space-2) 0;
+}
+
+/* Semantic slot classes (applied by adaptive slot directives). */
+
+.af-dialog-mobile .af-dialog__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.af-dialog-mobile .af-dialog__title {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-line-height-tight);
+  margin: 0;
+}
+
+.af-dialog-mobile .af-dialog__description {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-dialog-mobile .af-dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-3);
+}
+
+.af-dialog-mobile .af-dialog__footer {
+  align-items: stretch;
+  border-top: 1px solid var(--af-border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  margin-top: var(--af-space-2);
+  padding-top: var(--af-space-3);
+}
+
+@keyframes af-dialog-mobile-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes af-dialog-mobile-rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-dialog-mobile__backdrop,
+  .af-dialog-mobile__panel {
+    animation: none;
+  }
+}

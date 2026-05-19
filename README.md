@@ -1,20 +1,38 @@
 # ArgFit UI
 
-ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile workflows.
+![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-10.28-F69220?logo=pnpm&logoColor=white)
+![Status](https://img.shields.io/badge/status-active%20foundation-2599D5)
 
-The public API is semantic and vendor-independent. Desktop implementations use PrimeNG internally, mobile implementations use Ionic internally, and adaptive components expose a unified Angular API.
+ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile-first workflows.
 
-## Packages
+It provides a semantic, vendor-independent public API while rendering through specialized engines internally: PrimeNG for desktop experiences, Ionic Angular for mobile experiences, and a lightweight adaptive layer that chooses the right implementation for the current platform.
 
-```txt
-@argfit-ui/core
-@argfit-ui/primitives
-@argfit-ui/desktop
-@argfit-ui/mobile
-@argfit-ui/adaptive
-```
+## Why ArgFit UI
 
-## Workspace Projects
+Modern product teams often need one design system that works across dense desktop workflows and touch-first mobile screens without exposing separate component APIs. ArgFit UI is built around that constraint.
+
+- Unified Angular components for adaptive interfaces.
+- Vendor abstraction across desktop and mobile rendering engines.
+- Token-driven styling for consistent dark-first enterprise UI.
+- Standalone Angular APIs, signals, strict typing, and OnPush change detection.
+- Architecture guards that protect package boundaries and prevent vendor leakage.
+
+## Project Status
+
+ArgFit UI is currently in active foundation development. The workspace already contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, and initial vertical slices for the first components.
+
+Current adaptive component surface:
+
+| Component | Purpose | Highlights |
+| --- | --- | --- |
+| `AfButton` | User actions | Variants, sizes, disabled/loading states, semantic pressed output |
+| `AfCard` | Structured surfaces | Surface, metric, device, and panel variants with slot directives |
+| `AfInput` | Form entry | Labels, hints, errors, icons/suffixes, disabled state, reactive forms support |
+| `AfDialog` | Modal workflows | Sizes, tones, content/footer slots, adaptive mobile presentation |
+
+## Package Architecture
 
 ```txt
 argfit-ui-core
@@ -25,29 +43,187 @@ argfit-ui-adaptive
 showcase
 ```
 
-## Development
+| Package | Public import | Responsibility |
+| --- | --- | --- |
+| Core | `@argfit-ui/core` | Tokens, themes, shared types, platform services, configuration |
+| Primitives | `@argfit-ui/primitives` | Vendor-agnostic accessibility and low-level composition utilities |
+| Desktop | `@argfit-ui/desktop` | PrimeNG-backed desktop implementations kept behind ArgFit APIs |
+| Mobile | `@argfit-ui/mobile` | Ionic-backed mobile implementations kept behind ArgFit APIs |
+| Adaptive | `@argfit-ui/adaptive` | Public adaptive components that select desktop or mobile rendering |
+
+The public contract is the scoped package API. Implementation project names are workspace details.
+
+## Design Principles
+
+- Semantic components over vendor wrappers.
+- Stable, typed, minimal public APIs.
+- Dark-first, data-focused visual language.
+- CSS variables and design tokens instead of hardcoded visual values.
+- Small focused components composed through Angular content projection and directives.
+- Desktop experiences optimized for density, keyboard use, and productivity.
+- Mobile experiences optimized for touch, safe areas, and native-feeling interaction.
+
+## Quick Start
+
+Install dependencies:
 
 ```bash
 pnpm install
-pnpm build:all
-pnpm test:all
+```
+
+Run the showcase app:
+
+```bash
 pnpm start
 ```
 
+Build all libraries and the showcase:
+
+```bash
+pnpm build:all
+```
+
+Run the full validation suite:
+
+```bash
+pnpm test:all
+```
+
+## Usage
+
+Register ArgFit UI at application bootstrap:
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { ARGFIT_DARK_THEME, provideArgfitUi } from '@argfit-ui/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideArgfitUi({
+      theme: ARGFIT_DARK_THEME,
+      platform: 'auto',
+    }),
+  ],
+};
+```
+
+Use adaptive components from the public API:
+
+```ts
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  AfButton,
+  AfCard,
+  AfCardContentDirective,
+  AfCardEyebrowDirective,
+  AfCardFooterDirective,
+  AfCardHeaderDirective,
+  AfCardTitleDirective,
+  AfInput,
+} from '@argfit-ui/adaptive';
+
+@Component({
+  selector: 'app-dashboard-card',
+  imports: [
+    AfButton,
+    AfCard,
+    AfCardHeaderDirective,
+    AfCardEyebrowDirective,
+    AfCardTitleDirective,
+    AfCardContentDirective,
+    AfCardFooterDirective,
+    AfInput,
+  ],
+  template: `
+    <af-card variant="panel" tone="primary">
+      <header afCardHeader>
+        <span afCardEyebrow>Performance</span>
+        <h2 afCardTitle>Weekly readiness</h2>
+      </header>
+
+      <div afCardContent>
+        <af-input label="Athlete" placeholder="Search athlete" type="search" />
+      </div>
+
+      <footer afCardFooter>
+        <af-button variant="secondary">View details</af-button>
+        <af-button>Save changes</af-button>
+      </footer>
+    </af-card>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DashboardCardComponent {}
+```
+
+## Public Imports
+
+```ts
+import { AfPlatformService, provideArgfitUi } from '@argfit-ui/core';
+import { AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
+import { AfButton, AfCard, AfDialog, AfInput } from '@argfit-ui/adaptive';
+```
+
+Consumers should depend on semantic ArgFit APIs, not on PrimeNG or Ionic component APIs.
+
+## Development Commands
+
+| Command | Description |
+| --- | --- |
+| `pnpm start` | Builds libraries and serves the showcase app |
+| `pnpm build:libs` | Builds all library packages |
+| `pnpm build:all` | Builds libraries and the showcase app |
+| `pnpm test` | Runs Angular tests |
+| `pnpm test:all` | Builds, validates architecture, and runs project test suites |
+| `pnpm guard:architecture` | Checks package boundaries and vendor isolation |
+
 ## Architecture Guard
+
+ArgFit UI includes a local architecture guard that protects layer boundaries:
 
 ```bash
 pnpm guard:architecture
 ```
 
-The guard blocks vendor leakage across library boundaries. For example, `core` cannot import PrimeNG or Ionic, and `adaptive` cannot import either vendor directly.
+The guard prevents accidental coupling such as importing PrimeNG or Ionic from `core`, `primitives`, or `adaptive`, and helps keep the public API vendor-independent.
 
-## First Vertical Slice
+## Documentation
 
-`AfButton` is the reference implementation:
+- [Architecture](docs/architecture.md)
+- [Component philosophy](docs/component-philosophy.md)
+- [Design system](docs/design-system.md)
+- [Conventions](docs/conventions.md)
+- [Roadmap](docs/roadmap.md)
+- [Human units](docs/hus/README.md)
 
-- shared API types, tokens, theme service, and platform service in `@argfit-ui/core`
-- vendor-agnostic accessibility primitives in `@argfit-ui/primitives`
-- PrimeNG-backed desktop rendering in `@argfit-ui/desktop`
-- Ionic-backed mobile rendering in `@argfit-ui/mobile`
-- public adaptive API in `@argfit-ui/adaptive`
+## Repository Layout
+
+```txt
+projects/
+  argfit-ui-core/        Shared tokens, themes, services, types, and config
+  argfit-ui-primitives/  Accessibility and low-level vendor-agnostic utilities
+  argfit-ui-desktop/     Desktop implementations backed by PrimeNG internally
+  argfit-ui-mobile/      Mobile implementations backed by Ionic internally
+  argfit-ui-adaptive/    Public adaptive components and orchestration
+  showcase/              Local showcase and integration playground
+tools/
+  architecture-guard.mjs Package boundary validation
+docs/
+  Architecture, component philosophy, design system, roadmap, and HUs
+```
+
+## Standards
+
+ArgFit UI code is expected to follow these constraints:
+
+- Angular standalone components only.
+- Signals and `inject()` for modern Angular patterns.
+- Strict TypeScript without `any`.
+- OnPush change detection for components.
+- Token-based visual values and CSS variables.
+- No public PrimeNG or Ionic API leakage.
+- Small, semantic components with clear responsibilities.
+
+## Versioning And Distribution
+
+The repository is currently marked private and uses version `0.0.0` while the foundation is being built. Package publishing, semantic versioning policy, changelog automation, and license metadata should be finalized before external distribution.

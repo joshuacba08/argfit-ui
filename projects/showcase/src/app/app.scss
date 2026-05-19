@@ -337,6 +337,18 @@ p {
   }
 }
 
+.dialog-section {
+  display: grid;
+  gap: var(--af-space-4);
+  margin-top: var(--af-space-6);
+}
+
+.dialog-trigger-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-3);
+}
+
 @media (max-width: 860px) {
   .showcase-shell {
     padding: var(--af-space-4);

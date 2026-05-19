@@ -10,6 +10,9 @@ import {
     AfCardHeaderDirective,
     AfCardSubtitleDirective,
     AfCardTitleDirective,
+    AfDialog,
+    AfDialogContentDirective,
+    AfDialogFooterDirective,
     AfInput,
 } from '@argfit-ui/adaptive';
 import {
@@ -30,6 +33,9 @@ import {
     AfCardContentDirective,
     AfCardFooterDirective,
     AfInput,
+    AfDialog,
+    AfDialogContentDirective,
+    AfDialogFooterDirective,
     ReactiveFormsModule,
   ],
   templateUrl: './app.html',
@@ -88,5 +94,64 @@ export class App {
       return undefined;
     }
     return /.+@.+\..+/.test(value) ? undefined : 'Ingresa un email valido';
+  }
+
+  protected readonly detailsDialogOpen = signal(false);
+  protected readonly removeDialogOpen = signal(false);
+  protected readonly athleteDialogOpen = signal(false);
+  protected readonly newAthleteName = signal('');
+  protected readonly newAthleteEmail = signal('');
+
+  protected openDetailsDialog(): void {
+    this.detailsDialogOpen.set(true);
+    this.recordAction('Dialog → details abierto');
+  }
+
+  protected setDetailsDialog(open: boolean): void {
+    this.detailsDialogOpen.set(open);
+    if (!open) {
+      this.recordAction('Dialog → details cerrado');
+    }
+  }
+
+  protected openRemoveDialog(): void {
+    this.removeDialogOpen.set(true);
+    this.recordAction('Dialog → confirmar baja abierto');
+  }
+
+  protected setRemoveDialog(open: boolean): void {
+    this.removeDialogOpen.set(open);
+    if (!open) {
+      this.recordAction('Dialog → confirmar baja cerrado');
+    }
+  }
+
+  protected confirmRemove(): void {
+    this.removeDialogOpen.set(false);
+    this.recordAction('Atleta dado de baja');
+  }
+
+  protected openAthleteDialog(): void {
+    this.newAthleteName.set('');
+    this.newAthleteEmail.set('');
+    this.athleteDialogOpen.set(true);
+    this.recordAction('Dialog → nuevo atleta abierto');
+  }
+
+  protected setAthleteDialog(open: boolean): void {
+    this.athleteDialogOpen.set(open);
+    if (!open) {
+      this.recordAction('Dialog → nuevo atleta cerrado');
+    }
+  }
+
+  protected saveAthleteDialog(): void {
+    const name = this.newAthleteName().trim();
+    if (!name) {
+      this.recordAction('Nombre requerido');
+      return;
+    }
+    this.athleteDialogOpen.set(false);
+    this.recordAction(`Atleta creado → ${name}`);
   }
 }

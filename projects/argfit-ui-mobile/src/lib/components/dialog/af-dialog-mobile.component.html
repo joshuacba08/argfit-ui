@@ -1,0 +1,65 @@
+@if (open()) {
+  <div
+    class="af-dialog-mobile__backdrop"
+    [attr.data-presentation]="presentation()"
+    (click)="onBackdropClick($event)"
+    data-af-dialog-backdrop
+  >
+    <div
+      class="af-dialog-mobile__panel"
+      [attr.data-size]="size()"
+      [attr.data-tone]="tone()"
+      [attr.data-presentation]="presentation()"
+      [attr.role]="role()"
+      [attr.aria-modal]="true"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-labelledby]="labelledBy()"
+      [attr.aria-describedby]="describedBy()"
+      afFocusTrap
+      [afFocusTrapEnabled]="open()"
+      afEscapeKey
+      (afEscape)="onEscape($event)"
+      tabindex="-1"
+    >
+      @if (presentation() === 'sheet') {
+        <div class="af-dialog-mobile__grabber" aria-hidden="true"></div>
+      }
+
+      @if (title() || dismissible()) {
+        <header class="af-dialog-mobile__header af-dialog__header">
+          <div class="af-dialog-mobile__heading">
+            @if (title(); as titleText) {
+              <h2 class="af-dialog-mobile__title af-dialog__title" [id]="titleId">
+                {{ titleText }}
+              </h2>
+            }
+            @if (description(); as descriptionText) {
+              <p
+                class="af-dialog-mobile__description af-dialog__description"
+                [id]="descriptionId"
+              >
+                {{ descriptionText }}
+              </p>
+            }
+          </div>
+
+          @if (dismissible()) {
+            <button
+              type="button"
+              class="af-dialog-mobile__close"
+              [attr.aria-label]="closeLabel()"
+              (click)="onCloseButton()"
+              afFocusInitial
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          }
+        </header>
+      }
+
+      <div class="af-dialog-mobile__body af-dialog__content">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}

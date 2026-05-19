@@ -254,6 +254,86 @@
           <strong>{{ heightControl.value }} cm</strong>
         </div>
       </div>
+
+      <div class="dialog-section" aria-label="Dialog variants">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Component vertical slice</span>
+            <h2>AfDialog</h2>
+          </div>
+        </div>
+
+        <div class="dialog-trigger-grid">
+          <af-button (pressed)="openDetailsDialog()"> Ver detalles del atleta </af-button>
+          <af-button variant="danger" (pressed)="openRemoveDialog()">
+            Dar de baja
+          </af-button>
+          <af-button variant="secondary" (pressed)="openAthleteDialog()">
+            Nuevo atleta
+          </af-button>
+        </div>
+      </div>
     </section>
   </section>
+
+  <af-dialog
+    [open]="detailsDialogOpen()"
+    title="Detalle del atleta"
+    description="Resumen de la sesion activa registrada en la plataforma."
+    size="md"
+    (openChange)="setDetailsDialog($event)"
+  >
+    <div afDialogContent>
+      <p>Maria Garcia · 28 anos · Atletismo</p>
+      <p>Ultima sesion: 09:42 · 45.2 cm de salto vertical.</p>
+      <p>Dispositivos vinculados: ArgFit Jump 01.</p>
+    </div>
+    <div afDialogFooter>
+      <af-button variant="ghost" (pressed)="setDetailsDialog(false)"> Cerrar </af-button>
+      <af-button (pressed)="setDetailsDialog(false)"> Ver historial completo </af-button>
+    </div>
+  </af-dialog>
+
+  <af-dialog
+    [open]="removeDialogOpen()"
+    title="Dar de baja al atleta"
+    description="Esta accion archiva su perfil. Podras restaurarlo desde papelera durante 30 dias."
+    size="sm"
+    tone="danger"
+    (openChange)="setRemoveDialog($event)"
+  >
+    <div afDialogFooter>
+      <af-button variant="ghost" (pressed)="setRemoveDialog(false)"> Cancelar </af-button>
+      <af-button variant="danger" (pressed)="confirmRemove()"> Confirmar baja </af-button>
+    </div>
+  </af-dialog>
+
+  <af-dialog
+    [open]="athleteDialogOpen()"
+    title="Nuevo atleta"
+    description="Carga los datos basicos. Podras completar el perfil mas tarde."
+    size="lg"
+    mobilePresentation="fullscreen"
+    (openChange)="setAthleteDialog($event)"
+  >
+    <div afDialogContent>
+      <af-input
+        label="Nombre completo"
+        placeholder="Maria Garcia"
+        [value]="newAthleteName()"
+        (valueChange)="newAthleteName.set($event)"
+      />
+      <af-input
+        label="Email"
+        type="email"
+        placeholder="atleta@argfit.com"
+        [value]="newAthleteEmail()"
+        (valueChange)="newAthleteEmail.set($event)"
+      />
+    </div>
+    <div afDialogFooter>
+      <af-button variant="ghost" (pressed)="setAthleteDialog(false)"> Cancelar </af-button>
+      <af-button (pressed)="saveAthleteDialog()"> Guardar atleta </af-button>
+    </div>
+  </af-dialog>
 </main>

@@ -4,5 +4,6 @@
 
 export * from './lib/components/button/af-button-desktop.component';
 export * from './lib/components/card/af-card-desktop.component';
+export * from './lib/components/dialog/af-dialog-desktop.component';
 export * from './lib/components/input/af-input-desktop.component';
 

@@ -1,0 +1,220 @@
+/* ─────────────────────────────────────────────────────────────────
+   AfDialogDesktopComponent
+   Encapsulation: None — all rules namespaced under .af-dialog-desktop.
+   ───────────────────────────────────────────────────────────────── */
+
+.af-dialog-desktop {
+  display: contents;
+}
+
+.af-dialog-desktop__backdrop {
+  align-items: center;
+  background: rgba(10, 22, 40, 0.62);
+  backdrop-filter: blur(6px);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: var(--af-space-6);
+  position: fixed;
+  z-index: 1000;
+  animation: af-dialog-desktop-fade var(--af-duration-fast, 180ms) var(--af-ease-out, ease-out);
+}
+
+.af-dialog-desktop__panel {
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  box-shadow: var(--af-shadow-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--af-font-body);
+  gap: var(--af-space-4);
+  max-height: calc(100vh - calc(var(--af-space-6) * 2));
+  max-width: 100%;
+  outline: none;
+  overflow: hidden;
+  padding: var(--af-space-5) var(--af-space-6);
+  position: relative;
+  width: 520px;
+  animation: af-dialog-desktop-rise var(--af-duration-normal, 220ms)
+    var(--af-ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.af-dialog-desktop__panel[data-size='sm'] {
+  width: 400px;
+}
+
+.af-dialog-desktop__panel[data-size='md'] {
+  width: 520px;
+}
+
+.af-dialog-desktop__panel[data-size='lg'] {
+  width: 640px;
+}
+
+.af-dialog-desktop__panel[data-size='xl'] {
+  width: 800px;
+}
+
+.af-dialog-desktop__panel[data-size='fullscreen'] {
+  border-radius: var(--af-radius-md);
+  height: calc(100vh - calc(var(--af-space-6) * 2));
+  width: calc(100vw - calc(var(--af-space-6) * 2));
+}
+
+.af-dialog-desktop__panel[data-tone='danger'] {
+  box-shadow:
+    var(--af-shadow-lg),
+    inset 3px 0 0 0 var(--af-danger);
+}
+
+.af-dialog-desktop__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-4);
+  justify-content: space-between;
+}
+
+.af-dialog-desktop__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-1);
+  min-width: 0;
+}
+
+.af-dialog-desktop__title {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-lg);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-line-height-tight);
+  margin: 0;
+}
+
+.af-dialog-desktop__panel[data-tone='danger'] .af-dialog-desktop__title {
+  color: var(--af-danger);
+}
+
+.af-dialog-desktop__description {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-dialog-desktop__close {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: var(--af-text-lg);
+  height: 32px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+  width: 32px;
+}
+
+.af-dialog-desktop__close:hover {
+  background: var(--af-bg-interactive, var(--af-bg-surface));
+  color: var(--af-text-main);
+}
+
+.af-dialog-desktop__close:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-dialog-desktop__body {
+  color: var(--af-text-main);
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--af-space-3);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Semantic slot classes (applied by adaptive slot directives). */
+
+.af-dialog-desktop .af-dialog__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-4);
+  justify-content: space-between;
+}
+
+.af-dialog-desktop .af-dialog__title {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-lg);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-line-height-tight);
+  margin: 0;
+}
+
+.af-dialog-desktop .af-dialog__description {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-dialog-desktop .af-dialog__content {
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-3);
+}
+
+.af-dialog-desktop .af-dialog__footer {
+  align-items: center;
+  border-top: 1px solid var(--af-border-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+  justify-content: flex-end;
+  margin-top: var(--af-space-2);
+  padding-top: var(--af-space-4);
+}
+
+@keyframes af-dialog-desktop-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes af-dialog-desktop-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-dialog-desktop__backdrop,
+  .af-dialog-desktop__panel {
+    animation: none;
+  }
+}

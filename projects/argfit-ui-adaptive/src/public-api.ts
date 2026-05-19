@@ -18,6 +18,17 @@ export {
     AfCardComponent as AfCard, AfCardComponent
 } from './lib/components/card/af-card.component';
 export {
+    AF_DIALOG_SLOT_DIRECTIVES,
+    AfDialogContentDirective,
+    AfDialogDescriptionDirective,
+    AfDialogFooterDirective,
+    AfDialogHeaderDirective,
+    AfDialogTitleDirective
+} from './lib/components/dialog/af-dialog-slots.directive';
+export {
+    AfDialogComponent as AfDialog, AfDialogComponent
+} from './lib/components/dialog/af-dialog.component';
+export {
     AfInputComponent as AfInput, AfInputComponent
 } from './lib/components/input/af-input.component';
 

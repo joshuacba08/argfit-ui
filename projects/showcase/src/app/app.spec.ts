@@ -89,4 +89,33 @@ describe('App', () => {
 
     expect(fixture.componentInstance['heightControl'].value).toBe('182');
   });
+
+  it('opens and closes the AfDialog vertical slice', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.af-dialog-desktop__panel')).toBeNull();
+
+    const triggers = compiled.querySelectorAll('.dialog-trigger-grid af-button-desktop button');
+    expect(triggers.length).toBeGreaterThanOrEqual(3);
+
+    (triggers[0] as HTMLButtonElement).click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const panel = document.querySelector('.af-dialog-desktop__panel') as HTMLElement;
+    expect(panel).not.toBeNull();
+    expect(panel.querySelector('.af-dialog-desktop__title')?.textContent?.trim()).toBe(
+      'Detalle del atleta',
+    );
+
+    const close = panel.querySelector('.af-dialog-desktop__close') as HTMLButtonElement;
+    close.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(document.querySelector('.af-dialog-desktop__panel')).toBeNull();
+  });
 });

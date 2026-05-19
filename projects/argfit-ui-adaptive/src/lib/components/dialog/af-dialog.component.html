@@ -1,0 +1,46 @@
+<ng-template #dialogContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-dialog-mobile
+    [open]="open()"
+    [title]="title()"
+    [description]="description()"
+    [size]="size()"
+    [tone]="tone()"
+    [presentation]="mobilePresentation()"
+    [dismissible]="dismissible()"
+    [closeOnBackdrop]="closeOnBackdrop()"
+    [closeOnEscape]="closeOnEscape()"
+    [ariaLabel]="ariaLabel()"
+    [ariaDescribedBy]="ariaDescribedBy()"
+    [closeLabel]="closeLabel()"
+    (openChange)="onOpenChange($event)"
+    (opened)="onOpened()"
+    (closed)="onClosed()"
+    (backdropPress)="onBackdropPress()"
+    (escapePress)="onEscapePress($event)"
+  >
+    <ng-container *ngTemplateOutlet="dialogContent" />
+  </af-dialog-mobile>
+} @else {
+  <af-dialog-desktop
+    [open]="open()"
+    [title]="title()"
+    [description]="description()"
+    [size]="size()"
+    [tone]="tone()"
+    [dismissible]="dismissible()"
+    [closeOnBackdrop]="closeOnBackdrop()"
+    [closeOnEscape]="closeOnEscape()"
+    [ariaLabel]="ariaLabel()"
+    [ariaDescribedBy]="ariaDescribedBy()"
+    [closeLabel]="closeLabel()"
+    (openChange)="onOpenChange($event)"
+    (opened)="onOpened()"
+    (closed)="onClosed()"
+    (backdropPress)="onBackdropPress()"
+    (escapePress)="onEscapePress($event)"
+  >
+    <ng-container *ngTemplateOutlet="dialogContent" />
+  </af-dialog-desktop>
+}

@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@argfit-ui/core": "0.0.1",
+    "@argfit-ui/primitives": "0.0.1",
+    "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@ionic/angular": "^8.8.7"
