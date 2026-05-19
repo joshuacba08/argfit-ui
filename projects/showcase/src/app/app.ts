@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 
 import { AfButton } from '@argfit-ui/adaptive';
 import {
-  AfPlatformService,
-  AfThemeService,
-  type AfPlatformPreference,
+    AfPlatformService,
+    AfThemeService,
+    type AfPlatformPreference,
 } from '@argfit-ui/core';
 
 @Component({
