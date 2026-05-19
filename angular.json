@@ -6,5 +6,109 @@
   },
   "newProjectRoot": "projects",
   "projects": {
+    "argfit-ui-core": {
+      "projectType": "library",
+      "root": "projects/argfit-ui-core",
+      "sourceRoot": "projects/argfit-ui-core/src",
+      "prefix": "af",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/argfit-ui-core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/argfit-ui-core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/argfit-ui-core/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "argfit-ui-desktop": {
+      "projectType": "library",
+      "root": "projects/argfit-ui-desktop",
+      "sourceRoot": "projects/argfit-ui-desktop/src",
+      "prefix": "af",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/argfit-ui-desktop/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/argfit-ui-desktop/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/argfit-ui-desktop/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "argfit-ui-mobile": {
+      "projectType": "library",
+      "root": "projects/argfit-ui-mobile",
+      "sourceRoot": "projects/argfit-ui-mobile/src",
+      "prefix": "af",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/argfit-ui-mobile/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/argfit-ui-mobile/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/argfit-ui-mobile/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "argfit-ui-adaptive": {
+      "projectType": "library",
+      "root": "projects/argfit-ui-adaptive",
+      "sourceRoot": "projects/argfit-ui-adaptive/src",
+      "prefix": "af",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/argfit-ui-adaptive/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/argfit-ui-adaptive/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/argfit-ui-adaptive/tsconfig.spec.json"
+          }
+        }
+      }
+    }
   }
 }

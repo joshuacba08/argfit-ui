@@ -3,6 +3,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "argfit-ui-adaptive": ["./dist/argfit-ui-adaptive"],
+      "argfit-ui-core": ["./dist/argfit-ui-core"],
+      "argfit-ui-desktop": ["./dist/argfit-ui-desktop"],
+      "argfit-ui-mobile": ["./dist/argfit-ui-mobile"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -21,5 +27,31 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/argfit-ui-core/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/argfit-ui-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/argfit-ui-desktop/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/argfit-ui-desktop/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/argfit-ui-mobile/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/argfit-ui-mobile/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/argfit-ui-adaptive/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/argfit-ui-adaptive/tsconfig.spec.json"
+    }
+  ]
 }
