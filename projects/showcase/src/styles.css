@@ -19,6 +19,9 @@
 
 html {
   background: var(--af-bg-main);
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
@@ -26,8 +29,16 @@ body {
   color: var(--af-text-main);
   font-family: var(--af-font-body);
   font-size: var(--af-text-base);
+  height: auto;
   line-height: var(--af-leading-normal);
   margin: 0;
+  max-height: none;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  position: static;
+  touch-action: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

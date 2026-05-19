@@ -192,6 +192,7 @@ Create desktop-oriented rendering.
 - AfCardDesktop
 - HU-005 — [AfInput vertical slice](./hus/HU-005-af-input.md) — ready for implementation
 - AfInputDesktop
+- HU-006 — [AfDialog vertical slice](./hus/HU-006-af-dialog.md) — ready for implementation
 - AfDialogDesktop
 - AfBadgeDesktop
 

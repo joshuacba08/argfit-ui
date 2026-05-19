@@ -65,4 +65,28 @@ describe('App', () => {
     ) as HTMLElement | null;
     expect(interactiveCard).not.toBeNull();
   });
+
+  it('should render the AfInput vertical slice with reactive form binding', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const inputs = compiled.querySelectorAll('af-input-desktop');
+    expect(inputs.length).toBeGreaterThanOrEqual(6);
+
+    const heightInput = Array.from(
+      compiled.querySelectorAll('af-input-desktop'),
+    ).find((host) => host.querySelector('label')?.textContent?.includes('Altura'));
+    expect(heightInput).toBeTruthy();
+
+    const nativeInput = heightInput!.querySelector('input') as HTMLInputElement;
+    expect(nativeInput.value).toBe('178');
+
+    nativeInput.value = '182';
+    nativeInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance['heightControl'].value).toBe('182');
+  });
 });

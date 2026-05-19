@@ -1,0 +1,56 @@
+<div class="af-input-desktop__field">
+  @if (label(); as labelText) {
+    <label class="af-input-desktop__label" [attr.for]="resolvedInputId()">
+      {{ labelText }}
+      @if (required()) {
+        <span class="af-input-desktop__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="af-input-desktop__control">
+    @if (prefixIcon(); as iconValue) {
+      <span class="af-input-desktop__icon af-input-desktop__icon--prefix" aria-hidden="true">
+        {{ iconValue }}
+      </span>
+    } @else if (prefix(); as prefixValue) {
+      <span class="af-input-desktop__affix af-input-desktop__affix--prefix" aria-hidden="true">
+        {{ prefixValue }}
+      </span>
+    }
+
+    <input
+      class="af-input-desktop__input"
+      [id]="resolvedInputId()"
+      [type]="type()"
+      [value]="value()"
+      [attr.placeholder]="placeholder() ?? null"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [attr.name]="name() ?? null"
+      [attr.autocomplete]="autocomplete() ?? null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    />
+
+    @if (suffix(); as suffixValue) {
+      <span class="af-input-desktop__affix af-input-desktop__affix--suffix" aria-hidden="true">
+        {{ suffixValue }}
+      </span>
+    }
+  </div>
+
+  @if (error(); as errorText) {
+    <p class="af-input-desktop__message af-input-desktop__message--error" [id]="errorId()">
+      {{ errorText }}
+    </p>
+  } @else if (hint(); as hintText) {
+    <p class="af-input-desktop__message af-input-desktop__message--hint" [id]="hintId()">
+      {{ hintText }}
+    </p>
+  }
+</div>

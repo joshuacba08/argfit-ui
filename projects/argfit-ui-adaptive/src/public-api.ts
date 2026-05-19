@@ -17,4 +17,7 @@ export {
 export {
     AfCardComponent as AfCard, AfCardComponent
 } from './lib/components/card/af-card.component';
+export {
+    AfInputComponent as AfInput, AfInputComponent
+} from './lib/components/input/af-input.component';
 

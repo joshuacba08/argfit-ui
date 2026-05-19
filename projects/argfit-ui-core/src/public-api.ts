@@ -14,5 +14,6 @@ export * from './lib/tokens/breakpoints';
 export * from './lib/tokens/theme-token-names';
 export * from './lib/types/button.types';
 export * from './lib/types/card.types';
+export * from './lib/types/input.types';
 export * from './lib/types/platform.types';
 

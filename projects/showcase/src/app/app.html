@@ -188,6 +188,72 @@
           </af-card>
         </div>
       </div>
+
+      <div class="input-section" aria-label="Input variants">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Component vertical slice</span>
+            <h2>AfInput</h2>
+          </div>
+        </div>
+
+        <div class="input-grid">
+          <af-input
+            label="Nombre del atleta"
+            placeholder="Maria Garcia"
+            hint="Tal como aparece en el carnet"
+            [value]="athleteName()"
+            (valueChange)="updateAthleteName($event)"
+          />
+
+          <af-input
+            label="Buscar"
+            placeholder="Atleta o equipo"
+            type="search"
+            prefixIcon="🔍"
+            [value]="searchQuery()"
+            (valueChange)="updateSearchQuery($event)"
+          />
+
+          <af-input
+            label="Peso"
+            placeholder="0"
+            type="number"
+            suffix="kg"
+            [value]="athleteWeight()"
+            (valueChange)="updateAthleteWeight($event)"
+          />
+
+          <af-input
+            label="ID dispositivo"
+            value="AF-J2-001"
+            hint="Identificador asignado por el sistema"
+            [disabled]="true"
+          />
+
+          <af-input
+            label="Email"
+            type="email"
+            placeholder="atleta@argfit.com"
+            [value]="athleteEmail()"
+            [error]="emailError()"
+            (valueChange)="updateAthleteEmail($event)"
+          />
+
+          <af-input
+            label="Altura"
+            type="number"
+            suffix="cm"
+            hint="Vinculado a un FormControl reactivo"
+            [formControl]="heightControl"
+          />
+        </div>
+
+        <div class="status-row">
+          <span>Altura (FormControl)</span>
+          <strong>{{ heightControl.value }} cm</strong>
+        </div>
+      </div>
     </section>
   </section>
 </main>

@@ -150,7 +150,6 @@ p {
   margin: 0 auto;
   max-width: 1180px;
   min-height: 560px;
-  overflow: hidden;
 }
 
 .rail {
@@ -318,6 +317,24 @@ p {
 .device-battery.is-low {
   background: rgba(255, 179, 0, 0.18);
   color: var(--af-warning);
+}
+
+.input-section {
+  display: grid;
+  gap: var(--af-space-4);
+  margin-top: var(--af-space-6);
+}
+
+.input-grid {
+  display: grid;
+  gap: var(--af-space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 860px) {
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 860px) {
