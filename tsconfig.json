@@ -52,6 +52,12 @@
     },
     {
       "path": "./projects/argfit-ui-adaptive/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/showcase/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/showcase/tsconfig.spec.json"
     }
   ]
 }
