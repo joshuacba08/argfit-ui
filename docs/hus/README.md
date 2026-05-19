@@ -12,3 +12,4 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 4. [HU-004 — AfCard Vertical Slice](./HU-004-af-card.md)
 5. [HU-005 — AfInput Vertical Slice](./HU-005-af-input.md)
 6. [HU-006 — AfDialog Vertical Slice](./HU-006-af-dialog.md)
+7. [HU-007 — Icon and Chart Foundations](./HU-007-icon-chart-foundations.md)

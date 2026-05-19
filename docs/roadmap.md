@@ -47,6 +47,8 @@ The system should support:
 - TailwindCSS
 - PrimeNG
 - Ionic Angular
+- Lucide icons
+- ECharts
 
 ---
 
@@ -151,6 +153,7 @@ IN PROGRESS
 - Shared utilities
 - Shared types
 - Responsive helpers
+- HU-007 — [Icon and chart foundations](./hus/HU-007-icon-chart-foundations.md) — ready for implementation
 
 ---
 
@@ -168,6 +171,8 @@ IN PROGRESS
 
 - AfVisuallyHiddenComponent — initial slice complete
 - HU-003 — [Accessibility primitives](./hus/HU-003-accessibility-primitives.md) — ready for implementation
+- HU-007 — [Icon and chart foundations](./hus/HU-007-icon-chart-foundations.md) — ready for implementation
+- AfIcon
 - Focus management helpers
 - Disclosure primitives
 - Portal/overlay foundations
@@ -260,6 +265,7 @@ Expose unified adaptive APIs.
 - AfCard
 - AfInput
 - AfDialog
+- AfChart
 - AfPageShell
 - AfSidebar
 - AfMetricCard
@@ -308,6 +314,7 @@ Build advanced enterprise features.
 
 ## Planned Systems
 
+- HU-007 — [Icon and chart foundations](./hus/HU-007-icon-chart-foundations.md) — ready for implementation
 - Data visualization components
 - Dashboard blocks
 - Advanced tables
