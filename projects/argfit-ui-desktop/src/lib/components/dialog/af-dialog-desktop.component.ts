@@ -1,27 +1,27 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  output,
-  PLATFORM_ID,
-  signal,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    effect,
+    ElementRef,
+    inject,
+    input,
+    output,
+    PLATFORM_ID,
+    signal,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import type {
-  AfDialogSize,
-  AfDialogTone,
+    AfDialogSize,
+    AfDialogTone,
 } from '@argfit-ui/core';
 import {
-  AfEscapeKeyDirective,
-  AfFocusInitialDirective,
-  AfFocusTrapDirective,
+    AfEscapeKeyDirective,
+    AfFocusInitialDirective,
+    AfFocusTrapDirective,
 } from '@argfit-ui/primitives';
 
 let nextAfDesktopDialogId = 0;
