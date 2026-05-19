@@ -133,6 +133,7 @@ IN PROGRESS
 - Dark theme — initial slice complete
 - Theme switching
 - Theme service — initial slice complete
+- HU-002 — [Theme runtime y estilos base](./hus/HU-002-theme-runtime-base-styles.md) — ready for implementation
 
 ---
 

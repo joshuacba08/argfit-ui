@@ -7,3 +7,4 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 ## Orden Inicial
 
 1. [HU-001 — Formalizar tokens del design system](./HU-001-design-tokens.md)
+2. [HU-002 — Theme Runtime y Estilos Base](./HU-002-theme-runtime-base-styles.md)
