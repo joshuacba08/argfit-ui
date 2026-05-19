@@ -6,6 +6,8 @@ export * from './lib/config/argfit-ui.config';
 export * from './lib/providers/provide-argfit-ui';
 export * from './lib/services/platform.service';
 export * from './lib/themes/argfit-dark.theme';
+export * from './lib/themes/argfit-light.theme';
+export * from './lib/themes/base-tokens';
 export * from './lib/themes/theme.service';
 export * from './lib/themes/theme.types';
 export * from './lib/tokens/breakpoints';

@@ -1,41 +1,133 @@
+/**
+ * Canonical list of every CSS custom property exposed by an ArgFit UI theme.
+ *
+ * All tokens live in the `--af-*` namespace. Consumers should reference these
+ * tokens instead of hardcoding raw values so that the design system stays
+ * coherent across desktop, mobile and adaptive layers.
+ */
 export const AF_THEME_TOKEN_NAMES = [
-  '--af-bg-main',
-  '--af-bg-surface',
-  '--af-bg-elevated',
-  '--af-bg-overlay',
-  '--af-bg-interactive',
-  '--af-text-main',
-  '--af-text-muted',
-  '--af-text-soft',
-  '--af-text-disabled',
-  '--af-text-inverse',
+  // ── Brand colour scales ─────────────────────────────────────────────
+  '--af-color-primary-50',
+  '--af-color-primary-100',
+  '--af-color-primary-200',
+  '--af-color-primary-300',
+  '--af-color-primary-400',
+  '--af-color-primary-500',
+  '--af-color-primary-600',
+  '--af-color-primary-700',
+  '--af-color-primary-800',
+  '--af-color-primary-900',
+  '--af-color-accent-50',
+  '--af-color-accent-100',
+  '--af-color-accent-200',
+  '--af-color-accent-300',
+  '--af-color-accent-400',
+  '--af-color-accent-500',
+  '--af-color-accent-600',
+  '--af-color-accent-700',
+  '--af-color-accent-800',
+  '--af-color-accent-900',
+  '--af-color-neutral-50',
+  '--af-color-neutral-100',
+  '--af-color-neutral-200',
+  '--af-color-neutral-300',
+  '--af-color-neutral-400',
+  '--af-color-neutral-500',
+  '--af-color-neutral-600',
+  '--af-color-neutral-700',
+  '--af-color-neutral-800',
+  '--af-color-neutral-900',
+
+  // ── Semantic palette ────────────────────────────────────────────────
+  '--af-success',
+  '--af-success-light',
+  '--af-success-dark',
+  '--af-warning',
+  '--af-warning-light',
+  '--af-warning-dark',
+  '--af-danger',
+  '--af-danger-light',
+  '--af-danger-dark',
+  '--af-info',
+  '--af-info-light',
+  '--af-info-dark',
+
+  // ── Primary / accent semantic aliases ───────────────────────────────
   '--af-primary',
   '--af-primary-hover',
   '--af-primary-active',
   '--af-primary-soft',
   '--af-primary-contrast',
+  '--af-accent',
+  '--af-accent-hover',
+  '--af-accent-soft',
   '--af-secondary',
   '--af-secondary-hover',
-  '--af-success',
-  '--af-warning',
-  '--af-danger',
   '--af-danger-hover',
   '--af-danger-soft',
-  '--af-info',
+
+  // ── Surfaces & backgrounds ──────────────────────────────────────────
+  '--af-bg-main',
+  '--af-bg-surface',
+  '--af-bg-elevated',
+  '--af-bg-overlay',
+  '--af-bg-interactive',
+  '--af-surface-1',
+  '--af-surface-2',
+  '--af-surface-3',
+  '--af-surface-4',
+
+  // ── Foreground / typography colour ──────────────────────────────────
+  '--af-text-main',
+  '--af-text-muted',
+  '--af-text-soft',
+  '--af-text-disabled',
+  '--af-text-inverse',
+
+  // ── Borders & focus ─────────────────────────────────────────────────
   '--af-border',
   '--af-border-soft',
   '--af-border-strong',
   '--af-border-focus',
+  '--af-focus-ring',
+
+  // ── Inputs ──────────────────────────────────────────────────────────
+  '--af-input-bg',
+  '--af-input-border',
+
+  // ── Cards ───────────────────────────────────────────────────────────
+  '--af-card-bg',
+  '--af-card-border',
+  '--af-card-shadow',
+
+  // ── Scrollbar ───────────────────────────────────────────────────────
+  '--af-scrollbar-thumb',
+
+  // ── Radii ───────────────────────────────────────────────────────────
+  '--af-radius-none',
   '--af-radius-xs',
   '--af-radius-sm',
   '--af-radius-md',
   '--af-radius-lg',
   '--af-radius-xl',
+  '--af-radius-2xl',
   '--af-radius-pill',
+
+  // ── Shadows / elevation ─────────────────────────────────────────────
+  '--af-shadow-xs',
   '--af-shadow-sm',
   '--af-shadow-md',
   '--af-shadow-lg',
+  '--af-shadow-xl',
+  '--af-shadow-glow',
+  '--af-shadow-glow-accent',
+
+  // ── Spacing scale ───────────────────────────────────────────────────
+  '--af-space-0',
+  '--af-space-px',
+  '--af-space-0_5',
   '--af-space-1',
+  '--af-space-1_5',
   '--af-space-2',
   '--af-space-3',
   '--af-space-4',
@@ -44,7 +136,25 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-space-8',
   '--af-space-10',
   '--af-space-12',
+  '--af-space-16',
+  '--af-space-20',
+  '--af-space-24',
+
+  // ── Typography ──────────────────────────────────────────────────────
+  '--af-font-display',
+  '--af-font-body',
+  '--af-font-mono',
   '--af-font-family',
+  '--af-text-xs',
+  '--af-text-sm',
+  '--af-text-base',
+  '--af-text-lg',
+  '--af-text-xl',
+  '--af-text-2xl',
+  '--af-text-3xl',
+  '--af-text-4xl',
+  '--af-text-5xl',
+  '--af-text-6xl',
   '--af-font-size-xs',
   '--af-font-size-sm',
   '--af-font-size-md',
@@ -55,16 +165,37 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-font-weight-medium',
   '--af-font-weight-semibold',
   '--af-font-weight-bold',
+  '--af-leading-tight',
+  '--af-leading-snug',
+  '--af-leading-normal',
+  '--af-leading-relaxed',
   '--af-line-height-tight',
   '--af-line-height-normal',
+  '--af-tracking-tight',
+  '--af-tracking-normal',
+  '--af-tracking-wide',
+  '--af-tracking-wider',
+  '--af-tracking-widest',
+
+  // ── Motion ──────────────────────────────────────────────────────────
+  '--af-ease-out',
+  '--af-ease-in-out',
+  '--af-ease-spring',
+  '--af-duration-fast',
+  '--af-duration-normal',
+  '--af-duration-slow',
+  '--af-duration-slower',
   '--af-motion-fast',
   '--af-motion-base',
   '--af-motion-slow',
   '--af-motion-ease',
+
+  // ── Breakpoints ─────────────────────────────────────────────────────
   '--af-breakpoint-mobile',
   '--af-breakpoint-tablet',
   '--af-breakpoint-desktop',
-  '--af-focus-ring',
+
+  // ── Button sizing ───────────────────────────────────────────────────
   '--af-button-height-sm',
   '--af-button-height-md',
   '--af-button-height-lg',

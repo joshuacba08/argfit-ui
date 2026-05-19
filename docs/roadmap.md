@@ -123,6 +123,7 @@ IN PROGRESS
 - Elevation — initial slice complete
 - Motion — initial slice complete
 - Breakpoints — initial slice complete
+- HU-001 — [Formalizar tokens del design system](./hus/HU-001-design-tokens.md) — ready for implementation
 
 ---
 
