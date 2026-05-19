@@ -94,6 +94,100 @@
         <span>Last action</span>
         <strong>{{ lastAction() }}</strong>
       </div>
+
+      <div class="card-section" aria-label="Card variants">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Component vertical slice</span>
+            <h2>AfCard</h2>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <af-card class="card-grid__item" variant="surface">
+            <header afCardHeader>
+              <h3 afCardTitle>Resumen del torneo</h3>
+              <span afCardEyebrow>Hoy</span>
+            </header>
+            <p afCardSubtitle>
+              Plataforma adaptativa preparada para una jornada con 38 atletas activos.
+            </p>
+            <div afCardContent>
+              Sesiones previstas, lecturas en tiempo real y panel tactico unificado.
+            </div>
+          </af-card>
+
+          <af-card class="card-grid__item" variant="metric" tone="primary" density="compact">
+            <span afCardEyebrow>Atletas activos</span>
+            <strong class="card-metric">38</strong>
+            <span afCardSubtitle>+4 vs ayer</span>
+          </af-card>
+
+          <af-card class="card-grid__item" variant="metric" tone="success" density="compact">
+            <span afCardEyebrow>Mejor salto</span>
+            <strong class="card-metric">45.2<small> cm</small></strong>
+            <span afCardSubtitle>Lucia P. · 09:42</span>
+          </af-card>
+
+          <af-card
+            class="card-grid__item"
+            variant="device"
+            [interactive]="true"
+            [selected]="selectedDevice() === 'jump-01'"
+            (pressed)="selectDevice('jump-01')"
+            aria-label="Seleccionar dispositivo ArgFit Jump 01"
+          >
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>ArgFit Jump</span>
+                <h3 afCardTitle>Jump · 01</h3>
+              </div>
+              <span class="device-battery">84%</span>
+            </header>
+            <p afCardSubtitle>Conectado · sesion en curso</p>
+            <footer afCardFooter>
+              <af-button variant="ghost">Configurar</af-button>
+              <af-button variant="secondary">Detalles</af-button>
+            </footer>
+          </af-card>
+
+          <af-card
+            class="card-grid__item"
+            variant="device"
+            tone="warning"
+            [interactive]="true"
+            [selected]="selectedDevice() === 'jump-02'"
+            (pressed)="selectDevice('jump-02')"
+            aria-label="Seleccionar dispositivo ArgFit Jump 02"
+          >
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>ArgFit Jump</span>
+                <h3 afCardTitle>Jump · 02</h3>
+              </div>
+              <span class="device-battery is-low">21%</span>
+            </header>
+            <p afCardSubtitle>Bateria baja · recargar pronto</p>
+          </af-card>
+
+          <af-card class="card-grid__item" variant="panel" tone="primary">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Sesiones semanales</span>
+                <h3 afCardTitle>124 completadas</h3>
+              </div>
+              <span class="device-battery">+18%</span>
+            </header>
+            <div afCardContent>
+              Volumen de trabajo distribuido entre atletas individuales y equipos.
+            </div>
+            <footer afCardFooter>
+              <af-button variant="ghost">Exportar</af-button>
+              <af-button>Ver detalle</af-button>
+            </footer>
+          </af-card>
+        </div>
+      </div>
     </section>
   </section>
 </main>

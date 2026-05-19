@@ -3,3 +3,4 @@
  */
 
 export * from './lib/components/button/af-button-desktop.component';
+export * from './lib/components/card/af-card-desktop.component';

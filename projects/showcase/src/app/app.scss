@@ -274,6 +274,52 @@ p {
   font-size: var(--af-font-size-md);
 }
 
+.card-section {
+  display: grid;
+  gap: var(--af-space-4);
+  margin-top: var(--af-space-6);
+}
+
+.card-grid {
+  display: grid;
+  gap: var(--af-space-4);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card-grid__item {
+  min-width: 0;
+}
+
+.card-metric {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-3xl);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-leading-tight);
+}
+
+.card-metric small {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-medium);
+  margin-left: var(--af-space-1);
+}
+
+.device-battery {
+  background: var(--af-primary-soft);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-primary-hover);
+  font-size: var(--af-font-size-xs);
+  font-weight: var(--af-font-weight-bold);
+  padding: var(--af-space-1) var(--af-space-2);
+}
+
+.device-battery.is-low {
+  background: rgba(255, 179, 0, 0.18);
+  color: var(--af-warning);
+}
+
 @media (max-width: 860px) {
   .showcase-shell {
     padding: var(--af-space-4);
@@ -298,6 +344,10 @@ p {
   }
 
   .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid {
     grid-template-columns: 1fr;
   }
 }

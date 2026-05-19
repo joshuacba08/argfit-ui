@@ -1,0 +1,27 @@
+<ng-template #cardContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-card-mobile
+    [variant]="variant()"
+    [density]="density()"
+    [tone]="tone()"
+    [interactive]="interactive()"
+    [selected]="selected()"
+    (click)="onClick($event)"
+    (keydown)="onKeydown($event)"
+  >
+    <ng-container *ngTemplateOutlet="cardContent" />
+  </af-card-mobile>
+} @else {
+  <af-card-desktop
+    [variant]="variant()"
+    [density]="density()"
+    [tone]="tone()"
+    [interactive]="interactive()"
+    [selected]="selected()"
+    (click)="onClick($event)"
+    (keydown)="onKeydown($event)"
+  >
+    <ng-container *ngTemplateOutlet="cardContent" />
+  </af-card-desktop>
+}

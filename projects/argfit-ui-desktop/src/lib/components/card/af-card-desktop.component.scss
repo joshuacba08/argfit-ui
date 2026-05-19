@@ -1,0 +1,185 @@
+/* ─────────────────────────────────────────────────────────────────
+   AfCardDesktopComponent
+   Encapsulation: None — all rules namespaced under .af-card-desktop.
+   ───────────────────────────────────────────────────────────────── */
+
+.af-card-desktop {
+  background: var(--af-card-bg, var(--af-bg-elevated));
+  border: 1px solid var(--af-card-border, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  box-shadow: var(--af-shadow-sm);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--af-font-body);
+  gap: var(--af-space-3);
+  padding: var(--af-space-5);
+  position: relative;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    box-shadow var(--af-duration-fast) var(--af-ease-out),
+    transform var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-card-desktop:focus {
+  outline: none;
+}
+
+/* Variants */
+
+.af-card-desktop--elevated {
+  background: var(--af-bg-elevated);
+  box-shadow: var(--af-shadow-md);
+}
+
+.af-card-desktop--metric {
+  background: var(--af-bg-elevated);
+  border-color: var(--af-border-soft);
+  gap: var(--af-space-2);
+}
+
+.af-card-desktop--device {
+  background: var(--af-bg-elevated);
+  border-radius: var(--af-radius-lg);
+}
+
+.af-card-desktop--panel {
+  background: var(--af-bg-elevated);
+  border-radius: var(--af-radius-xl);
+  padding: var(--af-space-6);
+}
+
+/* Density */
+
+.af-card-desktop--density-compact {
+  gap: var(--af-space-2);
+  padding: var(--af-space-4);
+}
+
+.af-card-desktop--density-comfortable {
+  gap: var(--af-space-4);
+  padding: var(--af-space-5);
+}
+
+.af-card-desktop--panel.af-card-desktop--density-compact {
+  padding: var(--af-space-5);
+}
+
+/* Tones — subtle accents on border/left rail */
+
+.af-card-desktop--tone-primary {
+  border-color: rgba(37, 153, 213, 0.28);
+  box-shadow:
+    var(--af-shadow-sm),
+    inset 3px 0 0 0 var(--af-primary);
+}
+
+.af-card-desktop--tone-success {
+  border-color: rgba(0, 200, 83, 0.28);
+  box-shadow:
+    var(--af-shadow-sm),
+    inset 3px 0 0 0 var(--af-success);
+}
+
+.af-card-desktop--tone-warning {
+  border-color: rgba(255, 179, 0, 0.28);
+  box-shadow:
+    var(--af-shadow-sm),
+    inset 3px 0 0 0 var(--af-warning);
+}
+
+.af-card-desktop--tone-danger {
+  border-color: rgba(255, 61, 113, 0.28);
+  box-shadow:
+    var(--af-shadow-sm),
+    inset 3px 0 0 0 var(--af-danger);
+}
+
+/* Interactive */
+
+.af-card-desktop--interactive {
+  cursor: pointer;
+  user-select: none;
+}
+
+.af-card-desktop--interactive:hover {
+  border-color: var(--af-border-strong, var(--af-border));
+  box-shadow: var(--af-shadow-md);
+  transform: translateY(-1px);
+}
+
+.af-card-desktop--interactive:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+/* Selected */
+
+.af-card-desktop--selected {
+  border-color: var(--af-primary);
+  box-shadow:
+    var(--af-shadow-sm),
+    0 0 0 1px var(--af-primary);
+}
+
+.af-card-desktop--selected.af-card-desktop--interactive:hover {
+  box-shadow:
+    var(--af-shadow-md),
+    0 0 0 1px var(--af-primary);
+}
+
+/* Semantic slots */
+
+.af-card-desktop .af-card__header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.af-card-desktop .af-card__title {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-lg);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-leading-tight);
+  margin: 0;
+}
+
+.af-card-desktop .af-card__subtitle {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-card-desktop .af-card__eyebrow {
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-wider);
+  text-transform: uppercase;
+}
+
+.af-card-desktop .af-card__content {
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-3);
+}
+
+.af-card-desktop .af-card__footer {
+  align-items: center;
+  border-top: 1px solid var(--af-border-soft);
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: flex-end;
+  padding-top: var(--af-space-3);
+}
+
+.af-card-desktop--metric .af-card__eyebrow {
+  color: var(--af-text-muted);
+}

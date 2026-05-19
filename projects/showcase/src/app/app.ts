@@ -1,6 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
-import { AfButton } from '@argfit-ui/adaptive';
+import {
+  AfButton,
+  AfCard,
+  AfCardContentDirective,
+  AfCardEyebrowDirective,
+  AfCardFooterDirective,
+  AfCardHeaderDirective,
+  AfCardSubtitleDirective,
+  AfCardTitleDirective,
+} from '@argfit-ui/adaptive';
 import {
     AfPlatformService,
     AfThemeService,
@@ -9,7 +18,16 @@ import {
 
 @Component({
   selector: 'app-root',
-  imports: [AfButton],
+  imports: [
+    AfButton,
+    AfCard,
+    AfCardHeaderDirective,
+    AfCardTitleDirective,
+    AfCardSubtitleDirective,
+    AfCardEyebrowDirective,
+    AfCardContentDirective,
+    AfCardFooterDirective,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +36,7 @@ export class App {
   protected readonly platform = inject(AfPlatformService);
   protected readonly theme = inject(AfThemeService);
   protected readonly lastAction = signal('Idle');
+  protected readonly selectedDevice = signal<string>('jump-01');
 
   protected setPlatform(preference: AfPlatformPreference): void {
     this.platform.setPreference(preference);
@@ -30,5 +49,10 @@ export class App {
 
   protected recordAction(action: string): void {
     this.lastAction.set(action);
+  }
+
+  protected selectDevice(id: string): void {
+    this.selectedDevice.set(id);
+    this.recordAction(`Device selected → ${id}`);
   }
 }

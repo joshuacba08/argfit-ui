@@ -44,4 +44,25 @@ describe('App', () => {
     expect(theme.isLightTheme()).toBe(true);
     expect(document.documentElement.dataset['theme']).toBe('light');
   });
+
+  it('should render the AfCard vertical slice with all variants', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const cards = compiled.querySelectorAll('af-card-desktop');
+    expect(cards.length).toBeGreaterThanOrEqual(4);
+
+    const variants = Array.from(cards).map((card) => card.getAttribute('data-variant'));
+    expect(variants).toContain('surface');
+    expect(variants).toContain('metric');
+    expect(variants).toContain('device');
+    expect(variants).toContain('panel');
+
+    const interactiveCard = compiled.querySelector(
+      'af-card-desktop[data-interactive]',
+    ) as HTMLElement | null;
+    expect(interactiveCard).not.toBeNull();
+  });
 });
