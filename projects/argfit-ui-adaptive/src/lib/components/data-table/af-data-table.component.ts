@@ -8,8 +8,8 @@ import {
     inject,
     input,
     output,
-    type TemplateRef,
     viewChild,
+    type TemplateRef,
 } from '@angular/core';
 
 import {
