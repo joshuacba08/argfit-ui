@@ -13,9 +13,9 @@ The recommended consumer surface is `@argfit-ui/adaptive`. Desktop and mobile pa
 | Package manager | pnpm, npm or another npm-compatible client |
 | Rendering | Browser app for the full component catalog |
 
-## Install From A Registry
+## Install From npm
 
-Install ArgFit packages in dependency order:
+Install ArgFit packages from the public npm registry in dependency order:
 
 ```bash
 pnpm add @argfit-ui/core@0.1.0-alpha.0
@@ -34,7 +34,7 @@ Angular packages should already be present in a normal Angular 21 app: `@angular
 
 ## Install From Local Tarballs
 
-When testing the workspace alpha locally, generate tarballs first:
+When testing an unpublished local change or validating artifacts before release, generate tarballs first:
 
 ```bash
 pnpm pack:alpha
@@ -112,7 +112,7 @@ The app should compile without importing PrimeNG, Ionic or ECharts from applicat
 
 | Symptom | Check |
 | --- | --- |
-| `Cannot find module @argfit-ui/core` | Install all five ArgFit packages or local tarballs in dependency order. |
+| `Cannot find module @argfit-ui/core` | Install all five ArgFit packages from npm, or local tarballs in dependency order. |
 | Peer dependency warning for `@argfit-ui/*` | Make sure every ArgFit package is exactly `0.1.0-alpha.0`. |
 | Angular peer mismatch | Use Angular 21.x for this alpha. Older Angular versions are not supported. |
 | Form component does not bind | Import `ReactiveFormsModule` in the standalone consumer component. |

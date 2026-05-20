@@ -2,7 +2,7 @@
 
 This document records the package metadata decision for `0.1.0-alpha.0`.
 
-HU-016 prepares artifacts for verification. It does not publish packages to npm.
+HU-016 prepared the artifacts; the current metadata now supports public npm publication.
 
 ## Version
 
@@ -16,13 +16,13 @@ The root workspace is also set to `0.1.0-alpha.0` for milestone alignment, but i
 
 ## License Decision
 
-There is no repository license file yet. Until a public license is selected, all package manifests use:
+The repository now ships with an MIT license and all publishable package manifests use:
 
 ```json
-"license": "UNLICENSED"
+"license": "MIT"
 ```
 
-The alpha should be consumed through local tarballs or a private registry. Do not publish these artifacts to the public npm registry as open source packages until the license decision changes.
+The alpha can be consumed directly from npm or from generated tarballs.
 
 ## Publish Config
 
@@ -30,22 +30,22 @@ Each publishable package declares:
 
 ```json
 "publishConfig": {
-  "access": "restricted",
+  "access": "public",
   "tag": "alpha"
 }
 ```
 
-This records the intended prerelease dist-tag and keeps the alpha oriented toward private distribution. A future public release can switch to `access: public` after package ownership and license are finalized.
+This records the intended prerelease dist-tag and allows public npm distribution under the `alpha` channel.
 
 ## Package Matrix
 
 | Package | Version | License | Publish mode | Role |
 | --- | --- | --- | --- | --- |
-| `@argfit-ui/core` | `0.1.0-alpha.0` | `UNLICENSED` | private registry or tarball | Tokens, themes, config, services and shared types |
-| `@argfit-ui/primitives` | `0.1.0-alpha.0` | `UNLICENSED` | private registry or tarball | Vendor-agnostic accessibility and icon primitives |
-| `@argfit-ui/desktop` | `0.1.0-alpha.0` | `UNLICENSED` | private registry or tarball | Desktop renderer package backed by PrimeNG internally |
-| `@argfit-ui/mobile` | `0.1.0-alpha.0` | `UNLICENSED` | private registry or tarball | Mobile renderer package backed by Ionic internally |
-| `@argfit-ui/adaptive` | `0.1.0-alpha.0` | `UNLICENSED` | private registry or tarball | Primary adaptive component API |
+| `@argfit-ui/core` | `0.1.0-alpha.0` | `MIT` | public npm or tarball | Tokens, themes, config, services and shared types |
+| `@argfit-ui/primitives` | `0.1.0-alpha.0` | `MIT` | public npm or tarball | Vendor-agnostic accessibility and icon primitives |
+| `@argfit-ui/desktop` | `0.1.0-alpha.0` | `MIT` | public npm or tarball | Desktop renderer package backed by PrimeNG internally |
+| `@argfit-ui/mobile` | `0.1.0-alpha.0` | `MIT` | public npm or tarball | Mobile renderer package backed by Ionic internally |
+| `@argfit-ui/adaptive` | `0.1.0-alpha.0` | `MIT` | public npm or tarball | Primary adaptive component API |
 
 ## Internal Peer Dependencies
 
@@ -92,6 +92,8 @@ dist/alpha-tarballs/
 
 `pnpm release:alpha:check` runs the alpha release gate: architecture guard, production build, full tests, pack dry-run, tarball generation and the consumer smoke test.
 
+`publish-alpha.yml` uses `NPM_TOKEN` in GitHub Actions and publishes the generated tarballs to npm with `--access public --tag alpha`.
+
 ## ng-packagr Entry Points
 
 The five `projects/*/ng-package.json` files were reviewed for HU-016. No changes were required:
@@ -109,5 +111,5 @@ The five `projects/*/ng-package.json` files were reviewed for HU-016. No changes
 - Package must not be `private: true`.
 - Metadata fields must exist: description, keywords, author, license, repository, homepage and bugs.
 - Internal `@argfit-ui/*` relationships must be peer dependencies at the exact alpha version.
-- Tarball must include `package.json` and `README.md`.
+- Tarball must include `package.json`, `README.md` and `LICENSE`.
 - Tarball must not include source folders, workspace projects, showcase output, logs, lockfiles, temp files or env files.

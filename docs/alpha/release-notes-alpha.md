@@ -9,7 +9,7 @@ Initial ArgFit UI alpha candidate.
 - Adaptive Angular component API for desktop/mobile rendering.
 - Token-driven dark-first theme runtime.
 - Vendor-independent public contracts over PrimeNG, Ionic, ECharts and Lucide internals.
-- Local tarball and `npm pack --dry-run` workflow.
+- Public npm alpha distribution with MIT licensing, plus tarball and `npm pack --dry-run` workflow.
 - Reproducible alpha release gate through `pnpm release:alpha:check` and CI.
 
 ## Stable For Alpha
@@ -27,10 +27,10 @@ Initial ArgFit UI alpha candidate.
 
 ## Packaging
 
-- Packages are `UNLICENSED` until the license decision is made.
+- Packages are MIT licensed.
 - Root workspace remains private.
 - `publishConfig.tag` is `alpha`.
-- Intended alpha distribution is private registry or local tarball.
+- Intended alpha distribution is the public npm registry with the `alpha` dist-tag, or generated tarballs.
 
 ## Validation Commands
 

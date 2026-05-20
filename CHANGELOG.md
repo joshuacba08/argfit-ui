@@ -17,6 +17,6 @@ Initial alpha candidate for ArgFit UI.
 
 ### Notes
 
-- Packages are `UNLICENSED` until the public license decision is made.
-- Intended alpha distribution is local tarball or private registry with the `alpha` dist-tag.
+- Packages are MIT licensed.
+- Intended alpha distribution is the public npm registry with the `alpha` dist-tag, with tarballs still available for manual verification.
 - Breaking changes can occur before beta; consumers should pin exact `0.1.0-alpha.0` versions.

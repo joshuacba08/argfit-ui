@@ -249,4 +249,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `0.1.0-alpha.0`. The root workspace remains private. Packages are prepared for local tarball or private-registry alpha distribution and are marked `UNLICENSED` until the public license decision is made.
+The workspace and publishable packages are aligned on `0.1.0-alpha.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages are MIT licensed and prepared for public npm distribution with the `alpha` dist-tag, while tarballs remain available for manual verification.

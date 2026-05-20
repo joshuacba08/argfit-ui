@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import process from 'node:process';
@@ -8,6 +8,7 @@ const ALPHA_VERSION = '0.1.0-alpha.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
 const tarballDestination = resolve(repoRoot, 'dist', 'alpha-tarballs');
+const rootLicensePath = resolve(repoRoot, 'LICENSE');
 
 const packageDefinitions = [
   {
@@ -65,6 +66,8 @@ for (const packageDefinition of packageDefinitions) {
   if (!existsSync(manifestPath)) {
     fail(`Missing built package manifest for ${packageDefinition.name}. Run pnpm build:libs first.`);
   }
+
+  ensureLicenseFile(packageDirectory);
 
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
   validateManifest(packageDefinition, manifest);
@@ -125,8 +128,8 @@ function validateManifest(packageDefinition, manifest) {
     }
   }
 
-  if (manifest.license !== 'UNLICENSED') {
-    fail(`${packageDefinition.name} must keep license UNLICENSED until the public license decision is made.`);
+  if (manifest.license !== 'MIT') {
+    fail(`${packageDefinition.name} must use the MIT license for public npm distribution.`);
   }
 
   if (manifest.sideEffects !== false) {
@@ -135,6 +138,10 @@ function validateManifest(packageDefinition, manifest) {
 
   if (manifest.publishConfig?.tag !== 'alpha') {
     fail(`${packageDefinition.name} publishConfig.tag must be alpha.`);
+  }
+
+  if (manifest.publishConfig?.access !== 'public') {
+    fail(`${packageDefinition.name} publishConfig.access must be public for npm distribution.`);
   }
 
   const peerDependencies = manifest.peerDependencies ?? {};
@@ -168,7 +175,7 @@ function validatePackEntry(packageDefinition, npmPackEntry) {
 
   const filePaths = (npmPackEntry.files ?? []).map((packFile) => packFile.path);
 
-  for (const requiredPath of ['package.json', 'README.md']) {
+  for (const requiredPath of ['package.json', 'README.md', 'LICENSE']) {
     if (!filePaths.includes(requiredPath)) {
       fail(`${packageDefinition.name} tarball is missing ${requiredPath}.`);
     }
@@ -209,6 +216,14 @@ function runNpmPack(packageDirectory, packArguments) {
     cwd: packageDirectory,
     encoding: 'utf8',
   });
+}
+
+function ensureLicenseFile(packageDirectory) {
+  if (!existsSync(rootLicensePath)) {
+    fail('Repository LICENSE file is required for public npm distribution.');
+  }
+
+  copyFileSync(rootLicensePath, resolve(packageDirectory, 'LICENSE'));
 }
 
 function quoteWindowsArgument(argument) {

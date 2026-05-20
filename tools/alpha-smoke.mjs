@@ -44,6 +44,7 @@ for (const packageDefinition of packageDefinitions) {
 validateTarballs();
 validateTypeScriptConsumerSmoke();
 validateWorkflowShape();
+validatePublishWorkflowShape();
 
 rmSync(smokeDirectory, { recursive: true, force: true });
 
@@ -93,6 +94,10 @@ function validateDistPackage(packageDefinition) {
 
   if (!runtimeEntry || !existsSync(resolve(packageDirectory, runtimeEntry))) {
     failures.push(`${packageDefinition.name}: missing exported runtime entrypoint`);
+  }
+
+  if (!existsSync(resolve(packageDirectory, 'LICENSE'))) {
+    failures.push(`${packageDefinition.name}: missing LICENSE file in built package directory`);
   }
 }
 
@@ -173,6 +178,33 @@ function validateWorkflowShape() {
 
   if (invalidIndentLine) {
     failures.push('.github/workflows/ci.yml: tabs are not valid indentation for this workflow');
+  }
+}
+
+function validatePublishWorkflowShape() {
+  const workflowPath = resolve(repoRoot, '.github', 'workflows', 'publish-alpha.yml');
+
+  if (!existsSync(workflowPath)) {
+    failures.push('.github/workflows/publish-alpha.yml: expected publish workflow to exist');
+    return;
+  }
+
+  const workflow = readFileSync(workflowPath, 'utf8');
+  const requiredSnippets = [
+    'name: Publish Alpha',
+    'workflow_dispatch:',
+    'tags:',
+    'NPM_TOKEN',
+    'NODE_AUTH_TOKEN',
+    'pnpm release:alpha:check',
+    'pnpm pack:alpha',
+    'npm publish dist/alpha-tarballs/argfit-ui-core-0.1.0-alpha.0.tgz --tag alpha --access public',
+  ];
+
+  for (const snippet of requiredSnippets) {
+    if (!workflow.includes(snippet)) {
+      failures.push(`.github/workflows/publish-alpha.yml: missing ${JSON.stringify(snippet)}`);
+    }
   }
 }
 

@@ -28,7 +28,9 @@ const expectedFiles = [
   'docs/alpha/release-checklist.md',
   'tools/alpha-smoke.mjs',
   '.github/workflows/ci.yml',
+  '.github/workflows/publish-alpha.yml',
   'CHANGELOG.md',
+  'LICENSE',
 ];
 
 for (const filePath of expectedFiles) {
@@ -257,12 +259,23 @@ expectIncludes('.github/workflows/ci.yml', [
   'dist/alpha-tarballs/*.tgz',
 ]);
 
+expectIncludes('.github/workflows/publish-alpha.yml', [
+  'name: Publish Alpha',
+  'workflow_dispatch:',
+  "- 'v*-alpha.*'",
+  'NPM_TOKEN',
+  'NODE_AUTH_TOKEN',
+  'pnpm release:alpha:check',
+  '--access public',
+]);
+
 expectIncludes('tools/alpha-smoke.mjs', [
   '.tmp',
   'alpha-smoke',
   'dist/argfit-ui-core',
   'dist/argfit-ui-adaptive',
   'dist/alpha-tarballs',
+  'publish-alpha.yml',
   '@argfit-ui/adaptive',
   'ts.createProgram',
 ]);
@@ -271,6 +284,7 @@ expectIncludes('docs/alpha/release-checklist.md', [
   'pnpm release:alpha:check',
   'v0.1.0-alpha.0',
   '--tag alpha',
+  '--access public',
   'dist/alpha-tarballs/',
 ]);
 
@@ -278,6 +292,12 @@ expectIncludes('CHANGELOG.md', [
   '0.1.0-alpha.0',
   '@argfit-ui/adaptive',
   'release gate CI',
+  'MIT licensed',
+]);
+
+expectIncludes('LICENSE', [
+  'MIT License',
+  'Permission is hereby granted, free of charge',
 ]);
 
 expectIncludes('.gitignore', [

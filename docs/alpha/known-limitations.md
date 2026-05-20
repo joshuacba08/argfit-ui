@@ -11,10 +11,10 @@ ArgFit UI `0.1.0-alpha.0` is an early distribution target. It is usable for cons
 
 ## Distribution
 
-- Packages are marked `UNLICENSED` until a public license is selected.
-- Public npm publish is not part of this HU.
-- Current publish mode is local tarball or private registry.
-- CI release gates and automated changelog are planned for a later HU.
+- This alpha can still introduce breaking changes between prereleases even though it is publicly installable from npm.
+- Consumers should install the exact `0.1.0-alpha.0` version instead of a floating prerelease range.
+- Tarballs remain part of the release process because they are the audited publish artifact.
+- The monetized building blocks planned for the future live outside this repository; this package remains the reusable MIT-licensed foundation.
 
 ## Component Coverage
 

@@ -10,7 +10,7 @@
     "ionic"
   ],
   "author": "ArgFit UI maintainers",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joshuacba08/argfit-ui.git",
@@ -34,7 +34,7 @@
   },
   "sideEffects": false,
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "tag": "alpha"
   }
 }

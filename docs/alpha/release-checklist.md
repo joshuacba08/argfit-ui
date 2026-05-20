@@ -20,7 +20,8 @@ This gate validates architecture, production build, unit tests, regression contr
 - Confirm `git status --short` contains only intentional source and documentation changes.
 - Confirm `.tmp/` is absent or ignored and `dist/alpha-tarballs/*.tgz` is not versioned.
 - Review [release notes](release-notes-alpha.md) and [known limitations](known-limitations.md).
-- Confirm package scope ownership, registry target and license policy before publishing.
+- Confirm package scope ownership on npm.
+- Confirm the GitHub Actions secret `NPM_TOKEN` exists and has publish rights for `@argfit-ui`.
 
 ## Tag
 
@@ -47,20 +48,24 @@ dist/alpha-tarballs/
 
 Share these files only through the approved alpha distribution channel.
 
-## Private Registry Publish
+## Public npm Publish
 
-Publish only after registry authentication and package ownership are confirmed:
+Automated publish uses [publish-alpha.yml](../../.github/workflows/publish-alpha.yml) and the repository secret `NPM_TOKEN`.
+
+For a manual local publish, publish the generated tarballs:
 
 ```bash
-npm publish dist/argfit-ui-core --tag alpha --access restricted
-npm publish dist/argfit-ui-primitives --tag alpha --access restricted
-npm publish dist/argfit-ui-desktop --tag alpha --access restricted
-npm publish dist/argfit-ui-mobile --tag alpha --access restricted
-npm publish dist/argfit-ui-adaptive --tag alpha --access restricted
+npm publish dist/alpha-tarballs/argfit-ui-core-0.1.0-alpha.0.tgz --tag alpha --access public
+npm publish dist/alpha-tarballs/argfit-ui-primitives-0.1.0-alpha.0.tgz --tag alpha --access public
+npm publish dist/alpha-tarballs/argfit-ui-desktop-0.1.0-alpha.0.tgz --tag alpha --access public
+npm publish dist/alpha-tarballs/argfit-ui-mobile-0.1.0-alpha.0.tgz --tag alpha --access public
+npm publish dist/alpha-tarballs/argfit-ui-adaptive-0.1.0-alpha.0.tgz --tag alpha --access public
 ```
 
-If the private registry does not use npmjs access flags, omit `--access restricted` and configure the registry through `.npmrc` or `npm config set registry` before publishing.
+## GitHub Actions Publish
 
-## Public Publish Hold
+After pushing `v0.1.0-alpha.0`, GitHub Actions will use `NPM_TOKEN` as `NODE_AUTH_TOKEN` and publish the five packages automatically.
 
-Do not publish these artifacts as public npm packages until the `@argfit-ui` scope and repository license decision are finalized.
+## Public Publish Notes
+
+The publishable packages are MIT licensed and configured with `publishConfig.access = public` and `publishConfig.tag = alpha`.
