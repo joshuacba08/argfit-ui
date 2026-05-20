@@ -27,6 +27,7 @@ import {
     AfDialogContentDirective,
     AfDialogFooterDirective,
     AfInput,
+    AfInlineMessage,
     AfMetricCard,
     AfPageShell,
     AfPageShellActionsDirective,
@@ -38,10 +39,12 @@ import {
     AfSelect,
     AfTextarea,
     AfToggle,
+    AfToastViewport,
 } from '@argfit-ui/adaptive';
 import {
     AfPlatformService,
     AfThemeService,
+    AfToastService,
     type AfAnalyticsCardState,
     type AfBadgeTone,
     type AfBreadcrumbItem,
@@ -51,6 +54,7 @@ import {
     type AfDataTablePageChange,
     type AfDataTablePagination,
     type AfDataTableSort,
+    type AfFeedbackSeverity,
     type AfFormOption,
     type AfIconName,
     type AfNavigationItem,
@@ -101,6 +105,7 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfDataTableToolbarDirective,
     AfIconComponent,
     AfInput,
+    AfInlineMessage,
     AfMetricCard,
     AfPageShell,
     AfPageShellBrandDirective,
@@ -115,6 +120,7 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfSelect,
     AfTextarea,
     AfToggle,
+    AfToastViewport,
     ReactiveFormsModule,
   ],
   templateUrl: './app.html',
@@ -124,6 +130,7 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
 export class App {
   protected readonly platform = inject(AfPlatformService);
   protected readonly theme = inject(AfThemeService);
+  private readonly toastService = inject(AfToastService);
   protected readonly lastAction = signal('Idle');
   protected readonly selectedDevice = signal<string>('jump-01');
   protected readonly activeShellSection = signal('dashboard');
@@ -138,6 +145,7 @@ export class App {
     { id: 'devices', label: 'Dispositivos', icon: 'cpu', badge: 2 },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
     { id: 'forms', label: 'Formularios', icon: 'check-square' },
+    { id: 'feedback', label: 'Feedback', icon: 'bell' },
     { id: 'reports', label: 'Reportes', icon: 'file-text' },
     { id: 'settings', label: 'Configuracion', icon: 'settings', kind: 'action' },
   ];
@@ -157,6 +165,7 @@ export class App {
     devices: 'Dispositivos',
     analytics: 'Analytics',
     forms: 'Formularios',
+    feedback: 'Feedback',
     reports: 'Reportes',
     settings: 'Configuracion',
   };
@@ -168,6 +177,7 @@ export class App {
     devices: 'Sensores vinculados y estado de bateria',
     analytics: 'Lecturas, tendencias y comparativas',
     forms: 'Altas, configuracion de tests y exportacion',
+    feedback: 'Toasts, avisos persistentes y mensajes inline',
     reports: 'Exportaciones y entregables del staff',
     settings: 'Preferencias visuales y primitives',
   };
@@ -197,6 +207,8 @@ export class App {
   protected readonly searchQuery = signal('');
   protected readonly athleteWeight = signal('68');
   protected readonly athleteEmail = signal('invalid-email');
+  protected readonly feedbackInlineVisible = signal(true);
+  protected readonly lastToastId = signal<string | undefined>(undefined);
   protected readonly heightControl = new FormControl<string>('178', { nonNullable: true });
   protected readonly activeFormsTab = signal<ShowcaseFormsTab>('athlete');
   protected readonly formTabOptions: readonly AfFormOption[] = [
@@ -425,14 +437,55 @@ export class App {
 
   protected saveNewAthleteForm(): void {
     this.recordAction(`Formulario atleta → ${this.newAthleteForm.controls.name.value}`);
+    this.toastService.success({
+      title: 'Atleta registrado',
+      description: `${this.newAthleteForm.controls.name.value} quedo listo para la proxima sesion.`,
+    });
   }
 
   protected saveTestConfigForm(): void {
     this.recordAction(`Formulario test → ${this.testConfigForm.controls.testType.value}`);
+    this.toastService.info({
+      title: 'Configuracion guardada',
+      description: `Test ${this.testConfigForm.controls.testType.value.toUpperCase()} actualizado.`,
+    });
   }
 
   protected generateExportForm(): void {
     this.recordAction(`Formulario exportacion → ${this.exportForm.controls.range.value}`);
+    this.toastService.success({
+      title: 'Reporte generado',
+      description: 'El archivo quedo disponible para el staff.',
+    });
+  }
+
+  protected showFeedbackToast(severity: AfFeedbackSeverity): void {
+    const toast = this.feedbackToastCopy(severity);
+    const id = this.toastService.show({
+      ...toast,
+      severity,
+      duration: severity === 'danger' ? 0 : 5000,
+      persistent: severity === 'danger',
+    });
+
+    this.lastToastId.set(id);
+    this.recordAction(`Toast → ${severity}`);
+  }
+
+  protected clearFeedbackToasts(): void {
+    this.toastService.clear();
+    this.lastToastId.set(undefined);
+    this.recordAction('Toasts limpiados');
+  }
+
+  protected dismissFeedbackInline(): void {
+    this.feedbackInlineVisible.set(false);
+    this.recordAction('Inline feedback cerrado');
+  }
+
+  protected resetFeedbackInline(): void {
+    this.feedbackInlineVisible.set(true);
+    this.recordAction('Inline feedback restaurado');
   }
 
   protected emailError(): string | undefined {
@@ -540,6 +593,31 @@ export class App {
 
     const candidate = value as Partial<ShowcaseAthlete>;
     return typeof candidate.id === 'string' && typeof candidate.name === 'string' ? candidate as ShowcaseAthlete : undefined;
+  }
+
+  private feedbackToastCopy(severity: AfFeedbackSeverity): { readonly title: string; readonly description: string } {
+    switch (severity) {
+      case 'success':
+        return {
+          title: 'Sesion guardada',
+          description: 'Los datos de salto se sincronizaron correctamente.',
+        };
+      case 'info':
+        return {
+          title: 'Sensor conectado',
+          description: 'ArgFit Jump 01 esta transmitiendo con baja latencia.',
+        };
+      case 'warning':
+        return {
+          title: 'Bateria baja',
+          description: 'Carga el dispositivo antes de iniciar el siguiente bloque.',
+        };
+      case 'danger':
+        return {
+          title: 'Conexion interrumpida',
+          description: 'Revisa BLE y vuelve a vincular el sensor.',
+        };
+    }
   }
 
   protected readonly detailsDialogOpen = signal(false);

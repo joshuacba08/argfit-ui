@@ -74,6 +74,8 @@
     <span>{{ platform.platform() }}</span>
   </div>
 
+  <af-toast-viewport />
+
   @switch (activeShellSection()) {
     @case ('athletes') {
       <section class="shell-section athletes-view" aria-label="Atletas">
@@ -725,6 +727,86 @@
             </form>
           }
         }
+      </section>
+    }
+
+    @case ('feedback') {
+      <section class="shell-section feedback-view" aria-label="Feedback">
+        <div class="section-header section-header--inline">
+          <div>
+            <span class="eyebrow">HU-014</span>
+            <h2>Feedback operativo</h2>
+            <p>Mensajes inline, toasts temporales y avisos persistentes para flujos criticos.</p>
+          </div>
+          <af-badge tone="primary" icon="bell">Toast viewport</af-badge>
+        </div>
+
+        <div class="feedback-grid">
+          <af-card variant="panel" tone="primary">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Inline messages</span>
+                <h3 afCardTitle>Estados dentro del flujo</h3>
+              </div>
+              <af-badge tone="success" dot>Listo</af-badge>
+            </header>
+            <p afCardSubtitle>Mensajes accesibles para confirmaciones, alertas y fallos recuperables.</p>
+
+            <div class="feedback-stack">
+              @if (feedbackInlineVisible()) {
+                <af-inline-message
+                  severity="success"
+                  title="Sesion sincronizada"
+                  description="La medicion quedo asociada a Maria Garcia y disponible para analytics."
+                  [closable]="true"
+                  (dismissed)="dismissFeedbackInline()"
+                />
+              }
+              <af-inline-message
+                severity="warning"
+                title="Bateria en observacion"
+                description="El sensor Jump 02 tiene 21% y deberia cargarse antes del siguiente turno."
+              />
+              <af-inline-message
+                severity="danger"
+                title="Lectura descartada"
+                description="La senal BLE perdio estabilidad durante el salto numero 4."
+              />
+            </div>
+
+            <footer afCardFooter class="feedback-footer">
+              <af-badge tone="neutral">aria-live</af-badge>
+              <af-button size="sm" variant="ghost" (pressed)="resetFeedbackInline()">Restaurar inline</af-button>
+            </footer>
+          </af-card>
+
+          <af-card variant="panel" tone="primary">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Toasts</span>
+                <h3 afCardTitle>Notificaciones globales</h3>
+              </div>
+              <af-badge tone="primary">Service</af-badge>
+            </header>
+            <p afCardSubtitle>Dispara el viewport real usado por la aplicacion, con cierre manual y duracion controlada.</p>
+
+            <div class="feedback-actions feedback-actions--grid">
+              <af-button size="sm" (pressed)="showFeedbackToast('success')">Exito</af-button>
+              <af-button size="sm" variant="secondary" (pressed)="showFeedbackToast('info')">Info</af-button>
+              <af-button size="sm" variant="secondary" (pressed)="showFeedbackToast('warning')">Alerta</af-button>
+              <af-button size="sm" variant="danger" (pressed)="showFeedbackToast('danger')">Persistente</af-button>
+            </div>
+
+            <footer afCardFooter class="feedback-footer">
+              @if (lastToastId(); as id) {
+                <af-badge tone="primary">{{ id }}</af-badge>
+              } @else {
+                <span class="feedback-empty-state">Sin toasts activos</span>
+              }
+              <af-button size="sm" variant="ghost" (pressed)="clearFeedbackToasts()">Limpiar</af-button>
+            </footer>
+          </af-card>
+        </div>
       </section>
     }
 

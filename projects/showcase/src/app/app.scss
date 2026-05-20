@@ -167,6 +167,7 @@ p {
 .input-grid,
 .chart-grid,
 .analytics-grid,
+.feedback-grid,
 .icon-grid {
   display: grid;
   gap: var(--af-space-4);
@@ -184,6 +185,10 @@ p {
 .chart-grid,
 .analytics-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feedback-grid {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
 }
 
 .analytics-card--wide {
@@ -532,6 +537,39 @@ p {
   background: var(--af-danger);
 }
 
+.feedback-stack {
+  display: grid;
+  gap: var(--af-space-3);
+  margin-block: var(--af-space-4);
+}
+
+.feedback-actions,
+.feedback-footer {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+}
+
+.feedback-actions {
+  flex-wrap: wrap;
+  margin-block: var(--af-space-4);
+}
+
+.feedback-actions--grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.feedback-footer {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.feedback-empty-state {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
 .data-table-empty {
   display: grid;
   gap: var(--af-space-1);
@@ -575,7 +613,8 @@ p {
   .card-grid,
   .input-grid,
   .chart-grid,
-  .analytics-grid {
+  .analytics-grid,
+  .feedback-grid {
     grid-template-columns: 1fr;
   }
 

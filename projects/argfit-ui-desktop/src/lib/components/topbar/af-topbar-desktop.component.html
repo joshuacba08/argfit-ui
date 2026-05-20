@@ -37,6 +37,9 @@
       <af-icon name="search" size="sm" tone="muted" decorative />
       <input
         type="search"
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
         [attr.placeholder]="searchPlaceholder()"
         (input)="onSearchInput($event)"
       />

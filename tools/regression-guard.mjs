@@ -139,6 +139,29 @@ expectIncludes('projects/argfit-ui-desktop/src/lib/components/select/af-select-d
   'margin-inline-start: auto;',
 ]);
 
+expectIncludes('projects/argfit-ui-desktop/src/lib/components/topbar/af-topbar-desktop.component.scss', [
+  '.af-topbar-desktop__search input',
+  'appearance: none;',
+  'box-shadow: none;',
+  '::-webkit-search-cancel-button',
+]);
+
+expectIncludes('projects/showcase/src/app/app.ts', [
+  'AfToastService',
+  'AfToastViewport',
+  'AfInlineMessage',
+  "{ id: 'feedback', label: 'Feedback', icon: 'bell' }",
+  'showFeedbackToast(severity: AfFeedbackSeverity)',
+]);
+
+expectIncludes('projects/showcase/src/app/app.html', [
+  '<af-toast-viewport />',
+  "@case ('feedback')",
+  '<af-inline-message',
+  "showFeedbackToast('success')",
+  "showFeedbackToast('danger')",
+]);
+
 if (failures.length > 0) {
   console.error('Regression guard failed:');
   for (const failure of failures) {

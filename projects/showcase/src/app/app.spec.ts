@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ARGFIT_DARK_THEME, AfPlatformService, AfThemeService, provideArgfitUi } from '@argfit-ui/core';
+import { ARGFIT_DARK_THEME, AfPlatformService, AfThemeService, AfToastService, provideArgfitUi } from '@argfit-ui/core';
 import { providePrimeNG } from 'primeng/config';
 
 import { App } from './app';
@@ -289,6 +289,28 @@ describe('App', () => {
     expect(compiled.querySelector('af-toggle-mobile')).not.toBeNull();
     expect(compiled.querySelector('af-radio-group-mobile')).not.toBeNull();
     expect(compiled.textContent).toContain('Nuevo atleta');
+  });
+
+  it('renders the HU-014 feedback toast showcase', async () => {
+    const fixture = TestBed.createComponent(App);
+    const toastService = TestBed.inject(AfToastService);
+    fixture.componentInstance['activeShellSection'].set('feedback');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('af-toast-viewport-desktop')).not.toBeNull();
+    expect(compiled.querySelectorAll('af-inline-message-desktop').length).toBeGreaterThanOrEqual(3);
+    expect(compiled.textContent).toContain('Feedback operativo');
+    expect(compiled.textContent).toContain('Sesion sincronizada');
+    expect(compiled.textContent).toContain('Toast viewport');
+
+    fixture.componentInstance['showFeedbackToast']('success');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('af-toast-desktop')?.textContent).toContain('Sesion guardada');
+    toastService.clear();
   });
 
   it('should render the AfInput vertical slice with reactive form binding', async () => {
