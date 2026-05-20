@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Exo+2:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A1628;color:#F0F4F8;font-family:'Outfit',system-ui,sans-serif;padding:24px;-webkit-font-smoothing:antialiased}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:6px}
+.swatch{border-radius:8px;display:flex;align-items:flex-end;padding:10px;font-size:11px;font-weight:500;letter-spacing:0.02em}
+.label{font-size:11px;color:#829AB1;font-weight:500}
+.val{font-size:11px;color:#BCCCDC;font-family:'JetBrains Mono',monospace}
+
+.toast{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:10px;font-size:13px;font-weight:500;border-left:3px solid;min-width:280px}
+.toast-success{background:rgba(0,200,83,0.08);border-left-color:#00C853;color:#B9F6CA}
+.toast-warning{background:rgba(255,179,0,0.08);border-left-color:#FFB300;color:#FFE082}
+.toast-error{background:rgba(255,61,113,0.08);border-left-color:#FF3D71;color:#FF8A9B}
+.toast-info{background:rgba(37,153,213,0.08);border-left-color:#2599D5;color:#8DCAEF}
+.toast-icon{font-size:18px}
+.toast-close{margin-left:auto;color:#627D98;cursor:pointer;font-size:14px}
+
+</style></head><body>
+<div class="col" style="gap:10px">
+  <div class="toast toast-success"><span class="toast-icon">✓</span>Dispositivo conectado exitosamente<span class="toast-close">✕</span></div>
+  <div class="toast toast-warning"><span class="toast-icon">⚠</span>Batería baja — 15% restante<span class="toast-close">✕</span></div>
+  <div class="toast toast-error"><span class="toast-icon">✕</span>Error de conexión BLE<span class="toast-close">✕</span></div>
+  <div class="toast toast-info"><span class="toast-icon">ℹ</span>Firmware v3.2 disponible<span class="toast-close">✕</span></div>
+</div>
+</body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArgFit — Mobile UI Kit (Ionic)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Zalando Sans Expanded ── */
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-ExtraBold.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Zalando Sans Expanded'; src: url('../../uploads/ZalandoSans_Expanded-Black.ttf') format('truetype'); font-weight: 900; font-style: normal; font-display: swap; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #070D18;
+      font-family: 'Outfit', system-ui, sans-serif;
+      color: #F0F4F8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .phone-frame {
+      width: 375px;
+      height: 812px;
+      background:
+        radial-gradient(ellipse 70% 50% at 30% 15%, rgba(37,153,213,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 85%, rgba(0,212,255,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(37,153,213,0.03) 0%, transparent 60%),
+        #0A1628;
+      border-radius: 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 0 3px #1C3550, 0 32px 80px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .screen-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Slide animation */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .screen-content > div:first-child {
+      animation: fadeIn 300ms ease-out;
+    }
+    /* Home indicator */
+    .home-indicator {
+      width: 134px; height: 5px; background: #F0F4F8;
+      border-radius: 3px; margin: 8px auto 4px; opacity: 0.2;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334E68; border-radius: 999px; }
+    /* Glow animation for active training */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 24px rgba(37,153,213,0.15); }
+      50% { box-shadow: 0 0 40px rgba(37,153,213,0.35); }
+    }
+    button:active { transform: scale(0.97); }
+    button { transition: transform 120ms ease; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="components.jsx"></script>
+  <script type="text/babel" src="screens.jsx"></script>
+  <script type="text/babel" src="forms.jsx"></script>
+  <script type="text/babel" src="overlays.jsx"></script>
+  <script type="text/babel" src="charts.jsx"></script>
+
+  <script type="text/babel">
+    const {useState} = React;
+
+    function MobileAppInner() {
+      const [tab, setTab] = useState('home');
+
+      const screenMap = {
+        home: <HomeScreen onNavigate={setTab} />,
+        devices: <HomeScreen onNavigate={setTab} />,
+        train: <TrainScreen />,
+        charts: <MobileChartsScreen />,
+        profile: <MobileFormsScreen />,
+        overlays: <MobileOverlaysScreen />,
+      };
+
+      return (
+        <div className="phone-frame">
+          <MobileStatusBar />
+          <div className="screen-content" key={tab}>
+            {screenMap[tab]}
+          </div>
+          <MobileTabBar activeTab={tab} onTabChange={setTab} />
+          <div className="home-indicator"></div>
+        </div>
+      );
+    }
+
+    function MobileApp() {
+      return (
+        <MToastProvider>
+          <MobileAppInner />
+        </MToastProvider>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<MobileApp />);
+  </script>
+</body>
+</html>

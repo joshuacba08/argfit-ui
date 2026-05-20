@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Exo+2:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A1628;color:#F0F4F8;font-family:'Outfit',system-ui,sans-serif;padding:24px;-webkit-font-smoothing:antialiased}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:6px}
+.swatch{border-radius:8px;display:flex;align-items:flex-end;padding:10px;font-size:11px;font-weight:500;letter-spacing:0.02em}
+.label{font-size:11px;color:#829AB1;font-weight:500}
+.val{font-size:11px;color:#BCCCDC;font-family:'JetBrains Mono',monospace}
+
+</style></head><body>
+<div class="col" style="gap:16px">
+  <div>
+    <div class="label" style="margin-bottom:8px">Spacing Scale (4px base)</div>
+    <div class="row" style="align-items:flex-end;gap:8px">
+      <div class="col" style="align-items:center;gap:4px">
+        <div style="width:4px;height:4px;background:#2599D5;border-radius:2px;opacity:0.44"></div>
+        <span class="val" style="font-size:9px">4</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:8px;height:8px;background:#2599D5;border-radius:2px;opacity:0.48000000000000004"></div>
+        <span class="val" style="font-size:9px">8</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:12px;height:12px;background:#2599D5;border-radius:2px;opacity:0.52"></div>
+        <span class="val" style="font-size:9px">12</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:16px;height:16px;background:#2599D5;border-radius:2px;opacity:0.56"></div>
+        <span class="val" style="font-size:9px">16</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:20px;height:20px;background:#2599D5;border-radius:2px;opacity:0.6000000000000001"></div>
+        <span class="val" style="font-size:9px">20</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:24px;height:24px;background:#2599D5;border-radius:2px;opacity:0.64"></div>
+        <span class="val" style="font-size:9px">24</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:32px;height:32px;background:#2599D5;border-radius:2px;opacity:0.72"></div>
+        <span class="val" style="font-size:9px">32</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:40px;height:40px;background:#2599D5;border-radius:2px;opacity:0.8"></div>
+        <span class="val" style="font-size:9px">40</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:48px;height:48px;background:#2599D5;border-radius:2px;opacity:0.88"></div>
+        <span class="val" style="font-size:9px">48</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:48px;height:64px;background:#2599D5;border-radius:2px;opacity:1.04"></div>
+        <span class="val" style="font-size:9px">64</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="label" style="margin-bottom:8px">Border Radii</div>
+    <div class="row" style="gap:12px;align-items:center">
+      <div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:2px"></div>
+        <span class="val" style="font-size:9px">xs</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:4px"></div>
+        <span class="val" style="font-size:9px">sm</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:8px"></div>
+        <span class="val" style="font-size:9px">md</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:12px"></div>
+        <span class="val" style="font-size:9px">lg</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:16px"></div>
+        <span class="val" style="font-size:9px">xl</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:24px"></div>
+        <span class="val" style="font-size:9px">2xl</span>
+      </div><div class="col" style="align-items:center;gap:4px">
+        <div style="width:44px;height:36px;border:2px solid #2599D5;border-radius:999px"></div>
+        <span class="val" style="font-size:9px">pill</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

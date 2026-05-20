@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Exo+2:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A1628;color:#F0F4F8;font-family:'Outfit',system-ui,sans-serif;padding:24px;-webkit-font-smoothing:antialiased}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:6px}
+.swatch{border-radius:8px;display:flex;align-items:flex-end;padding:10px;font-size:11px;font-weight:500;letter-spacing:0.02em}
+.label{font-size:11px;color:#829AB1;font-weight:500}
+.val{font-size:11px;color:#BCCCDC;font-family:'JetBrains Mono',monospace}
+
+.toggle-wrap{display:flex;align-items:center;gap:10px}
+.toggle{width:44px;height:24px;border-radius:12px;background:#334E68;position:relative;flex-shrink:0}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 200ms}
+.toggle.on{background:#2599D5}
+.toggle.on::after{transform:translateX(20px)}
+.radio{width:18px;height:18px;border-radius:50%;border:2px solid #486581;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.radio.on{border-color:#2599D5}
+.radio.on::after{content:'';width:8px;height:8px;border-radius:50%;background:#2599D5}
+.check{width:18px;height:18px;border-radius:4px;border:2px solid #486581;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:#fff}
+.check.on{background:#2599D5;border-color:#2599D5}
+.seg{display:flex;background:#0F1D32;border-radius:8px;padding:3px;border:1px solid rgba(37,153,213,0.08)}
+.seg-item{padding:8px 20px;border-radius:6px;font-size:13px;font-weight:500;color:#627D98;cursor:pointer}
+.seg-item.active{background:#2599D5;color:#fff}
+
+</style></head><body>
+<div class="col" style="gap:14px">
+  <div class="row" style="gap:24px;align-items:center">
+    <div class="toggle-wrap"><div class="toggle on"></div><span style="font-size:13px">Bluetooth ON</span></div>
+    <div class="toggle-wrap"><div class="toggle"></div><span style="font-size:13px">Notifications OFF</span></div>
+    <div class="toggle-wrap"><div class="radio on"></div><span style="font-size:13px">CMJ</span></div>
+    <div class="toggle-wrap"><div class="radio"></div><span style="font-size:13px">SJ</span></div>
+    <div class="toggle-wrap"><div class="check on">✓</div><span style="font-size:13px">Auto-sync</span></div>
+    <div class="toggle-wrap"><div class="check"></div><span style="font-size:13px">Dark mode</span></div>
+  </div>
+  <div><div class="label" style="margin-bottom:6px">Segment Control (Ionic)</div>
+    <div class="seg">
+      <div class="seg-item active">Fuerza</div>
+      <div class="seg-item">Velocidad</div>
+      <div class="seg-item">Potencia</div>
+    </div>
+  </div>
+</div>
+</body></html>
