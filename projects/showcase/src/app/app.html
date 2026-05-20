@@ -250,23 +250,41 @@
 
           <ng-template afDataTableExpandedRow let-row="row">
             <div class="athlete-expanded-row">
-              <div>
-                <span>Atleta</span>
-                <strong>{{ athleteText(row, 'name') }}</strong>
-              </div>
-              <div>
-                <span>Ultima sesion</span>
-                <strong>{{ athleteText(row, 'lastSession') }}</strong>
-              </div>
-              <div>
-                <span>Equipo</span>
-                <strong>{{ athleteText(row, 'team') }}</strong>
-              </div>
-              <div>
-                <span>Fuerza pico</span>
-                <strong>{{ athleteNumber(row, 'force') }} N</strong>
-              </div>
-              <af-button size="sm" variant="secondary" (pressed)="recordAthleteRow(row)">Ver perfil</af-button>
+              <section class="athlete-expanded-row__sessions" aria-label="Ultimas sesiones">
+                <div class="athlete-expanded-row__identity">
+                  <span class="athlete-avatar athlete-avatar--sm">{{ athleteInitials(row) }}</span>
+                  <span>
+                    <strong>{{ athleteText(row, 'name') }}</strong>
+                    <small>{{ athleteText(row, 'sport') }} · {{ athleteText(row, 'team') }}</small>
+                  </span>
+                </div>
+                <h4>Ultimas sesiones</h4>
+                <ul>
+                  @for (session of athleteRecentSessions(row); track session) {
+                    <li>{{ session }}</li>
+                  }
+                </ul>
+              </section>
+
+              <section class="athlete-expanded-row__progress" aria-label="Progreso seis sesiones">
+                <h4>Progreso 6 sesiones</h4>
+                <svg viewBox="0 0 160 48" aria-hidden="true">
+                  <polyline [attr.points]="athleteSparklinePoints(row)" />
+                </svg>
+                <div class="athlete-expanded-row__stats">
+                  <span>{{ athleteNumber(row, 'bestJump', 1) }} cm</span>
+                  <span>{{ athleteNumber(row, 'force') }} N</span>
+                  <span>RSI {{ athleteNumber(row, 'rsi', 2) }}</span>
+                </div>
+              </section>
+
+              <section class="athlete-expanded-row__actions" aria-label="Acciones de atleta">
+                <h4>Acciones</h4>
+                <af-button size="sm" variant="secondary" (pressed)="recordAthleteRow(row)">Ver perfil completo</af-button>
+                <af-button size="sm" variant="ghost" (pressed)="recordAction('Tabla → export ' + athleteText(row, 'name'))">
+                  Exportar datos
+                </af-button>
+              </section>
             </div>
           </ng-template>
         </af-data-table>
@@ -335,153 +353,212 @@
           <af-button variant="ghost" (pressed)="toggleChartLoading()">Toggle loading</af-button>
         </div>
 
-        <div class="chart-grid">
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Performance</span>
-              <h3 afCardTitle>Score general</h3>
-              <p afCardSubtitle>Gauge semicircular</p>
+        <div class="analytics-grid">
+          <af-analytics-card
+            title="Performance Score"
+            subtitle="Score compuesto del microciclo"
+            tone="primary"
+            [state]="analyticsLoadingState()"
+            height="240px"
+          >
+            <div afAnalyticsCardActions class="analytics-period-control">
+              @for (period of analyticsPeriods; track period) {
+                <button
+                  type="button"
+                  [class.is-active]="analyticsPeriod() === period"
+                  (click)="setAnalyticsPeriod(period)"
+                >
+                  {{ period }}
+                </button>
+              }
             </div>
-            <div afCardContent>
-              <af-chart
-                type="gauge"
-                tone="primary"
-                density="comfortable"
-                [series]="performanceGaugeSeries()"
-                [indicators]="performanceIndicators()"
-                [loading]="chartLoading()"
-                ariaLabel="Performance score"
-              />
+            <div afAnalyticsCardMetrics class="analytics-metric-strip">
+              <af-metric-card label="Salto" value="45.2" unit="cm" tone="primary" size="sm" density="compact" variant="outline" />
+              <af-metric-card label="Fuerza" value="2847" unit="N" tone="accent" size="sm" density="compact" variant="outline" />
+              <af-metric-card label="RSI" value="1.32" tone="success" size="sm" density="compact" variant="outline" />
             </div>
-          </af-card>
+            <af-chart
+              type="gauge"
+              tone="primary"
+              density="comfortable"
+              [height]="220"
+              [series]="performanceGaugeSeries()"
+              [indicators]="performanceIndicators()"
+              ariaLabel="Performance score"
+            />
+            <div afAnalyticsCardFooter>
+              <af-badge tone="success" dot>Listo para staff</af-badge>
+              <af-badge tone="neutral">{{ analyticsPeriod() }}</af-badge>
+            </div>
+          </af-analytics-card>
 
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Distribucion</span>
-              <h3 afCardTitle>Sesiones por tipo</h3>
-              <p afCardSubtitle>Donut/ring</p>
+          <af-analytics-card
+            title="Comparacion atletas"
+            subtitle="Perfil radar de Maria vs Santiago"
+            tone="accent"
+            height="300px"
+          >
+            <div afAnalyticsCardActions>
+              <af-button size="sm" variant="secondary" (pressed)="recordAction('Analytics → comparar atletas')">
+                Comparar
+              </af-button>
             </div>
-            <div afCardContent>
-              <af-chart
-                type="donut"
-                density="comfortable"
-                [series]="sessionDistributionSeries()"
-                [loading]="chartLoading()"
-                ariaLabel="Distribucion de sesiones por tipo"
-              />
+            <af-chart
+              type="radar"
+              density="comfortable"
+              [height]="280"
+              [categories]="radarCategories()"
+              [indicators]="radarIndicators()"
+              [series]="radarSeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Radar comparativo de atletas"
+            />
+            <div afAnalyticsCardLegend class="analytics-legend analytics-legend--inline">
+              <span><i class="analytics-legend__swatch analytics-legend__swatch--primary"></i>Maria Garcia</span>
+              <span><i class="analytics-legend__swatch analytics-legend__swatch--accent"></i>Santiago Perez</span>
             </div>
-          </af-card>
+          </af-analytics-card>
 
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Progreso</span>
-              <h3 afCardTitle>Salto vertical</h3>
-              <p afCardSubtitle>Ultimos 14 dias</p>
+          <af-analytics-card
+            class="analytics-card--wide"
+            title="Sesiones mensuales"
+            subtitle="Distribucion por tipo de test"
+            height="260px"
+          >
+            <af-chart
+              type="stacked-bar"
+              density="comfortable"
+              [height]="250"
+              [categories]="monthlyCategories()"
+              [series]="monthlySessionSeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Sesiones mensuales apiladas por tipo"
+            />
+            <div afAnalyticsCardFooter>
+              <af-badge tone="primary">124 sesiones</af-badge>
+              <span>CMJ, SJ, DJ y Sprint</span>
             </div>
-            <div afCardContent>
-              <af-chart
-                type="area"
-                tone="primary"
-                density="comfortable"
-                [categories]="jumpProgressCategories()"
-                [series]="jumpProgressSeries()"
-                [loading]="chartLoading()"
-                ariaLabel="Progreso de salto vertical"
-              />
-            </div>
-          </af-card>
+          </af-analytics-card>
 
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Mensual</span>
-              <h3 afCardTitle>Sesiones por tipo</h3>
-              <p afCardSubtitle>Stacked bar</p>
-            </div>
-            <div afCardContent>
-              <af-chart
-                type="stacked-bar"
-                density="comfortable"
-                [categories]="monthlyCategories()"
-                [series]="monthlySessionSeries()"
-                [loading]="chartLoading()"
-                ariaLabel="Sesiones mensuales apiladas por tipo"
-              />
-            </div>
-          </af-card>
+          <af-analytics-card
+            title="Intensidad semanal"
+            subtitle="Mapa de calor de 12 semanas"
+            tone="primary"
+            height="260px"
+          >
+            <af-chart
+              type="heatmap"
+              density="comfortable"
+              [height]="250"
+              [categories]="weeklyIntensityCategories()"
+              [series]="weeklyIntensitySeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Mapa de calor de intensidad semanal"
+            />
+          </af-analytics-card>
 
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Ranking</span>
-              <h3 afCardTitle>Mejor salto</h3>
-              <p afCardSubtitle>Barras horizontales</p>
+          <af-analytics-card
+            title="Progreso de salto"
+            subtitle="Altura promedio, ultimos 14 dias"
+            tone="primary"
+            height="220px"
+          >
+            <af-chart
+              type="area"
+              tone="primary"
+              density="comfortable"
+              [height]="210"
+              [categories]="jumpProgressCategories()"
+              [series]="jumpProgressSeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Progreso de salto vertical"
+            />
+            <div afAnalyticsCardFooter>
+              <af-badge tone="success">+17.8%</af-badge>
+              <span>38.2 cm a 46.1 cm</span>
             </div>
-            <div afCardContent>
-              <af-chart
-                type="horizontal-bar"
-                tone="primary"
-                density="comfortable"
-                [categories]="rankingCategories()"
-                [series]="rankingSeries()"
-                [loading]="chartLoading()"
-                ariaLabel="Ranking de mejor salto por atleta"
-              />
-            </div>
-          </af-card>
+          </af-analytics-card>
 
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Comparacion</span>
-              <h3 afCardTitle>Radar de atletas</h3>
-              <p afCardSubtitle>Perfil multimetric</p>
+          <af-analytics-card
+            title="Sesiones por tipo"
+            subtitle="Donut con leyenda operacional"
+            height="220px"
+          >
+            <af-chart
+              type="donut"
+              density="comfortable"
+              [height]="210"
+              [legend]="false"
+              [series]="sessionDistributionSeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Distribucion de sesiones por tipo"
+            />
+            <div afAnalyticsCardLegend class="analytics-legend">
+              <span><i class="analytics-legend__swatch analytics-legend__swatch--primary"></i>CMJ · 42</span>
+              <span><i class="analytics-legend__swatch analytics-legend__swatch--accent"></i>SJ · 18</span>
+              <span><i class="analytics-legend__swatch analytics-legend__swatch--warning"></i>DJ · 15</span>
+              <span><i class="analytics-legend__swatch analytics-legend__swatch--danger"></i>Sprint · 8</span>
             </div>
-            <div afCardContent>
-              <af-chart
-                type="radar"
-                density="comfortable"
-                [categories]="radarCategories()"
-                [indicators]="radarIndicators()"
-                [series]="radarSeries()"
-                [loading]="chartLoading()"
-                ariaLabel="Radar comparativo de atletas"
-              />
-            </div>
-          </af-card>
+          </af-analytics-card>
 
-          <af-card variant="metric">
-            <div afCardHeader>
-              <span afCardEyebrow>Latencia sensor</span>
-              <h3 afCardTitle>33 ms</h3>
-              <p afCardSubtitle>Tendencia 10 minutos</p>
-            </div>
-            <div afCardContent>
-              <af-chart
-                type="sparkline"
-                tone="warning"
-                density="compact"
-                [categories]="latencyCategories()"
-                [series]="latencySparkline()"
-                ariaLabel="Latencia del sensor en los ultimos 10 minutos"
-              />
-            </div>
-          </af-card>
+          <af-analytics-card
+            title="Distribucion de saltos"
+            subtitle="Boxplot por tipo de test"
+            height="240px"
+          >
+            <af-chart
+              type="boxplot"
+              tone="primary"
+              density="comfortable"
+              [height]="230"
+              [series]="jumpDistributionSeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Distribucion de saltos por tipo de test"
+            />
+          </af-analytics-card>
 
-          <af-card variant="panel">
-            <div afCardHeader>
-              <span afCardEyebrow>Estado vacio</span>
-              <h3 afCardTitle>Sin datos aun</h3>
-              <p afCardSubtitle>Mensaje configurable</p>
-            </div>
-            <div afCardContent>
-              <af-chart
-                type="line"
-                density="comfortable"
-                [categories]="weekCategories()"
-                [series]="emptySeries()"
-                emptyMessage="Conecta un dispositivo para empezar"
-                ariaLabel="Chart sin datos"
-              />
-            </div>
-          </af-card>
+          <af-analytics-card
+            title="Coordenadas paralelas"
+            subtitle="Analisis multivariable de atletas"
+            tone="accent"
+            height="240px"
+          >
+            <af-chart
+              type="parallel"
+              tone="primary"
+              density="comfortable"
+              [height]="230"
+              [indicators]="parallelIndicators()"
+              [series]="parallelSeries()"
+              [loading]="chartLoading()"
+              ariaLabel="Coordenadas paralelas de atletas"
+            />
+          </af-analytics-card>
+
+          <af-analytics-card
+            title="Card loading"
+            subtitle="Reserva estable para datos remotos"
+            state="loading"
+            height="180px"
+          />
+
+          <af-analytics-card
+            title="Card empty"
+            subtitle="Sin lecturas para este filtro"
+            state="empty"
+            emptyTitle="Sin datos de analytics"
+            emptyDescription="Ajusta el periodo o conecta un dispositivo"
+            height="180px"
+          />
+
+          <af-analytics-card
+            title="Card error"
+            subtitle="Estado de fallo recuperable"
+            state="error"
+            errorTitle="No se pudo cargar"
+            errorDescription="El servicio de analytics no respondio"
+            height="180px"
+          />
         </div>
       </section>
     }

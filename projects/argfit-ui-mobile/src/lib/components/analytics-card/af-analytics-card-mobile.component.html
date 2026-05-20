@@ -1,0 +1,77 @@
+<article class="af-analytics-card-mobile__surface">
+  <header class="af-analytics-card-mobile__header">
+    <div class="af-analytics-card-mobile__heading">
+      <h3 class="af-analytics-card-mobile__title">{{ title() }}</h3>
+      @if (subtitle()) {
+        <p class="af-analytics-card-mobile__subtitle">{{ subtitle() }}</p>
+      }
+    </div>
+
+    <div class="af-analytics-card-mobile__actions">
+      @if (actionsTemplate(); as template) {
+        <ng-container *ngTemplateOutlet="template" />
+      } @else {
+        <ng-content select="[afAnalyticsCardActions]" />
+      }
+    </div>
+  </header>
+
+  <div class="af-analytics-card-mobile__metrics">
+    @if (metricsTemplate(); as template) {
+      <ng-container *ngTemplateOutlet="template" />
+    } @else {
+      <ng-content select="[afAnalyticsCardMetrics]" />
+    }
+  </div>
+
+  <div class="af-analytics-card-mobile__body">
+    @if (state() === 'loading') {
+      <div class="af-analytics-card-mobile__state" role="status">
+        <af-icon name="activity" tone="primary" [decorative]="true" />
+        <strong>Cargando analytics</strong>
+        <span class="af-analytics-card-mobile__skeleton af-analytics-card-mobile__skeleton--wide"></span>
+        <span class="af-analytics-card-mobile__skeleton"></span>
+      </div>
+    } @else if (state() === 'empty') {
+      <div class="af-analytics-card-mobile__state">
+        <af-icon name="pie-chart" tone="muted" [decorative]="true" />
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription()) {
+          <span>{{ emptyDescription() }}</span>
+        }
+      </div>
+    } @else if (state() === 'error') {
+      <div class="af-analytics-card-mobile__state af-analytics-card-mobile__state--error" role="alert">
+        <af-icon name="circle-alert" tone="danger" [decorative]="true" />
+        <strong>{{ errorTitle() }}</strong>
+        @if (errorDescription()) {
+          <span>{{ errorDescription() }}</span>
+        }
+      </div>
+    } @else {
+      <div class="af-analytics-card-mobile__content">
+        @if (contentTemplate(); as template) {
+          <ng-container *ngTemplateOutlet="template" />
+        } @else {
+          <ng-content />
+        }
+      </div>
+    }
+  </div>
+
+  <div class="af-analytics-card-mobile__legend">
+    @if (legendTemplate(); as template) {
+      <ng-container *ngTemplateOutlet="template" />
+    } @else {
+      <ng-content select="[afAnalyticsCardLegend]" />
+    }
+  </div>
+
+  <footer class="af-analytics-card-mobile__footer">
+    @if (footerTemplate(); as template) {
+      <ng-container *ngTemplateOutlet="template" />
+    } @else {
+      <ng-content select="[afAnalyticsCardFooter]" />
+    }
+  </footer>
+</article>

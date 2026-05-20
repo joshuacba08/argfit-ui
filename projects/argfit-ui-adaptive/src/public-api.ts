@@ -3,6 +3,16 @@
  */
 
 export {
+    AF_ANALYTICS_CARD_SLOT_DIRECTIVES,
+    AfAnalyticsCardActionsDirective,
+    AfAnalyticsCardFooterDirective,
+    AfAnalyticsCardLegendDirective,
+    AfAnalyticsCardMetricsDirective
+} from './lib/components/analytics-card/af-analytics-card-slots.directive';
+export {
+    AfAnalyticsCardComponent as AfAnalyticsCard, AfAnalyticsCardComponent
+} from './lib/components/analytics-card/af-analytics-card.component';
+export {
     AfBadgeComponent as AfBadge, AfBadgeComponent
 } from './lib/components/badge/af-badge.component';
 export {

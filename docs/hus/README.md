@@ -20,3 +20,7 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 12. [HU-012 — AfAnalyticsCard Vertical Slice](./HU-012-af-analytics-card.md)
 13. [HU-013 — AfFormControls Expansion Slice](./HU-013-af-form-controls.md)
 14. [HU-014 — AfFeedback Toast Slice](./HU-014-af-feedback-toast.md)
+15. [HU-015 — Alpha Public API Scope](./HU-015-alpha-public-api-scope.md)
+16. [HU-016 — Alpha Packaging And Versioning](./HU-016-alpha-packaging-versioning.md)
+17. [HU-017 — Alpha Consumer Docs And Showcase](./HU-017-alpha-consumer-docs-showcase.md)
+18. [HU-018 — Alpha Release Gate And CI](./HU-018-alpha-release-gate-ci.md)

@@ -1,0 +1,61 @@
+<ng-template #analyticsCardActions>
+  <ng-content select="[afAnalyticsCardActions]" />
+</ng-template>
+
+<ng-template #analyticsCardMetrics>
+  <ng-content select="[afAnalyticsCardMetrics]" />
+</ng-template>
+
+<ng-template #analyticsCardLegend>
+  <ng-content select="[afAnalyticsCardLegend]" />
+</ng-template>
+
+<ng-template #analyticsCardFooter>
+  <ng-content select="[afAnalyticsCardFooter]" />
+</ng-template>
+
+<ng-template #analyticsCardContent>
+  <ng-content />
+</ng-template>
+
+@if (isMobile()) {
+  <af-analytics-card-mobile
+    [title]="title()"
+    [subtitle]="subtitle()"
+    [density]="density()"
+    [variant]="variant()"
+    [tone]="tone()"
+    [state]="state()"
+    [height]="height()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [errorTitle]="errorTitle()"
+    [errorDescription]="errorDescription()"
+    [ariaLabel]="ariaLabel()"
+    [contentTemplate]="contentTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [metricsTemplate]="projectedMetricsTemplate()"
+    [legendTemplate]="projectedLegendTemplate()"
+    [footerTemplate]="projectedFooterTemplate()"
+  />
+} @else {
+  <af-analytics-card-desktop
+    [title]="title()"
+    [subtitle]="subtitle()"
+    [density]="density()"
+    [variant]="variant()"
+    [tone]="tone()"
+    [state]="state()"
+    [height]="height()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [errorTitle]="errorTitle()"
+    [errorDescription]="errorDescription()"
+    [ariaLabel]="ariaLabel()"
+    [contentTemplate]="contentTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [metricsTemplate]="projectedMetricsTemplate()"
+    [legendTemplate]="projectedLegendTemplate()"
+    [footerTemplate]="projectedFooterTemplate()"
+  />
+}

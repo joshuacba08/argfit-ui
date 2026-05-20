@@ -363,6 +363,7 @@ Transform showcase into:
 - Responsive playground
 - Code examples
 - Documentation pages
+- HU-017 — [Alpha consumer docs and showcase](./hus/HU-017-alpha-consumer-docs-showcase.md) — ready for implementation
 
 ---
 
@@ -443,6 +444,33 @@ Developer productivity systems.
 - Figma token sync
 - Theme builder
 - Design token pipelines
+- HU-016 — [Alpha packaging and versioning](./hus/HU-016-alpha-packaging-versioning.md) — ready for implementation
+- HU-018 — [Alpha release gate and CI](./hus/HU-018-alpha-release-gate-ci.md) — ready for implementation
+
+---
+
+# Phase 10 — Alpha Distribution
+
+# Goal
+
+Prepare and ship the first installable `0.1.0-alpha.0` version of ArgFit UI.
+
+## Planned Systems
+
+- HU-015 — [Alpha public API scope](./hus/HU-015-alpha-public-api-scope.md) — ready for implementation
+- HU-016 — [Alpha packaging and versioning](./hus/HU-016-alpha-packaging-versioning.md) — ready for implementation
+- HU-017 — [Alpha consumer docs and showcase](./hus/HU-017-alpha-consumer-docs-showcase.md) — ready for implementation
+- HU-018 — [Alpha release gate and CI](./hus/HU-018-alpha-release-gate-ci.md) — ready for implementation
+
+## Alpha Definition
+
+The alpha is ready when:
+
+- The public API surface is documented.
+- Package metadata and prerelease versions are aligned.
+- Consumer documentation exists.
+- Build, tests, architecture guard, pack dry-run, and smoke checks pass.
+- Publishing can be done manually with a documented checklist.
 
 ---
 

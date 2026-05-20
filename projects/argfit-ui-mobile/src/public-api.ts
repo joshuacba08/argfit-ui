@@ -2,6 +2,7 @@
  * Public API Surface of argfit-ui-mobile
  */
 
+export * from './lib/components/analytics-card/af-analytics-card-mobile.component';
 export * from './lib/components/badge/af-badge-mobile.component';
 export * from './lib/components/bottom-tabs/af-bottom-tabs-mobile.component';
 export * from './lib/components/button/af-button-mobile.component';

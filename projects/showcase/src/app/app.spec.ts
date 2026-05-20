@@ -185,6 +185,9 @@ describe('App', () => {
       'Mostrando 1-8 de 12',
     );
     expect(compiled.querySelector('.athlete-expanded-row')?.textContent).toContain('Santiago Perez');
+    expect(compiled.querySelector('.athlete-expanded-row')?.textContent).toContain('Ultimas sesiones');
+    expect(compiled.querySelector('.athlete-expanded-row')?.textContent).toContain('Progreso 6 sesiones');
+    expect(compiled.querySelector('.athlete-expanded-row')?.textContent).toContain('Exportar datos');
 
     fixture.componentInstance['updateAthleteTableSearch']('sin-coincidencias');
     fixture.detectChanges();
@@ -207,6 +210,39 @@ describe('App', () => {
     expect(compiled.querySelector('af-data-table-desktop')).toBeNull();
     expect(compiled.querySelector('af-data-table-mobile table')).toBeNull();
     expect(compiled.querySelectorAll('af-data-table-mobile [role="listitem"]').length).toBeGreaterThanOrEqual(8);
+  });
+
+  it('renders the AfAnalyticsCard showcase with charts, slots and states', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('analytics');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const analyticsCards = compiled.querySelectorAll('af-analytics-card-desktop');
+    expect(analyticsCards.length).toBeGreaterThanOrEqual(7);
+    expect(compiled.textContent).toContain('Performance Score');
+    expect(compiled.textContent).toContain('Sesiones mensuales');
+    expect(compiled.textContent).toContain('Comparacion atletas');
+    expect(compiled.querySelector('.analytics-period-control')).not.toBeNull();
+    expect(compiled.querySelector('.analytics-metric-strip af-metric-card-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.analytics-legend')).not.toBeNull();
+    expect(compiled.querySelector('af-analytics-card-desktop[data-state="loading"]')).not.toBeNull();
+    expect(compiled.querySelector('af-analytics-card-desktop[data-state="empty"]')?.textContent).toContain(
+      'Sin datos de analytics',
+    );
+    expect(compiled.querySelector('af-analytics-card-desktop[data-state="error"]')?.textContent).toContain(
+      'El servicio de analytics no respondio',
+    );
+
+    const chartTypes = Array.from(compiled.querySelectorAll('af-chart-desktop')).map((chart) =>
+      chart.getAttribute('data-type'),
+    );
+    expect(chartTypes).toContain('gauge');
+    expect(chartTypes).toContain('donut');
+    expect(chartTypes).toContain('heatmap');
+    expect(chartTypes).toContain('boxplot');
+    expect(chartTypes).toContain('parallel');
   });
 
   it('should render the AfInput vertical slice with reactive form binding', async () => {

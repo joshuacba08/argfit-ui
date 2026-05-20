@@ -2,6 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import {
+    AfAnalyticsCard,
+    AfAnalyticsCardActionsDirective,
+    AfAnalyticsCardFooterDirective,
+    AfAnalyticsCardLegendDirective,
+    AfAnalyticsCardMetricsDirective,
     AfBadge,
     AfButton,
     AfCard,
@@ -31,6 +36,7 @@ import {
 import {
     AfPlatformService,
     AfThemeService,
+    type AfAnalyticsCardState,
     type AfBadgeTone,
     type AfBreadcrumbItem,
     type AfChartIndicator,
@@ -59,9 +65,16 @@ interface ShowcaseAthlete {
   readonly lastSession: string;
 }
 
+type ShowcaseAnalyticsPeriod = '1M' | '3M' | '6M' | '1A';
+
 @Component({
   selector: 'app-root',
   imports: [
+    AfAnalyticsCard,
+    AfAnalyticsCardActionsDirective,
+    AfAnalyticsCardMetricsDirective,
+    AfAnalyticsCardLegendDirective,
+    AfAnalyticsCardFooterDirective,
     AfBadge,
     AfButton,
     AfCard,
@@ -372,6 +385,47 @@ export class App {
     return 'asymmetry-value--success';
   }
 
+  protected athleteRecentSessions(row: unknown): readonly string[] {
+    const athlete = this.asShowcaseAthlete(row);
+    if (!athlete) {
+      return [];
+    }
+
+    const jumps = Math.max(6, Math.round(athlete.sessions / 6));
+    return [
+      `${athlete.sport} bilateral - ${athlete.lastSession} - ${jumps} saltos`,
+      `Drop Jump - Ayer 16:45 - ${Math.max(5, jumps - 4)} saltos`,
+      `SJ unilateral - 15 May - ${Math.max(4, jumps - 6)} saltos`,
+    ];
+  }
+
+  protected athleteSparklinePoints(row: unknown): string {
+    const athlete = this.asShowcaseAthlete(row);
+    if (!athlete) {
+      return '';
+    }
+
+    const values = [
+      athlete.bestJump - 5.4,
+      athlete.bestJump - 4.1,
+      athlete.bestJump - 2.2,
+      athlete.bestJump - 1.1,
+      athlete.bestJump + 0.6,
+      athlete.bestJump + 1.4,
+    ];
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const range = Math.max(max - min, 1);
+
+    return values
+      .map((value, index) => {
+        const x = Math.round((index / (values.length - 1)) * 160);
+        const y = Math.round(44 - ((value - min) / range) * 36);
+        return `${x},${y}`;
+      })
+      .join(' ');
+  }
+
   private asShowcaseAthlete(value: unknown): ShowcaseAthlete | undefined {
     if (typeof value !== 'object' || value === null) {
       return undefined;
@@ -592,6 +646,65 @@ export class App {
 
   protected readonly emptySeries = signal<readonly AfChartSeries[]>([]);
   protected readonly chartLoading = signal(false);
+  protected readonly analyticsPeriods: readonly ShowcaseAnalyticsPeriod[] = ['1M', '3M', '6M', '1A'];
+  protected readonly analyticsPeriod = signal<ShowcaseAnalyticsPeriod>('3M');
+  protected readonly analyticsLoadingState = computed<AfAnalyticsCardState>(() =>
+    this.chartLoading() ? 'loading' : 'ready',
+  );
+  protected readonly weeklyIntensityCategories = signal<readonly string[]>([
+    'Lun',
+    'Mar',
+    'Mie',
+    'Jue',
+    'Vie',
+    'Sab',
+    'Dom',
+  ]);
+  protected readonly weeklyIntensitySeries = signal<readonly AfChartSeries[]>([
+    { name: 'S1', data: [4, 7, 8, 5, 9, 3, 6] },
+    { name: 'S2', data: [5, 3, 7, 8, 6, 4, 7] },
+    { name: 'S3', data: [8, 6, 5, 7, 9, 6, 3] },
+    { name: 'S4', data: [7, 8, 9, 5, 8, 7, 6] },
+    { name: 'S5', data: [4, 6, 7, 8, 5, 6, 4] },
+    { name: 'S6', data: [6, 8, 5, 9, 7, 5, 8] },
+    { name: 'S7', data: [9, 7, 8, 6, 4, 9, 7] },
+    { name: 'S8', data: [8, 5, 6, 8, 7, 6, 5] },
+    { name: 'S9', data: [6, 7, 9, 5, 8, 7, 6] },
+    { name: 'S10', data: [7, 6, 8, 9, 5, 8, 7] },
+    { name: 'S11', data: [5, 9, 7, 6, 8, 9, 5] },
+    { name: 'S12', data: [8, 6, 5, 7, 9, 6, 8] },
+  ]);
+  protected readonly jumpDistributionSeries = signal<readonly AfChartSeries[]>([
+    { name: 'CMJ', data: [36, 38, 41, 43, 45, 48, 50] },
+    { name: 'SJ', data: [29, 31, 33, 35, 38, 41, 45] },
+    { name: 'DJ', data: [32, 35, 37, 39, 41, 43, 47] },
+    { name: 'Abalakov', data: [38, 40, 42, 45, 47, 49, 52] },
+  ]);
+  protected readonly parallelIndicators = signal<readonly AfChartIndicator[]>([
+    { name: 'Salto', min: 30, max: 60 },
+    { name: 'Fuerza', min: 2000, max: 3600 },
+    { name: 'T.Contacto', min: 0.25, max: 0.42 },
+    { name: 'RSI', min: 0.9, max: 1.8 },
+    { name: 'Potencia', min: 1200, max: 2600 },
+    { name: 'Asimetria', min: 0, max: 10 },
+  ]);
+  protected readonly parallelSeries = signal<readonly AfChartSeries[]>([
+    {
+      name: 'Atletas',
+      data: [
+        { label: 'Maria Garcia', value: [45.2, 2847, 0.34, 1.32, 1842, 4.2] },
+        { label: 'Lucas Rodriguez', value: [52.1, 3120, 0.31, 1.45, 2180, 6.1] },
+        { label: 'Santiago Perez', value: [55.4, 3340, 0.3, 1.52, 2420, 2.9] },
+        { label: 'Nicolas Morales', value: [49.7, 2960, 0.32, 1.4, 2050, 5.5] },
+        { label: 'Paula Martinez', value: [44.8, 2720, 0.33, 1.3, 1790, 3.2] },
+      ],
+    },
+  ]);
+
+  protected setAnalyticsPeriod(period: ShowcaseAnalyticsPeriod): void {
+    this.analyticsPeriod.set(period);
+    this.recordAction(`Analytics periodo → ${period}`);
+  }
 
   protected toggleChartLoading(): void {
     this.chartLoading.update((current) => !current);

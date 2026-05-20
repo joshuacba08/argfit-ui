@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import type {
+    AfAnalyticsCardDensity,
+    AfAnalyticsCardState,
+    AfAnalyticsCardTone,
+    AfAnalyticsCardVariant,
     AfBadgeShape,
     AfBadgeSize,
     AfBadgeTone,
@@ -171,5 +175,17 @@ describe('ArgFit core systems', () => {
     expect(columns[0].mobilePriority).toBe('primary');
     expect(sort.direction).toBe('desc');
     expect(pagination.pageSize).toBe(8);
+  });
+
+  it('exports the analytics card contract through the public API', () => {
+    const density: AfAnalyticsCardDensity = 'comfortable';
+    const variant: AfAnalyticsCardVariant = 'surface';
+    const tone: AfAnalyticsCardTone = 'accent';
+    const state: AfAnalyticsCardState = 'ready';
+
+    expect(density).toBe('comfortable');
+    expect(variant).toBe('surface');
+    expect(tone).toBe('accent');
+    expect(state).toBe('ready');
   });
 });

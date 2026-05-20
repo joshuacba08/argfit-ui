@@ -12,6 +12,7 @@ export * from './lib/themes/theme.service';
 export * from './lib/themes/theme.types';
 export * from './lib/tokens/breakpoints';
 export * from './lib/tokens/theme-token-names';
+export * from './lib/types/analytics-card.types';
 export * from './lib/types/badge.types';
 export * from './lib/types/button.types';
 export * from './lib/types/card.types';
