@@ -20,6 +20,11 @@ const expectedFiles = [
   'projects/argfit-ui-adaptive/src/lib/components/password/af-password.component.ts',
   'projects/argfit-ui-desktop/src/lib/components/password/af-password-desktop.component.ts',
   'projects/argfit-ui-mobile/src/lib/components/password/af-password-mobile.component.ts',
+  'docs/alpha/quickstart.md',
+  'docs/alpha/theming.md',
+  'docs/alpha/components.md',
+  'docs/alpha/known-limitations.md',
+  'docs/alpha/release-notes-alpha.md',
 ];
 
 for (const filePath of expectedFiles) {
@@ -182,6 +187,7 @@ expectIncludes('projects/argfit-ui-desktop/src/lib/components/topbar/af-topbar-d
 ]);
 
 expectIncludes('projects/showcase/src/app/app.ts', [
+  "{ id: 'alpha', label: 'Alpha', icon: 'info' }",
   'AfToastService',
   'AfToastViewport',
   'AfInlineMessage',
@@ -190,6 +196,10 @@ expectIncludes('projects/showcase/src/app/app.ts', [
 ]);
 
 expectIncludes('projects/showcase/src/app/app.html', [
+  "@case ('alpha')",
+  'Alpha consumer kit',
+  'docs/alpha/quickstart.md',
+  'docs/alpha/components.md',
   '<af-toast-viewport />',
   "@case ('feedback')",
   '<af-inline-message',
@@ -212,10 +222,46 @@ expectIncludes('projects/showcase/src/app/app.html', [
 ]);
 
 expectIncludes('projects/showcase/src/app/app.spec.ts', [
+  'renders the alpha consumer showcase section',
+  'Alpha consumer kit',
   'af-password-desktop',
   'af-password-mobile',
   'ion-input-password-toggle',
 ]);
+
+expectIncludes('README.md', [
+  'Alpha quickstart',
+  'Alpha components',
+  'Alpha release notes',
+]);
+
+expectIncludes('docs/alpha/quickstart.md', [
+  'pnpm add @argfit-ui/core@0.1.0-alpha.0',
+  'provideArgfitUi',
+  '@argfit-ui/adaptive',
+  'Troubleshooting',
+]);
+
+expectIncludes('docs/alpha/components.md', [
+  'Stable For Alpha',
+  'Experimental In Alpha',
+  'AfPageShell',
+  'Vendor Boundary',
+]);
+
+for (const packageReadme of [
+  'projects/argfit-ui-core/README.md',
+  'projects/argfit-ui-primitives/README.md',
+  'projects/argfit-ui-desktop/README.md',
+  'projects/argfit-ui-mobile/README.md',
+  'projects/argfit-ui-adaptive/README.md',
+]) {
+  expectIncludes(packageReadme, [
+    '0.1.0-alpha.0',
+    '## Install',
+    '## Alpha Docs',
+  ]);
+}
 
 expectNotIncludes('projects/argfit-ui-desktop/src/lib/components/toast/af-toast-desktop.component.scss', [
   'border-left:',

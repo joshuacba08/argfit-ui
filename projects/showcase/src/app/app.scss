@@ -167,6 +167,7 @@ p {
 .input-grid,
 .chart-grid,
 .analytics-grid,
+.alpha-grid,
 .feedback-grid,
 .icon-grid {
   display: grid;
@@ -191,7 +192,20 @@ p {
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
 }
 
+.alpha-grid--top {
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.8fr);
+}
+
+.alpha-grid--components {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .analytics-card--wide {
+  grid-column: span 2;
+}
+
+.alpha-card--wide,
+.alpha-card--chart {
   grid-column: span 2;
 }
 
@@ -570,6 +584,49 @@ p {
   font-size: var(--af-text-xs);
 }
 
+.alpha-install,
+.alpha-runtime-list,
+.alpha-control-stack,
+.alpha-shell-summary,
+.alpha-dialog-preview {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.alpha-install code {
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  overflow-wrap: anywhere;
+}
+
+.alpha-doc-links,
+.alpha-inline-actions,
+.alpha-badge-row,
+.alpha-status-strip {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+}
+
+.alpha-doc-links a {
+  color: var(--af-primary);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.alpha-runtime-list strong,
+.alpha-shell-summary strong {
+  color: var(--af-text-main);
+  font-family: var(--af-font-mono);
+}
+
+.alpha-runtime-list small,
+.alpha-shell-summary small {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
 .data-table-empty {
   display: grid;
   gap: var(--af-space-1);
@@ -690,6 +747,8 @@ p {
   .input-grid,
   .chart-grid,
   .analytics-grid,
+  .alpha-grid--top,
+  .alpha-grid--components,
   .feedback-grid,
   .dialog-detail-grid,
   .dialog-quick-test-grid,
@@ -697,7 +756,9 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .analytics-card--wide {
+  .analytics-card--wide,
+  .alpha-card--wide,
+  .alpha-card--chart {
     grid-column: auto;
   }
 

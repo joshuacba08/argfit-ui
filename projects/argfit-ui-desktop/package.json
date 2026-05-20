@@ -1,17 +1,41 @@
 {
   "name": "@argfit-ui/desktop",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
+  "description": "PrimeNG-backed desktop renderer package for ArgFit UI.",
+  "keywords": [
+    "angular",
+    "argfit-ui",
+    "desktop",
+    "design-system",
+    "primeng"
+  ],
+  "author": "ArgFit UI maintainers",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "projects/argfit-ui-desktop"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
   "peerDependencies": {
-    "@argfit-ui/core": "0.0.1",
-    "@argfit-ui/primitives": "0.0.1",
+    "@argfit-ui/core": "0.1.0-alpha.0",
+    "@argfit-ui/primitives": "0.1.0-alpha.0",
     "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
     "primeng": "^21.1.8",
-    "echarts": "^5.5.0"
+    "echarts": "^6.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "restricted",
+    "tag": "alpha"
+  }
 }

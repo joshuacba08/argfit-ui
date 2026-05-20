@@ -1,8 +1,15 @@
 # @argfit-ui/primitives
 
-Vendor-agnostic primitive package for ArgFit UI.
+Vendor-agnostic primitive package for ArgFit UI `0.1.0-alpha.0`.
 
-Contains small building blocks shared by desktop, mobile, and adaptive layers. Primitives may depend on `@argfit-ui/core` and `@angular/cdk`, but must not import PrimeNG, Ionic, desktop, mobile, or adaptive implementations.
+Contains small building blocks shared by desktop, mobile and adaptive layers. Primitives may depend on `@argfit-ui/core` and `@angular/cdk`, but must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
+
+## Install
+
+```bash
+pnpm add @argfit-ui/core@0.1.0-alpha.0 @argfit-ui/primitives@0.1.0-alpha.0
+pnpm add @angular/cdk@^21.2.0 @lucide/angular@^1.16.0
+```
 
 ## Available primitives
 
@@ -36,6 +43,12 @@ import {
   <af-visually-hidden>Modal opened</af-visually-hidden>
 </section>
 ```
+
+## Alpha Docs
+
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/quickstart.md)
+- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/components.md)
+- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/known-limitations.md)
 
 ## Build
 

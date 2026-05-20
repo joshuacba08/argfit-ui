@@ -1,8 +1,27 @@
 {
   "name": "@argfit-ui/primitives",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
+  "description": "Vendor-agnostic accessibility and icon primitives for ArgFit UI.",
+  "keywords": [
+    "angular",
+    "argfit-ui",
+    "accessibility",
+    "icons",
+    "primitives"
+  ],
+  "author": "ArgFit UI maintainers",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "projects/argfit-ui-primitives"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
   "peerDependencies": {
-    "@argfit-ui/core": "0.0.1",
+    "@argfit-ui/core": "0.1.0-alpha.0",
     "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
@@ -11,5 +30,9 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "restricted",
+    "tag": "alpha"
+  }
 }

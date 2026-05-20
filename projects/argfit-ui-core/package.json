@@ -1,6 +1,25 @@
 {
   "name": "@argfit-ui/core",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
+  "description": "Core tokens, themes, services, and shared types for ArgFit UI.",
+  "keywords": [
+    "angular",
+    "argfit-ui",
+    "design-system",
+    "tokens",
+    "theme"
+  ],
+  "author": "ArgFit UI maintainers",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "projects/argfit-ui-core"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0"
@@ -8,5 +27,9 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "restricted",
+    "tag": "alpha"
+  }
 }

@@ -66,7 +66,7 @@ These are not part of the `0.1.0-alpha.0` public contract unless they appear lat
 - Virtualized data table, server-side data source, column resizing/reorder and inline editing.
 - Chart export, drilldown, synchronized charts and 3D chart presets.
 - Notification center, browser push notifications and persistent user notification history.
-- Packaging, npm publish, final changelog, CI release gates and smoke consumer app.
+- Public npm publish, final changelog, CI release gates and smoke consumer app.
 
 ## Vendor-Independent Contract
 

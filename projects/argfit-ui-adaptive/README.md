@@ -1,14 +1,43 @@
 # @argfit-ui/adaptive
 
-Public adaptive API package for ArgFit UI.
+Primary consumer component package for ArgFit UI `0.1.0-alpha.0`.
 
-Contains lightweight orchestration components that select desktop or mobile renderers through `AfPlatformService`.
+It contains lightweight orchestration components that select desktop or mobile renderers through `AfPlatformService`. Adaptive components should not import PrimeNG or Ionic directly, and application consumers should normally use this package for UI components.
 
-Current slice:
+## Install
 
-- `AfButton`
+Install the full alpha package set so adaptive renderers can resolve their peers:
 
-Adaptive components should not import PrimeNG or Ionic directly.
+```bash
+pnpm add @argfit-ui/core@0.1.0-alpha.0 @argfit-ui/primitives@0.1.0-alpha.0
+pnpm add @argfit-ui/desktop@0.1.0-alpha.0 @argfit-ui/mobile@0.1.0-alpha.0 @argfit-ui/adaptive@0.1.0-alpha.0
+pnpm add @angular/cdk@^21.2.0 @angular/forms@^21.2.0 @ionic/angular@^8.8.7 @lucide/angular@^1.16.0 echarts@^6.1.0 primeng@^21.1.8
+```
+
+## Usage
+
+```ts
+import { AfButton, AfCard, AfInput, AfPageShell } from '@argfit-ui/adaptive';
+```
+
+```html
+<af-page-shell title="Dashboard" [navItems]="navItems">
+	<af-card variant="panel">
+		<div afCardContent>
+			<af-input label="Athlete" placeholder="Search athlete" />
+			<af-button>Start session</af-button>
+		</div>
+	</af-card>
+</af-page-shell>
+```
+
+## Alpha Docs
+
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/quickstart.md)
+- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/components.md)
+- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/known-limitations.md)
+
+## Build
 
 ```bash
 pnpm build:adaptive

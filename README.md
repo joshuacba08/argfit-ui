@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-10.28-F69220?logo=pnpm&logoColor=white)
-![Status](https://img.shields.io/badge/status-active%20foundation-2599D5)
+![Status](https://img.shields.io/badge/status-0.1.0--alpha.0-2599D5)
 
 ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile-first workflows.
 
@@ -21,7 +21,7 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI is currently in active foundation development. The workspace already contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, and the first enterprise component slices.
+ArgFit UI is currently prepared as `0.1.0-alpha.0`. The workspace contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, packaging metadata, local tarball generation, and the first enterprise component slices.
 
 The official `0.1.0-alpha.0` surface is tracked in the alpha docs. Stable-for-alpha components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Newer data, analytics, form, password, and feedback components are available as experimental alpha APIs.
 
@@ -57,6 +57,14 @@ The public contract is the scoped package API. Implementation project names are 
 - Mobile experiences optimized for touch, safe areas, and native-feeling interaction.
 
 ## Quick Start
+
+For consumer setup, start with the alpha guide:
+
+- [Alpha quickstart](docs/alpha/quickstart.md)
+- [Theming and adaptive rendering](docs/alpha/theming.md)
+- [Alpha components](docs/alpha/components.md)
+
+For local workspace development:
 
 Install dependencies:
 
@@ -191,6 +199,13 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Alpha scope](docs/alpha/alpha-scope.md)
 - [Alpha public API](docs/alpha/public-api.md)
 - [Alpha compatibility](docs/alpha/compatibility.md)
+- [Alpha quickstart](docs/alpha/quickstart.md)
+- [Alpha theming and adaptive rendering](docs/alpha/theming.md)
+- [Alpha components](docs/alpha/components.md)
+- [Alpha known limitations](docs/alpha/known-limitations.md)
+- [Alpha release notes](docs/alpha/release-notes-alpha.md)
+- [Alpha package metadata](docs/alpha/package-metadata.md)
+- [Publish alpha procedure](docs/alpha/publish-alpha.md)
 - [Human units](docs/hus/README.md)
 
 ## Repository Layout
@@ -223,4 +238,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The repository is currently marked private and uses version `0.0.0` while the foundation is being built. Package publishing, semantic versioning policy, changelog automation, and license metadata should be finalized before external distribution.
+The workspace and publishable packages are aligned on `0.1.0-alpha.0`. The root workspace remains private. Packages are prepared for local tarball or private-registry alpha distribution and are marked `UNLICENSED` until the public license decision is made.

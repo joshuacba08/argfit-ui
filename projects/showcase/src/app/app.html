@@ -77,6 +77,154 @@
   <af-toast-viewport />
 
   @switch (activeShellSection()) {
+    @case ('alpha') {
+      <section class="shell-section alpha-view" aria-label="Alpha">
+        <div class="section-header section-header--inline">
+          <div>
+            <span class="eyebrow">0.1.0-alpha.0</span>
+            <h2>Alpha consumer kit</h2>
+            <p>Paquetes, runtime y componentes principales listos para una prueba en Angular 21.</p>
+          </div>
+          <af-badge tone="primary" icon="info">Adaptive API</af-badge>
+        </div>
+
+        <div class="alpha-grid alpha-grid--top">
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wide">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Setup</span>
+                <h3 afCardTitle>Instalacion recomendada</h3>
+              </div>
+              <af-badge tone="success" dot>Tarball / private registry</af-badge>
+            </header>
+            <div afCardContent class="alpha-install">
+              <code>pnpm add &#64;argfit-ui/core&#64;0.1.0-alpha.0</code>
+              <code>pnpm add &#64;argfit-ui/primitives&#64;0.1.0-alpha.0</code>
+              <code>pnpm add &#64;argfit-ui/desktop&#64;0.1.0-alpha.0 &#64;argfit-ui/mobile&#64;0.1.0-alpha.0</code>
+              <code>pnpm add &#64;argfit-ui/adaptive&#64;0.1.0-alpha.0</code>
+            </div>
+            <footer afCardFooter class="alpha-doc-links" aria-label="Documentacion alpha">
+              <a href="docs/alpha/quickstart.md">Quickstart</a>
+              <a href="docs/alpha/theming.md">Theming</a>
+              <a href="docs/alpha/components.md">Components</a>
+              <a href="docs/alpha/known-limitations.md">Limitations</a>
+            </footer>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Runtime</span>
+                <h3 afCardTitle>Theme + platform</h3>
+              </div>
+              <af-icon name="settings" tone="primary" ariaLabel="Runtime" />
+            </header>
+            <div afCardContent class="alpha-runtime-list">
+              <span><strong>{{ theme.currentThemeName() }}</strong><small>Tema activo</small></span>
+              <span><strong>{{ platform.platform() }}</strong><small>Renderer actual</small></span>
+              <span><strong>{{ platform.preference() }}</strong><small>Preferencia</small></span>
+            </div>
+          </af-card>
+        </div>
+
+        <div class="alpha-grid alpha-grid--components">
+          <af-card variant="panel" tone="primary" class="alpha-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Stable</span>
+                <h3 afCardTitle>Base controls</h3>
+              </div>
+              <af-badge tone="primary">AfCard</af-badge>
+            </header>
+            <div afCardContent class="alpha-control-stack">
+              <af-input label="Athlete" placeholder="Maria Garcia" prefixIcon="search" />
+              <div class="alpha-inline-actions">
+                <af-button size="sm" (pressed)="recordAction('Alpha → button')">Start</af-button>
+                <af-button size="sm" variant="secondary" (pressed)="recordAction('Alpha → secondary')">Review</af-button>
+              </div>
+              <div class="alpha-badge-row">
+                <af-badge tone="success" dot>Ready</af-badge>
+                <af-badge tone="neutral" icon="activity">Live</af-badge>
+              </div>
+            </div>
+          </af-card>
+
+          <af-metric-card
+            label="Stable components"
+            value="8"
+            tone="primary"
+            icon="check"
+            trendValue="alpha"
+            trendDirection="flat"
+          />
+
+          <af-metric-card
+            label="Publishable packages"
+            value="5"
+            tone="accent"
+            icon="download"
+            trendValue="pack ready"
+            trendDirection="up"
+          />
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--chart">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>AfChart</span>
+                <h3 afCardTitle>Performance preview</h3>
+              </div>
+              <af-badge tone="primary">ECharts internal</af-badge>
+            </header>
+            <div afCardContent>
+              <af-chart
+                type="area"
+                tone="primary"
+                [categories]="jumpProgressCategories()"
+                [series]="jumpProgressSeries()"
+                ariaLabel="Alpha performance chart"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>AfPageShell</span>
+                <h3 afCardTitle>Adaptive shell activo</h3>
+              </div>
+              <af-badge tone="neutral">{{ activeShellTitle() }}</af-badge>
+            </header>
+            <div afCardContent class="alpha-shell-summary">
+              <span><strong>{{ shellNavItems.length }}</strong><small>Desktop nav items</small></span>
+              <span><strong>{{ shellMobileTabs.length }}</strong><small>Mobile tabs</small></span>
+              <span><strong>{{ shellBreadcrumbs().length }}</strong><small>Breadcrumb levels</small></span>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>AfDialog</span>
+                <h3 afCardTitle>Workflow modal</h3>
+              </div>
+              <af-icon name="panel-top" tone="primary" ariaLabel="Dialog" />
+            </header>
+            <div afCardContent class="alpha-dialog-preview">
+              <p>El dialog real del showcase usa la misma API adaptativa que consumiria una app externa.</p>
+              <af-button size="sm" (pressed)="openQuickTestDialog()">Abrir dialog</af-button>
+            </div>
+          </af-card>
+        </div>
+
+        <div class="alpha-status-strip" aria-label="Alpha status">
+          <af-badge tone="success" icon="check">Core stable-for-alpha</af-badge>
+          <af-badge tone="primary" icon="grid-2x2">Adaptive first</af-badge>
+          <af-badge tone="warning" icon="alert-triangle">Experimental forms/data</af-badge>
+          <af-badge tone="neutral" icon="file-text">Docs linked</af-badge>
+        </div>
+      </section>
+    }
+
     @case ('athletes') {
       <section class="shell-section athletes-view" aria-label="Atletas">
         <div class="section-header">

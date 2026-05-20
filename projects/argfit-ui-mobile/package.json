@@ -1,17 +1,40 @@
 {
   "name": "@argfit-ui/mobile",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
+  "description": "Ionic-backed mobile renderer package for ArgFit UI.",
+  "keywords": [
+    "angular",
+    "argfit-ui",
+    "mobile",
+    "design-system",
+    "ionic"
+  ],
+  "author": "ArgFit UI maintainers",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "projects/argfit-ui-mobile"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
   "peerDependencies": {
-    "@argfit-ui/core": "0.0.1",
-    "@argfit-ui/primitives": "0.0.1",
+    "@argfit-ui/core": "0.1.0-alpha.0",
+    "@argfit-ui/primitives": "0.1.0-alpha.0",
     "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@ionic/angular": "^8.8.7",
-    "echarts": "^5.5.0"
+    "echarts": "^6.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "restricted",
+    "tag": "alpha"
+  }
 }

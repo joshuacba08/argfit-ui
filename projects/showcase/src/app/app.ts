@@ -141,6 +141,7 @@ export class App {
   protected readonly shellSearchQuery = signal('');
 
   protected readonly shellNavItems: readonly AfNavigationItem[] = [
+    { id: 'alpha', label: 'Alpha', icon: 'info' },
     { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard', badge: 3 },
     { id: 'athletes', label: 'Atletas', icon: 'users' },
     { id: 'data-table', label: 'Tabla avanzada', icon: 'table' },
@@ -153,6 +154,7 @@ export class App {
   ];
 
   protected readonly shellMobileTabs: readonly AfNavigationItem[] = [
+    { id: 'alpha', label: 'Alpha', icon: 'info' },
     { id: 'home', label: 'Inicio', icon: 'home' },
     { id: 'train', label: 'Entrenar', icon: 'play' },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
@@ -161,6 +163,7 @@ export class App {
   ];
 
   private readonly sectionTitles: Readonly<Record<string, string>> = {
+    alpha: 'Alpha',
     dashboard: 'Dashboard',
     athletes: 'Atletas',
     'data-table': 'Tabla avanzada',
@@ -173,6 +176,7 @@ export class App {
   };
 
   private readonly sectionSubtitles: Readonly<Record<string, string>> = {
+    alpha: 'Guia visual para probar 0.1.0-alpha.0',
     dashboard: 'Centro operativo de rendimiento',
     athletes: 'Roster, altas y mediciones base',
     'data-table': 'Dataset operativo de atletas',
@@ -185,6 +189,7 @@ export class App {
   };
 
   private readonly mobileTabSections: Readonly<Record<string, string>> = {
+    alpha: 'alpha',
     home: 'dashboard',
     train: 'athletes',
     analytics: 'analytics',

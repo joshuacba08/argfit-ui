@@ -82,6 +82,25 @@ describe('App', () => {
     expect(compiled.querySelector('.shell-section h2')?.textContent?.trim()).toBe('Atletas');
   });
 
+  it('renders the alpha consumer showcase section', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('alpha');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('.alpha-view')).not.toBeNull();
+    expect(compiled.textContent).toContain('Alpha consumer kit');
+    expect(compiled.textContent).toContain('0.1.0-alpha.0');
+    expect(compiled.querySelector('a[href="docs/alpha/quickstart.md"]')).not.toBeNull();
+    expect(compiled.querySelector('a[href="docs/alpha/components.md"]')).not.toBeNull();
+    expect(compiled.querySelector('af-input-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-chart-desktop')).not.toBeNull();
+    expect(compiled.querySelectorAll('af-metric-card-desktop').length).toBeGreaterThanOrEqual(2);
+    expect(compiled.querySelector('.alpha-dialog-preview af-button-desktop')).not.toBeNull();
+    expect(compiled.textContent).toContain('Adaptive API');
+  });
+
   it('should toggle the active theme', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

@@ -1,16 +1,40 @@
 {
   "name": "@argfit-ui/adaptive",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
+  "description": "Adaptive Angular components that route ArgFit UI semantics to desktop or mobile renderers.",
+  "keywords": [
+    "angular",
+    "argfit-ui",
+    "adaptive-ui",
+    "design-system",
+    "components"
+  ],
+  "author": "ArgFit UI maintainers",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "projects/argfit-ui-adaptive"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
   "peerDependencies": {
-    "@argfit-ui/core": "0.0.1",
-    "@argfit-ui/desktop": "0.0.1",
-    "@argfit-ui/mobile": "0.0.1",
-    "@argfit-ui/primitives": "0.0.1",
+    "@argfit-ui/core": "0.1.0-alpha.0",
+    "@argfit-ui/desktop": "0.1.0-alpha.0",
+    "@argfit-ui/mobile": "0.1.0-alpha.0",
+    "@argfit-ui/primitives": "0.1.0-alpha.0",
     "@angular/common": "^21.2.0",
-    "@angular/core": "^21.2.0"
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "restricted",
+    "tag": "alpha"
+  }
 }
