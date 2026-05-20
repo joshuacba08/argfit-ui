@@ -97,6 +97,9 @@ ion-alert.af-select-mobile__overlay {
   --backdrop-opacity: 0.42;
   --button-color: var(--af-primary);
   --color: var(--af-text-main);
+  --ion-color-primary: var(--af-primary);
+  --ion-color-step-850: var(--af-text-main);
+  --ion-text-color-step-150: var(--af-text-main);
 }
 
 ion-alert.af-select-mobile__overlay .alert-wrapper {
@@ -137,6 +140,10 @@ ion-alert.af-select-mobile__overlay .alert-radio-button {
   min-height: 48px;
 }
 
+ion-alert.af-select-mobile__overlay .alert-radio-button[aria-checked='true'] {
+  background: color-mix(in srgb, var(--af-primary) 10%, transparent);
+}
+
 ion-alert.af-select-mobile__overlay .alert-radio-label {
   color: var(--af-text-main);
   font-family: var(--af-font-body);
@@ -144,8 +151,17 @@ ion-alert.af-select-mobile__overlay .alert-radio-label {
   font-weight: var(--af-font-weight-medium);
 }
 
+ion-alert.af-select-mobile__overlay .alert-radio-button[aria-checked='true'] .alert-radio-label {
+  color: var(--af-text-main);
+  font-weight: var(--af-font-weight-semibold);
+}
+
 ion-alert.af-select-mobile__overlay .alert-radio-icon {
   border-color: var(--af-border-strong, var(--af-border));
+}
+
+ion-alert.af-select-mobile__overlay .alert-radio-button[aria-checked='true'] .alert-radio-icon {
+  border-color: var(--af-primary);
 }
 
 ion-alert.af-select-mobile__overlay .alert-radio-inner {

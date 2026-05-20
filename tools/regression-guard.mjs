@@ -126,6 +126,12 @@ expectIncludes('projects/showcase/src/app/app.spec.ts', [
   'renders the AfChart vertical slice with empty and ready states',
 ]);
 
+expectIncludes('projects/argfit-ui-mobile/src/lib/components/select/af-select-mobile.component.scss', [
+  '--ion-color-step-850: var(--af-text-main);',
+  '--ion-text-color-step-150: var(--af-text-main);',
+  "ion-alert.af-select-mobile__overlay .alert-radio-button[aria-checked='true'] .alert-radio-label",
+]);
+
 if (failures.length > 0) {
   console.error('Regression guard failed:');
   for (const failure of failures) {
