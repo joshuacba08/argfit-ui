@@ -68,18 +68,22 @@
 /* Tones */
 
 .af-card-mobile--tone-primary {
+  background: color-mix(in srgb, var(--af-primary) 3%, var(--af-bg-elevated));
   border-color: rgba(37, 153, 213, 0.32);
 }
 
 .af-card-mobile--tone-success {
+  background: color-mix(in srgb, var(--af-success) 3%, var(--af-bg-elevated));
   border-color: rgba(0, 200, 83, 0.32);
 }
 
 .af-card-mobile--tone-warning {
+  background: color-mix(in srgb, var(--af-warning) 3%, var(--af-bg-elevated));
   border-color: rgba(255, 179, 0, 0.32);
 }
 
 .af-card-mobile--tone-danger {
+  background: color-mix(in srgb, var(--af-danger) 3%, var(--af-bg-elevated));
   border-color: rgba(255, 61, 113, 0.32);
 }
 

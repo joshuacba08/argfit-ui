@@ -66,34 +66,26 @@
   padding: var(--af-space-5);
 }
 
-/* Tones — subtle accents on border/left rail */
+/* Tones */
 
 .af-card-desktop--tone-primary {
+  background: color-mix(in srgb, var(--af-primary) 3%, var(--af-bg-elevated));
   border-color: rgba(37, 153, 213, 0.28);
-  box-shadow:
-    var(--af-shadow-sm),
-    inset 3px 0 0 0 var(--af-primary);
 }
 
 .af-card-desktop--tone-success {
+  background: color-mix(in srgb, var(--af-success) 3%, var(--af-bg-elevated));
   border-color: rgba(0, 200, 83, 0.28);
-  box-shadow:
-    var(--af-shadow-sm),
-    inset 3px 0 0 0 var(--af-success);
 }
 
 .af-card-desktop--tone-warning {
+  background: color-mix(in srgb, var(--af-warning) 3%, var(--af-bg-elevated));
   border-color: rgba(255, 179, 0, 0.28);
-  box-shadow:
-    var(--af-shadow-sm),
-    inset 3px 0 0 0 var(--af-warning);
 }
 
 .af-card-desktop--tone-danger {
+  background: color-mix(in srgb, var(--af-danger) 3%, var(--af-bg-elevated));
   border-color: rgba(255, 61, 113, 0.28);
-  box-shadow:
-    var(--af-shadow-sm),
-    inset 3px 0 0 0 var(--af-danger);
 }
 
 /* Interactive */

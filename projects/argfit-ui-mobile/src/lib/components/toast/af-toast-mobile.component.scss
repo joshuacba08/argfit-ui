@@ -10,9 +10,8 @@
 
   align-items: flex-start;
   animation: af-toast-mobile-enter 280ms var(--af-ease-out, ease-out);
-  background: var(--af-bg-elevated);
+  background: color-mix(in srgb, var(--af-toast-tone) 4%, var(--af-bg-elevated));
   border: 1px solid var(--af-toast-tone-border);
-  border-left: 3px solid var(--af-toast-tone);
   border-radius: var(--af-radius-lg);
   box-shadow: var(--af-shadow-lg);
   color: var(--af-text-main);

@@ -162,6 +162,23 @@ expectIncludes('projects/showcase/src/app/app.html', [
   "showFeedbackToast('danger')",
 ]);
 
+expectNotIncludes('projects/argfit-ui-desktop/src/lib/components/toast/af-toast-desktop.component.scss', [
+  'border-left:',
+]);
+expectNotIncludes('projects/argfit-ui-mobile/src/lib/components/toast/af-toast-mobile.component.scss', [
+  'border-left:',
+]);
+expectNotIncludes('projects/argfit-ui-desktop/src/lib/components/card/af-card-desktop.component.scss', [
+  'inset 3px 0 0 0',
+  'left rail',
+]);
+expectNotIncludes('projects/argfit-ui-desktop/src/lib/components/dialog/af-dialog-desktop.component.scss', [
+  'inset 3px 0 0 0',
+]);
+expectNotIncludes('projects/argfit-ui-mobile/src/lib/components/dialog/af-dialog-mobile.component.scss', [
+  'inset 0 3px 0 0',
+]);
+
 if (failures.length > 0) {
   console.error('Regression guard failed:');
   for (const failure of failures) {
@@ -181,6 +198,15 @@ function expectFile(relativePath) {
 function expectIncludes(relativePath, snippets) {
   const source = readFile(relativePath);
   expectContains(source, relativePath, snippets);
+}
+
+function expectNotIncludes(relativePath, snippets) {
+  const source = readFile(relativePath);
+  for (const snippet of snippets) {
+    if (source.includes(snippet)) {
+      failures.push(`${relativePath}: should not include ${JSON.stringify(snippet)}`);
+    }
+  }
 }
 
 function expectContains(source, relativePath, snippets) {

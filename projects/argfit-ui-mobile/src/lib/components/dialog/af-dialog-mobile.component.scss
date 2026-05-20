@@ -58,7 +58,7 @@
 }
 
 .af-dialog-mobile__panel[data-tone='danger'] {
-  box-shadow: inset 0 3px 0 0 var(--af-danger);
+  background: color-mix(in srgb, var(--af-danger) 3%, var(--af-bg-elevated));
 }
 
 .af-dialog-mobile__grabber {

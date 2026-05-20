@@ -64,9 +64,8 @@
 }
 
 .af-dialog-desktop__panel[data-tone='danger'] {
-  box-shadow:
-    var(--af-shadow-lg),
-    inset 3px 0 0 0 var(--af-danger);
+  background: color-mix(in srgb, var(--af-danger) 3%, var(--af-bg-elevated));
+  border-color: color-mix(in srgb, var(--af-danger) 32%, var(--af-border-soft));
 }
 
 .af-dialog-desktop__header {
