@@ -1,0 +1,68 @@
+.af-chart-desktop {
+  background: transparent;
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.af-chart-desktop[data-density='compact'] {
+  min-height: 96px;
+}
+
+.af-chart-desktop[data-density='comfortable'] {
+  min-height: 220px;
+}
+
+.af-chart-desktop[data-type='sparkline'] {
+  min-height: 48px;
+}
+
+.af-chart-desktop__canvas {
+  height: 100%;
+  min-height: inherit;
+  width: 100%;
+}
+
+.af-chart-desktop[data-state='empty'] .af-chart-desktop__canvas,
+.af-chart-desktop[data-state='loading'] .af-chart-desktop__canvas {
+  visibility: hidden;
+}
+
+.af-chart-desktop__empty {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  font-size: var(--af-font-size-sm);
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.af-chart-desktop__loading {
+  align-items: stretch;
+  display: flex;
+  inset: 0;
+  padding: var(--af-space-2);
+  position: absolute;
+}
+
+.af-chart-desktop__skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--af-bg-surface) 0%,
+    var(--af-bg-interactive) 50%,
+    var(--af-bg-surface) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--af-radius-md);
+  display: block;
+  flex: 1;
+  opacity: 0.85;
+  animation: af-chart-desktop-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes af-chart-desktop-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

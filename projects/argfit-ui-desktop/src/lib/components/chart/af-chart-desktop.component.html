@@ -1,0 +1,17 @@
+@if (state() === 'empty') {
+  <div class="af-chart-desktop__empty" role="status">
+    {{ emptyMessage() }}
+  </div>
+}
+
+@if (state() === 'loading') {
+  <div class="af-chart-desktop__loading" role="status" aria-live="polite">
+    <span class="af-chart-desktop__skeleton"></span>
+  </div>
+}
+
+<div
+  #canvas
+  class="af-chart-desktop__canvas"
+  [attr.aria-hidden]="state() !== 'ready' ? 'true' : null"
+></div>

@@ -18,6 +18,9 @@ export {
     AfCardComponent as AfCard, AfCardComponent
 } from './lib/components/card/af-card.component';
 export {
+    AfChartComponent as AfChart, AfChartComponent
+} from './lib/components/chart/af-chart.component';
+export {
     AF_DIALOG_SLOT_DIRECTIVES,
     AfDialogContentDirective,
     AfDialogDescriptionDirective,

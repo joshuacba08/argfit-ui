@@ -10,8 +10,8 @@
 
   <div class="af-input-mobile__control">
     @if (prefixIcon(); as iconValue) {
-      <span class="af-input-mobile__icon af-input-mobile__icon--prefix" aria-hidden="true">
-        {{ iconValue }}
+      <span class="af-input-mobile__icon af-input-mobile__icon--prefix">
+        <af-icon [name]="iconValue" tone="muted" size="sm" decorative />
       </span>
     } @else if (prefix(); as prefixValue) {
       <span class="af-input-mobile__affix af-input-mobile__affix--prefix" aria-hidden="true">

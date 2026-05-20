@@ -118,4 +118,43 @@ describe('App', () => {
 
     expect(document.querySelector('.af-dialog-desktop__panel')).toBeNull();
   });
+
+  it('renders the AfIcon gallery with accessible labels and tokens', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const iconCells = compiled.querySelectorAll('.icon-cell af-icon');
+    expect(iconCells.length).toBeGreaterThanOrEqual(6);
+
+    const firstSvg = iconCells[0].querySelector('svg') as SVGElement;
+    expect(firstSvg).not.toBeNull();
+    expect(firstSvg.getAttribute('role')).toBe('img');
+    expect(firstSvg.querySelector('title')?.textContent ?? '').not.toBe('');
+
+    const searchInputIcon = compiled.querySelector(
+      'af-input-desktop af-icon',
+    ) as HTMLElement | null;
+    expect(searchInputIcon).not.toBeNull();
+  });
+
+  it('renders the AfChart vertical slice with empty and ready states', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const charts = compiled.querySelectorAll('af-chart-desktop');
+    expect(charts.length).toBeGreaterThanOrEqual(4);
+
+    const states = Array.from(charts).map((c) => c.getAttribute('data-state'));
+    expect(states).toContain('ready');
+    expect(states).toContain('empty');
+
+    const empty = compiled.querySelector('af-chart-desktop[data-state="empty"]') as HTMLElement;
+    expect(empty.querySelector('.af-chart-desktop__empty')?.textContent?.trim()).toContain(
+      'Conecta',
+    );
+  });
 });

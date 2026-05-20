@@ -210,7 +210,7 @@
             label="Buscar"
             placeholder="Atleta o equipo"
             type="search"
-            prefixIcon="🔍"
+            prefixIcon="search"
             [value]="searchQuery()"
             (valueChange)="updateSearchQuery($event)"
           />
@@ -271,6 +271,127 @@
           <af-button variant="secondary" (pressed)="openAthleteDialog()">
             Nuevo atleta
           </af-button>
+        </div>
+      </div>
+
+      <div class="icon-section" aria-label="Icon gallery">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Primitive vertical slice</span>
+            <h2>AfIcon</h2>
+          </div>
+        </div>
+
+        <div class="icon-grid">
+          @for (icon of iconGallery; track icon.name) {
+            <div class="icon-cell">
+              <af-icon
+                [name]="icon.name"
+                size="lg"
+                tone="primary"
+                [decorative]="false"
+                [ariaLabel]="icon.label"
+              />
+              <span class="icon-cell__label">{{ icon.label }}</span>
+              <code class="icon-cell__token">{{ icon.name }}</code>
+            </div>
+          }
+        </div>
+
+        <div class="icon-sizes" aria-hidden="true">
+          <af-icon name="activity" size="xs" tone="muted" decorative />
+          <af-icon name="activity" size="sm" tone="muted" decorative />
+          <af-icon name="activity" size="md" decorative />
+          <af-icon name="activity" size="lg" tone="primary" decorative />
+          <af-icon name="activity" size="xl" tone="success" decorative />
+        </div>
+      </div>
+
+      <div class="chart-section" aria-label="Chart variants">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Component vertical slice</span>
+            <h2>AfChart</h2>
+          </div>
+          <af-button variant="ghost" (pressed)="toggleChartLoading()">
+            Toggle loading
+          </af-button>
+        </div>
+
+        <div class="chart-grid">
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Rendimiento semanal</span>
+              <h3 afCardTitle>Salto vertical</h3>
+              <p afCardSubtitle>Promedio en centimetros</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="area"
+                tone="primary"
+                density="comfortable"
+                [categories]="chartCategories()"
+                [series]="jumpsSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Salto vertical promedio por dia"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Volumen</span>
+              <h3 afCardTitle>Sesiones por dia</h3>
+              <p afCardSubtitle>Ultimos 7 dias</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="bar"
+                tone="success"
+                density="comfortable"
+                [categories]="chartCategories()"
+                [series]="sessionsSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Sesiones registradas por dia"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="metric">
+            <div afCardHeader>
+              <span afCardEyebrow>Latencia sensor</span>
+              <h3 afCardTitle>33 ms</h3>
+              <p afCardSubtitle>Tendencia 10 minutos</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="sparkline"
+                tone="warning"
+                density="compact"
+                [categories]="latencyCategories()"
+                [series]="latencySparkline()"
+                ariaLabel="Latencia del sensor en los ultimos 10 minutos"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Estado vacio</span>
+              <h3 afCardTitle>Sin datos aun</h3>
+              <p afCardSubtitle>Mensaje configurable</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="line"
+                density="comfortable"
+                [categories]="chartCategories()"
+                [series]="emptySeries()"
+                emptyMessage="Conecta un dispositivo para empezar"
+                ariaLabel="Chart sin datos"
+              />
+            </div>
+          </af-card>
         </div>
       </div>
     </section>

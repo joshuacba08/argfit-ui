@@ -48,6 +48,13 @@ export const ARGFIT_LIGHT_THEME: AfThemeDefinition = {
     '--af-card-border': 'rgba(16, 42, 67, 0.10)',
     '--af-card-shadow': '0 2px 8px rgba(16, 42, 67, 0.08)',
 
+    // ── Charts (data visualization) ───────────────────────────────────
+    '--af-chart-grid': 'rgba(16, 42, 67, 0.08)',
+    '--af-chart-axis': 'rgba(16, 42, 67, 0.18)',
+    '--af-chart-label': '#486581',
+    '--af-chart-tooltip-bg': 'rgba(255, 255, 255, 0.98)',
+    '--af-chart-tooltip-text': '#102A43',
+
     // ── Scrollbar ─────────────────────────────────────────────────────
     '--af-scrollbar-thumb': '#9FB3C8',
   },

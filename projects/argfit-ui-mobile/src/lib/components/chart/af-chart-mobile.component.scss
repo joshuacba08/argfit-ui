@@ -1,0 +1,68 @@
+.af-chart-mobile {
+  background: transparent;
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.af-chart-mobile[data-density='compact'] {
+  min-height: 140px;
+}
+
+.af-chart-mobile[data-density='comfortable'] {
+  min-height: 200px;
+}
+
+.af-chart-mobile[data-type='sparkline'] {
+  min-height: 56px;
+}
+
+.af-chart-mobile__canvas {
+  height: 100%;
+  min-height: inherit;
+  width: 100%;
+}
+
+.af-chart-mobile[data-state='empty'] .af-chart-mobile__canvas,
+.af-chart-mobile[data-state='loading'] .af-chart-mobile__canvas {
+  visibility: hidden;
+}
+
+.af-chart-mobile__empty {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  font-size: var(--af-font-size-sm);
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.af-chart-mobile__loading {
+  align-items: stretch;
+  display: flex;
+  inset: 0;
+  padding: var(--af-space-2);
+  position: absolute;
+}
+
+.af-chart-mobile__skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--af-bg-surface) 0%,
+    var(--af-bg-interactive) 50%,
+    var(--af-bg-surface) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--af-radius-md);
+  display: block;
+  flex: 1;
+  opacity: 0.85;
+  animation: af-chart-mobile-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes af-chart-mobile-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

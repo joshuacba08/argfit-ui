@@ -10,6 +10,7 @@ import {
     AfCardHeaderDirective,
     AfCardSubtitleDirective,
     AfCardTitleDirective,
+    AfChart,
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
@@ -18,8 +19,11 @@ import {
 import {
     AfPlatformService,
     AfThemeService,
+    type AfChartSeries,
+    type AfIconName,
     type AfPlatformPreference,
 } from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +36,8 @@ import {
     AfCardEyebrowDirective,
     AfCardContentDirective,
     AfCardFooterDirective,
+    AfChart,
+    AfIconComponent,
     AfInput,
     AfDialog,
     AfDialogContentDirective,
@@ -153,5 +159,45 @@ export class App {
     }
     this.athleteDialogOpen.set(false);
     this.recordAction(`Atleta creado → ${name}`);
+  }
+
+  // ────────────────────────────────────────────────────────────────
+  // Icon gallery + chart vertical slice (HU-007)
+  // ────────────────────────────────────────────────────────────────
+  protected readonly iconGallery: ReadonlyArray<{ name: AfIconName; label: string }> = [
+    { name: 'search', label: 'Buscar' },
+    { name: 'activity', label: 'Actividad' },
+    { name: 'calendar', label: 'Calendario' },
+    { name: 'settings', label: 'Ajustes' },
+    { name: 'trash', label: 'Eliminar' },
+    { name: 'download', label: 'Descargar' },
+  ];
+
+  protected readonly chartCategories = signal<readonly string[]>([
+    'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom',
+  ]);
+
+  protected readonly jumpsSeries = signal<readonly AfChartSeries[]>([
+    { name: 'Salto vertical (cm)', data: [42, 45, 47, 44, 49, 51, 48], tone: 'primary' },
+  ]);
+
+  protected readonly sessionsSeries = signal<readonly AfChartSeries[]>([
+    { name: 'Sesiones', data: [3, 5, 4, 6, 7, 4, 2], tone: 'success' },
+  ]);
+
+  protected readonly latencySparkline = signal<readonly AfChartSeries[]>([
+    { name: 'Latencia (ms)', data: [42, 39, 44, 41, 38, 36, 35, 37, 34, 33], tone: 'warning' },
+  ]);
+
+  protected readonly latencyCategories = signal<readonly string[]>([
+    't-9', 't-8', 't-7', 't-6', 't-5', 't-4', 't-3', 't-2', 't-1', 't-0',
+  ]);
+
+  protected readonly emptySeries = signal<readonly AfChartSeries[]>([]);
+  protected readonly chartLoading = signal(false);
+
+  protected toggleChartLoading(): void {
+    this.chartLoading.update((current) => !current);
+    this.recordAction(`Chart loading → ${this.chartLoading()}`);
   }
 }

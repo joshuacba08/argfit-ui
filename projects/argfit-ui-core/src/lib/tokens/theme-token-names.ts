@@ -100,6 +100,17 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-card-border',
   '--af-card-shadow',
 
+  // ── Charts ──────────────────────────────────────────────────────────
+  '--af-chart-grid',
+  '--af-chart-axis',
+  '--af-chart-label',
+  '--af-chart-primary',
+  '--af-chart-success',
+  '--af-chart-warning',
+  '--af-chart-danger',
+  '--af-chart-tooltip-bg',
+  '--af-chart-tooltip-text',
+
   // ── Scrollbar ───────────────────────────────────────────────────────
   '--af-scrollbar-thumb',
 

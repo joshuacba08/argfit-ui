@@ -9,12 +9,14 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 
-import type { AfInputSize, AfInputTone, AfInputType } from '@argfit-ui/core';
+import type { AfIconName, AfInputSize, AfInputTone, AfInputType } from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
 
 let nextAfMobileInputId = 0;
 
 @Component({
   selector: 'af-input-mobile',
+  imports: [AfIconComponent],
   templateUrl: './af-input-mobile.component.html',
   styleUrl: './af-input-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +44,7 @@ export class AfInputMobileComponent {
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly prefix = input<string | undefined>(undefined);
   readonly suffix = input<string | undefined>(undefined);
-  readonly prefixIcon = input<string | undefined>(undefined);
+  readonly prefixIcon = input<AfIconName | undefined>(undefined);
   readonly autocomplete = input<string | undefined>(undefined);
   readonly name = input<string | undefined>(undefined);
   readonly inputId = input<string | undefined>(undefined);

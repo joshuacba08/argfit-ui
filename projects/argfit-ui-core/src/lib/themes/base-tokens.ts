@@ -168,6 +168,17 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-motion-slow': '350ms',
   '--af-motion-ease': 'cubic-bezier(0.22, 1, 0.36, 1)',
 
+  // ── Charts (data visualization) ─────────────────────────────────────
+  '--af-chart-grid': 'rgba(37, 153, 213, 0.10)',
+  '--af-chart-axis': 'rgba(37, 153, 213, 0.22)',
+  '--af-chart-label': '#BCCCDC',
+  '--af-chart-primary': '#2599D5',
+  '--af-chart-success': '#00C853',
+  '--af-chart-warning': '#FFB300',
+  '--af-chart-danger': '#FF3D71',
+  '--af-chart-tooltip-bg': 'rgba(10, 22, 40, 0.95)',
+  '--af-chart-tooltip-text': '#F0F4F8',
+
   // ── Breakpoints ─────────────────────────────────────────────────────
   '--af-breakpoint-mobile': '767.98px',
   '--af-breakpoint-tablet': '1023.98px',

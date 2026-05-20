@@ -349,6 +349,68 @@ p {
   gap: var(--af-space-3);
 }
 
+.icon-section,
+.chart-section {
+  display: grid;
+  gap: var(--af-space-4);
+  margin-top: var(--af-space-6);
+}
+
+.icon-grid {
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+.icon-cell {
+  align-items: center;
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  padding: var(--af-space-4);
+}
+
+.icon-cell__label {
+  color: var(--af-text-main);
+  font-size: var(--af-font-size-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.icon-cell__token {
+  background: var(--af-bg-interactive);
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-font-size-xs);
+  padding: 2px var(--af-space-2);
+}
+
+.icon-sizes {
+  align-items: center;
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: flex;
+  gap: var(--af-space-4);
+  justify-content: center;
+  padding: var(--af-space-4);
+}
+
+.chart-grid {
+  display: grid;
+  gap: var(--af-space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 860px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 860px) {
   .showcase-shell {
     padding: var(--af-space-4);

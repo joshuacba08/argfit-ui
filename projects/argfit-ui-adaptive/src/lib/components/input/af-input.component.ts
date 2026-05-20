@@ -13,6 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import {
     AfPlatformService,
+    type AfIconName,
     type AfInputSize,
     type AfInputTone,
     type AfInputType,
@@ -51,7 +52,7 @@ export class AfInputComponent implements ControlValueAccessor {
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly prefix = input<string | undefined>(undefined);
   readonly suffix = input<string | undefined>(undefined);
-  readonly prefixIcon = input<string | undefined>(undefined);
+  readonly prefixIcon = input<AfIconName | undefined>(undefined);
   readonly autocomplete = input<string | undefined>(undefined);
   readonly name = input<string | undefined>(undefined);
   readonly inputId = input<string | undefined>(undefined);
