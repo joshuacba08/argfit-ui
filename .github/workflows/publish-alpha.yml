@@ -40,6 +40,16 @@ jobs:
       - name: Pack public tarballs
         run: pnpm pack:alpha
 
+      - name: Verify npm authentication
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "NPM_TOKEN secret is missing. Configure it as a GitHub Actions secret, not as a variable."
+            exit 1
+          fi
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish @argfit-ui/core
         run: npm publish dist/alpha-tarballs/argfit-ui-core-0.1.0-alpha.0.tgz --tag alpha --access public
         env:
