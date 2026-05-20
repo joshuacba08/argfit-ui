@@ -199,6 +199,7 @@ Create desktop-oriented rendering.
 - AfInputDesktop
 - HU-006 — [AfDialog vertical slice](./hus/HU-006-af-dialog.md) — ready for implementation
 - AfDialogDesktop
+- HU-008 — [AfBadge vertical slice](./hus/HU-008-af-badge.md) — ready for implementation
 - AfBadgeDesktop
 
 ---
@@ -234,6 +235,8 @@ Create mobile-native rendering.
 - AfCardMobile
 - AfInputMobile
 - AfModalMobile
+- HU-008 — [AfBadge vertical slice](./hus/HU-008-af-badge.md) — ready for implementation
+- AfBadgeMobile
 
 ---
 
@@ -266,6 +269,7 @@ Expose unified adaptive APIs.
 - AfInput
 - AfDialog
 - AfChart
+- AfBadge
 - AfPageShell
 - AfSidebar
 - AfMetricCard
