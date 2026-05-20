@@ -19,6 +19,7 @@ export * from './lib/types/chart.types';
 export * from './lib/types/dialog.types';
 export * from './lib/types/icon.types';
 export * from './lib/types/input.types';
+export * from './lib/types/metric-card.types';
 export * from './lib/types/navigation.types';
 export * from './lib/types/page-shell.types';
 export * from './lib/types/platform.types';

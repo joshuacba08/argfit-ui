@@ -1,0 +1,41 @@
+<div class="af-metric-card-desktop__header">
+  <span class="af-metric-card-desktop__label">{{ label() }}</span>
+
+  @if (icon(); as iconName) {
+    <span class="af-metric-card-desktop__icon-box" aria-hidden="true">
+      <af-icon [name]="iconName" size="md" decorative />
+    </span>
+  }
+</div>
+
+@if (loading()) {
+  <div class="af-metric-card-desktop__skeleton af-metric-card-desktop__skeleton--value"></div>
+  <div class="af-metric-card-desktop__skeleton af-metric-card-desktop__skeleton--trend"></div>
+} @else {
+  <div class="af-metric-card-desktop__value-row">
+    <span class="af-metric-card-desktop__value">{{ value() }}</span>
+    @if (unit(); as unitText) {
+      <span class="af-metric-card-desktop__unit">{{ unitText }}</span>
+    }
+  </div>
+
+  @if (trendDisplayValue(); as trendText) {
+    <af-badge-desktop
+      class="af-metric-card-desktop__trend"
+      [tone]="trendBadgeTone()"
+      variant="soft"
+      size="sm"
+    >
+      <span class="af-metric-card-desktop__trend-value">{{ trendText }}</span>
+      @if (trendLabel(); as trendLabelText) {
+        <span class="af-metric-card-desktop__trend-label">{{ trendLabelText }}</span>
+      }
+    </af-badge-desktop>
+  } @else if (helper(); as helperText) {
+    <p class="af-metric-card-desktop__helper">{{ helperText }}</p>
+  }
+}
+
+<div class="af-metric-card-desktop__footer">
+  <ng-content />
+</div>

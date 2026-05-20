@@ -6,6 +6,9 @@ import type {
     AfBadgeTone,
     AfBadgeVariant,
     AfBreadcrumbItem,
+    AfMetricCardTone,
+    AfMetricCardVariant,
+    AfMetricTrendDirection,
     AfNavigationItem,
     AfPageShellDensity,
     AfPageShellVariant,
@@ -136,5 +139,15 @@ describe('ArgFit core systems', () => {
     expect(breadcrumb.label).toBe('ArgFit');
     expect(density).toBe('compact');
     expect(variant).toBe('dashboard');
+  });
+
+  it('exports the metric card contract through the public API', () => {
+    const tone: AfMetricCardTone = 'accent';
+    const variant: AfMetricCardVariant = 'surface';
+    const direction: AfMetricTrendDirection = 'flat';
+
+    expect(tone).toBe('accent');
+    expect(variant).toBe('surface');
+    expect(direction).toBe('flat');
   });
 });

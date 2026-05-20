@@ -15,3 +15,5 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 7. [HU-007 — Icon and Chart Foundations](./HU-007-icon-chart-foundations.md)
 8. [HU-008 — AfBadge Vertical Slice](./HU-008-af-badge.md)
 9. [HU-009 — AfPageShell Navigation Slice](./HU-009-af-page-shell.md)
+10. [HU-010 — AfMetricCard Vertical Slice](./HU-010-af-metric-card.md)
+11. [HU-011 — AfDataTable Vertical Slice](./HU-011-af-data-table.md)

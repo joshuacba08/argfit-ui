@@ -9,5 +9,6 @@ export * from './lib/components/card/af-card-mobile.component';
 export * from './lib/components/chart/af-chart-mobile.component';
 export * from './lib/components/dialog/af-dialog-mobile.component';
 export * from './lib/components/input/af-input-mobile.component';
+export * from './lib/components/metric-card/af-metric-card-mobile.component';
 export * from './lib/components/page-shell/af-page-shell-mobile.component';
 

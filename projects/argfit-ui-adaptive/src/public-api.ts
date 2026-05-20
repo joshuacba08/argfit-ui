@@ -38,6 +38,9 @@ export {
     AfInputComponent as AfInput, AfInputComponent
 } from './lib/components/input/af-input.component';
 export {
+    AfMetricCardComponent as AfMetricCard, AfMetricCardComponent
+} from './lib/components/metric-card/af-metric-card.component';
+export {
     AF_PAGE_SHELL_SLOT_DIRECTIVES,
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,

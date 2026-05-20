@@ -144,6 +144,29 @@ describe('App', () => {
     expect(compiled.querySelector('af-badge-desktop af-icon')).not.toBeNull();
   });
 
+  it('renders the AfMetricCard vertical slice with icons, trends and loading', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const metrics = compiled.querySelectorAll('af-metric-card-desktop');
+    expect(metrics.length).toBeGreaterThanOrEqual(8);
+
+    const tones = Array.from(metrics).map((metric) => metric.getAttribute('data-tone'));
+    expect(tones).toContain('primary');
+    expect(tones).toContain('accent');
+    expect(tones).toContain('success');
+    expect(tones).toContain('warning');
+    expect(tones).toContain('neutral');
+
+    expect(compiled.querySelector('af-metric-card-desktop af-icon')).not.toBeNull();
+    expect(compiled.querySelector('af-metric-card-desktop af-badge-desktop[data-tone="success"]')).not.toBeNull();
+    expect(compiled.querySelector('af-metric-card-desktop af-badge-desktop[data-tone="danger"]')).not.toBeNull();
+    expect(compiled.querySelector('af-metric-card-desktop af-badge-desktop[data-tone="neutral"]')).not.toBeNull();
+    expect(compiled.querySelector('af-metric-card-desktop[data-loading]')).not.toBeNull();
+  });
+
   it('should render the AfInput vertical slice with reactive form binding', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

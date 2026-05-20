@@ -429,23 +429,107 @@
         </div>
 
         <div class="metric-grid">
-          <af-card variant="metric" tone="primary" density="compact">
-            <span afCardEyebrow>Atletas activos</span>
-            <strong class="card-metric">38</strong>
-            <span afCardSubtitle>+4 vs ayer</span>
-          </af-card>
+          <af-metric-card
+            label="Atletas activos"
+            value="38"
+            tone="primary"
+            icon="users"
+            trendValue="12%"
+            trendDirection="up"
+            trendLabel="vs mes anterior"
+          />
 
-          <af-card variant="metric" tone="success" density="compact">
-            <span afCardEyebrow>Mejor salto</span>
-            <strong class="card-metric">45.2<small> cm</small></strong>
-            <span afCardSubtitle>Lucia P. · 09:42</span>
-          </af-card>
+          <af-metric-card
+            label="Sesiones (mes)"
+            value="247"
+            tone="accent"
+            icon="file-text"
+            trendValue="8%"
+            trendDirection="up"
+            trendLabel="vs mes anterior"
+          />
 
-          <af-card variant="metric" tone="warning" density="compact">
-            <span afCardEyebrow>Latencia</span>
-            <strong class="card-metric">33<small> ms</small></strong>
-            <span afCardSubtitle>Sensor estable</span>
-          </af-card>
+          <af-metric-card
+            label="Dispositivos online"
+            value="4"
+            unit="/6"
+            tone="success"
+            icon="cpu"
+            trendValue="0%"
+            trendDirection="flat"
+            trendLabel="estable"
+          />
+
+          <af-metric-card
+            label="Salto prom. (mes)"
+            value="42.1"
+            unit="cm"
+            tone="warning"
+            icon="zap"
+            trendValue="3%"
+            trendDirection="down"
+            trendLabel="vs semana anterior"
+          />
+        </div>
+
+        <div class="metric-results-grid" aria-label="Resumen de resultados">
+          <af-metric-card
+            label="Mejor salto"
+            value="45.2"
+            unit="cm"
+            tone="accent"
+            icon="activity"
+            trendValue="5.3%"
+            trendDirection="up"
+            size="sm"
+            density="compact"
+          />
+
+          <af-metric-card
+            label="Promedio"
+            value="42.1"
+            unit="cm"
+            tone="primary"
+            trendValue="0%"
+            trendDirection="flat"
+            size="sm"
+            density="compact"
+          />
+
+          <af-metric-card
+            label="Fuerza pico"
+            value="2847"
+            unit="N"
+            tone="warning"
+            icon="zap"
+            trendValue="2%"
+            trendDirection="down"
+            size="sm"
+            density="compact"
+          />
+
+          <af-metric-card
+            label="T. contacto"
+            value="0.342"
+            unit="s"
+            tone="success"
+            icon="clock"
+            trendValue="4%"
+            trendDirection="up"
+            size="sm"
+            density="compact"
+          />
+
+          <af-metric-card
+            label="Carga neural"
+            value="78"
+            unit="pts"
+            helper="Calculando nueva lectura"
+            tone="neutral"
+            size="sm"
+            density="compact"
+            [loading]="true"
+          />
         </div>
 
         <div class="status-row">

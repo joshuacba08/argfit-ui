@@ -1,0 +1,41 @@
+<div class="af-metric-card-mobile__header">
+  <span class="af-metric-card-mobile__label">{{ label() }}</span>
+
+  @if (icon(); as iconName) {
+    <span class="af-metric-card-mobile__icon-box" aria-hidden="true">
+      <af-icon [name]="iconName" size="sm" decorative />
+    </span>
+  }
+</div>
+
+@if (loading()) {
+  <div class="af-metric-card-mobile__skeleton af-metric-card-mobile__skeleton--value"></div>
+  <div class="af-metric-card-mobile__skeleton af-metric-card-mobile__skeleton--trend"></div>
+} @else {
+  <div class="af-metric-card-mobile__value-row">
+    <span class="af-metric-card-mobile__value">{{ value() }}</span>
+    @if (unit(); as unitText) {
+      <span class="af-metric-card-mobile__unit">{{ unitText }}</span>
+    }
+  </div>
+
+  @if (trendDisplayValue(); as trendText) {
+    <af-badge-mobile
+      class="af-metric-card-mobile__trend"
+      [tone]="trendBadgeTone()"
+      variant="soft"
+      size="sm"
+    >
+      <span class="af-metric-card-mobile__trend-value">{{ trendText }}</span>
+      @if (trendLabel(); as trendLabelText) {
+        <span class="af-metric-card-mobile__trend-label">{{ trendLabelText }}</span>
+      }
+    </af-badge-mobile>
+  } @else if (helper(); as helperText) {
+    <p class="af-metric-card-mobile__helper">{{ helperText }}</p>
+  }
+}
+
+<div class="af-metric-card-mobile__footer">
+  <ng-content />
+</div>

@@ -1,0 +1,45 @@
+<ng-template #metricCardContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-metric-card-mobile
+    [label]="label()"
+    [value]="value()"
+    [unit]="unit()"
+    [helper]="helper()"
+    [icon]="icon()"
+    [tone]="tone()"
+    [size]="size()"
+    [density]="density()"
+    [variant]="variant()"
+    [trendValue]="trendValue()"
+    [trendDirection]="trendDirection()"
+    [trendLabel]="trendLabel()"
+    [loading]="loading()"
+    [interactive]="interactive()"
+    [ariaLabel]="ariaLabel()"
+    (pressed)="pressed.emit($event)"
+  >
+    <ng-container *ngTemplateOutlet="metricCardContent" />
+  </af-metric-card-mobile>
+} @else {
+  <af-metric-card-desktop
+    [label]="label()"
+    [value]="value()"
+    [unit]="unit()"
+    [helper]="helper()"
+    [icon]="icon()"
+    [tone]="tone()"
+    [size]="size()"
+    [density]="density()"
+    [variant]="variant()"
+    [trendValue]="trendValue()"
+    [trendDirection]="trendDirection()"
+    [trendLabel]="trendLabel()"
+    [loading]="loading()"
+    [interactive]="interactive()"
+    [ariaLabel]="ariaLabel()"
+    (pressed)="pressed.emit($event)"
+  >
+    <ng-container *ngTemplateOutlet="metricCardContent" />
+  </af-metric-card-desktop>
+}

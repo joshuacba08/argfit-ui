@@ -216,8 +216,10 @@ Create desktop-oriented rendering.
 
 ### Data Components
 
+- HU-010 — [AfMetricCard vertical slice](./hus/HU-010-af-metric-card.md) — ready for implementation
 - AfMetricCardDesktop
 - AfAnalyticsCardDesktop
+- HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - AfDataTableDesktop
 
 ---
@@ -252,8 +254,10 @@ Create mobile-native rendering.
 
 ### Data Components
 
+- HU-010 — [AfMetricCard vertical slice](./hus/HU-010-af-metric-card.md) — ready for implementation
 - AfMetricCardMobile
 - AfAnalyticsCardMobile
+- HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - AfMobileList
 
 ---
@@ -275,7 +279,10 @@ Expose unified adaptive APIs.
 - HU-009 — [AfPageShell navigation slice](./hus/HU-009-af-page-shell.md) — ready for implementation
 - AfPageShell
 - AfSidebar
+- HU-010 — [AfMetricCard vertical slice](./hus/HU-010-af-metric-card.md) — ready for implementation
 - AfMetricCard
+- HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
+- AfDataTable
 
 ---
 
@@ -323,7 +330,9 @@ Build advanced enterprise features.
 
 - HU-007 — [Icon and chart foundations](./hus/HU-007-icon-chart-foundations.md) — ready for implementation
 - Data visualization components
+- HU-010 — [AfMetricCard vertical slice](./hus/HU-010-af-metric-card.md) — ready for implementation
 - Dashboard blocks
+- HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - Advanced tables
 - Analytics widgets
 - Complex forms
