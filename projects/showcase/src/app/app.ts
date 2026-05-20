@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import {
     AfAnalyticsCard,
@@ -17,6 +17,7 @@ import {
     AfCardSubtitleDirective,
     AfCardTitleDirective,
     AfChart,
+    AfCheckbox,
     AfDataTable,
     AfDataTableCellDirective,
     AfDataTableEmptyDirective,
@@ -32,6 +33,11 @@ import {
     AfPageShellBrandDirective,
     AfPageShellFooterDirective,
     AfPageShellUserDirective,
+    AfRadioGroup,
+    AfSegmentedControl,
+    AfSelect,
+    AfTextarea,
+    AfToggle,
 } from '@argfit-ui/adaptive';
 import {
     AfPlatformService,
@@ -45,6 +51,7 @@ import {
     type AfDataTablePageChange,
     type AfDataTablePagination,
     type AfDataTableSort,
+    type AfFormOption,
     type AfIconName,
     type AfNavigationItem,
     type AfPlatformPreference,
@@ -66,6 +73,7 @@ interface ShowcaseAthlete {
 }
 
 type ShowcaseAnalyticsPeriod = '1M' | '3M' | '6M' | '1A';
+type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
 
 @Component({
   selector: 'app-root',
@@ -85,6 +93,7 @@ type ShowcaseAnalyticsPeriod = '1M' | '3M' | '6M' | '1A';
     AfCardContentDirective,
     AfCardFooterDirective,
     AfChart,
+    AfCheckbox,
     AfDataTable,
     AfDataTableCellDirective,
     AfDataTableEmptyDirective,
@@ -101,6 +110,11 @@ type ShowcaseAnalyticsPeriod = '1M' | '3M' | '6M' | '1A';
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
+    AfRadioGroup,
+    AfSegmentedControl,
+    AfSelect,
+    AfTextarea,
+    AfToggle,
     ReactiveFormsModule,
   ],
   templateUrl: './app.html',
@@ -123,6 +137,7 @@ export class App {
     { id: 'data-table', label: 'Tabla avanzada', icon: 'table' },
     { id: 'devices', label: 'Dispositivos', icon: 'cpu', badge: 2 },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
+    { id: 'forms', label: 'Formularios', icon: 'check-square' },
     { id: 'reports', label: 'Reportes', icon: 'file-text' },
     { id: 'settings', label: 'Configuracion', icon: 'settings', kind: 'action' },
   ];
@@ -131,8 +146,8 @@ export class App {
     { id: 'home', label: 'Inicio', icon: 'home' },
     { id: 'train', label: 'Entrenar', icon: 'play' },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
+    { id: 'forms', label: 'Formularios', icon: 'check-square' },
     { id: 'devices', label: 'Equipos', icon: 'cpu', badge: 2 },
-    { id: 'settings', label: 'Ajustes', icon: 'settings' },
   ];
 
   private readonly sectionTitles: Readonly<Record<string, string>> = {
@@ -141,6 +156,7 @@ export class App {
     'data-table': 'Tabla avanzada',
     devices: 'Dispositivos',
     analytics: 'Analytics',
+    forms: 'Formularios',
     reports: 'Reportes',
     settings: 'Configuracion',
   };
@@ -151,6 +167,7 @@ export class App {
     'data-table': 'Dataset operativo de atletas',
     devices: 'Sensores vinculados y estado de bateria',
     analytics: 'Lecturas, tendencias y comparativas',
+    forms: 'Altas, configuracion de tests y exportacion',
     reports: 'Exportaciones y entregables del staff',
     settings: 'Preferencias visuales y primitives',
   };
@@ -159,8 +176,8 @@ export class App {
     home: 'dashboard',
     train: 'athletes',
     analytics: 'analytics',
+    forms: 'forms',
     devices: 'devices',
-    settings: 'settings',
   };
 
   protected readonly activeShellTitle = computed(
@@ -181,6 +198,77 @@ export class App {
   protected readonly athleteWeight = signal('68');
   protected readonly athleteEmail = signal('invalid-email');
   protected readonly heightControl = new FormControl<string>('178', { nonNullable: true });
+  protected readonly activeFormsTab = signal<ShowcaseFormsTab>('athlete');
+  protected readonly formTabOptions: readonly AfFormOption[] = [
+    { value: 'athlete', label: 'Nuevo atleta' },
+    { value: 'test', label: 'Configuracion de test' },
+    { value: 'export', label: 'Exportacion' },
+  ];
+  protected readonly sportOptions: readonly AfFormOption[] = [
+    { value: 'voleibol', label: 'Voleibol' },
+    { value: 'futbol', label: 'Futbol' },
+    { value: 'rugby', label: 'Rugby' },
+    { value: 'basquet', label: 'Basquet' },
+    { value: 'atletismo', label: 'Atletismo' },
+  ];
+  protected readonly genderOptions: readonly AfFormOption[] = [
+    { value: 'female', label: 'Femenino' },
+    { value: 'male', label: 'Masculino' },
+    { value: 'other', label: 'Otro' },
+  ];
+  protected readonly testTypeOptions: readonly AfFormOption[] = [
+    { value: 'cmj', label: 'CMJ', hint: 'Countermovement Jump' },
+    { value: 'sj', label: 'SJ', hint: 'Squat Jump' },
+    { value: 'dj', label: 'DJ', hint: 'Drop Jump' },
+    { value: 'abalakov', label: 'Abalakov' },
+  ];
+  protected readonly lateralityOptions: readonly AfFormOption[] = [
+    { value: 'bilateral', label: 'Bilateral' },
+    { value: 'left', label: 'Unilateral izquierdo' },
+    { value: 'right', label: 'Unilateral derecho' },
+  ];
+  protected readonly dateRangeOptions: readonly AfFormOption[] = [
+    { value: 'session', label: 'Ultima sesion' },
+    { value: 'week', label: 'Ultima semana' },
+    { value: 'month', label: 'Ultimo mes' },
+    { value: 'quarter', label: 'Ultimo trimestre' },
+  ];
+  protected readonly exportAthleteOptions: readonly AfFormOption[] = [
+    { value: 'all', label: 'Todos los atletas' },
+    { value: 'maria', label: 'Maria Garcia' },
+    { value: 'santiago', label: 'Santiago Perez' },
+    { value: 'lucas', label: 'Lucas Rodriguez' },
+  ];
+  protected readonly newAthleteForm = new FormGroup({
+    name: new FormControl<string>('Maria Garcia', { nonNullable: true }),
+    email: new FormControl<string>('maria@club.com.ar', { nonNullable: true }),
+    sport: new FormControl<string>('voleibol', { nonNullable: true }),
+    team: new FormControl<string>('Club San Lorenzo', { nonNullable: true }),
+    weight: new FormControl<string>('68', { nonNullable: true }),
+    height: new FormControl<string>('172', { nonNullable: true }),
+    gender: new FormControl<string>('female', { nonNullable: true }),
+    notes: new FormControl<string>('Seguimiento de potencia semanal y asimetria leve.', { nonNullable: true }),
+    notifications: new FormControl<boolean>(true, { nonNullable: true }),
+  });
+  protected readonly testConfigForm = new FormGroup({
+    testType: new FormControl<string>('cmj', { nonNullable: true }),
+    laterality: new FormControl<string>('bilateral', { nonNullable: true }),
+    jumps: new FormControl<string>('8', { nonNullable: true }),
+    rest: new FormControl<string>('3', { nonNullable: true }),
+    threshold: new FormControl<string>('50', { nonNullable: true }),
+    bleAuto: new FormControl<boolean>(true, { nonNullable: true }),
+    audioFeedback: new FormControl<boolean>(true, { nonNullable: true }),
+    vibration: new FormControl<boolean>(false, { nonNullable: true }),
+  });
+  protected readonly exportForm = new FormGroup({
+    range: new FormControl<string>('month', { nonNullable: true }),
+    athlete: new FormControl<string>('all', { nonNullable: true }),
+    csv: new FormControl<boolean>(true, { nonNullable: true }),
+    pdf: new FormControl<boolean>(true, { nonNullable: true }),
+    xlsx: new FormControl<boolean>(false, { nonNullable: true }),
+    shareCoach: new FormControl<boolean>(true, { nonNullable: true }),
+    email: new FormControl<string>('staff@club.com.ar', { nonNullable: true }),
+  });
 
   protected readonly athleteTableColumns: readonly AfDataTableColumn[] = [
     { key: 'name', header: 'Atleta', sortable: true, minWidth: '190px', mobilePriority: 'primary' },
@@ -326,6 +414,25 @@ export class App {
 
   protected updateAthleteEmail(value: string): void {
     this.athleteEmail.set(value);
+  }
+
+  protected setFormsTab(value: string): void {
+    if (value === 'athlete' || value === 'test' || value === 'export') {
+      this.activeFormsTab.set(value);
+      this.recordAction(`Formularios → ${value}`);
+    }
+  }
+
+  protected saveNewAthleteForm(): void {
+    this.recordAction(`Formulario atleta → ${this.newAthleteForm.controls.name.value}`);
+  }
+
+  protected saveTestConfigForm(): void {
+    this.recordAction(`Formulario test → ${this.testConfigForm.controls.testType.value}`);
+  }
+
+  protected generateExportForm(): void {
+    this.recordAction(`Formulario exportacion → ${this.exportForm.controls.range.value}`);
   }
 
   protected emailError(): string | undefined {

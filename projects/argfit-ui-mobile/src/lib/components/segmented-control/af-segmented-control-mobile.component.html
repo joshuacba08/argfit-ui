@@ -1,0 +1,35 @@
+<div class="af-segmented-control-mobile__field">
+  @if (label(); as labelText) {
+    <span class="af-segmented-control-mobile__label" [id]="labelId()">{{ labelText }}</span>
+  }
+
+  <div
+    class="af-segmented-control-mobile__control"
+    role="radiogroup"
+    [attr.aria-label]="label() ? null : ariaLabel()"
+    [attr.aria-labelledby]="label() ? labelId() : null"
+    [attr.aria-describedby]="describedBy()"
+  >
+    @for (option of options(); track option.value) {
+      <button
+        class="af-segmented-control-mobile__item"
+        type="button"
+        role="radio"
+        [class.is-active]="value() === option.value"
+        [disabled]="disabled() || option.disabled"
+        [attr.aria-checked]="value() === option.value"
+        (click)="selectOption(option)"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      >
+        {{ option.label }}
+      </button>
+    }
+  </div>
+
+  @if (error(); as errorText) {
+    <p class="af-segmented-control-mobile__message af-segmented-control-mobile__message--error" [id]="errorId()">{{ errorText }}</p>
+  } @else if (hint(); as hintText) {
+    <p class="af-segmented-control-mobile__message af-segmented-control-mobile__message--hint" [id]="hintId()">{{ hintText }}</p>
+  }
+</div>

@@ -1,0 +1,31 @@
+@if (isMobile()) {
+  <af-toggle-mobile
+    [checked]="resolvedChecked()"
+    [label]="label()"
+    [description]="description()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [inputId]="inputId()"
+    [ariaLabel]="ariaLabel()"
+    (checkedChange)="onInternalCheckedChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-toggle-desktop
+    [checked]="resolvedChecked()"
+    [label]="label()"
+    [description]="description()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [inputId]="inputId()"
+    [ariaLabel]="ariaLabel()"
+    (checkedChange)="onInternalCheckedChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

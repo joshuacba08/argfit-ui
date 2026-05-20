@@ -1,0 +1,93 @@
+.af-toggle-desktop {
+  display: block;
+  font-family: var(--af-font-body);
+  width: 100%;
+}
+
+.af-toggle-desktop__row {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.af-toggle-desktop__copy {
+  display: grid;
+  gap: var(--af-space-0_5);
+  min-width: 0;
+}
+
+.af-toggle-desktop__label {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-snug);
+}
+
+.af-toggle-desktop__description,
+.af-toggle-desktop__message {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+}
+
+.af-toggle-desktop__switch {
+  background: var(--af-color-neutral-700, #334e68);
+  border: 0;
+  border-radius: var(--af-radius-pill);
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 24px;
+  padding: 3px;
+  position: relative;
+  transition: background-color var(--af-duration-normal) var(--af-ease-out), box-shadow var(--af-duration-fast) var(--af-ease-out);
+  width: 44px;
+}
+
+.af-toggle-desktop__switch[aria-checked='true'] {
+  background: var(--af-primary);
+}
+
+.af-toggle-desktop__switch:focus-visible {
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.2);
+  outline: none;
+}
+
+.af-toggle-desktop__thumb {
+  background: #fff;
+  border-radius: 50%;
+  display: block;
+  height: 18px;
+  transition: transform var(--af-duration-normal) var(--af-ease-out);
+  width: 18px;
+}
+
+.af-toggle-desktop__switch[aria-checked='true'] .af-toggle-desktop__thumb {
+  transform: translateX(20px);
+}
+
+.af-toggle-desktop[data-size='sm'] .af-toggle-desktop__label {
+  font-size: var(--af-text-xs);
+}
+
+.af-toggle-desktop[data-size='lg'] .af-toggle-desktop__label {
+  font-size: var(--af-text-base);
+}
+
+.af-toggle-desktop[data-disabled] {
+  opacity: 0.55;
+}
+
+.af-toggle-desktop[data-disabled] .af-toggle-desktop__switch {
+  cursor: not-allowed;
+}
+
+.af-toggle-desktop__message {
+  margin-top: var(--af-space-1_5);
+}
+
+.af-toggle-desktop__message--error {
+  color: var(--af-danger);
+}

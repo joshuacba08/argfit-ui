@@ -1,0 +1,31 @@
+<button
+  class="af-toggle-mobile__row"
+  type="button"
+  role="switch"
+  [id]="resolvedToggleId()"
+  [disabled]="disabled()"
+  [attr.aria-label]="label() ? null : ariaLabel()"
+  [attr.aria-checked]="checked()"
+  [attr.aria-describedby]="describedBy()"
+  (click)="toggle()"
+  (focus)="onFocus()"
+  (blur)="onBlur()"
+>
+  <span class="af-toggle-mobile__copy">
+    @if (label(); as labelText) {
+      <span class="af-toggle-mobile__label">{{ labelText }}</span>
+    }
+    @if (description(); as descriptionText) {
+      <span class="af-toggle-mobile__description" [id]="hintId()">{{ descriptionText }}</span>
+    }
+  </span>
+  <span class="af-toggle-mobile__switch" aria-hidden="true">
+    <span class="af-toggle-mobile__thumb"></span>
+  </span>
+</button>
+
+@if (error(); as errorText) {
+  <p class="af-toggle-mobile__message af-toggle-mobile__message--error" [id]="errorId()">{{ errorText }}</p>
+} @else if (hint(); as hintText) {
+  <p class="af-toggle-mobile__message af-toggle-mobile__message--hint" [id]="hintId()">{{ hintText }}</p>
+}

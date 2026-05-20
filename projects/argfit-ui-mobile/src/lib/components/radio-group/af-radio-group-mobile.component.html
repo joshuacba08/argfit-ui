@@ -1,0 +1,43 @@
+<fieldset class="af-radio-group-mobile__fieldset" [attr.aria-describedby]="describedBy()">
+  @if (label(); as labelText) {
+    <legend class="af-radio-group-mobile__legend">
+      {{ labelText }}
+      @if (required()) {
+        <span class="af-radio-group-mobile__required" aria-hidden="true">*</span>
+      }
+    </legend>
+  }
+
+  <div class="af-radio-group-mobile__list">
+    @for (option of options(); track option.value) {
+      <label class="af-radio-group-mobile__option" [attr.data-disabled]="disabled() || option.disabled ? '' : null">
+        <input
+          class="af-radio-group-mobile__input"
+          type="radio"
+          [name]="resolvedName()"
+          [value]="option.value"
+          [checked]="value() === option.value"
+          [disabled]="disabled() || option.disabled"
+          [required]="required()"
+          [attr.aria-invalid]="error() ? 'true' : null"
+          (change)="onOptionChange($event)"
+          (focus)="onFocus()"
+          (blur)="onBlur()"
+        />
+        <span class="af-radio-group-mobile__mark" aria-hidden="true"></span>
+        <span class="af-radio-group-mobile__copy">
+          <span class="af-radio-group-mobile__text">{{ option.label }}</span>
+          @if (option.hint; as optionHint) {
+            <span class="af-radio-group-mobile__option-hint">{{ optionHint }}</span>
+          }
+        </span>
+      </label>
+    }
+  </div>
+
+  @if (error(); as errorText) {
+    <p class="af-radio-group-mobile__message af-radio-group-mobile__message--error" [id]="errorId()">{{ errorText }}</p>
+  } @else if (hint(); as hintText) {
+    <p class="af-radio-group-mobile__message af-radio-group-mobile__message--hint" [id]="hintId()">{{ hintText }}</p>
+  }
+</fieldset>

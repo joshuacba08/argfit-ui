@@ -1,0 +1,27 @@
+<label class="af-checkbox-desktop__label" [attr.for]="resolvedCheckboxId()">
+  <input
+    class="af-checkbox-desktop__input"
+    type="checkbox"
+    [id]="resolvedCheckboxId()"
+    [checked]="checked()"
+    [disabled]="disabled()"
+    [required]="required()"
+    [attr.name]="name() ?? null"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (change)="onChange($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  />
+  <span class="af-checkbox-desktop__box" aria-hidden="true"></span>
+  <span class="af-checkbox-desktop__copy">
+    @if (label(); as labelText) {
+      <span class="af-checkbox-desktop__text">{{ labelText }}</span>
+    }
+    @if (error(); as errorText) {
+      <span class="af-checkbox-desktop__message af-checkbox-desktop__message--error" [id]="errorId()">{{ errorText }}</span>
+    } @else if (hint(); as hintText) {
+      <span class="af-checkbox-desktop__message af-checkbox-desktop__message--hint" [id]="hintId()">{{ hintText }}</span>
+    }
+  </span>
+</label>

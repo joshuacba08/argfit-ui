@@ -34,6 +34,9 @@ export {
     AfChartComponent as AfChart, AfChartComponent
 } from './lib/components/chart/af-chart.component';
 export {
+    AfCheckboxComponent as AfCheckbox, AfCheckboxComponent
+} from './lib/components/checkbox/af-checkbox.component';
+export {
     AfDataTableCellDirective,
     AfDataTableExpandedRowDirective
 } from './lib/components/data-table/af-data-table-cell.directive';
@@ -72,4 +75,19 @@ export {
 export {
     AfPageShellComponent as AfPageShell, AfPageShellComponent
 } from './lib/components/page-shell/af-page-shell.component';
+export {
+    AfRadioGroupComponent as AfRadioGroup, AfRadioGroupComponent
+} from './lib/components/radio-group/af-radio-group.component';
+export {
+    AfSegmentedControlComponent as AfSegmentedControl, AfSegmentedControlComponent
+} from './lib/components/segmented-control/af-segmented-control.component';
+export {
+    AfSelectComponent as AfSelect, AfSelectComponent
+} from './lib/components/select/af-select.component';
+export {
+    AfTextareaComponent as AfTextarea, AfTextareaComponent
+} from './lib/components/textarea/af-textarea.component';
+export {
+    AfToggleComponent as AfToggle, AfToggleComponent
+} from './lib/components/toggle/af-toggle.component';
 

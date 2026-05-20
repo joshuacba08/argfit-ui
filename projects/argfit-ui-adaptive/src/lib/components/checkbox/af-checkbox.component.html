@@ -1,0 +1,31 @@
+@if (isMobile()) {
+  <af-checkbox-mobile
+    [checked]="resolvedChecked()"
+    [label]="label()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [required]="required()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (checkedChange)="onInternalCheckedChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-checkbox-desktop
+    [checked]="resolvedChecked()"
+    [label]="label()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [required]="required()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (checkedChange)="onInternalCheckedChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

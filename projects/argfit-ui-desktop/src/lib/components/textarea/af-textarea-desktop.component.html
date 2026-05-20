@@ -1,0 +1,43 @@
+<div class="af-textarea-desktop__field">
+  @if (label(); as labelText) {
+    <label class="af-textarea-desktop__label" [attr.for]="resolvedTextareaId()">
+      {{ labelText }}
+      @if (required()) {
+        <span class="af-textarea-desktop__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <textarea
+    class="af-textarea-desktop__textarea"
+    [id]="resolvedTextareaId()"
+    [value]="value()"
+    [attr.placeholder]="placeholder() ?? null"
+    [attr.rows]="rows()"
+    [attr.maxlength]="maxLength() ?? null"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    [attr.name]="name() ?? null"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-required]="required() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  ></textarea>
+
+  <div class="af-textarea-desktop__meta">
+    @if (error(); as errorText) {
+      <p class="af-textarea-desktop__message af-textarea-desktop__message--error" [id]="errorId()">
+        {{ errorText }}
+      </p>
+    } @else if (hint(); as hintText) {
+      <p class="af-textarea-desktop__message af-textarea-desktop__message--hint" [id]="hintId()">
+        {{ hintText }}
+      </p>
+    }
+    @if (maxLength(); as lengthLimit) {
+      <span class="af-textarea-desktop__counter">{{ value().length }}/{{ lengthLimit }}</span>
+    }
+  </div>
+</div>

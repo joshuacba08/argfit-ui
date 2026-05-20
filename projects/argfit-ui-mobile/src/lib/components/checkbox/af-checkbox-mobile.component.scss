@@ -1,0 +1,93 @@
+.af-checkbox-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+}
+
+.af-checkbox-mobile__row {
+  align-items: flex-start;
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft, var(--af-border));
+  border-radius: var(--af-radius-lg);
+  cursor: pointer;
+  display: flex;
+  gap: var(--af-space-3);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-checkbox-mobile__input {
+  block-size: 1px;
+  inline-size: 1px;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+}
+
+.af-checkbox-mobile__box {
+  align-items: center;
+  border: 2px solid var(--af-color-neutral-600, #486581);
+  border-radius: 5px;
+  display: inline-flex;
+  flex: 0 0 20px;
+  height: 20px;
+  justify-content: center;
+  margin-top: 1px;
+  transition: background-color var(--af-duration-fast) var(--af-ease-out), border-color var(--af-duration-fast) var(--af-ease-out), box-shadow var(--af-duration-fast) var(--af-ease-out);
+  width: 20px;
+}
+
+.af-checkbox-mobile__box::after {
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  content: '';
+  height: 9px;
+  opacity: 0;
+  transform: translateY(-1px) rotate(45deg);
+  width: 5px;
+}
+
+.af-checkbox-mobile__input:checked + .af-checkbox-mobile__box {
+  background: var(--af-primary);
+  border-color: var(--af-primary);
+}
+
+.af-checkbox-mobile__input:checked + .af-checkbox-mobile__box::after {
+  opacity: 1;
+}
+
+.af-checkbox-mobile__input:focus-visible + .af-checkbox-mobile__box {
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.2);
+}
+
+.af-checkbox-mobile__copy {
+  display: grid;
+  gap: var(--af-space-0_5);
+}
+
+.af-checkbox-mobile__text {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-medium);
+  line-height: var(--af-leading-snug);
+}
+
+.af-checkbox-mobile__message {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+}
+
+.af-checkbox-mobile__message--error {
+  color: var(--af-danger);
+}
+
+.af-checkbox-mobile[data-state='error'] .af-checkbox-mobile__box {
+  border-color: var(--af-danger);
+}
+
+.af-checkbox-mobile[data-disabled] {
+  opacity: 0.55;
+}
+
+.af-checkbox-mobile[data-disabled] .af-checkbox-mobile__row {
+  cursor: not-allowed;
+}

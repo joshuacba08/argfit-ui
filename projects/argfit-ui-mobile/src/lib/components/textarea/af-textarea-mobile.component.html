@@ -1,0 +1,40 @@
+<div class="af-textarea-mobile__field">
+  <div class="af-textarea-mobile__control">
+    @if (label(); as labelText) {
+      <label class="af-textarea-mobile__label" [attr.for]="resolvedTextareaId()">
+        {{ labelText }}
+        @if (required()) {
+          <span class="af-textarea-mobile__required" aria-hidden="true">*</span>
+        }
+      </label>
+    }
+    <textarea
+      class="af-textarea-mobile__textarea"
+      [id]="resolvedTextareaId()"
+      [value]="value()"
+      [attr.placeholder]="placeholder() ?? null"
+      [attr.rows]="rows()"
+      [attr.maxlength]="maxLength() ?? null"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [attr.name]="name() ?? null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    ></textarea>
+  </div>
+
+  <div class="af-textarea-mobile__meta">
+    @if (error(); as errorText) {
+      <p class="af-textarea-mobile__message af-textarea-mobile__message--error" [id]="errorId()">{{ errorText }}</p>
+    } @else if (hint(); as hintText) {
+      <p class="af-textarea-mobile__message af-textarea-mobile__message--hint" [id]="hintId()">{{ hintText }}</p>
+    }
+    @if (maxLength(); as lengthLimit) {
+      <span class="af-textarea-mobile__counter">{{ value().length }}/{{ lengthLimit }}</span>
+    }
+  </div>
+</div>

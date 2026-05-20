@@ -1,0 +1,32 @@
+<div class="af-toggle-desktop__row">
+  <div class="af-toggle-desktop__copy">
+    @if (label(); as labelText) {
+      <label class="af-toggle-desktop__label" [attr.for]="resolvedToggleId()">{{ labelText }}</label>
+    }
+    @if (description(); as descriptionText) {
+      <p class="af-toggle-desktop__description" [id]="hintId()">{{ descriptionText }}</p>
+    }
+  </div>
+
+  <button
+    class="af-toggle-desktop__switch"
+    type="button"
+    role="switch"
+    [id]="resolvedToggleId()"
+    [disabled]="disabled()"
+    [attr.aria-label]="label() ? null : ariaLabel()"
+    [attr.aria-checked]="checked()"
+    [attr.aria-describedby]="describedBy()"
+    (click)="toggle()"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  >
+    <span class="af-toggle-desktop__thumb" aria-hidden="true"></span>
+  </button>
+</div>
+
+@if (error(); as errorText) {
+  <p class="af-toggle-desktop__message af-toggle-desktop__message--error" [id]="errorId()">{{ errorText }}</p>
+} @else if (hint(); as hintText) {
+  <p class="af-toggle-desktop__message af-toggle-desktop__message--hint" [id]="hintId()">{{ hintText }}</p>
+}

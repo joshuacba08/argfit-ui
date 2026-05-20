@@ -1,0 +1,92 @@
+.af-checkbox-desktop {
+  display: block;
+  font-family: var(--af-font-body);
+}
+
+.af-checkbox-desktop__label {
+  align-items: flex-start;
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--af-space-2_5, 10px);
+  min-width: 0;
+}
+
+.af-checkbox-desktop__input {
+  block-size: 1px;
+  inline-size: 1px;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+}
+
+.af-checkbox-desktop__box {
+  align-items: center;
+  border: 2px solid var(--af-color-neutral-600, #486581);
+  border-radius: var(--af-radius-sm);
+  display: inline-flex;
+  flex: 0 0 18px;
+  height: 18px;
+  justify-content: center;
+  margin-top: 1px;
+  transition: background-color var(--af-duration-fast) var(--af-ease-out), border-color var(--af-duration-fast) var(--af-ease-out), box-shadow var(--af-duration-fast) var(--af-ease-out);
+  width: 18px;
+}
+
+.af-checkbox-desktop__box::after {
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  content: '';
+  height: 8px;
+  opacity: 0;
+  transform: translateY(-1px) rotate(45deg);
+  width: 4px;
+}
+
+.af-checkbox-desktop__input:checked + .af-checkbox-desktop__box {
+  background: var(--af-primary);
+  border-color: var(--af-primary);
+}
+
+.af-checkbox-desktop__input:checked + .af-checkbox-desktop__box::after {
+  opacity: 1;
+}
+
+.af-checkbox-desktop__input:focus-visible + .af-checkbox-desktop__box {
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.2);
+}
+
+.af-checkbox-desktop__copy {
+  display: grid;
+  gap: var(--af-space-0_5);
+  min-width: 0;
+}
+
+.af-checkbox-desktop__text {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-medium);
+  line-height: var(--af-leading-snug);
+}
+
+.af-checkbox-desktop__message {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+}
+
+.af-checkbox-desktop__message--error {
+  color: var(--af-danger);
+}
+
+.af-checkbox-desktop[data-state='error'] .af-checkbox-desktop__box {
+  border-color: var(--af-danger);
+}
+
+.af-checkbox-desktop[data-disabled] {
+  opacity: 0.55;
+}
+
+.af-checkbox-desktop[data-disabled] .af-checkbox-desktop__label {
+  cursor: not-allowed;
+}

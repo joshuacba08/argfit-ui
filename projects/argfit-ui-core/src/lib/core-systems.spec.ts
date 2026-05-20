@@ -10,17 +10,20 @@ import type {
     AfBadgeTone,
     AfBadgeVariant,
     AfBreadcrumbItem,
+    AfControlSize,
     AfDataTableColumn,
     AfDataTableDensity,
     AfDataTablePagination,
     AfDataTableSelectionMode,
     AfDataTableSort,
+    AfFormOption,
     AfMetricCardTone,
     AfMetricCardVariant,
     AfMetricTrendDirection,
     AfNavigationItem,
     AfPageShellDensity,
     AfPageShellVariant,
+    AfValidationState,
 } from '../public-api';
 import { provideArgfitUi } from './providers/provide-argfit-ui';
 import { AfPlatformService } from './services/platform.service';
@@ -187,5 +190,20 @@ describe('ArgFit core systems', () => {
     expect(variant).toBe('surface');
     expect(tone).toBe('accent');
     expect(state).toBe('ready');
+  });
+
+  it('exports the form controls contract through the public API', () => {
+    const option: AfFormOption<'cmj'> = {
+      value: 'cmj',
+      label: 'CMJ',
+      hint: 'Countermovement Jump',
+    };
+    const size: AfControlSize = 'md';
+    const validation: AfValidationState = 'success';
+
+    expect(option.value).toBe('cmj');
+    expect(option.hint).toBe('Countermovement Jump');
+    expect(size).toBe('md');
+    expect(validation).toBe('success');
   });
 });

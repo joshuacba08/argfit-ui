@@ -1,0 +1,101 @@
+.af-textarea-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+  width: 100%;
+}
+
+.af-textarea-mobile__field {
+  display: grid;
+  gap: var(--af-space-1);
+}
+
+.af-textarea-mobile__control {
+  background: var(--af-bg-elevated);
+  border: 1.5px solid var(--af-border);
+  border-radius: var(--af-radius-lg);
+  min-height: 112px;
+  position: relative;
+  transition: border-color var(--af-duration-fast) var(--af-ease-out), box-shadow var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-textarea-mobile__control:focus-within {
+  border-color: var(--af-primary);
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.18);
+}
+
+.af-textarea-mobile__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: 10px;
+  font-weight: var(--af-font-weight-semibold);
+  left: var(--af-space-4);
+  letter-spacing: var(--af-tracking-wider);
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  text-transform: uppercase;
+  top: var(--af-space-2);
+}
+
+.af-textarea-mobile__required {
+  color: var(--af-danger);
+}
+
+.af-textarea-mobile__textarea {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--af-text-main);
+  font: inherit;
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  min-height: 110px;
+  outline: none;
+  padding: 26px var(--af-space-4) var(--af-space-3);
+  resize: none;
+  width: 100%;
+}
+
+.af-textarea-mobile[data-state='success'] .af-textarea-mobile__control {
+  border-color: rgba(0, 200, 83, 0.45);
+}
+
+.af-textarea-mobile[data-state='error'] .af-textarea-mobile__control {
+  border-color: var(--af-danger);
+}
+
+.af-textarea-mobile[data-state='error'] .af-textarea-mobile__label {
+  color: var(--af-danger);
+}
+
+.af-textarea-mobile[data-disabled] .af-textarea-mobile__control,
+.af-textarea-mobile[data-readonly] .af-textarea-mobile__control {
+  background: var(--af-bg-surface);
+}
+
+.af-textarea-mobile[data-disabled] .af-textarea-mobile__control {
+  opacity: 0.6;
+}
+
+.af-textarea-mobile__textarea::placeholder {
+  color: var(--af-text-soft, var(--af-text-muted));
+}
+
+.af-textarea-mobile__meta {
+  align-items: start;
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.af-textarea-mobile__message,
+.af-textarea-mobile__counter {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+  padding-inline: var(--af-space-1);
+}
+
+.af-textarea-mobile__message--error {
+  color: var(--af-danger);
+}

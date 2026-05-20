@@ -1,0 +1,39 @@
+@if (isMobile()) {
+  <af-textarea-mobile
+    [value]="resolvedValue()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [rows]="rows()"
+    [maxLength]="maxLength()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-textarea-desktop
+    [value]="resolvedValue()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [rows]="rows()"
+    [maxLength]="maxLength()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

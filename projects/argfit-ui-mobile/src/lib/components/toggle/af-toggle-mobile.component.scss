@@ -1,0 +1,91 @@
+.af-toggle-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+  width: 100%;
+}
+
+.af-toggle-mobile__row {
+  align-items: center;
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft, var(--af-border));
+  border-radius: var(--af-radius-lg);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  min-height: 58px;
+  padding: var(--af-space-3) var(--af-space-4);
+  text-align: left;
+  width: 100%;
+}
+
+.af-toggle-mobile__row:focus-visible {
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.2);
+  outline: none;
+}
+
+.af-toggle-mobile__copy {
+  display: grid;
+  gap: var(--af-space-0_5);
+  min-width: 0;
+}
+
+.af-toggle-mobile__label {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-snug);
+}
+
+.af-toggle-mobile__description,
+.af-toggle-mobile__message {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+}
+
+.af-toggle-mobile__switch {
+  background: var(--af-color-neutral-700, #334e68);
+  border-radius: var(--af-radius-pill);
+  flex: 0 0 44px;
+  height: 24px;
+  padding: 3px;
+  transition: background-color var(--af-duration-normal) var(--af-ease-out);
+  width: 44px;
+}
+
+.af-toggle-mobile__thumb {
+  background: #fff;
+  border-radius: 50%;
+  display: block;
+  height: 18px;
+  transition: transform var(--af-duration-normal) var(--af-ease-out);
+  width: 18px;
+}
+
+.af-toggle-mobile__row[aria-checked='true'] .af-toggle-mobile__switch {
+  background: var(--af-primary);
+}
+
+.af-toggle-mobile__row[aria-checked='true'] .af-toggle-mobile__thumb {
+  transform: translateX(20px);
+}
+
+.af-toggle-mobile[data-disabled] {
+  opacity: 0.55;
+}
+
+.af-toggle-mobile[data-disabled] .af-toggle-mobile__row {
+  cursor: not-allowed;
+}
+
+.af-toggle-mobile__message {
+  margin-top: var(--af-space-1);
+  padding-inline: var(--af-space-1);
+}
+
+.af-toggle-mobile__message--error {
+  color: var(--af-danger);
+}

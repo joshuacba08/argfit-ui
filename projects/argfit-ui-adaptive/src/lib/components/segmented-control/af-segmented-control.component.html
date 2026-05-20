@@ -1,0 +1,31 @@
+@if (isMobile()) {
+  <af-segmented-control-mobile
+    [value]="resolvedValue()"
+    [options]="options()"
+    [label]="label()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [inputId]="inputId()"
+    [ariaLabel]="ariaLabel()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-segmented-control-desktop
+    [value]="resolvedValue()"
+    [options]="options()"
+    [label]="label()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [inputId]="inputId()"
+    [ariaLabel]="ariaLabel()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

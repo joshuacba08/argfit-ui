@@ -1,0 +1,108 @@
+.af-select-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+  width: 100%;
+}
+
+.af-select-mobile__field {
+  display: grid;
+  gap: var(--af-space-1);
+}
+
+.af-select-mobile__control {
+  background: var(--af-bg-elevated);
+  border: 1.5px solid var(--af-border);
+  border-radius: var(--af-radius-lg);
+  min-height: 56px;
+  position: relative;
+  transition: border-color var(--af-duration-fast) var(--af-ease-out), box-shadow var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-select-mobile__control::after {
+  border: solid var(--af-text-soft, var(--af-text-muted));
+  border-width: 0 1.5px 1.5px 0;
+  content: '';
+  height: 7px;
+  pointer-events: none;
+  position: absolute;
+  right: var(--af-space-4);
+  top: 50%;
+  transform: translateY(-65%) rotate(45deg);
+  width: 7px;
+}
+
+.af-select-mobile__control:focus-within {
+  border-color: var(--af-primary);
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.18);
+}
+
+.af-select-mobile__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: 10px;
+  font-weight: var(--af-font-weight-semibold);
+  left: var(--af-space-4);
+  letter-spacing: var(--af-tracking-wider);
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  text-transform: uppercase;
+  top: var(--af-space-2);
+}
+
+.af-select-mobile__required {
+  color: var(--af-danger);
+}
+
+.af-select-mobile__select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--af-text-main);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  min-height: 54px;
+  outline: none;
+  padding: 24px calc(var(--af-space-8) + var(--af-space-2)) var(--af-space-2) var(--af-space-4);
+  width: 100%;
+}
+
+.af-select-mobile[data-size='sm'] .af-select-mobile__control,
+.af-select-mobile[data-size='sm'] .af-select-mobile__select {
+  min-height: 48px;
+}
+
+.af-select-mobile[data-size='lg'] .af-select-mobile__control,
+.af-select-mobile[data-size='lg'] .af-select-mobile__select {
+  min-height: 64px;
+}
+
+.af-select-mobile[data-state='success'] .af-select-mobile__control {
+  border-color: rgba(0, 200, 83, 0.45);
+}
+
+.af-select-mobile[data-state='error'] .af-select-mobile__control {
+  border-color: var(--af-danger);
+}
+
+.af-select-mobile[data-state='error'] .af-select-mobile__label {
+  color: var(--af-danger);
+}
+
+.af-select-mobile[data-disabled] .af-select-mobile__control {
+  background: var(--af-bg-surface);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.af-select-mobile__message {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+  padding-inline: var(--af-space-1);
+}
+
+.af-select-mobile__message--error {
+  color: var(--af-danger);
+}

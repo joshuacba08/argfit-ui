@@ -1,0 +1,34 @@
+@if (isMobile()) {
+  <af-radio-group-mobile
+    [value]="resolvedValue()"
+    [options]="options()"
+    [label]="label()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [disabled]="resolvedDisabled()"
+    [required]="required()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-radio-group-desktop
+    [value]="resolvedValue()"
+    [options]="options()"
+    [label]="label()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [layout]="layout()"
+    [disabled]="resolvedDisabled()"
+    [required]="required()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

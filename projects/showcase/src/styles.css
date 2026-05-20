@@ -83,3 +83,111 @@ samp {
   background: var(--af-scrollbar-thumb);
   border-radius: var(--af-radius-pill);
 }
+
+.forms-view__header {
+  align-items: end;
+  gap: var(--af-space-4);
+}
+
+.forms-tabs {
+  justify-self: end;
+  min-width: min(100%, 420px);
+}
+
+.forms-panel {
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: var(--af-space-5);
+  max-width: 860px;
+  padding: var(--af-space-5);
+  width: 100%;
+}
+
+.forms-panel__header {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.forms-panel__header > h3 {
+  color: var(--af-text-main);
+  flex: 1;
+  font-size: var(--af-text-lg);
+  line-height: var(--af-leading-tight);
+  margin: 0;
+}
+
+.forms-panel__subsection,
+.forms-stack,
+.forms-toggle-list,
+.forms-check-list {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.forms-panel__label {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.forms-grid {
+  display: grid;
+  gap: var(--af-space-4);
+}
+
+.forms-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.forms-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.forms-toggle-list,
+.forms-check-list {
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  padding: var(--af-space-4);
+}
+
+.forms-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-3);
+  justify-content: flex-end;
+}
+
+@media (max-width: 860px) {
+  .forms-view__header {
+    align-items: stretch;
+    display: grid;
+  }
+
+  .forms-tabs {
+    justify-self: stretch;
+    min-width: 0;
+  }
+
+  .forms-panel {
+    border-radius: var(--af-radius-lg);
+    padding: var(--af-space-4);
+  }
+
+  .forms-panel__header,
+  .forms-actions {
+    align-items: stretch;
+    display: grid;
+  }
+
+  .forms-grid--two,
+  .forms-grid--three {
+    grid-template-columns: 1fr;
+  }
+}

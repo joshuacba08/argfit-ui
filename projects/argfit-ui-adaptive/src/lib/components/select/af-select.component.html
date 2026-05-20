@@ -1,0 +1,35 @@
+@if (isMobile()) {
+  <af-select-mobile
+    [value]="resolvedValue()"
+    [options]="options()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-select-desktop
+    [value]="resolvedValue()"
+    [options]="options()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [hint]="hint()"
+    [error]="error()"
+    [state]="state()"
+    [size]="size()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

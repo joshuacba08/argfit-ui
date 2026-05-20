@@ -1,0 +1,78 @@
+.af-segmented-control-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+  width: 100%;
+}
+
+.af-segmented-control-mobile__field {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-segmented-control-mobile__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-wider);
+  line-height: var(--af-line-height-tight);
+  padding-inline: var(--af-space-1);
+  text-transform: uppercase;
+}
+
+.af-segmented-control-mobile__control {
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft, var(--af-border));
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: 3px;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  padding: 3px;
+  width: 100%;
+}
+
+.af-segmented-control-mobile__item {
+  background: transparent;
+  border: 0;
+  border-radius: calc(var(--af-radius-lg) - 4px);
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-medium);
+  min-height: 38px;
+  min-width: 0;
+  padding: 0 var(--af-space-2);
+  transition: background-color var(--af-duration-normal) var(--af-ease-out), color var(--af-duration-normal) var(--af-ease-out);
+}
+
+.af-segmented-control-mobile__item.is-active {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-segmented-control-mobile__item:focus-visible {
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.2);
+  outline: none;
+}
+
+.af-segmented-control-mobile[data-state='error'] .af-segmented-control-mobile__control {
+  border-color: var(--af-danger);
+}
+
+.af-segmented-control-mobile[data-disabled] {
+  opacity: 0.55;
+}
+
+.af-segmented-control-mobile__message {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+  padding-inline: var(--af-space-1);
+}
+
+.af-segmented-control-mobile__message--error {
+  color: var(--af-danger);
+}

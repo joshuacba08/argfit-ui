@@ -245,6 +245,52 @@ describe('App', () => {
     expect(chartTypes).toContain('parallel');
   });
 
+  it('renders the AfFormControls showcase tabs with reactive forms', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('forms');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Controles adaptativos');
+    expect(compiled.querySelector('af-segmented-control-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-select-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-textarea-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-toggle-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-radio-group-desktop')).not.toBeNull();
+    expect(compiled.textContent).toContain('Registro operativo');
+
+    fixture.componentInstance['setFormsTab']('test');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(compiled.textContent).toContain('Parametros de sesion');
+    expect(compiled.querySelectorAll('af-toggle-desktop').length).toBeGreaterThanOrEqual(3);
+
+    fixture.componentInstance['setFormsTab']('export');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(compiled.textContent).toContain('Reporte para staff');
+    expect(compiled.querySelectorAll('af-checkbox-desktop').length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('renders the AfFormControls mobile showcase alternative', async () => {
+    const platform = TestBed.inject(AfPlatformService);
+    platform.setPreference('mobile');
+
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('forms');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('af-page-shell-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-select-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-textarea-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-toggle-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-radio-group-mobile')).not.toBeNull();
+    expect(compiled.textContent).toContain('Nuevo atleta');
+  });
+
   it('should render the AfInput vertical slice with reactive form binding', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

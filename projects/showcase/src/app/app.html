@@ -563,6 +563,171 @@
       </section>
     }
 
+    @case ('forms') {
+      <section class="shell-section forms-view" aria-label="Formularios">
+        <div class="section-header section-header--inline forms-view__header">
+          <div>
+            <span class="eyebrow">Formularios</span>
+            <h2>Controles adaptativos</h2>
+            <p>Altas, configuracion de tests y exportacion usando Angular Forms.</p>
+          </div>
+          <af-segmented-control
+            class="forms-tabs"
+            ariaLabel="Seleccionar formulario"
+            [options]="formTabOptions"
+            [value]="activeFormsTab()"
+            (valueChange)="setFormsTab($event)"
+          />
+        </div>
+
+        @switch (activeFormsTab()) {
+          @case ('test') {
+            <form class="forms-panel" [formGroup]="testConfigForm">
+              <div class="forms-panel__header">
+                <span class="eyebrow">Configuracion de test</span>
+                <h3>Parametros de sesion</h3>
+                <af-badge tone="primary">CMJ ready</af-badge>
+              </div>
+
+              <div class="forms-stack">
+                <af-segmented-control
+                  label="Tipo de test"
+                  [options]="testTypeOptions"
+                  formControlName="testType"
+                />
+
+                <div class="forms-grid forms-grid--two">
+                  <af-select
+                    label="Lateralidad"
+                    [options]="lateralityOptions"
+                    formControlName="laterality"
+                  />
+                  <af-input label="Umbral de deteccion" suffix="N" type="number" formControlName="threshold" />
+                </div>
+
+                <div class="forms-grid forms-grid--two">
+                  <af-input label="Cantidad de saltos" type="number" formControlName="jumps" />
+                  <af-input label="Descanso entre saltos" suffix="s" type="number" formControlName="rest" />
+                </div>
+
+                <div class="forms-toggle-list">
+                  <af-toggle
+                    label="Auto-conectar BLE"
+                    description="Conectar automaticamente al dispositivo mas cercano"
+                    formControlName="bleAuto"
+                  />
+                  <af-toggle
+                    label="Audio feedback"
+                    description="Reproducir sonido al detectar cada salto"
+                    formControlName="audioFeedback"
+                  />
+                  <af-toggle
+                    label="Vibracion"
+                    description="Aviso tactil para operadores en campo"
+                    formControlName="vibration"
+                  />
+                </div>
+              </div>
+
+              <div class="forms-actions">
+                <af-button variant="secondary" (pressed)="recordAction('Formulario test → defaults')">Restaurar defaults</af-button>
+                <af-button (pressed)="saveTestConfigForm()">Guardar configuracion</af-button>
+              </div>
+            </form>
+          }
+
+          @case ('export') {
+            <form class="forms-panel" [formGroup]="exportForm">
+              <div class="forms-panel__header">
+                <span class="eyebrow">Exportacion</span>
+                <h3>Reporte para staff</h3>
+                <af-badge tone="success" icon="download">Listo</af-badge>
+              </div>
+
+              <div class="forms-grid forms-grid--two">
+                <af-select label="Rango de fechas" [options]="dateRangeOptions" formControlName="range" />
+                <af-select label="Atleta" [options]="exportAthleteOptions" formControlName="athlete" />
+              </div>
+
+              <div class="forms-panel__subsection">
+                <span class="forms-panel__label">Formatos de exportacion</span>
+                <div class="forms-check-list">
+                  <af-checkbox label="CSV - Datos tabulares para analisis externo" formControlName="csv" />
+                  <af-checkbox label="PDF - Reporte visual con graficos" formControlName="pdf" />
+                  <af-checkbox label="XLSX - Planilla de calculo" formControlName="xlsx" />
+                </div>
+              </div>
+
+              <div class="forms-stack">
+                <af-toggle
+                  label="Enviar copia al cuerpo tecnico"
+                  description="Los entrenadores asignados recibiran el reporte por email"
+                  formControlName="shareCoach"
+                />
+                <af-input
+                  label="Email adicional"
+                  type="email"
+                  hint="Opcional - se enviara una copia al generar"
+                  formControlName="email"
+                />
+              </div>
+
+              <div class="forms-actions">
+                <af-button variant="secondary" (pressed)="recordAction('Formulario exportacion → preview')">Vista previa</af-button>
+                <af-button (pressed)="generateExportForm()">Generar reporte</af-button>
+              </div>
+            </form>
+          }
+
+          @default {
+            <form class="forms-panel" [formGroup]="newAthleteForm">
+              <div class="forms-panel__header">
+                <span class="eyebrow">Nuevo atleta</span>
+                <h3>Registro operativo</h3>
+                <af-badge tone="primary">Reactive Forms</af-badge>
+              </div>
+
+              <div class="forms-grid forms-grid--two">
+                <af-input label="Nombre completo" formControlName="name" tone="success" />
+                <af-input label="Email" type="email" hint="Se usara para enviar reportes" formControlName="email" />
+                <af-select label="Deporte" [options]="sportOptions" formControlName="sport" state="success" />
+                <af-input label="Equipo / Club" formControlName="team" />
+              </div>
+
+              <div class="forms-grid forms-grid--three">
+                <af-input label="Peso" type="number" suffix="kg" formControlName="weight" />
+                <af-input label="Altura" type="number" suffix="cm" formControlName="height" />
+                <af-radio-group
+                  label="Genero"
+                  [options]="genderOptions"
+                  formControlName="gender"
+                />
+              </div>
+
+              <af-textarea
+                label="Observaciones"
+                placeholder="Notas del equipo tecnico"
+                hint="Informacion adicional para seguimiento"
+                [maxLength]="500"
+                formControlName="notes"
+              />
+
+              <af-toggle
+                label="Notificaciones"
+                description="Alertas de sesiones, reportes y cambios de estado"
+                formControlName="notifications"
+              />
+
+              <div class="forms-actions">
+                <af-button variant="secondary" (pressed)="recordAction('Formulario atleta → cancelar')">Cancelar</af-button>
+                <af-button (pressed)="saveNewAthleteForm()">Registrar atleta</af-button>
+              </div>
+            </form>
+          }
+        }
+      </section>
+    }
+
     @case ('reports') {
       <section class="shell-section reports-view" aria-label="Reportes">
         <div class="section-header">
