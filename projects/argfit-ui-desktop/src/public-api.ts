@@ -14,6 +14,7 @@ export * from './lib/components/inline-message/af-inline-message-desktop.compone
 export * from './lib/components/input/af-input-desktop.component';
 export * from './lib/components/metric-card/af-metric-card-desktop.component';
 export * from './lib/components/page-shell/af-page-shell-desktop.component';
+export * from './lib/components/password/af-password-desktop.component';
 export * from './lib/components/radio-group/af-radio-group-desktop.component';
 export * from './lib/components/segmented-control/af-segmented-control-desktop.component';
 export * from './lib/components/select/af-select-desktop.component';

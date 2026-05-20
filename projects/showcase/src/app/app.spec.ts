@@ -258,6 +258,8 @@ describe('App', () => {
     expect(compiled.querySelector('af-textarea-desktop')).not.toBeNull();
     expect(compiled.querySelector('af-toggle-desktop')).not.toBeNull();
     expect(compiled.querySelector('af-radio-group-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-password-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-password-desktop .af-password-desktop__toggle')).not.toBeNull();
     expect(compiled.textContent).toContain('Registro operativo');
 
     fixture.componentInstance['setFormsTab']('test');
@@ -288,6 +290,8 @@ describe('App', () => {
     expect(compiled.querySelector('af-textarea-mobile')).not.toBeNull();
     expect(compiled.querySelector('af-toggle-mobile')).not.toBeNull();
     expect(compiled.querySelector('af-radio-group-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-password-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-password-mobile ion-input-password-toggle')).not.toBeNull();
     expect(compiled.textContent).toContain('Nuevo atleta');
   });
 

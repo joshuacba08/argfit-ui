@@ -15,6 +15,7 @@ export * from './lib/components/inline-message/af-inline-message-mobile.componen
 export * from './lib/components/input/af-input-mobile.component';
 export * from './lib/components/metric-card/af-metric-card-mobile.component';
 export * from './lib/components/page-shell/af-page-shell-mobile.component';
+export * from './lib/components/password/af-password-mobile.component';
 export * from './lib/components/radio-group/af-radio-group-mobile.component';
 export * from './lib/components/segmented-control/af-segmented-control-mobile.component';
 export * from './lib/components/select/af-select-mobile.component';

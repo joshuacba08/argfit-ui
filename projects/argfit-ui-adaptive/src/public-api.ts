@@ -79,6 +79,9 @@ export {
     AfPageShellComponent as AfPageShell, AfPageShellComponent
 } from './lib/components/page-shell/af-page-shell.component';
 export {
+    AfPasswordComponent as AfPassword, AfPasswordComponent
+} from './lib/components/password/af-password.component';
+export {
     AfRadioGroupComponent as AfRadioGroup, AfRadioGroupComponent
 } from './lib/components/radio-group/af-radio-group.component';
 export {

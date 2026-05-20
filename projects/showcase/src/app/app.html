@@ -706,6 +706,22 @@
                 />
               </div>
 
+              <div class="forms-grid forms-grid--two">
+                <af-password
+                  label="Clave del portal"
+                  placeholder="Crea una clave segura"
+                  hint="Incluye letras, numeros y simbolos"
+                  [feedback]="true"
+                  formControlName="portalPassword"
+                />
+                <af-password
+                  label="Clave temporal"
+                  placeholder="Pendiente de configurar"
+                  error="La clave temporal es requerida para activar el acceso"
+                  formControlName="temporaryPassword"
+                />
+              </div>
+
               <af-textarea
                 label="Observaciones"
                 placeholder="Notas del equipo tecnico"

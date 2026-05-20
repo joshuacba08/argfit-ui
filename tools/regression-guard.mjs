@@ -17,6 +17,9 @@ const expectedFiles = [
   'projects/argfit-ui-mobile/src/lib/components/inline-message/af-inline-message-mobile.component.ts',
   'projects/argfit-ui-mobile/src/lib/components/toast/af-toast-mobile.component.ts',
   'projects/argfit-ui-mobile/src/lib/components/toast-viewport/af-toast-viewport-mobile.component.ts',
+  'projects/argfit-ui-adaptive/src/lib/components/password/af-password.component.ts',
+  'projects/argfit-ui-desktop/src/lib/components/password/af-password-desktop.component.ts',
+  'projects/argfit-ui-mobile/src/lib/components/password/af-password-mobile.component.ts',
 ];
 
 for (const filePath of expectedFiles) {
@@ -31,16 +34,48 @@ expectIncludes('projects/argfit-ui-adaptive/src/public-api.ts', [
   'AfInlineMessageComponent as AfInlineMessage',
   'AfToastComponent as AfToast',
   'AfToastViewportComponent as AfToastViewport',
+  'AfPasswordComponent as AfPassword',
 ]);
 expectIncludes('projects/argfit-ui-desktop/src/public-api.ts', [
   './lib/components/inline-message/af-inline-message-desktop.component',
+  './lib/components/password/af-password-desktop.component',
   './lib/components/toast/af-toast-desktop.component',
   './lib/components/toast-viewport/af-toast-viewport-desktop.component',
 ]);
 expectIncludes('projects/argfit-ui-mobile/src/public-api.ts', [
   './lib/components/inline-message/af-inline-message-mobile.component',
+  './lib/components/password/af-password-mobile.component',
   './lib/components/toast/af-toast-mobile.component',
   './lib/components/toast-viewport/af-toast-viewport-mobile.component',
+]);
+
+expectIncludes('projects/argfit-ui-desktop/src/lib/components/password/af-password-desktop.component.ts', [
+  "import { PasswordDirective } from 'primeng/password';",
+  'readonly revealLabel = input',
+  'readonly hideLabel = input',
+  'protected readonly passwordVisible = signal(false)',
+]);
+expectIncludes('projects/argfit-ui-mobile/src/lib/components/password/af-password-mobile.component.ts', [
+  "import { IonInput } from '@ionic/angular/standalone';",
+  'AF_IONIC_PASSWORD_ELEMENTS',
+  'CUSTOM_ELEMENTS_SCHEMA',
+  'protected readonly passwordVisible = signal(false)',
+  'toggleVisibility()',
+]);
+expectIncludes('projects/argfit-ui-mobile/src/lib/components/password/af-password-mobile.component.html', [
+  'ion-input-password-toggle',
+  'showIcon="eye"',
+  'hideIcon="eye-off"',
+  '[type]="inputType()"',
+]);
+expectIncludes('projects/argfit-ui-adaptive/src/lib/components/password/af-password.component.ts', [
+  'ControlValueAccessor',
+  'AfPasswordDesktopComponent',
+  'AfPasswordMobileComponent',
+]);
+expectIncludes('projects/argfit-ui-primitives/src/lib/icon/af-icon.component.ts', [
+  'LucideEye',
+  'LucideEyeOff',
 ]);
 
 expectIncludes('projects/argfit-ui-core/src/lib/types/feedback.types.ts', [
@@ -160,6 +195,26 @@ expectIncludes('projects/showcase/src/app/app.html', [
   '<af-inline-message',
   "showFeedbackToast('success')",
   "showFeedbackToast('danger')",
+]);
+
+expectIncludes('projects/showcase/src/app/app.ts', [
+  'AfPassword',
+  'portalPassword',
+  'temporaryPassword',
+]);
+
+expectIncludes('projects/showcase/src/app/app.html', [
+  '<af-password',
+  'label="Clave del portal"',
+  'label="Clave temporal"',
+  'formControlName="portalPassword"',
+  'formControlName="temporaryPassword"',
+]);
+
+expectIncludes('projects/showcase/src/app/app.spec.ts', [
+  'af-password-desktop',
+  'af-password-mobile',
+  'ion-input-password-toggle',
 ]);
 
 expectNotIncludes('projects/argfit-ui-desktop/src/lib/components/toast/af-toast-desktop.component.scss', [

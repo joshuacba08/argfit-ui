@@ -27,6 +27,8 @@ export type AfIconName =
   | 'cpu'
   | 'download'
   | 'edit'
+  | 'eye'
+  | 'eye-off'
   | 'file-text'
   | 'filter'
   | 'grid-2x2'
