@@ -1,0 +1,156 @@
+/* -----------------------------------------------------------------
+   AfSidebarDesktopComponent
+   ----------------------------------------------------------------- */
+
+.af-sidebar-desktop {
+  background: linear-gradient(180deg, var(--af-bg-surface) 0%, var(--af-bg-main) 100%);
+  border-right: 1px solid var(--af-border-soft);
+  color: var(--af-text-main);
+  display: flex;
+  flex: 0 0 var(--af-shell-sidebar-width);
+  flex-direction: column;
+  font-family: var(--af-font-body);
+  min-height: 0;
+  overflow: hidden;
+  transition: flex-basis var(--af-duration-normal) var(--af-ease-out);
+  width: var(--af-shell-sidebar-width);
+}
+
+.af-sidebar-desktop--collapsed {
+  flex-basis: var(--af-shell-sidebar-collapsed-width);
+  width: var(--af-shell-sidebar-collapsed-width);
+}
+
+.af-sidebar-desktop__brand {
+  align-items: center;
+  border-bottom: 1px solid var(--af-border-soft);
+  display: flex;
+  gap: var(--af-space-3);
+  min-height: var(--af-shell-topbar-height);
+  padding: var(--af-space-4) var(--af-space-5);
+}
+
+.af-sidebar-desktop--collapsed .af-sidebar-desktop__brand {
+  justify-content: center;
+  padding-inline: var(--af-space-3);
+}
+
+.af-sidebar-desktop--collapsed .af-page-shell__brand > :not(:first-child) {
+  display: none;
+}
+
+.af-sidebar-desktop__nav {
+  display: grid;
+  gap: var(--af-space-1);
+  padding: var(--af-space-3) var(--af-space-2);
+}
+
+.af-sidebar-desktop__item {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-3);
+  min-height: var(--af-button-height-md);
+  min-width: 0;
+  padding: var(--af-space-2) var(--af-space-3);
+  text-align: left;
+  text-decoration: none;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+  width: 100%;
+}
+
+.af-sidebar-desktop__item:hover:not(:disabled):not(.af-sidebar-desktop__item--disabled) {
+  background: var(--af-bg-interactive);
+  color: var(--af-text-main);
+}
+
+.af-sidebar-desktop__item:focus-visible,
+.af-sidebar-desktop__collapse:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-sidebar-desktop__item--active {
+  background: var(--af-primary-soft);
+  color: var(--af-primary);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-sidebar-desktop__item--disabled,
+.af-sidebar-desktop__item:disabled {
+  color: var(--af-text-disabled);
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.af-sidebar-desktop__icon,
+.af-sidebar-desktop__icon svg {
+  color: currentColor !important;
+  stroke: currentColor;
+}
+
+.af-sidebar-desktop__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-sidebar-desktop__badge {
+  margin-left: auto;
+}
+
+.af-sidebar-desktop--collapsed .af-sidebar-desktop__item {
+  justify-content: center;
+  padding-inline: var(--af-space-2);
+}
+
+.af-sidebar-desktop--collapsed .af-sidebar-desktop__label,
+.af-sidebar-desktop--collapsed .af-sidebar-desktop__badge,
+.af-sidebar-desktop--collapsed .af-sidebar-desktop__footer {
+  display: none;
+}
+
+.af-sidebar-desktop__spacer {
+  flex: 1 1 auto;
+  min-height: var(--af-space-4);
+}
+
+.af-sidebar-desktop__footer {
+  border-top: 1px solid var(--af-border-soft);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-sidebar-desktop__collapse {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--af-border-soft);
+  color: var(--af-text-soft);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  min-height: var(--af-button-height-md);
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-sidebar-desktop__collapse:hover {
+  background: var(--af-bg-interactive);
+  color: var(--af-primary);
+}
+
+.af-sidebar-desktop--collapsed .af-sidebar-desktop__collapse af-icon {
+  transform: rotate(180deg);
+}

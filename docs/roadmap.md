@@ -206,6 +206,7 @@ Create desktop-oriented rendering.
 
 ### Layout Components
 
+- HU-009 — [AfPageShell navigation slice](./hus/HU-009-af-page-shell.md) — ready for implementation
 - AfSidebarDesktop
 - AfTopbarDesktop
 - AfPageShellDesktop
@@ -242,6 +243,7 @@ Create mobile-native rendering.
 
 ### Navigation Components
 
+- HU-009 — [AfPageShell navigation slice](./hus/HU-009-af-page-shell.md) — ready for implementation
 - AfBottomTabsMobile
 - AfMobileHeader
 - AfMobileShell
@@ -270,6 +272,7 @@ Expose unified adaptive APIs.
 - AfDialog
 - AfChart
 - AfBadge
+- HU-009 — [AfPageShell navigation slice](./hus/HU-009-af-page-shell.md) — ready for implementation
 - AfPageShell
 - AfSidebar
 - AfMetricCard

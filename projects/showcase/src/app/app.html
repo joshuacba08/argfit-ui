@@ -1,194 +1,166 @@
-<main class="showcase-shell">
-  <header class="showcase-header">
-    <div class="showcase-brand">
-      <span class="showcase-kicker">ArgFit UI</span>
-      <h1>Adaptive enterprise UI</h1>
-      <p>One semantic Angular API rendered through desktop and mobile engines.</p>
-    </div>
+<af-page-shell
+  class="showcase-shell"
+  [title]="activeShellTitle()"
+  [subtitle]="activeShellSubtitle()"
+  [navItems]="shellNavItems"
+  [mobileTabs]="shellMobileTabs"
+  [breadcrumbs]="shellBreadcrumbs()"
+  [activeItem]="activeShellSection()"
+  [activeTab]="activeShellTab()"
+  [collapsed]="shellCollapsed()"
+  [showSearch]="true"
+  searchPlaceholder="Buscar atleta, equipo o dispositivo"
+  [notificationCount]="3"
+  userInitials="AG"
+  (navItemSelected)="onShellNavSelected($event)"
+  (tabSelected)="onShellTabSelected($event)"
+  (breadcrumbSelected)="onShellBreadcrumbSelected($event)"
+  (collapsedChange)="onShellCollapsedChange($event)"
+  (searchChanged)="onShellSearchChanged($event)"
+>
+  <div afPageShellBrand class="shell-brand">
+    <span class="shell-brand__mark">AF</span>
+    <span class="shell-brand__copy">
+      <strong>ArgFit</strong>
+      <small>Performance OS</small>
+    </span>
+  </div>
 
-    <div class="showcase-controls">
-      <div class="platform-switch" aria-label="Platform preview">
-        <button
-          type="button"
-          [class.is-active]="platform.preference() === 'auto'"
-          (click)="setPlatform('auto')"
-        >
-          Auto
-        </button>
-        <button
-          type="button"
-          [class.is-active]="platform.platform() === 'desktop'"
-          (click)="setPlatform('desktop')"
-        >
-          Desktop
-        </button>
-        <button
-          type="button"
-          [class.is-active]="platform.platform() === 'mobile'"
-          (click)="setPlatform('mobile')"
-        >
-          Mobile
-        </button>
-      </div>
-
+  <div afPageShellActions class="shell-actions">
+    <div class="platform-switch" aria-label="Platform preview">
       <button
         type="button"
-        class="theme-toggle"
-        (click)="toggleTheme()"
-        [attr.aria-pressed]="theme.isDarkTheme()"
-        aria-label="Toggle theme"
+        [class.is-active]="platform.preference() === 'auto'"
+        (click)="setPlatform('auto')"
       >
-        <span class="theme-toggle__label">Theme</span>
-        <span class="theme-toggle__value">{{ theme.currentThemeName() }}</span>
+        Auto
+      </button>
+      <button
+        type="button"
+        [class.is-active]="platform.platform() === 'desktop'"
+        (click)="setPlatform('desktop')"
+      >
+        Desktop
+      </button>
+      <button
+        type="button"
+        [class.is-active]="platform.platform() === 'mobile'"
+        (click)="setPlatform('mobile')"
+      >
+        Mobile
       </button>
     </div>
-  </header>
 
-  <section class="workspace">
-    <aside class="rail" aria-label="Workspace sections">
-      <span class="rail-logo">AF</span>
-      <nav>
-        <a class="is-active" href="/">Overview</a>
-        <a href="/">Analytics</a>
-        <a href="/">Accounts</a>
-      </nav>
-    </aside>
+    <button
+      type="button"
+      class="theme-toggle"
+      (click)="toggleTheme()"
+      [attr.aria-pressed]="theme.isDarkTheme()"
+      aria-label="Toggle theme"
+    >
+      <span class="theme-toggle__label">Theme</span>
+      <span class="theme-toggle__value">{{ theme.currentThemeName() }}</span>
+    </button>
 
-    <section class="panel">
-      <div class="panel-header">
-        <div>
-          <span class="eyebrow">Component vertical slice</span>
-          <h2>AfButton</h2>
-        </div>
-        <span class="platform-pill">{{ platform.platform() }}</span>
-      </div>
+    <af-button (pressed)="openAthleteDialog()">Nuevo atleta</af-button>
+  </div>
 
-      <div class="metrics">
-        <article>
-          <span>Active sessions</span>
-          <strong>18,420</strong>
-          <small>+12.8%</small>
-        </article>
-        <article>
-          <span>Conversion</span>
-          <strong>8.7%</strong>
-          <small>+1.4%</small>
-        </article>
-        <article>
-          <span>Latency</span>
-          <strong>124ms</strong>
-          <small>-18ms</small>
-        </article>
-      </div>
+  <div afPageShellUser class="shell-user">
+    <span>Ander</span>
+  </div>
 
-      <div class="button-grid" aria-label="Button variants">
-        <af-button (pressed)="recordAction('Saved changes')"> Save changes </af-button>
-        <af-button variant="secondary" (pressed)="recordAction('Opened details')">
-          View details
-        </af-button>
-        <af-button variant="ghost" (pressed)="recordAction('Dismissed')"> Dismiss </af-button>
-        <af-button variant="danger" (pressed)="recordAction('Queued removal')"> Remove </af-button>
-      </div>
+  <div afPageShellFooter class="shell-footer">
+    <af-badge tone="neutral" icon="activity">Live</af-badge>
+    <span>{{ platform.platform() }}</span>
+  </div>
 
-      <div class="status-row">
-        <span>Last action</span>
-        <strong>{{ lastAction() }}</strong>
-      </div>
-
-      <div class="card-section" aria-label="Badge variants">
-        <div class="panel-header">
-          <div>
-            <span class="eyebrow">Component vertical slice</span>
-            <h2>AfBadge</h2>
-          </div>
+  @switch (activeShellSection()) {
+    @case ('athletes') {
+      <section class="shell-section athletes-view" aria-label="Atletas">
+        <div class="section-header">
+          <span class="eyebrow">Roster operativo</span>
+          <h2>Atletas</h2>
+          <p>Perfiles activos, altas rapidas y datos base para sesiones de campo.</p>
         </div>
 
-        <div class="badge-showcase">
-          <div class="dialog-trigger-grid" aria-label="Badge tones">
-            <af-badge>Primary</af-badge>
-            <af-badge tone="accent">Accent</af-badge>
-            <af-badge tone="success">Success</af-badge>
-            <af-badge tone="warning">Warning</af-badge>
-            <af-badge tone="danger">Danger</af-badge>
-            <af-badge tone="neutral">v2.4.1</af-badge>
-          </div>
-
-          <div class="dialog-trigger-grid" aria-label="Status badges">
-            <af-badge tone="success" dot>Conectado</af-badge>
-            <af-badge tone="warning" dot>Bateria baja</af-badge>
-            <af-badge tone="danger" dot>Desconectado</af-badge>
-            <af-badge tone="success" dot>Activo</af-badge>
-            <af-badge tone="neutral" dot>Inactivo</af-badge>
-            <af-badge variant="solid" tone="primary">PRO</af-badge>
-          </div>
-
-          <div class="dialog-trigger-grid" aria-label="Tag badges">
-            <af-badge variant="tag">Fuerza</af-badge>
-            <af-badge variant="tag">Velocidad</af-badge>
-            <af-badge variant="tag">Salto</af-badge>
-            <af-badge variant="tag" tone="primary" icon="plus">Agregar</af-badge>
-          </div>
-
-          <div class="dialog-trigger-grid" aria-label="Icon badges">
-            <af-badge tone="primary" icon="bluetooth">BLE</af-badge>
-            <af-badge tone="neutral" icon="download">CSV</af-badge>
-            <af-badge tone="success">+18%</af-badge>
-          </div>
-
-          <af-card class="badge-device-card" variant="device" tone="primary" density="compact">
-            <header afCardHeader>
-              <div>
-                <span afCardEyebrow>ArgFit Jump 2</span>
-                <h3 afCardTitle>AF-J2-001</h3>
-              </div>
-              <af-badge tone="success" dot>Conectado</af-badge>
-            </header>
-            <p afCardSubtitle>Firmware 3.2.1 · Bateria 87% · Maria Garcia</p>
-            <footer afCardFooter>
-              <af-badge tone="primary" icon="bluetooth">BLE</af-badge>
-              <af-badge tone="neutral">Hace 2 min</af-badge>
-              <af-badge tone="success">+18%</af-badge>
-            </footer>
-          </af-card>
-        </div>
-      </div>
-
-      <div class="card-section" aria-label="Card variants">
-        <div class="panel-header">
-          <div>
-            <span class="eyebrow">Component vertical slice</span>
-            <h2>AfCard</h2>
-          </div>
+        <div class="input-grid">
+          <af-input
+            label="Nombre del atleta"
+            placeholder="Maria Garcia"
+            hint="Tal como aparece en el carnet"
+            [value]="athleteName()"
+            (valueChange)="updateAthleteName($event)"
+          />
+          <af-input
+            label="Buscar"
+            placeholder="Atleta o equipo"
+            type="search"
+            prefixIcon="search"
+            [value]="searchQuery()"
+            (valueChange)="updateSearchQuery($event)"
+          />
+          <af-input
+            label="Peso"
+            placeholder="0"
+            type="number"
+            suffix="kg"
+            [value]="athleteWeight()"
+            (valueChange)="updateAthleteWeight($event)"
+          />
+          <af-input
+            label="Email"
+            type="email"
+            placeholder="atleta@argfit.com"
+            [value]="athleteEmail()"
+            [error]="emailError()"
+            (valueChange)="updateAthleteEmail($event)"
+          />
+          <af-input
+            label="Altura"
+            type="number"
+            suffix="cm"
+            hint="Vinculado a un FormControl reactivo"
+            [formControl]="heightControl"
+          />
+          <af-input label="ID dispositivo" value="AF-J2-001" [disabled]="true" />
         </div>
 
         <div class="card-grid">
-          <af-card class="card-grid__item" variant="surface">
+          <af-card variant="surface">
             <header afCardHeader>
-              <h3 afCardTitle>Resumen del torneo</h3>
-              <span afCardEyebrow>Hoy</span>
+              <div>
+                <span afCardEyebrow>Maria Garcia</span>
+                <h3 afCardTitle>Velocista senior</h3>
+              </div>
+              <af-badge tone="success" dot>Activo</af-badge>
             </header>
-            <p afCardSubtitle>
-              Plataforma adaptativa preparada para una jornada con 38 atletas activos.
-            </p>
-            <div afCardContent>
-              Sesiones previstas, lecturas en tiempo real y panel tactico unificado.
-            </div>
+            <p afCardSubtitle>45.2 cm · RSI 2.4 · Jump 01 asignado</p>
           </af-card>
 
-          <af-card class="card-grid__item" variant="metric" tone="primary" density="compact">
-            <span afCardEyebrow>Atletas activos</span>
-            <strong class="card-metric">38</strong>
-            <span afCardSubtitle>+4 vs ayer</span>
+          <af-card variant="surface">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Santiago Perez</span>
+                <h3 afCardTitle>Potencia maxima</h3>
+              </div>
+              <af-badge tone="primary">PRO</af-badge>
+            </header>
+            <p afCardSubtitle>55.4 cm · mejor marca del microciclo</p>
           </af-card>
+        </div>
+      </section>
+    }
 
-          <af-card class="card-grid__item" variant="metric" tone="success" density="compact">
-            <span afCardEyebrow>Mejor salto</span>
-            <strong class="card-metric">45.2<small> cm</small></strong>
-            <span afCardSubtitle>Lucia P. · 09:42</span>
-          </af-card>
+    @case ('devices') {
+      <section class="shell-section devices-view" aria-label="Dispositivos">
+        <div class="section-header">
+          <span class="eyebrow">Sensores</span>
+          <h2>Dispositivos</h2>
+          <p>Estado de conexion, bateria y asignacion de sensores ArgFit Jump.</p>
+        </div>
 
+        <div class="card-grid">
           <af-card
-            class="card-grid__item"
             variant="device"
             [interactive]="true"
             [selected]="selectedDevice() === 'jump-01'"
@@ -200,17 +172,16 @@
                 <span afCardEyebrow>ArgFit Jump</span>
                 <h3 afCardTitle>Jump · 01</h3>
               </div>
-              <span class="device-battery">84%</span>
+              <af-badge tone="success" dot>Conectado</af-badge>
             </header>
-            <p afCardSubtitle>Conectado · sesion en curso</p>
+            <p afCardSubtitle>Firmware 3.2.1 · Bateria 84% · Maria Garcia</p>
             <footer afCardFooter>
-              <af-button variant="ghost">Configurar</af-button>
-              <af-button variant="secondary">Detalles</af-button>
+              <af-badge tone="primary" icon="bluetooth">BLE</af-badge>
+              <af-badge tone="neutral">Hace 2 min</af-badge>
             </footer>
           </af-card>
 
           <af-card
-            class="card-grid__item"
             variant="device"
             tone="warning"
             [interactive]="true"
@@ -223,151 +194,23 @@
                 <span afCardEyebrow>ArgFit Jump</span>
                 <h3 afCardTitle>Jump · 02</h3>
               </div>
-              <span class="device-battery is-low">21%</span>
+              <af-badge tone="warning" dot>Bateria baja</af-badge>
             </header>
-            <p afCardSubtitle>Bateria baja · recargar pronto</p>
-          </af-card>
-
-          <af-card class="card-grid__item" variant="panel" tone="primary">
-            <header afCardHeader>
-              <div>
-                <span afCardEyebrow>Sesiones semanales</span>
-                <h3 afCardTitle>124 completadas</h3>
-              </div>
-              <span class="device-battery">+18%</span>
-            </header>
-            <div afCardContent>
-              Volumen de trabajo distribuido entre atletas individuales y equipos.
-            </div>
-            <footer afCardFooter>
-              <af-button variant="ghost">Exportar</af-button>
-              <af-button>Ver detalle</af-button>
-            </footer>
+            <p afCardSubtitle>21% · listo para recarga</p>
           </af-card>
         </div>
-      </div>
+      </section>
+    }
 
-      <div class="input-section" aria-label="Input variants">
-        <div class="panel-header">
+    @case ('analytics') {
+      <section class="shell-section chart-section" aria-label="Analytics">
+        <div class="section-header section-header--inline">
           <div>
-            <span class="eyebrow">Component vertical slice</span>
-            <h2>AfInput</h2>
+            <span class="eyebrow">Lecturas</span>
+            <h2>Analytics</h2>
+            <p>Tendencias de salto, distribucion de sesiones y comparativas del equipo.</p>
           </div>
-        </div>
-
-        <div class="input-grid">
-          <af-input
-            label="Nombre del atleta"
-            placeholder="Maria Garcia"
-            hint="Tal como aparece en el carnet"
-            [value]="athleteName()"
-            (valueChange)="updateAthleteName($event)"
-          />
-
-          <af-input
-            label="Buscar"
-            placeholder="Atleta o equipo"
-            type="search"
-            prefixIcon="search"
-            [value]="searchQuery()"
-            (valueChange)="updateSearchQuery($event)"
-          />
-
-          <af-input
-            label="Peso"
-            placeholder="0"
-            type="number"
-            suffix="kg"
-            [value]="athleteWeight()"
-            (valueChange)="updateAthleteWeight($event)"
-          />
-
-          <af-input
-            label="ID dispositivo"
-            value="AF-J2-001"
-            hint="Identificador asignado por el sistema"
-            [disabled]="true"
-          />
-
-          <af-input
-            label="Email"
-            type="email"
-            placeholder="atleta@argfit.com"
-            [value]="athleteEmail()"
-            [error]="emailError()"
-            (valueChange)="updateAthleteEmail($event)"
-          />
-
-          <af-input
-            label="Altura"
-            type="number"
-            suffix="cm"
-            hint="Vinculado a un FormControl reactivo"
-            [formControl]="heightControl"
-          />
-        </div>
-
-        <div class="status-row">
-          <span>Altura (FormControl)</span>
-          <strong>{{ heightControl.value }} cm</strong>
-        </div>
-      </div>
-
-      <div class="dialog-section" aria-label="Dialog variants">
-        <div class="panel-header">
-          <div>
-            <span class="eyebrow">Component vertical slice</span>
-            <h2>AfDialog</h2>
-          </div>
-        </div>
-
-        <div class="dialog-trigger-grid">
-          <af-button (pressed)="openDetailsDialog()"> Ver detalles del atleta </af-button>
-          <af-button variant="danger" (pressed)="openRemoveDialog()"> Dar de baja </af-button>
-          <af-button variant="secondary" (pressed)="openAthleteDialog()"> Nuevo atleta </af-button>
-        </div>
-      </div>
-
-      <div class="icon-section" aria-label="Icon gallery">
-        <div class="panel-header">
-          <div>
-            <span class="eyebrow">Primitive vertical slice</span>
-            <h2>AfIcon</h2>
-          </div>
-        </div>
-
-        <div class="icon-grid">
-          @for (icon of iconGallery; track icon.name) {
-            <div class="icon-cell">
-              <af-icon
-                [name]="icon.name"
-                size="lg"
-                tone="primary"
-                [decorative]="false"
-                [ariaLabel]="icon.label"
-              />
-              <span class="icon-cell__label">{{ icon.label }}</span>
-              <code class="icon-cell__token">{{ icon.name }}</code>
-            </div>
-          }
-        </div>
-
-        <div class="icon-sizes" aria-hidden="true">
-          <af-icon name="activity" size="xs" tone="muted" decorative />
-          <af-icon name="activity" size="sm" tone="muted" decorative />
-          <af-icon name="activity" size="md" decorative />
-          <af-icon name="activity" size="lg" tone="primary" decorative />
-          <af-icon name="activity" size="xl" tone="success" decorative />
-        </div>
-      </div>
-
-      <div class="chart-section" aria-label="Chart variants">
-        <div class="panel-header">
-          <div>
-            <span class="eyebrow">Component vertical slice</span>
-            <h2>AfChart</h2>
-          </div>
-          <af-button variant="ghost" (pressed)="toggleChartLoading()"> Toggle loading </af-button>
+          <af-button variant="ghost" (pressed)="toggleChartLoading()">Toggle loading</af-button>
         </div>
 
         <div class="chart-grid">
@@ -428,8 +271,8 @@
 
           <af-card variant="panel">
             <div afCardHeader>
-              <span afCardEyebrow>Analytics</span>
-              <h3 afCardTitle>Sesiones mensuales</h3>
+              <span afCardEyebrow>Mensual</span>
+              <h3 afCardTitle>Sesiones por tipo</h3>
               <p afCardSubtitle>Stacked bar</p>
             </div>
             <div afCardContent>
@@ -518,9 +361,335 @@
             </div>
           </af-card>
         </div>
-      </div>
-    </section>
-  </section>
+      </section>
+    }
+
+    @case ('reports') {
+      <section class="shell-section reports-view" aria-label="Reportes">
+        <div class="section-header">
+          <span class="eyebrow">Entregables</span>
+          <h2>Reportes</h2>
+          <p>Exportaciones de staff, sesiones y perfiles listos para compartir.</p>
+        </div>
+
+        <div class="card-grid">
+          <af-card variant="panel" tone="primary">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Equipo elite</span>
+                <h3 afCardTitle>Informe semanal</h3>
+              </div>
+              <af-badge tone="primary" icon="download">CSV</af-badge>
+            </header>
+            <p afCardSubtitle>124 sesiones · 38 atletas · listo para exportar</p>
+            <footer afCardFooter>
+              <af-button variant="ghost">Vista previa</af-button>
+              <af-button>Exportar</af-button>
+            </footer>
+          </af-card>
+        </div>
+      </section>
+    }
+
+    @case ('settings') {
+      <section class="shell-section icon-section" aria-label="Configuracion">
+        <div class="section-header">
+          <span class="eyebrow">Sistema</span>
+          <h2>Configuracion</h2>
+          <p>Tokens, tema activo y primitives disponibles para interfaces internas.</p>
+        </div>
+
+        <div class="icon-grid">
+          @for (icon of iconGallery; track icon.name) {
+            <div class="icon-cell">
+              <af-icon
+                [name]="icon.name"
+                size="lg"
+                tone="primary"
+                [decorative]="false"
+                [ariaLabel]="icon.label"
+              />
+              <span class="icon-cell__label">{{ icon.label }}</span>
+              <code class="icon-cell__token">{{ icon.name }}</code>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @default {
+      <section class="shell-section dashboard-view" aria-label="Dashboard">
+        <div class="section-header section-header--inline">
+          <div>
+            <span class="eyebrow">Centro operativo</span>
+            <h2>Dashboard</h2>
+            <p>Sesiones, sensores y atletas activos para la jornada de rendimiento.</p>
+          </div>
+          <span class="platform-pill">{{ platform.platform() }}</span>
+        </div>
+
+        <div class="metric-grid">
+          <af-card variant="metric" tone="primary" density="compact">
+            <span afCardEyebrow>Atletas activos</span>
+            <strong class="card-metric">38</strong>
+            <span afCardSubtitle>+4 vs ayer</span>
+          </af-card>
+
+          <af-card variant="metric" tone="success" density="compact">
+            <span afCardEyebrow>Mejor salto</span>
+            <strong class="card-metric">45.2<small> cm</small></strong>
+            <span afCardSubtitle>Lucia P. · 09:42</span>
+          </af-card>
+
+          <af-card variant="metric" tone="warning" density="compact">
+            <span afCardEyebrow>Latencia</span>
+            <strong class="card-metric">33<small> ms</small></strong>
+            <span afCardSubtitle>Sensor estable</span>
+          </af-card>
+        </div>
+
+        <div class="status-row">
+          <span>Ultima accion</span>
+          <strong>{{ lastAction() }}</strong>
+        </div>
+
+        <div class="button-grid dialog-trigger-grid" aria-label="Acciones de jornada">
+          <af-button (pressed)="recordAction('Sesion guardada')">Guardar sesion</af-button>
+          <af-button variant="secondary" (pressed)="openDetailsDialog()">Ver atleta</af-button>
+          <af-button variant="ghost" (pressed)="recordAction('Panel actualizado')">Actualizar</af-button>
+          <af-button variant="danger" (pressed)="openRemoveDialog()">Dar de baja</af-button>
+          <af-button variant="secondary" (pressed)="openAthleteDialog()">Nuevo atleta</af-button>
+        </div>
+
+        <div class="badge-showcase" aria-label="Estados de operacion">
+          <af-badge>Primary</af-badge>
+          <af-badge tone="accent">Accent</af-badge>
+          <af-badge tone="success">Success</af-badge>
+          <af-badge tone="warning">Warning</af-badge>
+          <af-badge tone="danger">Danger</af-badge>
+          <af-badge tone="neutral">v2.4.1</af-badge>
+          <af-badge tone="success" dot>Conectado</af-badge>
+          <af-badge tone="warning" dot>Bateria baja</af-badge>
+          <af-badge tone="danger" dot>Desconectado</af-badge>
+          <af-badge variant="solid" tone="primary">PRO</af-badge>
+          <af-badge variant="tag">Fuerza</af-badge>
+          <af-badge variant="tag" tone="primary" icon="plus">Agregar</af-badge>
+          <af-badge tone="primary" icon="bluetooth">BLE</af-badge>
+          <af-badge tone="neutral" icon="download">CSV</af-badge>
+        </div>
+
+        <div class="card-grid">
+          <af-card variant="surface">
+            <header afCardHeader>
+              <h3 afCardTitle>Resumen del torneo</h3>
+              <span afCardEyebrow>Hoy</span>
+            </header>
+            <p afCardSubtitle>38 atletas activos, 124 sesiones y panel tactico unificado.</p>
+          </af-card>
+
+          <af-card
+            variant="device"
+            [interactive]="true"
+            [selected]="selectedDevice() === 'jump-01'"
+            (pressed)="selectDevice('jump-01')"
+            aria-label="Seleccionar dispositivo ArgFit Jump 01"
+          >
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>ArgFit Jump</span>
+                <h3 afCardTitle>Jump · 01</h3>
+              </div>
+              <af-badge tone="success" dot>Conectado</af-badge>
+            </header>
+            <p afCardSubtitle>Firmware 3.2.1 · Bateria 84%</p>
+          </af-card>
+
+          <af-card variant="panel" tone="primary">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Sesiones semanales</span>
+                <h3 afCardTitle>124 completadas</h3>
+              </div>
+              <af-badge tone="success">+18%</af-badge>
+            </header>
+            <div afCardContent>Volumen distribuido entre atletas individuales y equipos.</div>
+          </af-card>
+        </div>
+
+        <div class="input-grid">
+          <af-input
+            label="Nombre del atleta"
+            placeholder="Maria Garcia"
+            [value]="athleteName()"
+            (valueChange)="updateAthleteName($event)"
+          />
+          <af-input
+            label="Buscar"
+            placeholder="Atleta o equipo"
+            type="search"
+            prefixIcon="search"
+            [value]="searchQuery()"
+            (valueChange)="updateSearchQuery($event)"
+          />
+          <af-input
+            label="Peso"
+            type="number"
+            suffix="kg"
+            [value]="athleteWeight()"
+            (valueChange)="updateAthleteWeight($event)"
+          />
+          <af-input label="ID dispositivo" value="AF-J2-001" [disabled]="true" />
+          <af-input
+            label="Email"
+            type="email"
+            placeholder="atleta@argfit.com"
+            [value]="athleteEmail()"
+            [error]="emailError()"
+            (valueChange)="updateAthleteEmail($event)"
+          />
+          <af-input
+            label="Altura"
+            type="number"
+            suffix="cm"
+            hint="Vinculado a un FormControl reactivo"
+            [formControl]="heightControl"
+          />
+        </div>
+
+        <div class="chart-grid chart-grid--preview">
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Performance</span>
+              <h3 afCardTitle>Score general</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="gauge"
+                tone="primary"
+                [series]="performanceGaugeSeries()"
+                [indicators]="performanceIndicators()"
+                [loading]="chartLoading()"
+                ariaLabel="Performance score"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Distribucion</span>
+              <h3 afCardTitle>Sesiones por tipo</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="donut"
+                [series]="sessionDistributionSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Distribucion de sesiones por tipo"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Progreso</span>
+              <h3 afCardTitle>Salto vertical</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="area"
+                [categories]="jumpProgressCategories()"
+                [series]="jumpProgressSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Progreso de salto vertical"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Mensual</span>
+              <h3 afCardTitle>Sesiones por tipo</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="stacked-bar"
+                [categories]="monthlyCategories()"
+                [series]="monthlySessionSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Sesiones mensuales apiladas por tipo"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Ranking</span>
+              <h3 afCardTitle>Mejor salto</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="horizontal-bar"
+                [categories]="rankingCategories()"
+                [series]="rankingSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Ranking de mejor salto por atleta"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Comparacion</span>
+              <h3 afCardTitle>Radar de atletas</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="radar"
+                [categories]="radarCategories()"
+                [indicators]="radarIndicators()"
+                [series]="radarSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Radar comparativo de atletas"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="metric">
+            <div afCardHeader>
+              <span afCardEyebrow>Latencia sensor</span>
+              <h3 afCardTitle>33 ms</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="sparkline"
+                tone="warning"
+                density="compact"
+                [categories]="latencyCategories()"
+                [series]="latencySparkline()"
+                ariaLabel="Latencia del sensor en los ultimos 10 minutos"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Estado vacio</span>
+              <h3 afCardTitle>Sin datos aun</h3>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="line"
+                [categories]="weekCategories()"
+                [series]="emptySeries()"
+                emptyMessage="Conecta un dispositivo para empezar"
+                ariaLabel="Chart sin datos"
+              />
+            </div>
+          </af-card>
+        </div>
+      </section>
+    }
+  }
 
   <af-dialog
     [open]="detailsDialogOpen()"
@@ -535,8 +704,8 @@
       <p>Dispositivos vinculados: ArgFit Jump 01.</p>
     </div>
     <div afDialogFooter>
-      <af-button variant="ghost" (pressed)="setDetailsDialog(false)"> Cerrar </af-button>
-      <af-button (pressed)="setDetailsDialog(false)"> Ver historial completo </af-button>
+      <af-button variant="ghost" (pressed)="setDetailsDialog(false)">Cerrar</af-button>
+      <af-button (pressed)="setDetailsDialog(false)">Ver historial completo</af-button>
     </div>
   </af-dialog>
 
@@ -549,8 +718,8 @@
     (openChange)="setRemoveDialog($event)"
   >
     <div afDialogFooter>
-      <af-button variant="ghost" (pressed)="setRemoveDialog(false)"> Cancelar </af-button>
-      <af-button variant="danger" (pressed)="confirmRemove()"> Confirmar baja </af-button>
+      <af-button variant="ghost" (pressed)="setRemoveDialog(false)">Cancelar</af-button>
+      <af-button variant="danger" (pressed)="confirmRemove()">Confirmar baja</af-button>
     </div>
   </af-dialog>
 
@@ -578,8 +747,8 @@
       />
     </div>
     <div afDialogFooter>
-      <af-button variant="ghost" (pressed)="setAthleteDialog(false)"> Cancelar </af-button>
-      <af-button (pressed)="saveAthleteDialog()"> Guardar atleta </af-button>
+      <af-button variant="ghost" (pressed)="setAthleteDialog(false)">Cancelar</af-button>
+      <af-button (pressed)="saveAthleteDialog()">Guardar atleta</af-button>
     </div>
   </af-dialog>
-</main>
+</af-page-shell>

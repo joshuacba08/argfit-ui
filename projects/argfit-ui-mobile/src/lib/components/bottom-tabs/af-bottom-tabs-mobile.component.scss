@@ -1,0 +1,89 @@
+/* -----------------------------------------------------------------
+   AfBottomTabsMobileComponent
+   ----------------------------------------------------------------- */
+
+.af-bottom-tabs-mobile {
+  background: color-mix(in srgb, var(--af-bg-elevated) 92%, var(--af-bg-main));
+  border-top: 1px solid var(--af-border-soft);
+  color: var(--af-text-muted);
+  display: block;
+  flex: 0 0 auto;
+  font-family: var(--af-font-body);
+  min-height: var(--af-shell-mobile-tabbar-height);
+  padding: var(--af-space-1) var(--af-space-2) max(var(--af-space-2), env(safe-area-inset-bottom));
+}
+
+.af-bottom-tabs-mobile__nav {
+  display: flex;
+  gap: var(--af-space-1);
+  height: 100%;
+}
+
+.af-bottom-tabs-mobile__item {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-soft);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  font: inherit;
+  font-size: calc(var(--af-text-xs) - 1px);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-0_5);
+  justify-content: center;
+  min-height: 54px;
+  min-width: 0;
+  padding: var(--af-space-1) var(--af-space-0_5);
+  text-decoration: none;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-bottom-tabs-mobile__item--active {
+  background: var(--af-primary-soft);
+  color: var(--af-primary);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-bottom-tabs-mobile__item:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-bottom-tabs-mobile__item--disabled,
+.af-bottom-tabs-mobile__item:disabled {
+  color: var(--af-text-disabled);
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.af-bottom-tabs-mobile__icon-wrap {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 0;
+  position: relative;
+}
+
+.af-bottom-tabs-mobile__icon-wrap af-icon,
+.af-bottom-tabs-mobile__icon-wrap svg {
+  color: currentColor !important;
+  stroke: currentColor;
+}
+
+.af-bottom-tabs-mobile__badge {
+  position: absolute;
+  right: -14px;
+  top: -8px;
+}
+
+.af-bottom-tabs-mobile__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

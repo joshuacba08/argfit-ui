@@ -196,4 +196,10 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-button-padding-x-md': '16px',
   '--af-button-padding-x-lg': '20px',
   '--af-button-gap': '8px',
+
+  // Shell sizing
+  '--af-shell-sidebar-width': '220px',
+  '--af-shell-sidebar-collapsed-width': '64px',
+  '--af-shell-topbar-height': '64px',
+  '--af-shell-mobile-tabbar-height': '72px',
 } satisfies Partial<AfThemeTokenMap>;

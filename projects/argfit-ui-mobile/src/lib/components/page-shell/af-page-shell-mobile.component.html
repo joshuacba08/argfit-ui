@@ -1,0 +1,29 @@
+<header class="af-page-shell-mobile__header">
+  <div class="af-page-shell-mobile__brand-row">
+    <ng-content select="[afPageShellBrand]" />
+    <div class="af-page-shell-mobile__title-block">
+      @if (subtitle(); as subtitleText) {
+        <span class="af-page-shell-mobile__subtitle">{{ subtitleText }}</span>
+      }
+      <h1>{{ title() }}</h1>
+    </div>
+  </div>
+
+  <div class="af-page-shell-mobile__actions">
+    <ng-content select="[afPageShellActions]" />
+    <ng-content select="[afPageShellUser]" />
+  </div>
+</header>
+
+<main class="af-page-shell-mobile__content" [attr.aria-label]="title() || 'Contenido principal'">
+  <ng-content />
+</main>
+
+<ng-content select="[afPageShellFooter]" />
+
+<af-bottom-tabs-mobile
+  [tabs]="resolvedTabs()"
+  [activeTab]="resolvedActiveTab()"
+  [ariaLabel]="ariaLabel()"
+  (tabSelected)="tabSelected.emit($event)"
+/>

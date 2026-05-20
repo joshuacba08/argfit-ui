@@ -1,0 +1,33 @@
+<af-sidebar-desktop
+  [navItems]="navItems()"
+  [activeItem]="activeItem()"
+  [collapsed]="collapsed()"
+  [collapsible]="collapsible()"
+  [ariaLabel]="ariaLabel()"
+  (navItemSelected)="navItemSelected.emit($event)"
+  (collapsedChange)="collapsedChange.emit($event)"
+>
+  <ng-content select="[afPageShellBrand]" />
+  <ng-content select="[afPageShellFooter]" />
+</af-sidebar-desktop>
+
+<section class="af-page-shell-desktop__main">
+  <af-topbar-desktop
+    [title]="title()"
+    [subtitle]="subtitle()"
+    [breadcrumbs]="breadcrumbs()"
+    [showSearch]="showSearch()"
+    [searchPlaceholder]="searchPlaceholder()"
+    [notificationCount]="notificationCount()"
+    [userInitials]="userInitials()"
+    (breadcrumbSelected)="breadcrumbSelected.emit($event)"
+    (searchChanged)="searchChanged.emit($event)"
+  >
+    <ng-content select="[afPageShellActions]" />
+    <ng-content select="[afPageShellUser]" />
+  </af-topbar-desktop>
+
+  <main class="af-page-shell-desktop__content" [attr.aria-label]="title() || 'Contenido principal'">
+    <ng-content />
+  </main>
+</section>

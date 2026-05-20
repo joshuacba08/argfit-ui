@@ -1,0 +1,41 @@
+<ng-template #shellContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-page-shell-mobile
+    [title]="title()"
+    [subtitle]="subtitle()"
+    [navItems]="navItems()"
+    [mobileTabs]="mobileTabs()"
+    [activeItem]="activeItem()"
+    [activeTab]="activeTab()"
+    [density]="density()"
+    [variant]="variant()"
+    [ariaLabel]="ariaLabel()"
+    (tabSelected)="tabSelected.emit($event)"
+  >
+    <ng-container *ngTemplateOutlet="shellContent" />
+  </af-page-shell-mobile>
+} @else {
+  <af-page-shell-desktop
+    [title]="title()"
+    [subtitle]="subtitle()"
+    [navItems]="navItems()"
+    [breadcrumbs]="breadcrumbs()"
+    [activeItem]="activeItem()"
+    [density]="density()"
+    [variant]="variant()"
+    [collapsible]="collapsible()"
+    [collapsed]="collapsed()"
+    [showSearch]="showSearch()"
+    [searchPlaceholder]="searchPlaceholder()"
+    [notificationCount]="notificationCount()"
+    [userInitials]="userInitials()"
+    [ariaLabel]="ariaLabel()"
+    (navItemSelected)="navItemSelected.emit($event)"
+    (breadcrumbSelected)="breadcrumbSelected.emit($event)"
+    (collapsedChange)="collapsedChange.emit($event)"
+    (searchChanged)="searchChanged.emit($event)"
+  >
+    <ng-container *ngTemplateOutlet="shellContent" />
+  </af-page-shell-desktop>
+}

@@ -1,0 +1,147 @@
+/* -----------------------------------------------------------------
+   AfTopbarDesktopComponent
+   ----------------------------------------------------------------- */
+
+.af-topbar-desktop {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-bg-main) 82%, var(--af-bg-elevated));
+  border-bottom: 1px solid var(--af-border-soft);
+  color: var(--af-text-main);
+  display: flex;
+  font-family: var(--af-font-body);
+  gap: var(--af-space-5);
+  justify-content: space-between;
+  min-height: var(--af-shell-topbar-height);
+  padding: var(--af-space-2) var(--af-space-6);
+}
+
+.af-topbar-desktop__title-block {
+  min-width: 0;
+}
+
+.af-topbar-desktop__breadcrumbs ol {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-1);
+  list-style: none;
+  margin: 0 0 var(--af-space-0_5);
+  padding: 0;
+}
+
+.af-topbar-desktop__breadcrumbs li {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-1);
+}
+
+.af-topbar-desktop__breadcrumbs a,
+.af-topbar-desktop__breadcrumbs button {
+  background: transparent;
+  border: 0;
+  color: var(--af-text-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-tight);
+  padding: 0;
+  text-decoration: none;
+}
+
+.af-topbar-desktop__breadcrumbs a:hover,
+.af-topbar-desktop__breadcrumbs button:hover {
+  color: var(--af-primary);
+}
+
+.af-topbar-desktop__breadcrumbs a:focus-visible,
+.af-topbar-desktop__breadcrumbs button:focus-visible,
+.af-topbar-desktop__notification:focus-visible,
+.af-topbar-desktop__search:focus-within {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-topbar-desktop__title {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xl);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: 0;
+  line-height: var(--af-leading-tight);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.af-topbar-desktop__subtitle {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  margin: var(--af-space-0_5) 0 0;
+}
+
+.af-topbar-desktop__actions {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--af-space-3);
+  min-width: 0;
+}
+
+.af-topbar-desktop__search {
+  align-items: center;
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-soft);
+  display: inline-flex;
+  gap: var(--af-space-2);
+  min-height: var(--af-button-height-sm);
+  min-width: 220px;
+  padding: 0 var(--af-space-3);
+}
+
+.af-topbar-desktop__search-label {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.af-topbar-desktop__search input {
+  background: transparent;
+  border: 0;
+  color: var(--af-text-main);
+  font: inherit;
+  font-size: var(--af-text-sm);
+  min-width: 0;
+  outline: none;
+  width: 100%;
+}
+
+.af-topbar-desktop__search input::placeholder {
+  color: var(--af-text-soft);
+}
+
+.af-topbar-desktop__notification {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--af-space-1);
+  min-height: var(--af-button-height-sm);
+}
+
+.af-topbar-desktop__avatar {
+  align-items: center;
+  background: var(--af-primary);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-primary-contrast);
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  height: var(--af-button-height-sm);
+  justify-content: center;
+  min-width: var(--af-button-height-sm);
+  padding-inline: var(--af-space-2);
+}

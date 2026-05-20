@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import {
@@ -16,13 +16,20 @@ import {
     AfDialogContentDirective,
     AfDialogFooterDirective,
     AfInput,
+    AfPageShell,
+    AfPageShellActionsDirective,
+    AfPageShellBrandDirective,
+    AfPageShellFooterDirective,
+    AfPageShellUserDirective,
 } from '@argfit-ui/adaptive';
 import {
     AfPlatformService,
     AfThemeService,
+    type AfBreadcrumbItem,
     type AfChartIndicator,
     type AfChartSeries,
     type AfIconName,
+    type AfNavigationItem,
     type AfPlatformPreference,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
@@ -42,6 +49,11 @@ import { AfIconComponent } from '@argfit-ui/primitives';
     AfChart,
     AfIconComponent,
     AfInput,
+    AfPageShell,
+    AfPageShellBrandDirective,
+    AfPageShellActionsDirective,
+    AfPageShellUserDirective,
+    AfPageShellFooterDirective,
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
@@ -56,6 +68,66 @@ export class App {
   protected readonly theme = inject(AfThemeService);
   protected readonly lastAction = signal('Idle');
   protected readonly selectedDevice = signal<string>('jump-01');
+  protected readonly activeShellSection = signal('dashboard');
+  protected readonly activeShellTab = signal('home');
+  protected readonly shellCollapsed = signal(false);
+  protected readonly shellSearchQuery = signal('');
+
+  protected readonly shellNavItems: readonly AfNavigationItem[] = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard', badge: 3 },
+    { id: 'athletes', label: 'Atletas', icon: 'users' },
+    { id: 'devices', label: 'Dispositivos', icon: 'cpu', badge: 2 },
+    { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
+    { id: 'reports', label: 'Reportes', icon: 'file-text' },
+    { id: 'settings', label: 'Configuracion', icon: 'settings', kind: 'action' },
+  ];
+
+  protected readonly shellMobileTabs: readonly AfNavigationItem[] = [
+    { id: 'home', label: 'Inicio', icon: 'home' },
+    { id: 'train', label: 'Entrenar', icon: 'play' },
+    { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
+    { id: 'devices', label: 'Equipos', icon: 'cpu', badge: 2 },
+    { id: 'settings', label: 'Ajustes', icon: 'settings' },
+  ];
+
+  private readonly sectionTitles: Readonly<Record<string, string>> = {
+    dashboard: 'Dashboard',
+    athletes: 'Atletas',
+    devices: 'Dispositivos',
+    analytics: 'Analytics',
+    reports: 'Reportes',
+    settings: 'Configuracion',
+  };
+
+  private readonly sectionSubtitles: Readonly<Record<string, string>> = {
+    dashboard: 'Centro operativo de rendimiento',
+    athletes: 'Roster, altas y mediciones base',
+    devices: 'Sensores vinculados y estado de bateria',
+    analytics: 'Lecturas, tendencias y comparativas',
+    reports: 'Exportaciones y entregables del staff',
+    settings: 'Preferencias visuales y primitives',
+  };
+
+  private readonly mobileTabSections: Readonly<Record<string, string>> = {
+    home: 'dashboard',
+    train: 'athletes',
+    analytics: 'analytics',
+    devices: 'devices',
+    settings: 'settings',
+  };
+
+  protected readonly activeShellTitle = computed(
+    () => this.sectionTitles[this.activeShellSection()] ?? 'Dashboard',
+  );
+
+  protected readonly activeShellSubtitle = computed(
+    () => this.sectionSubtitles[this.activeShellSection()] ?? 'Centro operativo de rendimiento',
+  );
+
+  protected readonly shellBreadcrumbs = computed<readonly AfBreadcrumbItem[]>(() => [
+    { id: 'dashboard', label: 'ArgFit' },
+    { id: this.activeShellSection(), label: this.activeShellTitle() },
+  ]);
 
   protected readonly athleteName = signal('');
   protected readonly searchQuery = signal('');
@@ -79,6 +151,34 @@ export class App {
   protected selectDevice(id: string): void {
     this.selectedDevice.set(id);
     this.recordAction(`Device selected → ${id}`);
+  }
+
+  protected onShellNavSelected(item: AfNavigationItem): void {
+    this.activeShellSection.set(item.id);
+    this.recordAction(`Navegacion → ${item.label}`);
+  }
+
+  protected onShellTabSelected(item: AfNavigationItem): void {
+    this.activeShellTab.set(item.id);
+    this.activeShellSection.set(this.mobileTabSections[item.id] ?? item.id);
+    this.recordAction(`Tab movil → ${item.label}`);
+  }
+
+  protected onShellBreadcrumbSelected(item: AfBreadcrumbItem): void {
+    if (item.id && this.sectionTitles[item.id]) {
+      this.activeShellSection.set(item.id);
+    }
+    this.recordAction(`Breadcrumb → ${item.label}`);
+  }
+
+  protected onShellCollapsedChange(collapsed: boolean): void {
+    this.shellCollapsed.set(collapsed);
+    this.recordAction(`Sidebar → ${collapsed ? 'colapsado' : 'expandido'}`);
+  }
+
+  protected onShellSearchChanged(value: string): void {
+    this.shellSearchQuery.set(value);
+    this.searchQuery.set(value);
   }
 
   protected updateAthleteName(value: string): void {

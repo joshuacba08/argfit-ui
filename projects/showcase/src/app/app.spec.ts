@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ARGFIT_DARK_THEME, AfThemeService, provideArgfitUi } from '@argfit-ui/core';
+import { ARGFIT_DARK_THEME, AfPlatformService, AfThemeService, provideArgfitUi } from '@argfit-ui/core';
 import { providePrimeNG } from 'primeng/config';
 
 import { App } from './app';
@@ -26,7 +26,60 @@ describe('App', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Adaptive enterprise UI');
+    expect(compiled.querySelector('af-page-shell-desktop')).not.toBeNull();
+    expect(compiled.querySelector('h1')?.textContent).toContain('Dashboard');
+  });
+
+  it('renders the AfPageShell desktop navigation contract', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const navItems = compiled.querySelectorAll('.af-sidebar-desktop__item');
+    expect(navItems.length).toBeGreaterThanOrEqual(5);
+    expect(compiled.querySelector('.af-sidebar-desktop__item--active')?.getAttribute('aria-current')).toBe(
+      'page',
+    );
+    expect(compiled.querySelectorAll('.af-topbar-desktop__breadcrumbs li').length).toBeGreaterThanOrEqual(2);
+    expect(compiled.querySelector('.af-topbar-desktop__search input')).not.toBeNull();
+    expect(compiled.querySelector('.af-topbar-desktop__notification af-badge-desktop')?.textContent?.trim()).toBe(
+      '3',
+    );
+  });
+
+  it('renders the AfPageShell mobile tabs contract', async () => {
+    const platform = TestBed.inject(AfPlatformService);
+    platform.setPreference('mobile');
+
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const tabs = compiled.querySelectorAll('.af-bottom-tabs-mobile__item');
+    expect(compiled.querySelector('af-page-shell-mobile')).not.toBeNull();
+    expect(tabs.length).toBeGreaterThanOrEqual(4);
+    expect(compiled.querySelector('.af-bottom-tabs-mobile__item--active')?.getAttribute('aria-current')).toBe(
+      'page',
+    );
+  });
+
+  it('switches local sections without Router navigation', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const athletes = Array.from(compiled.querySelectorAll('button.af-sidebar-desktop__item')).find(
+      (button) => button.textContent?.includes('Atletas'),
+    ) as HTMLButtonElement;
+
+    athletes.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('.shell-section h2')?.textContent?.trim()).toBe('Atletas');
   });
 
   it('should toggle the active theme', async () => {
@@ -126,7 +179,10 @@ describe('App', () => {
     const triggers = compiled.querySelectorAll('.dialog-trigger-grid af-button-desktop button');
     expect(triggers.length).toBeGreaterThanOrEqual(3);
 
-    (triggers[0] as HTMLButtonElement).click();
+    const detailsTrigger = Array.from(triggers).find((button) =>
+      button.textContent?.includes('Ver atleta'),
+    ) as HTMLButtonElement;
+    detailsTrigger.click();
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -150,6 +206,19 @@ describe('App', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    const searchInputIcon = compiled.querySelector(
+      'af-input-desktop af-icon',
+    ) as HTMLElement | null;
+    expect(searchInputIcon).not.toBeNull();
+
+    const settings = Array.from(compiled.querySelectorAll('button.af-sidebar-desktop__item')).find(
+      (button) => button.textContent?.includes('Configuracion'),
+    ) as HTMLButtonElement;
+
+    settings.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
     const iconCells = compiled.querySelectorAll('.icon-cell af-icon');
     expect(iconCells.length).toBeGreaterThanOrEqual(12);
 
@@ -157,11 +226,6 @@ describe('App', () => {
     expect(firstSvg).not.toBeNull();
     expect(firstSvg.getAttribute('role')).toBe('img');
     expect(firstSvg.querySelector('title')?.textContent ?? '').not.toBe('');
-
-    const searchInputIcon = compiled.querySelector(
-      'af-input-desktop af-icon',
-    ) as HTMLElement | null;
-    expect(searchInputIcon).not.toBeNull();
   });
 
   it('renders the AfChart vertical slice with empty and ready states', async () => {

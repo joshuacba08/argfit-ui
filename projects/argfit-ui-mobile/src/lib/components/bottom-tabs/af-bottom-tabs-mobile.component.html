@@ -1,0 +1,46 @@
+<nav class="af-bottom-tabs-mobile__nav" [attr.aria-label]="ariaLabel()">
+  <ng-template #tabContent let-tab>
+    <span class="af-bottom-tabs-mobile__icon-wrap">
+      @if (tab.icon) {
+        <af-icon [name]="tab.icon" size="lg" decorative />
+      }
+
+      @if (tab.badge !== undefined && tab.badge !== null) {
+        <af-badge-mobile class="af-bottom-tabs-mobile__badge" tone="danger" size="sm">
+          {{ tab.badge }}
+        </af-badge-mobile>
+      }
+    </span>
+    <span class="af-bottom-tabs-mobile__label">{{ tab.label }}</span>
+  </ng-template>
+
+  @for (tab of tabs(); track tab.id) {
+    @if (tab.href) {
+      <a
+        class="af-bottom-tabs-mobile__item"
+        [class.af-bottom-tabs-mobile__item--active]="isActive(tab)"
+        [class.af-bottom-tabs-mobile__item--disabled]="tab.disabled"
+        [href]="tab.disabled ? null : tab.href"
+        [attr.aria-label]="tab.ariaLabel ?? tab.label"
+        [attr.aria-current]="isActive(tab) ? 'page' : null"
+        [attr.aria-disabled]="tab.disabled ? 'true' : null"
+        [attr.tabindex]="tab.disabled ? -1 : null"
+        (click)="onTabClick($event, tab)"
+      >
+        <ng-container *ngTemplateOutlet="tabContent; context: { $implicit: tab }" />
+      </a>
+    } @else {
+      <button
+        class="af-bottom-tabs-mobile__item"
+        type="button"
+        [class.af-bottom-tabs-mobile__item--active]="isActive(tab)"
+        [disabled]="tab.disabled"
+        [attr.aria-label]="tab.ariaLabel ?? tab.label"
+        [attr.aria-current]="isActive(tab) ? 'page' : null"
+        (click)="onTabClick($event, tab)"
+      >
+        <ng-container *ngTemplateOutlet="tabContent; context: { $implicit: tab }" />
+      </button>
+    }
+  }
+</nav>

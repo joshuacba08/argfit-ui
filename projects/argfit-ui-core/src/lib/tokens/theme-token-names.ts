@@ -218,6 +218,12 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-button-padding-x-md',
   '--af-button-padding-x-lg',
   '--af-button-gap',
+
+  // Shell sizing
+  '--af-shell-sidebar-width',
+  '--af-shell-sidebar-collapsed-width',
+  '--af-shell-topbar-height',
+  '--af-shell-mobile-tabbar-height',
 ] as const;
 
 export type AfThemeTokenName = (typeof AF_THEME_TOKEN_NAMES)[number];

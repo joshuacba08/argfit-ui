@@ -8,4 +8,7 @@ export * from './lib/components/card/af-card-desktop.component';
 export * from './lib/components/chart/af-chart-desktop.component';
 export * from './lib/components/dialog/af-dialog-desktop.component';
 export * from './lib/components/input/af-input-desktop.component';
+export * from './lib/components/page-shell/af-page-shell-desktop.component';
+export * from './lib/components/sidebar/af-sidebar-desktop.component';
+export * from './lib/components/topbar/af-topbar-desktop.component';
 

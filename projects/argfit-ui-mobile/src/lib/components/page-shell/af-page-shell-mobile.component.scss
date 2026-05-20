@@ -1,0 +1,82 @@
+/* -----------------------------------------------------------------
+   AfPageShellMobileComponent
+   ----------------------------------------------------------------- */
+
+.af-page-shell-mobile {
+  background: var(--af-bg-main);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--af-font-body);
+  height: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.af-page-shell-mobile__header {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-bg-main) 86%, var(--af-bg-elevated));
+  border-bottom: 1px solid var(--af-border-soft);
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  min-height: var(--af-shell-topbar-height);
+  padding: max(var(--af-space-3), env(safe-area-inset-top)) var(--af-space-4) var(--af-space-3);
+}
+
+.af-page-shell-mobile__brand-row {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-3);
+  min-width: 0;
+}
+
+.af-page-shell-mobile__title-block {
+  min-width: 0;
+}
+
+.af-page-shell-mobile__subtitle {
+  color: var(--af-text-soft);
+  display: block;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  letter-spacing: 0;
+  line-height: var(--af-leading-tight);
+}
+
+.af-page-shell-mobile h1 {
+  color: var(--af-text-main);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-lg);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: 0;
+  line-height: var(--af-leading-tight);
+  margin: var(--af-space-0_5) 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.af-page-shell-mobile__actions {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: var(--af-space-2);
+}
+
+.af-page-shell-mobile__content {
+  background:
+    radial-gradient(ellipse 80% 50% at 30% 8%, color-mix(in srgb, var(--af-primary) 8%, transparent) 0%, transparent 60%),
+    var(--af-bg-main);
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--af-space-4);
+}
+
+.af-page-shell-mobile[data-density='compact'] .af-page-shell-mobile__content {
+  padding: var(--af-space-3);
+}

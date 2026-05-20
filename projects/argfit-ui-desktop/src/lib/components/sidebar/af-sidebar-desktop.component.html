@@ -1,0 +1,67 @@
+<div class="af-sidebar-desktop__brand">
+  <ng-content select="[afPageShellBrand]" />
+</div>
+
+<nav class="af-sidebar-desktop__nav" [attr.aria-label]="ariaLabel()">
+  <ng-template #navItemContent let-item>
+    @if (item.icon) {
+      <af-icon class="af-sidebar-desktop__icon" [name]="item.icon" size="md" decorative />
+    }
+
+    <span class="af-sidebar-desktop__label">{{ item.label }}</span>
+
+    @if (item.badge !== undefined && item.badge !== null) {
+      <af-badge-desktop class="af-sidebar-desktop__badge" tone="primary" size="sm">
+        {{ item.badge }}
+      </af-badge-desktop>
+    }
+  </ng-template>
+
+  @for (item of navItems(); track item.id) {
+    @if (item.href) {
+      <a
+        class="af-sidebar-desktop__item"
+        [class.af-sidebar-desktop__item--active]="isActive(item)"
+        [class.af-sidebar-desktop__item--disabled]="item.disabled"
+        [href]="item.disabled ? null : item.href"
+        [attr.aria-label]="itemAriaLabel(item)"
+        [attr.aria-current]="isActive(item) ? 'page' : null"
+        [attr.aria-disabled]="item.disabled ? 'true' : null"
+        [attr.tabindex]="item.disabled ? -1 : null"
+        (click)="onItemClick($event, item)"
+      >
+        <ng-container *ngTemplateOutlet="navItemContent; context: { $implicit: item }" />
+      </a>
+    } @else {
+      <button
+        class="af-sidebar-desktop__item"
+        type="button"
+        [class.af-sidebar-desktop__item--active]="isActive(item)"
+        [disabled]="item.disabled"
+        [attr.aria-label]="itemAriaLabel(item)"
+        [attr.aria-current]="isActive(item) ? 'page' : null"
+        (click)="onItemClick($event, item)"
+      >
+        <ng-container *ngTemplateOutlet="navItemContent; context: { $implicit: item }" />
+      </button>
+    }
+  }
+</nav>
+
+<div class="af-sidebar-desktop__spacer"></div>
+
+<div class="af-sidebar-desktop__footer">
+  <ng-content select="[afPageShellFooter]" />
+</div>
+
+@if (collapsible()) {
+  <button
+    class="af-sidebar-desktop__collapse"
+    type="button"
+    [attr.aria-label]="collapsed() ? 'Expandir navegacion' : 'Colapsar navegacion'"
+    [attr.aria-expanded]="!collapsed()"
+    (click)="toggleCollapsed()"
+  >
+    <af-icon name="chevron-left" size="sm" decorative />
+  </button>
+}

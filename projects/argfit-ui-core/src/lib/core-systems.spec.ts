@@ -1,6 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import type { AfBadgeShape, AfBadgeSize, AfBadgeTone, AfBadgeVariant } from '../public-api';
+import type {
+  AfBadgeShape,
+  AfBadgeSize,
+  AfBadgeTone,
+  AfBadgeVariant,
+  AfBreadcrumbItem,
+  AfNavigationItem,
+  AfPageShellDensity,
+  AfPageShellVariant,
+} from '../public-api';
 import { provideArgfitUi } from './providers/provide-argfit-ui';
 import { AfPlatformService } from './services/platform.service';
 import { ARGFIT_DARK_THEME } from './themes/argfit-dark.theme';
@@ -109,5 +118,23 @@ describe('ArgFit core systems', () => {
       size: 'sm',
       shape: 'pill',
     });
+  });
+
+  it('exports the page shell navigation contract through the public API', () => {
+    const navItem: AfNavigationItem = {
+      id: 'dashboard',
+      label: 'Dashboard',
+      icon: 'layout-dashboard',
+      badge: 3,
+    };
+    const breadcrumb: AfBreadcrumbItem = { id: 'root', label: 'ArgFit' };
+    const density: AfPageShellDensity = 'compact';
+    const variant: AfPageShellVariant = 'dashboard';
+
+    expect(navItem.icon).toBe('layout-dashboard');
+    expect(navItem.badge).toBe(3);
+    expect(breadcrumb.label).toBe('ArgFit');
+    expect(density).toBe('compact');
+    expect(variant).toBe('dashboard');
   });
 });

@@ -37,4 +37,14 @@ export {
 export {
     AfInputComponent as AfInput, AfInputComponent
 } from './lib/components/input/af-input.component';
+export {
+    AF_PAGE_SHELL_SLOT_DIRECTIVES,
+    AfPageShellActionsDirective,
+    AfPageShellBrandDirective,
+    AfPageShellFooterDirective,
+    AfPageShellUserDirective
+} from './lib/components/page-shell/af-page-shell-slots.directive';
+export {
+    AfPageShellComponent as AfPageShell, AfPageShellComponent
+} from './lib/components/page-shell/af-page-shell.component';
 

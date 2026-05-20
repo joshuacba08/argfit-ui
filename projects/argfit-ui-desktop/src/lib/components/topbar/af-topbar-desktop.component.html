@@ -1,0 +1,64 @@
+<div class="af-topbar-desktop__title-block">
+  @if (breadcrumbs().length > 0) {
+    <nav class="af-topbar-desktop__breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        @for (breadcrumb of breadcrumbs(); track breadcrumb.id ?? breadcrumb.label) {
+          <li>
+            @if (breadcrumb.href) {
+              <a [href]="breadcrumb.href" (click)="onBreadcrumbClick(breadcrumb)">
+                {{ breadcrumb.label }}
+              </a>
+            } @else {
+              <button type="button" (click)="onBreadcrumbClick(breadcrumb)">
+                {{ breadcrumb.label }}
+              </button>
+            }
+
+            @if (!$last) {
+              <af-icon name="chevron-right" size="xs" tone="muted" decorative />
+            }
+          </li>
+        }
+      </ol>
+    </nav>
+  }
+
+  <h1 class="af-topbar-desktop__title">{{ title() }}</h1>
+
+  @if (subtitle(); as subtitleText) {
+    <p class="af-topbar-desktop__subtitle">{{ subtitleText }}</p>
+  }
+</div>
+
+<div class="af-topbar-desktop__actions">
+  @if (showSearch()) {
+    <label class="af-topbar-desktop__search">
+      <span class="af-topbar-desktop__search-label">Buscar</span>
+      <af-icon name="search" size="sm" tone="muted" decorative />
+      <input
+        type="search"
+        [attr.placeholder]="searchPlaceholder()"
+        (input)="onSearchInput($event)"
+      />
+    </label>
+  }
+
+  <ng-content select="[afPageShellActions]" />
+
+  @if (notificationCount() !== undefined) {
+    <button class="af-topbar-desktop__notification" type="button" aria-label="Notificaciones">
+      <af-icon name="bell" size="sm" decorative />
+      @if (notificationCount(); as count) {
+        <af-badge-desktop tone="danger" size="sm" ariaLabel="Notificaciones pendientes">
+          {{ count }}
+        </af-badge-desktop>
+      }
+    </button>
+  }
+
+  @if (userInitials(); as initials) {
+    <span class="af-topbar-desktop__avatar" aria-label="Usuario actual">{{ initials }}</span>
+  }
+
+  <ng-content select="[afPageShellUser]" />
+</div>
