@@ -17,3 +17,6 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 9. [HU-009 — AfPageShell Navigation Slice](./HU-009-af-page-shell.md)
 10. [HU-010 — AfMetricCard Vertical Slice](./HU-010-af-metric-card.md)
 11. [HU-011 — AfDataTable Vertical Slice](./HU-011-af-data-table.md)
+12. [HU-012 — AfAnalyticsCard Vertical Slice](./HU-012-af-analytics-card.md)
+13. [HU-013 — AfFormControls Expansion Slice](./HU-013-af-form-controls.md)
+14. [HU-014 — AfFeedback Toast Slice](./HU-014-af-feedback-toast.md)

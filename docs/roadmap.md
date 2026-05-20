@@ -201,6 +201,13 @@ Create desktop-oriented rendering.
 - AfDialogDesktop
 - HU-008 — [AfBadge vertical slice](./hus/HU-008-af-badge.md) — ready for implementation
 - AfBadgeDesktop
+- HU-013 — [AfFormControls expansion slice](./hus/HU-013-af-form-controls.md) — ready for implementation
+- AfSelectDesktop
+- AfTextareaDesktop
+- AfToggleDesktop
+- AfCheckboxDesktop
+- AfRadioGroupDesktop
+- AfSegmentedControlDesktop
 
 ---
 
@@ -218,9 +225,19 @@ Create desktop-oriented rendering.
 
 - HU-010 — [AfMetricCard vertical slice](./hus/HU-010-af-metric-card.md) — ready for implementation
 - AfMetricCardDesktop
+- HU-012 — [AfAnalyticsCard vertical slice](./hus/HU-012-af-analytics-card.md) — ready for implementation
 - AfAnalyticsCardDesktop
 - HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - AfDataTableDesktop
+
+---
+
+### Feedback Components
+
+- HU-014 — [AfFeedback toast slice](./hus/HU-014-af-feedback-toast.md) — ready for implementation
+- AfToastDesktop
+- AfToastViewportDesktop
+- AfInlineMessageDesktop
 
 ---
 
@@ -240,6 +257,13 @@ Create mobile-native rendering.
 - AfModalMobile
 - HU-008 — [AfBadge vertical slice](./hus/HU-008-af-badge.md) — ready for implementation
 - AfBadgeMobile
+- HU-013 — [AfFormControls expansion slice](./hus/HU-013-af-form-controls.md) — ready for implementation
+- AfSelectMobile
+- AfTextareaMobile
+- AfToggleMobile
+- AfCheckboxMobile
+- AfRadioGroupMobile
+- AfSegmentedControlMobile
 
 ---
 
@@ -256,9 +280,19 @@ Create mobile-native rendering.
 
 - HU-010 — [AfMetricCard vertical slice](./hus/HU-010-af-metric-card.md) — ready for implementation
 - AfMetricCardMobile
+- HU-012 — [AfAnalyticsCard vertical slice](./hus/HU-012-af-analytics-card.md) — ready for implementation
 - AfAnalyticsCardMobile
 - HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - AfMobileList
+
+---
+
+### Feedback Components
+
+- HU-014 — [AfFeedback toast slice](./hus/HU-014-af-feedback-toast.md) — ready for implementation
+- AfToastMobile
+- AfToastViewportMobile
+- AfInlineMessageMobile
 
 ---
 
@@ -283,6 +317,18 @@ Expose unified adaptive APIs.
 - AfMetricCard
 - HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - AfDataTable
+- HU-012 — [AfAnalyticsCard vertical slice](./hus/HU-012-af-analytics-card.md) — ready for implementation
+- AfAnalyticsCard
+- HU-013 — [AfFormControls expansion slice](./hus/HU-013-af-form-controls.md) — ready for implementation
+- AfSelect
+- AfTextarea
+- AfToggle
+- AfCheckbox
+- AfRadioGroup
+- AfSegmentedControl
+- HU-014 — [AfFeedback toast slice](./hus/HU-014-af-feedback-toast.md) — ready for implementation
+- AfToastViewport
+- AfInlineMessage
 
 ---
 
@@ -334,8 +380,12 @@ Build advanced enterprise features.
 - Dashboard blocks
 - HU-011 — [AfDataTable vertical slice](./hus/HU-011-af-data-table.md) — ready for implementation
 - Advanced tables
+- HU-012 — [AfAnalyticsCard vertical slice](./hus/HU-012-af-analytics-card.md) — ready for implementation
 - Analytics widgets
+- HU-013 — [AfFormControls expansion slice](./hus/HU-013-af-form-controls.md) — ready for implementation
 - Complex forms
+- HU-014 — [AfFeedback toast slice](./hus/HU-014-af-feedback-toast.md) — ready for implementation
+- Feedback systems
 - Entity management systems
 
 ---
