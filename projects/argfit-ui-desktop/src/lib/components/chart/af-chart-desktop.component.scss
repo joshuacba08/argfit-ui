@@ -1,25 +1,33 @@
 .af-chart-desktop {
   background: transparent;
   display: block;
+  height: var(--af-chart-height, auto);
+  min-height: var(--af-chart-min-height, 220px);
   position: relative;
   width: 100%;
 }
 
 .af-chart-desktop[data-density='compact'] {
-  min-height: 96px;
+  --af-chart-min-height: 96px;
 }
 
 .af-chart-desktop[data-density='comfortable'] {
-  min-height: 220px;
+  --af-chart-min-height: 220px;
 }
 
 .af-chart-desktop[data-type='sparkline'] {
-  min-height: 48px;
+  --af-chart-min-height: 56px;
+}
+
+.af-chart-desktop[data-type='donut'],
+.af-chart-desktop[data-type='gauge'],
+.af-chart-desktop[data-type='radar'] {
+  --af-chart-min-height: 240px;
 }
 
 .af-chart-desktop__canvas {
-  height: 100%;
-  min-height: inherit;
+  height: var(--af-chart-height, var(--af-chart-min-height, 220px));
+  min-height: var(--af-chart-min-height, 220px);
   width: 100%;
 }
 
@@ -63,6 +71,10 @@
 }
 
 @keyframes af-chart-desktop-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

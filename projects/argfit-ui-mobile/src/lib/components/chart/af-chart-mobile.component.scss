@@ -1,25 +1,36 @@
 .af-chart-mobile {
   background: transparent;
   display: block;
+  height: var(--af-chart-height, auto);
+  min-height: var(--af-chart-min-height, 200px);
   position: relative;
   width: 100%;
 }
 
 .af-chart-mobile[data-density='compact'] {
-  min-height: 140px;
+  --af-chart-min-height: 160px;
 }
 
 .af-chart-mobile[data-density='comfortable'] {
-  min-height: 200px;
+  --af-chart-min-height: 220px;
 }
 
 .af-chart-mobile[data-type='sparkline'] {
-  min-height: 56px;
+  --af-chart-min-height: 64px;
+}
+
+.af-chart-mobile[data-type='donut'],
+.af-chart-mobile[data-type='radar'] {
+  --af-chart-min-height: 240px;
+}
+
+.af-chart-mobile[data-type='gauge'] {
+  --af-chart-min-height: 260px;
 }
 
 .af-chart-mobile__canvas {
-  height: 100%;
-  min-height: inherit;
+  height: var(--af-chart-height, var(--af-chart-min-height, 200px));
+  min-height: var(--af-chart-min-height, 200px);
   width: 100%;
 }
 
@@ -63,6 +74,10 @@
 }
 
 @keyframes af-chart-mobile-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

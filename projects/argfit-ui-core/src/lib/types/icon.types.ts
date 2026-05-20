@@ -10,8 +10,13 @@ export type AfIconName =
   | 'alert-triangle'
   | 'arrow-down'
   | 'arrow-up'
+  | 'bar-chart-3'
+  | 'battery'
+  | 'bell'
+  | 'bluetooth'
   | 'calendar'
   | 'check'
+  | 'check-square'
   | 'chevron-down'
   | 'chevron-left'
   | 'chevron-right'
@@ -19,15 +24,29 @@ export type AfIconName =
   | 'circle-alert'
   | 'circle-check'
   | 'clock'
+  | 'cpu'
   | 'download'
+  | 'edit'
+  | 'file-text'
   | 'filter'
+  | 'grid-2x2'
+  | 'home'
   | 'info'
+  | 'kanban'
+  | 'layout-dashboard'
   | 'menu'
+  | 'monitor'
+  | 'panel-top'
+  | 'pie-chart'
+  | 'play'
   | 'plus'
   | 'search'
   | 'settings'
+  | 'table'
   | 'trash'
   | 'upload'
+  | 'users'
+  | 'zap'
   | 'x';
 
 /**
@@ -38,10 +57,4 @@ export type AfIconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 /**
  * Semantic colour tone for an icon. Maps to ArgFit `--af-*` tokens.
  */
-export type AfIconTone =
-  | 'default'
-  | 'muted'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'danger';
+export type AfIconTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';

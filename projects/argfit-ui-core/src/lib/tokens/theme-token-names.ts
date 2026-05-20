@@ -105,10 +105,14 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-chart-axis',
   '--af-chart-label',
   '--af-chart-primary',
+  '--af-chart-accent',
   '--af-chart-success',
   '--af-chart-warning',
   '--af-chart-danger',
+  '--af-chart-track',
+  '--af-chart-fill-soft',
   '--af-chart-tooltip-bg',
+  '--af-chart-tooltip-border',
   '--af-chart-tooltip-text',
 
   // ── Scrollbar ───────────────────────────────────────────────────────

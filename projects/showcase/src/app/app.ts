@@ -2,26 +2,27 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import {
-    AfButton,
-    AfCard,
-    AfCardContentDirective,
-    AfCardEyebrowDirective,
-    AfCardFooterDirective,
-    AfCardHeaderDirective,
-    AfCardSubtitleDirective,
-    AfCardTitleDirective,
-    AfChart,
-    AfDialog,
-    AfDialogContentDirective,
-    AfDialogFooterDirective,
-    AfInput,
+  AfButton,
+  AfCard,
+  AfCardContentDirective,
+  AfCardEyebrowDirective,
+  AfCardFooterDirective,
+  AfCardHeaderDirective,
+  AfCardSubtitleDirective,
+  AfCardTitleDirective,
+  AfChart,
+  AfDialog,
+  AfDialogContentDirective,
+  AfDialogFooterDirective,
+  AfInput,
 } from '@argfit-ui/adaptive';
 import {
-    AfPlatformService,
-    AfThemeService,
-    type AfChartSeries,
-    type AfIconName,
-    type AfPlatformPreference,
+  AfPlatformService,
+  AfThemeService,
+  type AfChartIndicator,
+  type AfChartSeries,
+  type AfIconName,
+  type AfPlatformPreference,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
@@ -171,18 +172,127 @@ export class App {
     { name: 'settings', label: 'Ajustes' },
     { name: 'trash', label: 'Eliminar' },
     { name: 'download', label: 'Descargar' },
+    { name: 'layout-dashboard', label: 'Dashboard' },
+    { name: 'users', label: 'Atletas' },
+    { name: 'table', label: 'Tabla' },
+    { name: 'kanban', label: 'Kanban' },
+    { name: 'bar-chart-3', label: 'Charts' },
+    { name: 'cpu', label: 'Dispositivo' },
+    { name: 'monitor', label: 'Overlays' },
+    { name: 'check-square', label: 'Forms' },
   ];
 
-  protected readonly chartCategories = signal<readonly string[]>([
-    'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom',
+  protected readonly weekCategories = signal<readonly string[]>([
+    'Lun',
+    'Mar',
+    'Mie',
+    'Jue',
+    'Vie',
+    'Sab',
+    'Dom',
   ]);
 
-  protected readonly jumpsSeries = signal<readonly AfChartSeries[]>([
-    { name: 'Salto vertical (cm)', data: [42, 45, 47, 44, 49, 51, 48], tone: 'primary' },
+  protected readonly performanceIndicators = signal<readonly AfChartIndicator[]>([
+    { name: 'Performance Score', min: 0, max: 100 },
   ]);
 
-  protected readonly sessionsSeries = signal<readonly AfChartSeries[]>([
-    { name: 'Sesiones', data: [3, 5, 4, 6, 7, 4, 2], tone: 'success' },
+  protected readonly performanceGaugeSeries = signal<readonly AfChartSeries[]>([
+    { name: 'Performance Score', data: [78], tone: 'primary' },
+  ]);
+
+  protected readonly sessionDistributionSeries = signal<readonly AfChartSeries[]>([
+    {
+      name: 'Sesiones',
+      data: [
+        { label: 'CMJ', value: 42 },
+        { label: 'SJ', value: 18 },
+        { label: 'DJ', value: 15 },
+        { label: 'Sprint', value: 8 },
+        { label: 'Abalakov', value: 12 },
+      ],
+    },
+  ]);
+
+  protected readonly jumpProgressCategories = signal<readonly string[]>([
+    'D1',
+    'D2',
+    'D3',
+    'D4',
+    'D5',
+    'D6',
+    'D7',
+    'D8',
+    'D9',
+    'D10',
+    'D11',
+    'D12',
+    'D13',
+    'D14',
+  ]);
+
+  protected readonly jumpProgressSeries = signal<readonly AfChartSeries[]>([
+    {
+      name: 'Salto',
+      data: [38.2, 40, 39.4, 42.1, 41.8, 43.0, 44.1, 42.9, 45.2, 43.8, 44.4, 45, 44.8, 46],
+      tone: 'primary',
+    },
+  ]);
+
+  protected readonly monthlyCategories = signal<readonly string[]>([
+    'Ene',
+    'Feb',
+    'Mar',
+    'Abr',
+    'May',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dic',
+  ]);
+
+  protected readonly monthlySessionSeries = signal<readonly AfChartSeries[]>([
+    { name: 'CMJ', data: [30, 48, 38, 44, 42, 52, 40, 39, 35, 49, 31, 51] },
+    { name: 'SJ', data: [20, 22, 24, 24, 25, 28, 22, 32, 31, 28, 25, 31] },
+    { name: 'DJ', data: [13, 10, 16, 20, 21, 18, 21, 15, 14, 24, 13, 20] },
+    { name: 'Sprint', data: [8, 9, 7, 5, 10, 6, 9, 12, 8, 10, 9, 8] },
+  ]);
+
+  protected readonly rankingCategories = signal<readonly string[]>([
+    'S. Perez',
+    'L. Rodriguez',
+    'N. Morales',
+    'D. Romero',
+    'M. Garcia',
+  ]);
+
+  protected readonly rankingSeries = signal<readonly AfChartSeries[]>([
+    { name: 'Mejor salto', data: [42.1, 46.5, 49.7, 52.1, 55.4], tone: 'primary' },
+  ]);
+
+  protected readonly radarCategories = signal<readonly string[]>([
+    'Salto',
+    'T. Contacto',
+    'Simetria',
+    'Potencia',
+    'RSI',
+    'Fuerza',
+  ]);
+
+  protected readonly radarIndicators = signal<readonly AfChartIndicator[]>([
+    { name: 'Salto', max: 100 },
+    { name: 'T.Contacto', max: 100 },
+    { name: 'Simetria', max: 100 },
+    { name: 'Potencia', max: 100 },
+    { name: 'RSI', max: 100 },
+    { name: 'Fuerza', max: 100 },
+  ]);
+
+  protected readonly radarSeries = signal<readonly AfChartSeries[]>([
+    { name: 'Maria Garcia', data: [82, 70, 64, 78, 68, 88] },
+    { name: 'Santiago Perez', data: [92, 76, 70, 91, 74, 94] },
   ]);
 
   protected readonly latencySparkline = signal<readonly AfChartSeries[]>([
@@ -190,7 +300,16 @@ export class App {
   ]);
 
   protected readonly latencyCategories = signal<readonly string[]>([
-    't-9', 't-8', 't-7', 't-6', 't-5', 't-4', 't-3', 't-2', 't-1', 't-0',
+    't-9',
+    't-8',
+    't-7',
+    't-6',
+    't-5',
+    't-4',
+    't-3',
+    't-2',
+    't-1',
+    't-0',
   ]);
 
   protected readonly emptySeries = signal<readonly AfChartSeries[]>([]);

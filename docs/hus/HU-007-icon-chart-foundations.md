@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Implemented
 
 ## Fase del Roadmap
 
@@ -25,6 +25,7 @@ ArgFit UI usara:
 
 - `lucide-angular` como proveedor interno de iconos.
 - `echarts` como motor interno de graficos de datos.
+- `echarts-gl` queda documentado como extension futura para charts 3D. No se instala en esta HU porque los presets 3D quedan fuera del primer cierre implementado.
 
 Estas librerias NO deben filtrarse como contrato publico principal de ArgFit UI.
 
@@ -39,10 +40,39 @@ Crear la base compartida para:
 - Renderizar iconos ArgFit usando Lucide internamente.
 - Reemplazar iconos sueltos como strings/emoji por nombres tipados.
 - Renderizar graficos basicos ArgFit usando ECharts internamente.
+- Cubrir los patrones reales del design system: KPI gauge, donut/ring, line/area, bar, radar, heatmap y charts analiticos avanzados.
 - Definir tokens, tipos y patrones de uso para data visualization.
 - Mantener APIs publicas simples, estables y vendor-independent.
 
-Esta HU no busca construir dashboards completos. Busca cerrar la decision tecnica antes de que el sistema crezca.
+Esta HU no busca construir dashboards completos. Busca cerrar la decision tecnica y un catalogo minimo de chart presets antes de que el sistema crezca.
+
+## Validacion de Diseno
+
+La HU debe validarse contra las referencias visuales adjuntas. El diseño real muestra tres familias que deben quedar contempladas:
+
+1. **Iconografia de sistema**
+   - Sidebar desktop y tabbar mobile usan SVG lineales tipo Lucide.
+   - Stroke esperado: 1.8–2px, `roundCap`, `roundJoin`, sin fill salvo casos puntuales.
+   - Iconos visibles en referencias: dashboard/grid, users, table, kanban, pie/chart, device/cpu, report/file, monitor, check-square, settings, search, bell, download, plus, edit, trash, chevron, filter.
+
+2. **Charts KPI/mobile**
+   - Gauge semicircular de performance score.
+   - Donut/ring para distribucion de sesiones.
+   - Radial/polar bars para KPIs.
+   - Area line para progreso.
+   - Horizontal bars para ranking.
+   - Radar para comparar atletas.
+   - Side-by-side bars para comparacion de metricas.
+
+3. **Charts analytics/desktop**
+   - Stacked bar mensual.
+   - Heatmap semanal.
+   - Boxplot de distribucion.
+   - Parallel coordinates.
+   - Radar comparison.
+   - 3D scatter y 3D bar como charts avanzados.
+
+La implementacion de HU-007 puede priorizar un subconjunto, pero el modelo de tipos, tokens y arquitectura no debe impedir estos charts. Si algun chart avanzado queda fuera, debe quedar marcado como `planned` y no como imposible.
 
 ## Referencias Visuales Obligatorias
 
@@ -53,14 +83,20 @@ Adjuntar al agente al menos:
 - Screenshot desktop dashboard.
 - Screenshot desktop analytics.
 - Screenshot mobile charts.
+- `C:\Users\Ander\Downloads\ArgFit\ui_kits\desktop\charts.jsx`
+- `C:\Users\Ander\Downloads\ArgFit\ui_kits\mobile\charts.jsx`
 - `C:\Users\Ander\Downloads\ArgFit\ui_kits\desktop\components.jsx`
 - `C:\Users\Ander\Downloads\ArgFit\ui_kits\desktop\advanced-table.jsx`
+- `C:\Users\Ander\Downloads\ArgFit\ui_kits\desktop\kanban.jsx`
+- `C:\Users\Ander\Downloads\ArgFit\ui_kits\desktop\screens.jsx`
 - `C:\Users\Ander\Downloads\ArgFit\ui_kits\mobile\components.jsx`
+- `C:\Users\Ander\Downloads\ArgFit\ui_kits\mobile\screens.jsx`
+- `C:\Users\Ander\Downloads\ArgFit\preview\colors-surfaces.html`
+- `C:\Users\Ander\Downloads\ArgFit\preview\comp-badges.html`
 - `C:\Users\Ander\Downloads\ArgFit\colors_and_type.css`
 
 Opcionales utiles:
 
-- `C:\Users\Ander\Downloads\ArgFit\preview\comp-badges.html`
 - `C:\Users\Ander\Downloads\ArgFit\preview\comp-inputs.html`
 - `C:\Users\Ander\Downloads\ArgFit\ui_kits\desktop\forms.jsx`
 - `C:\Users\Ander\Downloads\ArgFit\ui_kits\mobile\forms.jsx`
@@ -102,6 +138,10 @@ Instalar dependencias de workspace:
 - `echarts`
 
 No instalar wrappers de ECharts para Angular salvo justificacion tecnica clara.
+
+Opcional avanzado:
+
+- `echarts-gl`, solo si se implementan `scatter3d` o `bar3d` en esta HU.
 
 ### Core
 
@@ -205,8 +245,13 @@ type AfIconName =
   | 'alert-triangle'
   | 'arrow-down'
   | 'arrow-up'
+  | 'bar-chart-3'
+  | 'battery'
+  | 'bell'
+  | 'bluetooth'
   | 'calendar'
   | 'check'
+  | 'check-square'
   | 'chevron-down'
   | 'chevron-left'
   | 'chevron-right'
@@ -214,15 +259,26 @@ type AfIconName =
   | 'circle-alert'
   | 'circle-check'
   | 'clock'
+  | 'cpu'
+  | 'edit'
+  | 'file-text'
   | 'download'
   | 'filter'
+  | 'grid-2x2'
   | 'info'
+  | 'layout-dashboard'
   | 'menu'
+  | 'monitor'
+  | 'panel-top'
+  | 'pie-chart'
+  | 'play'
   | 'plus'
   | 'search'
   | 'settings'
   | 'trash'
   | 'upload'
+  | 'users'
+  | 'zap'
   | 'x';
 
 type AfIconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -277,14 +333,41 @@ Uso compacto:
 Tipos sugeridos:
 
 ```ts
-type AfChartType = 'line' | 'bar' | 'area' | 'sparkline';
+type AfChartType =
+  | 'line'
+  | 'area'
+  | 'bar'
+  | 'stacked-bar'
+  | 'horizontal-bar'
+  | 'sparkline'
+  | 'donut'
+  | 'gauge'
+  | 'radar'
+  | 'heatmap'
+  | 'boxplot'
+  | 'parallel';
 type AfChartTone = 'default' | 'primary' | 'success' | 'warning' | 'danger';
 type AfChartDensity = 'compact' | 'comfortable';
+type AfChartStatus = 'stable' | 'planned' | 'experimental';
 
 interface AfChartSeries {
   name: string;
-  data: readonly number[];
+  data: readonly number[] | readonly AfChartPoint[];
   tone?: AfChartTone;
+}
+
+interface AfChartPoint {
+  x?: string | number;
+  y?: string | number;
+  z?: string | number;
+  value: number | readonly number[];
+  label?: string;
+}
+
+interface AfChartIndicator {
+  name: string;
+  max: number;
+  min?: number;
 }
 ```
 
@@ -296,9 +379,13 @@ title = input<string | undefined>();
 description = input<string | undefined>();
 categories = input<readonly string[]>([]);
 series = input<readonly AfChartSeries[]>([]);
+indicators = input<readonly AfChartIndicator[]>([]);
 height = input<number>(220);
 density = input<AfChartDensity>('comfortable');
 tone = input<AfChartTone>('default');
+legend = input(true);
+showGrid = input(true);
+interactive = input(true);
 loading = input(false);
 emptyMessage = input('Sin datos disponibles');
 ```
@@ -323,6 +410,34 @@ Requisitos:
 - Respetar reduced motion cuando sea posible.
 - Ser SSR-safe: no acceder a `window`/canvas fuera del browser.
 
+## Chart Presets Requeridos
+
+Para que la HU siga siendo implementable, dividir presets en dos niveles.
+
+### Nivel 1 — Obligatorio en HU-007
+
+Estos presets deben compilar, renderizar y aparecer en showcase:
+
+- `line`
+- `area`
+- `bar`
+- `stacked-bar`
+- `horizontal-bar`
+- `sparkline`
+- `donut`
+- `gauge`
+- `radar`
+
+### Nivel 2 — Soportado por arquitectura, opcional en showcase
+
+Estos presets deben quedar previstos por tokens y arquitectura. Pueden implementarse como demo interno si el tiempo alcanza, pero no deben bloquear la HU:
+
+- `heatmap`
+- `boxplot`
+- `parallel`
+
+En este cierre se implementan `heatmap`, `boxplot` y `parallel` como presets avanzados 2D. `scatter3d` y `bar3d` quedan planeados para una HU posterior junto con `echarts-gl`.
+
 ## Actualizacion de Componentes Existentes
 
 Actualizar `AfInput` para que `prefixIcon` use `AfIconName` y renderice `af-icon` en lugar de texto/emoji.
@@ -342,10 +457,14 @@ Si los tokens actuales no alcanzan, agregar tokens minimos para charts:
 - `--af-chart-axis`
 - `--af-chart-label`
 - `--af-chart-primary`
+- `--af-chart-accent`
 - `--af-chart-success`
 - `--af-chart-warning`
 - `--af-chart-danger`
+- `--af-chart-track`
+- `--af-chart-fill-soft`
 - `--af-chart-tooltip-bg`
+- `--af-chart-tooltip-border`
 
 Requisitos:
 
@@ -414,9 +533,13 @@ Agregar una seccion sencilla al showcase:
 
 - Icon samples con `search`, `activity`, `calendar`, `settings`, `trash`, `x`.
 - Input con `prefixIcon="search"`.
-- Chart line o area con datos de salto.
-- Chart bar con sesiones semanales.
-- Sparkline dentro de una card.
+- Gauge de performance score.
+- Donut/ring de sesiones por tipo.
+- Area line de progreso de salto.
+- Stacked bar de sesiones mensuales.
+- Horizontal bar de ranking.
+- Radar de comparacion de atletas.
+- Sparkline dentro de una card o tabla compacta.
 - Estado empty.
 
 Contenido recomendado:
@@ -444,6 +567,7 @@ Contenido recomendado:
 - `AfChartDesktopComponent` renderiza contenedor de chart.
 - Muestra empty state sin series.
 - Muestra loading state.
+- Renderiza al menos `line`, `bar`, `stacked-bar`, `donut`, `radar`.
 - Crea y destruye instancia ECharts sin leaks evidentes.
 
 ### Mobile
@@ -451,6 +575,7 @@ Contenido recomendado:
 - `AfChartMobileComponent` renderiza contenedor de chart.
 - Muestra empty/loading.
 - Usa configuracion mobile distinta a desktop.
+- Renderiza al menos `gauge`, `donut`, `area`, `horizontal-bar`, `radar`.
 
 ### Adaptive
 
@@ -477,7 +602,7 @@ Contenido recomendado:
 8. Los charts usan tokens `--af-*` y no paleta default de ECharts.
 9. Los charts son SSR-safe.
 10. Las instancias ECharts se destruyen correctamente.
-11. El showcase muestra iconos y al menos 3 charts/estados.
+11. El showcase muestra iconos y al menos 6 charts/estados: gauge, donut, line/area, stacked bar, horizontal bar, radar y empty.
 12. Desktop y mobile se ven distintos cuando corresponde, pero comparten contrato publico.
 13. `pnpm guard:architecture` pasa.
 14. `pnpm build:all` pasa.
@@ -485,28 +610,29 @@ Contenido recomendado:
 
 ## Checklist Tecnica
 
-- [ ] Leer `docs/hus/HU-007-icon-chart-foundations.md`.
-- [ ] Leer `docs/architecture.md`.
-- [ ] Leer `docs/component-philosophy.md`.
-- [ ] Leer `docs/design-system.md`.
-- [ ] Revisar `AfButton`, `AfCard`, `AfInput` y `AfDialog`.
-- [ ] Instalar `lucide-angular`.
-- [ ] Instalar `echarts`.
-- [ ] Crear tipos de iconos en core.
-- [ ] Crear tipos de charts en core.
-- [ ] Crear `AfIconComponent` en primitives.
-- [ ] Crear registry acotado de iconos Lucide.
-- [ ] Actualizar `AfInput` para usar `AfIcon`.
-- [ ] Crear `AfChartDesktopComponent`.
-- [ ] Crear `AfChartMobileComponent`.
-- [ ] Crear `AfChart` adaptativo.
-- [ ] Agregar tokens de chart si hacen falta.
-- [ ] Exportar APIs publicas.
-- [ ] Agregar ejemplos al showcase.
-- [ ] Escribir tests.
-- [ ] Verificar visualmente en browser desktop/mobile.
-- [ ] Formatear archivos.
-- [ ] Ejecutar validaciones.
+- [x] Leer `docs/hus/HU-007-icon-chart-foundations.md`.
+- [x] Leer `docs/architecture.md`.
+- [x] Leer `docs/component-philosophy.md`.
+- [x] Leer `docs/design-system.md`.
+- [x] Revisar `AfButton`, `AfCard`, `AfInput` y `AfDialog`.
+- [x] Instalar `lucide-angular`.
+- [x] Instalar `echarts`.
+- [x] Decidir si esta HU instala `echarts-gl` o lo deja para una HU posterior.
+- [x] Crear tipos de iconos en core.
+- [x] Crear tipos de charts en core.
+- [x] Crear `AfIconComponent` en primitives.
+- [x] Crear registry acotado de iconos Lucide.
+- [x] Actualizar `AfInput` para usar `AfIcon`.
+- [x] Crear `AfChartDesktopComponent`.
+- [x] Crear `AfChartMobileComponent`.
+- [x] Crear `AfChart` adaptativo.
+- [x] Agregar tokens de chart si hacen falta.
+- [x] Exportar APIs publicas.
+- [x] Agregar ejemplos al showcase.
+- [x] Escribir tests.
+- [x] Verificar servidor local en `http://localhost:4200`.
+- [x] Formatear archivos.
+- [x] Ejecutar validaciones.
 
 ## Comandos de Validacion
 
@@ -535,6 +661,8 @@ Despues de implementar, abrir el showcase y revisar:
 - Inputs: `prefixIcon="search"` se ve como Lucide, no como emoji/texto.
 - Charts desktop: ejes, grid, tooltip y contraste.
 - Charts mobile: legibilidad y touch.
+- Gauge/donut/radar: proporciones fieles a las referencias mobile.
+- Stacked/horizontal bars: color y labels fieles a referencias desktop/mobile.
 - Empty/loading: estados claros.
 - Theme dark: charts e iconos respetan tokens.
 - Theme light si esta habilitado: legibilidad minima aceptable.
@@ -561,10 +689,11 @@ Contexto obligatorio:
 Decisiones obligatorias:
 - Usar lucide-angular como proveedor interno de iconos.
 - Usar echarts como motor interno de graficos.
+- Contemplar echarts-gl solo si se implementan charts 3D en esta HU.
 - No exponer APIs Lucide ni ECharts como contrato publico principal.
 
 Objetivo:
-Crear AfIcon y AfChart como fundaciones oficiales: tipos core, registry de iconos, chart wrapper desktop/mobile/adaptive, tokens minimos de chart si hacen falta y ejemplos en showcase.
+Crear AfIcon y AfChart como fundaciones oficiales: tipos core, registry de iconos, chart wrapper desktop/mobile/adaptive, presets de chart basados en las referencias visuales, tokens minimos de chart si hacen falta y ejemplos en showcase.
 
 Alcance:
 - projects/argfit-ui-core/src/lib/types/icon.types.ts
@@ -584,7 +713,7 @@ Definition of Done:
 - AfChart existe desde @argfit-ui/adaptive.
 - AfInput usa prefixIcon con nombres ArgFit/Lucide.
 - Charts tienen empty/loading, destruyen instancia ECharts y son SSR-safe.
-- Showcase muestra iconos, line/area chart, bar chart, sparkline y empty state.
+- Showcase muestra iconos, gauge, donut, line/area, stacked bar, horizontal bar, radar, sparkline y empty state.
 - pnpm guard:architecture, pnpm build:all y pnpm test:all pasan.
 ```
 

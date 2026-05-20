@@ -173,10 +173,14 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-chart-axis': 'rgba(37, 153, 213, 0.22)',
   '--af-chart-label': '#BCCCDC',
   '--af-chart-primary': '#2599D5',
+  '--af-chart-accent': '#00D4FF',
   '--af-chart-success': '#00C853',
   '--af-chart-warning': '#FFB300',
   '--af-chart-danger': '#FF3D71',
+  '--af-chart-track': 'rgba(37, 153, 213, 0.12)',
+  '--af-chart-fill-soft': 'rgba(37, 153, 213, 0.16)',
   '--af-chart-tooltip-bg': 'rgba(10, 22, 40, 0.95)',
+  '--af-chart-tooltip-border': 'rgba(37, 153, 213, 0.18)',
   '--af-chart-tooltip-text': '#F0F4F8',
 
   // ── Breakpoints ─────────────────────────────────────────────────────

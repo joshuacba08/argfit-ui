@@ -265,12 +265,8 @@
 
         <div class="dialog-trigger-grid">
           <af-button (pressed)="openDetailsDialog()"> Ver detalles del atleta </af-button>
-          <af-button variant="danger" (pressed)="openRemoveDialog()">
-            Dar de baja
-          </af-button>
-          <af-button variant="secondary" (pressed)="openAthleteDialog()">
-            Nuevo atleta
-          </af-button>
+          <af-button variant="danger" (pressed)="openRemoveDialog()"> Dar de baja </af-button>
+          <af-button variant="secondary" (pressed)="openAthleteDialog()"> Nuevo atleta </af-button>
         </div>
       </div>
 
@@ -313,46 +309,117 @@
             <span class="eyebrow">Component vertical slice</span>
             <h2>AfChart</h2>
           </div>
-          <af-button variant="ghost" (pressed)="toggleChartLoading()">
-            Toggle loading
-          </af-button>
+          <af-button variant="ghost" (pressed)="toggleChartLoading()"> Toggle loading </af-button>
         </div>
 
         <div class="chart-grid">
           <af-card variant="panel">
             <div afCardHeader>
-              <span afCardEyebrow>Rendimiento semanal</span>
-              <h3 afCardTitle>Salto vertical</h3>
-              <p afCardSubtitle>Promedio en centimetros</p>
+              <span afCardEyebrow>Performance</span>
+              <h3 afCardTitle>Score general</h3>
+              <p afCardSubtitle>Gauge semicircular</p>
             </div>
             <div afCardContent>
               <af-chart
-                type="area"
+                type="gauge"
                 tone="primary"
                 density="comfortable"
-                [categories]="chartCategories()"
-                [series]="jumpsSeries()"
+                [series]="performanceGaugeSeries()"
+                [indicators]="performanceIndicators()"
                 [loading]="chartLoading()"
-                ariaLabel="Salto vertical promedio por dia"
+                ariaLabel="Performance score"
               />
             </div>
           </af-card>
 
           <af-card variant="panel">
             <div afCardHeader>
-              <span afCardEyebrow>Volumen</span>
-              <h3 afCardTitle>Sesiones por dia</h3>
-              <p afCardSubtitle>Ultimos 7 dias</p>
+              <span afCardEyebrow>Distribucion</span>
+              <h3 afCardTitle>Sesiones por tipo</h3>
+              <p afCardSubtitle>Donut/ring</p>
             </div>
             <div afCardContent>
               <af-chart
-                type="bar"
-                tone="success"
+                type="donut"
                 density="comfortable"
-                [categories]="chartCategories()"
-                [series]="sessionsSeries()"
+                [series]="sessionDistributionSeries()"
                 [loading]="chartLoading()"
-                ariaLabel="Sesiones registradas por dia"
+                ariaLabel="Distribucion de sesiones por tipo"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Progreso</span>
+              <h3 afCardTitle>Salto vertical</h3>
+              <p afCardSubtitle>Ultimos 14 dias</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="area"
+                tone="primary"
+                density="comfortable"
+                [categories]="jumpProgressCategories()"
+                [series]="jumpProgressSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Progreso de salto vertical"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Analytics</span>
+              <h3 afCardTitle>Sesiones mensuales</h3>
+              <p afCardSubtitle>Stacked bar</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="stacked-bar"
+                density="comfortable"
+                [categories]="monthlyCategories()"
+                [series]="monthlySessionSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Sesiones mensuales apiladas por tipo"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Ranking</span>
+              <h3 afCardTitle>Mejor salto</h3>
+              <p afCardSubtitle>Barras horizontales</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="horizontal-bar"
+                tone="primary"
+                density="comfortable"
+                [categories]="rankingCategories()"
+                [series]="rankingSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Ranking de mejor salto por atleta"
+              />
+            </div>
+          </af-card>
+
+          <af-card variant="panel">
+            <div afCardHeader>
+              <span afCardEyebrow>Comparacion</span>
+              <h3 afCardTitle>Radar de atletas</h3>
+              <p afCardSubtitle>Perfil multimetric</p>
+            </div>
+            <div afCardContent>
+              <af-chart
+                type="radar"
+                density="comfortable"
+                [categories]="radarCategories()"
+                [indicators]="radarIndicators()"
+                [series]="radarSeries()"
+                [loading]="chartLoading()"
+                ariaLabel="Radar comparativo de atletas"
               />
             </div>
           </af-card>
@@ -385,7 +452,7 @@
               <af-chart
                 type="line"
                 density="comfortable"
-                [categories]="chartCategories()"
+                [categories]="weekCategories()"
                 [series]="emptySeries()"
                 emptyMessage="Conecta un dispositivo para empezar"
                 ariaLabel="Chart sin datos"

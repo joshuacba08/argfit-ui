@@ -1,31 +1,57 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
 import {
-    LucideActivity,
-    LucideAlertTriangle,
-    LucideArrowDown,
-    LucideArrowUp,
-    LucideCalendar,
-    LucideCheck,
-    LucideChevronDown,
-    LucideChevronLeft,
-    LucideChevronRight,
-    LucideChevronUp,
-    LucideCircleAlert,
-    LucideCircleCheck,
-    LucideClock,
-    LucideDownload,
-    LucideDynamicIcon,
-    LucideFilter,
-    LucideInfo,
-    LucideMenu,
-    LucidePlus,
-    LucideSearch,
-    LucideSettings,
-    LucideTrash,
-    LucideUpload,
-    LucideX,
-    provideLucideIcons,
-    type LucideIcon,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  ViewEncapsulation,
+} from '@angular/core';
+import {
+  LucideActivity,
+  LucideAlertTriangle,
+  LucideArrowDown,
+  LucideArrowUp,
+  LucideBarChart3,
+  LucideBattery,
+  LucideBell,
+  LucideBluetooth,
+  LucideCalendar,
+  LucideCheck,
+  LucideCheckSquare,
+  LucideChevronDown,
+  LucideChevronLeft,
+  LucideChevronRight,
+  LucideChevronUp,
+  LucideCircleAlert,
+  LucideCircleCheck,
+  LucideClock,
+  LucideCpu,
+  LucideDownload,
+  LucideDynamicIcon,
+  LucideEdit,
+  LucideFileText,
+  LucideFilter,
+  LucideGrid2X2,
+  LucideHome,
+  LucideInfo,
+  LucideKanban,
+  LucideLayoutDashboard,
+  LucideMenu,
+  LucideMonitor,
+  LucidePanelTop,
+  LucidePieChart,
+  LucidePlay,
+  LucidePlus,
+  LucideSearch,
+  LucideSettings,
+  LucideTable,
+  LucideTrash,
+  LucideUpload,
+  LucideUsers,
+  LucideX,
+  LucideZap,
+  provideLucideIcons,
+  type LucideIcon,
 } from '@lucide/angular';
 
 import type { AfIconName, AfIconSize, AfIconTone } from '@argfit-ui/core';
@@ -42,8 +68,13 @@ const AF_ICON_REGISTRY: readonly LucideIcon[] = [
   LucideAlertTriangle,
   LucideArrowDown,
   LucideArrowUp,
+  LucideBarChart3,
+  LucideBattery,
+  LucideBell,
+  LucideBluetooth,
   LucideCalendar,
   LucideCheck,
+  LucideCheckSquare,
   LucideChevronDown,
   LucideChevronLeft,
   LucideChevronRight,
@@ -51,16 +82,30 @@ const AF_ICON_REGISTRY: readonly LucideIcon[] = [
   LucideCircleAlert,
   LucideCircleCheck,
   LucideClock,
+  LucideCpu,
   LucideDownload,
+  LucideEdit,
+  LucideFileText,
   LucideFilter,
+  LucideGrid2X2,
+  LucideHome,
   LucideInfo,
+  LucideKanban,
+  LucideLayoutDashboard,
   LucideMenu,
+  LucideMonitor,
+  LucidePanelTop,
+  LucidePieChart,
+  LucidePlay,
   LucidePlus,
   LucideSearch,
   LucideSettings,
+  LucideTable,
   LucideTrash,
   LucideUpload,
+  LucideUsers,
   LucideX,
+  LucideZap,
 ];
 
 const AF_ICON_SIZE_PX: Record<AfIconSize, number> = {
@@ -90,8 +135,10 @@ const AF_ICON_TONE_VAR: Record<AfIconTone, string> = {
       [size]="px()"
       [strokeWidth]="strokeWidth() ?? 2"
       [color]="color()"
-      [title]="decorative() ? null : ariaLabel() ?? null"
+      [title]="resolvedAriaLabel()"
       [attr.role]="decorative() ? null : 'img'"
+      [attr.aria-hidden]="decorative() ? 'true' : 'false'"
+      [attr.aria-label]="resolvedAriaLabel()"
       [attr.focusable]="false"
     ></svg>
   `,
@@ -134,4 +181,10 @@ export class AfIconComponent {
 
   protected readonly px = computed<number>(() => AF_ICON_SIZE_PX[this.size()]);
   protected readonly color = computed<string>(() => AF_ICON_TONE_VAR[this.tone()]);
+  protected readonly resolvedAriaLabel = computed<string | null>(() => {
+    if (this.decorative()) {
+      return null;
+    }
+    return this.ariaLabel() ?? this.name();
+  });
 }

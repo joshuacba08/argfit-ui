@@ -1,20 +1,21 @@
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    input,
-    output,
-    ViewEncapsulation,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  output,
+  ViewEncapsulation,
 } from '@angular/core';
 
 import {
-    AfPlatformService,
-    type AfChartDensity,
-    type AfChartPointEvent,
-    type AfChartSeries,
-    type AfChartTone,
-    type AfChartType,
+  AfPlatformService,
+  type AfChartDensity,
+  type AfChartIndicator,
+  type AfChartPointEvent,
+  type AfChartSeries,
+  type AfChartTone,
+  type AfChartType,
 } from '@argfit-ui/core';
 import { AfChartDesktopComponent } from '@argfit-ui/desktop';
 import { AfChartMobileComponent } from '@argfit-ui/mobile';
@@ -38,7 +39,13 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [density]="density()"
         [categories]="categories()"
         [series]="series()"
+        [indicators]="indicators()"
         [title]="title()"
+        [description]="description()"
+        [height]="height()"
+        [legend]="legend()"
+        [showGrid]="showGrid()"
+        [interactive]="interactive()"
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
         [ariaLabel]="ariaLabel()"
@@ -51,7 +58,13 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [density]="density()"
         [categories]="categories()"
         [series]="series()"
+        [indicators]="indicators()"
         [title]="title()"
+        [description]="description()"
+        [height]="height()"
+        [legend]="legend()"
+        [showGrid]="showGrid()"
+        [interactive]="interactive()"
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
         [ariaLabel]="ariaLabel()"
@@ -67,11 +80,17 @@ export class AfChartComponent {
   private readonly platform = inject(AfPlatformService);
 
   readonly type = input<AfChartType>('line');
-  readonly tone = input<AfChartTone>('primary');
+  readonly tone = input<AfChartTone>('default');
   readonly density = input<AfChartDensity>('comfortable');
   readonly categories = input<readonly string[]>([]);
   readonly series = input<readonly AfChartSeries[]>([]);
+  readonly indicators = input<readonly AfChartIndicator[]>([]);
   readonly title = input<string | undefined>(undefined);
+  readonly description = input<string | undefined>(undefined);
+  readonly height = input<number | undefined>(undefined);
+  readonly legend = input(true, { transform: booleanAttribute });
+  readonly showGrid = input(true, { transform: booleanAttribute });
+  readonly interactive = input(true, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly emptyMessage = input<string>('Sin datos disponibles');
   readonly ariaLabel = input<string | undefined>(undefined);

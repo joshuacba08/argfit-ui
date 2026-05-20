@@ -75,9 +75,9 @@ describe('App', () => {
     const inputs = compiled.querySelectorAll('af-input-desktop');
     expect(inputs.length).toBeGreaterThanOrEqual(6);
 
-    const heightInput = Array.from(
-      compiled.querySelectorAll('af-input-desktop'),
-    ).find((host) => host.querySelector('label')?.textContent?.includes('Altura'));
+    const heightInput = Array.from(compiled.querySelectorAll('af-input-desktop')).find((host) =>
+      host.querySelector('label')?.textContent?.includes('Altura'),
+    );
     expect(heightInput).toBeTruthy();
 
     const nativeInput = heightInput!.querySelector('input') as HTMLInputElement;
@@ -126,7 +126,7 @@ describe('App', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     const iconCells = compiled.querySelectorAll('.icon-cell af-icon');
-    expect(iconCells.length).toBeGreaterThanOrEqual(6);
+    expect(iconCells.length).toBeGreaterThanOrEqual(12);
 
     const firstSvg = iconCells[0].querySelector('svg') as SVGElement;
     expect(firstSvg).not.toBeNull();
@@ -146,11 +146,20 @@ describe('App', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     const charts = compiled.querySelectorAll('af-chart-desktop');
-    expect(charts.length).toBeGreaterThanOrEqual(4);
+    expect(charts.length).toBeGreaterThanOrEqual(8);
 
     const states = Array.from(charts).map((c) => c.getAttribute('data-state'));
     expect(states).toContain('ready');
     expect(states).toContain('empty');
+
+    const types = Array.from(charts).map((c) => c.getAttribute('data-type'));
+    expect(types).toContain('gauge');
+    expect(types).toContain('donut');
+    expect(types).toContain('area');
+    expect(types).toContain('stacked-bar');
+    expect(types).toContain('horizontal-bar');
+    expect(types).toContain('radar');
+    expect(types).toContain('sparkline');
 
     const empty = compiled.querySelector('af-chart-desktop[data-state="empty"]') as HTMLElement;
     expect(empty.querySelector('.af-chart-desktop__empty')?.textContent?.trim()).toContain(
