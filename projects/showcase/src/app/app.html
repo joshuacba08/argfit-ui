@@ -62,7 +62,7 @@
       <span class="theme-toggle__value">{{ theme.currentThemeName() }}</span>
     </button>
 
-    <af-button (pressed)="openAthleteDialog()">Nuevo atleta</af-button>
+    <af-button (pressed)="openQuickTestDialog()">Nuevo test</af-button>
   </div>
 
   <div afPageShellUser class="shell-user">
@@ -197,9 +197,9 @@
                 <af-icon name="download" size="sm" [decorative]="true" />
                 CSV
               </af-button>
-              <af-button size="sm" (pressed)="openAthleteDialog()">
+              <af-button size="sm" (pressed)="openQuickTestDialog()">
                 <af-icon name="plus" size="sm" [decorative]="true" />
-                Nuevo atleta
+                Nuevo test
               </af-button>
             </div>
           </div>
@@ -984,11 +984,11 @@
         </div>
 
         <div class="button-grid dialog-trigger-grid" aria-label="Acciones de jornada">
-          <af-button (pressed)="recordAction('Sesion guardada')">Guardar sesion</af-button>
-          <af-button variant="secondary" (pressed)="openDetailsDialog()">Ver atleta</af-button>
+          <af-button (pressed)="openSessionDialog()">Guardar sesion</af-button>
+          <af-button variant="secondary" (pressed)="openDetailsDialog()">Ver dispositivo</af-button>
           <af-button variant="ghost" (pressed)="recordAction('Panel actualizado')">Actualizar</af-button>
           <af-button variant="danger" (pressed)="openRemoveDialog()">Dar de baja</af-button>
-          <af-button variant="secondary" (pressed)="openAthleteDialog()">Nuevo atleta</af-button>
+          <af-button variant="secondary" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
         </div>
 
         <div class="badge-showcase" aria-label="Estados de operacion">
@@ -1223,19 +1223,78 @@
 
   <af-dialog
     [open]="detailsDialogOpen()"
-    title="Detalle del atleta"
-    description="Resumen de la sesion activa registrada en la plataforma."
-    size="md"
+    title="Detalles del dispositivo"
+    description="ArgFit Jump 2 - AF-J2-001"
+    size="lg"
     (openChange)="setDetailsDialog($event)"
   >
-    <div afDialogContent>
-      <p>Maria Garcia · 28 anos · Atletismo</p>
-      <p>Ultima sesion: 09:42 · 45.2 cm de salto vertical.</p>
-      <p>Dispositivos vinculados: ArgFit Jump 01.</p>
+    <div afDialogContent class="dialog-detail-grid">
+      <div>
+        <span>Firmware</span>
+        <strong>v3.2.1</strong>
+      </div>
+      <div>
+        <span>Bateria</span>
+        <strong>87%</strong>
+      </div>
+      <div>
+        <span>Ultimo sync</span>
+        <strong>Hace 2 min</strong>
+      </div>
+      <div>
+        <span>Atleta asignado</span>
+        <strong>Maria Garcia</strong>
+      </div>
+      <div>
+        <span>Protocolo</span>
+        <strong>BLE 5.0</strong>
+      </div>
+      <div>
+        <span>MAC</span>
+        <strong>AA:BB:CC:DD:EE:FF</strong>
+      </div>
     </div>
+    <af-inline-message
+      severity="info"
+      title="Actualizacion disponible"
+      description="La version 3.2.2 del firmware esta disponible. Se recomienda actualizar."
+    />
     <div afDialogFooter>
       <af-button variant="ghost" (pressed)="setDetailsDialog(false)">Cerrar</af-button>
-      <af-button (pressed)="setDetailsDialog(false)">Ver historial completo</af-button>
+      <af-button (pressed)="setDetailsDialog(false)">Configurar</af-button>
+    </div>
+  </af-dialog>
+
+  <af-dialog
+    [open]="sessionDialogOpen()"
+    title="Sesion completada"
+    size="lg"
+    tone="success"
+    (openChange)="setSessionDialog($event)"
+  >
+    <div afDialogContent class="dialog-session-summary">
+      <span class="dialog-session-summary__icon" aria-hidden="true">
+        <af-icon name="check" size="xl" tone="success" [decorative]="true" />
+      </span>
+      <p>Se registraron <strong>12 saltos</strong> en la sesion CMJ Bilateral.</p>
+      <div class="dialog-session-summary__metrics" aria-label="Metricas de sesion">
+        <div>
+          <strong>45.2 <span>cm</span></strong>
+          <span>Mejor</span>
+        </div>
+        <div>
+          <strong>42.1 <span>cm</span></strong>
+          <span>Promedio</span>
+        </div>
+        <div>
+          <strong>2847 <span>N</span></strong>
+          <span>Fuerza pico</span>
+        </div>
+      </div>
+    </div>
+    <div afDialogFooter>
+      <af-button variant="ghost" (pressed)="setSessionDialog(false)">Cerrar</af-button>
+      <af-button (pressed)="downloadSessionCsv()">Descargar CSV</af-button>
     </div>
   </af-dialog>
 
@@ -1254,31 +1313,34 @@
   </af-dialog>
 
   <af-dialog
-    [open]="athleteDialogOpen()"
-    title="Nuevo atleta"
-    description="Carga los datos basicos. Podras completar el perfil mas tarde."
+    [open]="quickTestDialogOpen()"
+    title="Nuevo test rapido"
+    description="Configura los parametros para iniciar una sesion"
     size="lg"
+    tone="info"
     mobilePresentation="fullscreen"
-    (openChange)="setAthleteDialog($event)"
+    (openChange)="setQuickTestDialog($event)"
   >
-    <div afDialogContent>
-      <af-input
-        label="Nombre completo"
-        placeholder="Maria Garcia"
-        [value]="newAthleteName()"
-        (valueChange)="newAthleteName.set($event)"
+    <div afDialogContent class="dialog-quick-test-grid" [formGroup]="testConfigForm">
+      <af-select label="Tipo de test" [options]="testTypeOptions" formControlName="testType" />
+      <af-select label="Lateralidad" [options]="lateralityOptions" formControlName="laterality" />
+      <af-input label="Cantidad de saltos" type="number" formControlName="jumps" />
+      <af-input label="Descanso entre saltos" suffix="s" type="number" formControlName="rest" />
+      <af-select
+        class="dialog-quick-test-grid__full"
+        label="Atleta"
+        [options]="quickTestAthleteOptions"
+        value="maria"
       />
-      <af-input
-        label="Email"
-        type="email"
-        placeholder="atleta@argfit.com"
-        [value]="newAthleteEmail()"
-        (valueChange)="newAthleteEmail.set($event)"
+      <af-inline-message
+        class="dialog-quick-test-grid__full"
+        severity="info"
+        title="El dispositivo AF-J2-001 esta conectado y listo."
       />
     </div>
     <div afDialogFooter>
-      <af-button variant="ghost" (pressed)="setAthleteDialog(false)">Cancelar</af-button>
-      <af-button (pressed)="saveAthleteDialog()">Guardar atleta</af-button>
+      <af-button variant="ghost" (pressed)="setQuickTestDialog(false)">Cancelar</af-button>
+      <af-button (pressed)="createQuickTest()">Crear test</af-button>
     </div>
   </af-dialog>
 </af-page-shell>

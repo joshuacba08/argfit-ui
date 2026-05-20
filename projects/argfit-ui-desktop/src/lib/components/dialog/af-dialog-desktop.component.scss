@@ -12,10 +12,12 @@
   background: rgba(10, 22, 40, 0.62);
   backdrop-filter: blur(6px);
   display: flex;
+  height: 100dvh;
   inset: 0;
   justify-content: center;
   padding: var(--af-space-6);
   position: fixed;
+  width: 100vw;
   z-index: 1000;
   animation: af-dialog-desktop-fade var(--af-duration-fast, 180ms) var(--af-ease-out, ease-out);
 }
@@ -29,12 +31,12 @@
   display: flex;
   flex-direction: column;
   font-family: var(--af-font-body);
-  gap: var(--af-space-4);
+  gap: 0;
   max-height: calc(100vh - calc(var(--af-space-6) * 2));
   max-width: 100%;
   outline: none;
   overflow: hidden;
-  padding: var(--af-space-5) var(--af-space-6);
+  padding: 0;
   position: relative;
   width: 520px;
   animation: af-dialog-desktop-rise var(--af-duration-normal, 220ms)
@@ -63,37 +65,38 @@
   width: calc(100vw - calc(var(--af-space-6) * 2));
 }
 
+.af-dialog-desktop__panel[data-tone='info'] {
+  --af-dialog-tone-color: var(--af-info);
+}
+
+.af-dialog-desktop__panel[data-tone='success'] {
+  --af-dialog-tone-color: var(--af-success);
+}
+
 .af-dialog-desktop__panel[data-tone='danger'] {
-  background: var(--af-bg-elevated);
-  border-color: var(--af-border-soft);
-  gap: 0;
-  padding: 0;
+  --af-dialog-tone-color: var(--af-danger);
 }
 
 .af-dialog-desktop__header {
-  align-items: flex-start;
+  align-items: center;
+  border-bottom: 1px solid var(--af-border-soft);
   display: flex;
   gap: var(--af-space-4);
   justify-content: space-between;
-}
-
-.af-dialog-desktop__panel[data-tone='danger'] .af-dialog-desktop__header {
-  align-items: center;
-  border-bottom: 1px solid var(--af-border-soft);
-  gap: var(--af-space-4);
   padding: var(--af-space-5) var(--af-space-6);
 }
 
 .af-dialog-desktop__tone-icon {
   align-items: center;
-  background: color-mix(in srgb, var(--af-danger) 18%, transparent);
-  border: 1px solid color-mix(in srgb, var(--af-danger) 26%, transparent);
+  background: color-mix(in srgb, var(--af-dialog-tone-color, var(--af-info)) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-dialog-tone-color, var(--af-info)) 26%, transparent);
   border-radius: var(--af-radius-md);
-  display: inline-flex;
-  flex: 0 0 var(--af-space-10);
-  height: var(--af-space-10);
+  display: grid;
+  flex: 0 0 var(--af-space-12);
+  height: var(--af-space-12);
   justify-content: center;
-  width: var(--af-space-10);
+  place-items: center;
+  width: var(--af-space-12);
 }
 
 .af-dialog-desktop__heading {
@@ -103,23 +106,14 @@
   min-width: 0;
 }
 
-.af-dialog-desktop__panel[data-tone='danger'] .af-dialog-desktop__heading {
-  flex: 1 1 auto;
-}
-
 .af-dialog-desktop__title {
   color: var(--af-text-main);
   font-family: var(--af-font-display);
-  font-size: var(--af-text-lg);
+  font-size: var(--af-text-xl);
   font-weight: var(--af-font-weight-bold);
-  letter-spacing: var(--af-tracking-tight);
+  letter-spacing: var(--af-tracking-normal);
   line-height: var(--af-line-height-tight);
   margin: 0;
-}
-
-.af-dialog-desktop__panel[data-tone='danger'] .af-dialog-desktop__title {
-  color: var(--af-text-main);
-  font-size: var(--af-text-xl);
   text-transform: uppercase;
 }
 
@@ -169,9 +163,10 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: var(--af-space-3);
+  gap: var(--af-space-4);
   min-height: 0;
   overflow-y: auto;
+  padding: var(--af-space-5) var(--af-space-6);
 }
 
 .af-dialog-desktop__panel[data-tone='danger'] .af-dialog-desktop__body {
@@ -192,7 +187,7 @@
 /* Semantic slot classes (applied by adaptive slot directives). */
 
 .af-dialog-desktop .af-dialog__header {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
   gap: var(--af-space-4);
   justify-content: space-between;
@@ -201,11 +196,12 @@
 .af-dialog-desktop .af-dialog__title {
   color: var(--af-text-main);
   font-family: var(--af-font-display);
-  font-size: var(--af-text-lg);
+  font-size: var(--af-text-xl);
   font-weight: var(--af-font-weight-bold);
-  letter-spacing: var(--af-tracking-tight);
+  letter-spacing: var(--af-tracking-normal);
   line-height: var(--af-line-height-tight);
   margin: 0;
+  text-transform: uppercase;
 }
 
 .af-dialog-desktop .af-dialog__description {
@@ -217,9 +213,6 @@
 
 .af-dialog-desktop .af-dialog__content {
   color: var(--af-text-main);
-  display: flex;
-  flex-direction: column;
-  gap: var(--af-space-3);
 }
 
 .af-dialog-desktop .af-dialog__footer {
@@ -227,10 +220,10 @@
   border-top: 1px solid var(--af-border-soft);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--af-space-2);
+  gap: var(--af-space-3);
   justify-content: flex-end;
-  margin-top: var(--af-space-2);
-  padding-top: var(--af-space-4);
+  margin: var(--af-space-5) calc(var(--af-space-6) * -1) calc(var(--af-space-5) * -1);
+  padding: var(--af-space-4) var(--af-space-6) var(--af-space-5);
 }
 
 .af-dialog-desktop__panel[data-tone='danger'] .af-dialog__footer {

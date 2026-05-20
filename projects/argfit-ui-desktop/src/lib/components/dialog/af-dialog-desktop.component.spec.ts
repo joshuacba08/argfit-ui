@@ -132,6 +132,26 @@ describe('AfDialogDesktopComponent', () => {
     const panel = fixture.nativeElement.querySelector('.af-dialog-desktop__panel') as HTMLElement;
     expect(panel.getAttribute('role')).toBe('alertdialog');
     expect(panel.getAttribute('data-tone')).toBe('danger');
+    expect(panel.querySelector('.af-dialog-desktop__tone-icon')).not.toBeNull();
+  });
+
+  it('renders semantic icons for non-danger tones without alertdialog role', async () => {
+    @Component({
+      imports: [AfDialogDesktopComponent],
+      template: `
+        <af-dialog-desktop [open]="true" title="Listo" tone="success"></af-dialog-desktop>
+      `,
+    })
+    class SuccessHost {}
+
+    await TestBed.configureTestingModule({ imports: [SuccessHost] }).compileComponents();
+    const fixture = TestBed.createComponent(SuccessHost);
+    fixture.detectChanges();
+
+    const panel = fixture.nativeElement.querySelector('.af-dialog-desktop__panel') as HTMLElement;
+    expect(panel.getAttribute('role')).toBe('dialog');
+    expect(panel.getAttribute('data-tone')).toBe('success');
+    expect(panel.querySelector('.af-dialog-desktop__tone-icon')).not.toBeNull();
   });
 
   it('closes on Escape key by default', async () => {

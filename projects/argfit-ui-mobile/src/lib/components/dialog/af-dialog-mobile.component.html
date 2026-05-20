@@ -27,9 +27,9 @@
 
       @if (title() || dismissible()) {
         <header class="af-dialog-mobile__header af-dialog__header">
-          @if (tone() === 'danger') {
+          @if (toneIconName(); as iconName) {
             <span class="af-dialog-mobile__tone-icon" aria-hidden="true">
-              <af-icon name="circle-alert" size="sm" tone="danger" decorative />
+              <af-icon [name]="iconName" size="md" [tone]="toneIconTone()" decorative />
             </span>
           }
 

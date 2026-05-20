@@ -349,7 +349,7 @@ describe('App', () => {
     expect(triggers.length).toBeGreaterThanOrEqual(3);
 
     const detailsTrigger = Array.from(triggers).find((button) =>
-      button.textContent?.includes('Ver atleta'),
+      button.textContent?.includes('Ver dispositivo'),
     ) as HTMLButtonElement;
     detailsTrigger.click();
     fixture.detectChanges();
@@ -358,7 +358,7 @@ describe('App', () => {
     const panel = document.querySelector('.af-dialog-desktop__panel') as HTMLElement;
     expect(panel).not.toBeNull();
     expect(panel.querySelector('.af-dialog-desktop__title')?.textContent?.trim()).toBe(
-      'Detalle del atleta',
+      'Detalles del dispositivo',
     );
 
     const close = panel.querySelector('.af-dialog-desktop__close') as HTMLButtonElement;

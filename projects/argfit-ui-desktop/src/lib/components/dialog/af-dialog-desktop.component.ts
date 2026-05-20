@@ -17,6 +17,8 @@ import {
 import type {
     AfDialogSize,
     AfDialogTone,
+  AfIconName,
+  AfIconTone,
 } from '@argfit-ui/core';
 import {
     AfEscapeKeyDirective,
@@ -70,6 +72,31 @@ export class AfDialogDesktopComponent {
   protected readonly role = computed<'dialog' | 'alertdialog'>(() =>
     this.tone() === 'danger' ? 'alertdialog' : 'dialog',
   );
+
+  protected readonly toneIconName = computed<AfIconName | null>(() => {
+    switch (this.tone()) {
+      case 'danger':
+        return 'circle-alert';
+      case 'info':
+        return 'info';
+      case 'success':
+        return 'check';
+      case 'neutral':
+        return null;
+    }
+  });
+
+  protected readonly toneIconTone = computed<AfIconTone>(() => {
+    switch (this.tone()) {
+      case 'danger':
+        return 'danger';
+      case 'success':
+        return 'success';
+      case 'info':
+      case 'neutral':
+        return 'primary';
+    }
+  });
 
   protected readonly labelledBy = computed<string | null>(() => {
     if (this.ariaLabel()) {

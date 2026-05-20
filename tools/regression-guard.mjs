@@ -179,19 +179,31 @@ expectNotIncludes('projects/argfit-ui-mobile/src/lib/components/dialog/af-dialog
   'inset 0 3px 0 0',
 ]);
 
+expectIncludes('projects/argfit-ui-core/src/lib/types/dialog.types.ts', [
+  "'neutral' | 'info' | 'success' | 'danger'",
+]);
+
 expectIncludes('projects/argfit-ui-desktop/src/lib/components/dialog/af-dialog-desktop.component.html', [
   'af-dialog-desktop__tone-icon',
-  'tone() === \'danger\'',
+  'toneIconName()',
   'af-dialog-desktop__description--body',
 ]);
 expectIncludes('projects/argfit-ui-desktop/src/lib/components/dialog/af-dialog-desktop.component.scss', [
-  "[data-tone='danger'] .af-dialog-desktop__header",
+  "[data-tone='info']",
+  "[data-tone='success']",
+  'height: 100dvh;',
+  'width: 100vw;',
   '.af-dialog-desktop__tone-icon',
   '.af-dialog-desktop__description--body',
   "[data-tone='danger'] .af-dialog__footer .af-button-desktop--danger",
 ]);
 expectIncludes('projects/showcase/src/app/app.html', [
+  'title="Detalles del dispositivo"',
+  'title="Sesion completada"',
+  'title="Nuevo test rapido"',
   'title="Eliminar atleta"',
+  'tone="info"',
+  'tone="success"',
   'Esta accion no se puede deshacer.',
   '>Eliminar</af-button>',
 ]);

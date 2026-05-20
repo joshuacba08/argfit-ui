@@ -59,6 +59,23 @@ describe('AfDialogMobileComponent', () => {
     expect(panel.querySelector('.af-dialog-mobile__grabber')).toBeNull();
   });
 
+  it('renders semantic tone icons on mobile dialogs', async () => {
+    @Component({
+      imports: [AfDialogMobileComponent],
+      template: `<af-dialog-mobile [open]="true" title="Info" tone="info"></af-dialog-mobile>`,
+    })
+    class InfoHost {}
+
+    await TestBed.configureTestingModule({ imports: [InfoHost] }).compileComponents();
+    const fixture = TestBed.createComponent(InfoHost);
+    fixture.detectChanges();
+
+    const panel = fixture.nativeElement.querySelector('.af-dialog-mobile__panel') as HTMLElement;
+    expect(panel.getAttribute('role')).toBe('dialog');
+    expect(panel.getAttribute('data-tone')).toBe('info');
+    expect(panel.querySelector('.af-dialog-mobile__tone-icon')).not.toBeNull();
+  });
+
   it('emits openChange(false) when close button is pressed', async () => {
     await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
     const fixture = TestBed.createComponent(HostComponent);

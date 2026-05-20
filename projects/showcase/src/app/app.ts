@@ -239,6 +239,11 @@ export class App {
     { value: 'left', label: 'Unilateral izquierdo' },
     { value: 'right', label: 'Unilateral derecho' },
   ];
+  protected readonly quickTestAthleteOptions: readonly AfFormOption[] = [
+    { value: 'maria', label: 'Maria Garcia' },
+    { value: 'santiago', label: 'Santiago Perez' },
+    { value: 'lucas', label: 'Lucas Rodriguez' },
+  ];
   protected readonly dateRangeOptions: readonly AfFormOption[] = [
     { value: 'session', label: 'Ultima sesion' },
     { value: 'week', label: 'Ultima semana' },
@@ -622,20 +627,36 @@ export class App {
 
   protected readonly detailsDialogOpen = signal(false);
   protected readonly removeDialogOpen = signal(false);
-  protected readonly athleteDialogOpen = signal(false);
-  protected readonly newAthleteName = signal('');
-  protected readonly newAthleteEmail = signal('');
+  protected readonly quickTestDialogOpen = signal(false);
+  protected readonly sessionDialogOpen = signal(false);
 
   protected openDetailsDialog(): void {
     this.detailsDialogOpen.set(true);
-    this.recordAction('Dialog → details abierto');
+    this.recordAction('Dialog → dispositivo abierto');
   }
 
   protected setDetailsDialog(open: boolean): void {
     this.detailsDialogOpen.set(open);
     if (!open) {
-      this.recordAction('Dialog → details cerrado');
+      this.recordAction('Dialog → dispositivo cerrado');
     }
+  }
+
+  protected openSessionDialog(): void {
+    this.sessionDialogOpen.set(true);
+    this.recordAction('Dialog → sesion completada abierto');
+  }
+
+  protected setSessionDialog(open: boolean): void {
+    this.sessionDialogOpen.set(open);
+    if (!open) {
+      this.recordAction('Dialog → sesion completada cerrado');
+    }
+  }
+
+  protected downloadSessionCsv(): void {
+    this.sessionDialogOpen.set(false);
+    this.recordAction('Sesion → CSV descargado');
   }
 
   protected openRemoveDialog(): void {
@@ -655,28 +676,21 @@ export class App {
     this.recordAction('Atleta dado de baja');
   }
 
-  protected openAthleteDialog(): void {
-    this.newAthleteName.set('');
-    this.newAthleteEmail.set('');
-    this.athleteDialogOpen.set(true);
-    this.recordAction('Dialog → nuevo atleta abierto');
+  protected openQuickTestDialog(): void {
+    this.quickTestDialogOpen.set(true);
+    this.recordAction('Dialog → nuevo test abierto');
   }
 
-  protected setAthleteDialog(open: boolean): void {
-    this.athleteDialogOpen.set(open);
+  protected setQuickTestDialog(open: boolean): void {
+    this.quickTestDialogOpen.set(open);
     if (!open) {
-      this.recordAction('Dialog → nuevo atleta cerrado');
+      this.recordAction('Dialog → nuevo test cerrado');
     }
   }
 
-  protected saveAthleteDialog(): void {
-    const name = this.newAthleteName().trim();
-    if (!name) {
-      this.recordAction('Nombre requerido');
-      return;
-    }
-    this.athleteDialogOpen.set(false);
-    this.recordAction(`Atleta creado → ${name}`);
+  protected createQuickTest(): void {
+    this.quickTestDialogOpen.set(false);
+    this.recordAction(`Test creado → ${this.testConfigForm.controls.testType.value.toUpperCase()}`);
   }
 
   // ────────────────────────────────────────────────────────────────
