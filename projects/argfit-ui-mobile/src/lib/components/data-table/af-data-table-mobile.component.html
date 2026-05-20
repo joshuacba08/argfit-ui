@@ -1,0 +1,141 @@
+@if (toolbarTemplate()) {
+  <div class="af-data-table-mobile__toolbar">
+    <ng-container *ngTemplateOutlet="toolbarTemplate()" />
+  </div>
+}
+
+@if (selectionMode() !== 'none' && selectedRowIds().length > 0) {
+  <div class="af-data-table-mobile__selection-bar" role="status">
+    <strong>{{ selectionLabel() }}</strong>
+  </div>
+}
+
+<section class="af-data-table-mobile__surface" [attr.aria-label]="ariaLabel()">
+  @if (state() === 'error') {
+    <div class="af-data-table-mobile__state af-data-table-mobile__state--error" role="alert">
+      <af-icon name="circle-alert" tone="danger" [decorative]="true" />
+      <strong>Error al cargar datos</strong>
+      <span>{{ error() }}</span>
+    </div>
+  } @else if (state() === 'empty') {
+    <div class="af-data-table-mobile__state">
+      @if (emptyTemplate()) {
+        <ng-container *ngTemplateOutlet="emptyTemplate()" />
+      } @else {
+        <af-icon name="table" tone="muted" [decorative]="true" />
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription()) {
+          <span>{{ emptyDescription() }}</span>
+        }
+      }
+    </div>
+  } @else if (state() === 'loading') {
+    <div class="af-data-table-mobile__list" role="list">
+      @for (rowNumber of [1, 2, 3]; track rowNumber) {
+        <article class="af-data-table-mobile__item af-data-table-mobile__item--loading" role="listitem">
+          <span class="af-data-table-mobile__skeleton af-data-table-mobile__skeleton--title"></span>
+          <span class="af-data-table-mobile__skeleton"></span>
+          <span class="af-data-table-mobile__skeleton af-data-table-mobile__skeleton--short"></span>
+        </article>
+      }
+    </div>
+  } @else {
+    <div class="af-data-table-mobile__list" role="list">
+      @for (row of displayRows(); track rowId(row, $index); let rowIndex = $index) {
+        <article
+          class="af-data-table-mobile__item"
+          role="listitem"
+          tabindex="0"
+          [attr.data-selected]="isRowSelected(row, rowIndex) ? '' : null"
+          (click)="pressRow(row)"
+          (keydown.enter)="pressRow(row)"
+          (keydown.space)="pressRow(row); $event.preventDefault()"
+        >
+          <div class="af-data-table-mobile__item-head">
+            @if (selectionMode() !== 'none') {
+              <button
+                type="button"
+                class="af-data-table-mobile__checkbox"
+                [class.af-data-table-mobile__checkbox--checked]="isRowSelected(row, rowIndex)"
+                (click)="$event.stopPropagation(); toggleRowSelection(row, rowIndex)"
+                [attr.aria-label]="isRowSelected(row, rowIndex) ? 'Quitar seleccion' : 'Seleccionar fila'"
+              >
+                @if (isRowSelected(row, rowIndex)) {
+                  <af-icon name="check" size="xs" [decorative]="true" />
+                }
+              </button>
+            }
+
+            @if (primaryColumn(); as column) {
+              <div class="af-data-table-mobile__primary">
+                <span>{{ column.header }}</span>
+                @if (cellTemplateFor(column); as cellTemplate) {
+                  <ng-container *ngTemplateOutlet="cellTemplate; context: cellContext(row, column, rowIndex)" />
+                } @else {
+                  <strong>{{ displayValue(row, column) }}</strong>
+                }
+              </div>
+            }
+
+            @if (hasExpandedRows()) {
+              <button
+                type="button"
+                class="af-data-table-mobile__expand"
+                [class.af-data-table-mobile__expand--open]="isRowExpanded(row, rowIndex)"
+                (click)="$event.stopPropagation(); toggleExpanded(row, rowIndex)"
+                [attr.aria-expanded]="isRowExpanded(row, rowIndex)"
+                aria-label="Alternar detalle"
+              >
+                <af-icon name="chevron-right" size="sm" [decorative]="true" />
+              </button>
+            }
+          </div>
+
+          <dl class="af-data-table-mobile__meta">
+            @for (column of secondaryColumns(); track column.key) {
+              <div>
+                <dt>{{ column.header }}</dt>
+                <dd>
+                  @if (cellTemplateFor(column); as cellTemplate) {
+                    <ng-container *ngTemplateOutlet="cellTemplate; context: cellContext(row, column, rowIndex)" />
+                  } @else {
+                    {{ displayValue(row, column) }}
+                  }
+                </dd>
+              </div>
+            }
+          </dl>
+
+          @if (isRowExpanded(row, rowIndex)) {
+            <div class="af-data-table-mobile__details">
+              @if (expandedRowTemplate(); as expandedTemplate) {
+                <ng-container *ngTemplateOutlet="expandedTemplate; context: expandedRowContext(row, rowIndex)" />
+              } @else {
+                @for (column of tertiaryColumns(); track column.key) {
+                  <div>
+                    <span>{{ column.header }}</span>
+                    <strong>{{ displayValue(row, column) }}</strong>
+                  </div>
+                }
+              }
+            </div>
+          }
+        </article>
+      }
+    </div>
+
+    @if (pagination()) {
+      <footer class="af-data-table-mobile__pagination">
+        <span>{{ pageStart() }}-{{ pageEnd() }} de {{ totalItems() }}</span>
+        <div>
+          <button type="button" (click)="previousPage()" [disabled]="!canGoPrevious()" aria-label="Pagina anterior">
+            <af-icon name="chevron-left" size="xs" [decorative]="true" />
+          </button>
+          <button type="button" (click)="nextPage()" [disabled]="!canGoNext()" aria-label="Pagina siguiente">
+            <af-icon name="chevron-right" size="xs" [decorative]="true" />
+          </button>
+        </div>
+      </footer>
+    }
+  }
+</section>

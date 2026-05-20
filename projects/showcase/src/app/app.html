@@ -151,6 +151,128 @@
       </section>
     }
 
+    @case ('data-table') {
+      <section class="shell-section data-table-view" aria-label="Tabla avanzada de atletas">
+        <div class="section-header section-header--inline">
+          <div>
+            <span class="eyebrow">Dataset operativo</span>
+            <h2>Tabla avanzada</h2>
+            <p>Atletas, sesiones, marcas y estado listos para workflows enterprise.</p>
+          </div>
+          <af-badge tone="primary" icon="table">{{ filteredAthleteTableRows().length }} atletas</af-badge>
+        </div>
+
+        <af-data-table
+          [columns]="athleteTableColumns"
+          [rows]="filteredAthleteTableRows()"
+          rowIdKey="id"
+          density="compact"
+          selectionMode="multiple"
+          emptyTitle="Sin atletas encontrados"
+          emptyDescription="Ajusta la busqueda o limpia los filtros"
+          ariaLabel="Tabla avanzada de atletas ArgFit"
+          [selectedRowIds]="athleteTableSelectedRowIds()"
+          [expandedRowIds]="athleteTableExpandedRowIds()"
+          [sort]="athleteTableSort()"
+          [pagination]="athleteTablePagination()"
+          (sortChange)="setAthleteTableSort($event)"
+          (pageChange)="setAthleteTablePage($event)"
+          (selectionChange)="setAthleteTableSelection($event)"
+          (rowExpandedChange)="setAthleteTableExpanded($event)"
+          (rowPressed)="recordAthleteRow($event)"
+        >
+          <div afDataTableToolbar class="data-table-toolbar">
+            <af-input
+              label="Buscar"
+              type="search"
+              prefixIcon="search"
+              placeholder="Atleta, equipo o deporte"
+              [value]="athleteTableSearch()"
+              (valueChange)="updateAthleteTableSearch($event)"
+            />
+            <div class="data-table-toolbar__actions">
+              <af-button size="sm" variant="secondary" (pressed)="recordAction('Tabla → CSV')">
+                <af-icon name="download" size="sm" [decorative]="true" />
+                CSV
+              </af-button>
+              <af-button size="sm" (pressed)="openAthleteDialog()">
+                <af-icon name="plus" size="sm" [decorative]="true" />
+                Nuevo atleta
+              </af-button>
+            </div>
+          </div>
+
+          <div afDataTableEmpty class="data-table-empty">
+            <strong>Sin atletas encontrados</strong>
+            <span>La busqueda actual no coincide con el dataset del showcase.</span>
+          </div>
+
+          <ng-template afDataTableCell="name" let-row="row">
+            <div class="athlete-cell">
+              <span class="athlete-avatar">{{ athleteInitials(row) }}</span>
+              <span>
+                <strong>{{ athleteText(row, 'name') }}</strong>
+                <small>{{ athleteText(row, 'team') }}</small>
+              </span>
+            </div>
+          </ng-template>
+
+          <ng-template afDataTableCell="sessions" let-row="row">
+            <span class="sessions-cell">
+              <span class="sessions-cell__track">
+                <span class="sessions-cell__bar" [style.width.%]="athleteSessionsPercent(row)"></span>
+              </span>
+              <span class="data-cell">{{ athleteNumber(row, 'sessions') }}</span>
+            </span>
+          </ng-template>
+
+          <ng-template afDataTableCell="bestJump" let-row="row">
+            <span class="data-cell data-cell--accent">{{ athleteNumber(row, 'bestJump', 1) }} cm</span>
+          </ng-template>
+
+          <ng-template afDataTableCell="force" let-row="row">
+            <span class="data-cell">{{ athleteNumber(row, 'force') }} N</span>
+          </ng-template>
+
+          <ng-template afDataTableCell="rsi" let-row="row">
+            <span class="data-cell">{{ athleteNumber(row, 'rsi', 2) }}</span>
+          </ng-template>
+
+          <ng-template afDataTableCell="asymmetry" let-row="row">
+            <span class="data-cell asymmetry-value {{ athleteAsymmetryToneClass(row) }}">
+              {{ athleteNumber(row, 'asymmetry', 1) }}%
+            </span>
+          </ng-template>
+
+          <ng-template afDataTableCell="status" let-row="row">
+            <af-badge [tone]="athleteStatusTone(row)" dot>{{ athleteStatusLabel(row) }}</af-badge>
+          </ng-template>
+
+          <ng-template afDataTableExpandedRow let-row="row">
+            <div class="athlete-expanded-row">
+              <div>
+                <span>Atleta</span>
+                <strong>{{ athleteText(row, 'name') }}</strong>
+              </div>
+              <div>
+                <span>Ultima sesion</span>
+                <strong>{{ athleteText(row, 'lastSession') }}</strong>
+              </div>
+              <div>
+                <span>Equipo</span>
+                <strong>{{ athleteText(row, 'team') }}</strong>
+              </div>
+              <div>
+                <span>Fuerza pico</span>
+                <strong>{{ athleteNumber(row, 'force') }} N</strong>
+              </div>
+              <af-button size="sm" variant="secondary" (pressed)="recordAthleteRow(row)">Ver perfil</af-button>
+            </div>
+          </ng-template>
+        </af-data-table>
+      </section>
+    }
+
     @case ('devices') {
       <section class="shell-section devices-view" aria-label="Dispositivos">
         <div class="section-header">

@@ -1,0 +1,396 @@
+import { NgStyle, NgTemplateOutlet } from '@angular/common';
+import {
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    type TemplateRef,
+    ViewEncapsulation,
+} from '@angular/core';
+
+import {
+    type AfDataTableCellContext,
+    type AfDataTableCellTemplate,
+    type AfDataTableColumn,
+    type AfDataTableDensity,
+    type AfDataTableExpandedRowContext,
+    type AfDataTableExpandedRowTemplate,
+    type AfDataTablePageChange,
+    type AfDataTablePagination,
+    type AfDataTableSelectionMode,
+    type AfDataTableSort,
+    type AfIconName,
+} from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
+
+type AfDataTableState = 'ready' | 'loading' | 'empty' | 'error';
+type AfDataTableAriaSort = 'ascending' | 'descending' | 'none' | null;
+
+@Component({
+  selector: 'af-data-table-desktop',
+  imports: [AfIconComponent, NgStyle, NgTemplateOutlet],
+  templateUrl: './af-data-table-desktop.component.html',
+  styleUrl: './af-data-table-desktop.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'af-data-table-desktop',
+    '[class]': 'hostClasses()',
+    '[attr.data-density]': 'density()',
+    '[attr.data-state]': 'state()',
+    '[attr.data-selection-mode]': 'selectionMode()',
+  },
+})
+export class AfDataTableDesktopComponent {
+  readonly columns = input.required<readonly AfDataTableColumn[]>();
+  readonly rows = input<readonly unknown[]>([]);
+  readonly rowIdKey = input('id');
+  readonly density = input<AfDataTableDensity>('normal');
+  readonly selectionMode = input<AfDataTableSelectionMode>('none');
+  readonly selectedRowIds = input<readonly string[]>([]);
+  readonly expandedRowIds = input<readonly string[]>([]);
+  readonly sort = input<AfDataTableSort | undefined>(undefined);
+  readonly pagination = input<AfDataTablePagination | undefined>(undefined);
+  readonly loading = input(false, { transform: booleanAttribute });
+  readonly error = input<string | undefined>(undefined);
+  readonly emptyTitle = input('Sin datos');
+  readonly emptyDescription = input<string | undefined>(undefined);
+  readonly ariaLabel = input('Tabla de datos');
+  readonly cellTemplates = input<readonly AfDataTableCellTemplate[]>([]);
+  readonly expandedRowTemplate = input<AfDataTableExpandedRowTemplate | undefined>(undefined);
+  readonly toolbarTemplate = input<TemplateRef<unknown> | undefined>(undefined);
+  readonly emptyTemplate = input<TemplateRef<unknown> | undefined>(undefined);
+
+  readonly sortChange = output<AfDataTableSort>();
+  readonly pageChange = output<AfDataTablePageChange>();
+  readonly rowPressed = output<unknown>();
+  readonly selectionChange = output<readonly string[]>();
+  readonly rowExpandedChange = output<readonly string[]>();
+
+  protected readonly hostClasses = computed(() =>
+    ['af-data-table-desktop', `af-data-table-desktop--density-${this.density()}`].join(' '),
+  );
+
+  protected readonly selectedRowIdSet = computed(() => new Set(this.selectedRowIds()));
+  protected readonly expandedRowIdSet = computed(() => new Set(this.expandedRowIds()));
+  protected readonly cellTemplateMap = computed(
+    () => new Map(this.cellTemplates().map((item) => [item.columnKey, item.template])),
+  );
+
+  protected readonly sortedRows = computed(() => {
+    const activeSort = this.sort();
+    const rows = [...this.rows()];
+
+    if (!activeSort) {
+      return rows;
+    }
+
+    rows.sort((leftRow, rightRow) => {
+      const leftValue = this.valueByKey(leftRow, activeSort.key);
+      const rightValue = this.valueByKey(rightRow, activeSort.key);
+      const comparison = this.compareValues(leftValue, rightValue);
+      return activeSort.direction === 'asc' ? comparison : -comparison;
+    });
+
+    return rows;
+  });
+
+  protected readonly displayRows = computed(() => {
+    const pagination = this.pagination();
+    const rows = this.sortedRows();
+
+    if (!pagination) {
+      return rows;
+    }
+
+    const start = pagination.pageIndex * pagination.pageSize;
+    return rows.slice(start, start + pagination.pageSize);
+  });
+
+  protected readonly visibleRowIds = computed(() =>
+    this.displayRows().map((row, rowIndex) => this.rowId(row, rowIndex)),
+  );
+
+  protected readonly allVisibleRowsSelected = computed(() => {
+    const rowIds = this.visibleRowIds();
+    const selected = this.selectedRowIdSet();
+    return rowIds.length > 0 && rowIds.every((rowId) => selected.has(rowId));
+  });
+
+  protected readonly hasSelection = computed(() => this.selectionMode() !== 'none');
+  protected readonly hasExpandedRows = computed(() => !!this.expandedRowTemplate());
+  protected readonly tableColumnCount = computed(
+    () => this.columns().length + (this.hasSelection() ? 1 : 0) + (this.hasExpandedRows() ? 1 : 0),
+  );
+  protected readonly skeletonColumns = computed(() =>
+    Array.from({ length: this.tableColumnCount() }, (_, columnIndex) => columnIndex),
+  );
+
+  protected readonly state = computed<AfDataTableState>(() => {
+    if (this.error()) {
+      return 'error';
+    }
+
+    if (this.loading()) {
+      return 'loading';
+    }
+
+    return this.displayRows().length > 0 ? 'ready' : 'empty';
+  });
+
+  protected readonly totalItems = computed(() => this.pagination()?.totalItems ?? this.sortedRows().length);
+  protected readonly totalPages = computed(() => {
+    const pagination = this.pagination();
+    if (!pagination || pagination.pageSize <= 0) {
+      return 1;
+    }
+    return Math.max(1, Math.ceil(this.totalItems() / pagination.pageSize));
+  });
+  protected readonly pageNumbers = computed(() =>
+    Array.from({ length: this.totalPages() }, (_, pageIndex) => pageIndex),
+  );
+  protected readonly pageStart = computed(() => {
+    const pagination = this.pagination();
+    if (!pagination || this.totalItems() === 0) {
+      return this.displayRows().length === 0 ? 0 : 1;
+    }
+    return pagination.pageIndex * pagination.pageSize + 1;
+  });
+  protected readonly pageEnd = computed(() => {
+    const pagination = this.pagination();
+    if (!pagination) {
+      return this.displayRows().length;
+    }
+    return Math.min((pagination.pageIndex + 1) * pagination.pageSize, this.totalItems());
+  });
+
+  protected isSortable(column: AfDataTableColumn): boolean {
+    return column.sortable === true;
+  }
+
+  protected columnAlign(column: AfDataTableColumn): string {
+    return column.align ?? 'start';
+  }
+
+  protected columnStyle(column: AfDataTableColumn): Record<string, string> | null {
+    if (!column.width && !column.minWidth) {
+      return null;
+    }
+
+    return {
+      ...(column.width ? { width: column.width } : {}),
+      ...(column.minWidth ? { minWidth: column.minWidth } : {}),
+    };
+  }
+
+  protected ariaSort(column: AfDataTableColumn): AfDataTableAriaSort {
+    if (!this.isSortable(column)) {
+      return null;
+    }
+
+    const activeSort = this.sort();
+    if (activeSort?.key !== column.key) {
+      return 'none';
+    }
+
+    return activeSort.direction === 'asc' ? 'ascending' : 'descending';
+  }
+
+  protected sortIcon(column: AfDataTableColumn): AfIconName {
+    const activeSort = this.sort();
+    if (activeSort?.key !== column.key) {
+      return 'chevron-down';
+    }
+
+    return activeSort.direction === 'asc' ? 'arrow-up' : 'arrow-down';
+  }
+
+  protected cellTemplateFor(column: AfDataTableColumn): TemplateRef<AfDataTableCellContext> | undefined {
+    return this.cellTemplateMap().get(column.key);
+  }
+
+  protected cellContext(
+    row: unknown,
+    column: AfDataTableColumn,
+    rowIndex: number,
+  ): AfDataTableCellContext {
+    const value = this.valueByKey(row, column.key);
+    return {
+      $implicit: value,
+      value,
+      row,
+      column,
+      rowId: this.rowId(row, rowIndex),
+      rowIndex,
+    };
+  }
+
+  protected expandedRowContext(row: unknown, rowIndex: number): AfDataTableExpandedRowContext {
+    return {
+      $implicit: row,
+      row,
+      rowId: this.rowId(row, rowIndex),
+      rowIndex,
+    };
+  }
+
+  protected displayValue(row: unknown, column: AfDataTableColumn): string {
+    const labelledValue = column.valueLabel?.(row);
+    if (labelledValue !== undefined) {
+      return labelledValue;
+    }
+
+    const value = this.valueByKey(row, column.key);
+    if (value === null || value === undefined || value === '') {
+      return '-';
+    }
+
+    return String(value);
+  }
+
+  protected rowId(row: unknown, rowIndex: number): string {
+    const value = this.valueByKey(row, this.rowIdKey());
+    if (value === null || value === undefined || value === '') {
+      return String(rowIndex);
+    }
+    return String(value);
+  }
+
+  protected isRowSelected(row: unknown, rowIndex: number): boolean {
+    return this.selectedRowIdSet().has(this.rowId(row, rowIndex));
+  }
+
+  protected isRowExpanded(row: unknown, rowIndex: number): boolean {
+    return this.expandedRowIdSet().has(this.rowId(row, rowIndex));
+  }
+
+  protected toggleSort(column: AfDataTableColumn): void {
+    if (!this.isSortable(column)) {
+      return;
+    }
+
+    const activeSort = this.sort();
+    const nextSort: AfDataTableSort = {
+      key: column.key,
+      direction: activeSort?.key === column.key && activeSort.direction === 'asc' ? 'desc' : 'asc',
+    };
+    this.sortChange.emit(nextSort);
+  }
+
+  protected pressRow(row: unknown): void {
+    this.rowPressed.emit(row);
+  }
+
+  protected toggleRowSelection(row: unknown, rowIndex: number): void {
+    const mode = this.selectionMode();
+    if (mode === 'none') {
+      return;
+    }
+
+    const rowId = this.rowId(row, rowIndex);
+    const current = this.selectedRowIds();
+    const selected = current.includes(rowId);
+    const nextSelection = mode === 'single'
+      ? selected ? [] : [rowId]
+      : selected ? current.filter((selectedId) => selectedId !== rowId) : [...current, rowId];
+
+    this.selectionChange.emit(nextSelection);
+  }
+
+  protected toggleVisibleSelection(): void {
+    if (this.selectionMode() === 'none') {
+      return;
+    }
+
+    const visibleIds = this.visibleRowIds();
+    if (this.selectionMode() === 'single') {
+      this.selectionChange.emit(visibleIds.length > 0 ? [visibleIds[0]] : []);
+      return;
+    }
+
+    const visibleIdSet = new Set(visibleIds);
+    const current = this.selectedRowIds();
+    const nextSelection = this.allVisibleRowsSelected()
+      ? current.filter((selectedId) => !visibleIdSet.has(selectedId))
+      : Array.from(new Set([...current, ...visibleIds]));
+
+    this.selectionChange.emit(nextSelection);
+  }
+
+  protected clearSelection(): void {
+    this.selectionChange.emit([]);
+  }
+
+  protected toggleExpanded(row: unknown, rowIndex: number): void {
+    if (!this.expandedRowTemplate()) {
+      return;
+    }
+
+    const rowId = this.rowId(row, rowIndex);
+    const current = this.expandedRowIds();
+    const nextExpanded = current.includes(rowId)
+      ? current.filter((expandedId) => expandedId !== rowId)
+      : [...current, rowId];
+
+    this.rowExpandedChange.emit(nextExpanded);
+  }
+
+  protected goToPage(pageIndex: number): void {
+    const pagination = this.pagination();
+    if (!pagination) {
+      return;
+    }
+
+    const boundedPageIndex = Math.min(Math.max(pageIndex, 0), this.totalPages() - 1);
+    this.pageChange.emit({ pageIndex: boundedPageIndex, pageSize: pagination.pageSize });
+  }
+
+  protected previousPage(): void {
+    const pagination = this.pagination();
+    if (pagination) {
+      this.goToPage(pagination.pageIndex - 1);
+    }
+  }
+
+  protected nextPage(): void {
+    const pagination = this.pagination();
+    if (pagination) {
+      this.goToPage(pagination.pageIndex + 1);
+    }
+  }
+
+  protected canGoPrevious(): boolean {
+    return (this.pagination()?.pageIndex ?? 0) > 0;
+  }
+
+  protected canGoNext(): boolean {
+    const pagination = this.pagination();
+    return !!pagination && pagination.pageIndex < this.totalPages() - 1;
+  }
+
+  protected selectionLabel(): string {
+    const count = this.selectedRowIds().length;
+    return `${count} seleccionado${count === 1 ? '' : 's'}`;
+  }
+
+  private valueByKey(row: unknown, key: string): unknown {
+    if (!this.isRecord(row)) {
+      return undefined;
+    }
+    return row[key];
+  }
+
+  private compareValues(leftValue: unknown, rightValue: unknown): number {
+    if (typeof leftValue === 'number' && typeof rightValue === 'number') {
+      return leftValue - rightValue;
+    }
+
+    return String(leftValue ?? '').localeCompare(String(rightValue ?? ''));
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
+  }
+}

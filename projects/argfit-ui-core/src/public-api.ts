@@ -16,6 +16,7 @@ export * from './lib/types/badge.types';
 export * from './lib/types/button.types';
 export * from './lib/types/card.types';
 export * from './lib/types/chart.types';
+export * from './lib/types/data-table.types';
 export * from './lib/types/dialog.types';
 export * from './lib/types/icon.types';
 export * from './lib/types/input.types';

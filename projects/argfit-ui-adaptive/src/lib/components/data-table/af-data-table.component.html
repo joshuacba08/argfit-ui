@@ -1,0 +1,61 @@
+<ng-template #dataTableToolbar>
+  <ng-content select="[afDataTableToolbar]" />
+</ng-template>
+
+<ng-template #dataTableEmpty>
+  <ng-content select="[afDataTableEmpty]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-data-table-mobile
+    [columns]="columns()"
+    [rows]="rows()"
+    [rowIdKey]="rowIdKey()"
+    [density]="density()"
+    [selectionMode]="selectionMode()"
+    [selectedRowIds]="selectedRowIds()"
+    [expandedRowIds]="expandedRowIds()"
+    [sort]="sort()"
+    [pagination]="pagination()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [cellTemplates]="cellTemplates()"
+    [expandedRowTemplate]="expandedRowTemplate()"
+    [toolbarTemplate]="projectedToolbarTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    (sortChange)="sortChange.emit($event)"
+    (pageChange)="pageChange.emit($event)"
+    (rowPressed)="rowPressed.emit($event)"
+    (selectionChange)="selectionChange.emit($event)"
+    (rowExpandedChange)="rowExpandedChange.emit($event)"
+  />
+} @else {
+  <af-data-table-desktop
+    [columns]="columns()"
+    [rows]="rows()"
+    [rowIdKey]="rowIdKey()"
+    [density]="density()"
+    [selectionMode]="selectionMode()"
+    [selectedRowIds]="selectedRowIds()"
+    [expandedRowIds]="expandedRowIds()"
+    [sort]="sort()"
+    [pagination]="pagination()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [cellTemplates]="cellTemplates()"
+    [expandedRowTemplate]="expandedRowTemplate()"
+    [toolbarTemplate]="projectedToolbarTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    (sortChange)="sortChange.emit($event)"
+    (pageChange)="pageChange.emit($event)"
+    (rowPressed)="rowPressed.emit($event)"
+    (selectionChange)="selectionChange.emit($event)"
+    (rowExpandedChange)="rowExpandedChange.emit($event)"
+  />
+}

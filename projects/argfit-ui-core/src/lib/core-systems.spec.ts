@@ -6,6 +6,11 @@ import type {
     AfBadgeTone,
     AfBadgeVariant,
     AfBreadcrumbItem,
+    AfDataTableColumn,
+    AfDataTableDensity,
+    AfDataTablePagination,
+    AfDataTableSelectionMode,
+    AfDataTableSort,
     AfMetricCardTone,
     AfMetricCardVariant,
     AfMetricTrendDirection,
@@ -149,5 +154,22 @@ describe('ArgFit core systems', () => {
     expect(tone).toBe('accent');
     expect(variant).toBe('surface');
     expect(direction).toBe('flat');
+  });
+
+  it('exports the data table contract through the public API', () => {
+    const density: AfDataTableDensity = 'compact';
+    const selectionMode: AfDataTableSelectionMode = 'multiple';
+    const columns: readonly AfDataTableColumn[] = [
+      { key: 'name', header: 'Atleta', sortable: true, mobilePriority: 'primary' },
+      { key: 'bestJump', header: 'Mejor salto', align: 'end', mobilePriority: 'secondary' },
+    ];
+    const sort: AfDataTableSort = { key: 'bestJump', direction: 'desc' };
+    const pagination: AfDataTablePagination = { pageIndex: 0, pageSize: 8, totalItems: 12 };
+
+    expect(density).toBe('compact');
+    expect(selectionMode).toBe('multiple');
+    expect(columns[0].mobilePriority).toBe('primary');
+    expect(sort.direction).toBe('desc');
+    expect(pagination.pageSize).toBe(8);
   });
 });

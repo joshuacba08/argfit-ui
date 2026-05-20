@@ -12,6 +12,11 @@ import {
     AfCardSubtitleDirective,
     AfCardTitleDirective,
     AfChart,
+    AfDataTable,
+    AfDataTableCellDirective,
+    AfDataTableEmptyDirective,
+    AfDataTableExpandedRowDirective,
+    AfDataTableToolbarDirective,
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
@@ -26,14 +31,33 @@ import {
 import {
     AfPlatformService,
     AfThemeService,
+    type AfBadgeTone,
     type AfBreadcrumbItem,
     type AfChartIndicator,
     type AfChartSeries,
+    type AfDataTableColumn,
+    type AfDataTablePageChange,
+    type AfDataTablePagination,
+    type AfDataTableSort,
     type AfIconName,
     type AfNavigationItem,
     type AfPlatformPreference,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
+
+interface ShowcaseAthlete {
+  readonly id: string;
+  readonly name: string;
+  readonly sport: string;
+  readonly team: string;
+  readonly sessions: number;
+  readonly bestJump: number;
+  readonly force: number;
+  readonly rsi: number;
+  readonly asymmetry: number;
+  readonly status: 'active' | 'inactive';
+  readonly lastSession: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -48,6 +72,11 @@ import { AfIconComponent } from '@argfit-ui/primitives';
     AfCardContentDirective,
     AfCardFooterDirective,
     AfChart,
+    AfDataTable,
+    AfDataTableCellDirective,
+    AfDataTableEmptyDirective,
+    AfDataTableExpandedRowDirective,
+    AfDataTableToolbarDirective,
     AfIconComponent,
     AfInput,
     AfMetricCard,
@@ -78,6 +107,7 @@ export class App {
   protected readonly shellNavItems: readonly AfNavigationItem[] = [
     { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard', badge: 3 },
     { id: 'athletes', label: 'Atletas', icon: 'users' },
+    { id: 'data-table', label: 'Tabla avanzada', icon: 'table' },
     { id: 'devices', label: 'Dispositivos', icon: 'cpu', badge: 2 },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
     { id: 'reports', label: 'Reportes', icon: 'file-text' },
@@ -95,6 +125,7 @@ export class App {
   private readonly sectionTitles: Readonly<Record<string, string>> = {
     dashboard: 'Dashboard',
     athletes: 'Atletas',
+    'data-table': 'Tabla avanzada',
     devices: 'Dispositivos',
     analytics: 'Analytics',
     reports: 'Reportes',
@@ -104,6 +135,7 @@ export class App {
   private readonly sectionSubtitles: Readonly<Record<string, string>> = {
     dashboard: 'Centro operativo de rendimiento',
     athletes: 'Roster, altas y mediciones base',
+    'data-table': 'Dataset operativo de atletas',
     devices: 'Sensores vinculados y estado de bateria',
     analytics: 'Lecturas, tendencias y comparativas',
     reports: 'Exportaciones y entregables del staff',
@@ -136,6 +168,54 @@ export class App {
   protected readonly athleteWeight = signal('68');
   protected readonly athleteEmail = signal('invalid-email');
   protected readonly heightControl = new FormControl<string>('178', { nonNullable: true });
+
+  protected readonly athleteTableColumns: readonly AfDataTableColumn[] = [
+    { key: 'name', header: 'Atleta', sortable: true, minWidth: '190px', mobilePriority: 'primary' },
+    { key: 'sport', header: 'Deporte', sortable: true, minWidth: '110px', mobilePriority: 'secondary' },
+    { key: 'sessions', header: 'Sesiones', sortable: true, align: 'end', minWidth: '120px', mobilePriority: 'secondary' },
+    { key: 'bestJump', header: 'Mejor salto', sortable: true, align: 'end', minWidth: '120px', mobilePriority: 'secondary' },
+    { key: 'force', header: 'Fuerza', sortable: true, align: 'end', minWidth: '110px', mobilePriority: 'tertiary' },
+    { key: 'rsi', header: 'RSI', sortable: true, align: 'end', minWidth: '80px', mobilePriority: 'tertiary' },
+    { key: 'asymmetry', header: 'Asimetria', sortable: true, align: 'end', minWidth: '105px', mobilePriority: 'tertiary' },
+    { key: 'status', header: 'Estado', minWidth: '110px', mobilePriority: 'secondary' },
+  ];
+
+  protected readonly athleteTableRows: readonly ShowcaseAthlete[] = [
+    { id: '1', name: 'Maria Garcia', sport: 'Voleibol', team: 'Club San Lorenzo', sessions: 42, bestJump: 45.2, force: 2847, rsi: 1.32, asymmetry: 4.2, status: 'active', lastSession: 'Hoy 10:30' },
+    { id: '2', name: 'Lucas Rodriguez', sport: 'Futbol', team: 'Racing Club', sessions: 38, bestJump: 52.1, force: 3120, rsi: 1.45, asymmetry: 6.1, status: 'active', lastSession: 'Hoy 09:15' },
+    { id: '3', name: 'Valentina Lopez', sport: 'Handball', team: 'Seleccion ARG', sessions: 56, bestJump: 38.7, force: 2340, rsi: 1.18, asymmetry: 3.8, status: 'active', lastSession: 'Ayer 17:00' },
+    { id: '4', name: 'Matias Fernandez', sport: 'Rugby', team: 'CASI', sessions: 29, bestJump: 48.9, force: 2890, rsi: 1.38, asymmetry: 8.4, status: 'inactive', lastSession: '12 May' },
+    { id: '5', name: 'Camila Torres', sport: 'Basquet', team: 'Obras Sanitarias', sessions: 34, bestJump: 41.3, force: 2580, rsi: 1.25, asymmetry: 5.0, status: 'active', lastSession: 'Ayer 11:30' },
+    { id: '6', name: 'Santiago Perez', sport: 'Atletismo', team: 'GEBA', sessions: 67, bestJump: 55.4, force: 3340, rsi: 1.52, asymmetry: 2.9, status: 'active', lastSession: 'Hoy 08:00' },
+    { id: '7', name: 'Florencia Diaz', sport: 'Hockey', team: 'Club Ciudad', sessions: 23, bestJump: 36.8, force: 2180, rsi: 1.1, asymmetry: 7.2, status: 'inactive', lastSession: '8 May' },
+    { id: '8', name: 'Nicolas Morales', sport: 'Futbol', team: 'Independiente', sessions: 45, bestJump: 49.7, force: 2960, rsi: 1.4, asymmetry: 5.5, status: 'active', lastSession: 'Ayer 16:00' },
+    { id: '9', name: 'Ana Gutierrez', sport: 'Voleibol', team: 'River Plate', sessions: 31, bestJump: 40.2, force: 2450, rsi: 1.22, asymmetry: 4.8, status: 'active', lastSession: '15 May' },
+    { id: '10', name: 'Diego Romero', sport: 'Rugby', team: 'Alumni', sessions: 19, bestJump: 46.5, force: 2780, rsi: 1.35, asymmetry: 9.1, status: 'inactive', lastSession: '5 May' },
+    { id: '11', name: 'Paula Martinez', sport: 'Atletismo', team: 'CeNARD', sessions: 72, bestJump: 44.8, force: 2720, rsi: 1.3, asymmetry: 3.2, status: 'active', lastSession: 'Hoy 07:30' },
+    { id: '12', name: 'Tomas Herrera', sport: 'Basquet', team: 'San Lorenzo', sessions: 28, bestJump: 50.3, force: 3050, rsi: 1.42, asymmetry: 6.8, status: 'active', lastSession: '14 May' },
+  ];
+
+  protected readonly athleteTableSearch = signal('');
+  protected readonly athleteTableSort = signal<AfDataTableSort>({ key: 'bestJump', direction: 'desc' });
+  protected readonly athleteTablePage = signal<AfDataTablePagination>({ pageIndex: 0, pageSize: 8, totalItems: this.athleteTableRows.length });
+  protected readonly athleteTableSelectedRowIds = signal<readonly string[]>(['6', '2']);
+  protected readonly athleteTableExpandedRowIds = signal<readonly string[]>(['6']);
+  protected readonly filteredAthleteTableRows = computed(() => {
+    const query = this.athleteTableSearch().trim().toLowerCase();
+    if (!query) {
+      return this.athleteTableRows;
+    }
+
+    return this.athleteTableRows.filter((athlete) =>
+      [athlete.name, athlete.sport, athlete.team, athlete.status].some((value) =>
+        value.toLowerCase().includes(query),
+      ),
+    );
+  });
+  protected readonly athleteTablePagination = computed<AfDataTablePagination>(() => ({
+    ...this.athleteTablePage(),
+    totalItems: this.filteredAthleteTableRows().length,
+  }));
 
   protected setPlatform(preference: AfPlatformPreference): void {
     this.platform.setPreference(preference);
@@ -191,6 +271,42 @@ export class App {
     this.searchQuery.set(value);
   }
 
+  protected updateAthleteTableSearch(value: string): void {
+    this.athleteTableSearch.set(value);
+    this.athleteTablePage.update((current) => ({ ...current, pageIndex: 0 }));
+  }
+
+  protected setAthleteTableSort(sort: AfDataTableSort): void {
+    this.athleteTableSort.set(sort);
+    this.athleteTablePage.update((current) => ({ ...current, pageIndex: 0 }));
+    this.recordAction(`Tabla sort → ${sort.key} ${sort.direction}`);
+  }
+
+  protected setAthleteTablePage(page: AfDataTablePageChange): void {
+    this.athleteTablePage.update((current) => ({
+      ...current,
+      pageIndex: page.pageIndex,
+      pageSize: page.pageSize,
+    }));
+    this.recordAction(`Tabla page → ${page.pageIndex + 1}`);
+  }
+
+  protected setAthleteTableSelection(rowIds: readonly string[]): void {
+    this.athleteTableSelectedRowIds.set(rowIds);
+    this.recordAction(`Tabla seleccion → ${rowIds.length}`);
+  }
+
+  protected setAthleteTableExpanded(rowIds: readonly string[]): void {
+    this.athleteTableExpandedRowIds.set(rowIds);
+  }
+
+  protected recordAthleteRow(row: unknown): void {
+    const athlete = this.asShowcaseAthlete(row);
+    if (athlete) {
+      this.recordAction(`Tabla atleta → ${athlete.name}`);
+    }
+  }
+
   protected updateAthleteWeight(value: string): void {
     this.athleteWeight.set(value);
   }
@@ -205,6 +321,64 @@ export class App {
       return undefined;
     }
     return /.+@.+\..+/.test(value) ? undefined : 'Ingresa un email valido';
+  }
+
+  protected athleteInitials(row: unknown): string {
+    const athlete = this.asShowcaseAthlete(row);
+    if (!athlete) {
+      return 'AF';
+    }
+    return athlete.name
+      .split(' ')
+      .map((part) => part[0] ?? '')
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  protected athleteText(row: unknown, key: keyof ShowcaseAthlete): string {
+    const athlete = this.asShowcaseAthlete(row);
+    const value = athlete?.[key];
+    return value === undefined ? '-' : String(value);
+  }
+
+  protected athleteNumber(row: unknown, key: keyof ShowcaseAthlete, fractionDigits = 0): string {
+    const athlete = this.asShowcaseAthlete(row);
+    const value = athlete?.[key];
+    return typeof value === 'number' ? value.toFixed(fractionDigits) : '-';
+  }
+
+  protected athleteSessionsPercent(row: unknown): number {
+    const athlete = this.asShowcaseAthlete(row);
+    return athlete ? Math.min(Math.round((athlete.sessions / 80) * 100), 100) : 0;
+  }
+
+  protected athleteStatusLabel(row: unknown): string {
+    return this.asShowcaseAthlete(row)?.status === 'active' ? 'Activo' : 'Inactivo';
+  }
+
+  protected athleteStatusTone(row: unknown): AfBadgeTone {
+    return this.asShowcaseAthlete(row)?.status === 'active' ? 'success' : 'neutral';
+  }
+
+  protected athleteAsymmetryToneClass(row: unknown): string {
+    const asymmetry = this.asShowcaseAthlete(row)?.asymmetry ?? 0;
+    if (asymmetry > 7) {
+      return 'asymmetry-value--danger';
+    }
+    if (asymmetry > 5) {
+      return 'asymmetry-value--warning';
+    }
+    return 'asymmetry-value--success';
+  }
+
+  private asShowcaseAthlete(value: unknown): ShowcaseAthlete | undefined {
+    if (typeof value !== 'object' || value === null) {
+      return undefined;
+    }
+
+    const candidate = value as Partial<ShowcaseAthlete>;
+    return typeof candidate.id === 'string' && typeof candidate.name === 'string' ? candidate as ShowcaseAthlete : undefined;
   }
 
   protected readonly detailsDialogOpen = signal(false);

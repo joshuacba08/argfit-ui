@@ -24,6 +24,18 @@ export {
     AfChartComponent as AfChart, AfChartComponent
 } from './lib/components/chart/af-chart.component';
 export {
+    AfDataTableCellDirective,
+    AfDataTableExpandedRowDirective
+} from './lib/components/data-table/af-data-table-cell.directive';
+export {
+    AF_DATA_TABLE_SLOT_DIRECTIVES,
+    AfDataTableEmptyDirective,
+    AfDataTableToolbarDirective
+} from './lib/components/data-table/af-data-table-slots.directive';
+export {
+    AfDataTableComponent as AfDataTable, AfDataTableComponent
+} from './lib/components/data-table/af-data-table.component';
+export {
     AF_DIALOG_SLOT_DIRECTIVES,
     AfDialogContentDirective,
     AfDialogDescriptionDirective,

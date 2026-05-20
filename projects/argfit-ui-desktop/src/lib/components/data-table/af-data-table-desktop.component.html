@@ -1,0 +1,185 @@
+@if (toolbarTemplate()) {
+  <div class="af-data-table-desktop__toolbar">
+    <ng-container *ngTemplateOutlet="toolbarTemplate()" />
+  </div>
+}
+
+@if (hasSelection() && selectedRowIds().length > 0) {
+  <div class="af-data-table-desktop__selection-bar" role="status">
+    <strong>{{ selectionLabel() }}</strong>
+    <button type="button" (click)="toggleVisibleSelection()">
+      {{ allVisibleRowsSelected() ? 'Limpiar visibles' : 'Seleccionar visibles' }}
+    </button>
+    <button type="button" (click)="clearSelection()">Limpiar</button>
+  </div>
+}
+
+<div class="af-data-table-desktop__surface">
+  @if (state() === 'error') {
+    <div class="af-data-table-desktop__state af-data-table-desktop__state--error" role="alert">
+      <af-icon name="circle-alert" tone="danger" [decorative]="true" />
+      <strong>Error al cargar datos</strong>
+      <span>{{ error() }}</span>
+    </div>
+  } @else if (state() === 'empty') {
+    <div class="af-data-table-desktop__state">
+      @if (emptyTemplate()) {
+        <ng-container *ngTemplateOutlet="emptyTemplate()" />
+      } @else {
+        <af-icon name="table" tone="muted" [decorative]="true" />
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription()) {
+          <span>{{ emptyDescription() }}</span>
+        }
+      }
+    </div>
+  } @else {
+    <div class="af-data-table-desktop__scroll">
+      <table [attr.aria-label]="ariaLabel()">
+        <thead>
+          <tr>
+            @if (hasSelection()) {
+              <th class="af-data-table-desktop__select-cell" scope="col">
+                <button
+                  type="button"
+                  class="af-data-table-desktop__checkbox"
+                  [class.af-data-table-desktop__checkbox--checked]="allVisibleRowsSelected()"
+                  (click)="toggleVisibleSelection()"
+                  [attr.aria-label]="allVisibleRowsSelected() ? 'Limpiar seleccion visible' : 'Seleccionar filas visibles'"
+                >
+                  @if (allVisibleRowsSelected()) {
+                    <af-icon name="check" size="xs" [decorative]="true" />
+                  }
+                </button>
+              </th>
+            }
+
+            @if (hasExpandedRows()) {
+              <th class="af-data-table-desktop__expand-cell" scope="col"></th>
+            }
+
+            @for (column of columns(); track column.key) {
+              <th
+                scope="col"
+                [attr.aria-sort]="ariaSort(column)"
+                [attr.data-align]="columnAlign(column)"
+                [ngStyle]="columnStyle(column)"
+              >
+                @if (isSortable(column)) {
+                  <button type="button" (click)="toggleSort(column)">
+                    <span>{{ column.header }}</span>
+                    <af-icon
+                      [name]="sortIcon(column)"
+                      size="xs"
+                      [tone]="sort()?.key === column.key ? 'primary' : 'muted'"
+                      [decorative]="true"
+                    />
+                  </button>
+                } @else {
+                  <span>{{ column.header }}</span>
+                }
+              </th>
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+          @if (state() === 'loading') {
+            @for (rowNumber of [1, 2, 3, 4, 5]; track rowNumber) {
+              <tr class="af-data-table-desktop__skeleton-row">
+                @for (columnNumber of skeletonColumns(); track columnNumber) {
+                  <td><span class="af-data-table-desktop__skeleton"></span></td>
+                }
+              </tr>
+            }
+          } @else {
+            @for (row of displayRows(); track rowId(row, $index); let rowIndex = $index) {
+              <tr
+                tabindex="0"
+                (click)="pressRow(row)"
+                (keydown.enter)="pressRow(row)"
+                (keydown.space)="pressRow(row); $event.preventDefault()"
+                [attr.data-selected]="isRowSelected(row, rowIndex) ? '' : null"
+              >
+                @if (hasSelection()) {
+                  <td class="af-data-table-desktop__select-cell">
+                    <button
+                      type="button"
+                      class="af-data-table-desktop__checkbox"
+                      [class.af-data-table-desktop__checkbox--checked]="isRowSelected(row, rowIndex)"
+                      (click)="$event.stopPropagation(); toggleRowSelection(row, rowIndex)"
+                      [attr.aria-label]="isRowSelected(row, rowIndex) ? 'Quitar seleccion' : 'Seleccionar fila'"
+                    >
+                      @if (isRowSelected(row, rowIndex)) {
+                        <af-icon name="check" size="xs" [decorative]="true" />
+                      }
+                    </button>
+                  </td>
+                }
+
+                @if (hasExpandedRows()) {
+                  <td class="af-data-table-desktop__expand-cell">
+                    <button
+                      type="button"
+                      class="af-data-table-desktop__expand"
+                      [class.af-data-table-desktop__expand--open]="isRowExpanded(row, rowIndex)"
+                      (click)="$event.stopPropagation(); toggleExpanded(row, rowIndex)"
+                      [attr.aria-expanded]="isRowExpanded(row, rowIndex)"
+                      aria-label="Alternar detalle de fila"
+                    >
+                      <af-icon name="chevron-right" size="xs" [decorative]="true" />
+                    </button>
+                  </td>
+                }
+
+                @for (column of columns(); track column.key) {
+                  <td [attr.data-align]="columnAlign(column)">
+                    @if (cellTemplateFor(column); as cellTemplate) {
+                      <ng-container *ngTemplateOutlet="cellTemplate; context: cellContext(row, column, rowIndex)" />
+                    } @else {
+                      <span>{{ displayValue(row, column) }}</span>
+                    }
+                  </td>
+                }
+              </tr>
+
+              @if (hasExpandedRows() && isRowExpanded(row, rowIndex) && expandedRowTemplate(); as expandedTemplate) {
+                <tr class="af-data-table-desktop__expanded-row">
+                  <td [attr.colspan]="tableColumnCount()">
+                    <ng-container
+                      *ngTemplateOutlet="expandedTemplate; context: expandedRowContext(row, rowIndex)"
+                    />
+                  </td>
+                </tr>
+              }
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (pagination()) {
+      <footer class="af-data-table-desktop__pagination">
+        <span>Mostrando {{ pageStart() }}-{{ pageEnd() }} de {{ totalItems() }}</span>
+        <div class="af-data-table-desktop__pages" aria-label="Paginacion">
+          <button type="button" (click)="previousPage()" [disabled]="!canGoPrevious()" aria-label="Pagina anterior">
+            <af-icon name="chevron-left" size="xs" [decorative]="true" />
+          </button>
+          @for (pageIndex of pageNumbers(); track pageIndex) {
+            <button
+              type="button"
+              [class.af-data-table-desktop__page--active]="pagination()?.pageIndex === pageIndex"
+              (click)="goToPage(pageIndex)"
+              [attr.aria-current]="pagination()?.pageIndex === pageIndex ? 'page' : null"
+            >
+              {{ pageIndex + 1 }}
+            </button>
+          }
+          <button type="button" (click)="nextPage()" [disabled]="!canGoNext()" aria-label="Pagina siguiente">
+            <af-icon name="chevron-right" size="xs" [decorative]="true" />
+          </button>
+        </div>
+      </footer>
+    }
+  }
+</div>

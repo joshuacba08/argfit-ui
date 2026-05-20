@@ -167,6 +167,48 @@ describe('App', () => {
     expect(compiled.querySelector('af-metric-card-desktop[data-loading]')).not.toBeNull();
   });
 
+  it('renders the AfDataTable showcase with sorting, selection, badges and empty state', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('data-table');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('af-data-table-desktop')).not.toBeNull();
+    expect(compiled.querySelectorAll('tbody tr[tabindex="0"]').length).toBeGreaterThanOrEqual(8);
+    expect(compiled.querySelector('th[aria-sort="descending"]')?.textContent).toContain('Mejor salto');
+    expect(compiled.querySelector('.af-data-table-desktop__selection-bar')?.textContent).toContain(
+      '2 seleccionados',
+    );
+    expect(compiled.querySelector('af-data-table-desktop af-badge-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.af-data-table-desktop__pagination')?.textContent).toContain(
+      'Mostrando 1-8 de 12',
+    );
+    expect(compiled.querySelector('.athlete-expanded-row')?.textContent).toContain('Santiago Perez');
+
+    fixture.componentInstance['updateAthleteTableSearch']('sin-coincidencias');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('.data-table-empty')?.textContent).toContain('Sin atletas encontrados');
+  });
+
+  it('renders the AfDataTable mobile list alternative', async () => {
+    const platform = TestBed.inject(AfPlatformService);
+    platform.setPreference('mobile');
+
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('data-table');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('af-data-table-mobile')).not.toBeNull();
+    expect(compiled.querySelector('af-data-table-desktop')).toBeNull();
+    expect(compiled.querySelector('af-data-table-mobile table')).toBeNull();
+    expect(compiled.querySelectorAll('af-data-table-mobile [role="listitem"]').length).toBeGreaterThanOrEqual(8);
+  });
+
   it('should render the AfInput vertical slice with reactive form binding', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
