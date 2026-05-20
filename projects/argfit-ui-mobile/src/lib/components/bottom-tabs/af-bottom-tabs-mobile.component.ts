@@ -1,11 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-  ViewEncapsulation,
-} from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    input,
+    output,
+    ViewEncapsulation,
+} from '@angular/core';
 
 import type { AfNavigationItem } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';

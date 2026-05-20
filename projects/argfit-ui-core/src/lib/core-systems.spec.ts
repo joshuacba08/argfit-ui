@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import type {
-  AfBadgeShape,
-  AfBadgeSize,
-  AfBadgeTone,
-  AfBadgeVariant,
-  AfBreadcrumbItem,
-  AfNavigationItem,
-  AfPageShellDensity,
-  AfPageShellVariant,
+    AfBadgeShape,
+    AfBadgeSize,
+    AfBadgeTone,
+    AfBadgeVariant,
+    AfBreadcrumbItem,
+    AfNavigationItem,
+    AfPageShellDensity,
+    AfPageShellVariant,
 } from '../public-api';
 import { provideArgfitUi } from './providers/provide-argfit-ui';
 import { AfPlatformService } from './services/platform.service';

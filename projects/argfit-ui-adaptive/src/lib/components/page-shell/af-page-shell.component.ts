@@ -1,19 +1,19 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  input,
-  output,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    input,
+    output,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfBreadcrumbItem,
-  type AfNavigationItem,
-  type AfPageShellDensity,
-  type AfPageShellVariant,
+    AfPlatformService,
+    type AfBreadcrumbItem,
+    type AfNavigationItem,
+    type AfPageShellDensity,
+    type AfPageShellVariant,
 } from '@argfit-ui/core';
 import { AfPageShellDesktopComponent } from '@argfit-ui/desktop';
 import { AfPageShellMobileComponent } from '@argfit-ui/mobile';

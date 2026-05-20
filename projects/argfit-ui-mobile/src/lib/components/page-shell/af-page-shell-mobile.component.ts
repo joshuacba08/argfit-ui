@@ -1,16 +1,16 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import type {
-  AfNavigationItem,
-  AfPageShellDensity,
-  AfPageShellVariant,
+    AfNavigationItem,
+    AfPageShellDensity,
+    AfPageShellVariant,
 } from '@argfit-ui/core';
 
 import { AfBottomTabsMobileComponent } from '../bottom-tabs/af-bottom-tabs-mobile.component';

@@ -1,17 +1,17 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    input,
+    output,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import type {
-  AfBreadcrumbItem,
-  AfNavigationItem,
-  AfPageShellDensity,
-  AfPageShellVariant,
+    AfBreadcrumbItem,
+    AfNavigationItem,
+    AfPageShellDensity,
+    AfPageShellVariant,
 } from '@argfit-ui/core';
 
 import { AfSidebarDesktopComponent } from '../sidebar/af-sidebar-desktop.component';
