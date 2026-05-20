@@ -23,13 +23,14 @@ import {
     AfEscapeKeyDirective,
     AfFocusInitialDirective,
     AfFocusTrapDirective,
+  AfIconComponent,
 } from '@argfit-ui/primitives';
 
 let nextAfMobileDialogId = 0;
 
 @Component({
   selector: 'af-dialog-mobile',
-  imports: [AfEscapeKeyDirective, AfFocusTrapDirective, AfFocusInitialDirective],
+  imports: [AfEscapeKeyDirective, AfFocusTrapDirective, AfFocusInitialDirective, AfIconComponent],
   templateUrl: './af-dialog-mobile.component.html',
   styleUrl: './af-dialog-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

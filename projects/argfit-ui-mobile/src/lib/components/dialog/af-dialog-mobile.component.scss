@@ -79,11 +79,34 @@
   padding: var(--af-space-2) 0 var(--af-space-1);
 }
 
+.af-dialog-mobile__panel[data-tone='danger'] .af-dialog-mobile__header {
+  align-items: center;
+  border-bottom: 1px solid var(--af-border-soft);
+  margin: 0 calc(var(--af-space-4) * -1);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-dialog-mobile__tone-icon {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-danger) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-danger) 26%, transparent);
+  border-radius: var(--af-radius-md);
+  display: inline-flex;
+  flex: 0 0 var(--af-space-8);
+  height: var(--af-space-8);
+  justify-content: center;
+  width: var(--af-space-8);
+}
+
 .af-dialog-mobile__heading {
   display: flex;
   flex-direction: column;
   gap: var(--af-space-1);
   min-width: 0;
+}
+
+.af-dialog-mobile__panel[data-tone='danger'] .af-dialog-mobile__heading {
+  flex: 1 1 auto;
 }
 
 .af-dialog-mobile__title {
@@ -98,7 +121,7 @@
 }
 
 .af-dialog-mobile__panel[data-tone='danger'] .af-dialog-mobile__title {
-  color: var(--af-danger);
+  color: var(--af-text-main);
 }
 
 .af-dialog-mobile__description {
@@ -150,6 +173,16 @@
   padding: var(--af-space-2) 0;
 }
 
+.af-dialog-mobile__panel[data-tone='danger'] .af-dialog-mobile__description--body {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+  padding: var(--af-space-4) 0;
+  text-align: center;
+}
+
 /* Semantic slot classes (applied by adaptive slot directives). */
 
 .af-dialog-mobile .af-dialog__header {
@@ -190,6 +223,12 @@
   gap: var(--af-space-2);
   margin-top: var(--af-space-2);
   padding-top: var(--af-space-3);
+}
+
+.af-dialog-mobile__panel[data-tone='danger'] .af-dialog__footer .af-button-mobile--danger {
+  --background: color-mix(in srgb, var(--af-danger) 7%, var(--af-bg-elevated));
+  --border-color: color-mix(in srgb, var(--af-danger) 42%, transparent);
+  --color: var(--af-danger);
 }
 
 @keyframes af-dialog-mobile-fade {

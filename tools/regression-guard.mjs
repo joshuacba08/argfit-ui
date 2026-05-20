@@ -179,6 +179,23 @@ expectNotIncludes('projects/argfit-ui-mobile/src/lib/components/dialog/af-dialog
   'inset 0 3px 0 0',
 ]);
 
+expectIncludes('projects/argfit-ui-desktop/src/lib/components/dialog/af-dialog-desktop.component.html', [
+  'af-dialog-desktop__tone-icon',
+  'tone() === \'danger\'',
+  'af-dialog-desktop__description--body',
+]);
+expectIncludes('projects/argfit-ui-desktop/src/lib/components/dialog/af-dialog-desktop.component.scss', [
+  "[data-tone='danger'] .af-dialog-desktop__header",
+  '.af-dialog-desktop__tone-icon',
+  '.af-dialog-desktop__description--body',
+  "[data-tone='danger'] .af-dialog__footer .af-button-desktop--danger",
+]);
+expectIncludes('projects/showcase/src/app/app.html', [
+  'title="Eliminar atleta"',
+  'Esta accion no se puede deshacer.',
+  '>Eliminar</af-button>',
+]);
+
 if (failures.length > 0) {
   console.error('Regression guard failed:');
   for (const failure of failures) {

@@ -1241,15 +1241,15 @@
 
   <af-dialog
     [open]="removeDialogOpen()"
-    title="Dar de baja al atleta"
-    description="Esta accion archiva su perfil. Podras restaurarlo desde papelera durante 30 dias."
-    size="sm"
+    title="Eliminar atleta"
+    description="Estas seguro de que quieres eliminar a Maria Garcia? Se borraran todas sus sesiones y datos historicos. Esta accion no se puede deshacer."
+    size="lg"
     tone="danger"
     (openChange)="setRemoveDialog($event)"
   >
     <div afDialogFooter>
       <af-button variant="ghost" (pressed)="setRemoveDialog(false)">Cancelar</af-button>
-      <af-button variant="danger" (pressed)="confirmRemove()">Confirmar baja</af-button>
+      <af-button variant="danger" (pressed)="confirmRemove()">Eliminar</af-button>
     </div>
   </af-dialog>
 

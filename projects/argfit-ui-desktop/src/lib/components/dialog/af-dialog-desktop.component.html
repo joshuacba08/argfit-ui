@@ -21,18 +21,24 @@
     >
       @if (title() || dismissible()) {
         <header class="af-dialog-desktop__header af-dialog__header">
+          @if (tone() === 'danger') {
+            <span class="af-dialog-desktop__tone-icon" aria-hidden="true">
+              <af-icon name="circle-alert" size="sm" tone="danger" decorative />
+            </span>
+          }
+
           <div class="af-dialog-desktop__heading">
             @if (title(); as titleText) {
               <h2 class="af-dialog-desktop__title af-dialog__title" [id]="titleId">
                 {{ titleText }}
               </h2>
             }
-            @if (description(); as descriptionText) {
+            @if (description() && tone() !== 'danger') {
               <p
                 class="af-dialog-desktop__description af-dialog__description"
                 [id]="descriptionId"
               >
-                {{ descriptionText }}
+                {{ description() }}
               </p>
             }
           </div>
@@ -52,6 +58,14 @@
       }
 
       <div class="af-dialog-desktop__body af-dialog__content">
+        @if (description() && tone() === 'danger') {
+          <p
+            class="af-dialog-desktop__description af-dialog-desktop__description--body af-dialog__description"
+            [id]="descriptionId"
+          >
+            {{ description() }}
+          </p>
+        }
         <ng-content />
       </div>
     </div>
