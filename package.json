@@ -13,7 +13,8 @@
     "build:libs": "pnpm build:core && pnpm build:primitives && pnpm build:desktop && pnpm build:mobile && pnpm build:adaptive",
     "build:all": "pnpm build:libs && ng build showcase",
     "guard:architecture": "node tools/architecture-guard.mjs",
-    "test:all": "pnpm build:libs && pnpm guard:architecture && ng test argfit-ui-core --watch=false && ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
+    "guard:regression": "node tools/regression-guard.mjs",
+    "test:all": "pnpm build:libs && pnpm guard:architecture && pnpm guard:regression && ng test argfit-ui-core --watch=false && ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
