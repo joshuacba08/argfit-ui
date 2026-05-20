@@ -10,6 +10,7 @@ Initial ArgFit UI alpha candidate.
 - Token-driven dark-first theme runtime.
 - Vendor-independent public contracts over PrimeNG, Ionic, ECharts and Lucide internals.
 - Local tarball and `npm pack --dry-run` workflow.
+- Reproducible alpha release gate through `pnpm release:alpha:check` and CI.
 
 ## Stable For Alpha
 
@@ -37,6 +38,7 @@ Initial ArgFit UI alpha candidate.
 pnpm publish:alpha:dry-run
 pnpm build:all
 ng test showcase --watch=false
+pnpm release:alpha:check
 ```
 
 ## Breaking Change Notice

@@ -90,6 +90,12 @@ Run the full validation suite:
 pnpm test:all
 ```
 
+Run the alpha release gate before tagging or publishing:
+
+```bash
+pnpm release:alpha:check
+```
+
 ## Usage
 
 Register ArgFit UI at application bootstrap:
@@ -176,6 +182,9 @@ Consumers should depend on semantic ArgFit APIs, not on PrimeNG or Ionic compone
 | `pnpm build:all` | Builds libraries and the showcase app |
 | `pnpm test` | Runs Angular tests |
 | `pnpm test:all` | Builds, validates architecture, and runs project test suites |
+| `pnpm release:alpha:check` | Runs the alpha release gate: architecture, production build, tests, pack validation and smoke test |
+| `pnpm publish:alpha:dry-run` | Runs package metadata checks and `npm pack --dry-run` for every built package |
+| `pnpm pack:alpha` | Generates alpha tarballs under `dist/alpha-tarballs/` |
 | `pnpm guard:architecture` | Checks package boundaries and vendor isolation |
 | `pnpm guard:regression` | Checks restored showcase and component regression contracts |
 
@@ -204,8 +213,10 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Alpha components](docs/alpha/components.md)
 - [Alpha known limitations](docs/alpha/known-limitations.md)
 - [Alpha release notes](docs/alpha/release-notes-alpha.md)
+- [Alpha release checklist](docs/alpha/release-checklist.md)
 - [Alpha package metadata](docs/alpha/package-metadata.md)
 - [Publish alpha procedure](docs/alpha/publish-alpha.md)
+- [Changelog](CHANGELOG.md)
 - [Human units](docs/hus/README.md)
 
 ## Repository Layout

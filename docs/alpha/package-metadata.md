@@ -79,6 +79,7 @@ Root scripts added for the alpha packaging flow:
 pnpm build:packages
 pnpm pack:alpha
 pnpm publish:alpha:dry-run
+pnpm release:alpha:check
 ```
 
 `pnpm publish:alpha:dry-run` rebuilds the libraries and runs `npm pack --dry-run` for every package under `dist/argfit-ui-*`.
@@ -88,6 +89,8 @@ pnpm publish:alpha:dry-run
 ```txt
 dist/alpha-tarballs/
 ```
+
+`pnpm release:alpha:check` runs the alpha release gate: architecture guard, production build, full tests, pack dry-run, tarball generation and the consumer smoke test.
 
 ## ng-packagr Entry Points
 

@@ -3,6 +3,7 @@
 # Compiled output
 /dist
 /tmp
+/.tmp
 /out-tsc
 /bazel-out
 
@@ -66,6 +67,7 @@ storybook-static
 
 # Build artifacts
 *.tsbuildinfo
+*.tgz
 
 # Tailwind cache
 .tailwindcache

@@ -25,6 +25,10 @@ const expectedFiles = [
   'docs/alpha/components.md',
   'docs/alpha/known-limitations.md',
   'docs/alpha/release-notes-alpha.md',
+  'docs/alpha/release-checklist.md',
+  'tools/alpha-smoke.mjs',
+  '.github/workflows/ci.yml',
+  'CHANGELOG.md',
 ];
 
 for (const filePath of expectedFiles) {
@@ -233,6 +237,52 @@ expectIncludes('README.md', [
   'Alpha quickstart',
   'Alpha components',
   'Alpha release notes',
+  'Alpha release checklist',
+  'pnpm release:alpha:check',
+]);
+
+expectIncludes('package.json', [
+  '"release:alpha:check"',
+  '"smoke:alpha"',
+  '"pack:alpha:dry-run:dist"',
+]);
+
+expectIncludes('.github/workflows/ci.yml', [
+  'name: CI',
+  'pull_request:',
+  'push:',
+  'pnpm install --frozen-lockfile',
+  'pnpm release:alpha:check',
+  'actions/upload-artifact@v4',
+  'dist/alpha-tarballs/*.tgz',
+]);
+
+expectIncludes('tools/alpha-smoke.mjs', [
+  '.tmp',
+  'alpha-smoke',
+  'dist/argfit-ui-core',
+  'dist/argfit-ui-adaptive',
+  'dist/alpha-tarballs',
+  '@argfit-ui/adaptive',
+  'ts.createProgram',
+]);
+
+expectIncludes('docs/alpha/release-checklist.md', [
+  'pnpm release:alpha:check',
+  'v0.1.0-alpha.0',
+  '--tag alpha',
+  'dist/alpha-tarballs/',
+]);
+
+expectIncludes('CHANGELOG.md', [
+  '0.1.0-alpha.0',
+  '@argfit-ui/adaptive',
+  'release gate CI',
+]);
+
+expectIncludes('.gitignore', [
+  '/.tmp',
+  '*.tgz',
 ]);
 
 expectIncludes('docs/alpha/quickstart.md', [

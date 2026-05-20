@@ -13,6 +13,14 @@ HU-016 does not publish to npm. Publishing should happen only after the maintain
 
 ## 1. Build Packages
 
+Run the alpha release gate before tagging or publishing:
+
+```bash
+pnpm release:alpha:check
+```
+
+For manual inspection, the individual steps are:
+
 ```bash
 pnpm build:libs
 ```
@@ -109,4 +117,5 @@ Do not publish these artifacts to the public npm registry as public packages unt
 
 - The `@argfit-ui` package scope is owned by the maintainer or organization.
 - A public license is selected and added to the repository.
-- HU-018 release gate/CI is complete.
+
+Use the [release checklist](release-checklist.md) before creating `v0.1.0-alpha.0` or publishing to a private registry.
