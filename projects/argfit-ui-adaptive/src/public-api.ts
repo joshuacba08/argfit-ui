@@ -60,6 +60,9 @@ export {
     AfDialogComponent as AfDialog, AfDialogComponent
 } from './lib/components/dialog/af-dialog.component';
 export {
+    AfInlineMessageComponent as AfInlineMessage, AfInlineMessageComponent
+} from './lib/components/inline-message/af-inline-message.component';
+export {
     AfInputComponent as AfInput, AfInputComponent
 } from './lib/components/input/af-input.component';
 export {
@@ -87,6 +90,12 @@ export {
 export {
     AfTextareaComponent as AfTextarea, AfTextareaComponent
 } from './lib/components/textarea/af-textarea.component';
+export {
+    AfToastComponent as AfToast, AfToastComponent
+} from './lib/components/toast/af-toast.component';
+export {
+    AfToastViewportComponent as AfToastViewport, AfToastViewportComponent
+} from './lib/components/toast-viewport/af-toast-viewport.component';
 export {
     AfToggleComponent as AfToggle, AfToggleComponent
 } from './lib/components/toggle/af-toggle.component';

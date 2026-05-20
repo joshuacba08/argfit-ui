@@ -1,0 +1,124 @@
+/* -----------------------------------------------------------------
+   AfToastDesktopComponent
+   Encapsulation: None - all rules namespaced under .af-toast-desktop.
+   ----------------------------------------------------------------- */
+
+.af-toast-desktop {
+  --af-toast-tone: var(--af-info);
+  --af-toast-tone-soft: color-mix(in srgb, var(--af-toast-tone) 14%, transparent);
+  --af-toast-tone-border: color-mix(in srgb, var(--af-toast-tone) 34%, transparent);
+
+  align-items: flex-start;
+  animation: af-toast-desktop-enter 280ms var(--af-ease-out, ease-out);
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-toast-tone-border);
+  border-left: 3px solid var(--af-toast-tone);
+  border-radius: var(--af-radius-lg);
+  box-shadow: var(--af-shadow-lg);
+  color: var(--af-text-main);
+  display: flex;
+  font-family: var(--af-font-body);
+  gap: var(--af-space-3);
+  padding: var(--af-space-3) var(--af-space-4);
+  pointer-events: auto;
+  width: min(380px, calc(100vw - var(--af-space-8)));
+}
+
+.af-toast-desktop[data-severity='success'] {
+  --af-toast-tone: var(--af-success);
+}
+
+.af-toast-desktop[data-severity='info'] {
+  --af-toast-tone: var(--af-info);
+}
+
+.af-toast-desktop[data-severity='warning'] {
+  --af-toast-tone: var(--af-warning);
+}
+
+.af-toast-desktop[data-severity='danger'] {
+  --af-toast-tone: var(--af-danger);
+}
+
+.af-toast-desktop__icon {
+  align-items: center;
+  background: var(--af-toast-tone-soft);
+  border: 1px solid var(--af-toast-tone-border);
+  border-radius: var(--af-radius-md);
+  display: inline-flex;
+  flex: 0 0 var(--af-space-8);
+  height: var(--af-space-8);
+  justify-content: center;
+  width: var(--af-space-8);
+}
+
+.af-toast-desktop__content {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--af-space-0_5);
+  min-width: 0;
+}
+
+.af-toast-desktop__title {
+  color: var(--af-text-main);
+  font-size: calc(var(--af-text-sm) - 1px);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-snug);
+  overflow-wrap: anywhere;
+}
+
+.af-toast-desktop__description {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-normal);
+  overflow-wrap: anywhere;
+}
+
+.af-toast-desktop__close {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-soft);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 var(--af-space-8);
+  height: var(--af-space-8);
+  justify-content: center;
+  margin: calc(var(--af-space-1) * -1) calc(var(--af-space-1) * -1) 0 0;
+  padding: 0;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+  width: var(--af-space-8);
+}
+
+.af-toast-desktop__close:hover {
+  background: var(--af-bg-interactive);
+  color: var(--af-text-main);
+}
+
+.af-toast-desktop__close:focus-visible {
+  border-color: var(--af-border-focus);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+@keyframes af-toast-desktop-enter {
+  from {
+    opacity: 0;
+    transform: translateX(var(--af-space-8));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-toast-desktop {
+    animation: none;
+  }
+}

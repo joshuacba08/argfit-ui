@@ -1,6 +1,6 @@
 <div class="af-select-desktop__field">
   @if (label(); as labelText) {
-    <label class="af-select-desktop__label" [attr.for]="resolvedSelectId()">
+    <label class="af-select-desktop__label" [attr.for]="resolvedSelectId()" [id]="labelId()">
       {{ labelText }}
       @if (required()) {
         <span class="af-select-desktop__required" aria-hidden="true">*</span>
@@ -9,26 +9,26 @@
   }
 
   <div class="af-select-desktop__control">
-    <select
+    <p-select
       class="af-select-desktop__select"
-      [id]="resolvedSelectId()"
-      [value]="value()"
+      [inputId]="resolvedSelectId()"
+      [ngModel]="value()"
+      [ngModelOptions]="{ standalone: true }"
+      [options]="selectOptions()"
+      optionLabel="label"
+      optionValue="value"
+      optionDisabled="disabled"
+      [placeholder]="placeholder() ?? undefined"
       [disabled]="disabled()"
-      [attr.name]="name() ?? null"
-      [attr.aria-invalid]="error() ? 'true' : null"
-      [attr.aria-required]="required() ? 'true' : null"
-      [attr.aria-describedby]="describedBy()"
-      (change)="onChange($event)"
-      (focus)="onFocus()"
-      (blur)="onBlur()"
-    >
-      @if (placeholder(); as placeholderText) {
-        <option value="" disabled>{{ placeholderText }}</option>
-      }
-      @for (option of options(); track option.value) {
-        <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
-      }
-    </select>
+      [appendTo]="'body'"
+      panelStyleClass="af-select-desktop__overlay"
+      [ariaLabelledBy]="ariaLabelledBy()"
+      [unstyled]="true"
+      [pt]="selectPt()"
+      (onChange)="onChange($event)"
+      (onFocus)="onFocus()"
+      (onBlur)="onBlur()"
+    />
   </div>
 
   @if (error(); as errorText) {

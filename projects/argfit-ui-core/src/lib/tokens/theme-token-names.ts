@@ -105,14 +105,10 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-chart-axis',
   '--af-chart-label',
   '--af-chart-primary',
-  '--af-chart-accent',
   '--af-chart-success',
   '--af-chart-warning',
   '--af-chart-danger',
-  '--af-chart-track',
-  '--af-chart-fill-soft',
   '--af-chart-tooltip-bg',
-  '--af-chart-tooltip-border',
   '--af-chart-tooltip-text',
 
   // ── Scrollbar ───────────────────────────────────────────────────────
@@ -218,12 +214,6 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-button-padding-x-md',
   '--af-button-padding-x-lg',
   '--af-button-gap',
-
-  // Shell sizing
-  '--af-shell-sidebar-width',
-  '--af-shell-sidebar-collapsed-width',
-  '--af-shell-topbar-height',
-  '--af-shell-mobile-tabbar-height',
 ] as const;
 
 export type AfThemeTokenName = (typeof AF_THEME_TOKEN_NAMES)[number];

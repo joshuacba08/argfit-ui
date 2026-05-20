@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideIonicAngular } from '@ionic/angular/standalone';
 
 import type { AfFormOption } from '@argfit-ui/core';
 
@@ -52,22 +53,26 @@ class MobileFormControlsHostComponent {
 
 describe('mobile form controls', () => {
   it('renders mobile surfaces and emits value changes', async () => {
-    await TestBed.configureTestingModule({ imports: [MobileFormControlsHostComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [MobileFormControlsHostComponent],
+      providers: [provideIonicAngular()],
+    }).compileComponents();
 
     const fixture = TestBed.createComponent(MobileFormControlsHostComponent);
     fixture.detectChanges();
 
     const root = fixture.nativeElement as HTMLElement;
-    expect(root.querySelector('af-select-mobile')?.textContent).toContain('Periodo');
+    const select = root.querySelector('af-select-mobile ion-select') as HTMLElement & { label?: string; value?: string };
+    expect(select).not.toBeNull();
+    expect(root.querySelectorAll('af-select-mobile ion-select-option').length).toBe(2);
     expect(root.querySelector('af-textarea-mobile[data-state="error"]')?.textContent).toContain('Campo requerido');
     expect(root.querySelector('af-toggle-mobile')?.textContent).toContain('Audio feedback');
     expect(root.querySelector('af-checkbox-mobile')?.textContent).toContain('PDF');
     expect(root.querySelector('af-radio-group-mobile')?.textContent).toContain('Lateralidad');
     expect(root.querySelector('af-segmented-control-mobile')?.textContent).toContain('Test');
 
-    const select = root.querySelector('af-select-mobile select') as HTMLSelectElement;
     select.value = 'month';
-    select.dispatchEvent(new Event('change'));
+    select.dispatchEvent(new CustomEvent('ionChange', { detail: { value: 'month' } }));
     fixture.detectChanges();
     expect(fixture.componentInstance.period).toBe('month');
 

@@ -3,23 +3,24 @@ import {
     ChangeDetectionStrategy,
     Component,
     computed,
-    CUSTOM_ELEMENTS_SCHEMA,
+  inject,
     input,
     output,
     ViewEncapsulation,
 } from '@angular/core';
+import { IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 
-import type { AfControlSize, AfFormOption, AfValidationState } from '@argfit-ui/core';
+import { AfThemeService, type AfControlSize, type AfFormOption, type AfValidationState } from '@argfit-ui/core';
 
 let nextAfMobileSelectId = 0;
 
 @Component({
   selector: 'af-select-mobile',
+  imports: [IonSelect, IonSelectOption],
   templateUrl: './af-select-mobile.component.html',
   styleUrl: './af-select-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   host: {
     class: 'af-select-mobile',
     '[attr.data-size]': 'size()',
@@ -46,10 +47,23 @@ export class AfSelectMobileComponent {
   readonly valueChange = output<string>();
   readonly focusChange = output<boolean>();
 
+  constructor() {
+    inject(AfThemeService);
+  }
+
   protected readonly resolvedSelectId = computed(() => this.inputId() ?? this.defaultSelectId);
   protected readonly hintId = computed(() => `${this.resolvedSelectId()}-hint`);
   protected readonly errorId = computed(() => `${this.resolvedSelectId()}-error`);
   protected readonly effectiveState = computed<AfValidationState>(() => (this.error() ? 'error' : this.state()));
+  protected readonly renderedLabel = computed(() => {
+    const label = this.label();
+
+    if (!label) {
+      return undefined;
+    }
+
+    return this.required() ? `${label} *` : label;
+  });
   protected readonly describedBy = computed(() => {
     if (this.error()) {
       return this.errorId();
@@ -59,10 +73,14 @@ export class AfSelectMobileComponent {
     }
     return null;
   });
+  protected readonly interfaceOptions = computed(() => ({
+    cssClass: 'af-select-mobile__overlay',
+    header: this.label() ?? undefined,
+    subHeader: this.error() ? undefined : this.hint() ?? undefined,
+  }));
 
-  protected onChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.valueChange.emit(target.value);
+  protected onChange(event: CustomEvent<{ value: string | null | undefined }>): void {
+    this.valueChange.emit((event.detail.value ?? '') as string);
   }
 
   protected onFocus(): void {

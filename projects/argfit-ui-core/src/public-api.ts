@@ -5,6 +5,7 @@
 export * from './lib/config/argfit-ui.config';
 export * from './lib/providers/provide-argfit-ui';
 export * from './lib/services/platform.service';
+export * from './lib/services/toast.service';
 export * from './lib/themes/argfit-dark.theme';
 export * from './lib/themes/argfit-light.theme';
 export * from './lib/themes/base-tokens';
@@ -19,6 +20,7 @@ export * from './lib/types/card.types';
 export * from './lib/types/chart.types';
 export * from './lib/types/data-table.types';
 export * from './lib/types/dialog.types';
+export * from './lib/types/feedback.types';
 export * from './lib/types/form-control.types';
 export * from './lib/types/icon.types';
 export * from './lib/types/input.types';

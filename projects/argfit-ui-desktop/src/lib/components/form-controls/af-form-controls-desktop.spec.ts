@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { providePrimeNG } from 'primeng/config';
 
 import type { AfFormOption } from '@argfit-ui/core';
 
@@ -84,7 +86,10 @@ class DesktopFormControlsHostComponent {
 
 describe('desktop form controls', () => {
   it('renders labels, states and emits value changes', async () => {
-    await TestBed.configureTestingModule({ imports: [DesktopFormControlsHostComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [DesktopFormControlsHostComponent],
+      providers: [providePrimeNG()],
+    }).compileComponents();
 
     const fixture = TestBed.createComponent(DesktopFormControlsHostComponent);
     fixture.detectChanges();
@@ -97,9 +102,13 @@ describe('desktop form controls', () => {
     expect(root.querySelector('af-radio-group-desktop')?.textContent).toContain('Lateralidad');
     expect(root.querySelector('af-segmented-control-desktop')?.textContent).toContain('Categoria');
 
-    const select = root.querySelector('af-select-desktop select') as HTMLSelectElement;
-    select.value = 'sj';
-    select.dispatchEvent(new Event('change'));
+    const select = root.querySelector('af-select-desktop') as HTMLElement;
+    expect(select.getAttribute('data-state')).toBe('error');
+    expect(select.textContent).toContain('Selecciona un test');
+
+    const primeSelect = root.querySelector('af-select-desktop p-select.af-select-desktop__select');
+    expect(primeSelect).not.toBeNull();
+    fixture.debugElement.query(By.css('af-select-desktop p-select')).triggerEventHandler('onChange', { value: 'sj' });
     fixture.detectChanges();
     expect(fixture.componentInstance.testType).toBe('sj');
 

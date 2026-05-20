@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { provideArgfitUi, type AfFormOption } from '@argfit-ui/core';
@@ -103,10 +104,9 @@ describe('adaptive form controls', () => {
 
     const root = fixture.nativeElement as HTMLElement;
 
-    const select = root.querySelector('af-select-desktop select') as HTMLSelectElement;
-    expect(select.value).toBe('cmj');
-    select.value = 'sj';
-    select.dispatchEvent(new Event('change'));
+    const select = root.querySelector('af-select-desktop') as HTMLElement;
+    expect(select.querySelector('p-select.af-select-desktop__select')).not.toBeNull();
+    fixture.debugElement.query(By.css('af-select-desktop')).triggerEventHandler('valueChange', 'sj');
     fixture.detectChanges();
     expect(fixture.componentInstance.testType.value).toBe('sj');
 
@@ -139,7 +139,7 @@ describe('adaptive form controls', () => {
 
     fixture.componentInstance.testType.disable();
     fixture.detectChanges();
-    expect(select.disabled).toBe(true);
+    expect(select.hasAttribute('data-disabled')).toBe(true);
 
     fixture.componentInstance.notes.setValue('Actualizado desde FormControl');
     fixture.detectChanges();

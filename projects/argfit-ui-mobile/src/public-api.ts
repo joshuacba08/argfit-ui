@@ -11,6 +11,7 @@ export * from './lib/components/chart/af-chart-mobile.component';
 export * from './lib/components/checkbox/af-checkbox-mobile.component';
 export * from './lib/components/data-table/af-data-table-mobile.component';
 export * from './lib/components/dialog/af-dialog-mobile.component';
+export * from './lib/components/inline-message/af-inline-message-mobile.component';
 export * from './lib/components/input/af-input-mobile.component';
 export * from './lib/components/metric-card/af-metric-card-mobile.component';
 export * from './lib/components/page-shell/af-page-shell-mobile.component';
@@ -19,4 +20,6 @@ export * from './lib/components/segmented-control/af-segmented-control-mobile.co
 export * from './lib/components/select/af-select-mobile.component';
 export * from './lib/components/textarea/af-textarea-mobile.component';
 export * from './lib/components/toggle/af-toggle-mobile.component';
+export * from './lib/components/toast/af-toast-mobile.component';
+export * from './lib/components/toast-viewport/af-toast-viewport-mobile.component';
 

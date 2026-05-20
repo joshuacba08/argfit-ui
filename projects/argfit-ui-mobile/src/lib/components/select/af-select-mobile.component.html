@@ -1,34 +1,28 @@
 <div class="af-select-mobile__field">
-  <div class="af-select-mobile__control">
-    @if (label(); as labelText) {
-      <label class="af-select-mobile__label" [attr.for]="resolvedSelectId()">
-        {{ labelText }}
-        @if (required()) {
-          <span class="af-select-mobile__required" aria-hidden="true">*</span>
-        }
-      </label>
+  <ion-select
+    class="af-select-mobile__select"
+    [id]="resolvedSelectId()"
+    [value]="value()"
+    [disabled]="disabled()"
+    [name]="name() ?? undefined"
+    [label]="renderedLabel()"
+    labelPlacement="stacked"
+    [placeholder]="placeholder() ?? undefined"
+    fill="outline"
+    interface="alert"
+    [interfaceOptions]="interfaceOptions()"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-required]="required() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-label]="label() ? null : placeholder() ?? name() ?? null"
+    (ionChange)="onChange($event)"
+    (ionFocus)="onFocus()"
+    (ionBlur)="onBlur()"
+  >
+    @for (option of options(); track option.value) {
+      <ion-select-option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</ion-select-option>
     }
-    <select
-      class="af-select-mobile__select"
-      [id]="resolvedSelectId()"
-      [value]="value()"
-      [disabled]="disabled()"
-      [attr.name]="name() ?? null"
-      [attr.aria-invalid]="error() ? 'true' : null"
-      [attr.aria-required]="required() ? 'true' : null"
-      [attr.aria-describedby]="describedBy()"
-      (change)="onChange($event)"
-      (focus)="onFocus()"
-      (blur)="onBlur()"
-    >
-      @if (placeholder(); as placeholderText) {
-        <option value="" disabled>{{ placeholderText }}</option>
-      }
-      @for (option of options(); track option.value) {
-        <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
-      }
-    </select>
-  </div>
+  </ion-select>
 
   @if (error(); as errorText) {
     <p class="af-select-mobile__message af-select-mobile__message--error" [id]="errorId()">{{ errorText }}</p>

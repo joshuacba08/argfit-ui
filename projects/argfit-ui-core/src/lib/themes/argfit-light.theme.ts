@@ -52,11 +52,7 @@ export const ARGFIT_LIGHT_THEME: AfThemeDefinition = {
     '--af-chart-grid': 'rgba(16, 42, 67, 0.08)',
     '--af-chart-axis': 'rgba(16, 42, 67, 0.18)',
     '--af-chart-label': '#486581',
-    '--af-chart-accent': '#00AACE',
-    '--af-chart-track': 'rgba(16, 42, 67, 0.10)',
-    '--af-chart-fill-soft': 'rgba(37, 153, 213, 0.12)',
     '--af-chart-tooltip-bg': 'rgba(255, 255, 255, 0.98)',
-    '--af-chart-tooltip-border': 'rgba(16, 42, 67, 0.12)',
     '--af-chart-tooltip-text': '#102A43',
 
     // ── Scrollbar ─────────────────────────────────────────────────────

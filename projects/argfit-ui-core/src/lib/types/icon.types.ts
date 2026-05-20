@@ -57,4 +57,10 @@ export type AfIconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 /**
  * Semantic colour tone for an icon. Maps to ArgFit `--af-*` tokens.
  */
-export type AfIconTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';
+export type AfIconTone =
+  | 'default'
+  | 'muted'
+  | 'primary'
+  | 'success'
+  | 'warning'
+  | 'danger';

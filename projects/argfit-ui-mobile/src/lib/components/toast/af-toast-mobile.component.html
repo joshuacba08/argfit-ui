@@ -1,0 +1,19 @@
+<span class="af-toast-mobile__icon" aria-hidden="true">
+  <af-icon [name]="iconName()" [tone]="iconTone()" size="sm" decorative />
+</span>
+
+<span class="af-toast-mobile__content">
+  <span class="af-toast-mobile__title">{{ toast().title }}</span>
+  @if (toast().description; as description) {
+    <span class="af-toast-mobile__description">{{ description }}</span>
+  }
+</span>
+
+<button
+  type="button"
+  class="af-toast-mobile__close"
+  [attr.aria-label]="closeLabel()"
+  (click)="onDismiss()"
+>
+  <af-icon name="x" size="xs" tone="muted" decorative />
+</button>

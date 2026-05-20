@@ -3,17 +3,21 @@ import {
     ChangeDetectionStrategy,
     Component,
     computed,
+  inject,
     input,
     output,
     ViewEncapsulation,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Select, type SelectChangeEvent } from 'primeng/select';
 
-import type { AfControlSize, AfFormOption, AfValidationState } from '@argfit-ui/core';
+import { AfThemeService, type AfControlSize, type AfFormOption, type AfValidationState } from '@argfit-ui/core';
 
 let nextAfDesktopSelectId = 0;
 
 @Component({
   selector: 'af-select-desktop',
+  imports: [FormsModule, Select],
   templateUrl: './af-select-desktop.component.html',
   styleUrl: './af-select-desktop.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +48,14 @@ export class AfSelectDesktopComponent {
   readonly valueChange = output<string>();
   readonly focusChange = output<boolean>();
 
+  constructor() {
+    inject(AfThemeService);
+  }
+
   protected readonly resolvedSelectId = computed(() => this.inputId() ?? this.defaultSelectId);
+  protected readonly labelId = computed(() => `${this.resolvedSelectId()}-label`);
+  protected readonly ariaLabelledBy = computed(() => (this.label() ? this.labelId() : undefined));
+  protected readonly selectOptions = computed(() => [...this.options()]);
   protected readonly hintId = computed(() => `${this.resolvedSelectId()}-hint`);
   protected readonly errorId = computed(() => `${this.resolvedSelectId()}-error`);
   protected readonly effectiveState = computed<AfValidationState>(() => (this.error() ? 'error' : this.state()));
@@ -57,10 +68,16 @@ export class AfSelectDesktopComponent {
     }
     return null;
   });
+  protected readonly selectPt = computed(() => ({
+    root: {
+      'aria-describedby': this.describedBy() ?? undefined,
+      'aria-invalid': this.error() ? 'true' : undefined,
+      'aria-required': this.required() ? 'true' : undefined,
+    },
+  }));
 
-  protected onChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.valueChange.emit(target.value);
+  protected onChange(event: SelectChangeEvent): void {
+    this.valueChange.emit((event.value ?? '') as string);
   }
 
   protected onFocus(): void {

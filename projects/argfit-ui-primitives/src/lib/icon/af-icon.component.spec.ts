@@ -10,7 +10,6 @@ import { AfIconComponent } from './af-icon.component';
   template: `
     <af-icon name="search" [decorative]="false" ariaLabel="Buscar" data-testid="search" />
     <af-icon name="trash" size="lg" tone="danger" data-testid="trash" />
-    <af-icon name="layout-dashboard" tone="primary" data-testid="dashboard" />
     <af-icon name="check" decorative data-testid="check" />
   `,
 })
@@ -53,8 +52,5 @@ describe('AfIconComponent', () => {
     const check = host.querySelector('[data-testid="check"]') as HTMLElement;
     const checkSvg = check.querySelector('svg') as SVGElement;
     expect(checkSvg.getAttribute('aria-hidden')).toBe('true');
-
-    const dashboard = host.querySelector('[data-testid="dashboard"] svg') as SVGElement;
-    expect(dashboard.querySelectorAll('path,circle,line,rect,polyline').length).toBeGreaterThan(0);
   });
 });

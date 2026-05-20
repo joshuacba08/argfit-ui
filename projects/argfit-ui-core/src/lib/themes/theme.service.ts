@@ -4,7 +4,7 @@ import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core
 import { AF_UI_CONFIG } from '../config/argfit-ui.config';
 import { ARGFIT_DARK_THEME } from './argfit-dark.theme';
 import { ARGFIT_LIGHT_THEME } from './argfit-light.theme';
-import type { AfThemeDefinition } from './theme.types';
+import type { AfThemeDefinition, AfThemeKind } from './theme.types';
 
 /**
  * Runtime API for applying ArgFit themes.
@@ -26,7 +26,7 @@ export class AfThemeService {
 
   readonly currentTheme = this.currentThemeSignal.asReadonly();
   readonly currentThemeName = computed(() => this.currentThemeSignal().name);
-  readonly currentThemeKind = computed(() => this.currentThemeSignal().kind);
+  readonly currentThemeKind = computed<AfThemeKind>(() => this.currentThemeSignal().kind);
   readonly isDarkTheme = computed(() => this.currentThemeSignal().kind === 'dark');
   readonly isLightTheme = computed(() => this.currentThemeSignal().kind === 'light');
 

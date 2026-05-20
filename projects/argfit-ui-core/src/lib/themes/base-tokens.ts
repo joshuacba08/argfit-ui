@@ -173,14 +173,10 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-chart-axis': 'rgba(37, 153, 213, 0.22)',
   '--af-chart-label': '#BCCCDC',
   '--af-chart-primary': '#2599D5',
-  '--af-chart-accent': '#00D4FF',
   '--af-chart-success': '#00C853',
   '--af-chart-warning': '#FFB300',
   '--af-chart-danger': '#FF3D71',
-  '--af-chart-track': 'rgba(37, 153, 213, 0.12)',
-  '--af-chart-fill-soft': 'rgba(37, 153, 213, 0.16)',
   '--af-chart-tooltip-bg': 'rgba(10, 22, 40, 0.95)',
-  '--af-chart-tooltip-border': 'rgba(37, 153, 213, 0.18)',
   '--af-chart-tooltip-text': '#F0F4F8',
 
   // ── Breakpoints ─────────────────────────────────────────────────────
@@ -196,10 +192,4 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-button-padding-x-md': '16px',
   '--af-button-padding-x-lg': '20px',
   '--af-button-gap': '8px',
-
-  // Shell sizing
-  '--af-shell-sidebar-width': '220px',
-  '--af-shell-sidebar-collapsed-width': '64px',
-  '--af-shell-topbar-height': '64px',
-  '--af-shell-mobile-tabbar-height': '72px',
 } satisfies Partial<AfThemeTokenMap>;
