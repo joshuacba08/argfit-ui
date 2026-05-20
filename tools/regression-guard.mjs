@@ -132,6 +132,13 @@ expectIncludes('projects/argfit-ui-mobile/src/lib/components/select/af-select-mo
   "ion-alert.af-select-mobile__overlay .alert-radio-button[aria-checked='true'] .alert-radio-label",
 ]);
 
+expectIncludes('projects/argfit-ui-desktop/src/lib/components/select/af-select-desktop.component.scss', [
+  "[data-pc-section='label']",
+  "[data-pc-section='dropdown']",
+  "[data-pc-section='option']",
+  'margin-inline-start: auto;',
+]);
+
 if (failures.length > 0) {
   console.error('Regression guard failed:');
   for (const failure of failures) {
