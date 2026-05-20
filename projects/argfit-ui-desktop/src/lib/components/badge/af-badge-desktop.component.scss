@@ -1,0 +1,130 @@
+/* -----------------------------------------------------------------
+   AfBadgeDesktopComponent
+  Encapsulation: None - all rules namespaced under .af-badge-desktop.
+  ----------------------------------------------------------------- */
+
+.af-badge-desktop {
+  --af-badge-tone: var(--af-primary);
+  --af-badge-fg: var(--af-primary-hover);
+  --af-badge-bg-soft: color-mix(in srgb, var(--af-badge-tone) 15%, transparent);
+  --af-badge-bg-outline: color-mix(in srgb, var(--af-badge-tone) 6%, transparent);
+  --af-badge-border-outline: color-mix(in srgb, var(--af-badge-tone) 42%, transparent);
+  --af-badge-solid-fg: var(--af-primary-contrast);
+
+  align-items: center;
+  border: var(--af-space-px) solid transparent;
+  border-radius: var(--af-radius-pill);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: var(--af-font-body);
+  font-size: calc(var(--af-text-xs) - var(--af-space-px));
+  font-weight: var(--af-font-weight-semibold);
+  gap: var(--af-space-1);
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: var(--af-leading-tight);
+  max-width: 100%;
+  min-width: 0;
+  padding: calc(var(--af-space-1) - var(--af-space-px))
+    calc(var(--af-space-2) + var(--af-space-0_5));
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.af-badge-desktop[data-size='md'] {
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-1_5);
+  padding: calc(var(--af-space-1) + var(--af-space-px)) var(--af-space-3);
+}
+
+.af-badge-desktop[data-shape='rounded'],
+.af-badge-desktop[data-variant='tag'] {
+  border-radius: var(--af-radius-md);
+}
+
+.af-badge-desktop[data-tone='primary'] {
+  --af-badge-tone: var(--af-primary);
+  --af-badge-fg: var(--af-primary-hover);
+}
+
+.af-badge-desktop[data-tone='accent'] {
+  --af-badge-tone: var(--af-accent);
+  --af-badge-fg: var(--af-accent-hover);
+}
+
+.af-badge-desktop[data-tone='success'] {
+  --af-badge-tone: var(--af-success);
+  --af-badge-fg: var(--af-success);
+}
+
+.af-badge-desktop[data-tone='warning'] {
+  --af-badge-tone: var(--af-warning);
+  --af-badge-fg: var(--af-warning);
+}
+
+.af-badge-desktop[data-tone='danger'] {
+  --af-badge-tone: var(--af-danger);
+  --af-badge-fg: var(--af-danger);
+}
+
+.af-badge-desktop[data-tone='neutral'] {
+  --af-badge-tone: var(--af-color-neutral-400);
+  --af-badge-fg: var(--af-color-neutral-300);
+  --af-badge-solid-fg: var(--af-color-neutral-50);
+}
+
+.af-badge-desktop[data-variant='soft'] {
+  background: var(--af-badge-bg-soft);
+  color: var(--af-badge-fg);
+}
+
+.af-badge-desktop[data-variant='solid'] {
+  background: var(--af-badge-tone);
+  color: var(--af-badge-solid-fg);
+}
+
+.af-badge-desktop[data-tone='neutral'][data-variant='solid'] {
+  background: var(--af-color-neutral-700);
+}
+
+.af-badge-desktop[data-variant='outline'] {
+  background: var(--af-badge-bg-outline);
+  border-color: var(--af-badge-border-outline);
+  color: var(--af-badge-fg);
+}
+
+.af-badge-desktop[data-variant='tag'] {
+  background: var(--af-bg-interactive);
+  border-color: var(--af-border);
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  padding: var(--af-space-1_5) var(--af-space-3);
+}
+
+.af-badge-desktop[data-variant='tag']:not([data-tone='neutral']) {
+  background: color-mix(in srgb, var(--af-badge-tone) 8%, var(--af-bg-interactive));
+  border-color: color-mix(in srgb, var(--af-badge-tone) 32%, transparent);
+  color: var(--af-badge-fg);
+}
+
+.af-badge-desktop__dot {
+  background: currentColor;
+  border-radius: var(--af-radius-pill);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: var(--af-space-1_5);
+  width: var(--af-space-1_5);
+}
+
+.af-badge-desktop__icon,
+.af-badge-desktop__icon svg {
+  color: currentColor !important;
+  stroke: currentColor;
+}
+
+.af-badge-desktop__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

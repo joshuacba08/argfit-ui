@@ -3,6 +3,9 @@
  */
 
 export {
+    AfBadgeComponent as AfBadge, AfBadgeComponent
+} from './lib/components/badge/af-badge.component';
+export {
     AfButtonComponent as AfButton, AfButtonComponent
 } from './lib/components/button/af-button.component';
 export {

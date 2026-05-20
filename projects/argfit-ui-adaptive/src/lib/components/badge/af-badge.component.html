@@ -1,0 +1,27 @@
+<ng-template #badgeContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-badge-mobile
+    [tone]="tone()"
+    [variant]="variant()"
+    [size]="size()"
+    [shape]="shape()"
+    [dot]="dot()"
+    [icon]="icon()"
+    [ariaLabel]="ariaLabel()"
+  >
+    <ng-container *ngTemplateOutlet="badgeContent" />
+  </af-badge-mobile>
+} @else {
+  <af-badge-desktop
+    [tone]="tone()"
+    [variant]="variant()"
+    [size]="size()"
+    [shape]="shape()"
+    [dot]="dot()"
+    [icon]="icon()"
+    [ariaLabel]="ariaLabel()"
+  >
+    <ng-container *ngTemplateOutlet="badgeContent" />
+  </af-badge-desktop>
+}

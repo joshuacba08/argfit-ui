@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import type { AfBadgeShape, AfBadgeSize, AfBadgeTone, AfBadgeVariant } from '../public-api';
 import { provideArgfitUi } from './providers/provide-argfit-ui';
 import { AfPlatformService } from './services/platform.service';
 import { ARGFIT_DARK_THEME } from './themes/argfit-dark.theme';
@@ -87,5 +88,26 @@ describe('ArgFit core systems', () => {
       expect(ARGFIT_DARK_THEME.tokens[tokenName]).toBeTruthy();
       expect(ARGFIT_LIGHT_THEME.tokens[tokenName]).toBeTruthy();
     }
+  });
+
+  it('exports the badge contract through the public API', () => {
+    const contract: {
+      tone: AfBadgeTone;
+      variant: AfBadgeVariant;
+      size: AfBadgeSize;
+      shape: AfBadgeShape;
+    } = {
+      tone: 'success',
+      variant: 'soft',
+      size: 'sm',
+      shape: 'pill',
+    };
+
+    expect(contract).toEqual({
+      tone: 'success',
+      variant: 'soft',
+      size: 'sm',
+      shape: 'pill',
+    });
   });
 });

@@ -279,6 +279,11 @@ p {
   margin-top: var(--af-space-6);
 }
 
+.badge-showcase {
+  display: grid;
+  gap: var(--af-space-4);
+}
+
 .card-grid {
   display: grid;
   gap: var(--af-space-4);

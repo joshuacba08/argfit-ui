@@ -66,6 +66,31 @@ describe('App', () => {
     expect(interactiveCard).not.toBeNull();
   });
 
+  it('should render the AfBadge vertical slice with tones, dots, tags and icons', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const badges = compiled.querySelectorAll('af-badge-desktop');
+    expect(badges.length).toBeGreaterThanOrEqual(10);
+
+    const tones = Array.from(badges).map((badge) => badge.getAttribute('data-tone'));
+    expect(tones).toContain('primary');
+    expect(tones).toContain('accent');
+    expect(tones).toContain('success');
+    expect(tones).toContain('warning');
+    expect(tones).toContain('danger');
+    expect(tones).toContain('neutral');
+
+    const variants = Array.from(badges).map((badge) => badge.getAttribute('data-variant'));
+    expect(variants).toContain('solid');
+    expect(variants).toContain('tag');
+
+    expect(compiled.querySelector('.af-badge-desktop__dot')).not.toBeNull();
+    expect(compiled.querySelector('af-badge-desktop af-icon')).not.toBeNull();
+  });
+
   it('should render the AfInput vertical slice with reactive form binding', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

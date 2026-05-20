@@ -95,6 +95,64 @@
         <strong>{{ lastAction() }}</strong>
       </div>
 
+      <div class="card-section" aria-label="Badge variants">
+        <div class="panel-header">
+          <div>
+            <span class="eyebrow">Component vertical slice</span>
+            <h2>AfBadge</h2>
+          </div>
+        </div>
+
+        <div class="badge-showcase">
+          <div class="dialog-trigger-grid" aria-label="Badge tones">
+            <af-badge>Primary</af-badge>
+            <af-badge tone="accent">Accent</af-badge>
+            <af-badge tone="success">Success</af-badge>
+            <af-badge tone="warning">Warning</af-badge>
+            <af-badge tone="danger">Danger</af-badge>
+            <af-badge tone="neutral">v2.4.1</af-badge>
+          </div>
+
+          <div class="dialog-trigger-grid" aria-label="Status badges">
+            <af-badge tone="success" dot>Conectado</af-badge>
+            <af-badge tone="warning" dot>Bateria baja</af-badge>
+            <af-badge tone="danger" dot>Desconectado</af-badge>
+            <af-badge tone="success" dot>Activo</af-badge>
+            <af-badge tone="neutral" dot>Inactivo</af-badge>
+            <af-badge variant="solid" tone="primary">PRO</af-badge>
+          </div>
+
+          <div class="dialog-trigger-grid" aria-label="Tag badges">
+            <af-badge variant="tag">Fuerza</af-badge>
+            <af-badge variant="tag">Velocidad</af-badge>
+            <af-badge variant="tag">Salto</af-badge>
+            <af-badge variant="tag" tone="primary" icon="plus">Agregar</af-badge>
+          </div>
+
+          <div class="dialog-trigger-grid" aria-label="Icon badges">
+            <af-badge tone="primary" icon="bluetooth">BLE</af-badge>
+            <af-badge tone="neutral" icon="download">CSV</af-badge>
+            <af-badge tone="success">+18%</af-badge>
+          </div>
+
+          <af-card class="badge-device-card" variant="device" tone="primary" density="compact">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>ArgFit Jump 2</span>
+                <h3 afCardTitle>AF-J2-001</h3>
+              </div>
+              <af-badge tone="success" dot>Conectado</af-badge>
+            </header>
+            <p afCardSubtitle>Firmware 3.2.1 · Bateria 87% · Maria Garcia</p>
+            <footer afCardFooter>
+              <af-badge tone="primary" icon="bluetooth">BLE</af-badge>
+              <af-badge tone="neutral">Hace 2 min</af-badge>
+              <af-badge tone="success">+18%</af-badge>
+            </footer>
+          </af-card>
+        </div>
+      </div>
+
       <div class="card-section" aria-label="Card variants">
         <div class="panel-header">
           <div>

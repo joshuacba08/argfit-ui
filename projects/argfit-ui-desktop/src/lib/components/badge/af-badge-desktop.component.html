@@ -1,0 +1,11 @@
+@if (dot()) {
+  <span class="af-badge-desktop__dot" aria-hidden="true"></span>
+}
+
+@if (icon(); as iconValue) {
+  <af-icon class="af-badge-desktop__icon" [name]="iconValue" size="xs" decorative />
+}
+
+<span class="af-badge-desktop__label">
+  <ng-content />
+</span>

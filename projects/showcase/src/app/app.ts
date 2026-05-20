@@ -2,33 +2,35 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import {
-  AfButton,
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardFooterDirective,
-  AfCardHeaderDirective,
-  AfCardSubtitleDirective,
-  AfCardTitleDirective,
-  AfChart,
-  AfDialog,
-  AfDialogContentDirective,
-  AfDialogFooterDirective,
-  AfInput,
+    AfBadge,
+    AfButton,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardFooterDirective,
+    AfCardHeaderDirective,
+    AfCardSubtitleDirective,
+    AfCardTitleDirective,
+    AfChart,
+    AfDialog,
+    AfDialogContentDirective,
+    AfDialogFooterDirective,
+    AfInput,
 } from '@argfit-ui/adaptive';
 import {
-  AfPlatformService,
-  AfThemeService,
-  type AfChartIndicator,
-  type AfChartSeries,
-  type AfIconName,
-  type AfPlatformPreference,
+    AfPlatformService,
+    AfThemeService,
+    type AfChartIndicator,
+    type AfChartSeries,
+    type AfIconName,
+    type AfPlatformPreference,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
 @Component({
   selector: 'app-root',
   imports: [
+    AfBadge,
     AfButton,
     AfCard,
     AfCardHeaderDirective,
