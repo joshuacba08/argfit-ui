@@ -9,11 +9,15 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Select, type SelectChangeEvent } from 'primeng/select';
+import { Select } from 'primeng/select';
 
 import { AfThemeService, type AfControlSize, type AfFormOption, type AfValidationState } from '@argfit-ui/core';
 
 let nextAfDesktopSelectId = 0;
+
+type AfSelectChangeEvent = {
+  readonly value?: unknown;
+};
 
 @Component({
   selector: 'af-select-desktop',
@@ -76,8 +80,10 @@ export class AfSelectDesktopComponent {
     },
   }));
 
-  protected onChange(event: SelectChangeEvent): void {
-    this.valueChange.emit((event.value ?? '') as string);
+  protected onChange(event: AfSelectChangeEvent): void {
+    const selectedValue = event.value;
+
+    this.valueChange.emit(typeof selectedValue === 'string' ? selectedValue : String(selectedValue ?? ''));
   }
 
   protected onFocus(): void {

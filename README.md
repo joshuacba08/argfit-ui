@@ -21,16 +21,9 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI is currently in active foundation development. The workspace already contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, and initial vertical slices for the first components.
+ArgFit UI is currently in active foundation development. The workspace already contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, and the first enterprise component slices.
 
-Current adaptive component surface:
-
-| Component | Purpose | Highlights |
-| --- | --- | --- |
-| `AfButton` | User actions | Variants, sizes, disabled/loading states, semantic pressed output |
-| `AfCard` | Structured surfaces | Surface, metric, device, and panel variants with slot directives |
-| `AfInput` | Form entry | Labels, hints, errors, icons/suffixes, disabled state, reactive forms support |
-| `AfDialog` | Modal workflows | Sizes, tones, content/footer slots, adaptive mobile presentation |
+The official `0.1.0-alpha.0` surface is tracked in the alpha docs. Stable-for-alpha components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Newer data, analytics, form, password, and feedback components are available as experimental alpha APIs.
 
 ## Package Architecture
 
@@ -176,6 +169,7 @@ Consumers should depend on semantic ArgFit APIs, not on PrimeNG or Ionic compone
 | `pnpm test` | Runs Angular tests |
 | `pnpm test:all` | Builds, validates architecture, and runs project test suites |
 | `pnpm guard:architecture` | Checks package boundaries and vendor isolation |
+| `pnpm guard:regression` | Checks restored showcase and component regression contracts |
 
 ## Architecture Guard
 
@@ -194,6 +188,9 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Design system](docs/design-system.md)
 - [Conventions](docs/conventions.md)
 - [Roadmap](docs/roadmap.md)
+- [Alpha scope](docs/alpha/alpha-scope.md)
+- [Alpha public API](docs/alpha/public-api.md)
+- [Alpha compatibility](docs/alpha/compatibility.md)
 - [Human units](docs/hus/README.md)
 
 ## Repository Layout
