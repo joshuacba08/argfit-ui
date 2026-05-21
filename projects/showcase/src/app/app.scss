@@ -219,6 +219,7 @@ p {
 .alpha-install,
 .alpha-runtime-list,
 .alpha-control-stack,
+.alpha-form-stack,
 .alpha-shell-summary,
 .alpha-dialog-preview,
 .alpha-popover-panel,
@@ -305,6 +306,10 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.alpha-wave-grid--forms {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .alpha-wave-panel {
   align-content: start;
   gap: var(--af-space-3);
@@ -326,6 +331,31 @@ p {
 .alpha-popover-panel p {
   color: var(--af-text-muted);
   font-size: var(--af-text-sm);
+}
+
+.alpha-live-copy {
+  background: color-mix(in srgb, var(--af-bg-canvas) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 20%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: var(--af-space-1);
+  padding: var(--af-space-3);
+}
+
+.alpha-live-copy span {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  text-transform: uppercase;
+}
+
+.alpha-live-copy strong {
+  color: var(--af-text-main);
+  font-size: var(--af-text-base);
+}
+
+.alpha-live-copy--wide strong {
+  line-height: var(--af-leading-normal);
 }
 
 .alpha-tooltip-demo {
@@ -471,6 +501,7 @@ p {
   .alpha-grid--top,
   .alpha-grid--components,
   .alpha-wave-grid,
+  .alpha-wave-grid--forms,
   .dialog-detail-grid,
   .dialog-quick-test-grid,
   .dialog-session-summary__metrics,

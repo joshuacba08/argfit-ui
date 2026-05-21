@@ -133,6 +133,7 @@ These families are intentionally in scope for `0.2.0-beta.0` and should enter as
 
 The first high-priority expansion track is:
 
+- `AfInputCount`
 - `AfMultiSelect`
 - `AfDatePicker`
 - `AfAutoComplete`
@@ -164,6 +165,15 @@ The current repository state already implements the first low-risk/high-reuse wa
 - `AfChip`
 
 These six surfaces now exist with adaptive, desktop and mobile implementations plus showcase coverage in the preserved `alpha` showcase slot.
+
+### Wave 2 Opening Status
+
+The repository now also opens the next Beta+ wave with two first vertical slices:
+
+- `AfInputCount`
+- `AfMultiSelect`
+
+Both surfaces currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
 
 ## Renderer Policy
 

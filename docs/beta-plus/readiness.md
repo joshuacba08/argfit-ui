@@ -63,6 +63,19 @@ Current validation completed for that wave:
 - showcase application spec covering the preserved `alpha` beta-consumer slot
 - `pnpm guard:architecture`
 
+## Current Wave 2 Opening Status
+
+The next Beta+ wave is now open with the first form and advanced-selection vertical slices:
+
+- `AfInputCount`
+- `AfMultiSelect`
+
+Current validation completed for that opening slice:
+
+- focused adaptive spec for `AfInputCount`
+- focused adaptive spec for `AfMultiSelect`
+- showcase application spec extended for both components in the preserved `alpha` slot
+
 ## Backlog HU Beta+
 
 1. [HU-027 - Beta+ Scope And Component Strategy](../hus/HU-027-beta-plus-scope-component-strategy.md)

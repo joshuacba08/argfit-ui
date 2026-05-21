@@ -88,7 +88,7 @@
           <div>
             <span class="eyebrow">Beta+ wave 1</span>
             <h2>Beta+ consumer kit</h2>
-            <p>Documentacion beta, setup actual y referencia visual para la primera wave Beta+ ya implementada.</p>
+            <p>Documentacion beta, setup actual y referencia visual para la wave 1 activa y el arranque de la siguiente ola Beta+.</p>
           </div>
           <af-badge tone="primary" icon="info">Adaptive API</af-badge>
         </div>
@@ -225,6 +225,7 @@
           <af-badge tone="success" icon="check">Core stable-for-beta</af-badge>
           <af-badge tone="primary" icon="grid-2x2">Adaptive first</af-badge>
           <af-badge tone="success" icon="monitor">Beta+ wave 1 live</af-badge>
+          <af-badge tone="accent" icon="settings">Wave 2 opening live</af-badge>
           <af-badge tone="warning" icon="alert-triangle">Experimental-in-beta forms/data/feedback</af-badge>
           <af-badge tone="neutral" icon="file-text">Beta docs linked</af-badge>
         </div>
@@ -313,6 +314,61 @@
                   <af-button size="sm" (pressed)="setAlphaDrawer(true)">Abrir drawer</af-button>
 
                   <p>Drawer lateral con backdrop, restore de foco y cierre por escape compartido con el patron de dialog.</p>
+                </div>
+              </div>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 2 opening</span>
+                <h3 afCardTitle>AfInputCount y AfMultiSelect</h3>
+              </div>
+              <af-badge tone="accent">HU-030 / HU-031</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid alpha-wave-grid--forms">
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Forms Beta+</span>
+                <h4 class="alpha-wave-panel__title">AfInputCount</h4>
+                <div class="alpha-form-stack">
+                  <af-input-count
+                    label="Intentos validos"
+                    unit="reps"
+                    [min]="1"
+                    [max]="12"
+                    [step]="1"
+                    helperText="Stepper numerico adaptive con soporte de teclado y CVA."
+                    [formControl]="alphaInputCountControl"
+                  />
+                  <div class="alpha-live-copy">
+                    <span>Valor actual</span>
+                    <strong>{{ alphaInputCountControl.value }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Advanced Forms</span>
+                <h4 class="alpha-wave-panel__title">AfMultiSelect</h4>
+                <div class="alpha-form-stack">
+                  <af-multi-select
+                    label="Tipos de test"
+                    placeholder="Selecciona hasta dos filtros"
+                    [options]="alphaAdvancedTestOptions"
+                    optionLabel="title"
+                    optionValue="id"
+                    [searchable]="true"
+                    [clearable]="true"
+                    [maxSelected]="2"
+                    helperText="Popover en desktop y drawer touch-first en mobile."
+                    [formControl]="alphaMultiSelectControl"
+                  />
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Seleccion actual</span>
+                    <strong>{{ alphaSelectedTestsSummary() }}</strong>
+                  </div>
                 </div>
               </div>
             </div>

@@ -34,7 +34,7 @@ The following new ArgFit-owned type families are approved to enter as `experimen
 | --- | --- | --- | --- |
 | Overlay types | `AfPopover*`, `AfDrawer*`, `AfTooltip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must describe ArgFit semantics only; no PrimeNG/Ionic event leakage. |
 | Status and identity types | `AfProgress*`, `AfAvatar*`, `AfChip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must cover accessible labels, variants and renderer-independent state. |
-| Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. |
+| Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfInputCount*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. `AfInputCount` and `AfMultiSelect` are now implemented as the first wave 2 opening slices. |
 | Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. |
 | Layout and panel types | `AfTabs*`, `AfStepper*`, `AfPanel*`, `AfToolbar*`, `AfSplitter*` and related families | `experimental-in-beta-plus` | Must preserve adaptive semantics across renderers. |
 
@@ -89,6 +89,7 @@ The following exports are in scope for `0.2.0-beta.0` and should enter as `exper
 | `AfProgress`, `AfProgressComponent` | `experimental-in-beta-plus` | Progress, loading and skeleton semantics reusable across the catalog. | May change during Beta+ with migration notes. |
 | `AfAvatar`, `AfAvatarComponent` | `experimental-in-beta-plus` | Identity primitive needed by richer workflow and data views. | May change during Beta+ with migration notes. |
 | `AfChip`, `AfChipComponent` | `experimental-in-beta-plus` | Compact identity/status/removal primitive reusable across forms and workflow. | May change during Beta+ with migration notes. |
+| `AfInputCount`, `AfInputCountComponent` | `experimental-in-beta-plus` | Numeric stepper/count control for dense operational forms and reactive form flows. | May change during Beta+ with migration notes. |
 | `AfAutoComplete`, `AfAutoCompleteComponent` | `experimental-in-beta-plus` | High-priority selection/search surface. | May change during Beta+ with migration notes. |
 | `AfDatePicker`, `AfDatePickerComponent` | `experimental-in-beta-plus` | High-priority date input surface. | May change during Beta+ with migration notes. |
 | `AfMultiSelect`, `AfMultiSelectComponent` | `experimental-in-beta-plus` | High-priority complex selection surface. | May change during Beta+ with migration notes. |
@@ -115,6 +116,8 @@ Current implemented Beta+ adaptive exports in the repository:
 - `AfProgress`, `AfProgressComponent`
 - `AfAvatar`, `AfAvatarComponent`
 - `AfChip`, `AfChipComponent`
+- `AfInputCount`, `AfInputCountComponent`
+- `AfMultiSelect`, `AfMultiSelectComponent`
 
 ## `@argfit-ui/desktop`
 
