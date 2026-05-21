@@ -1,0 +1,39 @@
+@if (isMobile()) {
+  <af-date-picker-mobile
+    [value]="resolvedValue()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [helperText]="helperText()"
+    [errorText]="errorText()"
+    [min]="min()"
+    [max]="max()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [size]="size()"
+    [density]="density()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-date-picker-desktop
+    [value]="resolvedValue()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [helperText]="helperText()"
+    [errorText]="errorText()"
+    [min]="min()"
+    [max]="max()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [size]="size()"
+    [density]="density()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

@@ -55,6 +55,9 @@ export {
     AfDataTableComponent as AfDataTable, AfDataTableComponent
 } from './lib/components/data-table/af-data-table.component';
 export {
+    AfDatePickerComponent as AfDatePicker, AfDatePickerComponent
+} from './lib/components/date-picker/af-date-picker.component';
+export {
     AfDrawerComponent as AfDrawer, AfDrawerComponent
 } from './lib/components/drawer/af-drawer.component';
 export {
@@ -69,6 +72,18 @@ export {
     AfDialogComponent as AfDialog, AfDialogComponent
 } from './lib/components/dialog/af-dialog.component';
 export {
+    AfFieldComponent as AfField, AfFieldComponent
+} from './lib/components/field/af-field.component';
+export {
+    AF_ICON_FIELD_SLOT_DIRECTIVES,
+    AfIconFieldControlDirective,
+    AfIconFieldPrefixDirective,
+    AfIconFieldSuffixDirective,
+} from './lib/components/icon-field/af-icon-field-slots.directive';
+export {
+    AfIconFieldComponent as AfIconField, AfIconFieldComponent
+} from './lib/components/icon-field/af-icon-field.component';
+export {
     AfInlineMessageComponent as AfInlineMessage, AfInlineMessageComponent
 } from './lib/components/inline-message/af-inline-message.component';
 export {
@@ -77,6 +92,18 @@ export {
 export {
     AfInputCountComponent as AfInputCount, AfInputCountComponent
 } from './lib/components/input-count/af-input-count.component';
+export {
+    AF_INPUT_GROUP_SLOT_DIRECTIVES,
+    AfInputGroupControlDirective,
+    AfInputGroupPrefixDirective,
+    AfInputGroupSuffixDirective,
+} from './lib/components/input-group/af-input-group-slots.directive';
+export {
+    AfInputGroupComponent as AfInputGroup, AfInputGroupComponent
+} from './lib/components/input-group/af-input-group.component';
+export {
+    AfListboxComponent as AfListbox, AfListboxComponent
+} from './lib/components/listbox/af-listbox.component';
 export {
     AfMetricCardComponent as AfMetricCard, AfMetricCardComponent
 } from './lib/components/metric-card/af-metric-card.component';

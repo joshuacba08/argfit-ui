@@ -307,12 +307,16 @@ p {
 }
 
 .alpha-wave-grid--forms {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .alpha-wave-panel {
   align-content: start;
   gap: var(--af-space-3);
+}
+
+.alpha-wave-panel--wide {
+  grid-column: span 2;
 }
 
 .alpha-wave-panel__title {
@@ -340,6 +344,60 @@ p {
   display: grid;
   gap: var(--af-space-1);
   padding: var(--af-space-3);
+}
+
+.alpha-composition-stack {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.alpha-composition-input,
+.alpha-composition-button,
+.alpha-composition-prefix,
+.alpha-composition-suffix {
+  font: inherit;
+}
+
+.alpha-composition-input {
+  background: color-mix(in srgb, var(--af-bg-surface) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 18%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  min-height: 2.9rem;
+  padding: 0.75rem 0.9rem;
+  width: 100%;
+}
+
+.alpha-composition-input--embedded {
+  background: transparent;
+  border: 0;
+  min-height: 3rem;
+  padding-inline: 0;
+}
+
+.alpha-composition-input:focus-visible,
+.alpha-composition-button:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.alpha-composition-prefix,
+.alpha-composition-suffix {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.alpha-composition-button {
+  appearance: none;
+  background: color-mix(in srgb, var(--af-primary) 18%, transparent);
+  border: 0;
+  color: var(--af-text-main);
+  cursor: pointer;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  min-height: 3rem;
+  padding: 0 var(--af-space-4);
 }
 
 .alpha-live-copy span {
@@ -517,7 +575,8 @@ p {
   }
 
   .alpha-card--wide,
-  .alpha-card--chart {
+  .alpha-card--chart,
+  .alpha-wave-panel--wide {
     grid-column: auto;
   }
 }

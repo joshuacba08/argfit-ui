@@ -1,0 +1,111 @@
+.af-listbox-desktop {
+  display: block;
+}
+
+.af-listbox-desktop__field {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-listbox-desktop__label {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  margin: 0;
+}
+
+.af-listbox-desktop__required {
+  color: var(--af-danger);
+}
+
+.af-listbox-desktop__panel {
+  background: color-mix(in srgb, var(--af-bg-surface) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 24%, var(--af-border-soft));
+  border-radius: var(--af-radius-2xl, 1.25rem);
+  display: grid;
+  gap: var(--af-space-2);
+  max-height: 18rem;
+  overflow: auto;
+  padding: var(--af-space-2);
+}
+
+.af-listbox-desktop[data-invalid] .af-listbox-desktop__panel {
+  border-color: color-mix(in srgb, var(--af-danger) 56%, transparent);
+}
+
+.af-listbox-desktop__option {
+  align-items: center;
+  appearance: none;
+  background: color-mix(in srgb, var(--af-bg-canvas) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 12%, var(--af-border-soft));
+  border-radius: var(--af-radius-xl);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: var(--af-space-3);
+  text-align: left;
+}
+
+.af-listbox-desktop__option[data-selected] {
+  background: color-mix(in srgb, var(--af-primary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--af-primary) 42%, transparent);
+}
+
+.af-listbox-desktop__option:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-listbox-desktop__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.af-listbox-desktop__option-mark {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-primary) 18%, transparent);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.5rem;
+}
+
+.af-listbox-desktop__option-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.af-listbox-desktop__option-label {
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-listbox-desktop__option-hint,
+.af-listbox-desktop__empty,
+.af-listbox-desktop__message {
+  font-size: var(--af-text-xs);
+}
+
+.af-listbox-desktop__option-hint,
+.af-listbox-desktop__message--hint,
+.af-listbox-desktop__empty {
+  color: var(--af-text-muted);
+}
+
+.af-listbox-desktop__message,
+.af-listbox-desktop__empty {
+  margin: 0;
+}
+
+.af-listbox-desktop__message--error {
+  color: var(--af-danger);
+}
+
+.af-listbox-desktop[data-density='compact'] .af-listbox-desktop__option {
+  padding: var(--af-space-2) var(--af-space-3);
+}

@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+.af-icon-field__shell {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-bg-surface) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 26%, var(--af-border-soft));
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  gap: var(--af-space-2);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 52px;
+  padding: 0 var(--af-space-3);
+}
+
+.af-icon-field__shell:focus-within {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-icon-field__slot {
+  align-items: center;
+  color: var(--af-text-soft);
+  display: inline-flex;
+}
+
+.af-icon-field__control {
+  min-width: 0;
+}
+
+.af-icon-field__control[data-empty] {
+  min-height: 1.5rem;
+}
+
+.af-icon-field__control ::ng-deep > * {
+  width: 100%;
+}

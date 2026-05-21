@@ -7,7 +7,7 @@ import {
     AfAnalyticsCardFooterDirective,
     AfAnalyticsCardLegendDirective,
     AfAnalyticsCardMetricsDirective,
-  AfAvatar,
+    AfAvatar,
     AfBadge,
     AfButton,
     AfCard,
@@ -25,13 +25,24 @@ import {
     AfDataTableEmptyDirective,
     AfDataTableExpandedRowDirective,
     AfDataTableToolbarDirective,
+    AfDatePicker,
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
     AfDrawer,
+    AfField,
+    AfIconField,
+    AfIconFieldControlDirective,
+    AfIconFieldPrefixDirective,
+    AfIconFieldSuffixDirective,
     AfInput,
     AfInputCount,
+    AfInputGroup,
+    AfInputGroupControlDirective,
+    AfInputGroupPrefixDirective,
+    AfInputGroupSuffixDirective,
     AfInlineMessage,
+    AfListbox,
     AfMetricCard,
     AfMultiSelect,
     AfPageShell,
@@ -122,10 +133,21 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfDataTableEmptyDirective,
     AfDataTableExpandedRowDirective,
     AfDataTableToolbarDirective,
+    AfDatePicker,
     AfIconComponent,
+    AfField,
+    AfIconField,
+    AfIconFieldControlDirective,
+    AfIconFieldPrefixDirective,
+    AfIconFieldSuffixDirective,
     AfInput,
     AfInputCount,
+    AfInputGroup,
+    AfInputGroupControlDirective,
+    AfInputGroupPrefixDirective,
+    AfInputGroupSuffixDirective,
     AfInlineMessage,
+    AfListbox,
     AfMetricCard,
     AfMultiSelect,
     AfPageShell,
@@ -296,6 +318,8 @@ export class App {
     { id: 'abalakov', title: 'Abalakov', hint: 'Brazo libre' },
   ];
   protected readonly alphaInputCountControl = new FormControl<number>(6, { nonNullable: true });
+  protected readonly alphaDatePickerControl = new FormControl<string>('2026-05-22', { nonNullable: true });
+  protected readonly alphaListboxControl = new FormControl<readonly unknown[]>(['cmj', 'dj'], { nonNullable: true });
   protected readonly alphaMultiSelectControl = new FormControl<readonly unknown[]>(['cmj'], { nonNullable: true });
   protected readonly newAthleteForm = new FormGroup({
     name: new FormControl<string>('Maria Garcia', { nonNullable: true }),
@@ -693,16 +717,27 @@ export class App {
   }
 
   protected alphaSelectedTestsSummary(): string {
-    const value = this.alphaMultiSelectControl.value;
+    return this.formatAlphaSelection(this.alphaMultiSelectControl.value, 'Sin filtros activos');
+  }
 
+  protected alphaListboxSummary(): string {
+    return this.formatAlphaSelection(this.alphaListboxControl.value, 'Sin tests fijados');
+  }
+
+  private formatAlphaSelection(value: unknown, emptyText: string): string {
     if (!Array.isArray(value) || value.length === 0) {
-      return 'Sin filtros activos';
+      return emptyText;
     }
 
-    return value
+    const labels = value
       .filter((entry): entry is string => typeof entry === 'string')
-      .map((entry) => entry.toUpperCase())
-      .join(' · ');
+      .map((entry) => this.alphaAdvancedTestOptions.find((option) => option.id === entry)?.title ?? entry.toUpperCase());
+
+    if (labels.length === 0) {
+      return emptyText;
+    }
+
+    return labels.join(' · ');
   }
 
   protected openDetailsDialog(): void {

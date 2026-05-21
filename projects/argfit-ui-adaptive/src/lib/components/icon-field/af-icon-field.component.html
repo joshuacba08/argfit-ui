@@ -1,0 +1,30 @@
+<af-field
+  [label]="label()"
+  [helperText]="helperText()"
+  [errorText]="errorText()"
+  [required]="required()"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  [density]="density()"
+  [labelMode]="labelMode()"
+  [state]="state()"
+  [inputId]="inputId()"
+>
+  <div class="af-icon-field__shell">
+    @if (prefix()) {
+      <span class="af-icon-field__slot af-icon-field__slot--prefix">
+        <ng-content select="[afIconFieldPrefix]" />
+      </span>
+    }
+
+    <div class="af-icon-field__control" [attr.data-empty]="control() ? null : ''">
+      <ng-content select="[afIconFieldControl]" />
+    </div>
+
+    @if (suffix()) {
+      <span class="af-icon-field__slot af-icon-field__slot--suffix">
+        <ng-content select="[afIconFieldSuffix]" />
+      </span>
+    }
+  </div>
+</af-field>

@@ -1,0 +1,20 @@
+<div class="af-field__shell">
+  @if (label(); as labelText) {
+    <label class="af-field__label" [attr.for]="inputId() ?? null">
+      {{ labelText }}
+      @if (required()) {
+        <span class="af-field__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="af-field__body">
+    <ng-content />
+  </div>
+
+  @if (errorText(); as error) {
+    <p class="af-field__message af-field__message--error" [attr.id]="errorId()">{{ error }}</p>
+  } @else if (helperText(); as helper) {
+    <p class="af-field__message af-field__message--hint" [attr.id]="hintId()">{{ helper }}</p>
+  }
+</div>

@@ -1,0 +1,33 @@
+@if (isMobile()) {
+  <af-listbox-mobile
+    [options]="resolvedOptions()"
+    [selectionMode]="selectionMode()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [helperText]="helperText()"
+    [errorText]="errorText()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [required]="required()"
+    [density]="density()"
+    [inputId]="inputId()"
+    (valueChange)="onToggleValue($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-listbox-desktop
+    [options]="resolvedOptions()"
+    [selectionMode]="selectionMode()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [helperText]="helperText()"
+    [errorText]="errorText()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [required]="required()"
+    [density]="density()"
+    [inputId]="inputId()"
+    (valueChange)="onToggleValue($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

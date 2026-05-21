@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.af-input-group__shell {
+  align-items: stretch;
+  background: color-mix(in srgb, var(--af-bg-surface) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 24%, var(--af-border-soft));
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.af-input-group__shell:focus-within {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-input-group__slot {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+  color: var(--af-text-main);
+  display: inline-flex;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  padding: 0 var(--af-space-3);
+}
+
+.af-input-group__control {
+  background: transparent;
+  min-width: 0;
+}
+
+.af-input-group__control[data-empty] {
+  min-height: 52px;
+}
+
+.af-input-group__control ::ng-deep > * {
+  width: 100%;
+}

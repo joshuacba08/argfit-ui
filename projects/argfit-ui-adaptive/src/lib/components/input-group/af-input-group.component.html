@@ -1,0 +1,30 @@
+<af-field
+  [label]="label()"
+  [helperText]="helperText()"
+  [errorText]="errorText()"
+  [required]="required()"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  [density]="density()"
+  [labelMode]="labelMode()"
+  [state]="state()"
+  [inputId]="inputId()"
+>
+  <div class="af-input-group__shell">
+    @if (prefix()) {
+      <span class="af-input-group__slot af-input-group__slot--prefix">
+        <ng-content select="[afInputGroupPrefix]" />
+      </span>
+    }
+
+    <div class="af-input-group__control" [attr.data-empty]="control() ? null : ''">
+      <ng-content select="[afInputGroupControl]" />
+    </div>
+
+    @if (suffix()) {
+      <span class="af-input-group__slot af-input-group__slot--suffix">
+        <ng-content select="[afInputGroupSuffix]" />
+      </span>
+    }
+  </div>
+</af-field>

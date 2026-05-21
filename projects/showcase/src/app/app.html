@@ -322,8 +322,8 @@
           <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
             <header afCardHeader>
               <div>
-                <span afCardEyebrow>Beta+ wave 2 opening</span>
-                <h3 afCardTitle>AfInputCount y AfMultiSelect</h3>
+                <span afCardEyebrow>Beta+ wave 2 current slice</span>
+                <h3 afCardTitle>Advanced forms: DatePicker, Listbox y field composition</h3>
               </div>
               <af-badge tone="accent">HU-030 / HU-031</af-badge>
             </header>
@@ -368,6 +368,66 @@
                   <div class="alpha-live-copy alpha-live-copy--wide">
                     <span>Seleccion actual</span>
                     <strong>{{ alphaSelectedTestsSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Date inputs</span>
+                <h4 class="alpha-wave-panel__title">AfDatePicker</h4>
+                <div class="alpha-form-stack">
+                  <af-date-picker
+                    label="Sesion objetivo"
+                    min="2026-01-01"
+                    max="2026-12-31"
+                    helperText="Control adaptive sobre fecha operativa con CVA y teclado nativo."
+                    [formControl]="alphaDatePickerControl"
+                  />
+                  <div class="alpha-live-copy">
+                    <span>Fecha activa</span>
+                    <strong>{{ alphaDatePickerControl.value }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Field composition</span>
+                <h4 class="alpha-wave-panel__title">AfField, AfIconField y AfInputGroup</h4>
+                <div class="alpha-composition-stack">
+                  <af-field label="Codigo de bloque" helperText="Wrapper base para labels, hints y estados." inputId="alpha-block-code">
+                    <input id="alpha-block-code" class="alpha-composition-input" value="ARG-2026-041" />
+                  </af-field>
+
+                  <af-icon-field label="Buscar atleta" helperText="Prefix y suffix sin filtrar APIs vendor." inputId="alpha-athlete-search">
+                    <span afIconFieldPrefix class="alpha-composition-prefix" aria-hidden="true">⌕</span>
+                    <input afIconFieldControl id="alpha-athlete-search" class="alpha-composition-input alpha-composition-input--embedded" value="Maria Garcia" />
+                    <span afIconFieldSuffix class="alpha-composition-suffix">#12</span>
+                  </af-icon-field>
+
+                  <af-input-group label="Carga objetivo" helperText="Composicion densa para unidades y acciones." inputId="alpha-load-target">
+                    <span afInputGroupPrefix class="alpha-composition-prefix">kg</span>
+                    <input afInputGroupControl id="alpha-load-target" class="alpha-composition-input alpha-composition-input--embedded" value="92" />
+                    <button afInputGroupSuffix type="button" class="alpha-composition-button">Aplicar</button>
+                  </af-input-group>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Selection lists</span>
+                <h4 class="alpha-wave-panel__title">AfListbox</h4>
+                <div class="alpha-form-stack">
+                  <af-listbox
+                    label="Tests fijados en tablero"
+                    selectionMode="multiple"
+                    [options]="alphaAdvancedTestOptions"
+                    optionLabel="title"
+                    optionValue="id"
+                    helperText="Lista inline con seleccion multiple y navegacion por teclado."
+                    [formControl]="alphaListboxControl"
+                  />
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Seleccion fija</span>
+                    <strong>{{ alphaListboxSummary() }}</strong>
                   </div>
                 </div>
               </div>
