@@ -30,8 +30,10 @@ import {
     AfDialogFooterDirective,
     AfDrawer,
     AfInput,
+    AfInputCount,
     AfInlineMessage,
     AfMetricCard,
+    AfMultiSelect,
     AfPageShell,
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,
@@ -85,6 +87,12 @@ interface ShowcaseAthlete {
   readonly lastSession: string;
 }
 
+interface ShowcaseAdvancedSelectOption {
+  readonly id: string;
+  readonly title: string;
+  readonly hint: string;
+}
+
 type ShowcaseAnalyticsPeriod = '1M' | '3M' | '6M' | '1A';
 type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
 
@@ -116,8 +124,10 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfDataTableToolbarDirective,
     AfIconComponent,
     AfInput,
+    AfInputCount,
     AfInlineMessage,
     AfMetricCard,
+    AfMultiSelect,
     AfPageShell,
     AfPageShellBrandDirective,
     AfPageShellActionsDirective,
@@ -192,7 +202,7 @@ export class App {
   };
 
   private readonly sectionSubtitles: Readonly<Record<string, string>> = {
-    alpha: 'Guia visual de la wave 1 Beta+ ya implementada',
+    alpha: 'Guia visual de la wave 1 activa y la siguiente ola Beta+ ya abierta',
     dashboard: 'Centro operativo de rendimiento',
     athletes: 'Roster, altas y mediciones base',
     'data-table': 'Dataset operativo de atletas',
@@ -279,6 +289,14 @@ export class App {
     { value: 'santiago', label: 'Santiago Perez' },
     { value: 'lucas', label: 'Lucas Rodriguez' },
   ];
+  protected readonly alphaAdvancedTestOptions: readonly ShowcaseAdvancedSelectOption[] = [
+    { id: 'cmj', title: 'CMJ', hint: 'Countermovement Jump' },
+    { id: 'sj', title: 'SJ', hint: 'Squat Jump' },
+    { id: 'dj', title: 'DJ', hint: 'Drop Jump' },
+    { id: 'abalakov', title: 'Abalakov', hint: 'Brazo libre' },
+  ];
+  protected readonly alphaInputCountControl = new FormControl<number>(6, { nonNullable: true });
+  protected readonly alphaMultiSelectControl = new FormControl<readonly unknown[]>(['cmj'], { nonNullable: true });
   protected readonly newAthleteForm = new FormGroup({
     name: new FormControl<string>('Maria Garcia', { nonNullable: true }),
     email: new FormControl<string>('maria@club.com.ar', { nonNullable: true }),
@@ -672,6 +690,19 @@ export class App {
   protected setAlphaPopover(open: boolean): void {
     this.alphaPopoverOpen.set(open);
     this.recordAction(`Beta+ → popover ${open ? 'abierto' : 'cerrado'}`);
+  }
+
+  protected alphaSelectedTestsSummary(): string {
+    const value = this.alphaMultiSelectControl.value;
+
+    if (!Array.isArray(value) || value.length === 0) {
+      return 'Sin filtros activos';
+    }
+
+    return value
+      .filter((entry): entry is string => typeof entry === 'string')
+      .map((entry) => entry.toUpperCase())
+      .join(' · ');
   }
 
   protected openDetailsDialog(): void {
