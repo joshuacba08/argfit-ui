@@ -60,10 +60,18 @@ The public contract is the scoped package API. Implementation project names are 
 
 ## Quick Start
 
-For consumer setup, start with the alpha guide:
+For the intended beta consumer contract, start with:
+
+- [Beta quickstart](docs/beta/quickstart.md)
+- [Beta theming and adaptive rendering](docs/beta/theming.md)
+- [Beta components](docs/beta/components.md)
+- [Beta known limitations](docs/beta/known-limitations.md)
+- [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
+
+The current public alpha distribution remains documented here:
 
 - [Alpha quickstart](docs/alpha/quickstart.md)
-- [Theming and adaptive rendering](docs/alpha/theming.md)
+- [Alpha theming and adaptive rendering](docs/alpha/theming.md)
 - [Alpha components](docs/alpha/components.md)
 
 For local workspace development:
@@ -96,6 +104,25 @@ Run the alpha release gate before tagging or publishing:
 
 ```bash
 pnpm release:alpha:check
+```
+
+Run the beta release gate with external consumer and visual smoke checks:
+
+```bash
+pnpm release:beta:check
+```
+
+Run the beta visual smoke locally:
+
+```bash
+pnpm exec playwright install chromium
+pnpm visual:beta
+```
+
+Run the external consumer smoke locally:
+
+```bash
+pnpm beta:consumer-smoke
 ```
 
 ## Usage
@@ -219,11 +246,21 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Alpha package metadata](docs/alpha/package-metadata.md)
 - [Publish alpha procedure](docs/alpha/publish-alpha.md)
 - [Beta scope](docs/beta/beta-scope.md)
+- [Beta quickstart](docs/beta/quickstart.md)
+- [Beta theming and adaptive rendering](docs/beta/theming.md)
+- [Beta components](docs/beta/components.md)
+- [Beta known limitations](docs/beta/known-limitations.md)
 - [Beta public API](docs/beta/public-api.md)
 - [Beta component engine map](docs/beta/component-engine-map.md)
 - [Beta accessibility audit](docs/beta/accessibility.md)
+- [Beta visual QA](docs/beta/visual-qa.md)
+- [Beta consumer compatibility](docs/beta/compatibility.md)
+- [Beta package matrix](docs/beta/package-matrix.md)
+- [Beta performance and budgets](docs/beta/performance.md)
 - [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
 - [Beta readiness evaluation](docs/beta/readiness.md)
+- [Beta+ readiness plan](docs/beta-plus/readiness.md)
+- [Productive version projection](docs/productive/projection.md)
 - [Changelog](CHANGELOG.md)
 - [Human units](docs/hus/README.md)
 

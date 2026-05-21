@@ -4,9 +4,9 @@ Fecha de evaluacion: 2026-05-21.
 
 ## Veredicto
 
-La version alpha sigue sana como alpha publica: compila, testea, empaqueta y tiene smoke test de consumo. HU-019 ya define el contrato beta base, pero el producto todavia no deberia llamarse beta.
+La version alpha sigue sana como alpha publica y ahora tambien tiene el gate beta base: compila, testea, empaqueta, valida consumidor externo y ejecuta smoke visual reproducible. HU-019 a HU-024 ya dejan el baseline tecnico beta bastante mas cerrado.
 
-El salto a beta no necesita mas catalogo por cantidad. Necesita cerrar calidad, accesibilidad, compatibilidad real y warnings de release sobre un contrato ya documentado.
+El producto todavia no deberia llamarse beta solo por cantidad de catalogo. Los gaps restantes ya no son visual QA, compatibilidad de consumo, budgets ni reference docs: son decision de promocion de APIs experimentales y la capa final de publish/release para el canal `beta`.
 
 ## Evidencia Actual
 
@@ -16,10 +16,15 @@ El salto a beta no necesita mas catalogo por cantidad. Necesita cerrar calidad, 
 - Spec files detectados: 51.
 - Tests ejecutados por `pnpm release:alpha:check`: 154.
 - Gate alpha ejecutado el 2026-05-21: `PASS`.
+- Gate beta ejecutado el 2026-05-21: `PASS`.
 - Architecture guard: `PASS`.
 - Regression guard: `PASS`.
 - Pack dry-run y tarballs alpha: `PASS`.
 - Alpha smoke: `PASS`.
+- Visual beta smoke: `PASS`.
+- Beta consumer smoke: `PASS`.
+- `pnpm build:all` sin warnings de budget: `PASS`.
+- Medicion reproducible de performance: `PASS`.
 
 ## Salida De HU-019
 
@@ -47,7 +52,21 @@ El baseline beta tambien quedo reforzado con:
 - cobertura explicita de focus return en dialog desktop/mobile;
 - cobertura explicita de live regions en toast e inline message;
 - [matriz y gate de accesibilidad beta](./accessibility.md);
+- [QA visual beta](./visual-qa.md);
+- [compatibilidad de consumidor beta](./compatibility.md);
+- [matriz de paquetes beta](./package-matrix.md);
+- [decision de performance y budgets beta](./performance.md);
 - comando reproducible `pnpm audit:accessibility`.
+
+## Salida De HU-022 A HU-025
+
+El baseline beta ya incluye tambien:
+
+- [visual beta QA](./visual-qa.md) con `pnpm visual:beta`;
+- [consumer compatibility](./compatibility.md) y [package matrix](./package-matrix.md) con `pnpm beta:consumer-smoke`;
+- [performance y budgets](./performance.md) con `pnpm measure:beta-performance`;
+- [beta quickstart](./quickstart.md), [beta components](./components.md), [beta theming](./theming.md) y [beta known limitations](./known-limitations.md);
+- README root, package READMEs y showcase enlazando la ruta documental beta.
 
 ## Fortalezas Para Beta
 
@@ -62,12 +81,7 @@ El baseline beta tambien quedo reforzado con:
 ## Bloqueantes Beta Restantes
 
 1. APIs `experimental-in-beta` ya tienen baseline de hardening, pero todavia necesitan validacion de campo y una decision final de promocion o permanencia experimental.
-2. No hay pipeline de visual regression ni QA responsive automatizado.
-3. El smoke de consumidor sigue siendo minimo; falta una matriz de consumo real desde paquetes publicados o tarballs.
-4. El showcase compila con warnings de presupuesto:
-   - Initial bundle: `2.25 MB` vs warning budget `750 kB`.
-   - `projects/showcase/src/app/app.scss`: `12.95 kB` vs warning budget `8 kB`.
-5. Aun faltan docs beta de release/reference final y un gate beta dedicado.
+2. Falta la capa final de publish/release para el canal `beta`.
 
 ## Definicion Recomendada De Beta
 
@@ -99,9 +113,6 @@ El camino beta queda dividido en estas HUs:
 
 ## Recomendacion De Orden
 
-HU-019 ya resolvio la decision de scope. El siguiente bloque natural es:
+HU-019 a HU-025 ya resolvieron el baseline tecnico y documental principal. El siguiente bloque natural es:
 
-- HU-020, HU-021 y HU-022 para calidad del catalogo.
-- HU-023 y HU-024 para consumo y performance.
-- HU-025 para reference/release docs cuando el hardening ya exista.
-- HU-026 al final como gate y publicacion beta.
+- HU-026 como gate y publicacion beta.

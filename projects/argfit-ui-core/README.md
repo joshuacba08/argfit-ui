@@ -4,6 +4,8 @@ Core runtime package for ArgFit UI `0.1.0-alpha.0`.
 
 It contains vendor-agnostic tokens, themes, shared types, platform services and `provideArgfitUi`. This package must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
 
+This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+
 ## Install
 
 ```bash
@@ -31,11 +33,12 @@ export const appConfig = {
 };
 ```
 
-## Alpha Docs
+## Beta Docs
 
-- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/quickstart.md)
-- [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/theming.md)
-- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/public-api.md)
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/quickstart.md)
+- [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/theming.md)
+- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/public-api.md)
+- [Migration alpha to beta](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/migration-alpha-to-beta.md)
 
 ## Build
 

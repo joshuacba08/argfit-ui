@@ -4,6 +4,8 @@ Vendor-agnostic primitive package for ArgFit UI `0.1.0-alpha.0`.
 
 Contains small building blocks shared by desktop, mobile and adaptive layers. Primitives may depend on `@argfit-ui/core` and `@angular/cdk`, but must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
 
+This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+
 ## Install
 
 ```bash
@@ -44,11 +46,12 @@ import {
 </section>
 ```
 
-## Alpha Docs
+## Beta Docs
 
-- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/quickstart.md)
-- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/components.md)
-- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/known-limitations.md)
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/quickstart.md)
+- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/components.md)
+- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/public-api.md)
+- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/known-limitations.md)
 
 ## Build
 

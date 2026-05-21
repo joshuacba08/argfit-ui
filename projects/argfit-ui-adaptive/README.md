@@ -4,6 +4,8 @@ Primary consumer component package for ArgFit UI `0.1.0-alpha.0`.
 
 It contains lightweight orchestration components that select desktop or mobile renderers through `AfPlatformService`. Adaptive components should not import PrimeNG or Ionic directly, and application consumers should normally use this package for UI components.
 
+This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+
 ## Install
 
 Install the full alpha package set so adaptive renderers can resolve their peers:
@@ -31,11 +33,13 @@ import { AfButton, AfCard, AfInput, AfPageShell } from '@argfit-ui/adaptive';
 </af-page-shell>
 ```
 
-## Alpha Docs
+## Beta Docs
 
-- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/quickstart.md)
-- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/components.md)
-- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/known-limitations.md)
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/quickstart.md)
+- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/components.md)
+- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/public-api.md)
+- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/known-limitations.md)
+- [Migration alpha to beta](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/migration-alpha-to-beta.md)
 
 ## Build
 

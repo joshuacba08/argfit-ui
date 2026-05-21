@@ -1,5 +1,6 @@
 <af-page-shell
   class="showcase-shell"
+  data-qa="showcase-shell"
   [title]="activeShellTitle()"
   [subtitle]="activeShellSubtitle()"
   [navItems]="shellNavItems"
@@ -30,6 +31,7 @@
     <div class="platform-switch" aria-label="Platform preview">
       <button
         type="button"
+        data-qa="platform-auto"
         [class.is-active]="platform.preference() === 'auto'"
         (click)="setPlatform('auto')"
       >
@@ -37,6 +39,7 @@
       </button>
       <button
         type="button"
+        data-qa="platform-desktop"
         [class.is-active]="platform.platform() === 'desktop'"
         (click)="setPlatform('desktop')"
       >
@@ -44,6 +47,7 @@
       </button>
       <button
         type="button"
+        data-qa="platform-mobile"
         [class.is-active]="platform.platform() === 'mobile'"
         (click)="setPlatform('mobile')"
       >
@@ -54,6 +58,7 @@
     <button
       type="button"
       class="theme-toggle"
+      data-qa="theme-toggle"
       (click)="toggleTheme()"
       [attr.aria-pressed]="theme.isDarkTheme()"
       aria-label="Toggle theme"
@@ -62,7 +67,7 @@
       <span class="theme-toggle__value">{{ theme.currentThemeName() }}</span>
     </button>
 
-    <af-button (pressed)="openQuickTestDialog()">Nuevo test</af-button>
+    <af-button data-qa="quick-test-cta" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
   </div>
 
   <div afPageShellUser class="shell-user">
@@ -78,12 +83,12 @@
 
   @switch (activeShellSection()) {
     @case ('alpha') {
-      <section class="shell-section alpha-view" aria-label="Alpha">
+      <section class="shell-section alpha-view" data-qa="section-alpha" aria-label="Alpha">
         <div class="section-header section-header--inline">
           <div>
-            <span class="eyebrow">0.1.0-alpha.0</span>
-            <h2>Alpha consumer kit</h2>
-            <p>Paquetes, runtime y componentes principales listos para una prueba en Angular 21.</p>
+            <span class="eyebrow">0.1.0-beta.0 target</span>
+            <h2>Beta consumer kit</h2>
+            <p>Documentacion beta, setup recomendado y referencia visual para evaluar el contrato previo al publish beta.</p>
           </div>
           <af-badge tone="primary" icon="info">Adaptive API</af-badge>
         </div>
@@ -93,21 +98,21 @@
             <header afCardHeader>
               <div>
                 <span afCardEyebrow>Setup</span>
-                <h3 afCardTitle>Instalacion recomendada</h3>
+                <h3 afCardTitle>Instalacion beta recomendada</h3>
               </div>
-              <af-badge tone="success" dot>npm public alpha</af-badge>
+              <af-badge tone="success" dot>beta target</af-badge>
             </header>
             <div afCardContent class="alpha-install">
-              <code>pnpm add &#64;argfit-ui/core&#64;0.1.0-alpha.0</code>
-              <code>pnpm add &#64;argfit-ui/primitives&#64;0.1.0-alpha.0</code>
-              <code>pnpm add &#64;argfit-ui/desktop&#64;0.1.0-alpha.0 &#64;argfit-ui/mobile&#64;0.1.0-alpha.0</code>
-              <code>pnpm add &#64;argfit-ui/adaptive&#64;0.1.0-alpha.0</code>
+              <code>pnpm add &#64;argfit-ui/core&#64;0.1.0-beta.0</code>
+              <code>pnpm add &#64;argfit-ui/primitives&#64;0.1.0-beta.0</code>
+              <code>pnpm add &#64;argfit-ui/desktop&#64;0.1.0-beta.0 &#64;argfit-ui/mobile&#64;0.1.0-beta.0</code>
+              <code>pnpm add &#64;argfit-ui/adaptive&#64;0.1.0-beta.0</code>
             </div>
-            <footer afCardFooter class="alpha-doc-links" aria-label="Documentacion alpha">
-              <a href="docs/alpha/quickstart.md">Quickstart</a>
-              <a href="docs/alpha/theming.md">Theming</a>
-              <a href="docs/alpha/components.md">Components</a>
-              <a href="docs/alpha/known-limitations.md">Limitations</a>
+            <footer afCardFooter class="alpha-doc-links" aria-label="Documentacion beta">
+              <a href="docs/beta/quickstart.md">Quickstart</a>
+              <a href="docs/beta/theming.md">Theming</a>
+              <a href="docs/beta/components.md">Components</a>
+              <a href="docs/beta/known-limitations.md">Limitations</a>
             </footer>
           </af-card>
 
@@ -131,7 +136,7 @@
           <af-card variant="panel" tone="primary" class="alpha-card">
             <header afCardHeader>
               <div>
-                <span afCardEyebrow>Stable</span>
+                <span afCardEyebrow>Stable-for-beta</span>
                 <h3 afCardTitle>Base controls</h3>
               </div>
               <af-badge tone="primary">AfCard</af-badge>
@@ -217,10 +222,10 @@
         </div>
 
         <div class="alpha-status-strip" aria-label="Alpha status">
-          <af-badge tone="success" icon="check">Core stable-for-alpha</af-badge>
+          <af-badge tone="success" icon="check">Core stable-for-beta</af-badge>
           <af-badge tone="primary" icon="grid-2x2">Adaptive first</af-badge>
-          <af-badge tone="warning" icon="alert-triangle">Experimental forms/data</af-badge>
-          <af-badge tone="neutral" icon="file-text">Docs linked</af-badge>
+          <af-badge tone="warning" icon="alert-triangle">Experimental-in-beta forms/data/feedback</af-badge>
+          <af-badge tone="neutral" icon="file-text">Beta docs linked</af-badge>
         </div>
       </section>
     }
@@ -302,7 +307,7 @@
     }
 
     @case ('data-table') {
-      <section class="shell-section data-table-view" aria-label="Tabla avanzada de atletas">
+      <section class="shell-section data-table-view" data-qa="section-data-table" aria-label="Tabla avanzada de atletas">
         <div class="section-header section-header--inline">
           <div>
             <span class="eyebrow">Dataset operativo</span>
@@ -493,7 +498,7 @@
     }
 
     @case ('analytics') {
-      <section class="shell-section chart-section" aria-label="Analytics">
+      <section class="shell-section chart-section" data-qa="section-analytics" aria-label="Analytics">
         <div class="section-header section-header--inline">
           <div>
             <span class="eyebrow">Lecturas</span>
@@ -714,7 +719,7 @@
     }
 
     @case ('forms') {
-      <section class="shell-section forms-view" aria-label="Formularios">
+      <section class="shell-section forms-view" data-qa="section-forms" aria-label="Formularios">
         <div class="section-header section-header--inline forms-view__header">
           <div>
             <span class="eyebrow">Formularios</span>
@@ -895,7 +900,7 @@
     }
 
     @case ('feedback') {
-      <section class="shell-section feedback-view" aria-label="Feedback">
+      <section class="shell-section feedback-view" data-qa="section-feedback" aria-label="Feedback">
         <div class="section-header section-header--inline">
           <div>
             <span class="eyebrow">HU-014</span>
@@ -1028,7 +1033,7 @@
     }
 
     @default {
-      <section class="shell-section dashboard-view" aria-label="Dashboard">
+      <section class="shell-section dashboard-view" data-qa="section-dashboard" aria-label="Dashboard">
         <div class="section-header section-header--inline">
           <div>
             <span class="eyebrow">Centro operativo</span>
@@ -1148,11 +1153,11 @@
         </div>
 
         <div class="button-grid dialog-trigger-grid" aria-label="Acciones de jornada">
-          <af-button (pressed)="openSessionDialog()">Guardar sesion</af-button>
-          <af-button variant="secondary" (pressed)="openDetailsDialog()">Ver dispositivo</af-button>
+          <af-button data-qa="dashboard-save-session" (pressed)="openSessionDialog()">Guardar sesion</af-button>
+          <af-button data-qa="dashboard-open-details" variant="secondary" (pressed)="openDetailsDialog()">Ver dispositivo</af-button>
           <af-button variant="ghost" (pressed)="recordAction('Panel actualizado')">Actualizar</af-button>
-          <af-button variant="danger" (pressed)="openRemoveDialog()">Dar de baja</af-button>
-          <af-button variant="secondary" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
+          <af-button data-qa="dashboard-open-remove" variant="danger" (pressed)="openRemoveDialog()">Dar de baja</af-button>
+          <af-button data-qa="dashboard-open-quick-test" variant="secondary" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
         </div>
 
         <div class="badge-showcase" aria-label="Estados de operacion">

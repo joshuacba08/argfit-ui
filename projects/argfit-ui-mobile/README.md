@@ -4,6 +4,8 @@ Mobile renderer package for ArgFit UI `0.1.0-alpha.0`.
 
 This package contains touch-oriented implementations that render Ionic elements internally while keeping ArgFit public APIs vendor-independent. Application consumers should normally import components from `@argfit-ui/adaptive` instead of this renderer package.
 
+This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+
 ## Install
 
 ```bash
@@ -25,11 +27,12 @@ Prefer adaptive imports in app code:
 import { AfButton, AfCard, AfInput } from '@argfit-ui/adaptive';
 ```
 
-## Alpha Docs
+## Beta Docs
 
-- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/quickstart.md)
-- [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/theming.md)
-- [Package metadata](https://github.com/joshuacba08/argfit-ui/blob/main/docs/alpha/package-metadata.md)
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/quickstart.md)
+- [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/theming.md)
+- [Package matrix](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/package-matrix.md)
+- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/known-limitations.md)
 
 ## Build
 

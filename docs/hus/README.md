@@ -41,3 +41,25 @@ La estrategia de engines vive en [docs/beta/component-engine-map.md](../beta/com
 24. [HU-024 — Beta Performance And Bundle Budget](./HU-024-beta-performance-bundle-budget.md)
 25. [HU-025 — Beta Docs, API Reference And Migration](./HU-025-beta-docs-api-reference-migration.md)
 26. [HU-026 — Beta Release Gate And Publish Channel](./HU-026-beta-release-gate-publish-channel.md)
+
+## Camino Beta+
+
+El plan Beta+ vive en [docs/beta-plus/readiness.md](../beta-plus/readiness.md). Beta+ apunta a `0.2.0-beta.0` y agrega una expansion pequena del catalogo sin romper el contrato de beta base.
+
+27. [HU-027 — Beta+ Scope And Component Strategy](./HU-027-beta-plus-scope-component-strategy.md)
+28. [HU-028 — Beta+ Overlay Components](./HU-028-beta-plus-overlay-components.md)
+29. [HU-029 — Beta+ Status Identity And Disclosure Components](./HU-029-beta-plus-status-identity-disclosure.md)
+30. [HU-030 — Beta+ Showcase And Documentation](./HU-030-beta-plus-showcase-docs.md)
+31. [HU-031 — Beta+ Consumer And Visual Validation](./HU-031-beta-plus-consumer-visual-validation.md)
+32. [HU-032 — Beta+ Release Gate And Publish Channel](./HU-032-beta-plus-release-gate.md)
+
+## Camino Productivo
+
+La proyeccion productiva vive en [docs/productive/projection.md](../productive/projection.md). Este tramo apunta a `1.0.0` y se enfoca en congelamiento API, gates obligatorios, soporte y release operations.
+
+33. [HU-033 — Productive Scope And Semver Freeze](./HU-033-productive-scope-semver-freeze.md)
+34. [HU-034 — Productive Quality Gates](./HU-034-productive-quality-gates.md)
+35. [HU-035 — Productive Enterprise Readiness](./HU-035-productive-enterprise-readiness.md)
+36. [HU-036 — Productive Documentation Site](./HU-036-productive-documentation-site.md)
+37. [HU-037 — Productive Release Operations And Support Policy](./HU-037-productive-release-operations-support.md)
+38. [HU-038 — Production 1.0 Release Gate](./HU-038-production-1-release-gate.md)

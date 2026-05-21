@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Implemented
 
 ## Fase Del Roadmap
 

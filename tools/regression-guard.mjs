@@ -203,9 +203,9 @@ expectIncludes('projects/showcase/src/app/app.ts', [
 
 expectIncludes('projects/showcase/src/app/app.html', [
   "@case ('alpha')",
-  'Alpha consumer kit',
-  'docs/alpha/quickstart.md',
-  'docs/alpha/components.md',
+  'Beta consumer kit',
+  'docs/beta/quickstart.md',
+  'docs/beta/components.md',
   '<af-toast-viewport />',
   "@case ('feedback')",
   '<af-inline-message',
@@ -228,8 +228,8 @@ expectIncludes('projects/showcase/src/app/app.html', [
 ]);
 
 expectIncludes('projects/showcase/src/app/app.spec.ts', [
-  'renders the alpha consumer showcase section',
-  'Alpha consumer kit',
+  'renders the beta consumer showcase section inside the alpha slot',
+  'Beta consumer kit',
   'af-password-desktop',
   'af-password-mobile',
   'ion-input-password-toggle',
@@ -329,7 +329,7 @@ for (const packageReadme of [
   expectIncludes(packageReadme, [
     '0.1.0-alpha.0',
     '## Install',
-    '## Alpha Docs',
+    '## Beta Docs',
   ]);
 }
 

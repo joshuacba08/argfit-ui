@@ -486,15 +486,18 @@ IN PROGRESS
 
 ## Current Evaluation
 
-The alpha release gate passes locally, including architecture, build, tests, packaging and smoke checks. HU-019 now documents the beta contract baseline in `docs/beta/beta-scope.md`, `docs/beta/public-api.md`, `docs/beta/component-engine-map.md` and `docs/beta/migration-alpha-to-beta.md`.
+The beta hardening baseline is now materially stronger than the original alpha gate. In addition to architecture, build, tests, packaging and alpha smoke, the repo now has:
 
-The remaining beta gap is quality and release hardening:
+- `docs/beta/quickstart.md`, `docs/beta/components.md`, `docs/beta/theming.md` and `docs/beta/known-limitations.md`, plus README and showcase links aligned to beta;
+- `docs/beta/visual-qa.md` and a reproducible `pnpm visual:beta` smoke;
+- `docs/beta/compatibility.md` and `docs/beta/package-matrix.md` backed by `pnpm beta:consumer-smoke`;
+- `docs/beta/performance.md` and `pnpm measure:beta-performance` with a documented showcase budget decision;
+- `pnpm release:beta:check` passing locally.
 
-- Experimental alpha components already have a stronger hardening baseline, but still need promotion decisions or continued beta-experimental treatment.
-- Visual regression and responsive QA need a reproducible gate.
-- Consumer compatibility needs validation outside the workspace.
-- Showcase performance budgets currently warn and must be resolved before beta.
-- Beta release/reference docs still need finalization after the hardening work.
+The remaining beta gap is narrower and almost entirely release-facing:
+
+- Experimental alpha components still need promotion decisions or continued beta-experimental treatment.
+- Beta publish channel, dist-tag policy and final release workflow still need HU-026.
 
 See [Beta readiness evaluation](./beta/readiness.md).
 
@@ -522,6 +525,78 @@ The beta is ready when:
 - `pnpm build:all` has no unresolved budget warnings.
 - `pnpm release:beta:check` passes locally and in CI.
 - Publishing uses the `beta` dist-tag.
+
+---
+
+# Phase 12 — Beta+ Component Expansion
+
+# Goal
+
+Ship a controlled `0.2.0-beta.0` expansion after the base beta is reliable.
+
+## Status
+
+PLANNED
+
+## Scope
+
+Beta+ adds a small set of high-leverage adaptive components:
+
+- `AfPopover`
+- `AfDrawer`
+- `AfTooltip`
+- `AfProgress`
+- `AfAvatar`
+- `AfChip`
+- `AfAccordion`
+
+See [Beta+ readiness plan](./beta-plus/readiness.md).
+
+## Planned HUs
+
+- HU-027 — [Beta+ Scope And Component Strategy](./hus/HU-027-beta-plus-scope-component-strategy.md)
+- HU-028 — [Beta+ Overlay Components](./hus/HU-028-beta-plus-overlay-components.md)
+- HU-029 — [Beta+ Status Identity And Disclosure Components](./hus/HU-029-beta-plus-status-identity-disclosure.md)
+- HU-030 — [Beta+ Showcase And Documentation](./hus/HU-030-beta-plus-showcase-docs.md)
+- HU-031 — [Beta+ Consumer And Visual Validation](./hus/HU-031-beta-plus-consumer-visual-validation.md)
+- HU-032 — [Beta+ Release Gate And Publish Channel](./hus/HU-032-beta-plus-release-gate.md)
+
+---
+
+# Phase 13 — Productive 1.0
+
+# Goal
+
+Turn the beta/Beta+ platform into a production-ready `1.0.0` release.
+
+## Status
+
+PLANNED
+
+## Scope
+
+The productive version focuses on API freeze, semver, mandatory quality gates, enterprise readiness, documentation and release operations.
+
+See [Productive version projection](./productive/projection.md).
+
+## Planned HUs
+
+- HU-033 — [Productive Scope And Semver Freeze](./hus/HU-033-productive-scope-semver-freeze.md)
+- HU-034 — [Productive Quality Gates](./hus/HU-034-productive-quality-gates.md)
+- HU-035 — [Productive Enterprise Readiness](./hus/HU-035-productive-enterprise-readiness.md)
+- HU-036 — [Productive Documentation Site](./hus/HU-036-productive-documentation-site.md)
+- HU-037 — [Productive Release Operations And Support Policy](./hus/HU-037-productive-release-operations-support.md)
+- HU-038 — [Production 1.0 Release Gate](./hus/HU-038-production-1-release-gate.md)
+
+## Productive Definition
+
+The productive version is ready when:
+
+- The public API is frozen for `1.0.0`.
+- Semver, deprecation and support policies are documented.
+- Visual, accessibility, consumer, performance and release gates are mandatory.
+- Docs are complete enough for a team with no repo context.
+- Publishing uses the npm `latest` dist-tag.
 
 ---
 

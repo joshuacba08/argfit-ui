@@ -86,7 +86,7 @@ describe('App', () => {
     expect(compiled.querySelector('.shell-section h2')?.textContent?.trim()).toBe('Atletas');
   });
 
-  it('renders the alpha consumer showcase section', async () => {
+  it('renders the beta consumer showcase section inside the alpha slot', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.componentInstance['activeShellSection'].set('alpha');
     fixture.detectChanges();
@@ -94,10 +94,10 @@ describe('App', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.alpha-view')).not.toBeNull();
-    expect(compiled.textContent).toContain('Alpha consumer kit');
-    expect(compiled.textContent).toContain('0.1.0-alpha.0');
-    expect(compiled.querySelector('a[href="docs/alpha/quickstart.md"]')).not.toBeNull();
-    expect(compiled.querySelector('a[href="docs/alpha/components.md"]')).not.toBeNull();
+    expect(compiled.textContent).toContain('Beta consumer kit');
+    expect(compiled.textContent).toContain('0.1.0-beta.0 target');
+    expect(compiled.querySelector('a[href="docs/beta/quickstart.md"]')).not.toBeNull();
+    expect(compiled.querySelector('a[href="docs/beta/components.md"]')).not.toBeNull();
     expect(compiled.querySelector('af-input-desktop')).not.toBeNull();
     expect(compiled.querySelector('af-chart-desktop')).not.toBeNull();
     expect(compiled.querySelectorAll('af-metric-card-desktop').length).toBeGreaterThanOrEqual(2);
