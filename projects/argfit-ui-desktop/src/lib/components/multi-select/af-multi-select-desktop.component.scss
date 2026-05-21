@@ -1,0 +1,200 @@
+.af-multi-select-desktop {
+  display: block;
+}
+
+.af-multi-select-desktop__field {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-multi-select-desktop__label {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  margin: 0;
+}
+
+.af-multi-select-desktop__required {
+  color: var(--af-danger);
+}
+
+.af-multi-select-desktop__trigger-shell {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-bg-surface) 84%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 30%, var(--af-border-soft));
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 52px;
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+.af-multi-select-desktop[data-invalid] .af-multi-select-desktop__trigger-shell {
+  border-color: color-mix(in srgb, var(--af-danger) 56%, transparent);
+}
+
+.af-multi-select-desktop__trigger-copy {
+  display: grid;
+  gap: var(--af-space-1);
+  min-width: 0;
+}
+
+.af-multi-select-desktop__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-1);
+}
+
+.af-multi-select-desktop__chip {
+  background: color-mix(in srgb, var(--af-primary) 18%, transparent);
+  border-radius: 999px;
+  color: var(--af-text-main);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  padding: 0.2rem 0.55rem;
+}
+
+.af-multi-select-desktop__chip--muted {
+  background: color-mix(in srgb, var(--af-bg-surface-alt) 78%, transparent);
+  color: var(--af-text-soft);
+}
+
+.af-multi-select-desktop__summary {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-multi-select-desktop__summary[data-placeholder] {
+  color: var(--af-text-muted);
+}
+
+.af-multi-select-desktop__caret {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-lg);
+}
+
+.af-multi-select-desktop__panel-tools {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+  margin-bottom: var(--af-space-3);
+}
+
+.af-multi-select-desktop__search {
+  background: color-mix(in srgb, var(--af-bg-canvas) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 24%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+}
+
+.af-multi-select-desktop__clear {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--af-primary);
+  cursor: pointer;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-multi-select-desktop__limit,
+.af-multi-select-desktop__empty,
+.af-multi-select-desktop__message {
+  font-size: var(--af-text-xs);
+  margin: 0;
+}
+
+.af-multi-select-desktop__limit {
+  color: var(--af-warning, #f4b942);
+  margin-bottom: var(--af-space-2);
+}
+
+.af-multi-select-desktop__message--hint {
+  color: var(--af-text-muted);
+}
+
+.af-multi-select-desktop__message--error {
+  color: var(--af-danger);
+}
+
+.af-multi-select-desktop__empty {
+  color: var(--af-text-muted);
+}
+
+.af-multi-select-desktop__options {
+  display: grid;
+  gap: var(--af-space-2);
+  max-height: 18rem;
+  overflow: auto;
+}
+
+.af-multi-select-desktop__option {
+  align-items: center;
+  appearance: none;
+  background: color-mix(in srgb, var(--af-bg-canvas) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 14%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: var(--af-space-3);
+  text-align: left;
+}
+
+.af-multi-select-desktop__option[data-selected] {
+  background: color-mix(in srgb, var(--af-primary) 16%, transparent);
+  border-color: color-mix(in srgb, var(--af-primary) 44%, transparent);
+}
+
+.af-multi-select-desktop__option:focus-visible,
+.af-multi-select-desktop__search:focus-visible,
+.af-multi-select-desktop__clear:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-multi-select-desktop__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.af-multi-select-desktop__option-mark {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-primary) 18%, transparent);
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  height: 1.4rem;
+  justify-content: center;
+  width: 1.4rem;
+}
+
+.af-multi-select-desktop__option-copy {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.af-multi-select-desktop__option-label {
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-multi-select-desktop__option-hint {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+}
+
+.af-multi-select-desktop[data-density='compact'] .af-multi-select-desktop__option {
+  padding: var(--af-space-2) var(--af-space-3);
+}

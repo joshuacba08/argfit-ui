@@ -75,8 +75,14 @@ export {
     AfInputComponent as AfInput, AfInputComponent
 } from './lib/components/input/af-input.component';
 export {
+    AfInputCountComponent as AfInputCount, AfInputCountComponent
+} from './lib/components/input-count/af-input-count.component';
+export {
     AfMetricCardComponent as AfMetricCard, AfMetricCardComponent
 } from './lib/components/metric-card/af-metric-card.component';
+export {
+    AfMultiSelectComponent as AfMultiSelect, AfMultiSelectComponent
+} from './lib/components/multi-select/af-multi-select.component';
 export {
     AF_PAGE_SHELL_SLOT_DIRECTIVES,
     AfPageShellActionsDirective,
