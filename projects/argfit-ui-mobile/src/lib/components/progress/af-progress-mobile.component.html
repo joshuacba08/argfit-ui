@@ -1,0 +1,19 @@
+@if (variant() === 'bar') {
+  <ion-progress-bar
+    class="af-progress-mobile__bar"
+    [type]="indeterminate() ? 'indeterminate' : 'determinate'"
+    [value]="progressRatio()"
+    aria-hidden="true"
+  ></ion-progress-bar>
+} @else if (variant() === 'spinner') {
+  <ion-spinner class="af-progress-mobile__spinner" name="crescent" aria-hidden="true"></ion-spinner>
+  <af-visually-hidden>{{ accessibleLabel() }}</af-visually-hidden>
+} @else {
+  <ion-skeleton-text
+    class="af-progress-mobile__skeleton"
+    [animated]="true"
+    [style.width]="skeletonWidth()"
+    aria-hidden="true"
+  ></ion-skeleton-text>
+  <af-visually-hidden>{{ accessibleLabel() }}</af-visually-hidden>
+}

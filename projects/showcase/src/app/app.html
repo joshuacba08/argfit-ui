@@ -83,12 +83,12 @@
 
   @switch (activeShellSection()) {
     @case ('alpha') {
-      <section class="shell-section alpha-view" data-qa="section-alpha" aria-label="Alpha">
+      <section class="shell-section alpha-view" data-qa="section-alpha" aria-label="Beta plus">
         <div class="section-header section-header--inline">
           <div>
-            <span class="eyebrow">0.1.0-beta.0 target</span>
-            <h2>Beta consumer kit</h2>
-            <p>Documentacion beta, setup recomendado y referencia visual para evaluar el contrato previo al publish beta.</p>
+            <span class="eyebrow">Beta+ wave 1</span>
+            <h2>Beta+ consumer kit</h2>
+            <p>Documentacion beta, setup actual y referencia visual para la primera wave Beta+ ya implementada.</p>
           </div>
           <af-badge tone="primary" icon="info">Adaptive API</af-badge>
         </div>
@@ -221,12 +221,135 @@
           </af-card>
         </div>
 
-        <div class="alpha-status-strip" aria-label="Alpha status">
+        <div class="alpha-status-strip" aria-label="Beta plus status">
           <af-badge tone="success" icon="check">Core stable-for-beta</af-badge>
           <af-badge tone="primary" icon="grid-2x2">Adaptive first</af-badge>
+          <af-badge tone="success" icon="monitor">Beta+ wave 1 live</af-badge>
           <af-badge tone="warning" icon="alert-triangle">Experimental-in-beta forms/data/feedback</af-badge>
           <af-badge tone="neutral" icon="file-text">Beta docs linked</af-badge>
         </div>
+
+        <div class="alpha-grid alpha-grid--wave">
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 1</span>
+                <h3 afCardTitle>Avatar, chip, progress y overlays</h3>
+              </div>
+              <af-badge tone="success">HU-028 / HU-029</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid">
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Identity</span>
+                <h4 class="alpha-wave-panel__title">AfAvatar + AfChip</h4>
+                <div class="alpha-avatar-row">
+                  <af-avatar label="Maria Garcia" initials="MG" tone="primary" size="lg" />
+                  <af-avatar label="Recovery squad" icon="users" tone="neutral" shape="rounded" />
+                  <af-avatar label="Coach" initials="AR" tone="accent" shape="square" />
+                </div>
+                <div class="alpha-chip-row">
+                  <af-chip tone="success" icon="check">Ready</af-chip>
+                  <af-chip tone="warning" variant="outline">Needs sync</af-chip>
+                  <af-chip tone="primary" variant="solid">Wave 1</af-chip>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Feedback</span>
+                <h4 class="alpha-wave-panel__title">AfProgress + AfTooltip</h4>
+                <div class="alpha-progress-stack">
+                  <div>
+                    <span>Rollout readiness</span>
+                    <af-progress [value]="72" tone="primary" ariaLabel="Wave 1 rollout readiness" />
+                  </div>
+                  <div>
+                    <span>Device pairing queue</span>
+                    <af-progress variant="spinner" tone="accent" size="md" ariaLabel="Device pairing queue loading" />
+                  </div>
+                  <div>
+                    <span>Skeleton placeholder</span>
+                    <af-progress variant="skeleton" tone="neutral" skeletonWidth="100%" ariaLabel="Skeleton placeholder" />
+                  </div>
+                </div>
+                <div class="alpha-tooltip-demo">
+                  <af-tooltip
+                    [open]="alphaTooltipOpen()"
+                    text="Ayuda contextual adaptive lista para desktop y mobile."
+                    placement="top"
+                    tone="primary"
+                  >
+                    <af-button size="sm" variant="ghost" (pressed)="toggleAlphaTooltip()">
+                      {{ alphaTooltipOpen() ? 'Ocultar tooltip' : 'Ver tooltip' }}
+                    </af-button>
+                  </af-tooltip>
+                  <p>Demo compacta para mostrar el overlay sin invadir el panel siguiente.</p>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Overlays</span>
+                <h4 class="alpha-wave-panel__title">AfPopover + AfDrawer</h4>
+                <div class="alpha-overlay-stack">
+                  <af-popover
+                    [open]="alphaPopoverOpen()"
+                    title="Wave 1 overlays"
+                    placement="bottom"
+                    tone="primary"
+                    (openChange)="setAlphaPopover($event)"
+                  >
+                    <ng-template afPopoverTrigger>
+                      <af-button size="sm" variant="secondary">Abrir popover</af-button>
+                    </ng-template>
+                    <ng-template afPopoverContent>
+                      <div class="alpha-popover-panel">
+                        <strong>Popover contextual</strong>
+                        <p>Trigger y content via templates para mantener la composicion adaptive sin filtrar el contenido.</p>
+                        <af-badge tone="success" dot>Focus + escape</af-badge>
+                      </div>
+                    </ng-template>
+                  </af-popover>
+
+                  <af-button size="sm" (pressed)="setAlphaDrawer(true)">Abrir drawer</af-button>
+
+                  <p>Drawer lateral con backdrop, restore de foco y cierre por escape compartido con el patron de dialog.</p>
+                </div>
+              </div>
+            </div>
+          </af-card>
+        </div>
+
+        <af-drawer
+          [open]="alphaDrawerOpen()"
+          title="Wave 1 drawer"
+          description="Overlay lateral listo para filtros, setup rapido o acciones contextuales en desktop y mobile."
+          placement="end"
+          size="md"
+          tone="primary"
+          (openChange)="setAlphaDrawer($event)"
+        >
+          <div class="alpha-drawer-summary">
+            <div>
+              <span>Focus trap</span>
+              <strong>Activo</strong>
+            </div>
+            <div>
+              <span>Escape</span>
+              <strong>Cierra overlay</strong>
+            </div>
+            <div>
+              <span>Backdrop</span>
+              <strong>Dismissible</strong>
+            </div>
+          </div>
+
+          <af-progress [value]="72" tone="primary" ariaLabel="Wave 1 completion progress" />
+
+          <div class="alpha-inline-actions">
+            <af-button size="sm" variant="secondary" (pressed)="setAlphaDrawer(false)">Cerrar</af-button>
+            <af-button size="sm" (pressed)="recordAction('Beta+ → drawer CTA')">Aplicar wave 1</af-button>
+          </div>
+        </af-drawer>
       </section>
     }
 

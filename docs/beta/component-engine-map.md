@@ -54,24 +54,61 @@ That matches the current architecture guard. A future exception would require a 
 | `AfDataTable` | `Table`, `Paginator` | `ion-list`, `ion-item`, `ion-infinite-scroll`, `ion-refresher` or custom list | `experimental-in-beta` | Mobile must stay list-first and the enterprise surface is still broad. |
 | `AfPageShell` | `Menu`, `Menubar`, `Breadcrumb`, `Toolbar`, `Drawer` | `ion-menu`, `ion-split-pane`, `ion-tabs`, `ion-toolbar` | `stable-for-beta` | One of the strongest current adaptive differentiators. |
 
-## Beta+ And Post-Beta Candidates
+## Beta+ Expansion Contract
+
+The following renderer decisions define the intended Beta+ expansion. They are not all equal in priority:
+
+- Wave 1 for Beta+: `AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`.
+- Current implementation status: the full wave 1 list above is now implemented and covered in the adaptive suite plus showcase.
+- High-priority Beta+ track: `AfMultiSelect`, `AfDatePicker`, `AfAutoComplete`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTabs`, `AfStepper`, `AfKanban`.
+- All remaining rows stay in-scope Beta+ candidates unless moved out explicitly.
 
 | API | Likely engines | Target |
 | --- | --- | --- |
-| `AfPopover` | `Popover`, `ConfirmPopup` / `ion-popover` | Beta+ candidate |
-| `AfDrawer` | `Drawer` / `ion-menu` or modal sheet | Beta+ candidate |
-| `AfTooltip` | `Tooltip` / custom help popover or inline help | Beta+ candidate |
-| `AfProgress` | `ProgressBar`, `ProgressSpinner`, `Skeleton` / `ion-progress-bar`, `ion-spinner`, `ion-skeleton-text` | Beta+ candidate |
-| `AfAvatar` | `Avatar` / `ion-avatar` | Beta+ candidate |
-| `AfChip` | `Chip`, `Tag` / `ion-chip` | Beta+ candidate |
+| `AfPopover` | `Popover`, `ConfirmPopup` / `ion-popover` | Beta+ wave 1 implemented |
+| `AfDrawer` | `Drawer` / `ion-menu` or modal sheet | Beta+ wave 1 implemented |
+| `AfTooltip` | `Tooltip` / custom help popover or inline help | Beta+ wave 1 implemented |
+| `AfProgress` | `ProgressBar`, `ProgressSpinner`, `Skeleton` / `ion-progress-bar`, `ion-spinner`, `ion-skeleton-text` | Beta+ wave 1 implemented |
+| `AfAvatar` | `Avatar` / `ion-avatar` | Beta+ wave 1 implemented |
+| `AfChip` | `Chip`, `Tag` / `ion-chip` | Beta+ wave 1 implemented |
+| `AfAutoComplete` | `AutoComplete` / `ion-searchbar` plus modal-list pattern | Beta+ high priority |
+| `AfCascadeSelect` | `CascadeSelect` / custom drilldown sheet | Beta+ candidate |
+| `AfColorPicker` | `ColorPicker` / custom swatches plus native color input fallback | Beta+ candidate |
+| `AfDatePicker` | `DatePicker` / `ion-datetime`, `ion-datetime-button`, `ion-picker` | Beta+ candidate |
+| `AfEditor` | `Editor`/Quill / textarea-first rich editor fallback | Beta+ experimental |
+| `AfField`, `AfFloatLabel`, `AfIftaLabel`, `AfIconField`, `AfInputGroup` | `FloatLabel`, `IftaLabel`, `IconField`, `InputGroup` / ArgFit field composition | Beta+ candidate |
+| `AfInputMask` | `InputMask` / custom mask directive or internal formatter | Beta+ candidate |
+| `AfInputNumber` | `InputNumber` / `ion-input` type number plus ArgFit formatting | Beta+ candidate |
+| `AfInputCount` | `InputNumber`, `Button`, `InputGroup` or custom tokenized wrapper / `ion-input`, `ion-button` or custom touch-first wrapper | Beta+ candidate |
+| `AfInputOtp` | `InputOtp` / custom segmented inputs | Beta+ candidate |
+| `AfKeyFilter` | `KeyFilter` / custom directive | Beta+ experimental |
+| `AfKnob` | `Knob` / custom SVG/range hybrid | Beta+ experimental |
+| `AfListbox` | `Listbox` / Ionic/custom selection list | Beta+ candidate |
+| `AfMultiSelect` | `MultiSelect` / Ionic/custom modal checklist with search | Beta+ high priority |
+| `AfRating` | `Rating` / custom touch-friendly rating | Beta+ candidate |
+| `AfToggleButton` | `ToggleButton` / `ion-button` or custom pressed button | Beta+ candidate |
+| `AfTreeSelect` | `TreeSelect` / custom drilldown tree sheet | Beta+ high priority |
+| `AfSlider` | `Slider` / `ion-range` | Beta+ candidate |
+| `AfDataView` | `DataView` / ArgFit/Ionic cards or list/grid | Beta+ high priority |
+| `AfPaginator` | `Paginator` / compact pagination, load-more or infinite pattern | Beta+ high priority |
+| `AfOrderList` | `OrderList` or CDK DragDrop / CDK DragDrop or move actions | Beta+ candidate |
+| `AfPickList` | `PickList` or CDK DragDrop / dual-sheet/list pattern | Beta+ candidate |
+| `AfTimeline` | `Timeline` / custom or Ionic timeline list | Beta+ candidate |
+| `AfTree` | `Tree` / custom nested list with disclosure | Beta+ candidate |
+| `AfTreeTable` | `TreeTable` / grouped cards or list, not table shrink | Beta+ candidate |
+| `AfVirtualScroller` | `VirtualScroller` or CDK virtual scroll / CDK virtual scroll or paginated fallback | Beta+ candidate |
+| `AfOrganizationChart` | `OrganizationChart` / compact hierarchy viewer | Beta+ experimental |
 | `AfAccordion` | `Accordion` / `ion-accordion`, `ion-accordion-group` | Beta+ candidate |
-| `AfAutocomplete` | `AutoComplete` / `ion-searchbar` plus modal-list pattern | Post-beta candidate |
-| `AfDatePicker` | `DatePicker` / `ion-datetime`, `ion-datetime-button`, `ion-picker` | Post-beta candidate |
+| `AfDivider` | `Divider` or custom / custom tokenized divider | Beta+ candidate |
+| `AfFieldset` | `Fieldset` / custom or Ionic section card | Beta+ candidate |
+| `AfPanel` | `Panel` / custom or Ionic section card | Beta+ candidate |
+| `AfScrollPanel` | `ScrollPanel` / native scroll container with mobile momentum | Beta+ candidate |
+| `AfSplitter` | `Splitter` or CDK layout / mobile stacked fallback | Beta+ experimental |
+| `AfStepper` | `Stepper` / custom card-flow or segment-flow | Beta+ high priority |
+| `AfTabs` | `Tabs` / `ion-segment` or custom tabs | Beta+ high priority |
+| `AfToolbar` | `Toolbar` / `ion-toolbar` or ArgFit toolbar | Beta+ candidate |
+| `AfKanban` | Angular CDK DragDrop plus ArgFit/PrimeNG composition / Angular CDK DragDrop plus Ionic/ArgFit cards and accessible move fallback | Beta+ high priority |
 | `AfFileUpload` | `FileUpload` / native file input plus optional Capacitor integration | Post-beta candidate |
-| `AfSlider` | `Slider`, `Knob` / `ion-range` | Post-beta candidate |
-| `AfStepper` | `Stepper` / custom card-flow or segment-flow | Post-beta candidate |
-| `AfTree` | `Tree`, `TreeSelect`, `TreeTable` / custom list-tree pattern | Post-beta candidate |
-| `AfVirtualList` | `VirtualScroller` / custom or CDK-backed strategy | Post-beta candidate |
 | `AfActionSheet` | `Menu`, `SplitButton`, `SpeedDial` / `ion-action-sheet`, `ion-fab` | Post-beta candidate |
 
 ## Product Interpretation
@@ -83,7 +120,6 @@ Examples:
 - Desktop `AfDataTable` can be a PrimeNG-style table, but mobile `AfDataTable` should stay a prioritized list or cards.
 - Desktop `AfDialog` can be a centered modal, but mobile `AfDialog` should prefer sheet/modal/alert patterns.
 - Desktop `AfTooltip` can be hover/focus driven, but mobile should prefer tap help, popover or inline disclosure.
-- Desktop `AfAutocomplete` can be an overlay input, but mobile should prefer searchbar plus modal/list.
+- Desktop `AfAutoComplete` can be an overlay input, but mobile should prefer searchbar plus modal/list.
 
 The goal remains one ArgFit API with platform-appropriate behavior.
-

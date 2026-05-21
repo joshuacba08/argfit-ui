@@ -543,26 +543,31 @@ PLANNED
 
 ## Scope
 
-Beta+ adds a small set of high-leverage adaptive components:
+Beta+ adds a broad but controlled expansion for advanced interfaces:
 
-- `AfPopover`
-- `AfDrawer`
-- `AfTooltip`
-- `AfProgress`
-- `AfAvatar`
-- `AfChip`
-- `AfAccordion`
+- Forms: autocomplete, cascade select, checkbox, color picker, date picker, editor, field wrappers, input group, masks, number/count, OTP, key filter, knob, listbox, multiselect, password, radio, rating, select, segmented control, slider, textarea, toggles and tree select.
+- Data: data view, paginator, order list, pick list, timeline, tree, tree table, virtual scroller and organization chart.
+- Panel/layout: accordion, card integration, divider, fieldset, panel, scroll panel, splitter, stepper, tabs and toolbar.
+- Workflow: `AfKanban` with CDK drag/drop and accessible movement fallback.
+- Supporting primitives: overlays, progress, avatar and chip.
 
 See [Beta+ readiness plan](./beta-plus/readiness.md).
+
+The Beta+ contract is defined by [Beta+ scope](./beta-plus/scope.md), [Beta+ public API inventory](./beta-plus/public-api.md) and the shared [component engine map](./beta/component-engine-map.md).
 
 ## Planned HUs
 
 - HU-027 — [Beta+ Scope And Component Strategy](./hus/HU-027-beta-plus-scope-component-strategy.md)
 - HU-028 — [Beta+ Overlay Components](./hus/HU-028-beta-plus-overlay-components.md)
 - HU-029 — [Beta+ Status Identity And Disclosure Components](./hus/HU-029-beta-plus-status-identity-disclosure.md)
-- HU-030 — [Beta+ Showcase And Documentation](./hus/HU-030-beta-plus-showcase-docs.md)
-- HU-031 — [Beta+ Consumer And Visual Validation](./hus/HU-031-beta-plus-consumer-visual-validation.md)
-- HU-032 — [Beta+ Release Gate And Publish Channel](./hus/HU-032-beta-plus-release-gate.md)
+- HU-030 — [Beta+ Form Field And Input Components](./hus/HU-030-beta-plus-form-field-input-components.md)
+- HU-031 — [Beta+ Selection And Advanced Form Components](./hus/HU-031-beta-plus-selection-form-components.md)
+- HU-032 — [Beta+ Data Components Suite](./hus/HU-032-beta-plus-data-components-suite.md)
+- HU-033 — [Beta+ Panel And Layout Components](./hus/HU-033-beta-plus-panel-layout-components.md)
+- HU-034 — [Beta+ Kanban Workflow Board](./hus/HU-034-beta-plus-kanban-workflow-board.md)
+- HU-035 — [Beta+ Showcase And Documentation](./hus/HU-035-beta-plus-showcase-docs.md)
+- HU-036 — [Beta+ Consumer And Visual Validation](./hus/HU-036-beta-plus-consumer-visual-validation.md)
+- HU-037 — [Beta+ Release Gate And Publish Channel](./hus/HU-037-beta-plus-release-gate.md)
 
 ---
 
@@ -584,12 +589,12 @@ See [Productive version projection](./productive/projection.md).
 
 ## Planned HUs
 
-- HU-033 — [Productive Scope And Semver Freeze](./hus/HU-033-productive-scope-semver-freeze.md)
-- HU-034 — [Productive Quality Gates](./hus/HU-034-productive-quality-gates.md)
-- HU-035 — [Productive Enterprise Readiness](./hus/HU-035-productive-enterprise-readiness.md)
-- HU-036 — [Productive Documentation Site](./hus/HU-036-productive-documentation-site.md)
-- HU-037 — [Productive Release Operations And Support Policy](./hus/HU-037-productive-release-operations-support.md)
-- HU-038 — [Production 1.0 Release Gate](./hus/HU-038-production-1-release-gate.md)
+- HU-038 — [Productive Scope And Semver Freeze](./hus/HU-038-productive-scope-semver-freeze.md)
+- HU-039 — [Productive Quality Gates](./hus/HU-039-productive-quality-gates.md)
+- HU-040 — [Productive Enterprise Readiness](./hus/HU-040-productive-enterprise-readiness.md)
+- HU-041 — [Productive Documentation Site](./hus/HU-041-productive-documentation-site.md)
+- HU-042 — [Productive Release Operations And Support Policy](./hus/HU-042-productive-release-operations-support.md)
+- HU-043 — [Production 1.0 Release Gate](./hus/HU-043-production-1-release-gate.md)
 
 ## Productive Definition
 

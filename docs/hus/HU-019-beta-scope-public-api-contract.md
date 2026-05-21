@@ -95,7 +95,7 @@ Crear o actualizar `docs/beta/component-engine-map.md` con una matriz como minim
 El mapa tambien debe marcar candidatos Beta+ o post-beta:
 
 - `AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`, `AfAccordion`.
-- `AfAutocomplete`, `AfDatePicker`, `AfFileUpload`, `AfSlider`, `AfStepper`, `AfTree`, `AfVirtualList`, `AfActionSheet`.
+- `AfAutoComplete`, `AfDatePicker`, `AfFileUpload`, `AfSlider`, `AfStepper`, `AfTree`, `AfVirtualList`, `AfActionSheet`.
 
 ## Politica Mobile
 

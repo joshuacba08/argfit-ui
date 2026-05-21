@@ -1,0 +1,23 @@
+@if (isMobile()) {
+  <af-progress-mobile
+    [variant]="variant()"
+    [tone]="tone()"
+    [size]="size()"
+    [value]="value()"
+    [max]="max()"
+    [indeterminate]="indeterminate()"
+    [ariaLabel]="ariaLabel()"
+    [skeletonWidth]="skeletonWidth()"
+  />
+} @else {
+  <af-progress-desktop
+    [variant]="variant()"
+    [tone]="tone()"
+    [size]="size()"
+    [value]="value()"
+    [max]="max()"
+    [indeterminate]="indeterminate()"
+    [ariaLabel]="ariaLabel()"
+    [skeletonWidth]="skeletonWidth()"
+  />
+}

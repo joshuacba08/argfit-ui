@@ -27,8 +27,6 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 
 ## Camino Beta
 
-La evaluacion actual de alpha vive en [docs/beta/readiness.md](../beta/readiness.md). Estas HUs definen el trabajo minimo recomendado para pasar de `0.1.0-alpha.0` a `0.1.0-beta.0`.
-
 El contrato beta base vive en [docs/beta/beta-scope.md](../beta/beta-scope.md), [docs/beta/public-api.md](../beta/public-api.md) y [docs/beta/migration-alpha-to-beta.md](../beta/migration-alpha-to-beta.md).
 
 La estrategia de engines vive en [docs/beta/component-engine-map.md](../beta/component-engine-map.md): desktop PrimeNG-first, mobile Ionic-first y cero excepciones PrimeNG aprobadas en mobile para el beta actual.
@@ -44,22 +42,29 @@ La estrategia de engines vive en [docs/beta/component-engine-map.md](../beta/com
 
 ## Camino Beta+
 
-El plan Beta+ vive en [docs/beta-plus/readiness.md](../beta-plus/readiness.md). Beta+ apunta a `0.2.0-beta.0` y agrega una expansion pequena del catalogo sin romper el contrato de beta base.
+El plan Beta+ vive en [docs/beta-plus/readiness.md](../beta-plus/readiness.md). Beta+ apunta a `0.2.0-beta.0` y agrega una expansion controlada del catalogo sin romper el contrato de beta base.
+
+El contrato Beta+ queda definido por [docs/beta-plus/scope.md](../beta-plus/scope.md), [docs/beta-plus/public-api.md](../beta-plus/public-api.md) y la estrategia de engines en [docs/beta/component-engine-map.md](../beta/component-engine-map.md).
 
 27. [HU-027 — Beta+ Scope And Component Strategy](./HU-027-beta-plus-scope-component-strategy.md)
 28. [HU-028 — Beta+ Overlay Components](./HU-028-beta-plus-overlay-components.md)
 29. [HU-029 — Beta+ Status Identity And Disclosure Components](./HU-029-beta-plus-status-identity-disclosure.md)
-30. [HU-030 — Beta+ Showcase And Documentation](./HU-030-beta-plus-showcase-docs.md)
-31. [HU-031 — Beta+ Consumer And Visual Validation](./HU-031-beta-plus-consumer-visual-validation.md)
-32. [HU-032 — Beta+ Release Gate And Publish Channel](./HU-032-beta-plus-release-gate.md)
+30. [HU-030 — Beta+ Form Field And Input Components](./HU-030-beta-plus-form-field-input-components.md)
+31. [HU-031 — Beta+ Selection And Advanced Form Components](./HU-031-beta-plus-selection-form-components.md)
+32. [HU-032 — Beta+ Data Components Suite](./HU-032-beta-plus-data-components-suite.md)
+33. [HU-033 — Beta+ Panel And Layout Components](./HU-033-beta-plus-panel-layout-components.md)
+34. [HU-034 — Beta+ Kanban Workflow Board](./HU-034-beta-plus-kanban-workflow-board.md)
+35. [HU-035 — Beta+ Showcase And Documentation](./HU-035-beta-plus-showcase-docs.md)
+36. [HU-036 — Beta+ Consumer And Visual Validation](./HU-036-beta-plus-consumer-visual-validation.md)
+37. [HU-037 — Beta+ Release Gate And Publish Channel](./HU-037-beta-plus-release-gate.md)
 
 ## Camino Productivo
 
 La proyeccion productiva vive en [docs/productive/projection.md](../productive/projection.md). Este tramo apunta a `1.0.0` y se enfoca en congelamiento API, gates obligatorios, soporte y release operations.
 
-33. [HU-033 — Productive Scope And Semver Freeze](./HU-033-productive-scope-semver-freeze.md)
-34. [HU-034 — Productive Quality Gates](./HU-034-productive-quality-gates.md)
-35. [HU-035 — Productive Enterprise Readiness](./HU-035-productive-enterprise-readiness.md)
-36. [HU-036 — Productive Documentation Site](./HU-036-productive-documentation-site.md)
-37. [HU-037 — Productive Release Operations And Support Policy](./HU-037-productive-release-operations-support.md)
-38. [HU-038 — Production 1.0 Release Gate](./HU-038-production-1-release-gate.md)
+38. [HU-038 — Productive Scope And Semver Freeze](./HU-038-productive-scope-semver-freeze.md)
+39. [HU-039 — Productive Quality Gates](./HU-039-productive-quality-gates.md)
+40. [HU-040 — Productive Enterprise Readiness](./HU-040-productive-enterprise-readiness.md)
+41. [HU-041 — Productive Documentation Site](./HU-041-productive-documentation-site.md)
+42. [HU-042 — Productive Release Operations And Support Policy](./HU-042-productive-release-operations-support.md)
+43. [HU-043 — Production 1.0 Release Gate](./HU-043-production-1-release-gate.md)

@@ -7,6 +7,7 @@ import {
     AfAnalyticsCardFooterDirective,
     AfAnalyticsCardLegendDirective,
     AfAnalyticsCardMetricsDirective,
+  AfAvatar,
     AfBadge,
     AfButton,
     AfCard,
@@ -17,6 +18,7 @@ import {
     AfCardSubtitleDirective,
     AfCardTitleDirective,
     AfChart,
+    AfChip,
     AfCheckbox,
     AfDataTable,
     AfDataTableCellDirective,
@@ -26,6 +28,7 @@ import {
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
+    AfDrawer,
     AfInput,
     AfInlineMessage,
     AfMetricCard,
@@ -33,12 +36,17 @@ import {
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,
     AfPageShellFooterDirective,
+    AfPopover,
+    AfPopoverContentDirective,
+    AfPopoverTriggerDirective,
     AfPageShellUserDirective,
     AfPassword,
+    AfProgress,
     AfRadioGroup,
     AfSegmentedControl,
     AfSelect,
     AfTextarea,
+    AfTooltip,
     AfToggle,
     AfToastViewport,
 } from '@argfit-ui/adaptive';
@@ -88,6 +96,7 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfAnalyticsCardMetricsDirective,
     AfAnalyticsCardLegendDirective,
     AfAnalyticsCardFooterDirective,
+    AfAvatar,
     AfBadge,
     AfButton,
     AfCard,
@@ -98,6 +107,7 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfCardContentDirective,
     AfCardFooterDirective,
     AfChart,
+    AfChip,
     AfCheckbox,
     AfDataTable,
     AfDataTableCellDirective,
@@ -117,10 +127,16 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
+    AfDrawer,
+    AfPopover,
+    AfPopoverContentDirective,
+    AfPopoverTriggerDirective,
+    AfProgress,
     AfRadioGroup,
     AfSegmentedControl,
     AfSelect,
     AfTextarea,
+    AfTooltip,
     AfToggle,
     AfToastViewport,
     ReactiveFormsModule,
@@ -141,7 +157,7 @@ export class App {
   protected readonly shellSearchQuery = signal('');
 
   protected readonly shellNavItems: readonly AfNavigationItem[] = [
-    { id: 'alpha', label: 'Alpha', icon: 'info' },
+    { id: 'alpha', label: 'Beta+', icon: 'info' },
     { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard', badge: 3 },
     { id: 'athletes', label: 'Atletas', icon: 'users' },
     { id: 'data-table', label: 'Tabla avanzada', icon: 'table' },
@@ -154,7 +170,7 @@ export class App {
   ];
 
   protected readonly shellMobileTabs: readonly AfNavigationItem[] = [
-    { id: 'alpha', label: 'Alpha', icon: 'info' },
+    { id: 'alpha', label: 'Beta+', icon: 'info' },
     { id: 'home', label: 'Inicio', icon: 'home' },
     { id: 'train', label: 'Entrenar', icon: 'play' },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
@@ -163,7 +179,7 @@ export class App {
   ];
 
   private readonly sectionTitles: Readonly<Record<string, string>> = {
-    alpha: 'Alpha',
+    alpha: 'Beta+',
     dashboard: 'Dashboard',
     athletes: 'Atletas',
     'data-table': 'Tabla avanzada',
@@ -176,7 +192,7 @@ export class App {
   };
 
   private readonly sectionSubtitles: Readonly<Record<string, string>> = {
-    alpha: 'Guia visual para probar 0.1.0-alpha.0',
+    alpha: 'Guia visual de la wave 1 Beta+ ya implementada',
     dashboard: 'Centro operativo de rendimiento',
     athletes: 'Roster, altas y mediciones base',
     'data-table': 'Dataset operativo de atletas',
@@ -638,6 +654,25 @@ export class App {
   protected readonly removeDialogOpen = signal(false);
   protected readonly quickTestDialogOpen = signal(false);
   protected readonly sessionDialogOpen = signal(false);
+  protected readonly alphaTooltipOpen = signal(false);
+  protected readonly alphaDrawerOpen = signal(false);
+  protected readonly alphaPopoverOpen = signal(false);
+
+  protected toggleAlphaTooltip(): void {
+    const next = !this.alphaTooltipOpen();
+    this.alphaTooltipOpen.set(next);
+    this.recordAction(`Beta+ → tooltip ${next ? 'abierto' : 'cerrado'}`);
+  }
+
+  protected setAlphaDrawer(open: boolean): void {
+    this.alphaDrawerOpen.set(open);
+    this.recordAction(`Beta+ → drawer ${open ? 'abierto' : 'cerrado'}`);
+  }
+
+  protected setAlphaPopover(open: boolean): void {
+    this.alphaPopoverOpen.set(open);
+    this.recordAction(`Beta+ → popover ${open ? 'abierto' : 'cerrado'}`);
+  }
 
   protected openDetailsDialog(): void {
     this.detailsDialogOpen.set(true);

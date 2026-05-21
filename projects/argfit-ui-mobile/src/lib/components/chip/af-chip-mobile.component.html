@@ -1,0 +1,20 @@
+<ion-chip class="af-chip-mobile__shell" aria-hidden="true">
+  @if (icon(); as iconValue) {
+    <af-icon class="af-chip-mobile__icon" [name]="iconValue" size="xs" decorative />
+  }
+
+  <span class="af-chip-mobile__label">
+    <ng-content />
+  </span>
+
+  @if (removable()) {
+    <button
+      type="button"
+      class="af-chip-mobile__remove"
+      [attr.aria-label]="removeAriaLabel()"
+      (click)="onRemove($event)"
+    >
+      <af-icon name="x" size="xs" tone="muted" decorative />
+    </button>
+  }
+</ion-chip>

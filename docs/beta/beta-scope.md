@@ -108,7 +108,7 @@ Supporting shell renderer exports such as `AfSidebarDesktopComponent`, `AfTopbar
 The following components are not promised for `0.1.0-beta.0`:
 
 - `AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`, `AfAccordion`.
-- `AfAutocomplete`, `AfDatePicker`, `AfFileUpload`, `AfSlider`, `AfStepper`, `AfTree`, `AfVirtualList`, `AfActionSheet`.
+- `AfAutoComplete`, `AfDatePicker`, `AfFileUpload`, `AfSlider`, `AfStepper`, `AfTree`, `AfVirtualList`, `AfActionSheet`.
 - Advanced data-table features: virtualization, server-side sources, column resizing/reorder and inline editing.
 - Advanced chart features: export, drilldown, synchronized charts and 3D presets.
 - Notification center and persistent notification history.

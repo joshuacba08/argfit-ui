@@ -1,4 +1,4 @@
-# HU-038 - Production 1.0 Release Gate
+# HU-043 - Production 1.0 Release Gate
 
 ## Estado
 
@@ -12,11 +12,11 @@ Fase 13 - Productive 1.0
 
 Esta HU depende de:
 
-- HU-033 - Productive Scope And Semver Freeze.
-- HU-034 - Productive Quality Gates.
-- HU-035 - Productive Enterprise Readiness.
-- HU-036 - Productive Documentation Site.
-- HU-037 - Productive Release Operations And Support Policy.
+- HU-038 - Productive Scope And Semver Freeze.
+- HU-039 - Productive Quality Gates.
+- HU-040 - Productive Enterprise Readiness.
+- HU-041 - Productive Documentation Site.
+- HU-042 - Productive Release Operations And Support Policy.
 
 ## Objetivo
 
@@ -47,4 +47,3 @@ Paths esperados:
 pnpm release:production:check
 git status --short
 ```
-

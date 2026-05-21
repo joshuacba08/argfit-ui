@@ -1,0 +1,94 @@
+.af-progress-mobile {
+  --af-progress-tone: var(--af-primary);
+
+  align-items: center;
+  color: var(--af-progress-tone);
+  display: inline-flex;
+  font-family: var(--af-font-body);
+}
+
+.af-progress-mobile[data-variant='bar'] {
+  min-width: 160px;
+  width: 100%;
+}
+
+.af-progress-mobile[data-tone='primary'] {
+  --af-progress-tone: var(--af-primary);
+}
+
+.af-progress-mobile[data-tone='accent'] {
+  --af-progress-tone: var(--af-accent);
+}
+
+.af-progress-mobile[data-tone='success'] {
+  --af-progress-tone: var(--af-success);
+}
+
+.af-progress-mobile[data-tone='warning'] {
+  --af-progress-tone: var(--af-warning);
+}
+
+.af-progress-mobile[data-tone='danger'] {
+  --af-progress-tone: var(--af-danger);
+}
+
+.af-progress-mobile[data-tone='neutral'] {
+  --af-progress-tone: var(--af-color-neutral-500);
+}
+
+.af-progress-mobile__bar {
+  --background: color-mix(in srgb, var(--af-progress-tone) 10%, var(--af-bg-interactive));
+  --progress-background: var(--af-progress-tone);
+  border-radius: var(--af-radius-pill);
+  overflow: hidden;
+  width: 100%;
+}
+
+.af-progress-mobile[data-size='sm'] .af-progress-mobile__bar {
+  height: var(--af-space-1_5);
+}
+
+.af-progress-mobile[data-size='md'] .af-progress-mobile__bar {
+  height: var(--af-space-2);
+}
+
+.af-progress-mobile[data-size='lg'] .af-progress-mobile__bar {
+  height: var(--af-space-3);
+}
+
+.af-progress-mobile__spinner {
+  color: var(--af-progress-tone);
+}
+
+.af-progress-mobile[data-size='sm'] .af-progress-mobile__spinner {
+  height: var(--af-space-4);
+  width: var(--af-space-4);
+}
+
+.af-progress-mobile[data-size='md'] .af-progress-mobile__spinner {
+  height: var(--af-space-5);
+  width: var(--af-space-5);
+}
+
+.af-progress-mobile[data-size='lg'] .af-progress-mobile__spinner {
+  height: var(--af-space-6);
+  width: var(--af-space-6);
+}
+
+.af-progress-mobile__skeleton {
+  --background: var(--af-bg-interactive);
+  --border-radius: var(--af-radius-pill);
+  line-height: 1;
+}
+
+.af-progress-mobile[data-size='sm'] .af-progress-mobile__skeleton {
+  height: var(--af-space-4);
+}
+
+.af-progress-mobile[data-size='md'] .af-progress-mobile__skeleton {
+  height: var(--af-space-5);
+}
+
+.af-progress-mobile[data-size='lg'] .af-progress-mobile__skeleton {
+  height: var(--af-space-6);
+}

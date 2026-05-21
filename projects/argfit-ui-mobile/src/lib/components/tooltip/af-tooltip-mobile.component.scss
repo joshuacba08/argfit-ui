@@ -1,0 +1,56 @@
+.af-tooltip-mobile {
+  --af-tooltip-bg: color-mix(in srgb, var(--af-color-neutral-900) 92%, black);
+  --af-tooltip-fg: var(--af-color-neutral-50);
+
+  display: inline-flex;
+  position: relative;
+}
+
+.af-tooltip-mobile[data-tone='primary'] {
+  --af-tooltip-bg: color-mix(in srgb, var(--af-primary) 88%, var(--af-color-neutral-950));
+  --af-tooltip-fg: var(--af-primary-contrast);
+}
+
+.af-tooltip-mobile__trigger {
+  display: inline-flex;
+}
+
+.af-tooltip-mobile__bubble {
+  background: var(--af-tooltip-bg);
+  border: 1px solid color-mix(in srgb, var(--af-tooltip-bg) 78%, white 12%);
+  border-radius: var(--af-radius-md);
+  box-shadow: var(--af-shadow-lg);
+  color: var(--af-tooltip-fg);
+  font-family: var(--af-font-body);
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  max-width: min(240px, calc(100vw - var(--af-space-6)));
+  padding: var(--af-space-2) var(--af-space-3);
+  position: absolute;
+  white-space: normal;
+  z-index: 30;
+}
+
+.af-tooltip-mobile[data-placement='top'] .af-tooltip-mobile__bubble {
+  bottom: calc(100% + var(--af-space-2));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.af-tooltip-mobile[data-placement='bottom'] .af-tooltip-mobile__bubble {
+  left: 50%;
+  top: calc(100% + var(--af-space-2));
+  transform: translateX(-50%);
+}
+
+.af-tooltip-mobile[data-placement='left'] .af-tooltip-mobile__bubble {
+  right: calc(100% + var(--af-space-2));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.af-tooltip-mobile[data-placement='right'] .af-tooltip-mobile__bubble {
+  left: calc(100% + var(--af-space-2));
+  top: 50%;
+  transform: translateY(-50%);
+}

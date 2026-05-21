@@ -1,0 +1,23 @@
+<ng-template #tooltipTrigger><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-tooltip-mobile
+    [open]="open()"
+    [text]="text()"
+    [placement]="placement()"
+    [tone]="tone()"
+    [ariaLabel]="ariaLabel()"
+  >
+    <ng-container *ngTemplateOutlet="tooltipTrigger" />
+  </af-tooltip-mobile>
+} @else {
+  <af-tooltip-desktop
+    [open]="open()"
+    [text]="text()"
+    [placement]="placement()"
+    [tone]="tone()"
+    [ariaLabel]="ariaLabel()"
+  >
+    <ng-container *ngTemplateOutlet="tooltipTrigger" />
+  </af-tooltip-desktop>
+}

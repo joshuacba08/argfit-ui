@@ -165,7 +165,11 @@ p {
 .metric-results-grid,
 .card-grid,
 .input-grid,
-.chart-grid {
+.chart-grid,
+.alpha-grid,
+.alpha-wave-grid,
+.alpha-progress-stack,
+.alpha-drawer-summary {
   display: grid;
   gap: var(--af-space-4);
 }
@@ -185,6 +189,161 @@ p {
 
 .input-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.alpha-grid--top {
+  grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.85fr);
+}
+
+.alpha-grid--components {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.alpha-grid--wave {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.alpha-card {
+  min-height: 100%;
+}
+
+.alpha-card--wide,
+.alpha-card--chart {
+  grid-column: span 2;
+}
+
+.alpha-card--wave {
+  grid-column: 1 / -1;
+}
+
+.alpha-install,
+.alpha-runtime-list,
+.alpha-control-stack,
+.alpha-shell-summary,
+.alpha-dialog-preview,
+.alpha-popover-panel,
+.alpha-overlay-stack {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.alpha-install code {
+  background: color-mix(in srgb, var(--af-bg-surface) 82%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  padding: var(--af-space-3);
+}
+
+.alpha-doc-links,
+.alpha-inline-actions,
+.alpha-badge-row,
+.alpha-avatar-row,
+.alpha-chip-row,
+.alpha-status-strip {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-3);
+}
+
+.alpha-doc-links a {
+  color: var(--af-primary);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  text-decoration: none;
+}
+
+.alpha-doc-links a:hover {
+  text-decoration: underline;
+}
+
+.alpha-runtime-list,
+.alpha-shell-summary,
+.alpha-drawer-summary {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.alpha-runtime-list > span,
+.alpha-shell-summary > span,
+.alpha-drawer-summary > div,
+.alpha-wave-panel {
+  background: color-mix(in srgb, var(--af-bg-surface) 84%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  padding: var(--af-space-4);
+}
+
+.alpha-runtime-list > span,
+.alpha-shell-summary > span,
+.alpha-drawer-summary > div {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.alpha-runtime-list strong,
+.alpha-shell-summary strong,
+.alpha-drawer-summary strong,
+.alpha-wave-panel__title,
+.alpha-popover-panel strong {
+  color: var(--af-text-main);
+}
+
+.alpha-runtime-list small,
+.alpha-shell-summary small,
+.alpha-drawer-summary span,
+.alpha-wave-panel__eyebrow {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  text-transform: uppercase;
+}
+
+.alpha-wave-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.alpha-wave-panel {
+  align-content: start;
+  gap: var(--af-space-3);
+}
+
+.alpha-wave-panel__title {
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-bold);
+  margin: 0;
+}
+
+.alpha-progress-stack > div {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.alpha-progress-stack span,
+.alpha-overlay-stack p,
+.alpha-popover-panel p {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+}
+
+.alpha-tooltip-demo {
+  align-items: flex-start;
+  display: grid;
+  gap: var(--af-space-3);
+  justify-items: start;
+}
+
+.alpha-tooltip-demo p {
+  max-width: 28ch;
+}
+
+.alpha-status-strip {
+  background: color-mix(in srgb, var(--af-bg-surface) 84%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  padding: var(--af-space-4);
 }
 
 .button-grid,
@@ -309,14 +468,25 @@ p {
   .card-grid,
   .input-grid,
   .chart-grid,
+  .alpha-grid--top,
+  .alpha-grid--components,
+  .alpha-wave-grid,
   .dialog-detail-grid,
   .dialog-quick-test-grid,
-  .dialog-session-summary__metrics {
+  .dialog-session-summary__metrics,
+  .alpha-runtime-list,
+  .alpha-shell-summary,
+  .alpha-drawer-summary {
     grid-template-columns: 1fr;
   }
 
   .metric-grid,
   .metric-results-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .alpha-card--wide,
+  .alpha-card--chart {
+    grid-column: auto;
   }
 }

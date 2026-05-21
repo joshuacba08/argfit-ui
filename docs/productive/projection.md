@@ -18,12 +18,12 @@ ArgFit UI is ready for `1.0.0` when:
 
 ## Backlog HU Productive
 
-1. [HU-033 - Productive Scope And Semver Freeze](../hus/HU-033-productive-scope-semver-freeze.md)
-2. [HU-034 - Productive Quality Gates](../hus/HU-034-productive-quality-gates.md)
-3. [HU-035 - Productive Enterprise Readiness](../hus/HU-035-productive-enterprise-readiness.md)
-4. [HU-036 - Productive Documentation Site](../hus/HU-036-productive-documentation-site.md)
-5. [HU-037 - Productive Release Operations And Support Policy](../hus/HU-037-productive-release-operations-support.md)
-6. [HU-038 - Production 1.0 Release Gate](../hus/HU-038-production-1-release-gate.md)
+1. [HU-038 - Productive Scope And Semver Freeze](../hus/HU-038-productive-scope-semver-freeze.md)
+2. [HU-039 - Productive Quality Gates](../hus/HU-039-productive-quality-gates.md)
+3. [HU-040 - Productive Enterprise Readiness](../hus/HU-040-productive-enterprise-readiness.md)
+4. [HU-041 - Productive Documentation Site](../hus/HU-041-productive-documentation-site.md)
+5. [HU-042 - Productive Release Operations And Support Policy](../hus/HU-042-productive-release-operations-support.md)
+6. [HU-043 - Production 1.0 Release Gate](../hus/HU-043-production-1-release-gate.md)
 
 ## Recommended Sequence
 
@@ -32,4 +32,3 @@ ArgFit UI is ready for `1.0.0` when:
 3. Freeze the production scope.
 4. Harden the production gates.
 5. Publish `1.0.0` only after release operations and support policy are documented.
-

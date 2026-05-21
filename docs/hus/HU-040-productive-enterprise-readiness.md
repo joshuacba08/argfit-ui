@@ -1,4 +1,4 @@
-# HU-035 - Productive Enterprise Readiness
+# HU-040 - Productive Enterprise Readiness
 
 ## Estado
 
@@ -12,7 +12,7 @@ Fase 13 - Productive 1.0 / Fase 7 - Enterprise Systems
 
 Esta HU depende de:
 
-- HU-033 - Productive Scope And Semver Freeze.
+- HU-038 - Productive Scope And Semver Freeze.
 
 ## Objetivo
 
@@ -44,4 +44,3 @@ Cerrar los gaps enterprise necesarios para produccion:
 ```bash
 pnpm test:all
 ```
-

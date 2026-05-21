@@ -1,0 +1,29 @@
+<ng-template #chipContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-chip-mobile
+    [tone]="tone()"
+    [variant]="variant()"
+    [size]="size()"
+    [icon]="icon()"
+    [removable]="removable()"
+    [removeAriaLabel]="removeAriaLabel()"
+    [ariaLabel]="ariaLabel()"
+    (removed)="onRemoved()"
+  >
+    <ng-container *ngTemplateOutlet="chipContent" />
+  </af-chip-mobile>
+} @else {
+  <af-chip-desktop
+    [tone]="tone()"
+    [variant]="variant()"
+    [size]="size()"
+    [icon]="icon()"
+    [removable]="removable()"
+    [removeAriaLabel]="removeAriaLabel()"
+    [ariaLabel]="ariaLabel()"
+    (removed)="onRemoved()"
+  >
+    <ng-container *ngTemplateOutlet="chipContent" />
+  </af-chip-desktop>
+}

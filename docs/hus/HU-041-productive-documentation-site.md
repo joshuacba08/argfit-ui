@@ -1,4 +1,4 @@
-# HU-036 - Productive Documentation Site
+# HU-041 - Productive Documentation Site
 
 ## Estado
 
@@ -12,8 +12,8 @@ Fase 13 - Productive 1.0 / Fase 6 - Showcase Platform
 
 Esta HU depende de:
 
-- HU-033 - Productive Scope And Semver Freeze.
-- HU-035 - Productive Enterprise Readiness.
+- HU-038 - Productive Scope And Semver Freeze.
+- HU-040 - Productive Enterprise Readiness.
 
 ## Objetivo
 
@@ -40,4 +40,3 @@ Convertir el showcase/documentacion en una referencia productiva:
 ```bash
 pnpm build:all
 ```
-

@@ -1,4 +1,4 @@
-# HU-033 - Productive Scope And Semver Freeze
+# HU-038 - Productive Scope And Semver Freeze
 
 ## Estado
 
@@ -12,7 +12,7 @@ Fase 13 - Productive 1.0
 
 Esta HU depende de:
 
-- HU-032 - Beta+ Release Gate And Publish Channel.
+- HU-037 - Beta+ Release Gate And Publish Channel.
 
 ## Objetivo
 
@@ -38,4 +38,3 @@ Definir el contrato productivo `1.0.0`:
 pnpm guard:architecture
 pnpm build:libs
 ```
-

@@ -1,4 +1,4 @@
-# HU-032 - Beta+ Release Gate And Publish Channel
+# HU-037 - Beta+ Release Gate And Publish Channel
 
 ## Estado
 
@@ -15,8 +15,13 @@ Esta HU depende de:
 - HU-027 - Beta+ Scope And Component Strategy.
 - HU-028 - Beta+ Overlay Components.
 - HU-029 - Beta+ Status Identity And Disclosure Components.
-- HU-030 - Beta+ Showcase And Documentation.
-- HU-031 - Beta+ Consumer And Visual Validation.
+- HU-030 - Beta+ Form Field And Input Components.
+- HU-031 - Beta+ Selection And Advanced Form Components.
+- HU-032 - Beta+ Data Components Suite.
+- HU-033 - Beta+ Panel And Layout Components.
+- HU-034 - Beta+ Kanban Workflow Board.
+- HU-035 - Beta+ Showcase And Documentation.
+- HU-036 - Beta+ Consumer And Visual Validation.
 
 ## Objetivo
 
@@ -51,4 +56,3 @@ Crear release flow Beta+:
 pnpm release:beta-plus:check
 git status --short
 ```
-

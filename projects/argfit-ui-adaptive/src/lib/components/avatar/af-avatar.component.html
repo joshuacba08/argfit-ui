@@ -1,0 +1,25 @@
+@if (isMobile()) {
+  <af-avatar-mobile
+    [label]="label()"
+    [initials]="initials()"
+    [imageSrc]="imageSrc()"
+    [imageAlt]="imageAlt()"
+    [icon]="icon()"
+    [size]="size()"
+    [tone]="tone()"
+    [shape]="shape()"
+    [ariaLabel]="ariaLabel()"
+  />
+} @else {
+  <af-avatar-desktop
+    [label]="label()"
+    [initials]="initials()"
+    [imageSrc]="imageSrc()"
+    [imageAlt]="imageAlt()"
+    [icon]="icon()"
+    [size]="size()"
+    [tone]="tone()"
+    [shape]="shape()"
+    [ariaLabel]="ariaLabel()"
+  />
+}

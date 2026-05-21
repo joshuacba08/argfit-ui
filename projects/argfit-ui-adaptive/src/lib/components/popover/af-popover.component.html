@@ -1,0 +1,39 @@
+@if (isMobile()) {
+  <af-popover-mobile
+    [open]="open()"
+    [title]="title()"
+    [placement]="placement()"
+    [tone]="tone()"
+    [dismissible]="dismissible()"
+    [closeOnBackdrop]="closeOnBackdrop()"
+    [closeOnEscape]="closeOnEscape()"
+    [ariaLabel]="ariaLabel()"
+    [closeLabel]="closeLabel()"
+    [triggerTemplate]="triggerSlot()?.templateRef ?? null"
+    [contentTemplate]="contentSlot()?.templateRef ?? null"
+    (openChange)="onOpenChange($event)"
+    (opened)="onOpened()"
+    (closed)="onClosed()"
+    (backdropPress)="onBackdropPress()"
+    (escapePress)="onEscapePress($event)"
+  />
+} @else {
+  <af-popover-desktop
+    [open]="open()"
+    [title]="title()"
+    [placement]="placement()"
+    [tone]="tone()"
+    [dismissible]="dismissible()"
+    [closeOnBackdrop]="closeOnBackdrop()"
+    [closeOnEscape]="closeOnEscape()"
+    [ariaLabel]="ariaLabel()"
+    [closeLabel]="closeLabel()"
+    [triggerTemplate]="triggerSlot()?.templateRef ?? null"
+    [contentTemplate]="contentSlot()?.templateRef ?? null"
+    (openChange)="onOpenChange($event)"
+    (opened)="onOpened()"
+    (closed)="onClosed()"
+    (backdropPress)="onBackdropPress()"
+    (escapePress)="onEscapePress($event)"
+  />
+}

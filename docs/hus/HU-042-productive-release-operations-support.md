@@ -1,4 +1,4 @@
-# HU-037 - Productive Release Operations And Support Policy
+# HU-042 - Productive Release Operations And Support Policy
 
 ## Estado
 
@@ -12,7 +12,7 @@ Fase 13 - Productive 1.0 / Fase 10 - Distribution
 
 Esta HU depende de:
 
-- HU-034 - Productive Quality Gates.
+- HU-039 - Productive Quality Gates.
 
 ## Objetivo
 
@@ -38,4 +38,3 @@ Definir operaciones de release y soporte:
 ```bash
 pnpm release:production:check
 ```
-

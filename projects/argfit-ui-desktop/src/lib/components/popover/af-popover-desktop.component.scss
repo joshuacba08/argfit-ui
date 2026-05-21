@@ -1,0 +1,137 @@
+.af-popover-desktop {
+  display: inline-flex;
+  position: relative;
+  z-index: 1;
+}
+
+.af-popover-desktop__trigger {
+  display: inline-flex;
+}
+
+.af-popover-desktop__trigger:focus-visible {
+  outline: none;
+}
+
+.af-popover-desktop__backdrop {
+  background: transparent;
+  inset: 0;
+  position: fixed;
+  z-index: 1000;
+}
+
+.af-popover-desktop__panel {
+  --af-popover-bg: var(--af-bg-elevated);
+  --af-popover-border: var(--af-border-soft);
+
+  background: var(--af-popover-bg);
+  border: 1px solid var(--af-popover-border);
+  border-radius: var(--af-radius-lg);
+  box-shadow: var(--af-shadow-lg);
+  color: var(--af-text-main);
+  display: grid;
+  font-family: var(--af-font-body);
+  gap: 0;
+  min-width: 240px;
+  max-width: min(320px, calc(100vw - var(--af-space-8)));
+  outline: none;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1001;
+  animation: af-popover-desktop-fade var(--af-duration-fast, 180ms) var(--af-ease-out, ease-out);
+}
+
+.af-popover-desktop__panel[data-tone='primary'] {
+  --af-popover-bg: color-mix(in srgb, var(--af-primary) 3%, var(--af-bg-elevated));
+  --af-popover-border: color-mix(in srgb, var(--af-primary) 28%, transparent);
+}
+
+.af-popover-desktop__panel[data-placement='top'] {
+  bottom: calc(100% + var(--af-space-2));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.af-popover-desktop__panel[data-placement='bottom'] {
+  left: 50%;
+  top: calc(100% + var(--af-space-2));
+  transform: translateX(-50%);
+}
+
+.af-popover-desktop__panel[data-placement='left'] {
+  right: calc(100% + var(--af-space-2));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.af-popover-desktop__panel[data-placement='right'] {
+  left: calc(100% + var(--af-space-2));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.af-popover-desktop__header {
+  align-items: center;
+  border-bottom: 1px solid var(--af-border-soft);
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-popover-desktop__title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+}
+
+.af-popover-desktop__close {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--af-text-base);
+  height: 28px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 28px;
+}
+
+.af-popover-desktop__close:hover {
+  background: var(--af-bg-interactive);
+  color: var(--af-text-main);
+}
+
+.af-popover-desktop__close:focus-visible {
+  border-color: var(--af-border-focus);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-popover-desktop__body {
+  display: grid;
+  gap: var(--af-space-3);
+  padding: var(--af-space-4);
+}
+
+@keyframes af-popover-desktop-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-popover-desktop__panel {
+    animation: none;
+  }
+}

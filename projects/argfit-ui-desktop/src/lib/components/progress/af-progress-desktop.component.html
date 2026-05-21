@@ -1,0 +1,15 @@
+@if (variant() === 'bar') {
+  <span class="af-progress-desktop__track" aria-hidden="true">
+    <span
+      class="af-progress-desktop__fill"
+      [class.af-progress-desktop__fill--indeterminate]="indeterminate()"
+      [style.width.%]="indeterminate() ? null : progressPercent()"
+    ></span>
+  </span>
+} @else if (variant() === 'spinner') {
+  <span class="af-progress-desktop__spinner" aria-hidden="true"></span>
+  <af-visually-hidden>{{ accessibleLabel() }}</af-visually-hidden>
+} @else {
+  <span class="af-progress-desktop__skeleton" [style.width]="skeletonWidth()" aria-hidden="true"></span>
+  <af-visually-hidden>{{ accessibleLabel() }}</af-visually-hidden>
+}

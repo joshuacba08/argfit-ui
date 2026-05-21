@@ -13,6 +13,9 @@ export {
     AfAnalyticsCardComponent as AfAnalyticsCard, AfAnalyticsCardComponent
 } from './lib/components/analytics-card/af-analytics-card.component';
 export {
+    AfAvatarComponent as AfAvatar, AfAvatarComponent
+} from './lib/components/avatar/af-avatar.component';
+export {
     AfBadgeComponent as AfBadge, AfBadgeComponent
 } from './lib/components/badge/af-badge.component';
 export {
@@ -34,6 +37,9 @@ export {
     AfChartComponent as AfChart, AfChartComponent
 } from './lib/components/chart/af-chart.component';
 export {
+    AfChipComponent as AfChip, AfChipComponent
+} from './lib/components/chip/af-chip.component';
+export {
     AfCheckboxComponent as AfCheckbox, AfCheckboxComponent
 } from './lib/components/checkbox/af-checkbox.component';
 export {
@@ -48,6 +54,9 @@ export {
 export {
     AfDataTableComponent as AfDataTable, AfDataTableComponent
 } from './lib/components/data-table/af-data-table.component';
+export {
+    AfDrawerComponent as AfDrawer, AfDrawerComponent
+} from './lib/components/drawer/af-drawer.component';
 export {
     AF_DIALOG_SLOT_DIRECTIVES,
     AfDialogContentDirective,
@@ -82,6 +91,12 @@ export {
     AfPasswordComponent as AfPassword, AfPasswordComponent
 } from './lib/components/password/af-password.component';
 export {
+    AfPopoverComponent as AfPopover, AfPopoverComponent
+} from './lib/components/popover/af-popover.component';
+export {
+    AfProgressComponent as AfProgress, AfProgressComponent
+} from './lib/components/progress/af-progress.component';
+export {
     AfRadioGroupComponent as AfRadioGroup, AfRadioGroupComponent
 } from './lib/components/radio-group/af-radio-group.component';
 export {
@@ -100,6 +115,14 @@ export {
     AfToastViewportComponent as AfToastViewport, AfToastViewportComponent
 } from './lib/components/toast-viewport/af-toast-viewport.component';
 export {
+    AfTooltipComponent as AfTooltip, AfTooltipComponent
+} from './lib/components/tooltip/af-tooltip.component';
+export {
     AfToggleComponent as AfToggle, AfToggleComponent
 } from './lib/components/toggle/af-toggle.component';
+export {
+    AF_POPOVER_SLOT_DIRECTIVES,
+    AfPopoverContentDirective,
+    AfPopoverTriggerDirective,
+} from './lib/components/popover/af-popover-slots.directive';
 

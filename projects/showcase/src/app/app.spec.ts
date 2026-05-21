@@ -94,15 +94,22 @@ describe('App', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.alpha-view')).not.toBeNull();
-    expect(compiled.textContent).toContain('Beta consumer kit');
-    expect(compiled.textContent).toContain('0.1.0-beta.0 target');
+    expect(compiled.textContent).toContain('Beta+ consumer kit');
+    expect(compiled.textContent).toContain('Beta+ wave 1');
     expect(compiled.querySelector('a[href="docs/beta/quickstart.md"]')).not.toBeNull();
     expect(compiled.querySelector('a[href="docs/beta/components.md"]')).not.toBeNull();
     expect(compiled.querySelector('af-input-desktop')).not.toBeNull();
     expect(compiled.querySelector('af-chart-desktop')).not.toBeNull();
     expect(compiled.querySelectorAll('af-metric-card-desktop').length).toBeGreaterThanOrEqual(2);
     expect(compiled.querySelector('.alpha-dialog-preview af-button-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid af-avatar-desktop')).not.toBeNull();
+    expect(compiled.querySelectorAll('.alpha-wave-grid af-chip-desktop').length).toBeGreaterThanOrEqual(3);
+    expect(compiled.querySelectorAll('.alpha-wave-grid af-progress-desktop').length).toBeGreaterThanOrEqual(3);
+    expect(compiled.querySelector('.alpha-wave-grid af-tooltip-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid af-popover-desktop')).not.toBeNull();
+    expect(compiled.querySelector('af-drawer-desktop')).not.toBeNull();
     expect(compiled.textContent).toContain('Adaptive API');
+    expect(compiled.textContent).toContain('Beta+ wave 1');
   });
 
   it('should toggle the active theme', async () => {

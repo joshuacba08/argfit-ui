@@ -1,0 +1,47 @@
+<ng-template #drawerContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-drawer-mobile
+    [open]="open()"
+    [title]="title()"
+    [description]="description()"
+    [placement]="placement()"
+    [size]="size()"
+    [tone]="tone()"
+    [dismissible]="dismissible()"
+    [closeOnBackdrop]="closeOnBackdrop()"
+    [closeOnEscape]="closeOnEscape()"
+    [ariaLabel]="ariaLabel()"
+    [ariaDescribedBy]="ariaDescribedBy()"
+    [closeLabel]="closeLabel()"
+    (openChange)="onOpenChange($event)"
+    (opened)="onOpened()"
+    (closed)="onClosed()"
+    (backdropPress)="onBackdropPress()"
+    (escapePress)="onEscapePress($event)"
+  >
+    <ng-container *ngTemplateOutlet="drawerContent" />
+  </af-drawer-mobile>
+} @else {
+  <af-drawer-desktop
+    [open]="open()"
+    [title]="title()"
+    [description]="description()"
+    [placement]="placement()"
+    [size]="size()"
+    [tone]="tone()"
+    [dismissible]="dismissible()"
+    [closeOnBackdrop]="closeOnBackdrop()"
+    [closeOnEscape]="closeOnEscape()"
+    [ariaLabel]="ariaLabel()"
+    [ariaDescribedBy]="ariaDescribedBy()"
+    [closeLabel]="closeLabel()"
+    (openChange)="onOpenChange($event)"
+    (opened)="onOpened()"
+    (closed)="onClosed()"
+    (backdropPress)="onBackdropPress()"
+    (escapePress)="onEscapePress($event)"
+  >
+    <ng-container *ngTemplateOutlet="drawerContent" />
+  </af-drawer-desktop>
+}

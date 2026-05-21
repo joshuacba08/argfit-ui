@@ -1,4 +1,4 @@
-# HU-034 - Productive Quality Gates
+# HU-039 - Productive Quality Gates
 
 ## Estado
 
@@ -12,7 +12,7 @@ Fase 13 - Productive 1.0
 
 Esta HU depende de:
 
-- HU-033 - Productive Scope And Semver Freeze.
+- HU-038 - Productive Scope And Semver Freeze.
 
 ## Objetivo
 
@@ -40,4 +40,3 @@ Convertir los gates de beta en obligatorios para produccion:
 ```bash
 pnpm release:production:check
 ```
-

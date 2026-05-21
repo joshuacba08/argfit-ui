@@ -1,0 +1,9 @@
+<span class="af-tooltip-desktop__trigger">
+  <ng-content />
+</span>
+
+@if (open() && text(); as tooltipText) {
+  <span class="af-tooltip-desktop__bubble" role="tooltip" [attr.aria-label]="tooltipLabel()">
+    {{ tooltipText }}
+  </span>
+}

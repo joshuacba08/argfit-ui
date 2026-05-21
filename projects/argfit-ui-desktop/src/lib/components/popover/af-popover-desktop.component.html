@@ -1,0 +1,58 @@
+<span
+  class="af-popover-desktop__trigger"
+  role="button"
+  tabindex="0"
+  aria-haspopup="dialog"
+  [attr.aria-expanded]="open()"
+  (click)="onTriggerClick($event)"
+  (keydown)="onTriggerKeydown($event)"
+>
+  @if (triggerTemplate(); as trigger) {
+    <ng-container *ngTemplateOutlet="trigger" />
+  }
+</span>
+
+@if (open()) {
+  <div class="af-popover-desktop__backdrop" (click)="onBackdropClick($event)" data-af-popover-backdrop></div>
+
+  <div
+    class="af-popover-desktop__panel"
+    [attr.data-placement]="placement()"
+    [attr.data-tone]="tone()"
+    role="dialog"
+    [attr.aria-modal]="false"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [attr.aria-labelledby]="labelledBy()"
+    afFocusTrap
+    [afFocusTrapEnabled]="open()"
+    afEscapeKey
+    (afEscape)="onEscape($event)"
+    tabindex="-1"
+  >
+    @if (title() || dismissible()) {
+      <header class="af-popover-desktop__header">
+        @if (title(); as titleText) {
+          <h3 class="af-popover-desktop__title" [id]="titleId">{{ titleText }}</h3>
+        }
+
+        @if (dismissible()) {
+          <button
+            type="button"
+            class="af-popover-desktop__close"
+            [attr.aria-label]="closeLabel()"
+            (click)="onCloseButton()"
+            afFocusInitial
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        }
+      </header>
+    }
+
+    <div class="af-popover-desktop__body">
+      @if (contentTemplate(); as content) {
+        <ng-container *ngTemplateOutlet="content" />
+      }
+    </div>
+  </div>
+}
