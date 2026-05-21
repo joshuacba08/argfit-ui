@@ -474,6 +474,58 @@ The alpha is ready when:
 
 ---
 
+# Phase 11 — Beta Hardening
+
+# Goal
+
+Convert the healthy alpha into a reliable `0.1.0-beta.0` prerelease.
+
+## Status
+
+PLANNED
+
+## Current Evaluation
+
+The alpha release gate passes locally, including architecture, build, tests, packaging and smoke checks. The beta gap is now quality and contract hardening:
+
+- Public API needs a `stable-for-beta` contract.
+- Component engines need an explicit map: desktop PrimeNG-first, mobile Ionic-first, adaptive vendor-independent.
+- Experimental alpha components need promotion or explicit beta-experimental status.
+- Accessibility and keyboard behavior need a transversal audit.
+- Visual regression and responsive QA need a reproducible gate.
+- Consumer compatibility needs validation outside the workspace.
+- Showcase performance budgets currently warn and must be resolved before beta.
+- Docs need beta quickstart, API reference and migration notes.
+
+See [Beta readiness evaluation](./beta/readiness.md).
+
+## Planned HUs
+
+- HU-019 — [Beta Scope And Public API Contract](./hus/HU-019-beta-scope-public-api-contract.md)
+- HU-020 — [Beta Experimental Components Hardening](./hus/HU-020-beta-experimental-components-hardening.md)
+- HU-021 — [Beta Accessibility And Keyboard Audit](./hus/HU-021-beta-accessibility-keyboard-audit.md)
+- HU-022 — [Beta Visual Regression And Responsive QA](./hus/HU-022-beta-visual-regression-responsive-qa.md)
+- HU-023 — [Beta Consumer Compatibility Matrix](./hus/HU-023-beta-consumer-compatibility-matrix.md)
+- HU-024 — [Beta Performance And Bundle Budget](./hus/HU-024-beta-performance-bundle-budget.md)
+- HU-025 — [Beta Docs, API Reference And Migration](./hus/HU-025-beta-docs-api-reference-migration.md)
+- HU-026 — [Beta Release Gate And Publish Channel](./hus/HU-026-beta-release-gate-publish-channel.md)
+
+## Beta Definition
+
+The beta is ready when:
+
+- `docs/beta/beta-scope.md` defines the beta contract.
+- `docs/beta/public-api.md` classifies every public export.
+- `docs/beta/component-engine-map.md` defines PrimeNG/Ionic/custom renderer decisions.
+- Promoted components have contract, accessibility and parity tests.
+- Visual QA is reproducible.
+- Consumer smoke validates generated packages from a temporary external app.
+- `pnpm build:all` has no unresolved budget warnings.
+- `pnpm release:beta:check` passes locally and in CI.
+- Publishing uses the `beta` dist-tag.
+
+---
+
 # Long-Term Vision
 
 ArgFit UI should evolve into:

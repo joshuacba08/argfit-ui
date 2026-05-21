@@ -216,6 +216,7 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Alpha release checklist](docs/alpha/release-checklist.md)
 - [Alpha package metadata](docs/alpha/package-metadata.md)
 - [Publish alpha procedure](docs/alpha/publish-alpha.md)
+- [Beta readiness evaluation](docs/beta/readiness.md)
 - [Changelog](CHANGELOG.md)
 - [Human units](docs/hus/README.md)
 

@@ -24,3 +24,18 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 16. [HU-016 — Alpha Packaging And Versioning](./HU-016-alpha-packaging-versioning.md)
 17. [HU-017 — Alpha Consumer Docs And Showcase](./HU-017-alpha-consumer-docs-showcase.md)
 18. [HU-018 — Alpha Release Gate And CI](./HU-018-alpha-release-gate-ci.md)
+
+## Camino Beta
+
+La evaluacion actual de alpha vive en [docs/beta/readiness.md](../beta/readiness.md). Estas HUs definen el trabajo minimo recomendado para pasar de `0.1.0-alpha.0` a `0.1.0-beta.0`.
+
+La estrategia de engines vive en [docs/beta/component-engine-map.md](../beta/component-engine-map.md): desktop PrimeNG-first, mobile Ionic-first y PrimeNG en mobile solo como excepcion interna justificada.
+
+19. [HU-019 — Beta Scope And Public API Contract](./HU-019-beta-scope-public-api-contract.md)
+20. [HU-020 — Beta Experimental Components Hardening](./HU-020-beta-experimental-components-hardening.md)
+21. [HU-021 — Beta Accessibility And Keyboard Audit](./HU-021-beta-accessibility-keyboard-audit.md)
+22. [HU-022 — Beta Visual Regression And Responsive QA](./HU-022-beta-visual-regression-responsive-qa.md)
+23. [HU-023 — Beta Consumer Compatibility Matrix](./HU-023-beta-consumer-compatibility-matrix.md)
+24. [HU-024 — Beta Performance And Bundle Budget](./HU-024-beta-performance-bundle-budget.md)
+25. [HU-025 — Beta Docs, API Reference And Migration](./HU-025-beta-docs-api-reference-migration.md)
+26. [HU-026 — Beta Release Gate And Publish Channel](./HU-026-beta-release-gate-publish-channel.md)
