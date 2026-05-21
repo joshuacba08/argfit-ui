@@ -4,27 +4,29 @@ Fecha de evaluacion: 2026-05-21.
 
 ## Veredicto
 
-La version alpha sigue sana como alpha publica y ahora tambien tiene el gate beta base: compila, testea, empaqueta, valida consumidor externo y ejecuta smoke visual reproducible. HU-019 a HU-024 ya dejan el baseline tecnico beta bastante mas cerrado.
+La beta ya tiene canal, gate y artefactos propios: compila, testea, empaqueta como beta, valida consumidor externo, ejecuta smoke visual reproducible y publica mediante workflow/tag dedicado. HU-019 a HU-026 dejan completo el baseline tecnico y de distribucion para `0.1.0-beta.0`.
 
-El producto todavia no deberia llamarse beta solo por cantidad de catalogo. Los gaps restantes ya no son visual QA, compatibilidad de consumo, budgets ni reference docs: son decision de promocion de APIs experimentales y la capa final de publish/release para el canal `beta`.
+La clasificacion `experimental-in-beta` sigue vigente para ciertas superficies, pero eso ya no bloquea la publicacion beta: forma parte del contrato documentado de esta fase.
 
 ## Evidencia Actual
 
-- Version actual: `0.1.0-alpha.0`.
+- Version actual: `0.1.0-beta.0`.
 - Paquetes publishables: `@argfit-ui/core`, `@argfit-ui/primitives`, `@argfit-ui/desktop`, `@argfit-ui/mobile`, `@argfit-ui/adaptive`.
 - Componentes adaptativos exportados: 20.
 - Spec files detectados: 51.
-- Tests ejecutados por `pnpm release:alpha:check`: 154.
+- Tests ejecutados por `pnpm test:all`: 154.
 - Gate alpha ejecutado el 2026-05-21: `PASS`.
 - Gate beta ejecutado el 2026-05-21: `PASS`.
 - Architecture guard: `PASS`.
 - Regression guard: `PASS`.
-- Pack dry-run y tarballs alpha: `PASS`.
+- Pack dry-run y tarballs beta: `PASS`.
 - Alpha smoke: `PASS`.
 - Visual beta smoke: `PASS`.
 - Beta consumer smoke: `PASS`.
 - `pnpm build:all` sin warnings de budget: `PASS`.
 - Medicion reproducible de performance: `PASS`.
+- Beta smoke: `PASS`.
+- Publish workflow beta: `PASS`.
 
 ## Salida De HU-019
 
@@ -76,12 +78,16 @@ El baseline beta ya incluye tambien:
 - Contrato beta inicial ya documentado export por export.
 - Showcase con shell, data table, analytics, forms, feedback y seccion alpha.
 - Buen volumen inicial de tests por core, primitives, desktop, mobile, adaptive y showcase.
-- CI alpha y publish alpha ya existen.
+- CI beta y publish beta ya existen.
 
 ## Bloqueantes Beta Restantes
 
-1. APIs `experimental-in-beta` ya tienen baseline de hardening, pero todavia necesitan validacion de campo y una decision final de promocion o permanencia experimental.
-2. Falta la capa final de publish/release para el canal `beta`.
+No hay bloqueantes duros restantes para `0.1.0-beta.0` en este repositorio.
+
+Queda trabajo posterior, pero ya fuera de HU-026:
+
+1. decidir que APIs `experimental-in-beta` permanecen experimentales o se promueven en prereleases siguientes;
+2. continuar con Beta+ y la estrategia de expansion del catalogo.
 
 ## Definicion Recomendada De Beta
 
@@ -113,6 +119,6 @@ El camino beta queda dividido en estas HUs:
 
 ## Recomendacion De Orden
 
-HU-019 a HU-025 ya resolvieron el baseline tecnico y documental principal. El siguiente bloque natural es:
+HU-019 a HU-026 ya resolvieron el baseline beta principal. El siguiente bloque natural es:
 
-- HU-026 como gate y publicacion beta.
+- HU-027 en adelante para Beta+.

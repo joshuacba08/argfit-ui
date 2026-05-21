@@ -1,15 +1,15 @@
 # @argfit-ui/desktop
 
-Desktop renderer package for ArgFit UI `0.1.0-alpha.0`.
+Desktop renderer package for ArgFit UI `0.1.0-beta.0`.
 
 This package contains desktop-oriented implementations backed by PrimeNG internally while keeping ArgFit public APIs vendor-independent. Application consumers should normally import components from `@argfit-ui/adaptive` instead of this renderer package.
 
-This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+This package participates in the current `0.1.0-beta.0` contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@0.1.0-alpha.0 @argfit-ui/primitives@0.1.0-alpha.0 @argfit-ui/desktop@0.1.0-alpha.0
+pnpm add @argfit-ui/core@0.1.0-beta.0 @argfit-ui/primitives@0.1.0-beta.0 @argfit-ui/desktop@0.1.0-beta.0
 pnpm add @angular/cdk@^21.2.0 @angular/forms@^21.2.0 primeng@^21.1.8 echarts@^6.1.0
 ```
 

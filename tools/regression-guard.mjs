@@ -26,9 +26,14 @@ const expectedFiles = [
   'docs/alpha/known-limitations.md',
   'docs/alpha/release-notes-alpha.md',
   'docs/alpha/release-checklist.md',
+  'docs/beta/release-notes-beta.md',
+  'docs/beta/release-checklist.md',
   'tools/alpha-smoke.mjs',
+  'tools/beta-smoke.mjs',
+  'tools/pack-beta.mjs',
   '.github/workflows/ci.yml',
   '.github/workflows/publish-alpha.yml',
+  '.github/workflows/publish-beta.yml',
   'CHANGELOG.md',
   'LICENSE',
 ];
@@ -236,17 +241,17 @@ expectIncludes('projects/showcase/src/app/app.spec.ts', [
 ]);
 
 expectIncludes('README.md', [
-  'Alpha quickstart',
-  'Alpha components',
-  'Alpha release notes',
-  'Alpha release checklist',
-  'pnpm release:alpha:check',
+  'Beta quickstart',
+  'Beta components',
+  'Beta release notes',
+  'Beta release checklist',
+  'pnpm release:beta:check',
 ]);
 
 expectIncludes('package.json', [
-  '"release:alpha:check"',
-  '"smoke:alpha"',
-  '"pack:alpha:dry-run:dist"',
+  '"release:beta:check"',
+  '"smoke:beta"',
+  '"pack:beta:dry-run:dist"',
 ]);
 
 expectIncludes('.github/workflows/ci.yml', [
@@ -254,9 +259,9 @@ expectIncludes('.github/workflows/ci.yml', [
   'pull_request:',
   'push:',
   'pnpm install --frozen-lockfile',
-  'pnpm release:alpha:check',
+  'pnpm release:beta:check',
   'actions/upload-artifact@v4',
-  'dist/alpha-tarballs/*.tgz',
+  'dist/beta-tarballs/*.tgz',
 ]);
 
 expectIncludes('.github/workflows/publish-alpha.yml', [
@@ -266,6 +271,17 @@ expectIncludes('.github/workflows/publish-alpha.yml', [
   'NPM_TOKEN',
   'NODE_AUTH_TOKEN',
   'pnpm release:alpha:check',
+  '--access public',
+]);
+
+expectIncludes('.github/workflows/publish-beta.yml', [
+  'name: Publish Beta',
+  'workflow_dispatch:',
+  "- 'v*-beta.*'",
+  'NPM_TOKEN',
+  'NODE_AUTH_TOKEN',
+  'pnpm release:beta:check',
+  '--tag beta',
   '--access public',
 ]);
 
@@ -280,6 +296,17 @@ expectIncludes('tools/alpha-smoke.mjs', [
   'ts.createProgram',
 ]);
 
+expectIncludes('tools/beta-smoke.mjs', [
+  '.tmp',
+  'beta-smoke',
+  'dist/argfit-ui-core',
+  'dist/argfit-ui-adaptive',
+  'dist/beta-tarballs',
+  'publish-beta.yml',
+  '@argfit-ui/adaptive',
+  'ts.createProgram',
+]);
+
 expectIncludes('docs/alpha/release-checklist.md', [
   'pnpm release:alpha:check',
   'v0.1.0-alpha.0',
@@ -288,11 +315,19 @@ expectIncludes('docs/alpha/release-checklist.md', [
   'dist/alpha-tarballs/',
 ]);
 
+expectIncludes('docs/beta/release-checklist.md', [
+  'pnpm release:beta:check',
+  'v0.1.0-beta.0',
+  '--tag beta',
+  '--access public',
+  'dist/beta-tarballs/',
+]);
+
 expectIncludes('CHANGELOG.md', [
-  '0.1.0-alpha.0',
+  '0.1.0-beta.0',
   '@argfit-ui/adaptive',
-  'release gate CI',
-  'MIT licensed',
+  'publish-beta.yml',
+  'beta dist-tag',
 ]);
 
 expectIncludes('LICENSE', [
@@ -327,7 +362,7 @@ for (const packageReadme of [
   'projects/argfit-ui-adaptive/README.md',
 ]) {
   expectIncludes(packageReadme, [
-    '0.1.0-alpha.0',
+    '0.1.0-beta.0',
     '## Install',
     '## Beta Docs',
   ]);

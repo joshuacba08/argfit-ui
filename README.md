@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-10.28-F69220?logo=pnpm&logoColor=white)
-![Status](https://img.shields.io/badge/status-0.1.0--alpha.0-2599D5)
+![Status](https://img.shields.io/badge/status-0.1.0--beta.0-2599D5)
 
 ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile-first workflows.
 
@@ -21,11 +21,11 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI is currently prepared as `0.1.0-alpha.0`. The workspace contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, packaging metadata, local tarball generation, and the first enterprise component slices.
+ArgFit UI is currently prepared as `0.1.0-beta.0`. The workspace contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, package metadata, beta tarball generation, and the current enterprise component slices.
 
-The official `0.1.0-alpha.0` surface is tracked in the alpha docs. Stable-for-alpha components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Newer data, analytics, form, password, and feedback components are available as experimental alpha APIs.
+The official `0.1.0-beta.0` surface is tracked in the beta docs. Stable-for-beta components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Analytics, data-table, expanded form controls and feedback components remain public as `experimental-in-beta` APIs.
 
-The planned beta contract is now documented in the beta docs. It keeps the base catalog as `stable-for-beta`, leaves analytics, data-table, expanded form controls and feedback as `experimental-in-beta`, and preserves renderer packages as renderer-specific APIs.
+Alpha docs remain in the repository as the historical baseline and migration source for prerelease consumers.
 
 ## Package Architecture
 
@@ -60,7 +60,7 @@ The public contract is the scoped package API. Implementation project names are 
 
 ## Quick Start
 
-For the intended beta consumer contract, start with:
+For the current beta consumer contract, start with:
 
 - [Beta quickstart](docs/beta/quickstart.md)
 - [Beta theming and adaptive rendering](docs/beta/theming.md)
@@ -68,7 +68,7 @@ For the intended beta consumer contract, start with:
 - [Beta known limitations](docs/beta/known-limitations.md)
 - [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
 
-The current public alpha distribution remains documented here:
+The historical alpha distribution remains documented here:
 
 - [Alpha quickstart](docs/alpha/quickstart.md)
 - [Alpha theming and adaptive rendering](docs/alpha/theming.md)
@@ -100,10 +100,16 @@ Run the full validation suite:
 pnpm test:all
 ```
 
-Run the alpha release gate before tagging or publishing:
+Run the beta release gate before tagging or publishing:
 
 ```bash
-pnpm release:alpha:check
+pnpm release:beta:check
+```
+
+Run the beta package dry-run locally:
+
+```bash
+pnpm publish:beta:dry-run
 ```
 
 Run the beta release gate with external consumer and visual smoke checks:
@@ -211,9 +217,9 @@ Consumers should depend on semantic ArgFit APIs, not on PrimeNG or Ionic compone
 | `pnpm build:all` | Builds libraries and the showcase app |
 | `pnpm test` | Runs Angular tests |
 | `pnpm test:all` | Builds, validates architecture, and runs project test suites |
-| `pnpm release:alpha:check` | Runs the alpha release gate: architecture, production build, tests, pack validation and smoke test |
-| `pnpm publish:alpha:dry-run` | Runs package metadata checks and `npm pack --dry-run` for every built package |
-| `pnpm pack:alpha` | Generates alpha tarballs under `dist/alpha-tarballs/` |
+| `pnpm release:beta:check` | Runs the beta release gate: architecture, build, tests, beta pack validation, consumer smoke, visual smoke, performance measurement and beta smoke |
+| `pnpm publish:beta:dry-run` | Runs beta package metadata checks and `npm pack --dry-run` for every built package |
+| `pnpm pack:beta` | Generates beta tarballs under `dist/beta-tarballs/` |
 | `pnpm guard:architecture` | Checks package boundaries and vendor isolation |
 | `pnpm guard:regression` | Checks restored showcase and component regression contracts |
 
@@ -257,6 +263,8 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Beta consumer compatibility](docs/beta/compatibility.md)
 - [Beta package matrix](docs/beta/package-matrix.md)
 - [Beta performance and budgets](docs/beta/performance.md)
+- [Beta release notes](docs/beta/release-notes-beta.md)
+- [Beta release checklist](docs/beta/release-checklist.md)
 - [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
 - [Beta readiness evaluation](docs/beta/readiness.md)
 - [Beta+ readiness plan](docs/beta-plus/readiness.md)
@@ -294,4 +302,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `0.1.0-alpha.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages are MIT licensed and prepared for public npm distribution with the `alpha` dist-tag, while tarballs remain available for manual verification.
+The workspace and publishable packages are aligned on `0.1.0-beta.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages are MIT licensed and prepared for public npm distribution with the `beta` dist-tag, while tarballs remain available for manual verification under `dist/beta-tarballs/`.

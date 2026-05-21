@@ -15,7 +15,7 @@ pnpm beta:consumer-smoke
 El comando:
 
 - compila las librerias publishables;
-- genera tarballs en `dist/alpha-tarballs/`;
+- genera tarballs beta en `dist/beta-tarballs/`;
 - crea una app Angular temporal en `.tmp/beta-consumer/`;
 - instala tarballs y peers externos;
 - ejecuta un build production del consumidor.

@@ -37,7 +37,7 @@ La referencia de footprint consumible ya no es el showcase. Para eso existe `pnp
 
 ```bash
 pnpm build:all
-pnpm pack:alpha:dist
+pnpm pack:beta:dist
 pnpm measure:beta-performance
 ```
 
@@ -45,7 +45,7 @@ El comando `pnpm measure:beta-performance` reporta:
 
 - assets iniciales anclados desde `dist/showcase/browser/index.html`;
 - total inicial enlazado por el entrypoint del showcase;
-- tamanos de tarballs alpha listos para consumo externo.
+- tamanos de tarballs beta listos para consumo externo.
 
 ## Medicion Actual
 

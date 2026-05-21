@@ -12,10 +12,10 @@ ArgFit UI `0.1.0-beta.0` is a stricter early-adopter contract than alpha, but it
 
 ## Distribution Status
 
-- The beta docs describe the intended `0.1.0-beta.0` contract.
-- The final `beta` dist-tag flow is still completed by HU-026.
-- Until then, local beta validation uses `pnpm beta:consumer-smoke` and `pnpm release:beta:check`.
-- Local artifacts are still generated under `dist/alpha-tarballs/` during the current hardening flow.
+- The repository is aligned on `0.1.0-beta.0`.
+- Publishable packages use the `beta` dist-tag.
+- Local beta validation uses `pnpm beta:consumer-smoke`, `pnpm publish:beta:dry-run` and `pnpm release:beta:check`.
+- Local artifacts are generated under `dist/beta-tarballs/`.
 
 ## Experimental Surfaces Still In Beta
 

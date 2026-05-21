@@ -1,15 +1,15 @@
 # @argfit-ui/core
 
-Core runtime package for ArgFit UI `0.1.0-alpha.0`.
+Core runtime package for ArgFit UI `0.1.0-beta.0`.
 
 It contains vendor-agnostic tokens, themes, shared types, platform services and `provideArgfitUi`. This package must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
 
-This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+This package participates in the current `0.1.0-beta.0` contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@0.1.0-alpha.0
+pnpm add @argfit-ui/core@0.1.0-beta.0
 ```
 
 Peer dependencies:

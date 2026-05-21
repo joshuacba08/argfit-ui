@@ -2,7 +2,7 @@
 
 This guide documents the intended consumer path for ArgFit UI `0.1.0-beta.0`.
 
-The workspace still builds as `0.1.0-alpha.0` today, but the contract below is the beta shape consumers should evaluate. If the `beta` dist-tag is not available yet, validate the same install and import path locally with `pnpm beta:consumer-smoke`.
+The workspace builds beta artifacts locally. If the `beta` dist-tag is not available yet, validate the same install and import path with `pnpm beta:consumer-smoke`.
 
 ## Requirements
 
@@ -41,11 +41,11 @@ Until the `beta` dist-tag is opened, the reproducible local beta validation path
 
 ```bash
 pnpm build:libs
-pnpm pack:alpha:dist
+pnpm pack:beta:dist
 pnpm beta:consumer-smoke
 ```
 
-That flow still uses local tarballs under `dist/alpha-tarballs/`, but it validates the intended beta consumer contract from a temporary external Angular app.
+That flow uses local beta tarballs under `dist/beta-tarballs/` and validates the intended beta consumer contract from a temporary external Angular app.
 
 Maintainers should use the full beta gate before tagging:
 

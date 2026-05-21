@@ -36,21 +36,15 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run alpha release gate
-        run: pnpm release:alpha:check
+      - name: Run beta release gate
+        run: pnpm release:beta:check
 
-      - name: Run beta consumer smoke
-        run: pnpm beta:consumer-smoke:dist
-
-      - name: Run beta visual smoke
-        run: pnpm visual:beta:dist
-
-      - name: Upload alpha tarballs
+      - name: Upload beta tarballs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: alpha-tarballs
-          path: dist/alpha-tarballs/*.tgz
+          name: beta-tarballs
+          path: dist/beta-tarballs/*.tgz
           if-no-files-found: ignore
 
       - name: Upload visual smoke screenshots

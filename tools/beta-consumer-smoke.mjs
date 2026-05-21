@@ -6,13 +6,15 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'beta-consumer');
 const rootManifest = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8'));
+const betaVersion = rootManifest.version;
+const tarballDirectory = resolve(repoRoot, 'dist', 'beta-tarballs');
 
 const argfitPackages = [
-  { name: '@argfit-ui/core', tarball: 'argfit-ui-core-0.1.0-alpha.0.tgz' },
-  { name: '@argfit-ui/primitives', tarball: 'argfit-ui-primitives-0.1.0-alpha.0.tgz' },
-  { name: '@argfit-ui/desktop', tarball: 'argfit-ui-desktop-0.1.0-alpha.0.tgz' },
-  { name: '@argfit-ui/mobile', tarball: 'argfit-ui-mobile-0.1.0-alpha.0.tgz' },
-  { name: '@argfit-ui/adaptive', tarball: 'argfit-ui-adaptive-0.1.0-alpha.0.tgz' },
+  { name: '@argfit-ui/core', tarball: createTarballName('@argfit-ui/core') },
+  { name: '@argfit-ui/primitives', tarball: createTarballName('@argfit-ui/primitives') },
+  { name: '@argfit-ui/desktop', tarball: createTarballName('@argfit-ui/desktop') },
+  { name: '@argfit-ui/mobile', tarball: createTarballName('@argfit-ui/mobile') },
+  { name: '@argfit-ui/adaptive', tarball: createTarballName('@argfit-ui/adaptive') },
 ];
 
 const runtimeDependencies = [
@@ -57,10 +59,10 @@ console.log(`Beta consumer smoke passed. Consumer app available at ${smokeDirect
 
 function assertTarballsExist() {
   for (const argfitPackage of argfitPackages) {
-    const tarballPath = resolve(repoRoot, 'dist', 'alpha-tarballs', argfitPackage.tarball);
+    const tarballPath = resolve(tarballDirectory, argfitPackage.tarball);
 
     if (!existsSync(tarballPath)) {
-      throw new Error(`Missing required tarball ${argfitPackage.tarball}. Run pnpm pack:alpha:dist first.`);
+      throw new Error(`Missing required tarball ${argfitPackage.tarball}. Run pnpm pack:beta:dist first.`);
     }
   }
 }
@@ -85,7 +87,7 @@ function createPackageManifest() {
   );
 
   for (const argfitPackage of argfitPackages) {
-    const tarballPath = resolve(repoRoot, 'dist', 'alpha-tarballs', argfitPackage.tarball);
+    const tarballPath = resolve(tarballDirectory, argfitPackage.tarball);
     const relativeTarballPath = relative(smokeDirectory, tarballPath).split('\\').join('/');
     dependencies[argfitPackage.name] = `file:${relativeTarballPath}`;
   }
@@ -474,4 +476,8 @@ function quoteWindowsArgument(argument) {
   }
 
   return `"${argument.replace(/"/g, '""')}"`;
+}
+
+function createTarballName(packageName) {
+  return `${packageName.replace('@', '').replace('/', '-')}-${betaVersion}.tgz`;
 }

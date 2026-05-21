@@ -112,7 +112,7 @@ Build the shared foundation.
 
 ## Status
 
-IN PROGRESS
+COMPLETE
 
 ## Planned Systems
 
@@ -492,12 +492,15 @@ The beta hardening baseline is now materially stronger than the original alpha g
 - `docs/beta/visual-qa.md` and a reproducible `pnpm visual:beta` smoke;
 - `docs/beta/compatibility.md` and `docs/beta/package-matrix.md` backed by `pnpm beta:consumer-smoke`;
 - `docs/beta/performance.md` and `pnpm measure:beta-performance` with a documented showcase budget decision;
-- `pnpm release:beta:check` passing locally.
+- `pnpm release:beta:check` passing locally;
+- `.github/workflows/publish-beta.yml`, `docs/beta/release-notes-beta.md` and `docs/beta/release-checklist.md` closing the dedicated beta release channel.
 
-The remaining beta gap is narrower and almost entirely release-facing:
+Phase 11 is now complete for `0.1.0-beta.0`.
 
-- Experimental alpha components still need promotion decisions or continued beta-experimental treatment.
-- Beta publish channel, dist-tag policy and final release workflow still need HU-026.
+What remains is no longer beta-hardening baseline work; it is future product scope work:
+
+- experimental surfaces can stay `experimental-in-beta` or be promoted in later prereleases;
+- Beta+ decides the next controlled catalog expansion.
 
 See [Beta readiness evaluation](./beta/readiness.md).
 

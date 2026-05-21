@@ -1,15 +1,15 @@
 # @argfit-ui/mobile
 
-Mobile renderer package for ArgFit UI `0.1.0-alpha.0`.
+Mobile renderer package for ArgFit UI `0.1.0-beta.0`.
 
 This package contains touch-oriented implementations that render Ionic elements internally while keeping ArgFit public APIs vendor-independent. Application consumers should normally import components from `@argfit-ui/adaptive` instead of this renderer package.
 
-This package participates in the intended `0.1.0-beta.0` contract. The repository still builds as `0.1.0-alpha.0` until the beta publish channel is finalized.
+This package participates in the current `0.1.0-beta.0` contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@0.1.0-alpha.0 @argfit-ui/primitives@0.1.0-alpha.0 @argfit-ui/mobile@0.1.0-alpha.0
+pnpm add @argfit-ui/core@0.1.0-beta.0 @argfit-ui/primitives@0.1.0-beta.0 @argfit-ui/mobile@0.1.0-beta.0
 pnpm add @angular/cdk@^21.2.0 @ionic/angular@^8.8.7 echarts@^6.1.0
 ```
 

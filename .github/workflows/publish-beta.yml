@@ -1,0 +1,79 @@
+name: Publish Beta
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*-beta.*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish-beta:
+    name: Publish beta packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.2
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Validate release gate
+        run: pnpm release:beta:check
+
+      - name: Pack public tarballs
+        run: pnpm pack:beta
+
+      - name: Verify npm authentication
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "NPM_TOKEN secret is missing. Configure it as a GitHub Actions secret, not as a variable."
+            exit 1
+          fi
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/core
+        run: npm publish dist/beta-tarballs/argfit-ui-core-0.1.0-beta.0.tgz --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/primitives
+        run: npm publish dist/beta-tarballs/argfit-ui-primitives-0.1.0-beta.0.tgz --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/desktop
+        run: npm publish dist/beta-tarballs/argfit-ui-desktop-0.1.0-beta.0.tgz --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/mobile
+        run: npm publish dist/beta-tarballs/argfit-ui-mobile-0.1.0-beta.0.tgz --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/adaptive
+        run: npm publish dist/beta-tarballs/argfit-ui-adaptive-0.1.0-beta.0.tgz --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
