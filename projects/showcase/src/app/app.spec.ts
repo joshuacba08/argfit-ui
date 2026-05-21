@@ -96,7 +96,7 @@ describe('App', () => {
     expect(compiled.querySelector('.alpha-view')).not.toBeNull();
     expect(compiled.textContent).toContain('Beta+ consumer kit');
     expect(compiled.textContent).toContain('Beta+ wave 1');
-    expect(compiled.textContent).toContain('Beta+ wave 2 opening');
+    expect(compiled.textContent).toContain('Beta+ wave 2 current slice');
     expect(compiled.querySelector('a[href="docs/beta/quickstart.md"]')).not.toBeNull();
     expect(compiled.querySelector('a[href="docs/beta/components.md"]')).not.toBeNull();
     expect(compiled.querySelector('af-input-desktop')).not.toBeNull();
@@ -111,6 +111,11 @@ describe('App', () => {
     expect(compiled.querySelector('af-drawer-desktop')).not.toBeNull();
     expect(compiled.querySelector('.alpha-wave-grid--forms af-input-count-desktop')).not.toBeNull();
     expect(compiled.querySelector('.alpha-wave-grid--forms af-multi-select-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid--forms af-date-picker-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid--forms af-listbox-desktop')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid--forms af-field')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid--forms af-icon-field')).not.toBeNull();
+    expect(compiled.querySelector('.alpha-wave-grid--forms af-input-group')).not.toBeNull();
     expect(compiled.textContent).toContain('Adaptive API');
     expect(compiled.textContent).toContain('Beta+ wave 1');
   });
