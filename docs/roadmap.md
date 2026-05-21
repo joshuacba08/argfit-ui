@@ -482,20 +482,19 @@ Convert the healthy alpha into a reliable `0.1.0-beta.0` prerelease.
 
 ## Status
 
-PLANNED
+IN PROGRESS
 
 ## Current Evaluation
 
-The alpha release gate passes locally, including architecture, build, tests, packaging and smoke checks. The beta gap is now quality and contract hardening:
+The alpha release gate passes locally, including architecture, build, tests, packaging and smoke checks. HU-019 now documents the beta contract baseline in `docs/beta/beta-scope.md`, `docs/beta/public-api.md`, `docs/beta/component-engine-map.md` and `docs/beta/migration-alpha-to-beta.md`.
 
-- Public API needs a `stable-for-beta` contract.
-- Component engines need an explicit map: desktop PrimeNG-first, mobile Ionic-first, adaptive vendor-independent.
-- Experimental alpha components need promotion or explicit beta-experimental status.
-- Accessibility and keyboard behavior need a transversal audit.
+The remaining beta gap is quality and release hardening:
+
+- Experimental alpha components already have a stronger hardening baseline, but still need promotion decisions or continued beta-experimental treatment.
 - Visual regression and responsive QA need a reproducible gate.
 - Consumer compatibility needs validation outside the workspace.
 - Showcase performance budgets currently warn and must be resolved before beta.
-- Docs need beta quickstart, API reference and migration notes.
+- Beta release/reference docs still need finalization after the hardening work.
 
 See [Beta readiness evaluation](./beta/readiness.md).
 

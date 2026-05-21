@@ -161,6 +161,28 @@ describe('AfDataTableDesktopComponent', () => {
     expect(root.querySelector('.expanded-template')?.textContent).toContain('Maria Garcia');
   });
 
+  it('supports keyboard row activation with Enter and Space', async () => {
+    const fixture = TestBed.createComponent(DataTableHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    const firstRow = root.querySelector('tbody tr[tabindex="0"]') as HTMLElement;
+
+    firstRow.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.rowPressed()).toEqual(
+      expect.objectContaining({ id: 'a1' }),
+    );
+
+    fixture.componentInstance.rowPressed.set(undefined);
+    firstRow.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.rowPressed()).toEqual(
+      expect.objectContaining({ id: 'a1' }),
+    );
+  });
+
   it('renders pagination footer and emits pageChange', async () => {
     const fixture = TestBed.createComponent(DataTableHostComponent);
     fixture.detectChanges();

@@ -166,4 +166,32 @@ describe('AfDialogDesktopComponent', () => {
 
     expect(fixture.componentInstance.lastOpenChange).toBe(false);
   });
+
+  it('restores focus to the previously active trigger when closed', async () => {
+    await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(HostComponent);
+    document.body.appendChild(fixture.nativeElement);
+    fixture.detectChanges();
+
+    const trigger = document.createElement('button');
+    trigger.type = 'button';
+    trigger.textContent = 'Abrir dialogo';
+    document.body.appendChild(trigger);
+    trigger.focus();
+
+    fixture.componentInstance.open.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const close = fixture.nativeElement.querySelector(
+      '.af-dialog-desktop__close',
+    ) as HTMLButtonElement;
+    close.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(document.activeElement).toBe(trigger);
+
+    trigger.remove();
+  });
 });

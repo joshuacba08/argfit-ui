@@ -7,6 +7,7 @@ ArgFit UI `0.1.0-alpha.0` is an early distribution target. It is usable for cons
 - Breaking changes are allowed before beta.
 - `stable-for-alpha` APIs should receive migration notes when they change.
 - `experimental` APIs can change shape, naming or behavior more aggressively.
+- The planned beta contract is now documented in `docs/beta/beta-scope.md` and `docs/beta/public-api.md`; experimental alpha APIs should not be assumed to auto-promote.
 - Exact internal peer versions are required so prerelease packages are not mixed accidentally.
 
 ## Distribution
@@ -43,3 +44,5 @@ ArgFit UI `0.1.0-alpha.0` is an early distribution target. It is usable for cons
 - Keep ArgFit packages on the same alpha version.
 - Avoid styling vendor internals.
 - Treat experimental components as useful previews, not final contracts.
+- Even after HU-020/HU-021 hardening, experimental APIs only have a stronger beta baseline for CVA, keyboard and live-region behavior; they are still not stable contracts.
+- Review `docs/beta/migration-alpha-to-beta.md` before planning the `0.1.0-beta.0` upgrade path.

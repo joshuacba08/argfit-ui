@@ -36,6 +36,8 @@ describe('AfToastDesktopComponent', () => {
     const toast = fixture.nativeElement.querySelector('af-toast-desktop') as HTMLElement;
     expect(toast.getAttribute('data-severity')).toBe('danger');
     expect(toast.getAttribute('role')).toBe('alert');
+    expect(toast.getAttribute('aria-live')).toBe('assertive');
+    expect(toast.getAttribute('aria-atomic')).toBe('true');
     expect(toast.textContent).toContain('Error BLE');
     expect(toast.textContent).toContain('No se pudo conectar.');
 
@@ -45,5 +47,29 @@ describe('AfToastDesktopComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.dismissedId).toBe('toast-1');
+  });
+
+  it('uses polite live regions for non assertive severities', async () => {
+    @Component({
+      imports: [AfToastDesktopComponent],
+      template: `<af-toast-desktop [toast]="toast" />`,
+    })
+    class InfoHostComponent {
+      readonly toast: AfToast = {
+        id: 'toast-2',
+        title: 'Sincronizado',
+        severity: 'info',
+        duration: 4000,
+        persistent: false,
+      };
+    }
+
+    await TestBed.configureTestingModule({ imports: [InfoHostComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(InfoHostComponent);
+    fixture.detectChanges();
+
+    const toast = fixture.nativeElement.querySelector('af-toast-desktop') as HTMLElement;
+    expect(toast.getAttribute('role')).toBe('status');
+    expect(toast.getAttribute('aria-live')).toBe('polite');
   });
 });

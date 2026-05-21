@@ -96,6 +96,24 @@ describe('AfDataTableMobileComponent', () => {
     expect(fixture.componentInstance.selectedRowIds()).toEqual(['a1']);
   });
 
+  it('supports keyboard row activation with Enter and Space', async () => {
+    const fixture = TestBed.createComponent(MobileDataTableHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    const firstItem = root.querySelector('.af-data-table-mobile__item') as HTMLElement;
+
+    firstItem.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.rowPressed()).toEqual(expect.objectContaining({ id: 'a1' }));
+
+    fixture.componentInstance.rowPressed.set(undefined);
+    firstItem.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.rowPressed()).toEqual(expect.objectContaining({ id: 'a1' }));
+  });
+
   it('renders expanded row templates', async () => {
     const fixture = TestBed.createComponent(MobileDataTableHostComponent);
     fixture.detectChanges();

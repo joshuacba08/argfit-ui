@@ -4,9 +4,9 @@ Fecha de evaluacion: 2026-05-21.
 
 ## Veredicto
 
-La version alpha esta sana como alpha publica: compila, testea, empaqueta y tiene smoke test de consumo. Todavia no deberia llamarse beta.
+La version alpha sigue sana como alpha publica: compila, testea, empaqueta y tiene smoke test de consumo. HU-019 ya define el contrato beta base, pero el producto todavia no deberia llamarse beta.
 
-El salto a beta no necesita "mas componentes por cantidad"; necesita estabilizar contrato, validar consumo real, cerrar deuda visual/accesible y eliminar warnings de release. La beta debe sentirse como un prerelease confiable, no como una demo amplia.
+El salto a beta no necesita mas catalogo por cantidad. Necesita cerrar calidad, accesibilidad, compatibilidad real y warnings de release sobre un contrato ya documentado.
 
 ## Evidencia Actual
 
@@ -21,37 +21,53 @@ El salto a beta no necesita "mas componentes por cantidad"; necesita estabilizar
 - Pack dry-run y tarballs alpha: `PASS`.
 - Alpha smoke: `PASS`.
 
-Tarballs generados por el gate:
+## Salida De HU-019
 
-| Package | Tarball size |
-| --- | ---: |
-| `@argfit-ui/core` | 21,078 bytes |
-| `@argfit-ui/primitives` | 9,768 bytes |
-| `@argfit-ui/desktop` | 92,828 bytes |
-| `@argfit-ui/mobile` | 84,918 bytes |
-| `@argfit-ui/adaptive` | 42,543 bytes |
+HU-019 ya define el baseline documental para beta:
+
+- [Beta scope](./beta-scope.md)
+- [Beta public API](./public-api.md)
+- [Component engine map](./component-engine-map.md)
+- [Migration alpha -> beta](./migration-alpha-to-beta.md)
+- [HU-019](../hus/HU-019-beta-scope-public-api-contract.md)
+
+La decision actual es conservadora:
+
+- El catalogo base se promueve a `stable-for-beta`.
+- `AfAnalyticsCard`, `AfDataTable`, expanded form controls y feedback siguen `experimental-in-beta`.
+- `@argfit-ui/desktop` y `@argfit-ui/mobile` permanecen `renderer-specific`.
+- PrimeNG en mobile sigue con cero excepciones aprobadas para beta.
+
+## Salida De HU-020 Y HU-021
+
+El baseline beta tambien quedo reforzado con:
+
+- hardening contractual para superficies `experimental-in-beta`, sin promocionarlas todavia;
+- cobertura explicita de teclado para data table desktop/mobile;
+- cobertura explicita de focus return en dialog desktop/mobile;
+- cobertura explicita de live regions en toast e inline message;
+- [matriz y gate de accesibilidad beta](./accessibility.md);
+- comando reproducible `pnpm audit:accessibility`.
 
 ## Fortalezas Para Beta
 
 - Arquitectura por capas clara y protegida por guard.
 - API adaptativa vendor-independent.
 - Paquetes publishables con metadata, licencia y tarball flow.
+- Contrato beta inicial ya documentado export por export.
 - Showcase con shell, data table, analytics, forms, feedback y seccion alpha.
 - Buen volumen inicial de tests por core, primitives, desktop, mobile, adaptive y showcase.
 - CI alpha y publish alpha ya existen.
 
-## Bloqueantes Beta
+## Bloqueantes Beta Restantes
 
-1. No existe contrato `stable-for-beta`. La documentacion separa `stable-for-alpha` y `experimental`, pero beta necesita una decision mas estricta export por export.
-2. APIs experimentales amplias siguen sin cierre formal: `AfDataTable`, `AfAnalyticsCard`, form controls, `AfPassword`, feedback y `AfToastService`.
-3. No hay pipeline de visual regression ni QA responsive automatizado.
-4. La accesibilidad esta cubierta por componentes y tests puntuales, pero no hay auditoria beta transversal.
-5. El smoke de consumidor es minimo; falta una matriz de consumo real desde tarballs/paquetes, con app externa temporal y casos de peer dependencies.
-6. El showcase compila con warnings de presupuesto:
+1. APIs `experimental-in-beta` ya tienen baseline de hardening, pero todavia necesitan validacion de campo y una decision final de promocion o permanencia experimental.
+2. No hay pipeline de visual regression ni QA responsive automatizado.
+3. El smoke de consumidor sigue siendo minimo; falta una matriz de consumo real desde paquetes publicados o tarballs.
+4. El showcase compila con warnings de presupuesto:
    - Initial bundle: `2.25 MB` vs warning budget `750 kB`.
    - `projects/showcase/src/app/app.scss`: `12.95 kB` vs warning budget `8 kB`.
-7. Falta documentar la decision de engines: desktop PrimeNG-first, mobile Ionic-first, y PrimeNG en mobile solo como excepcion interna.
-8. La documentacion beta aun no existe: public API beta, migracion alpha -> beta, compatibilidad y release notes beta.
+5. Aun faltan docs beta de release/reference final y un gate beta dedicado.
 
 ## Definicion Recomendada De Beta
 
@@ -64,7 +80,7 @@ Una beta esta lista cuando:
 - Los componentes que se promuevan a beta tienen tests de contrato, accesibilidad y mobile/desktop parity.
 - `pnpm release:beta:check` pasa sin warnings de build.
 - Existe visual regression o un gate visual documentado y reproducible.
-- Existe consumer compatibility smoke con tarballs generados.
+- Existe consumer compatibility smoke con tarballs o paquetes publicados.
 - Hay guia de migracion alpha -> beta.
 - La publicacion usa dist-tag `beta` y no sobreescribe el canal `alpha`.
 
@@ -83,11 +99,9 @@ El camino beta queda dividido en estas HUs:
 
 ## Recomendacion De Orden
 
-Primero hacer HU-019. Sin una decision de scope, las demas HUs pueden estabilizar cosas que despues no entren en beta.
-
-Despues ejecutar en paralelo o por bloques:
+HU-019 ya resolvio la decision de scope. El siguiente bloque natural es:
 
 - HU-020, HU-021 y HU-022 para calidad del catalogo.
 - HU-023 y HU-024 para consumo y performance.
-- HU-025 cuando el contrato de HU-019 ya este cerrado.
-- HU-026 al final como gate y publicacion.
+- HU-025 para reference/release docs cuando el hardening ya exista.
+- HU-026 al final como gate y publicacion beta.

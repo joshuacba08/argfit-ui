@@ -1,15 +1,15 @@
 # ArgFit UI - Component Engine Map
 
-## Decision
+## Beta Renderer Decision
 
-ArgFit UI should not mirror PrimeNG one-to-one. PrimeNG and Ionic are rendering engines, not the public product API.
+ArgFit UI should not mirror PrimeNG or Ionic one-to-one. PrimeNG and Ionic are rendering engines, not the public product API.
 
-Default policy:
+Renderer contract for the beta target:
 
 - Desktop renderer: PrimeNG-first.
 - Mobile renderer: Ionic-first.
 - Adaptive package: ArgFit-owned API only.
-- PrimeNG in mobile is allowed only as an internal exception when it improves delivery without hurting touch UX, accessibility, bundle size or platform feel.
+- Current beta scope approves zero PrimeNG exceptions inside `argfit-ui-mobile`.
 
 The public contract remains:
 
@@ -19,79 +19,71 @@ import { AfButton, AfDataTable, AfDialog } from '@argfit-ui/adaptive';
 
 Consumers should not need to know whether the renderer is PrimeNG, Ionic, ECharts or custom ArgFit code.
 
-## Mobile PrimeNG Exception Rule
+## Mobile PrimeNG Policy
 
-PrimeNG may be used inside `argfit-ui-mobile` only when all conditions below are true:
+For `0.1.0-beta.0`, PrimeNG is not approved inside `argfit-ui-mobile`.
 
-- Ionic has no strong equivalent for the behavior.
-- The interaction does not depend on delicate mobile gestures, safe areas or native-feeling overlays.
-- The component still feels touch-first, not like a desktop widget squeezed into a phone.
-- The public API does not expose PrimeNG symbols, types, CSS classes or event shapes.
-- The bundle impact is measured and acceptable.
-- Accessibility and keyboard/touch behavior are validated.
+That matches the current architecture guard. A future exception would require a dedicated architecture change and all of the following conditions:
 
-Examples where PrimeNG mobile is usually not recommended:
+- Ionic has no strong equivalent.
+- The resulting interaction still feels touch-first.
+- Safe areas, keyboard behavior and mobile overlays are not degraded.
+- No PrimeNG symbols, types, events or classes leak into the public API.
+- Bundle impact is measured and accepted.
+- Tests or visual QA prove it does not look like a desktop widget shrunk onto a phone.
 
-- Dense table rendering on phones.
-- Desktop-style dropdowns.
-- Desktop dialogs instead of mobile sheets/modals.
-- Tooltip-heavy interactions.
-- Complex desktop menus.
+## Beta Component Matrix
 
-Examples where PrimeNG mobile can be considered:
-
-- Simple status or display components if they do not leak vendor API.
-- Utility components without mobile-specific interaction complexity.
-- Tablet/large-screen mobile renderers where the UX is intentionally desktop-like.
-
-## Priority Matrix
-
-| Priority | ArgFit API | PrimeNG desktop engine | Ionic mobile engine | Recommendation |
+| ArgFit API | PrimeNG desktop engine | Ionic mobile engine | Beta category | Decision |
 | --- | --- | --- | --- | --- |
-| High | `AfButton` | `Button` | `ion-button` | Existing beta core candidate |
-| High | `AfInput` | `InputText`, `IconField`, `InputGroup` | `ion-input`, `ion-searchbar` | Existing beta core candidate |
-| High | `AfTextarea` | `Textarea` | `ion-textarea` | Existing beta candidate |
-| High | `AfPassword` | `Password` | `ion-input`, `ion-input-password-toggle` | Existing beta candidate |
-| High | `AfSelect` | `Select` | `ion-select` | Existing beta candidate |
-| High | `AfMultiSelect` | `MultiSelect` | `ion-select` with multiple or modal list | Post-beta candidate |
-| High | `AfCheckbox` | `Checkbox` | `ion-checkbox` | Existing beta candidate |
-| High | `AfRadioGroup` | `RadioButton` | `ion-radio-group`, `ion-radio` | Existing beta candidate |
-| High | `AfToggle` | `ToggleSwitch` | `ion-toggle` | Existing beta candidate |
-| High | `AfSegmentedControl` | `SelectButton` | `ion-segment`, `ion-segment-button` | Existing beta candidate |
-| High | `AfDialog` | `Dialog`, `ConfirmDialog` | `ion-modal`, `ion-alert` | Existing beta core candidate |
-| High | `AfToast`, `AfInlineMessage` | `Toast`, `Message` | `ion-toast` plus custom inline message | Existing beta candidate |
-| High | `AfBadge` | `Badge`, `Tag`, parts of `Chip` | `ion-badge`, `ion-chip` | Existing beta core candidate |
-| High | `AfCard` | `Card`, `Panel` | `ion-card` | Existing beta core candidate |
-| High | `AfDataTable` | `Table`, `Paginator` | `ion-list`, `ion-item`, `ion-infinite-scroll`, `ion-refresher` or custom list | Existing beta candidate; mobile must not force horizontal table |
-| High | `AfPageShell` | `Menu`, `Menubar`, `Breadcrumb`, `Toolbar`, `Drawer` | `ion-menu`, `ion-split-pane`, `ion-tabs`, `ion-toolbar` | Existing beta core candidate |
-| Medium | `AfPopover` | `Popover`, `ConfirmPopup` | `ion-popover` | Beta+ candidate |
-| Medium | `AfDrawer` | `Drawer` | `ion-menu` or `ion-modal` sheet | Beta+ candidate |
-| Medium | `AfTooltip` | `Tooltip` | Custom help popover/sheet | Desktop-first, mobile carefully scoped |
-| Medium | `AfAutocomplete` | `AutoComplete` | `ion-searchbar` plus modal/list/popover | Post-beta candidate |
-| Medium | `AfDatePicker` | `DatePicker` | `ion-datetime`, `ion-datetime-button`, `ion-picker` | Post-beta candidate |
-| Medium | `AfFileUpload` | `FileUpload` | Native file input plus optional Capacitor integration | Post-beta candidate |
-| Medium | `AfProgress` | `ProgressBar`, `ProgressSpinner`, `Skeleton` | `ion-progress-bar`, `ion-spinner`, `ion-skeleton-text`, `ion-loading` | Beta+ candidate |
-| Medium | `AfAvatar` | `Avatar` | `ion-avatar` | Beta+ candidate |
-| Medium | `AfChip` | `Chip`, `Tag` | `ion-chip` | Beta+ candidate |
-| Medium | `AfAccordion` | `Accordion` | `ion-accordion`, `ion-accordion-group` | Beta+ candidate |
-| Low | `AfSlider` | `Slider`, `Knob` | `ion-range` | Post-beta candidate |
-| Low | `AfTabs` | `Tabs` | `ion-tabs` or `ion-segment` | Usually covered by shell/segment |
-| Low | `AfStepper` | `Stepper` | Custom mobile flow with segment/cards | Post-beta candidate |
-| Low | `AfTree` | `Tree`, `TreeSelect`, `TreeTable` | Custom list/tree pattern | Enterprise advanced |
-| Low | `AfVirtualList` | `VirtualScroller`, table virtualization | Custom/CDK strategy | Enterprise advanced |
-| Low | `AfActionSheet` | `Menu`, `SplitButton`, `SpeedDial` | `ion-action-sheet`, `ion-fab` | Mobile-first, post-beta candidate |
-| Not core | `AfCarousel`, `AfGallery`, `AfImageCompare`, `AfOrganizationChart`, `AfTerminal`, `AfDock`, `AfMegaMenu` | PrimeNG specialized components | Partial or no Ionic equivalent | Not recommended for beta core |
+| `AfButton` | `Button` | `ion-button` | `stable-for-beta` | Keep as a stable base action contract. |
+| `AfInput` | `InputText`, `IconField`, `InputGroup` | `ion-input`, `ion-searchbar` | `stable-for-beta` | Keep as a stable base input contract. |
+| `AfTextarea` | `Textarea` | `ion-textarea` | `experimental-in-beta` | Useful, but still part of the wider form-controls hardening surface. |
+| `AfPassword` | `Password` | `ion-input`, `ion-input-password-toggle` | `experimental-in-beta` | Reveal semantics and mobile keyboard behavior still need more validation. |
+| `AfSelect` | `Select` | `ion-select` | `experimental-in-beta` | Overlay and mobile selection UX remain higher risk. |
+| `AfCheckbox` | `Checkbox` | `ion-checkbox` | `experimental-in-beta` | Keep experimental until the full form-control contract is hardened. |
+| `AfRadioGroup` | `RadioButton` | `ion-radio-group`, `ion-radio` | `experimental-in-beta` | Keep experimental until the full form-control contract is hardened. |
+| `AfToggle` | `ToggleSwitch` | `ion-toggle` | `experimental-in-beta` | Keep experimental until the full form-control contract is hardened. |
+| `AfSegmentedControl` | `SelectButton` | `ion-segment`, `ion-segment-button` | `experimental-in-beta` | Platform interaction details still need more consumer validation. |
+| `AfDialog` | `Dialog`, `ConfirmDialog` | `ion-modal`, `ion-alert` | `stable-for-beta` | Core modal/sheet contract is stable enough for beta. |
+| `AfToast` and `AfInlineMessage` | `Toast`, `Message` | `ion-toast` plus custom inline message | `experimental-in-beta` | Feedback orchestration remains under validation. |
+| `AfBadge` | `Badge`, `Tag`, parts of `Chip` | `ion-badge`, `ion-chip` | `stable-for-beta` | Compact status/tag display contract is already small and coherent. |
+| `AfCard` | `Card`, `Panel` | `ion-card` | `stable-for-beta` | Stable composition surface. |
+| `AfChart` | ArgFit wrapper over ECharts | ArgFit wrapper over ECharts | `stable-for-beta` | Public chart contract is ArgFit-owned even though the engine is shared. |
+| `AfAnalyticsCard` | Custom ArgFit composition plus chart/card primitives | Custom ArgFit composition plus chart/card primitives | `experimental-in-beta` | Layout composition and analytics density contracts still need more validation. |
+| `AfDataTable` | `Table`, `Paginator` | `ion-list`, `ion-item`, `ion-infinite-scroll`, `ion-refresher` or custom list | `experimental-in-beta` | Mobile must stay list-first and the enterprise surface is still broad. |
+| `AfPageShell` | `Menu`, `Menubar`, `Breadcrumb`, `Toolbar`, `Drawer` | `ion-menu`, `ion-split-pane`, `ion-tabs`, `ion-toolbar` | `stable-for-beta` | One of the strongest current adaptive differentiators. |
+
+## Beta+ And Post-Beta Candidates
+
+| API | Likely engines | Target |
+| --- | --- | --- |
+| `AfPopover` | `Popover`, `ConfirmPopup` / `ion-popover` | Beta+ candidate |
+| `AfDrawer` | `Drawer` / `ion-menu` or modal sheet | Beta+ candidate |
+| `AfTooltip` | `Tooltip` / custom help popover or inline help | Beta+ candidate |
+| `AfProgress` | `ProgressBar`, `ProgressSpinner`, `Skeleton` / `ion-progress-bar`, `ion-spinner`, `ion-skeleton-text` | Beta+ candidate |
+| `AfAvatar` | `Avatar` / `ion-avatar` | Beta+ candidate |
+| `AfChip` | `Chip`, `Tag` / `ion-chip` | Beta+ candidate |
+| `AfAccordion` | `Accordion` / `ion-accordion`, `ion-accordion-group` | Beta+ candidate |
+| `AfAutocomplete` | `AutoComplete` / `ion-searchbar` plus modal-list pattern | Post-beta candidate |
+| `AfDatePicker` | `DatePicker` / `ion-datetime`, `ion-datetime-button`, `ion-picker` | Post-beta candidate |
+| `AfFileUpload` | `FileUpload` / native file input plus optional Capacitor integration | Post-beta candidate |
+| `AfSlider` | `Slider`, `Knob` / `ion-range` | Post-beta candidate |
+| `AfStepper` | `Stepper` / custom card-flow or segment-flow | Post-beta candidate |
+| `AfTree` | `Tree`, `TreeSelect`, `TreeTable` / custom list-tree pattern | Post-beta candidate |
+| `AfVirtualList` | `VirtualScroller` / custom or CDK-backed strategy | Post-beta candidate |
+| `AfActionSheet` | `Menu`, `SplitButton`, `SpeedDial` / `ion-action-sheet`, `ion-fab` | Post-beta candidate |
 
 ## Product Interpretation
 
-For ArgFit, equivalent does not always mean same widget.
+Equivalent does not mean identical widget.
 
 Examples:
 
-- Desktop `AfDataTable` can be a PrimeNG-style table, but mobile `AfDataTable` should become a prioritized list or cards.
-- Desktop `AfDialog` can be a centered modal, but mobile `AfDialog` should become a sheet/modal/alert pattern.
+- Desktop `AfDataTable` can be a PrimeNG-style table, but mobile `AfDataTable` should stay a prioritized list or cards.
+- Desktop `AfDialog` can be a centered modal, but mobile `AfDialog` should prefer sheet/modal/alert patterns.
 - Desktop `AfTooltip` can be hover/focus driven, but mobile should prefer tap help, popover or inline disclosure.
 - Desktop `AfAutocomplete` can be an overlay input, but mobile should prefer searchbar plus modal/list.
 
-The goal is one ArgFit API with platform-appropriate behavior.
+The goal remains one ArgFit API with platform-appropriate behavior.
 

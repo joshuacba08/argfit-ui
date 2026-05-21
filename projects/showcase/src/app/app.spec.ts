@@ -36,6 +36,8 @@ describe('App', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('main.af-page-shell-desktop__content')).not.toBeNull();
+    expect(compiled.querySelector('nav.af-sidebar-desktop__nav')).not.toBeNull();
     const navItems = compiled.querySelectorAll('.af-sidebar-desktop__item');
     expect(navItems.length).toBeGreaterThanOrEqual(5);
     expect(compiled.querySelector('.af-sidebar-desktop__item--active')?.getAttribute('aria-current')).toBe(
@@ -59,6 +61,8 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const tabs = compiled.querySelectorAll('.af-bottom-tabs-mobile__item');
     expect(compiled.querySelector('af-page-shell-mobile')).not.toBeNull();
+    expect(compiled.querySelector('main.af-page-shell-mobile__content')).not.toBeNull();
+    expect(compiled.querySelector('nav.af-bottom-tabs-mobile__nav')).not.toBeNull();
     expect(tabs.length).toBeGreaterThanOrEqual(4);
     expect(compiled.querySelector('.af-bottom-tabs-mobile__item--active')?.getAttribute('aria-current')).toBe(
       'page',
@@ -324,6 +328,8 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('af-toast-viewport-desktop')).not.toBeNull();
     expect(compiled.querySelectorAll('af-inline-message-desktop').length).toBeGreaterThanOrEqual(3);
+    expect(compiled.querySelector('af-inline-message-desktop[role="status"][aria-live="polite"]')).not.toBeNull();
+    expect(compiled.querySelector('af-inline-message-desktop[role="alert"][aria-live="assertive"]')).not.toBeNull();
     expect(compiled.textContent).toContain('Feedback operativo');
     expect(compiled.textContent).toContain('Sesion sincronizada');
     expect(compiled.textContent).toContain('Toast viewport');
@@ -333,6 +339,7 @@ describe('App', () => {
     await fixture.whenStable();
 
     expect(compiled.querySelector('af-toast-desktop')?.textContent).toContain('Sesion guardada');
+    expect(compiled.querySelector('af-toast-desktop[role="status"][aria-live="polite"]')).not.toBeNull();
     toastService.clear();
   });
 

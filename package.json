@@ -21,6 +21,7 @@
     "release:alpha:check": "pnpm guard:architecture && pnpm build:all && pnpm test:all && pnpm pack:alpha:dry-run:dist && pnpm pack:alpha:dist && pnpm smoke:alpha",
     "guard:architecture": "node tools/architecture-guard.mjs",
     "guard:regression": "node tools/regression-guard.mjs",
+    "audit:accessibility": "ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
     "test:all": "pnpm build:libs && pnpm guard:architecture && pnpm guard:regression && ng test argfit-ui-core --watch=false && ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

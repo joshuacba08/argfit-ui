@@ -25,6 +25,8 @@ ArgFit UI is currently prepared as `0.1.0-alpha.0`. The workspace contains the c
 
 The official `0.1.0-alpha.0` surface is tracked in the alpha docs. Stable-for-alpha components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Newer data, analytics, form, password, and feedback components are available as experimental alpha APIs.
 
+The planned beta contract is now documented in the beta docs. It keeps the base catalog as `stable-for-beta`, leaves analytics, data-table, expanded form controls and feedback as `experimental-in-beta`, and preserves renderer packages as renderer-specific APIs.
+
 ## Package Architecture
 
 ```txt
@@ -216,6 +218,11 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Alpha release checklist](docs/alpha/release-checklist.md)
 - [Alpha package metadata](docs/alpha/package-metadata.md)
 - [Publish alpha procedure](docs/alpha/publish-alpha.md)
+- [Beta scope](docs/beta/beta-scope.md)
+- [Beta public API](docs/beta/public-api.md)
+- [Beta component engine map](docs/beta/component-engine-map.md)
+- [Beta accessibility audit](docs/beta/accessibility.md)
+- [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
 - [Beta readiness evaluation](docs/beta/readiness.md)
 - [Changelog](CHANGELOG.md)
 - [Human units](docs/hus/README.md)

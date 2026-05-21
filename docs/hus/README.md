@@ -29,7 +29,9 @@ Cada HU debe poder entregarse a un agente de codigo sin contexto verbal extra. P
 
 La evaluacion actual de alpha vive en [docs/beta/readiness.md](../beta/readiness.md). Estas HUs definen el trabajo minimo recomendado para pasar de `0.1.0-alpha.0` a `0.1.0-beta.0`.
 
-La estrategia de engines vive en [docs/beta/component-engine-map.md](../beta/component-engine-map.md): desktop PrimeNG-first, mobile Ionic-first y PrimeNG en mobile solo como excepcion interna justificada.
+El contrato beta base vive en [docs/beta/beta-scope.md](../beta/beta-scope.md), [docs/beta/public-api.md](../beta/public-api.md) y [docs/beta/migration-alpha-to-beta.md](../beta/migration-alpha-to-beta.md).
+
+La estrategia de engines vive en [docs/beta/component-engine-map.md](../beta/component-engine-map.md): desktop PrimeNG-first, mobile Ionic-first y cero excepciones PrimeNG aprobadas en mobile para el beta actual.
 
 19. [HU-019 — Beta Scope And Public API Contract](./HU-019-beta-scope-public-api-contract.md)
 20. [HU-020 — Beta Experimental Components Hardening](./HU-020-beta-experimental-components-hardening.md)
