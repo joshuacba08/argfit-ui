@@ -20,6 +20,8 @@ import {
     AfChart,
     AfChip,
     AfCheckbox,
+    AfDataView,
+    AfDataViewActionsDirective,
     AfDataTable,
     AfDataTableCellDirective,
     AfDataTableEmptyDirective,
@@ -45,6 +47,7 @@ import {
     AfListbox,
     AfMetricCard,
     AfMultiSelect,
+    AfPaginator,
     AfPageShell,
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,
@@ -76,10 +79,14 @@ import {
     type AfDataTablePageChange,
     type AfDataTablePagination,
     type AfDataTableSort,
+    type AfDataViewItem,
+    type AfDataViewLayout,
     type AfFeedbackSeverity,
     type AfFormOption,
     type AfIconName,
     type AfNavigationItem,
+    type AfPaginatorPageChange,
+    type AfPaginatorState,
     type AfPlatformPreference,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
@@ -128,6 +135,8 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfChart,
     AfChip,
     AfCheckbox,
+    AfDataView,
+    AfDataViewActionsDirective,
     AfDataTable,
     AfDataTableCellDirective,
     AfDataTableEmptyDirective,
@@ -150,6 +159,7 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfListbox,
     AfMetricCard,
     AfMultiSelect,
+    AfPaginator,
     AfPageShell,
     AfPageShellBrandDirective,
     AfPageShellActionsDirective,
@@ -317,10 +327,77 @@ export class App {
     { id: 'dj', title: 'DJ', hint: 'Drop Jump' },
     { id: 'abalakov', title: 'Abalakov', hint: 'Brazo libre' },
   ];
+  protected readonly alphaDataViewItems: readonly AfDataViewItem[] = [
+    {
+      id: 'session-target-power',
+      title: 'Sesion objetivo de potencia',
+      eyebrow: 'CMJ + RSI',
+      description: 'Bloque de 8 intentos con feedback operativo y control de carga por atleta.',
+      meta: 'Hoy 10:30',
+      supportingText: 'Grupo principal · San Lorenzo',
+      badge: { label: 'Activa', tone: 'success' },
+    },
+    {
+      id: 'drop-jump-screening',
+      title: 'Screening de Drop Jump',
+      eyebrow: 'Evaluacion',
+      description: 'Filtro rapido para asimetria y fatiga residual antes del entrenamiento.',
+      meta: 'Hoy 12:15',
+      supportingText: 'Staff medico · 6 atletas',
+      badge: { label: 'Revision', tone: 'warning' },
+    },
+    {
+      id: 'force-block-u21',
+      title: 'Bloque de fuerza U21',
+      eyebrow: 'Sentadilla',
+      description: 'Sesiones con seguimiento de fuerza maxima, saltos previos y recuperacion.',
+      meta: 'Manana 08:00',
+      supportingText: 'Plantel U21 · 14 atletas',
+      badge: { label: 'Planificada', tone: 'primary' },
+    },
+    {
+      id: 'travel-readiness',
+      title: 'Readiness pre-viaje',
+      eyebrow: 'Quick check',
+      description: 'Control de readiness para delegacion con carga baja y sesion tactica.',
+      meta: 'Viernes 07:45',
+      supportingText: 'Seleccion regional · 10 atletas',
+      badge: { label: 'Compacta', tone: 'accent' },
+    },
+    {
+      id: 'injury-return-board',
+      title: 'Seguimiento de retorno',
+      eyebrow: 'Rehab',
+      description: 'Vista resumida de salto, fuerza y dolor percibido para altas progresivas.',
+      meta: 'Lunes 17:00',
+      supportingText: 'Fisioterapia · 4 casos',
+      badge: { label: 'Sensibles', tone: 'danger' },
+    },
+    {
+      id: 'weekly-load-review',
+      title: 'Revision de carga semanal',
+      eyebrow: 'Analytics',
+      description: 'Resumen de volumen, fuerza y mejor salto para comparativa de microciclos.',
+      meta: 'Domingo 18:20',
+      supportingText: 'Coaching staff · 3 equipos',
+      badge: { label: 'Resumen', tone: 'neutral' },
+    },
+  ];
   protected readonly alphaInputCountControl = new FormControl<number>(6, { nonNullable: true });
   protected readonly alphaDatePickerControl = new FormControl<string>('2026-05-22', { nonNullable: true });
   protected readonly alphaListboxControl = new FormControl<readonly unknown[]>(['cmj', 'dj'], { nonNullable: true });
   protected readonly alphaMultiSelectControl = new FormControl<readonly unknown[]>(['cmj'], { nonNullable: true });
+  protected readonly alphaDataViewLayout = signal<AfDataViewLayout>('grid');
+  protected readonly alphaDataViewPage = signal<AfPaginatorState>({
+    pageIndex: 0,
+    pageSize: 4,
+    totalItems: this.alphaDataViewItems.length,
+  });
+  protected readonly alphaVisibleDataViewItems = computed(() => {
+    const page = this.alphaDataViewPage();
+    const start = page.pageIndex * page.pageSize;
+    return this.alphaDataViewItems.slice(start, start + page.pageSize);
+  });
   protected readonly newAthleteForm = new FormGroup({
     name: new FormControl<string>('Maria Garcia', { nonNullable: true }),
     email: new FormControl<string>('maria@club.com.ar', { nonNullable: true }),
@@ -722,6 +799,25 @@ export class App {
 
   protected alphaListboxSummary(): string {
     return this.formatAlphaSelection(this.alphaListboxControl.value, 'Sin tests fijados');
+  }
+
+  protected setAlphaDataViewLayout(layout: AfDataViewLayout): void {
+    this.alphaDataViewLayout.set(layout);
+    this.recordAction(`Beta+ data view → ${layout}`);
+  }
+
+  protected setAlphaDataViewPage(page: AfPaginatorPageChange): void {
+    this.alphaDataViewPage.update((current) => ({
+      ...current,
+      pageIndex: page.pageIndex,
+      pageSize: page.pageSize,
+      totalItems: this.alphaDataViewItems.length,
+    }));
+    this.recordAction(`Beta+ paginator → ${page.pageIndex + 1}`);
+  }
+
+  protected recordAlphaDataViewItem(item: AfDataViewItem): void {
+    this.recordAction(`Beta+ data view item → ${item.title}`);
   }
 
   private formatAlphaSelection(value: unknown, emptyText: string): string {

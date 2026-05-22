@@ -43,6 +43,18 @@ export {
     AfCheckboxComponent as AfCheckbox, AfCheckboxComponent
 } from './lib/components/checkbox/af-checkbox.component';
 export {
+    AfDataViewItemDirective
+} from './lib/components/data-view/af-data-view-item.directive';
+export {
+    AF_DATA_VIEW_SLOT_DIRECTIVES,
+    AfDataViewActionsDirective,
+    AfDataViewEmptyDirective,
+    AfDataViewLoadingDirective
+} from './lib/components/data-view/af-data-view-slots.directive';
+export {
+    AfDataViewComponent as AfDataView, AfDataViewComponent
+} from './lib/components/data-view/af-data-view.component';
+export {
     AfDataTableCellDirective,
     AfDataTableExpandedRowDirective
 } from './lib/components/data-table/af-data-table-cell.directive';
@@ -110,6 +122,9 @@ export {
 export {
     AfMultiSelectComponent as AfMultiSelect, AfMultiSelectComponent
 } from './lib/components/multi-select/af-multi-select.component';
+export {
+    AfPaginatorComponent as AfPaginator, AfPaginatorComponent
+} from './lib/components/paginator/af-paginator.component';
 export {
     AF_PAGE_SHELL_SLOT_DIRECTIVES,
     AfPageShellActionsDirective,

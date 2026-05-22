@@ -1,0 +1,25 @@
+@if (isMobile()) {
+  <af-paginator-mobile
+    [pageIndex]="pageIndex()"
+    [pageSize]="pageSize()"
+    [totalItems]="totalItems()"
+    [disabled]="disabled()"
+    [density]="density()"
+    [ariaLabel]="ariaLabel()"
+    [previousLabel]="previousLabel()"
+    [nextLabel]="nextLabel()"
+    (pageChange)="pageChange.emit($event)"
+  />
+} @else {
+  <af-paginator-desktop
+    [pageIndex]="pageIndex()"
+    [pageSize]="pageSize()"
+    [totalItems]="totalItems()"
+    [disabled]="disabled()"
+    [density]="density()"
+    [ariaLabel]="ariaLabel()"
+    [previousLabel]="previousLabel()"
+    [nextLabel]="nextLabel()"
+    (pageChange)="pageChange.emit($event)"
+  />
+}

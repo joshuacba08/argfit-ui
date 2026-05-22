@@ -1,0 +1,39 @@
+<nav class="af-paginator-desktop__nav" [attr.aria-label]="ariaLabel()">
+  <span class="af-paginator-desktop__summary">Mostrando {{ pageStart() }}-{{ pageEnd() }} de {{ normalizedTotalItems() }}</span>
+
+  <div class="af-paginator-desktop__pages">
+    <button
+      type="button"
+      (click)="previousPage()"
+      [disabled]="!canGoPrevious()"
+      [attr.aria-label]="previousLabel()"
+    >
+      <af-icon name="chevron-left" size="xs" [decorative]="true" />
+    </button>
+
+    @for (token of pageTokens(); track $index) {
+      @if (isEllipsis(token)) {
+        <span class="af-paginator-desktop__ellipsis" aria-hidden="true">...</span>
+      } @else {
+        <button
+          type="button"
+          [class.af-paginator-desktop__page--active]="isActivePage(token)"
+          [attr.aria-current]="isActivePage(token) ? 'page' : null"
+          (click)="goToPage(token)"
+          [disabled]="disabled()"
+        >
+          {{ token + 1 }}
+        </button>
+      }
+    }
+
+    <button
+      type="button"
+      (click)="nextPage()"
+      [disabled]="!canGoNext()"
+      [attr.aria-label]="nextLabel()"
+    >
+      <af-icon name="chevron-right" size="xs" [decorative]="true" />
+    </button>
+  </div>
+</nav>

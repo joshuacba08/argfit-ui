@@ -1,0 +1,25 @@
+<nav class="af-paginator-mobile__nav" [attr.aria-label]="ariaLabel()">
+  <div class="af-paginator-mobile__summary">
+    <strong>{{ pageStart() }}-{{ pageEnd() }} de {{ normalizedTotalItems() }}</strong>
+    <span>Pagina {{ currentPage() + 1 }} de {{ totalPages() }}</span>
+  </div>
+
+  <div class="af-paginator-mobile__actions">
+    <button
+      type="button"
+      (click)="previousPage()"
+      [disabled]="!canGoPrevious()"
+      [attr.aria-label]="previousLabel()"
+    >
+      <af-icon name="chevron-left" size="xs" [decorative]="true" />
+    </button>
+    <button
+      type="button"
+      (click)="nextPage()"
+      [disabled]="!canGoNext()"
+      [attr.aria-label]="nextLabel()"
+    >
+      <af-icon name="chevron-right" size="xs" [decorative]="true" />
+    </button>
+  </div>
+</nav>

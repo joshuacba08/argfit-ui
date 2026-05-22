@@ -433,6 +433,70 @@
               </div>
             </div>
           </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 3 initial slice</span>
+                <h3 afCardTitle>Data Beta+: AfDataView y AfPaginator</h3>
+              </div>
+              <af-badge tone="accent">HU-032</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid">
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Data view</span>
+                <h4 class="alpha-wave-panel__title">Vista list/grid para sesiones y workflows de staff</h4>
+                <div class="alpha-form-stack">
+                  <af-data-view
+                    [items]="alphaVisibleDataViewItems()"
+                    [layout]="alphaDataViewLayout()"
+                    ariaLabel="Vista beta plus de sesiones operativas"
+                    (itemPressed)="recordAlphaDataViewItem($event)"
+                  >
+                    <div afDataViewActions class="alpha-inline-actions">
+                      <af-button
+                        size="sm"
+                        [variant]="alphaDataViewLayout() === 'grid' ? 'primary' : 'secondary'"
+                        (pressed)="setAlphaDataViewLayout('grid')"
+                      >
+                        Grid
+                      </af-button>
+                      <af-button
+                        size="sm"
+                        [variant]="alphaDataViewLayout() === 'list' ? 'primary' : 'secondary'"
+                        (pressed)="setAlphaDataViewLayout('list')"
+                      >
+                        List
+                      </af-button>
+                    </div>
+                  </af-data-view>
+
+                  <af-paginator
+                    [pageIndex]="alphaDataViewPage().pageIndex"
+                    [pageSize]="alphaDataViewPage().pageSize"
+                    [totalItems]="alphaDataViewPage().totalItems"
+                    (pageChange)="setAlphaDataViewPage($event)"
+                  />
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Slice actual</span>
+                    <strong>{{ alphaVisibleDataViewItems().length }} items visibles · modo {{ alphaDataViewLayout() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Paginator</span>
+                <h4 class="alpha-wave-panel__title">Reusable y desacoplado</h4>
+                <p>El paginador queda disponible como primitive independiente para DataView hoy y para DataTable en iteraciones siguientes.</p>
+                <div class="alpha-live-copy">
+                  <span>Pagina activa</span>
+                  <strong>{{ alphaDataViewPage().pageIndex + 1 }}</strong>
+                </div>
+              </div>
+            </div>
+          </af-card>
         </div>
 
         <af-drawer

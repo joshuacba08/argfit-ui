@@ -1,0 +1,45 @@
+<ng-template #dataViewActions>
+  <ng-content select="[afDataViewActions]" />
+</ng-template>
+
+<ng-template #dataViewEmpty>
+  <ng-content select="[afDataViewEmpty]" />
+</ng-template>
+
+<ng-template #dataViewLoading>
+  <ng-content select="[afDataViewLoading]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-data-view-mobile
+    [items]="items()"
+    [layout]="layout()"
+    [density]="density()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (itemPressed)="itemPressed.emit($event)"
+  />
+} @else {
+  <af-data-view-desktop
+    [items]="items()"
+    [layout]="layout()"
+    [density]="density()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (itemPressed)="itemPressed.emit($event)"
+  />
+}

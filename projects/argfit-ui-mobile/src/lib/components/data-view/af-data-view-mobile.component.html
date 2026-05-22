@@ -1,0 +1,91 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-data-view-mobile__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <section class="af-data-view-mobile__items" [attr.aria-label]="ariaLabel()" role="list">
+        @for (index of skeletonItems(); track index) {
+          <article class="af-data-view-mobile__item af-data-view-mobile__item--skeleton" aria-hidden="true">
+            <span class="af-data-view-mobile__skeleton af-data-view-mobile__skeleton--eyebrow"></span>
+            <span class="af-data-view-mobile__skeleton af-data-view-mobile__skeleton--title"></span>
+            <span class="af-data-view-mobile__skeleton af-data-view-mobile__skeleton--body"></span>
+          </article>
+        }
+      </section>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-data-view-mobile__state af-data-view-mobile__state--error" role="alert">
+      <strong>No se pudo cargar la vista</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-data-view-mobile__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <section class="af-data-view-mobile__items" [attr.aria-label]="ariaLabel()" role="list">
+      @for (item of items(); track item.id; let itemIndex = $index) {
+        <article
+          class="af-data-view-mobile__item"
+          [class.af-data-view-mobile__item--disabled]="item.disabled"
+          [attr.aria-disabled]="item.disabled ? 'true' : null"
+          [attr.tabindex]="item.disabled ? -1 : 0"
+          role="listitem"
+          (click)="onItemPressed(item)"
+          (keydown)="onItemKeydown($event, item)"
+        >
+          @if (itemTemplate(); as itemTemplateRef) {
+            <ng-container *ngTemplateOutlet="itemTemplateRef; context: itemContext(item, itemIndex)" />
+          } @else {
+            @if (item.eyebrow || item.meta) {
+              <div class="af-data-view-mobile__meta-row">
+                @if (item.eyebrow) {
+                  <span class="af-data-view-mobile__eyebrow">{{ item.eyebrow }}</span>
+                }
+                @if (item.meta) {
+                  <span class="af-data-view-mobile__meta">{{ item.meta }}</span>
+                }
+              </div>
+            }
+
+            <div class="af-data-view-mobile__title-row">
+              <h3 class="af-data-view-mobile__title">{{ item.title }}</h3>
+              @if (item.badge; as badge) {
+                <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                  {{ badge.label }}
+                </af-badge-mobile>
+              }
+            </div>
+
+            @if (item.description) {
+              <p class="af-data-view-mobile__description">{{ item.description }}</p>
+            }
+
+            @if (item.supportingText) {
+              <span class="af-data-view-mobile__supporting">{{ item.supportingText }}</span>
+            }
+          }
+        </article>
+      }
+    </section>
+  }
+}

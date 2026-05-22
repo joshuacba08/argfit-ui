@@ -1,0 +1,94 @@
+.af-paginator-desktop {
+  display: block;
+  width: 100%;
+}
+
+.af-paginator-desktop__nav {
+  align-items: center;
+  color: var(--af-text-soft);
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.af-paginator-desktop__summary {
+  font-size: var(--af-text-xs);
+}
+
+.af-paginator-desktop__pages {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-1);
+  justify-content: flex-end;
+}
+
+.af-paginator-desktop__pages button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  height: 28px;
+  justify-content: center;
+  min-width: 28px;
+  padding: 0 var(--af-space-2);
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-paginator-desktop__pages button:hover:not(:disabled):not(.af-paginator-desktop__page--active) {
+  background: var(--af-bg-interactive);
+  color: var(--af-text-main);
+}
+
+.af-paginator-desktop__pages button:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-paginator-desktop__pages button:disabled {
+  color: var(--af-text-disabled);
+  cursor: default;
+}
+
+.af-paginator-desktop__page--active {
+  background: var(--af-primary) !important;
+  color: var(--af-primary-contrast) !important;
+}
+
+.af-paginator-desktop__ellipsis {
+  color: var(--af-text-disabled);
+  font-size: var(--af-text-xs);
+  min-width: 28px;
+  text-align: center;
+}
+
+.af-paginator-desktop[data-density='compact'] .af-paginator-desktop__pages button {
+  height: 24px;
+  min-width: 24px;
+}
+
+.af-paginator-desktop[data-disabled] {
+  opacity: 0.8;
+}
+
+@media (max-width: 720px) {
+  .af-paginator-desktop__nav {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .af-paginator-desktop__pages {
+    justify-content: flex-start;
+  }
+}
