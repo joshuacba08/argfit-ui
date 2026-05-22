@@ -1,23 +1,23 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  input,
-  output,
-  viewChildren,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    ElementRef,
+    input,
+    output,
+    viewChildren,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfAccordionChange,
-  type AfAccordionExpandedIds,
-  type AfAccordionItem,
-  type AfAccordionPanelContext,
-  type AfAccordionPanelDefinition,
-  type AfAccordionDensity,
+    type AfAccordionChange,
+    type AfAccordionDensity,
+    type AfAccordionExpandedIds,
+    type AfAccordionItem,
+    type AfAccordionPanelContext,
+    type AfAccordionPanelDefinition,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 

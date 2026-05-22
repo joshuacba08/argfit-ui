@@ -1,31 +1,31 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChild,
-  inject,
-  input,
-  output,
-  viewChild,
-  type TemplateRef,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChild,
+    inject,
+    input,
+    output,
+    viewChild,
+    type TemplateRef,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfVirtualScrollerDensity,
-  type AfVirtualScrollerItem,
-  type AfVirtualScrollerItemTemplate,
-  type AfVirtualScrollerRange,
+    AfPlatformService,
+    type AfVirtualScrollerDensity,
+    type AfVirtualScrollerItem,
+    type AfVirtualScrollerItemTemplate,
+    type AfVirtualScrollerRange,
 } from '@argfit-ui/core';
 import { AfVirtualScrollerDesktopComponent } from '@argfit-ui/desktop';
 import { AfVirtualScrollerMobileComponent } from '@argfit-ui/mobile';
 
 import { AfVirtualScrollerItemDirective } from './af-virtual-scroller-item.directive';
 import {
-  AfVirtualScrollerActionsDirective,
-  AfVirtualScrollerEmptyDirective,
-  AfVirtualScrollerLoadingDirective,
+    AfVirtualScrollerActionsDirective,
+    AfVirtualScrollerEmptyDirective,
+    AfVirtualScrollerLoadingDirective,
 } from './af-virtual-scroller-slots.directive';
 
 @Component({

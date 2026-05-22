@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
-  provideArgfitUi,
-  type AfAccordionChange,
-  type AfAccordionExpandedIds,
-  type AfAccordionItem,
+    provideArgfitUi,
+    type AfAccordionChange,
+    type AfAccordionExpandedIds,
+    type AfAccordionItem,
 } from '@argfit-ui/core';
 
 import { AfAccordionPanelDirective } from './af-accordion-panel.directive';

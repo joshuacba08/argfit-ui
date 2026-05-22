@@ -1,22 +1,22 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  input,
-  output,
-  viewChildren,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    ElementRef,
+    input,
+    output,
+    viewChildren,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfTabChange,
-  type AfTabItem,
-  type AfTabPanelContext,
-  type AfTabPanelDefinition,
-  type AfTabsDensity,
+    type AfTabChange,
+    type AfTabItem,
+    type AfTabPanelContext,
+    type AfTabPanelDefinition,
+    type AfTabsDensity,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 

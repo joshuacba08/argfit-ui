@@ -2,18 +2,18 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
-  provideArgfitUi,
-  type AfDataTableColumn,
-  type AfTreeTableExpandedIds,
-  type AfTreeTableNode,
-  type AfTreeTableSelectedIds,
+    provideArgfitUi,
+    type AfDataTableColumn,
+    type AfTreeTableExpandedIds,
+    type AfTreeTableNode,
+    type AfTreeTableSelectedIds,
 } from '@argfit-ui/core';
 
 import { AfTreeTableCellDirective } from './af-tree-table-cell.directive';
 import {
-  AfTreeTableActionsDirective,
-  AfTreeTableEmptyDirective,
-  AfTreeTableLoadingDirective,
+    AfTreeTableActionsDirective,
+    AfTreeTableEmptyDirective,
+    AfTreeTableLoadingDirective,
 } from './af-tree-table-slots.directive';
 import { AfTreeTableComponent } from './af-tree-table.component';
 

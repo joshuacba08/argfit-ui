@@ -1,23 +1,23 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  input,
-  output,
-  viewChildren,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    ElementRef,
+    input,
+    output,
+    viewChildren,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfStepChange,
-  type AfStepItem,
-  type AfStepPanelContext,
-  type AfStepPanelDefinition,
-  type AfStepperDensity,
-  type AfStepState,
+    type AfStepChange,
+    type AfStepItem,
+    type AfStepPanelContext,
+    type AfStepPanelDefinition,
+    type AfStepperDensity,
+    type AfStepState,
 } from '@argfit-ui/core';
 
 let nextAfStepperMobileId = 0;

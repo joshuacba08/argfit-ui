@@ -1,21 +1,21 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChildren,
-  inject,
-  input,
-  output,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChildren,
+    inject,
+    input,
+    output,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfAccordionChange,
-  type AfAccordionExpandedIds,
-  type AfAccordionItem,
-  type AfAccordionPanelDefinition,
-  type AfAccordionDensity,
+    AfPlatformService,
+    type AfAccordionChange,
+    type AfAccordionDensity,
+    type AfAccordionExpandedIds,
+    type AfAccordionItem,
+    type AfAccordionPanelDefinition,
 } from '@argfit-ui/core';
 import { AfAccordionDesktopComponent } from '@argfit-ui/desktop';
 import { AfAccordionMobileComponent } from '@argfit-ui/mobile';

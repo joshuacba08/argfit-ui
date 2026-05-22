@@ -1,22 +1,22 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  signal,
-  type TemplateRef,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    signal,
+    type TemplateRef,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfVirtualScrollerDensity,
-  type AfVirtualScrollerItem,
-  type AfVirtualScrollerItemContext,
-  type AfVirtualScrollerItemTemplate,
-  type AfVirtualScrollerRange,
+    type AfVirtualScrollerDensity,
+    type AfVirtualScrollerItem,
+    type AfVirtualScrollerItemContext,
+    type AfVirtualScrollerItemTemplate,
+    type AfVirtualScrollerRange,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 

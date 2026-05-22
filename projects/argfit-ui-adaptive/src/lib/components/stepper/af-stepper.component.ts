@@ -1,20 +1,20 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChildren,
-  inject,
-  input,
-  output,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChildren,
+    inject,
+    input,
+    output,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfStepChange,
-  type AfStepItem,
-  type AfStepPanelDefinition,
-  type AfStepperDensity,
+    AfPlatformService,
+    type AfStepChange,
+    type AfStepItem,
+    type AfStepPanelDefinition,
+    type AfStepperDensity,
 } from '@argfit-ui/core';
 import { AfStepperDesktopComponent } from '@argfit-ui/desktop';
 import { AfStepperMobileComponent } from '@argfit-ui/mobile';

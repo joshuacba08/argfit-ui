@@ -1,35 +1,35 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChild,
-  contentChildren,
-  inject,
-  input,
-  output,
-  viewChild,
-  type TemplateRef,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChild,
+    contentChildren,
+    inject,
+    input,
+    output,
+    viewChild,
+    type TemplateRef,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfDataTableColumn,
-  type AfTreeTableCellTemplate,
-  type AfTreeTableDensity,
-  type AfTreeTableExpandedIds,
-  type AfTreeTableNode,
-  type AfTreeTableSelectedIds,
-  type AfTreeTableSelectionMode,
+    AfPlatformService,
+    type AfDataTableColumn,
+    type AfTreeTableCellTemplate,
+    type AfTreeTableDensity,
+    type AfTreeTableExpandedIds,
+    type AfTreeTableNode,
+    type AfTreeTableSelectedIds,
+    type AfTreeTableSelectionMode,
 } from '@argfit-ui/core';
 import { AfTreeTableDesktopComponent } from '@argfit-ui/desktop';
 import { AfTreeTableMobileComponent } from '@argfit-ui/mobile';
 
 import { AfTreeTableCellDirective } from './af-tree-table-cell.directive';
 import {
-  AfTreeTableActionsDirective,
-  AfTreeTableEmptyDirective,
-  AfTreeTableLoadingDirective,
+    AfTreeTableActionsDirective,
+    AfTreeTableEmptyDirective,
+    AfTreeTableLoadingDirective,
 } from './af-tree-table-slots.directive';
 
 @Component({

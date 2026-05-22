@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
-  provideArgfitUi,
-  type AfVirtualScrollerItem,
-  type AfVirtualScrollerRange,
+    provideArgfitUi,
+    type AfVirtualScrollerItem,
+    type AfVirtualScrollerRange,
 } from '@argfit-ui/core';
 
 import { AfVirtualScrollerItemDirective } from './af-virtual-scroller-item.directive';
 import {
-  AfVirtualScrollerActionsDirective,
-  AfVirtualScrollerEmptyDirective,
-  AfVirtualScrollerLoadingDirective,
+    AfVirtualScrollerActionsDirective,
+    AfVirtualScrollerEmptyDirective,
+    AfVirtualScrollerLoadingDirective,
 } from './af-virtual-scroller-slots.directive';
 import { AfVirtualScrollerComponent } from './af-virtual-scroller.component';
 

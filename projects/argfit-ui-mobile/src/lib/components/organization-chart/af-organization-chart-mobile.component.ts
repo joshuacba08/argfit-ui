@@ -1,23 +1,23 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  type TemplateRef,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    type TemplateRef,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfOrganizationChartDensity,
-  type AfOrganizationChartExpandedIds,
-  type AfOrganizationChartNode,
-  type AfOrganizationChartNodeContext,
-  type AfOrganizationChartNodeTemplate,
-  type AfOrganizationChartSelectedIds,
-  type AfOrganizationChartSelectionMode,
+    type AfOrganizationChartDensity,
+    type AfOrganizationChartExpandedIds,
+    type AfOrganizationChartNode,
+    type AfOrganizationChartNodeContext,
+    type AfOrganizationChartNodeTemplate,
+    type AfOrganizationChartSelectedIds,
+    type AfOrganizationChartSelectionMode,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 

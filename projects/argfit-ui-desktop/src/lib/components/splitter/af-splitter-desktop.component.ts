@@ -1,18 +1,18 @@
 import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  ElementRef,
-  inject,
-  input,
-  numberAttribute,
-  output,
-  signal,
-  TemplateRef,
-  viewChild,
-  ViewEncapsulation,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    DestroyRef,
+    ElementRef,
+    inject,
+    input,
+    numberAttribute,
+    output,
+    signal,
+    TemplateRef,
+    viewChild,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import { AfThemeService, type AfSplitterOrientation } from '@argfit-ui/core';

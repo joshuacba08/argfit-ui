@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 
 import { AfPlatformService, type AfSectionDensity, type AfSurfaceTone } from '@argfit-ui/core';
 import { AfPanelDesktopComponent } from '@argfit-ui/desktop';

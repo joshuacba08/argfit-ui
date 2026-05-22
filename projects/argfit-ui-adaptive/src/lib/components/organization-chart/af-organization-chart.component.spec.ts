@@ -2,17 +2,17 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
-  provideArgfitUi,
-  type AfOrganizationChartExpandedIds,
-  type AfOrganizationChartNode,
-  type AfOrganizationChartSelectedIds,
+    provideArgfitUi,
+    type AfOrganizationChartExpandedIds,
+    type AfOrganizationChartNode,
+    type AfOrganizationChartSelectedIds,
 } from '@argfit-ui/core';
 
 import { AfOrganizationChartNodeDirective } from './af-organization-chart-node.directive';
 import {
-  AfOrganizationChartActionsDirective,
-  AfOrganizationChartEmptyDirective,
-  AfOrganizationChartLoadingDirective,
+    AfOrganizationChartActionsDirective,
+    AfOrganizationChartEmptyDirective,
+    AfOrganizationChartLoadingDirective,
 } from './af-organization-chart-slots.directive';
 import { AfOrganizationChartComponent } from './af-organization-chart.component';
 

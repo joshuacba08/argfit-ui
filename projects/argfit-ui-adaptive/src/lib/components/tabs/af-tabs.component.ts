@@ -1,20 +1,20 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChildren,
-  inject,
-  input,
-  output,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChildren,
+    inject,
+    input,
+    output,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfTabChange,
-  type AfTabItem,
-  type AfTabPanelDefinition,
-  type AfTabsDensity,
+    AfPlatformService,
+    type AfTabChange,
+    type AfTabItem,
+    type AfTabPanelDefinition,
+    type AfTabsDensity,
 } from '@argfit-ui/core';
 import { AfTabsDesktopComponent } from '@argfit-ui/desktop';
 import { AfTabsMobileComponent } from '@argfit-ui/mobile';

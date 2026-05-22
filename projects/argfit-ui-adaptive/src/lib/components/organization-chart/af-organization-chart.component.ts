@@ -1,33 +1,33 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChild,
-  inject,
-  input,
-  output,
-  viewChild,
-  type TemplateRef,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChild,
+    inject,
+    input,
+    output,
+    viewChild,
+    type TemplateRef,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfOrganizationChartDensity,
-  type AfOrganizationChartExpandedIds,
-  type AfOrganizationChartNode,
-  type AfOrganizationChartNodeTemplate,
-  type AfOrganizationChartSelectedIds,
-  type AfOrganizationChartSelectionMode,
+    AfPlatformService,
+    type AfOrganizationChartDensity,
+    type AfOrganizationChartExpandedIds,
+    type AfOrganizationChartNode,
+    type AfOrganizationChartNodeTemplate,
+    type AfOrganizationChartSelectedIds,
+    type AfOrganizationChartSelectionMode,
 } from '@argfit-ui/core';
 import { AfOrganizationChartDesktopComponent } from '@argfit-ui/desktop';
 import { AfOrganizationChartMobileComponent } from '@argfit-ui/mobile';
 
 import { AfOrganizationChartNodeDirective } from './af-organization-chart-node.directive';
 import {
-  AfOrganizationChartActionsDirective,
-  AfOrganizationChartEmptyDirective,
-  AfOrganizationChartLoadingDirective,
+    AfOrganizationChartActionsDirective,
+    AfOrganizationChartEmptyDirective,
+    AfOrganizationChartLoadingDirective,
 } from './af-organization-chart-slots.directive';
 
 @Component({

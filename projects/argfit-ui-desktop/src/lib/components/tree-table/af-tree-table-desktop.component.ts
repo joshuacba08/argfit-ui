@@ -1,26 +1,26 @@
 import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  output,
-  type TemplateRef,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    ElementRef,
+    inject,
+    input,
+    output,
+    type TemplateRef,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfDataTableColumn,
-  type AfTreeTableCellContext,
-  type AfTreeTableCellTemplate,
-  type AfTreeTableDensity,
-  type AfTreeTableExpandedIds,
-  type AfTreeTableNode,
-  type AfTreeTableSelectedIds,
-  type AfTreeTableSelectionMode,
+    type AfDataTableColumn,
+    type AfTreeTableCellContext,
+    type AfTreeTableCellTemplate,
+    type AfTreeTableDensity,
+    type AfTreeTableExpandedIds,
+    type AfTreeTableNode,
+    type AfTreeTableSelectedIds,
+    type AfTreeTableSelectionMode,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
