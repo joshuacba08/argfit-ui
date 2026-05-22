@@ -1,0 +1,17 @@
+@if (eyebrow() || heading() || description()) {
+  <header class="af-panel-mobile__header">
+    @if (eyebrow()) {
+      <span class="af-panel-mobile__eyebrow">{{ eyebrow() }}</span>
+    }
+    @if (heading()) {
+      <h3 class="af-panel-mobile__heading">{{ heading() }}</h3>
+    }
+    @if (description()) {
+      <p class="af-panel-mobile__description">{{ description() }}</p>
+    }
+  </header>
+}
+
+<div class="af-panel-mobile__content">
+  <ng-content />
+</div>

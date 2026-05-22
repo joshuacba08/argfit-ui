@@ -1,0 +1,5 @@
+@if (isMobile()) {
+  <af-divider-mobile [label]="label()" [orientation]="orientation()" [tone]="tone()" />
+} @else {
+  <af-divider-desktop [label]="label()" [orientation]="orientation()" [tone]="tone()" />
+}

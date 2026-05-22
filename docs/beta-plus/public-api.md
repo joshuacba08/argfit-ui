@@ -35,8 +35,8 @@ The following new ArgFit-owned type families are approved to enter as `experimen
 | Overlay types | `AfPopover*`, `AfDrawer*`, `AfTooltip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must describe ArgFit semantics only; no PrimeNG/Ionic event leakage. |
 | Status and identity types | `AfProgress*`, `AfAvatar*`, `AfChip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must cover accessible labels, variants and renderer-independent state. |
 | Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfInputCount*`, `AfListbox*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. `AfInputCount`, `AfDatePicker`, `AfMultiSelect`, `AfListbox` and the current field/input composition helpers are now implemented as wave 2 slices; `AfTreeSelect` remains pending. |
-| Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfOrderList*`, `AfPickList*`, `AfTimeline*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. `AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline` and `AfTree` now have current HU-032 slices; `AfTreeTable`, `AfVirtualScroller` and broader workflow surfaces remain pending. |
-| Layout and panel types | `AfTabs*`, `AfStepper*`, `AfPanel*`, `AfToolbar*`, `AfSplitter*` and related families | `experimental-in-beta-plus` | Must preserve adaptive semantics across renderers. |
+| Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfOrderList*`, `AfPickList*`, `AfTimeline*`, `AfTree*`, `AfTreeTable*`, `AfVirtualScroller*`, `AfOrganizationChart*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. `AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline`, `AfTree`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` now have current HU-032 slices; `AfVirtualScroller` currently relies on explicit fixed-height configuration (`itemHeight`, `viewportHeight`) while broader workflow surfaces remain pending. |
+| Layout and panel types | `AfAccordion*`, `AfDivider*`, `AfFieldset*`, `AfPanel*`, `AfScrollPanel*`, `AfTabs*`, `AfToolbar*`, `AfStepper*`, `AfSplitter*` and related families | `experimental-in-beta-plus` | Must preserve adaptive semantics across renderers. HU-033 now ships its stable layout surfaces plus the experimental `AfStepper`/`AfSplitter` slice with renderer-neutral contracts and mobile fallback notes. |
 
 ## `@argfit-ui/primitives`
 
@@ -104,8 +104,18 @@ The following exports are in scope for `0.2.0-beta.0` and should enter as `exper
 | `AfPickList`, `AfPickListComponent` | `experimental-in-beta-plus` | Dual-list assignment surface for source/target transfer flows. | May change during Beta+ with migration notes. |
 | `AfTimeline`, `AfTimelineComponent` | `experimental-in-beta-plus` | Ordered event and process history surface with slot-based customization. | May change during Beta+ with migration notes. |
 | `AfTree`, `AfTreeComponent` | `experimental-in-beta-plus` | Hierarchical navigation and selection surface with controlled expansion state. | May change during Beta+ with migration notes. |
+| `AfTreeTable`, `AfTreeTableComponent` | `experimental-in-beta-plus` | Hierarchical tabular surface with controlled expansion, selection and cell templating. | May change during Beta+ with migration notes. |
+| `AfVirtualScroller`, `AfVirtualScrollerComponent` | `experimental-in-beta-plus` | High-volume list surface with explicit fixed-height virtualization and range reporting. | May change during Beta+ with migration notes. |
+| `AfOrganizationChart`, `AfOrganizationChartComponent` | `experimental-in-beta-plus` | Hierarchical ownership surface with controlled expansion, selection and projected node templating. | May change during Beta+ with migration notes. |
+| `AfAccordion`, `AfAccordionComponent` | `experimental-in-beta-plus` | Collapsible section surface with controlled expansion, single/multiple modes and projected panel content. | May change during Beta+ with migration notes. |
+| `AfDivider`, `AfDividerComponent` | `experimental-in-beta-plus` | Tokenized separator surface for dense layouts and semantic grouping. | May change during Beta+ with migration notes. |
+| `AfFieldset`, `AfFieldsetComponent` | `experimental-in-beta-plus` | Semantic grouping surface for field-heavy flows without nested cards. | May change during Beta+ with migration notes. |
+| `AfPanel`, `AfPanelComponent` | `experimental-in-beta-plus` | Section container with heading semantics and renderer-neutral presentation. | May change during Beta+ with migration notes. |
+| `AfScrollPanel`, `AfScrollPanelComponent` | `experimental-in-beta-plus` | Overflow container that preserves keyboard focus and touch scroll behavior. | May change during Beta+ with migration notes. |
 | `AfTabs`, `AfTabsComponent` | `experimental-in-beta-plus` | High-priority panel navigation/composition surface. | May change during Beta+ with migration notes. |
+| `AfToolbar`, `AfToolbarComponent` | `experimental-in-beta-plus` | Three-slot adaptive action lane for dense operational layouts. | May change during Beta+ with migration notes. |
 | `AfStepper`, `AfStepperComponent` | `experimental-in-beta-plus` | High-priority workflow progression surface. | May change during Beta+ with migration notes. |
+| `AfSplitter`, `AfSplitterComponent` | `experimental-in-beta-plus` | Desktop-first resizable master-detail surface with mobile stacked fallback. | May change during Beta+ with migration notes. |
 | `AfKanban`, `AfKanbanComponent` | `experimental-in-beta-plus` | Workflow-grade composite component and drag/drop proving ground. | May change during Beta+ with migration notes. |
 
 ### Implemented Wave 1 Adaptive Helpers
@@ -149,6 +159,29 @@ Current implemented Beta+ adaptive exports in the repository:
 - `AfTree`, `AfTreeComponent`
 - `AfTreeNodeDirective`
 - `AfTreeActionsDirective`, `AfTreeEmptyDirective`, `AfTreeLoadingDirective`, `AF_TREE_SLOT_DIRECTIVES`
+- `AfTreeTable`, `AfTreeTableComponent`
+- `AfTreeTableCellDirective`
+- `AfTreeTableActionsDirective`, `AfTreeTableEmptyDirective`, `AfTreeTableLoadingDirective`, `AF_TREE_TABLE_SLOT_DIRECTIVES`
+- `AfVirtualScroller`, `AfVirtualScrollerComponent`
+- `AfVirtualScrollerItemDirective`
+- `AfVirtualScrollerActionsDirective`, `AfVirtualScrollerEmptyDirective`, `AfVirtualScrollerLoadingDirective`, `AF_VIRTUAL_SCROLLER_SLOT_DIRECTIVES`
+- `AfOrganizationChart`, `AfOrganizationChartComponent`
+- `AfOrganizationChartNodeDirective`
+- `AfOrganizationChartActionsDirective`, `AfOrganizationChartEmptyDirective`, `AfOrganizationChartLoadingDirective`, `AF_ORGANIZATION_CHART_SLOT_DIRECTIVES`
+- `AfAccordion`, `AfAccordionComponent`
+- `AfAccordionPanelDirective`
+- `AfDivider`, `AfDividerComponent`
+- `AfFieldset`, `AfFieldsetComponent`
+- `AfPanel`, `AfPanelComponent`
+- `AfScrollPanel`, `AfScrollPanelComponent`
+- `AfTabs`, `AfTabsComponent`
+- `AfTabPanelDirective`
+- `AfToolbar`, `AfToolbarComponent`
+- `AfToolbarStartDirective`, `AfToolbarCenterDirective`, `AfToolbarEndDirective`, `AF_TOOLBAR_SLOT_DIRECTIVES`
+- `AfStepper`, `AfStepperComponent`
+- `AfStepPanelDirective`
+- `AfSplitter`, `AfSplitterComponent`
+- `AfSplitterPrimaryDirective`, `AfSplitterSecondaryDirective`, `AF_SPLITTER_SLOT_DIRECTIVES`
 
 ## `@argfit-ui/desktop`
 

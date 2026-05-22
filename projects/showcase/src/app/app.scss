@@ -306,6 +306,10 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.alpha-wave-grid--layout {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .alpha-wave-grid--forms {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -414,6 +418,164 @@ p {
 
 .alpha-live-copy--wide strong {
   line-height: var(--af-leading-normal);
+}
+
+.alpha-tree-table-status,
+.alpha-tabs-template,
+.alpha-accordion-template,
+.alpha-stepper-template,
+.alpha-virtual-template,
+.alpha-org-template,
+.alpha-scroll-entry,
+.alpha-splitter-pane {
+  display: grid;
+  gap: var(--af-space-1);
+}
+
+.alpha-toolbar-chip,
+.alpha-panel-layout,
+.alpha-fieldset-grid,
+.alpha-scroll-list,
+.alpha-splitter-list {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.alpha-toolbar-chip {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-3);
+}
+
+.alpha-toolbar-copy {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.alpha-panel-layout,
+.alpha-fieldset-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.alpha-panel-surface {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.alpha-tree-table-status {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-bg-canvas) 76%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: 999px;
+  color: var(--af-text-main);
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  gap: var(--af-space-2);
+  padding: 0.25rem 0.55rem;
+}
+
+.alpha-tree-table-status[data-tone='accent'] {
+  border-color: color-mix(in srgb, var(--af-accent) 40%, var(--af-border-soft));
+  color: var(--af-accent);
+}
+
+.alpha-tree-table-status[data-tone='warning'] {
+  border-color: color-mix(in srgb, var(--af-warning) 40%, var(--af-border-soft));
+  color: var(--af-warning);
+}
+
+.alpha-tabs-template__eyebrow,
+.alpha-stepper-template__eyebrow,
+.alpha-panel-surface__eyebrow,
+.alpha-scroll-entry__time,
+.alpha-splitter-pane__eyebrow,
+.alpha-virtual-template__eyebrow,
+.alpha-org-template__eyebrow {
+  color: var(--af-primary);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  text-transform: uppercase;
+}
+
+.alpha-tabs-template__title,
+.alpha-accordion-template__title,
+.alpha-stepper-template__title,
+.alpha-panel-surface__title,
+.alpha-scroll-entry__title,
+.alpha-splitter-pane__title,
+.alpha-virtual-template__title,
+.alpha-org-template__title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.alpha-tabs-template__meta,
+.alpha-accordion-template__meta,
+.alpha-stepper-template__meta,
+.alpha-scroll-entry__owner,
+.alpha-org-template__role,
+.alpha-virtual-template__meta,
+.alpha-org-template__meta {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.alpha-tabs-template p,
+.alpha-accordion-template p,
+.alpha-stepper-template p,
+.alpha-panel-surface p,
+.alpha-scroll-entry p,
+.alpha-splitter-pane p {
+  margin: 0;
+}
+
+.alpha-scroll-entry {
+  background: color-mix(in srgb, var(--af-bg-canvas) 76%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  padding: var(--af-space-3);
+}
+
+.alpha-scroll-entry__meta {
+  color: var(--af-text-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.alpha-splitter-list__item {
+  appearance: none;
+  background: color-mix(in srgb, var(--af-bg-canvas) 78%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: grid;
+  gap: var(--af-space-1);
+  padding: var(--af-space-3);
+  text-align: left;
+}
+
+.alpha-splitter-list__item span {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+}
+
+.alpha-splitter-list__item:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.alpha-virtual-template__meta,
+.alpha-org-template__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+  justify-content: space-between;
 }
 
 .alpha-tooltip-demo {
@@ -559,6 +721,7 @@ p {
   .alpha-grid--top,
   .alpha-grid--components,
   .alpha-wave-grid,
+  .alpha-wave-grid--layout,
   .alpha-wave-grid--forms,
   .dialog-detail-grid,
   .dialog-quick-test-grid,
@@ -578,5 +741,10 @@ p {
   .alpha-card--chart,
   .alpha-wave-panel--wide {
     grid-column: auto;
+  }
+
+  .alpha-panel-layout,
+  .alpha-fieldset-grid {
+    grid-template-columns: 1fr;
   }
 }

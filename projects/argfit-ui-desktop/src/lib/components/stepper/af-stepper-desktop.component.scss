@@ -1,0 +1,95 @@
+.af-stepper-desktop {
+  display: grid;
+  gap: var(--af-space-4);
+}
+
+.af-stepper-desktop__steps {
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.af-stepper-desktop__step {
+  align-items: center;
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  gap: var(--af-space-3);
+  min-height: 72px;
+  padding: var(--af-space-3) var(--af-space-4);
+  text-align: left;
+}
+
+.af-stepper-desktop__step:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-stepper-desktop__step--current {
+  border-color: var(--af-primary);
+  box-shadow: inset 0 0 0 1px var(--af-primary);
+}
+
+.af-stepper-desktop__step--completed .af-stepper-desktop__indicator {
+  background: color-mix(in srgb, var(--af-success) 14%, transparent);
+  border-color: color-mix(in srgb, var(--af-success) 56%, var(--af-border-soft));
+  color: var(--af-success);
+}
+
+.af-stepper-desktop__step--error .af-stepper-desktop__indicator {
+  background: color-mix(in srgb, var(--af-danger) 14%, transparent);
+  border-color: color-mix(in srgb, var(--af-danger) 56%, var(--af-border-soft));
+  color: var(--af-danger);
+}
+
+.af-stepper-desktop__step--locked {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.af-stepper-desktop__indicator {
+  align-items: center;
+  aspect-ratio: 1;
+  background: color-mix(in srgb, var(--af-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--af-primary) 32%, var(--af-border-soft));
+  border-radius: 999px;
+  color: var(--af-primary);
+  display: inline-flex;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-bold);
+  justify-content: center;
+  min-width: 2.25rem;
+}
+
+.af-stepper-desktop__copy {
+  display: grid;
+  gap: var(--af-space-1);
+}
+
+.af-stepper-desktop__copy strong {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+}
+
+.af-stepper-desktop__copy small {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+}
+
+.af-stepper-desktop__panel,
+.af-stepper-desktop__panel-copy {
+  background: color-mix(in srgb, var(--af-bg-surface) 86%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  gap: var(--af-space-3);
+  padding: var(--af-space-4);
+}
+
+.af-stepper-desktop__panel-copy p {
+  color: var(--af-text-muted);
+  margin: 0;
+}

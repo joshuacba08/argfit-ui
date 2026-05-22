@@ -1,0 +1,51 @@
+<ng-template #virtualScrollerActions>
+  <ng-content select="[afVirtualScrollerActions]" />
+</ng-template>
+
+<ng-template #virtualScrollerEmpty>
+  <ng-content select="[afVirtualScrollerEmpty]" />
+</ng-template>
+
+<ng-template #virtualScrollerLoading>
+  <ng-content select="[afVirtualScrollerLoading]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-virtual-scroller-mobile
+    [items]="items()"
+    [density]="density()"
+    [itemHeight]="itemHeight()"
+    [viewportHeight]="viewportHeight()"
+    [overscan]="overscan()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (itemPressed)="itemPressed.emit($event)"
+    (visibleRangeChange)="visibleRangeChange.emit($event)"
+  />
+} @else {
+  <af-virtual-scroller-desktop
+    [items]="items()"
+    [density]="density()"
+    [itemHeight]="itemHeight()"
+    [viewportHeight]="viewportHeight()"
+    [overscan]="overscan()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (itemPressed)="itemPressed.emit($event)"
+    (visibleRangeChange)="visibleRangeChange.emit($event)"
+  />
+}

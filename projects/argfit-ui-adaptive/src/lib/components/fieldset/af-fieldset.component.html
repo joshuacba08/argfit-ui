@@ -1,0 +1,21 @@
+@if (isMobile()) {
+  <af-fieldset-mobile
+    [legend]="legend()"
+    [description]="description()"
+    [density]="density()"
+    [tone]="tone()"
+    [disabled]="disabled()"
+  >
+    <ng-content />
+  </af-fieldset-mobile>
+} @else {
+  <af-fieldset-desktop
+    [legend]="legend()"
+    [description]="description()"
+    [density]="density()"
+    [tone]="tone()"
+    [disabled]="disabled()"
+  >
+    <ng-content />
+  </af-fieldset-desktop>
+}

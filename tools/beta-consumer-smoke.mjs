@@ -288,9 +288,30 @@ import {
   AfDataTable,
   AfInlineMessage,
   AfInput,
+  AfOrganizationChart,
+  AfOrganizationChartActionsDirective,
+  AfOrganizationChartNodeDirective,
+  AfTreeTable,
+  AfTreeTableActionsDirective,
+  AfTreeTableCellDirective,
   AfToastViewport,
+  AfVirtualScroller,
+  AfVirtualScrollerActionsDirective,
+  AfVirtualScrollerItemDirective,
 } from '@argfit-ui/adaptive';
-import type { AfDataTableColumn, AfDataTablePagination, AfDataTableSort } from '@argfit-ui/core';
+import type {
+  AfDataTableColumn,
+  AfDataTablePagination,
+  AfDataTableSort,
+  AfOrganizationChartExpandedIds,
+  AfOrganizationChartNode,
+  AfOrganizationChartSelectedIds,
+  AfTreeTableExpandedIds,
+  AfTreeTableNode,
+  AfTreeTableSelectedIds,
+  AfVirtualScrollerItem,
+  AfVirtualScrollerRange,
+} from '@argfit-ui/core';
 import { AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
 
 interface ConsumerAthleteRow {
@@ -298,6 +319,15 @@ interface ConsumerAthleteRow {
   readonly athlete: string;
   readonly jump: number;
   readonly status: 'Ready' | 'Review';
+}
+
+interface ConsumerTreeUnit {
+  readonly name: string;
+  readonly status: string;
+}
+
+interface ConsumerOrgUnit {
+  readonly zone: string;
 }
 
 @Component({
@@ -313,7 +343,16 @@ interface ConsumerAthleteRow {
     AfDataTable,
     AfInlineMessage,
     AfInput,
+    AfOrganizationChart,
+    AfOrganizationChartActionsDirective,
+    AfOrganizationChartNodeDirective,
+    AfTreeTable,
+    AfTreeTableActionsDirective,
+    AfTreeTableCellDirective,
     AfToastViewport,
+    AfVirtualScroller,
+    AfVirtualScrollerActionsDirective,
+    AfVirtualScrollerItemDirective,
     AfVisuallyHiddenComponent,
   ],
   templateUrl: './app.html',
@@ -347,6 +386,69 @@ export class App {
     key: 'jump',
     direction: 'desc',
   };
+
+  protected readonly treeTableColumns: readonly AfDataTableColumn<ConsumerTreeUnit>[] = [
+    { key: 'name', header: 'Unit', mobilePriority: 'primary' },
+    { key: 'status', header: 'Status', mobilePriority: 'secondary' },
+  ];
+
+  protected readonly treeTableNodes: readonly AfTreeTableNode<ConsumerTreeUnit>[] = [
+    {
+      id: 'consumer-ops',
+      label: 'Ops',
+      data: { name: 'Ops', status: 'Active' },
+      children: [{ id: 'consumer-lab', label: 'Lab', data: { name: 'Lab', status: 'Ready' } }],
+    },
+  ];
+
+  protected treeTableSelectedIds: AfTreeTableSelectedIds = ['consumer-lab'];
+  protected treeTableExpandedIds: AfTreeTableExpandedIds = ['consumer-ops'];
+
+  protected readonly organizationNodes: readonly AfOrganizationChartNode<ConsumerOrgUnit>[] = [
+    {
+      id: 'consumer-root',
+      label: 'ArgFit HQ',
+      title: 'Leadership',
+      meta: '2 cells',
+      data: { zone: 'HQ' },
+      children: [{ id: 'consumer-performance', label: 'Performance', title: 'Ops', data: { zone: 'Field' } }],
+    },
+  ];
+
+  protected organizationSelectedIds: AfOrganizationChartSelectedIds = ['consumer-performance'];
+  protected organizationExpandedIds: AfOrganizationChartExpandedIds = ['consumer-root'];
+
+  protected readonly virtualItems: readonly AfVirtualScrollerItem[] = [
+    { id: 'consumer-session-1', title: 'Session 1', meta: 'AM', supportingText: 'CMJ' },
+    { id: 'consumer-session-2', title: 'Session 2', meta: 'PM', supportingText: 'RSI' },
+    { id: 'consumer-session-3', title: 'Session 3', meta: 'PM', supportingText: 'Load review' },
+  ];
+
+  protected visibleRange: AfVirtualScrollerRange = {
+    startIndex: 0,
+    endIndex: 1,
+    totalItems: this.virtualItems.length,
+  };
+
+  protected setTreeTableSelection(selectedIds: AfTreeTableSelectedIds): void {
+    this.treeTableSelectedIds = selectedIds;
+  }
+
+  protected setTreeTableExpanded(expandedIds: AfTreeTableExpandedIds): void {
+    this.treeTableExpandedIds = expandedIds;
+  }
+
+  protected setOrganizationSelection(selectedIds: AfOrganizationChartSelectedIds): void {
+    this.organizationSelectedIds = selectedIds;
+  }
+
+  protected setOrganizationExpanded(expandedIds: AfOrganizationChartExpandedIds): void {
+    this.organizationExpandedIds = expandedIds;
+  }
+
+  protected setVisibleRange(range: AfVirtualScrollerRange): void {
+    this.visibleRange = range;
+  }
 }
 `;
 }
@@ -390,6 +492,61 @@ function createAppTemplateSource() {
     [sort]="sort"
     [pagination]="pagination"
   />
+
+  <af-tree-table
+    [columns]="treeTableColumns"
+    [nodes]="treeTableNodes"
+    treeColumnKey="name"
+    [selectedIds]="treeTableSelectedIds"
+    [expandedIds]="treeTableExpandedIds"
+    ariaLabel="ArgFit beta consumer smoke tree table"
+    (selectionChange)="setTreeTableSelection($event)"
+    (expandedChange)="setTreeTableExpanded($event)"
+  >
+    <div afTreeTableActions class="consumer-actions">
+      <af-badge tone="accent">Hierarchy</af-badge>
+    </div>
+    <ng-template afTreeTableCell="status" let-value>
+      <span>{{ value }}</span>
+    </ng-template>
+  </af-tree-table>
+
+  <af-organization-chart
+    [nodes]="organizationNodes"
+    [selectedIds]="organizationSelectedIds"
+    [expandedIds]="organizationExpandedIds"
+    ariaLabel="ArgFit beta consumer smoke organization chart"
+    (selectionChange)="setOrganizationSelection($event)"
+    (expandedChange)="setOrganizationExpanded($event)"
+  >
+    <div afOrganizationChartActions class="consumer-actions">
+      <af-badge tone="neutral">Org chart</af-badge>
+    </div>
+    <ng-template afOrganizationChartNode let-node>
+      <div>
+        <strong>{{ node.label }}</strong>
+        <span>{{ node.title }}</span>
+      </div>
+    </ng-template>
+  </af-organization-chart>
+
+  <af-virtual-scroller
+    [items]="virtualItems"
+    [itemHeight]="72"
+    [viewportHeight]="180"
+    ariaLabel="ArgFit beta consumer smoke virtual list"
+    (visibleRangeChange)="setVisibleRange($event)"
+  >
+    <div afVirtualScrollerActions class="consumer-actions">
+      <af-badge tone="accent">{{ visibleRange.startIndex + 1 }}-{{ visibleRange.endIndex + 1 }}</af-badge>
+    </div>
+    <ng-template afVirtualScrollerItem let-item>
+      <div>
+        <strong>{{ item.title }}</strong>
+        <span>{{ item.meta }}</span>
+      </div>
+    </ng-template>
+  </af-virtual-scroller>
 </main>
 `;
 }
@@ -419,6 +576,12 @@ function createAppStylesSource() {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+af-tree-table,
+af-organization-chart,
+af-virtual-scroller {
+  display: block;
 }
 `;
 }

@@ -630,6 +630,476 @@
               </div>
             </div>
           </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 3 closing slice</span>
+                <h3 afCardTitle>Scale Beta+: AfTreeTable y AfVirtualScroller</h3>
+              </div>
+              <af-badge tone="accent">HU-032</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid">
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Tree table</span>
+                <h4 class="alpha-wave-panel__title">Jerarquia tabular con expansion y seleccion controladas</h4>
+                <div class="alpha-form-stack">
+                  <af-tree-table
+                    [columns]="alphaTreeTableColumns"
+                    [nodes]="alphaTreeTableNodes"
+                    treeColumnKey="name"
+                    [expandedIds]="alphaTreeTableExpandedIds()"
+                    [selectedIds]="alphaTreeTableSelectedIds()"
+                    selectionMode="multiple"
+                    ariaLabel="Tree table beta plus para operaciones y squads"
+                    (expandedChange)="setAlphaTreeTableExpanded($event)"
+                    (selectionChange)="setAlphaTreeTableSelection($event)"
+                    (nodePressed)="recordAlphaTreeTableNode($event)"
+                  >
+                    <div afTreeTableActions class="alpha-inline-actions">
+                      <af-button size="sm" variant="secondary" (pressed)="expandAlphaTreeTable()">Expandir todo</af-button>
+                      <af-button size="sm" variant="secondary" (pressed)="resetAlphaTreeTable()">Reset</af-button>
+                    </div>
+                    <ng-template afTreeTableCell="status" let-value let-node="node">
+                      <span
+                        class="alpha-tree-table-status"
+                        [attr.data-tone]="value === 'En curso' ? 'accent' : value === 'Supervision' ? 'warning' : 'neutral'"
+                      >
+                        {{ value }} · {{ node.data?.updated }}
+                      </span>
+                    </ng-template>
+                  </af-tree-table>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Seleccion</span>
+                    <strong>{{ alphaTreeTableSelectionSummary() }}</strong>
+                  </div>
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Expansion</span>
+                    <strong>{{ alphaTreeTableExpandedSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Virtual scroller</span>
+                <h4 class="alpha-wave-panel__title">Ventana fija para cargas altas sin perder API adaptiva</h4>
+                <div class="alpha-form-stack">
+                  <af-virtual-scroller
+                    [items]="alphaVirtualScrollerItems"
+                    [viewportHeight]="304"
+                    [itemHeight]="84"
+                    ariaLabel="Virtual scroller beta plus para sesiones masivas"
+                    (visibleRangeChange)="setAlphaVirtualScrollerRange($event)"
+                    (itemPressed)="recordAlphaVirtualScrollerItem($event)"
+                  >
+                    <div afVirtualScrollerActions class="alpha-inline-actions">
+                      <af-badge tone="neutral">{{ alphaVirtualScrollerItems.length }} registros</af-badge>
+                      <af-badge tone="accent">Fixed height</af-badge>
+                    </div>
+                    <ng-template afVirtualScrollerItem let-item let-itemIndex="itemIndex" let-visibleRange="visibleRange">
+                      <div class="alpha-virtual-template">
+                        <span class="alpha-virtual-template__eyebrow">Window {{ visibleRange.startIndex + 1 }}-{{ visibleRange.endIndex + 1 }}</span>
+                        <strong class="alpha-virtual-template__title">{{ itemIndex + 1 }} · {{ item.title }}</strong>
+                        <div class="alpha-virtual-template__meta">
+                          <span>{{ item.meta }}</span>
+                          <span>{{ item.supportingText }}</span>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </af-virtual-scroller>
+
+                  <p>Virtualizacion controlada con `itemHeight` y `viewportHeight` explicitos para mantener consistencia entre desktop y mobile.</p>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Ventana activa</span>
+                    <strong>{{ alphaVirtualScrollerSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 3 completion slice</span>
+                <h3 afCardTitle>Hierarchy Beta+: AfOrganizationChart</h3>
+              </div>
+              <af-badge tone="accent">HU-032</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid">
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Organization chart</span>
+                <h4 class="alpha-wave-panel__title">Compact hierarchy viewer para staff, cells y ownership</h4>
+                <div class="alpha-form-stack">
+                  <af-organization-chart
+                    [nodes]="alphaOrganizationChartNodes"
+                    [expandedIds]="alphaOrganizationChartExpandedIds()"
+                    [selectedIds]="alphaOrganizationChartSelectedIds()"
+                    selectionMode="multiple"
+                    ariaLabel="Organization chart beta plus para estructura operativa"
+                    (expandedChange)="setAlphaOrganizationChartExpanded($event)"
+                    (selectionChange)="setAlphaOrganizationChartSelection($event)"
+                    (nodePressed)="recordAlphaOrganizationChartNode($event)"
+                  >
+                    <div afOrganizationChartActions class="alpha-inline-actions">
+                      <af-button size="sm" variant="secondary" (pressed)="expandAlphaOrganizationChart()">Expandir todo</af-button>
+                      <af-button size="sm" variant="secondary" (pressed)="resetAlphaOrganizationChart()">Reset</af-button>
+                    </div>
+
+                    <ng-template afOrganizationChartNode let-node>
+                      <div class="alpha-org-template">
+                        <span class="alpha-org-template__eyebrow">{{ node.data?.zone ?? 'N/A' }}</span>
+                        <strong class="alpha-org-template__title">{{ node.label }}</strong>
+                        <span class="alpha-org-template__role">{{ node.title }}</span>
+                        <div class="alpha-org-template__meta">
+                          <span>{{ node.meta }}</span>
+                          <span>{{ node.data?.capacity }}</span>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </af-organization-chart>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Seleccion</span>
+                    <strong>{{ alphaOrganizationChartSelectionSummary() }}</strong>
+                  </div>
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Expansion</span>
+                    <strong>{{ alphaOrganizationChartExpandedSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Contract</span>
+                <h4 class="alpha-wave-panel__title">Data-model-first y renderer-neutral</h4>
+                <p>El organigrama expone nodos ArgFit-owned con slots de item, empty, loading y actions, manteniendo expansion y seleccion controladas.</p>
+                <div class="alpha-live-copy">
+                  <span>Estado</span>
+                  <strong>{{ alphaOrganizationChartNodes.length }} raiz · HU-032 completo</strong>
+                </div>
+              </div>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 4 current slice</span>
+                <h3 afCardTitle>Panel/Layout Beta+: surfaces estables</h3>
+              </div>
+              <af-badge tone="accent">HU-033</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid alpha-wave-grid--layout">
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Tabs</span>
+                <h4 class="alpha-wave-panel__title">Vista atleta, sesion y export con API adaptiva</h4>
+                <div class="alpha-form-stack">
+                  <af-tabs
+                    [items]="alphaTabsItems"
+                    [activeId]="alphaTabsActiveId()"
+                    ariaLabel="Tabs beta plus para paneles operativos"
+                    (activeIdChange)="setAlphaTabsActiveId($event)"
+                  >
+                    <ng-template afTabPanel="alpha-tab-athlete" let-item>
+                      <div class="alpha-tabs-template">
+                        <span class="alpha-tabs-template__eyebrow">{{ item.data?.owner }}</span>
+                        <strong class="alpha-tabs-template__title">{{ item.label }}</strong>
+                        <span class="alpha-tabs-template__meta">{{ item.data?.metric }}</span>
+                        <p>{{ item.data?.nextStep }}</p>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afTabPanel="alpha-tab-session" let-item>
+                      <div class="alpha-tabs-template">
+                        <span class="alpha-tabs-template__eyebrow">{{ item.data?.owner }}</span>
+                        <strong class="alpha-tabs-template__title">{{ item.label }}</strong>
+                        <span class="alpha-tabs-template__meta">{{ item.data?.metric }}</span>
+                        <p>{{ item.data?.nextStep }}</p>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afTabPanel="alpha-tab-export" let-item>
+                      <div class="alpha-tabs-template">
+                        <span class="alpha-tabs-template__eyebrow">{{ item.data?.owner }}</span>
+                        <strong class="alpha-tabs-template__title">{{ item.label }}</strong>
+                        <span class="alpha-tabs-template__meta">{{ item.data?.metric }}</span>
+                        <p>{{ item.data?.nextStep }}</p>
+                      </div>
+                    </ng-template>
+                  </af-tabs>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Tab activa</span>
+                    <strong>{{ alphaTabsSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Accordion</span>
+                <h4 class="alpha-wave-panel__title">Bloques colapsables para evaluacion y handoff</h4>
+                <div class="alpha-form-stack">
+                  <div class="alpha-inline-actions">
+                    <af-badge tone="neutral">Multiple expand</af-badge>
+                    <af-button size="sm" variant="secondary" (pressed)="resetAlphaAccordion()">Reset</af-button>
+                  </div>
+
+                  <af-accordion
+                    [items]="alphaAccordionItems"
+                    [expandedIds]="alphaAccordionExpandedIds()"
+                    [multiple]="true"
+                    ariaLabel="Accordion beta plus para bloques operativos"
+                    (expandedChange)="setAlphaAccordionExpanded($event)"
+                  >
+                    <ng-template afAccordionPanel="alpha-accordion-evaluation" let-item>
+                      <div class="alpha-accordion-template">
+                        <strong class="alpha-accordion-template__title">{{ item.label }}</strong>
+                        <span class="alpha-accordion-template__meta">{{ item.data?.state }}</span>
+                        <p>{{ item.data?.action }}</p>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afAccordionPanel="alpha-accordion-readiness" let-item>
+                      <div class="alpha-accordion-template">
+                        <strong class="alpha-accordion-template__title">{{ item.label }}</strong>
+                        <span class="alpha-accordion-template__meta">{{ item.data?.state }}</span>
+                        <p>{{ item.data?.action }}</p>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afAccordionPanel="alpha-accordion-handoff" let-item>
+                      <div class="alpha-accordion-template">
+                        <strong class="alpha-accordion-template__title">{{ item.label }}</strong>
+                        <span class="alpha-accordion-template__meta">{{ item.data?.state }}</span>
+                        <p>{{ item.data?.action }}</p>
+                      </div>
+                    </ng-template>
+                  </af-accordion>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Expansion</span>
+                    <strong>{{ alphaAccordionSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Toolbar + Divider</span>
+                <h4 class="alpha-wave-panel__title">Command lane con slots start, center y end</h4>
+                <div class="alpha-form-stack">
+                  <af-toolbar ariaLabel="Toolbar beta plus para acciones operativas">
+                    <ng-template afToolbarStart>
+                      <div class="alpha-toolbar-chip">
+                        <af-badge tone="accent">Live</af-badge>
+                        <strong>Session Ops</strong>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afToolbarCenter>
+                      <span class="alpha-toolbar-copy">14 atletas · carga 72% · handoff 14:00</span>
+                    </ng-template>
+
+                    <ng-template afToolbarEnd>
+                      <af-button size="sm" variant="secondary" (pressed)="recordAction('Beta+ toolbar → preview')">Preview</af-button>
+                      <af-button size="sm" (pressed)="recordAction('Beta+ toolbar → publish')">Publicar</af-button>
+                    </ng-template>
+                  </af-toolbar>
+
+                  <af-divider label="handoff lane" />
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Toolbar</span>
+                    <strong>3 slots adaptivos · comandos y separadores semanticos</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Panel + Fieldset</span>
+                <h4 class="alpha-wave-panel__title">Headings semanticos sin cards anidadas</h4>
+                <div class="alpha-panel-layout">
+                  <af-panel
+                    heading="Panel operativo"
+                    eyebrow="Panel"
+                    description="Resumen semantico para contexto y decision diaria."
+                  >
+                    <div class="alpha-panel-surface">
+                      <span class="alpha-panel-surface__eyebrow">Readiness</span>
+                      <strong class="alpha-panel-surface__title">CMJ 33.8 cm · RSI 1.92</strong>
+                      <p>Bloque principal habilitado con restriccion de carga excentrica controlada.</p>
+                    </div>
+                  </af-panel>
+
+                  <af-fieldset
+                    legend="Fieldset de decision"
+                    description="Grouping semantico para inputs y handoff de aprobacion."
+                    tone="accent"
+                  >
+                    <div class="alpha-fieldset-grid">
+                      <af-input label="Owner" value="Performance Ops" />
+                      <af-input label="Destino" value="Coach + Medical" />
+                    </div>
+
+                    <div class="alpha-inline-actions">
+                      <af-badge tone="neutral">Semantico</af-badge>
+                      <af-button size="sm" variant="secondary" (pressed)="recordAction('Beta+ fieldset → aprobar')">Aprobar</af-button>
+                    </div>
+                  </af-fieldset>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">ScrollPanel</span>
+                <h4 class="alpha-wave-panel__title">Overflow controlado sin romper foco ni touch scroll</h4>
+                <div class="alpha-form-stack">
+                  <af-scroll-panel ariaLabel="Registro operativo largo" maxHeight="16rem">
+                    <div class="alpha-scroll-list">
+                      @for (entry of alphaScrollEntries; track entry.id) {
+                        <article class="alpha-scroll-entry">
+                          <div class="alpha-scroll-entry__meta">
+                            <span class="alpha-scroll-entry__time">{{ entry.time }}</span>
+                            <span class="alpha-scroll-entry__owner">{{ entry.owner }}</span>
+                          </div>
+                          <strong class="alpha-scroll-entry__title">{{ entry.title }}</strong>
+                          <p>{{ entry.detail }}</p>
+                        </article>
+                      }
+                    </div>
+                  </af-scroll-panel>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Registro</span>
+                    <strong>{{ alphaScrollEntries.length }} eventos visibles con foco seguro</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 4 experimental slice</span>
+                <h3 afCardTitle>AfStepper y AfSplitter</h3>
+              </div>
+              <af-badge tone="warning">Experimental</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid alpha-wave-grid--layout">
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Stepper</span>
+                <h4 class="alpha-wave-panel__title">Linear flow con estados y paneles proyectados</h4>
+                <div class="alpha-form-stack">
+                  <div class="alpha-inline-actions">
+                    <af-badge tone="warning">Experimental</af-badge>
+                    <af-badge tone="neutral">Linear</af-badge>
+                    <af-button size="sm" variant="secondary" (pressed)="resetAlphaStepper()">Reset</af-button>
+                    <af-button size="sm" (pressed)="advanceAlphaStepper()">Completar paso</af-button>
+                  </div>
+
+                  <af-stepper
+                    [steps]="alphaStepperItems()"
+                    [activeId]="alphaStepperActiveId()"
+                    [linear]="true"
+                    ariaLabel="Stepper beta plus para flujo operativo"
+                    (activeIdChange)="setAlphaStepperActiveId($event)"
+                  >
+                    <ng-template afStepPanel="alpha-step-intake" let-step>
+                      <div class="alpha-stepper-template">
+                        <span class="alpha-stepper-template__eyebrow">{{ step.data?.owner }}</span>
+                        <strong class="alpha-stepper-template__title">{{ step.label }}</strong>
+                        <span class="alpha-stepper-template__meta">{{ step.data?.checklist }}</span>
+                        <p>{{ step.data?.nextStep }}</p>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afStepPanel="alpha-step-session" let-step>
+                      <div class="alpha-stepper-template">
+                        <span class="alpha-stepper-template__eyebrow">{{ step.data?.owner }}</span>
+                        <strong class="alpha-stepper-template__title">{{ step.label }}</strong>
+                        <span class="alpha-stepper-template__meta">{{ step.data?.checklist }}</span>
+                        <p>{{ step.data?.nextStep }}</p>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afStepPanel="alpha-step-handoff" let-step>
+                      <div class="alpha-stepper-template">
+                        <span class="alpha-stepper-template__eyebrow">{{ step.data?.owner }}</span>
+                        <strong class="alpha-stepper-template__title">{{ step.label }}</strong>
+                        <span class="alpha-stepper-template__meta">{{ step.data?.checklist }}</span>
+                        <p>{{ step.data?.nextStep }}</p>
+                      </div>
+                    </ng-template>
+                  </af-stepper>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Paso activo</span>
+                    <strong>{{ alphaStepperSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel">
+                <span class="alpha-wave-panel__eyebrow">Splitter</span>
+                <h4 class="alpha-wave-panel__title">Resize desktop y fallback stacked en mobile</h4>
+                <div class="alpha-form-stack">
+                  <af-splitter
+                    [primaryLabel]="'Lista operativa'"
+                    [secondaryLabel]="'Detalle contextual'"
+                    [primarySize]="alphaSplitterPrimarySize()"
+                    ariaLabel="Splitter beta plus para lista y detalle"
+                    (primarySizeChange)="setAlphaSplitterPrimarySize($event)"
+                  >
+                    <ng-template afSplitterPrimary>
+                      <div class="alpha-splitter-pane">
+                        <div class="alpha-splitter-list">
+                          <button type="button" class="alpha-splitter-list__item" (click)="recordAction('Beta+ splitter → atleta maria')">
+                            <strong>Maria Garcia</strong>
+                            <span>CMJ · 33.8 cm · lista para bloque principal</span>
+                          </button>
+                          <button type="button" class="alpha-splitter-list__item" (click)="recordAction('Beta+ splitter → atleta santiago')">
+                            <strong>Santiago Ruiz</strong>
+                            <span>RSI · 1.87 · seguimiento de fuerza</span>
+                          </button>
+                          <button type="button" class="alpha-splitter-list__item" (click)="recordAction('Beta+ splitter → atleta lucia')">
+                            <strong>Lucia Perez</strong>
+                            <span>Readiness watch · medical pending</span>
+                          </button>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <ng-template afSplitterSecondary>
+                      <div class="alpha-splitter-pane">
+                        <span class="alpha-splitter-pane__eyebrow">Detalle</span>
+                        <strong class="alpha-splitter-pane__title">Brief operativo del dia</strong>
+                        <p>Readiness validado, handoff listo para coaches y medical antes de 14:00.</p>
+                        <div class="alpha-live-copy">
+                          <span>Decision</span>
+                          <strong>Bloque principal aprobado</strong>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </af-splitter>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Distribucion</span>
+                    <strong>{{ alphaSplitterSummary() }}</strong>
+                  </div>
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Mobile</span>
+                    <strong>Fallback stacked documentado</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </af-card>
         </div>
 
         <af-drawer

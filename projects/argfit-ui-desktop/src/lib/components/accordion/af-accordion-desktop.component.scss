@@ -1,0 +1,81 @@
+.af-accordion-desktop {
+  display: block;
+}
+
+.af-accordion-desktop__stack {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.af-accordion-desktop__item {
+  background: color-mix(in srgb, var(--af-surface-raised) 84%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  overflow: clip;
+}
+
+.af-accordion-desktop__heading {
+  margin: 0;
+}
+
+.af-accordion-desktop__header-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  padding: var(--af-space-4);
+  text-align: left;
+  width: 100%;
+}
+
+.af-accordion-desktop__header-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--af-primary) 60%, transparent);
+  outline-offset: -2px;
+}
+
+.af-accordion-desktop__header-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.af-accordion-desktop__copy {
+  display: grid;
+  gap: var(--af-space-1);
+}
+
+.af-accordion-desktop__headline,
+.af-accordion-desktop__meta-group {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-2);
+}
+
+.af-accordion-desktop__label {
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-accordion-desktop__description,
+.af-accordion-desktop__meta,
+.af-accordion-desktop__panel-copy {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-accordion-desktop__panel {
+  border-top: 1px solid var(--af-border-soft);
+  padding: var(--af-space-4);
+}
+
+.af-accordion-desktop__panel-copy {
+  margin: 0;
+}
+
+.af-accordion-desktop[data-density='compact'] .af-accordion-desktop__header-button,
+.af-accordion-desktop[data-density='compact'] .af-accordion-desktop__panel {
+  padding: var(--af-space-3);
+}

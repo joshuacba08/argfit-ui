@@ -1,0 +1,134 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-organization-chart-mobile__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <div class="af-organization-chart-mobile__state af-organization-chart-mobile__state--loading">
+        @for (index of skeletonItems(); track index) {
+          <span class="af-organization-chart-mobile__skeleton"></span>
+        }
+      </div>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-organization-chart-mobile__state af-organization-chart-mobile__state--error" role="alert">
+      <strong>No se pudo cargar el organigrama</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-organization-chart-mobile__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <div class="af-organization-chart-mobile__canvas" [attr.aria-label]="ariaLabel()">
+      <ng-container *ngTemplateOutlet="organizationChartMobileLevel; context: { $implicit: nodes(), level: 0 }" />
+    </div>
+
+    <ng-template #organizationChartMobileLevel let-currentNodes let-level="level">
+      <div class="af-organization-chart-mobile__level" [attr.data-level]="level">
+        @for (node of currentNodes; track node.id) {
+          <div
+            class="af-organization-chart-mobile__branch"
+            [style.margin-inline-start.px]="level * 16"
+            [attr.data-selected]="isSelected(node.id) ? '' : null"
+          >
+            <div class="af-organization-chart-mobile__node-shell">
+              <button
+                type="button"
+                class="af-organization-chart-mobile__node-button"
+                [attr.aria-pressed]="isSelected(node.id)"
+                [disabled]="disabled() || node.disabled"
+                (click)="onNodePressed(node)"
+                (keydown)="onNodeKeydown($event, node)"
+              >
+                @if (nodeTemplate(); as nodeTemplateRef) {
+                  <ng-container *ngTemplateOutlet="nodeTemplateRef; context: nodeContext(node, level)" />
+                } @else {
+                  <div class="af-organization-chart-mobile__node-card">
+                    <div class="af-organization-chart-mobile__identity">
+                      <af-avatar-mobile
+                        [label]="node.label"
+                        [initials]="node.avatarLabel"
+                        [icon]="node.icon"
+                        size="md"
+                        tone="neutral"
+                      />
+
+                      <div class="af-organization-chart-mobile__copy">
+                        <span class="af-organization-chart-mobile__label">{{ node.label }}</span>
+
+                        @if (node.title) {
+                          <span class="af-organization-chart-mobile__title">{{ node.title }}</span>
+                        }
+                      </div>
+                    </div>
+
+                    @if (node.description) {
+                      <p class="af-organization-chart-mobile__description">{{ node.description }}</p>
+                    }
+
+                    @if (node.meta || node.badge) {
+                      <div class="af-organization-chart-mobile__meta-row">
+                        @if (node.meta) {
+                          <span class="af-organization-chart-mobile__meta">{{ node.meta }}</span>
+                        }
+
+                        @if (node.badge; as badge) {
+                          <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                            {{ badge.label }}
+                          </af-badge-mobile>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </button>
+
+              @if (hasChildren(node)) {
+                <button
+                  type="button"
+                  class="af-organization-chart-mobile__toggle"
+                  [attr.aria-label]="isExpanded(node.id) ? 'Contraer equipo' : 'Expandir equipo'"
+                  [disabled]="disabled() || node.disabled"
+                  (click)="onToggleClick($event, node.id)"
+                >
+                  <af-icon
+                    [name]="isExpanded(node.id) ? 'chevron-down' : 'chevron-right'"
+                    size="xs"
+                    tone="muted"
+                    [decorative]="true"
+                  />
+                </button>
+              }
+            </div>
+
+            @if (hasChildren(node) && isExpanded(node.id)) {
+              <span class="af-organization-chart-mobile__connector"></span>
+              <ng-container
+                *ngTemplateOutlet="organizationChartMobileLevel; context: { $implicit: childrenFor(node), level: level + 1 }"
+              />
+            }
+          </div>
+        }
+      </div>
+    </ng-template>
+  }
+}

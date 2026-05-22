@@ -33,9 +33,68 @@ try {
     execute: async (page) => {
       await setPlatform(page, 'desktop');
       await setTheme(page, 'dark');
-      await openDesktopSection(page, 'Alpha', '[data-qa="section-alpha"]');
+      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
       await assertMinimumCount(page, 'af-card-desktop', 3, 'alpha cards');
       await assertContainsText(page, '[data-qa="section-alpha"]', 'Adaptive API');
+    },
+  });
+
+  await runScenario(browser, {
+    name: 'alpha-tree-table-desktop-dark',
+    viewport: { width: 1440, height: 1100 },
+    execute: async (page) => {
+      await setPlatform(page, 'desktop');
+      await setTheme(page, 'dark');
+      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
+      await waitForVisible(page, 'af-tree-table-desktop');
+      await page.locator('af-tree-table-desktop').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, '.af-tree-table-desktop__row', 5, 'tree table rows');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Potencia CMJ');
+    },
+  });
+
+  await runScenario(browser, {
+    name: 'alpha-virtual-scroller-desktop-dark',
+    viewport: { width: 1440, height: 1100 },
+    execute: async (page) => {
+      await setPlatform(page, 'desktop');
+      await setTheme(page, 'dark');
+      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
+      await waitForVisible(page, 'af-virtual-scroller-desktop');
+      await page.locator('af-virtual-scroller-desktop').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, '.alpha-virtual-template', 1, 'templated virtual rows');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Window');
+    },
+  });
+
+  await runScenario(browser, {
+    name: 'alpha-organization-chart-desktop-dark',
+    viewport: { width: 1440, height: 1200 },
+    execute: async (page) => {
+      await setPlatform(page, 'desktop');
+      await setTheme(page, 'dark');
+      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
+      await waitForVisible(page, 'af-organization-chart-desktop');
+      await page.locator('af-organization-chart-desktop').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, '.af-organization-chart-desktop__node-button', 4, 'organization chart nodes');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'ArgFit Leadership');
+    },
+  });
+
+  await runScenario(browser, {
+    name: 'alpha-panel-layout-desktop-dark',
+    viewport: { width: 1440, height: 1500 },
+    execute: async (page) => {
+      await setPlatform(page, 'desktop');
+      await setTheme(page, 'dark');
+      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
+      await waitForVisible(page, 'af-stepper-desktop');
+      await page.locator('af-stepper-desktop').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, 'af-toolbar-desktop', 1, 'panel layout toolbars');
+      await assertMinimumCount(page, 'af-panel-desktop', 1, 'panel layout panels');
+      await assertMinimumCount(page, 'af-stepper-desktop .af-stepper-desktop__step', 3, 'stepper steps');
+      await assertMinimumCount(page, 'af-splitter-desktop', 1, 'splitter hosts');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Brief operativo del dia');
     },
   });
 

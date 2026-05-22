@@ -217,24 +217,83 @@ function validateDocsShape() {
 
 function createSmokeSource() {
   return `import { ARGFIT_DARK_THEME, AfPlatformService, AfThemeService, provideArgfitUi } from '@argfit-ui/core';
-import type { AfButtonVariant, AfChartType } from '@argfit-ui/core';
+import type { AfButtonVariant, AfChartType, AfOrganizationChartNode, AfTreeTableNode, AfVirtualScrollerItem } from '@argfit-ui/core';
 import { AfIconComponent, AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
 import { AfButtonDesktopComponent } from '@argfit-ui/desktop';
 import { AfButtonMobileComponent } from '@argfit-ui/mobile';
-import { AfBadge, AfButton, AfCard, AfChart, AfDialog, AfInput, AfMetricCard, AfPageShell } from '@argfit-ui/adaptive';
+import {
+  AfBadge,
+  AfButton,
+  AfCard,
+  AfChart,
+  AfDialog,
+  AfInput,
+  AfMetricCard,
+  AfOrganizationChart,
+  AfOrganizationChartActionsDirective,
+  AfOrganizationChartNodeDirective,
+  AfPageShell,
+  AfTreeTable,
+  AfTreeTableActionsDirective,
+  AfTreeTableCellDirective,
+  AfVirtualScroller,
+  AfVirtualScrollerActionsDirective,
+  AfVirtualScrollerItemDirective,
+} from '@argfit-ui/adaptive';
 
 const providers = provideArgfitUi({ theme: ARGFIT_DARK_THEME, platform: 'auto' });
 const variant: AfButtonVariant = 'primary';
 const chartType: AfChartType = 'line';
+const organizationNodes: readonly AfOrganizationChartNode[] = [
+  {
+    id: 'root',
+    label: 'ArgFit HQ',
+    title: 'Leadership',
+    children: [{ id: 'performance', label: 'Performance', title: 'Ops' }],
+  },
+];
+const treeTableNodes: readonly AfTreeTableNode[] = [
+  {
+    id: 'ops',
+    label: 'Ops',
+    data: { name: 'Ops', status: 'Active' },
+    children: [{ id: 'lab', label: 'Lab', data: { name: 'Lab', status: 'Ready' } }],
+  },
+];
+const virtualItems: readonly AfVirtualScrollerItem[] = [
+  { id: 'session-1', title: 'Session 1', meta: 'AM' },
+  { id: 'session-2', title: 'Session 2', meta: 'PM' },
+];
 
 export const betaSmoke = {
   providers,
   variant,
   chartType,
+  organizationNodes,
+  treeTableNodes,
+  virtualItems,
   core: [AfPlatformService, AfThemeService],
   primitives: [AfIconComponent, AfVisuallyHiddenComponent],
   renderers: [AfButtonDesktopComponent, AfButtonMobileComponent],
-  adaptive: [AfBadge, AfButton, AfCard, AfChart, AfDialog, AfInput, AfMetricCard, AfPageShell],
+  adaptive: [
+    AfBadge,
+    AfButton,
+    AfCard,
+    AfChart,
+    AfDialog,
+    AfInput,
+    AfMetricCard,
+    AfOrganizationChart,
+    AfOrganizationChartActionsDirective,
+    AfOrganizationChartNodeDirective,
+    AfPageShell,
+    AfTreeTable,
+    AfTreeTableActionsDirective,
+    AfTreeTableCellDirective,
+    AfVirtualScroller,
+    AfVirtualScrollerActionsDirective,
+    AfVirtualScrollerItemDirective,
+  ],
 };
 `;
 }

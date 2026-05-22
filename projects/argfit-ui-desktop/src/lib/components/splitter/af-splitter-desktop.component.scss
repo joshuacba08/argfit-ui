@@ -1,0 +1,66 @@
+.af-splitter-desktop__layout {
+  display: flex;
+  gap: var(--af-space-3);
+  min-height: 22rem;
+}
+
+.af-splitter-desktop--vertical .af-splitter-desktop__layout {
+  flex-direction: column;
+}
+
+.af-splitter-desktop__pane {
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  flex: 1 1 0;
+  gap: var(--af-space-3);
+  min-inline-size: 0;
+  overflow: hidden;
+  padding: var(--af-space-4);
+}
+
+.af-splitter-desktop__pane-header {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-wider);
+  text-transform: uppercase;
+}
+
+.af-splitter-desktop__divider {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-bg-surface) 86%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: 999px;
+  color: var(--af-text-muted);
+  cursor: col-resize;
+  display: inline-flex;
+  justify-content: center;
+  min-width: 0.9rem;
+  padding: 0;
+}
+
+.af-splitter-desktop__divider span {
+  background: currentColor;
+  border-radius: 999px;
+  display: block;
+  height: 3rem;
+  opacity: 0.48;
+  width: 2px;
+}
+
+.af-splitter-desktop--vertical .af-splitter-desktop__divider {
+  cursor: row-resize;
+  min-height: 0.9rem;
+}
+
+.af-splitter-desktop--vertical .af-splitter-desktop__divider span {
+  height: 2px;
+  width: 3rem;
+}
+
+.af-splitter-desktop__divider:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}

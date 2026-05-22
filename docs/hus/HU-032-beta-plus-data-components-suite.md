@@ -90,6 +90,7 @@ Crear seccion Data Beta+ con:
 - `AfTree` para club/equipo/grupo.
 - `AfTreeTable` desktop y mobile fallback.
 - `AfVirtualScroller` con dataset suficientemente grande.
+- `AfOrganizationChart` para ownership y jerarquia operativa.
 
 ## Criterios De Aceptacion
 
@@ -98,7 +99,7 @@ Crear seccion Data Beta+ con:
 3. `AfPaginator` se puede usar de forma independiente.
 4. No se filtran tipos PrimeNG/Ionic/CDK en adaptive.
 5. Tests cubren paginacion, seleccion, reorder, expand/collapse y estados.
-6. Visual QA cubre DataView, Timeline, Tree/TreeTable y VirtualScroller.
+6. Visual QA cubre DataView, Timeline, Tree/TreeTable, VirtualScroller y OrganizationChart.
 7. `pnpm guard:architecture` pasa.
 8. `pnpm test:all` pasa.
 

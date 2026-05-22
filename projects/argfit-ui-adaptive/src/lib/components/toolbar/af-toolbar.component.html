@@ -1,0 +1,17 @@
+@if (isMobile()) {
+  <af-toolbar-mobile
+    [density]="density()"
+    [ariaLabel]="ariaLabel()"
+    [startTemplate]="startTemplate()"
+    [centerTemplate]="centerTemplate()"
+    [endTemplate]="endTemplate()"
+  />
+} @else {
+  <af-toolbar-desktop
+    [density]="density()"
+    [ariaLabel]="ariaLabel()"
+    [startTemplate]="startTemplate()"
+    [centerTemplate]="centerTemplate()"
+    [endTemplate]="endTemplate()"
+  />
+}

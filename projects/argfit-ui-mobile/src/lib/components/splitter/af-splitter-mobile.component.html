@@ -1,0 +1,21 @@
+<div class="af-splitter-mobile__stack">
+  <section class="af-splitter-mobile__pane">
+    @if (primaryLabel()) {
+      <header class="af-splitter-mobile__pane-header">{{ primaryLabel() }}</header>
+    }
+    @if (primaryTemplate()) {
+      <ng-container [ngTemplateOutlet]="primaryTemplate()" />
+    }
+  </section>
+
+  <div class="af-splitter-mobile__fallback" aria-hidden="true">Stacked fallback</div>
+
+  <section class="af-splitter-mobile__pane">
+    @if (secondaryLabel()) {
+      <header class="af-splitter-mobile__pane-header">{{ secondaryLabel() }}</header>
+    }
+    @if (secondaryTemplate()) {
+      <ng-container [ngTemplateOutlet]="secondaryTemplate()" />
+    }
+  </section>
+</div>

@@ -1,0 +1,51 @@
+.af-divider-desktop {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  font-family: var(--af-font-body);
+  gap: var(--af-space-3);
+}
+
+.af-divider-desktop__line {
+  background: var(--af-border-soft);
+  flex: 1 1 auto;
+  min-width: 1px;
+}
+
+.af-divider-desktop__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  letter-spacing: var(--af-tracking-wider);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.af-divider-desktop--horizontal {
+  width: 100%;
+}
+
+.af-divider-desktop--horizontal .af-divider-desktop__line {
+  height: 1px;
+}
+
+.af-divider-desktop--vertical {
+  align-self: stretch;
+  height: 100%;
+  justify-content: center;
+  min-height: 100%;
+  width: 1px;
+}
+
+.af-divider-desktop--vertical .af-divider-desktop__line {
+  height: 100%;
+  width: 1px;
+}
+
+.af-divider-desktop--tone-accent .af-divider-desktop__line {
+  background: color-mix(in srgb, var(--af-primary) 56%, var(--af-border-soft));
+}
+
+.af-divider-desktop--tone-accent .af-divider-desktop__label {
+  color: var(--af-primary);
+}

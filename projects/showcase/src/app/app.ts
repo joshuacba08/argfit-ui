@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import {
+    AfAccordion,
+    AfAccordionPanelDirective,
     AfAnalyticsCard,
     AfAnalyticsCardActionsDirective,
     AfAnalyticsCardFooterDirective,
@@ -31,8 +33,10 @@ import {
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
+    AfDivider,
     AfDrawer,
     AfField,
+    AfFieldset,
     AfIconField,
     AfIconFieldControlDirective,
     AfIconFieldPrefixDirective,
@@ -49,12 +53,16 @@ import {
     AfMultiSelect,
     AfOrderList,
     AfOrderListActionsDirective,
+    AfOrganizationChart,
+    AfOrganizationChartActionsDirective,
+    AfOrganizationChartNodeDirective,
     AfPageShell,
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,
     AfPageShellFooterDirective,
     AfPageShellUserDirective,
     AfPaginator,
+    AfPanel,
     AfPassword,
     AfPickList,
     AfPickListActionsDirective,
@@ -63,21 +71,41 @@ import {
     AfPopoverTriggerDirective,
     AfProgress,
     AfRadioGroup,
+    AfScrollPanel,
     AfSegmentedControl,
     AfSelect,
+    AfSplitter,
+    AfSplitterPrimaryDirective,
+    AfSplitterSecondaryDirective,
+    AfStepPanelDirective,
+    AfStepper,
+    AfTabPanelDirective,
+    AfTabs,
     AfTextarea,
     AfTimeline,
     AfTimelineActionsDirective,
     AfToastViewport,
     AfToggle,
+    AfToolbar,
+    AfToolbarCenterDirective,
+    AfToolbarEndDirective,
+    AfToolbarStartDirective,
     AfTooltip,
     AfTree,
     AfTreeActionsDirective,
+    AfTreeTable,
+    AfTreeTableActionsDirective,
+    AfTreeTableCellDirective,
+    AfVirtualScroller,
+    AfVirtualScrollerActionsDirective,
+    AfVirtualScrollerItemDirective,
 } from '@argfit-ui/adaptive';
 import {
     AfPlatformService,
     AfThemeService,
     AfToastService,
+    type AfAccordionExpandedIds,
+    type AfAccordionItem,
     type AfAnalyticsCardState,
     type AfBadgeTone,
     type AfBreadcrumbItem,
@@ -96,16 +124,26 @@ import {
     type AfOrderListItem,
     type AfOrderListReorderChange,
     type AfOrderListSelectedIds,
+    type AfOrganizationChartExpandedIds,
+    type AfOrganizationChartNode,
+    type AfOrganizationChartSelectedIds,
     type AfPaginatorPageChange,
     type AfPaginatorState,
     type AfPickListChange,
     type AfPickListItem,
     type AfPickListSelectedIds,
     type AfPlatformPreference,
+    type AfStepItem,
+    type AfTabItem,
     type AfTimelineItem,
     type AfTreeExpandedIds,
     type AfTreeNode,
     type AfTreeSelectedIds,
+    type AfTreeTableExpandedIds,
+    type AfTreeTableNode,
+    type AfTreeTableSelectedIds,
+    type AfVirtualScrollerItem,
+    type AfVirtualScrollerRange,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
@@ -129,12 +167,51 @@ interface ShowcaseAdvancedSelectOption {
   readonly hint: string;
 }
 
+interface ShowcaseTreeTableRow {
+  readonly name: string;
+  readonly status: string;
+  readonly owner: string;
+  readonly updated: string;
+}
+
+interface ShowcaseOrganizationUnitData {
+  readonly zone: string;
+  readonly capacity: string;
+}
+
+interface ShowcaseTabPanelData {
+  readonly owner: string;
+  readonly metric: string;
+  readonly nextStep: string;
+}
+
+interface ShowcaseAccordionPanelData {
+  readonly state: string;
+  readonly action: string;
+}
+
+interface ShowcaseScrollEntry {
+  readonly id: string;
+  readonly title: string;
+  readonly owner: string;
+  readonly detail: string;
+  readonly time: string;
+}
+
+interface ShowcaseStepperData {
+  readonly owner: string;
+  readonly checklist: string;
+  readonly nextStep: string;
+}
+
 type ShowcaseAnalyticsPeriod = '1M' | '3M' | '6M' | '1A';
 type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
 
 @Component({
   selector: 'app-root',
   imports: [
+    AfAccordion,
+    AfAccordionPanelDirective,
     AfAnalyticsCard,
     AfAnalyticsCardActionsDirective,
     AfAnalyticsCardMetricsDirective,
@@ -161,8 +238,10 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfDataTableExpandedRowDirective,
     AfDataTableToolbarDirective,
     AfDatePicker,
+    AfDivider,
     AfIconComponent,
     AfField,
+    AfFieldset,
     AfIconField,
     AfIconFieldControlDirective,
     AfIconFieldPrefixDirective,
@@ -177,8 +256,12 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfListbox,
     AfMetricCard,
     AfMultiSelect,
+    AfOrganizationChart,
+    AfOrganizationChartActionsDirective,
+    AfOrganizationChartNodeDirective,
     AfOrderList,
     AfOrderListActionsDirective,
+    AfPanel,
     AfPaginator,
     AfPageShell,
     AfPageShellBrandDirective,
@@ -197,17 +280,35 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfPopoverTriggerDirective,
     AfProgress,
     AfRadioGroup,
+    AfScrollPanel,
     AfSegmentedControl,
     AfSelect,
+    AfSplitter,
+    AfSplitterPrimaryDirective,
+    AfSplitterSecondaryDirective,
+    AfStepPanelDirective,
+    AfStepper,
+    AfTabPanelDirective,
+    AfTabs,
     AfTextarea,
     AfTimeline,
     AfTimelineActionsDirective,
     AfTooltip,
+    AfToolbar,
+    AfToolbarCenterDirective,
+    AfToolbarEndDirective,
+    AfToolbarStartDirective,
     AfToggle,
     AfTree,
     AfTreeActionsDirective,
     AfToastViewport,
     ReactiveFormsModule,
+    AfTreeTable,
+    AfTreeTableCellDirective,
+    AfTreeTableActionsDirective,
+    AfVirtualScroller,
+    AfVirtualScrollerActionsDirective,
+    AfVirtualScrollerItemDirective,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -520,8 +621,298 @@ export class App {
       ],
     },
   ];
+  protected readonly alphaTreeTableColumns: readonly AfDataTableColumn<ShowcaseTreeTableRow>[] = [
+    { key: 'name', header: 'Unidad', minWidth: '220px', mobilePriority: 'primary' },
+    { key: 'status', header: 'Estado', minWidth: '120px', mobilePriority: 'secondary' },
+    { key: 'owner', header: 'Responsable', minWidth: '140px', mobilePriority: 'secondary' },
+    { key: 'updated', header: 'Actualizado', minWidth: '120px', mobilePriority: 'secondary' },
+  ];
+  protected readonly alphaTreeTableNodes: readonly AfTreeTableNode<ShowcaseTreeTableRow>[] = [
+    {
+      id: 'alpha-tree-table-root',
+      label: 'ArgFit Ops',
+      description: 'Portfolio operativo de performance',
+      meta: '3 lineas activas',
+      icon: 'users',
+      badge: { label: 'Live', tone: 'success' },
+      data: { name: 'ArgFit Ops', status: 'Activo', owner: 'Staff central', updated: '05:30' },
+      children: [
+        {
+          id: 'alpha-tree-table-programs',
+          label: 'Programas',
+          description: 'Bloques del microciclo',
+          meta: '2 flujos',
+          icon: 'bar-chart-3',
+          data: { name: 'Programas', status: 'Activo', owner: 'Performance', updated: '06:15' },
+          children: [
+            {
+              id: 'alpha-tree-table-power',
+              label: 'Potencia CMJ',
+              description: 'Sesion principal del dia',
+              meta: 'Cancha 2',
+              icon: 'activity',
+              badge: { label: 'Core', tone: 'accent' },
+              data: { name: 'Potencia CMJ', status: 'En curso', owner: 'Marta', updated: '10:30' },
+            },
+            {
+              id: 'alpha-tree-table-rehab',
+              label: 'Retorno progresivo',
+              description: 'Seguimiento medico sensible',
+              meta: '4 atletas',
+              icon: 'check-square',
+              badge: { label: 'Watch', tone: 'warning' },
+              data: { name: 'Retorno progresivo', status: 'Supervision', owner: 'Pablo', updated: '09:10' },
+            },
+          ],
+        },
+        {
+          id: 'alpha-tree-table-squads',
+          label: 'Planteles',
+          description: 'Agrupaciones activas',
+          meta: '2 equipos',
+          icon: 'users',
+          data: { name: 'Planteles', status: 'Activo', owner: 'Coaches', updated: '07:00' },
+          children: [
+            {
+              id: 'alpha-tree-table-first-team',
+              label: 'Primer equipo',
+              description: 'Seguimiento diario',
+              meta: '14 atletas',
+              icon: 'users',
+              data: { name: 'Primer equipo', status: 'Listo', owner: 'Lucia', updated: '08:20' },
+            },
+            {
+              id: 'alpha-tree-table-u21',
+              label: 'U21',
+              description: 'Control de fuerza y salto',
+              meta: '12 atletas',
+              icon: 'users',
+              data: { name: 'U21', status: 'Listo', owner: 'Nicolas', updated: '08:05' },
+            },
+          ],
+        },
+      ],
+    },
+  ];
+  protected readonly alphaTabsItems: readonly AfTabItem<ShowcaseTabPanelData>[] = [
+    {
+      id: 'alpha-tab-athlete',
+      label: 'Vista atleta',
+      description: 'Identidad, readiness y ownership operativo.',
+      badge: { label: 'Core', tone: 'accent' },
+      data: {
+        owner: 'Performance Ops',
+        metric: 'CMJ 33.8 cm · RSI 1.92',
+        nextStep: 'Confirmar readiness y abrir bloque principal',
+      },
+    },
+    {
+      id: 'alpha-tab-session',
+      label: 'Sesion',
+      description: 'Detalles del microciclo y handoff con staff.',
+      badge: { label: 'Today', tone: 'neutral' },
+      data: {
+        owner: 'Jump Lab',
+        metric: '8 intentos · ventana 6 min',
+        nextStep: 'Actualizar observaciones y exporte para coaches',
+      },
+    },
+    {
+      id: 'alpha-tab-export',
+      label: 'Export',
+      description: 'Entrega de resumen a analytics y medical.',
+      data: {
+        owner: 'Analytics',
+        metric: 'CSV + PDF listos',
+        nextStep: 'Publicar resumen diario antes de 14:00',
+      },
+    },
+  ];
+  protected readonly alphaAccordionItems: readonly AfAccordionItem<ShowcaseAccordionPanelData>[] = [
+    {
+      id: 'alpha-accordion-evaluation',
+      label: 'Evaluacion',
+      description: 'Screening inicial, test base y observaciones del staff.',
+      meta: '12 campos',
+      badge: { label: 'Core', tone: 'accent' },
+      data: {
+        state: 'Completo',
+        action: 'Validar restricciones y checklist inicial',
+      },
+    },
+    {
+      id: 'alpha-accordion-readiness',
+      label: 'Readiness',
+      description: 'Disponibilidad diaria, percepcion y carga externa.',
+      meta: '4 señales',
+      badge: { label: 'Watch', tone: 'warning' },
+      data: {
+        state: 'En seguimiento',
+        action: 'Cruzar CMJ, soreness y decision del coach',
+      },
+    },
+    {
+      id: 'alpha-accordion-handoff',
+      label: 'Handoff',
+      description: 'Resumen ejecutivo para medical, coaches y analytics.',
+      meta: '3 destinos',
+      data: {
+        state: 'Pendiente',
+        action: 'Confirmar exportes y enviar decision final',
+      },
+    },
+  ];
+  protected readonly alphaScrollEntries: readonly ShowcaseScrollEntry[] = [
+    {
+      id: 'alpha-scroll-1',
+      title: 'Readiness sync',
+      owner: 'Performance Ops',
+      detail: 'Coach report alineado con CMJ threshold y soreness notes.',
+      time: '06:45',
+    },
+    {
+      id: 'alpha-scroll-2',
+      title: 'Medical review',
+      owner: 'Medical',
+      detail: 'Alta progresiva confirmada para dos atletas sensibles.',
+      time: '07:10',
+    },
+    {
+      id: 'alpha-scroll-3',
+      title: 'Session briefing',
+      owner: 'Jump Lab',
+      detail: 'Ventana de potencia reducida a 6 minutos y checklist validado.',
+      time: '08:05',
+    },
+    {
+      id: 'alpha-scroll-4',
+      title: 'Handoff prep',
+      owner: 'Analytics',
+      detail: 'Export diario listo para coaches y medical antes de 14:00.',
+      time: '09:20',
+    },
+    {
+      id: 'alpha-scroll-5',
+      title: 'Coach adjustment',
+      owner: 'Coaching Staff',
+      detail: 'Se bloquea volumen extra y se mantiene criterio de salida conservador.',
+      time: '10:35',
+    },
+  ];
+  private readonly alphaStepperInitialItems: readonly AfStepItem<ShowcaseStepperData>[] = [
+    {
+      id: 'alpha-step-intake',
+      label: 'Intake',
+      description: 'Brief medico y readiness base.',
+      state: 'completed',
+      data: {
+        owner: 'Medical',
+        checklist: 'Checklist base aprobado y restricciones confirmadas.',
+        nextStep: 'Abrir bloque de sesion con foco en potencia.',
+      },
+    },
+    {
+      id: 'alpha-step-session',
+      label: 'Session',
+      description: 'Carga, constraints y objetivo principal.',
+      data: {
+        owner: 'Performance Ops',
+        checklist: 'Definir ventana, handoff y criterio de salida.',
+        nextStep: 'Preparar export y resumen ejecutivo.',
+      },
+    },
+    {
+      id: 'alpha-step-handoff',
+      label: 'Handoff',
+      description: 'Resumen para coach, medical y analytics.',
+      state: 'upcoming',
+      data: {
+        owner: 'Analytics',
+        checklist: 'Consolidar export, decision y alertas finales.',
+        nextStep: 'Publicar decision diaria antes de 14:00.',
+      },
+    },
+  ];
+  private readonly alphaStepperDefaultId = 'alpha-step-session';
+  protected readonly alphaOrganizationChartNodes: readonly AfOrganizationChartNode<ShowcaseOrganizationUnitData>[] = [
+    {
+      id: 'alpha-org-root',
+      label: 'ArgFit Leadership',
+      title: 'Direccion general',
+      description: 'Coordina operaciones, cuentas enterprise y roadmap de plataforma.',
+      meta: '4 cells',
+      icon: 'users',
+      badge: { label: 'HQ', tone: 'neutral' },
+      data: { zone: 'Buenos Aires', capacity: '12 leads' },
+      children: [
+        {
+          id: 'alpha-org-performance',
+          label: 'Performance Ops',
+          title: 'Direccion de campo',
+          description: 'Gestion de squads, readiness y sesiones operativas.',
+          meta: '6 squads',
+          icon: 'activity',
+          badge: { label: 'Core', tone: 'accent' },
+          data: { zone: 'Field', capacity: '6 squads' },
+          children: [
+            {
+              id: 'alpha-org-lab',
+              label: 'Jump Lab',
+              title: 'Ciencia del deporte',
+              meta: 'Turno AM',
+              icon: 'bar-chart-3',
+              data: { zone: 'Lab', capacity: '3 analysts' },
+            },
+            {
+              id: 'alpha-org-readiness',
+              label: 'Readiness Cell',
+              title: 'Monitoreo diario',
+              meta: 'Turno PM',
+              icon: 'check-square',
+              badge: { label: 'Watch', tone: 'warning' },
+              data: { zone: 'Field', capacity: '2 physios' },
+            },
+          ],
+        },
+        {
+          id: 'alpha-org-medical',
+          label: 'Medical Staff',
+          title: 'Salud y retorno',
+          description: 'Alta progresiva y restricciones operativas.',
+          meta: '4 casos',
+          icon: 'circle-check',
+          data: { zone: 'Clinic', capacity: '4 practitioners' },
+        },
+        {
+          id: 'alpha-org-analytics',
+          label: 'Analytics',
+          title: 'Insights y reporting',
+          description: 'Comparativas, exportes y tableros de coaching staff.',
+          meta: '2 pods',
+          icon: 'pie-chart',
+          data: { zone: 'Remote', capacity: '2 pods' },
+        },
+      ],
+    },
+  ];
   private readonly alphaTreeInitialExpandedIds: AfTreeExpandedIds = ['club-argfit', 'squads'];
   private readonly alphaTreeAllExpandableIds: AfTreeExpandedIds = this.collectAlphaTreeExpandableIds(this.alphaTreeNodes);
+  private readonly alphaTreeTableInitialExpandedIds: AfTreeTableExpandedIds = [
+    'alpha-tree-table-root',
+    'alpha-tree-table-programs',
+    'alpha-tree-table-squads',
+  ];
+  private readonly alphaTreeTableAllExpandableIds: AfTreeTableExpandedIds = this.collectAlphaTreeTableExpandableIds(
+    this.alphaTreeTableNodes,
+  );
+  private readonly alphaOrganizationChartInitialExpandedIds: AfOrganizationChartExpandedIds = [
+    'alpha-org-root',
+    'alpha-org-performance',
+  ];
+  private readonly alphaTabsDefaultId = 'alpha-tab-athlete';
+  private readonly alphaAccordionInitialExpandedIds: AfAccordionExpandedIds = ['alpha-accordion-evaluation'];
+  private readonly alphaOrganizationChartAllExpandableIds: AfOrganizationChartExpandedIds =
+    this.collectAlphaOrganizationChartExpandableIds(this.alphaOrganizationChartNodes);
   private readonly alphaOrderListInitialItems: readonly AfOrderListItem[] = [
     {
       id: 'alpha-order-warmup',
@@ -597,6 +988,21 @@ export class App {
       badge: { label: 'Ready', tone: 'success' },
     },
   ];
+  protected readonly alphaVirtualScrollerItems: readonly AfVirtualScrollerItem[] = Array.from(
+    { length: 18 },
+    (_, index) => ({
+      id: `alpha-virtual-${index + 1}`,
+      title: `Sesion masiva ${index + 1}`,
+      description: `Bloque ${Math.floor(index / 3) + 1} con ${6 + (index % 4)} atletas monitorizados.`,
+      meta: index % 2 === 0 ? 'Turno AM' : 'Turno PM',
+      supportingText: `Ventana ${(index % 5) + 4} min · CMJ + RSI`,
+      icon: index % 3 === 0 ? 'calendar' : index % 3 === 1 ? 'activity' : 'bar-chart-3',
+      badge: {
+        label: index % 4 === 0 ? 'Hot' : 'Ready',
+        tone: index % 4 === 0 ? 'accent' : 'neutral',
+      },
+    }),
+  );
   protected readonly alphaInputCountControl = new FormControl<number>(6, { nonNullable: true });
   protected readonly alphaDatePickerControl = new FormControl<string>('2026-05-22', { nonNullable: true });
   protected readonly alphaListboxControl = new FormControl<readonly unknown[]>(['cmj', 'dj'], { nonNullable: true });
@@ -614,6 +1020,19 @@ export class App {
   });
   protected readonly alphaTreeExpandedIds = signal<AfTreeExpandedIds>(this.alphaTreeInitialExpandedIds);
   protected readonly alphaTreeSelectedIds = signal<AfTreeSelectedIds>(['athlete-maria']);
+  protected readonly alphaTabsActiveId = signal<string>(this.alphaTabsDefaultId);
+  protected readonly alphaAccordionExpandedIds = signal<AfAccordionExpandedIds>(this.alphaAccordionInitialExpandedIds);
+  protected readonly alphaStepperItems = signal<readonly AfStepItem<ShowcaseStepperData>[]>(this.alphaStepperInitialItems);
+  protected readonly alphaStepperActiveId = signal<string>(this.alphaStepperDefaultId);
+  protected readonly alphaSplitterPrimarySize = signal(52);
+  protected readonly alphaOrganizationChartExpandedIds = signal<AfOrganizationChartExpandedIds>(
+    this.alphaOrganizationChartInitialExpandedIds,
+  );
+  protected readonly alphaOrganizationChartSelectedIds = signal<AfOrganizationChartSelectedIds>([
+    'alpha-org-performance',
+  ]);
+  protected readonly alphaTreeTableExpandedIds = signal<AfTreeTableExpandedIds>(this.alphaTreeTableInitialExpandedIds);
+  protected readonly alphaTreeTableSelectedIds = signal<AfTreeTableSelectedIds>(['alpha-tree-table-power']);
   protected readonly alphaOrderListItems = signal<readonly AfOrderListItem[]>(this.alphaOrderListInitialItems);
   protected readonly alphaOrderListSelectedIds = signal<AfOrderListSelectedIds>(['alpha-order-cmj']);
   protected readonly alphaOrderListSummary = computed(() => this.alphaOrderListItems().map((item) => item.label).join(' · '));
@@ -642,6 +1061,60 @@ export class App {
   protected readonly alphaTreeExpandedSummary = computed(
     () => `${this.alphaTreeExpandedIds().length} nodos abiertos`,
   );
+  protected readonly alphaTabsSummary = computed(() => {
+    const activeId = this.alphaTabsActiveId();
+    return this.alphaTabsItems.find((item) => item.id === activeId)?.label ?? activeId;
+  });
+  protected readonly alphaAccordionSummary = computed(
+    () => `${this.alphaAccordionExpandedIds().length} bloques abiertos`,
+  );
+  protected readonly alphaStepperSummary = computed(() => {
+    const activeId = this.alphaStepperActiveId();
+    return this.alphaStepperItems().find((item) => item.id === activeId)?.label ?? activeId;
+  });
+  protected readonly alphaSplitterSummary = computed(() => {
+    const primarySize = Math.round(this.alphaSplitterPrimarySize());
+    return `${primarySize}% lista · ${100 - primarySize}% detalle`;
+  });
+  protected readonly alphaOrganizationChartSelectionSummary = computed(() => {
+    const selectedIds = this.alphaOrganizationChartSelectedIds();
+    if (selectedIds.length === 0) {
+      return 'Sin unidad seleccionada';
+    }
+
+    return selectedIds
+      .map((selectedId) => this.findAlphaOrganizationChartNodeLabel(selectedId) ?? selectedId)
+      .join(' · ');
+  });
+  protected readonly alphaOrganizationChartExpandedSummary = computed(
+    () => `${this.alphaOrganizationChartExpandedIds().length} nodos abiertos`,
+  );
+  protected readonly alphaTreeTableSelectionSummary = computed(() => {
+    const selectedIds = this.alphaTreeTableSelectedIds();
+    if (selectedIds.length === 0) {
+      return 'Sin fila seleccionada';
+    }
+
+    return selectedIds
+      .map((selectedId) => this.findAlphaTreeTableNodeLabel(selectedId) ?? selectedId)
+      .join(' · ');
+  });
+  protected readonly alphaTreeTableExpandedSummary = computed(
+    () => `${this.alphaTreeTableExpandedIds().length} nodos abiertos`,
+  );
+  protected readonly alphaVirtualScrollerVisibleRange = signal<AfVirtualScrollerRange>({
+    startIndex: 0,
+    endIndex: 4,
+    totalItems: this.alphaVirtualScrollerItems.length,
+  });
+  protected readonly alphaVirtualScrollerSummary = computed(() => {
+    const range = this.alphaVirtualScrollerVisibleRange();
+    if (range.totalItems === 0) {
+      return 'Sin registros';
+    }
+
+    return `${range.startIndex + 1}-${Math.min(range.endIndex + 1, range.totalItems)} de ${range.totalItems}`;
+  });
   protected readonly newAthleteForm = new FormGroup({
     name: new FormControl<string>('Maria Garcia', { nonNullable: true }),
     email: new FormControl<string>('maria@club.com.ar', { nonNullable: true }),
@@ -1136,6 +1609,132 @@ export class App {
     this.recordAction(`Beta+ tree node → ${node.label}`);
   }
 
+  protected setAlphaTabsActiveId(activeId: string): void {
+    this.alphaTabsActiveId.set(activeId);
+    this.recordAction(`Beta+ tabs → ${this.alphaTabsSummary()}`);
+  }
+
+  protected setAlphaAccordionExpanded(expandedIds: AfAccordionExpandedIds): void {
+    this.alphaAccordionExpandedIds.set(expandedIds);
+    this.recordAction(`Beta+ accordion expanded → ${expandedIds.length}`);
+  }
+
+  protected resetAlphaAccordion(): void {
+    this.alphaAccordionExpandedIds.set(this.alphaAccordionInitialExpandedIds);
+    this.recordAction('Beta+ accordion → reset');
+  }
+
+  protected setAlphaStepperActiveId(activeId: string): void {
+    this.alphaStepperActiveId.set(activeId);
+    this.recordAction(`Beta+ stepper → ${this.alphaStepperSummary()}`);
+  }
+
+  protected advanceAlphaStepper(): void {
+    const items = this.alphaStepperItems();
+    const currentIndex = items.findIndex((item) => item.id === this.alphaStepperActiveId());
+    if (currentIndex === -1) {
+      return;
+    }
+
+    if (currentIndex >= items.length - 1) {
+      this.alphaStepperItems.set(
+        items.map((item, index) => (index === currentIndex ? { ...item, state: 'completed' } : item)),
+      );
+      this.recordAction('Beta+ stepper → completo');
+      return;
+    }
+
+    const nextStep = items[currentIndex + 1];
+    if (!nextStep) {
+      return;
+    }
+
+    this.alphaStepperItems.set(
+      items.map((item, index) => {
+        if (index <= currentIndex) {
+          return { ...item, state: 'completed' };
+        }
+
+        if (index === currentIndex + 1) {
+          return { ...item, state: undefined };
+        }
+
+        return { ...item, state: 'upcoming' };
+      }),
+    );
+    this.alphaStepperActiveId.set(nextStep.id);
+    this.recordAction(`Beta+ stepper → ${nextStep.label}`);
+  }
+
+  protected resetAlphaStepper(): void {
+    this.alphaStepperItems.set(this.alphaStepperInitialItems);
+    this.alphaStepperActiveId.set(this.alphaStepperDefaultId);
+    this.recordAction('Beta+ stepper → reset');
+  }
+
+  protected setAlphaSplitterPrimarySize(primarySize: number): void {
+    this.alphaSplitterPrimarySize.set(primarySize);
+    this.recordAction(`Beta+ splitter → ${this.alphaSplitterSummary()}`);
+  }
+
+  protected setAlphaOrganizationChartExpanded(expandedIds: AfOrganizationChartExpandedIds): void {
+    this.alphaOrganizationChartExpandedIds.set(expandedIds);
+    this.recordAction(`Beta+ organization chart expanded → ${expandedIds.length}`);
+  }
+
+  protected setAlphaOrganizationChartSelection(selectedIds: AfOrganizationChartSelectedIds): void {
+    this.alphaOrganizationChartSelectedIds.set(selectedIds);
+    this.recordAction(`Beta+ organization chart selection → ${this.alphaOrganizationChartSelectionSummary()}`);
+  }
+
+  protected expandAlphaOrganizationChart(): void {
+    this.alphaOrganizationChartExpandedIds.set(this.alphaOrganizationChartAllExpandableIds);
+    this.recordAction('Beta+ organization chart → expandir todo');
+  }
+
+  protected resetAlphaOrganizationChart(): void {
+    this.alphaOrganizationChartExpandedIds.set(this.alphaOrganizationChartInitialExpandedIds);
+    this.alphaOrganizationChartSelectedIds.set(['alpha-org-performance']);
+    this.recordAction('Beta+ organization chart → reset');
+  }
+
+  protected recordAlphaOrganizationChartNode(node: AfOrganizationChartNode): void {
+    this.recordAction(`Beta+ organization chart node → ${node.label}`);
+  }
+
+  protected setAlphaTreeTableExpanded(expandedIds: AfTreeTableExpandedIds): void {
+    this.alphaTreeTableExpandedIds.set(expandedIds);
+    this.recordAction(`Beta+ tree table expanded → ${expandedIds.length}`);
+  }
+
+  protected setAlphaTreeTableSelection(selectedIds: AfTreeTableSelectedIds): void {
+    this.alphaTreeTableSelectedIds.set(selectedIds);
+    this.recordAction(`Beta+ tree table selection → ${this.alphaTreeTableSelectionSummary()}`);
+  }
+
+  protected expandAlphaTreeTable(): void {
+    this.alphaTreeTableExpandedIds.set(this.alphaTreeTableAllExpandableIds);
+    this.recordAction('Beta+ tree table → expandir todo');
+  }
+
+  protected resetAlphaTreeTable(): void {
+    this.alphaTreeTableExpandedIds.set(this.alphaTreeTableInitialExpandedIds);
+    this.alphaTreeTableSelectedIds.set(['alpha-tree-table-power']);
+    this.recordAction('Beta+ tree table → reset');
+  }
+
+  protected recordAlphaTreeTableNode(node: AfTreeTableNode): void {
+    this.recordAction(`Beta+ tree table node → ${node.label ?? node.id}`);
+  }
+
+  protected setAlphaVirtualScrollerRange(range: AfVirtualScrollerRange): void {
+    this.alphaVirtualScrollerVisibleRange.set(range);
+  }
+
+  protected recordAlphaVirtualScrollerItem(item: AfVirtualScrollerItem): void {
+    this.recordAction(`Beta+ virtual scroller item → ${item.title}`);
+  }
+
   private formatAlphaSelection(value: unknown, emptyText: string): string {
     if (!Array.isArray(value) || value.length === 0) {
       return emptyText;
@@ -1162,6 +1761,28 @@ export class App {
     });
   }
 
+  private collectAlphaOrganizationChartExpandableIds(
+    nodes: readonly AfOrganizationChartNode[],
+  ): AfOrganizationChartExpandedIds {
+    return nodes.flatMap((node) => {
+      if (!node.children || node.children.length === 0) {
+        return [];
+      }
+
+      return [node.id, ...this.collectAlphaOrganizationChartExpandableIds(node.children)];
+    });
+  }
+
+  private collectAlphaTreeTableExpandableIds(nodes: readonly AfTreeTableNode[]): AfTreeTableExpandedIds {
+    return nodes.flatMap((node) => {
+      if (!node.children || node.children.length === 0) {
+        return [];
+      }
+
+      return [node.id, ...this.collectAlphaTreeTableExpandableIds(node.children)];
+    });
+  }
+
   private findAlphaTreeNodeLabel(nodeId: string, nodes: readonly AfTreeNode[] = this.alphaTreeNodes): string | undefined {
     for (const node of nodes) {
       if (node.id === nodeId) {
@@ -1173,6 +1794,50 @@ export class App {
       }
 
       const nestedLabel = this.findAlphaTreeNodeLabel(nodeId, node.children);
+      if (nestedLabel) {
+        return nestedLabel;
+      }
+    }
+
+    return undefined;
+  }
+
+  private findAlphaOrganizationChartNodeLabel(
+    nodeId: string,
+    nodes: readonly AfOrganizationChartNode[] = this.alphaOrganizationChartNodes,
+  ): string | undefined {
+    for (const node of nodes) {
+      if (node.id === nodeId) {
+        return node.label;
+      }
+
+      if (!node.children || node.children.length === 0) {
+        continue;
+      }
+
+      const nestedLabel = this.findAlphaOrganizationChartNodeLabel(nodeId, node.children);
+      if (nestedLabel) {
+        return nestedLabel;
+      }
+    }
+
+    return undefined;
+  }
+
+  private findAlphaTreeTableNodeLabel(
+    nodeId: string,
+    nodes: readonly AfTreeTableNode[] = this.alphaTreeTableNodes,
+  ): string | undefined {
+    for (const node of nodes) {
+      if (node.id === nodeId) {
+        return node.label ?? String((node.data as ShowcaseTreeTableRow).name ?? node.id);
+      }
+
+      if (!node.children || node.children.length === 0) {
+        continue;
+      }
+
+      const nestedLabel = this.findAlphaTreeTableNodeLabel(nodeId, node.children);
       if (nestedLabel) {
         return nestedLabel;
       }

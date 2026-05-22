@@ -1,0 +1,165 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-tree-table-desktop__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <div class="af-tree-table-desktop__table-shell">
+        <table class="af-tree-table-desktop__table" [attr.aria-label]="ariaLabel()">
+          <tbody>
+            @for (rowIndex of [0, 1, 2, 3]; track rowIndex) {
+              <tr>
+                @for (columnIndex of skeletonColumns(); track columnIndex) {
+                  <td><span class="af-tree-table-desktop__skeleton"></span></td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-tree-table-desktop__state af-tree-table-desktop__state--error" role="alert">
+      <strong>No se pudo cargar la tabla jerarquica</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-tree-table-desktop__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <div class="af-tree-table-desktop__table-shell">
+      <table class="af-tree-table-desktop__table" [attr.aria-label]="ariaLabel()">
+        <thead>
+          <tr>
+            @if (selectionEnabled()) {
+              <th class="af-tree-table-desktop__selection-column"></th>
+            }
+
+            @for (column of columns(); track column.key) {
+              <th [ngStyle]="columnStyle(column)">{{ column.header }}</th>
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (entry of flatRows(); track entry.node.id) {
+            <tr
+              class="af-tree-table-desktop__row"
+              [attr.data-selected]="entry.selected ? '' : null"
+              [attr.data-disabled]="entry.node.disabled ? '' : null"
+              (click)="onRowPressed(entry.node)"
+            >
+              @if (selectionEnabled()) {
+                <td class="af-tree-table-desktop__selection-column">
+                  <button
+                    type="button"
+                    class="af-tree-table-desktop__selection-toggle"
+                    [attr.aria-label]="entry.selected ? 'Deseleccionar fila' : 'Seleccionar fila'"
+                    [attr.aria-pressed]="entry.selected"
+                    [disabled]="disabled() || entry.node.disabled"
+                    (click)="onSelectionToggle($event, entry.node.id)"
+                  >
+                    <span class="af-tree-table-desktop__selection-indicator"></span>
+                  </button>
+                </td>
+              }
+
+              @for (column of columns(); track column.key) {
+                <td [ngStyle]="columnStyle(column)">
+                  @if (isTreeColumn(column)) {
+                    <div class="af-tree-table-desktop__tree-cell" [style.padding-inline-start.px]="entry.level * 20">
+                      @if (entry.hasChildren) {
+                        <button
+                          type="button"
+                          class="af-tree-table-desktop__toggle"
+                          [attr.aria-label]="entry.expanded ? 'Contraer nodo' : 'Expandir nodo'"
+                          [disabled]="disabled() || entry.node.disabled"
+                          (click)="onToggleClick($event, entry.node.id)"
+                        >
+                          <af-icon
+                            [name]="entry.expanded ? 'chevron-down' : 'chevron-right'"
+                            size="xs"
+                            tone="muted"
+                            [decorative]="true"
+                          />
+                        </button>
+                      } @else {
+                        <span class="af-tree-table-desktop__toggle-placeholder"></span>
+                      }
+
+                      <div
+                        class="af-tree-table-desktop__tree-button"
+                        role="button"
+                        [attr.tabindex]="disabled() || entry.node.disabled ? -1 : 0"
+                        [attr.data-node-id]="entry.node.id"
+                        [attr.data-parent-id]="entry.parentId"
+                        [attr.data-disabled]="disabled() || entry.node.disabled ? 'true' : 'false'"
+                        (click)="onTreeButtonClick($event, entry.node)"
+                        (keydown)="onTreeKeydown($event, entry)"
+                      >
+                        @if (cellTemplateFor(column); as cellTemplateRef) {
+                          <ng-container *ngTemplateOutlet="cellTemplateRef; context: cellContext(entry, column)" />
+                        } @else {
+                          <div class="af-tree-table-desktop__tree-content">
+                            <div class="af-tree-table-desktop__tree-title-row">
+                              <span class="af-tree-table-desktop__tree-title-group">
+                                @if (entry.node.icon; as iconName) {
+                                  <af-icon [name]="iconName" size="xs" tone="muted" [decorative]="true" />
+                                }
+                                <span class="af-tree-table-desktop__tree-title">{{ displayValue(entry.node, column) }}</span>
+                              </span>
+
+                              @if (entry.node.badge; as badge) {
+                                <af-badge-desktop [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                                  {{ badge.label }}
+                                </af-badge-desktop>
+                              }
+                            </div>
+
+                            @if (entry.node.description || entry.node.meta) {
+                              <div class="af-tree-table-desktop__tree-meta-row">
+                                @if (entry.node.description) {
+                                  <span>{{ entry.node.description }}</span>
+                                }
+                                @if (entry.node.meta) {
+                                  <span>{{ entry.node.meta }}</span>
+                                }
+                              </div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  } @else if (cellTemplateFor(column); as cellTemplateRef) {
+                    <ng-container *ngTemplateOutlet="cellTemplateRef; context: cellContext(entry, column)" />
+                  } @else {
+                    <span class="af-tree-table-desktop__cell-value">{{ displayValue(entry.node, column) }}</span>
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+}

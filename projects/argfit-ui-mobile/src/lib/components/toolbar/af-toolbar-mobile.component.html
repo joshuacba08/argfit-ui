@@ -1,0 +1,17 @@
+<div class="af-toolbar-mobile__slot af-toolbar-mobile__slot--start">
+  @if (startTemplate()) {
+    <ng-container [ngTemplateOutlet]="startTemplate()" />
+  }
+</div>
+
+<div class="af-toolbar-mobile__slot af-toolbar-mobile__slot--center">
+  @if (centerTemplate()) {
+    <ng-container [ngTemplateOutlet]="centerTemplate()" />
+  }
+</div>
+
+<div class="af-toolbar-mobile__slot af-toolbar-mobile__slot--end">
+  @if (endTemplate()) {
+    <ng-container [ngTemplateOutlet]="endTemplate()" />
+  }
+</div>

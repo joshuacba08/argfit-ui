@@ -1,0 +1,71 @@
+<div class="af-accordion-mobile__stack" [attr.aria-label]="ariaLabel()">
+  @for (item of items(); track item.id; let itemIndex = $index) {
+    <section
+      class="af-accordion-mobile__item"
+      [attr.data-expanded]="isExpanded(item.id) ? '' : null"
+      [attr.data-disabled]="item.disabled ? '' : null"
+    >
+      <h3 class="af-accordion-mobile__heading">
+        <button
+          #headerButton
+          type="button"
+          class="af-accordion-mobile__header-button"
+          [id]="headerId(item.id)"
+          [attr.aria-expanded]="isExpanded(item.id)"
+          [attr.aria-controls]="panelId(item.id)"
+          [disabled]="disabled() || item.disabled"
+          (click)="toggleItem(item, itemIndex)"
+          (keydown)="onHeaderKeydown($event, itemIndex, item)"
+        >
+          <span class="af-accordion-mobile__copy">
+            <span class="af-accordion-mobile__headline">
+              @if (item.icon) {
+                <af-icon [name]="item.icon" size="xs" tone="muted" [decorative]="true" />
+              }
+
+              <span class="af-accordion-mobile__label">{{ item.label }}</span>
+            </span>
+
+            @if (item.description) {
+              <span class="af-accordion-mobile__description">{{ item.description }}</span>
+            }
+          </span>
+
+          <span class="af-accordion-mobile__meta-group">
+            @if (item.meta) {
+              <span class="af-accordion-mobile__meta">{{ item.meta }}</span>
+            }
+
+            @if (item.badge; as badge) {
+              <af-badge-mobile size="sm" variant="soft" [tone]="badge.tone ?? 'neutral'">
+                {{ badge.label }}
+              </af-badge-mobile>
+            }
+
+            <af-icon
+              [name]="isExpanded(item.id) ? 'chevron-down' : 'chevron-right'"
+              size="xs"
+              tone="muted"
+              [decorative]="true"
+            />
+          </span>
+        </button>
+      </h3>
+
+      @if (isExpanded(item.id)) {
+        <div
+          class="af-accordion-mobile__panel"
+          role="region"
+          [id]="panelId(item.id)"
+          [attr.aria-labelledby]="headerId(item.id)"
+        >
+          @if (panelTemplateFor(item.id); as panelTemplateRef) {
+            <ng-container *ngTemplateOutlet="panelTemplateRef; context: panelContext(item, itemIndex)" />
+          } @else {
+            <p class="af-accordion-mobile__panel-copy">{{ item.description ?? item.label }}</p>
+          }
+        </div>
+      }
+    </section>
+  }
+</div>

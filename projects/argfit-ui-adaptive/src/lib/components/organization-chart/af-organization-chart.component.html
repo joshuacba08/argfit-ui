@@ -1,0 +1,55 @@
+<ng-template #organizationChartActions>
+  <ng-content select="[afOrganizationChartActions]" />
+</ng-template>
+
+<ng-template #organizationChartEmpty>
+  <ng-content select="[afOrganizationChartEmpty]" />
+</ng-template>
+
+<ng-template #organizationChartLoading>
+  <ng-content select="[afOrganizationChartLoading]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-organization-chart-mobile
+    [nodes]="nodes()"
+    [selectedIds]="selectedIds()"
+    [expandedIds]="expandedIds()"
+    [selectionMode]="selectionMode()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [nodeTemplate]="projectedNodeTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (selectionChange)="selectionChange.emit($event)"
+    (expandedChange)="expandedChange.emit($event)"
+    (nodePressed)="nodePressed.emit($event)"
+  />
+} @else {
+  <af-organization-chart-desktop
+    [nodes]="nodes()"
+    [selectedIds]="selectedIds()"
+    [expandedIds]="expandedIds()"
+    [selectionMode]="selectionMode()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [nodeTemplate]="projectedNodeTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (selectionChange)="selectionChange.emit($event)"
+    (expandedChange)="expandedChange.emit($event)"
+    (nodePressed)="nodePressed.emit($event)"
+  />
+}

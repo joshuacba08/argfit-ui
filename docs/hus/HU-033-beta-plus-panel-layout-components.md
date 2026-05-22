@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Done
 
 ## Fase Del Roadmap
 
@@ -120,3 +120,15 @@ pnpm build:all
 Implementa HU-033 - Beta+ Panel And Layout Components.
 
 Prioriza `AfTabs`, `AfAccordion`, `AfToolbar`, `AfPanel`, `AfFieldset`, `AfDivider` y `AfScrollPanel`. Luego implementa `AfStepper` y `AfSplitter` como experimental-in-Beta+ con mobile fallback documentado.
+
+## Progreso Actual
+
+HU-033 queda implementada con este alcance:
+
+- `AfTabs` con modelo ArgFit-owned, paneles proyectados y teclado.
+- `AfAccordion` con expansion single/multiple, paneles proyectados y teclado.
+- `AfToolbar`, `AfDivider`, `AfFieldset`, `AfPanel` y `AfScrollPanel` con wrappers adaptive y renderers desktop/mobile.
+- `AfStepper` como surface experimental con estados, modo linear y paneles proyectados.
+- `AfSplitter` como surface experimental con resize desktop, control por teclado y fallback stacked documentado en mobile.
+- Showcase `alpha` actualizado para exponer la slice estable y experimental completa de HU-033.
+- Documentacion Beta+ y visual smoke actualizados para reflejar el cierre de la wave 4.

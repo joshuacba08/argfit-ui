@@ -1,0 +1,9 @@
+@if (isMobile()) {
+  <af-scroll-panel-mobile [ariaLabel]="ariaLabel()" [direction]="direction()" [maxHeight]="maxHeight()">
+    <ng-content />
+  </af-scroll-panel-mobile>
+} @else {
+  <af-scroll-panel-desktop [ariaLabel]="ariaLabel()" [direction]="direction()" [maxHeight]="maxHeight()">
+    <ng-content />
+  </af-scroll-panel-desktop>
+}

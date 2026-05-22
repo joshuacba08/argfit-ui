@@ -1,0 +1,26 @@
+@if (isMobile()) {
+  <af-splitter-mobile
+    [primaryLabel]="primaryLabel()"
+    [secondaryLabel]="secondaryLabel()"
+    [orientation]="orientation()"
+    [primarySize]="primarySize()"
+    [minPrimarySize]="minPrimarySize()"
+    [minSecondarySize]="minSecondarySize()"
+    [ariaLabel]="ariaLabel()"
+    [primaryTemplate]="primaryTemplate()"
+    [secondaryTemplate]="secondaryTemplate()"
+  />
+} @else {
+  <af-splitter-desktop
+    [primaryLabel]="primaryLabel()"
+    [secondaryLabel]="secondaryLabel()"
+    [orientation]="orientation()"
+    [primarySize]="primarySize()"
+    [minPrimarySize]="minPrimarySize()"
+    [minSecondarySize]="minSecondarySize()"
+    [ariaLabel]="ariaLabel()"
+    [primaryTemplate]="primaryTemplate()"
+    [secondaryTemplate]="secondaryTemplate()"
+    (primarySizeChange)="primarySizeChange.emit($event)"
+  />
+}

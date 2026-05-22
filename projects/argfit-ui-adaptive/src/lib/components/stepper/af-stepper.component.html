@@ -1,0 +1,25 @@
+@if (isMobile()) {
+  <af-stepper-mobile
+    [steps]="steps()"
+    [activeId]="activeId()"
+    [density]="density()"
+    [linear]="linear()"
+    [disabled]="disabled()"
+    [ariaLabel]="ariaLabel()"
+    [panelTemplates]="panelTemplates()"
+    (activeIdChange)="activeIdChange.emit($event)"
+    (stepChange)="stepChange.emit($event)"
+  />
+} @else {
+  <af-stepper-desktop
+    [steps]="steps()"
+    [activeId]="activeId()"
+    [density]="density()"
+    [linear]="linear()"
+    [disabled]="disabled()"
+    [ariaLabel]="ariaLabel()"
+    [panelTemplates]="panelTemplates()"
+    (activeIdChange)="activeIdChange.emit($event)"
+    (stepChange)="stepChange.emit($event)"
+  />
+}

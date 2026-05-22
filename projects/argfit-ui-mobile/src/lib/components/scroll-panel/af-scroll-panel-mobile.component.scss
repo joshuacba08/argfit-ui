@@ -1,0 +1,28 @@
+.af-scroll-panel-mobile__viewport {
+  background: color-mix(in srgb, var(--af-bg-surface) 88%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: var(--af-space-3);
+}
+
+.af-scroll-panel-mobile__viewport:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-scroll-panel-mobile--vertical .af-scroll-panel-mobile__viewport {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.af-scroll-panel-mobile--horizontal .af-scroll-panel-mobile__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.af-scroll-panel-mobile--both .af-scroll-panel-mobile__viewport {
+  overflow: auto;
+}

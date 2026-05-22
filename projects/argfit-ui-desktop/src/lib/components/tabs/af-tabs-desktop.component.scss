@@ -1,0 +1,97 @@
+.af-tabs-desktop {
+  display: grid;
+  gap: var(--af-space-4);
+}
+
+.af-tabs-desktop__tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+}
+
+.af-tabs-desktop__tab-button {
+  align-items: flex-start;
+  background: color-mix(in srgb, var(--af-surface-raised) 82%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  flex: 1 1 14rem;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  min-width: 0;
+  padding: var(--af-space-3) var(--af-space-4);
+  text-align: left;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.af-tabs-desktop__tab-button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--af-primary) 40%, var(--af-border-soft));
+}
+
+.af-tabs-desktop__tab-button.is-active {
+  background: color-mix(in srgb, var(--af-primary) 14%, var(--af-surface-raised));
+  border-color: color-mix(in srgb, var(--af-primary) 52%, var(--af-border-soft));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--af-primary) 22%, transparent);
+}
+
+.af-tabs-desktop__tab-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--af-primary) 60%, transparent);
+  outline-offset: 2px;
+}
+
+.af-tabs-desktop__tab-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.af-tabs-desktop__copy {
+  display: grid;
+  gap: var(--af-space-1);
+  min-width: 0;
+}
+
+.af-tabs-desktop__headline {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-2);
+}
+
+.af-tabs-desktop__label {
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-tabs-desktop__description {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-tabs-desktop__panel,
+.af-tabs-desktop__empty {
+  background: color-mix(in srgb, var(--af-surface-raised) 84%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  padding: var(--af-space-5);
+}
+
+.af-tabs-desktop__panel-copy {
+  color: var(--af-text-main);
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-tabs-desktop__panel-copy p,
+.af-tabs-desktop__empty {
+  color: var(--af-text-soft);
+  margin: 0;
+}
+
+.af-tabs-desktop[data-density='compact'] .af-tabs-desktop__tab-button {
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+.af-tabs-desktop[data-density='compact'] .af-tabs-desktop__panel {
+  padding: var(--af-space-4);
+}

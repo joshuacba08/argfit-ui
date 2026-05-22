@@ -1,0 +1,106 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-virtual-scroller-mobile__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <div class="af-virtual-scroller-mobile__state af-virtual-scroller-mobile__state--loading">
+        @for (index of skeletonItems(); track index) {
+          <span class="af-virtual-scroller-mobile__skeleton af-virtual-scroller-mobile__skeleton--body"></span>
+        }
+      </div>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-virtual-scroller-mobile__state af-virtual-scroller-mobile__state--error" role="alert">
+      <strong>No se pudo cargar la lista virtualizada</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-virtual-scroller-mobile__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <div class="af-virtual-scroller-mobile__summary">
+      <strong>{{ windowState().range.startIndex + 1 }}-{{ windowState().range.endIndex + 1 }}</strong>
+      <span>de {{ items().length }}</span>
+    </div>
+
+    <div
+      class="af-virtual-scroller-mobile__viewport"
+      [style.height.px]="viewportHeight()"
+      [attr.aria-label]="ariaLabel()"
+      (scroll)="onViewportScroll($event)"
+    >
+      <div class="af-virtual-scroller-mobile__spacer" [style.height.px]="windowState().topSpacerHeight"></div>
+
+      <div class="af-virtual-scroller-mobile__list" role="list">
+        @for (entry of windowState().items; track entry.item.id) {
+          <button
+            type="button"
+            class="af-virtual-scroller-mobile__item"
+            [style.height.px]="itemHeight()"
+            [disabled]="entry.item.disabled"
+            role="listitem"
+            (click)="onItemPressed(entry.item)"
+            (keydown)="onItemKeydown($event, entry.item)"
+          >
+            @if (itemTemplate(); as itemTemplateRef) {
+              <ng-container *ngTemplateOutlet="itemTemplateRef; context: itemContext(entry.item, entry.itemIndex)" />
+            } @else {
+              <div class="af-virtual-scroller-mobile__item-content">
+                <div class="af-virtual-scroller-mobile__title-row">
+                  <span class="af-virtual-scroller-mobile__title-group">
+                    @if (entry.item.icon; as iconName) {
+                      <af-icon [name]="iconName" size="xs" tone="muted" [decorative]="true" />
+                    }
+                    <span class="af-virtual-scroller-mobile__title">{{ entry.item.title }}</span>
+                  </span>
+
+                  @if (entry.item.badge; as badge) {
+                    <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                      {{ badge.label }}
+                    </af-badge-mobile>
+                  }
+                </div>
+
+                @if (entry.item.description || entry.item.meta || entry.item.supportingText) {
+                  <div class="af-virtual-scroller-mobile__meta-row">
+                    @if (entry.item.description) {
+                      <span class="af-virtual-scroller-mobile__description">{{ entry.item.description }}</span>
+                    }
+                    @if (entry.item.meta) {
+                      <span class="af-virtual-scroller-mobile__meta">{{ entry.item.meta }}</span>
+                    }
+                  </div>
+                  @if (entry.item.supportingText) {
+                    <span class="af-virtual-scroller-mobile__supporting">{{ entry.item.supportingText }}</span>
+                  }
+                }
+              </div>
+            }
+          </button>
+        }
+      </div>
+
+      <div class="af-virtual-scroller-mobile__spacer" [style.height.px]="windowState().bottomSpacerHeight"></div>
+    </div>
+  }
+}

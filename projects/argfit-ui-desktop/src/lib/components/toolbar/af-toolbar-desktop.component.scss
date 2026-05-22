@@ -1,0 +1,30 @@
+.af-toolbar-desktop {
+  align-items: center;
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  gap: var(--af-space-4);
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+  padding: var(--af-space-4) var(--af-space-5);
+}
+
+.af-toolbar-desktop__slot {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-3);
+  min-width: 0;
+}
+
+.af-toolbar-desktop__slot--center {
+  justify-content: center;
+}
+
+.af-toolbar-desktop__slot--end {
+  justify-content: flex-end;
+}
+
+.af-toolbar-desktop--compact {
+  gap: var(--af-space-3);
+  padding: var(--af-space-3) var(--af-space-4);
+}

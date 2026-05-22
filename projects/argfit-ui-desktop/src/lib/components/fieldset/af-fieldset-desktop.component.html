@@ -1,0 +1,13 @@
+<fieldset class="af-fieldset-desktop__frame" [disabled]="disabled()">
+  @if (legend()) {
+    <legend class="af-fieldset-desktop__legend">{{ legend() }}</legend>
+  }
+
+  @if (description()) {
+    <p class="af-fieldset-desktop__description">{{ description() }}</p>
+  }
+
+  <div class="af-fieldset-desktop__content">
+    <ng-content />
+  </div>
+</fieldset>

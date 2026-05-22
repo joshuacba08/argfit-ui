@@ -1,0 +1,23 @@
+@if (isMobile()) {
+  <af-tabs-mobile
+    [items]="items()"
+    [activeId]="activeId()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [ariaLabel]="ariaLabel()"
+    [panelTemplates]="panelTemplates()"
+    (activeIdChange)="activeIdChange.emit($event)"
+    (tabChange)="tabChange.emit($event)"
+  />
+} @else {
+  <af-tabs-desktop
+    [items]="items()"
+    [activeId]="activeId()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [ariaLabel]="ariaLabel()"
+    [panelTemplates]="panelTemplates()"
+    (activeIdChange)="activeIdChange.emit($event)"
+    (tabChange)="tabChange.emit($event)"
+  />
+}

@@ -1,0 +1,30 @@
+<div #container class="af-splitter-desktop__layout">
+  <section class="af-splitter-desktop__pane af-splitter-desktop__pane--primary" [style.flex-basis.%]="resolvedPrimarySize()">
+    @if (primaryLabel()) {
+      <header class="af-splitter-desktop__pane-header">{{ primaryLabel() }}</header>
+    }
+    @if (primaryTemplate()) {
+      <ng-container [ngTemplateOutlet]="primaryTemplate()" />
+    }
+  </section>
+
+  <button
+    class="af-splitter-desktop__divider"
+    type="button"
+    [attr.aria-label]="'Resize panes'"
+    [attr.aria-orientation]="orientation()"
+    (keydown)="onDividerKeydown($event)"
+    (pointerdown)="onDividerPointerdown($event)"
+  >
+    <span aria-hidden="true"></span>
+  </button>
+
+  <section class="af-splitter-desktop__pane af-splitter-desktop__pane--secondary">
+    @if (secondaryLabel()) {
+      <header class="af-splitter-desktop__pane-header">{{ secondaryLabel() }}</header>
+    }
+    @if (secondaryTemplate()) {
+      <ng-container [ngTemplateOutlet]="secondaryTemplate()" />
+    }
+  </section>
+</div>

@@ -1,0 +1,21 @@
+@if (isMobile()) {
+  <af-panel-mobile
+    [heading]="heading()"
+    [eyebrow]="eyebrow()"
+    [description]="description()"
+    [density]="density()"
+    [tone]="tone()"
+  >
+    <ng-content />
+  </af-panel-mobile>
+} @else {
+  <af-panel-desktop
+    [heading]="heading()"
+    [eyebrow]="eyebrow()"
+    [description]="description()"
+    [density]="density()"
+    [tone]="tone()"
+  >
+    <ng-content />
+  </af-panel-desktop>
+}

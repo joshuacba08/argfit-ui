@@ -1,0 +1,26 @@
+.af-scroll-panel-desktop__viewport {
+  background: color-mix(in srgb, var(--af-bg-surface) 88%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  min-height: 0;
+  padding: var(--af-space-4);
+}
+
+.af-scroll-panel-desktop__viewport:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-scroll-panel-desktop--vertical .af-scroll-panel-desktop__viewport {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.af-scroll-panel-desktop--horizontal .af-scroll-panel-desktop__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.af-scroll-panel-desktop--both .af-scroll-panel-desktop__viewport {
+  overflow: auto;
+}

@@ -1,0 +1,25 @@
+@if (isMobile()) {
+  <af-accordion-mobile
+    [items]="items()"
+    [expandedIds]="expandedIds()"
+    [multiple]="multiple()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [ariaLabel]="ariaLabel()"
+    [panelTemplates]="panelTemplates()"
+    (expandedChange)="expandedChange.emit($event)"
+    (itemToggle)="itemToggle.emit($event)"
+  />
+} @else {
+  <af-accordion-desktop
+    [items]="items()"
+    [expandedIds]="expandedIds()"
+    [multiple]="multiple()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [ariaLabel]="ariaLabel()"
+    [panelTemplates]="panelTemplates()"
+    (expandedChange)="expandedChange.emit($event)"
+    (itemToggle)="itemToggle.emit($event)"
+  />
+}

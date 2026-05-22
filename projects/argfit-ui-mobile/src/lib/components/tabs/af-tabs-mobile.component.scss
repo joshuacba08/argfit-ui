@@ -1,0 +1,90 @@
+.af-tabs-mobile {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.af-tabs-mobile__tablist {
+  display: flex;
+  gap: var(--af-space-2);
+  overflow-x: auto;
+  padding-bottom: var(--af-space-1);
+  scrollbar-width: thin;
+}
+
+.af-tabs-mobile__tab-button {
+  align-items: flex-start;
+  background: color-mix(in srgb, var(--af-surface-raised) 84%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 min(17rem, 82vw);
+  gap: var(--af-space-3);
+  justify-content: space-between;
+  min-height: 4.75rem;
+  padding: var(--af-space-3);
+  text-align: left;
+}
+
+.af-tabs-mobile__tab-button.is-active {
+  background: color-mix(in srgb, var(--af-primary) 16%, var(--af-surface-raised));
+  border-color: color-mix(in srgb, var(--af-primary) 52%, var(--af-border-soft));
+}
+
+.af-tabs-mobile__tab-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--af-primary) 60%, transparent);
+  outline-offset: 2px;
+}
+
+.af-tabs-mobile__tab-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.af-tabs-mobile__copy {
+  display: grid;
+  gap: var(--af-space-1);
+  min-width: 0;
+}
+
+.af-tabs-mobile__headline {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-2);
+}
+
+.af-tabs-mobile__label {
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-tabs-mobile__description {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-tabs-mobile__panel,
+.af-tabs-mobile__empty {
+  background: color-mix(in srgb, var(--af-surface-raised) 84%, transparent);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  padding: var(--af-space-4);
+}
+
+.af-tabs-mobile__panel-copy {
+  color: var(--af-text-main);
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-tabs-mobile__panel-copy p,
+.af-tabs-mobile__empty {
+  color: var(--af-text-soft);
+  margin: 0;
+}
+
+.af-tabs-mobile[data-density='compact'] .af-tabs-mobile__tab-button {
+  min-height: 4.25rem;
+  padding: var(--af-space-2) var(--af-space-3);
+}

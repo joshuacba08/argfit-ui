@@ -1,0 +1,50 @@
+<div class="af-stepper-desktop__steps" role="tablist" [attr.aria-label]="ariaLabel()">
+  @for (step of steps(); track step.id; let index = $index) {
+    @let state = displayState(step, index);
+    <button
+      #stepButton
+      class="af-stepper-desktop__step"
+      type="button"
+      role="tab"
+      [class.af-stepper-desktop__step--current]="selectedId() === step.id"
+      [class.af-stepper-desktop__step--completed]="state === 'completed'"
+      [class.af-stepper-desktop__step--error]="state === 'error'"
+      [class.af-stepper-desktop__step--locked]="!isSelectable(step, index)"
+      [attr.id]="stepId(step.id)"
+      [attr.aria-controls]="panelId(step.id)"
+      [attr.aria-selected]="selectedId() === step.id"
+      [attr.aria-disabled]="!isSelectable(step, index) ? 'true' : null"
+      [attr.tabindex]="tabIndex(step.id)"
+      (click)="selectStep(step, index)"
+      (keydown)="onStepKeydown($event, index)"
+    >
+      <span class="af-stepper-desktop__indicator">{{ index + 1 }}</span>
+      <span class="af-stepper-desktop__copy">
+        <strong>{{ step.label }}</strong>
+        @if (step.description) {
+          <small>{{ step.description }}</small>
+        }
+      </span>
+    </button>
+  }
+</div>
+
+@if (selectedStep(); as selectedStep) {
+  <div
+    class="af-stepper-desktop__panel"
+    role="tabpanel"
+    [attr.id]="panelId(selectedStep.id)"
+    [attr.aria-labelledby]="stepId(selectedStep.id)"
+  >
+    @if (selectedPanelTemplate()) {
+      <ng-container [ngTemplateOutlet]="selectedPanelTemplate()" [ngTemplateOutletContext]="panelContext(selectedStep, selectedIndex())" />
+    } @else {
+      <div class="af-stepper-desktop__panel-copy">
+        <strong>{{ selectedStep.label }}</strong>
+        @if (selectedStep.description) {
+          <p>{{ selectedStep.description }}</p>
+        }
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,9 @@
+@if (orientation() === 'vertical') {
+  <span class="af-divider-desktop__line" aria-hidden="true"></span>
+} @else {
+  <span class="af-divider-desktop__line" aria-hidden="true"></span>
+  @if (label()) {
+    <span class="af-divider-desktop__label">{{ label() }}</span>
+    <span class="af-divider-desktop__line" aria-hidden="true"></span>
+  }
+}

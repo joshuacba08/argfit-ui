@@ -96,6 +96,9 @@ The repository now advances `HU-032` with these implemented data slices:
 - `AfPickList`
 - `AfTimeline`
 - `AfTree`
+- `AfTreeTable`
+- `AfVirtualScroller`
+- `AfOrganizationChart`
 
 Current validation completed for the implemented wave 3 slice:
 
@@ -105,9 +108,38 @@ Current validation completed for the implemented wave 3 slice:
 - focused adaptive spec for `AfPickList`
 - focused adaptive spec for `AfTimeline`
 - focused adaptive spec for `AfTree`
+- focused adaptive spec for `AfTreeTable`
+- focused adaptive spec for `AfVirtualScroller`
+- focused adaptive spec for `AfOrganizationChart`
 - showcase application spec extended for the current HU-032 slice in the preserved `alpha` slot
 
-`AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` still need later HU-032 slices.
+`AfVirtualScroller` is currently validated with an explicit fixed-height contract (`itemHeight`, `viewportHeight`) so the visible window stays deterministic across desktop and mobile renderers.
+
+`AfOrganizationChart` now closes the hierarchy slice of `HU-032`, including adaptive wrappers, desktop/mobile renderers and projected node/actions coverage.
+
+## Wave 4 Current Status
+
+The repository now closes `HU-033` with these implemented panel/layout slices:
+
+- `AfTabs`
+- `AfAccordion`
+- `AfToolbar`
+- `AfDivider`
+- `AfFieldset`
+- `AfPanel`
+- `AfScrollPanel`
+- `AfStepper`
+- `AfSplitter`
+
+Current validation completed for the current wave 4 slice:
+
+- focused adaptive spec for `AfTabs`
+- focused adaptive spec for `AfAccordion`
+- library builds refreshed through `pnpm build:libs`
+- showcase application updated for the full HU-033 slice in the preserved `alpha` slot
+- targeted visual smoke now covers the wave 4 panel/layout section
+
+`AfStepper` and `AfSplitter` remain experimental-in-beta-plus, while the stable HU-033 layout surfaces now ship end-to-end across adaptive, desktop and mobile renderers.
 
 ## Backlog HU Beta+
 
@@ -130,7 +162,7 @@ Beta+ is ready when:
 - `docs/beta-plus/scope.md` defines the Beta+ contract.
 - New components have adaptive, desktop and mobile implementations.
 - New components have accessibility and keyboard tests.
-- `AfMultiSelect`, `AfDatePicker`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTimeline`, `AfTree`, `AfTabs` and `AfStepper` are covered by showcase and consumer smoke.
+- `AfMultiSelect`, `AfDatePicker`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTimeline`, `AfTree`, `AfTabs`, `AfAccordion` and `AfStepper` are covered by showcase and consumer smoke.
 - `AfKanban` supports drag/drop plus non-drag keyboard/fallback movement.
 - Showcase covers desktop/mobile, dark/light and core states.
 - Consumer smoke validates Beta+ imports from generated packages.

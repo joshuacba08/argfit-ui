@@ -1,0 +1,60 @@
+<div class="af-tabs-desktop__tablist" role="tablist" [attr.aria-label]="ariaLabel()">
+  @for (item of items(); track item.id; let itemIndex = $index) {
+    <button
+      #tabButton
+      type="button"
+      class="af-tabs-desktop__tab-button"
+      role="tab"
+      [class.is-active]="selectedId() === item.id"
+      [id]="tabId(item.id)"
+      [attr.aria-selected]="selectedId() === item.id"
+      [attr.aria-controls]="panelId(item.id)"
+      [attr.tabindex]="tabIndex(item.id)"
+      [disabled]="disabled() || item.disabled"
+      (click)="selectTab(item, itemIndex)"
+      (keydown)="onTabKeydown($event, itemIndex)"
+    >
+      <span class="af-tabs-desktop__copy">
+        <span class="af-tabs-desktop__headline">
+          @if (item.icon) {
+            <af-icon [name]="item.icon" size="xs" tone="muted" [decorative]="true" />
+          }
+
+          <span class="af-tabs-desktop__label">{{ item.label }}</span>
+        </span>
+
+        @if (item.description) {
+          <span class="af-tabs-desktop__description">{{ item.description }}</span>
+        }
+      </span>
+
+      @if (item.badge; as badge) {
+        <af-badge-desktop size="sm" variant="soft" [tone]="badge.tone ?? 'neutral'">
+          {{ badge.label }}
+        </af-badge-desktop>
+      }
+    </button>
+  }
+</div>
+
+@if (selectedItem(); as activeItem) {
+  <section
+    class="af-tabs-desktop__panel"
+    role="tabpanel"
+    [id]="panelId(activeItem.id)"
+    [attr.aria-labelledby]="tabId(activeItem.id)"
+  >
+    @if (selectedPanelTemplate(); as panelTemplateRef) {
+      <ng-container *ngTemplateOutlet="panelTemplateRef; context: panelContext(activeItem, selectedIndex())" />
+    } @else {
+      <div class="af-tabs-desktop__panel-copy">
+        <strong>{{ activeItem.label }}</strong>
+        @if (activeItem.description) {
+          <p>{{ activeItem.description }}</p>
+        }
+      </div>
+    }
+  </section>
+} @else {
+  <div class="af-tabs-desktop__empty">Sin tabs configurados</div>
+}

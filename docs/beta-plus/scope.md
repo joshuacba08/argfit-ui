@@ -194,10 +194,33 @@ The repository now advances `HU-032` with the current data-oriented Beta+ slice:
 - `AfPickList`
 - `AfTimeline`
 - `AfTree`
+- `AfTreeTable`
+- `AfVirtualScroller`
+- `AfOrganizationChart`
 
-`AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline` and `AfTree` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
+`AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline`, `AfTree`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
 
-`AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` remain pending for later HU-032 slices.
+`AfVirtualScroller` currently ships with an explicit fixed-height contract through `itemHeight` and `viewportHeight` so desktop and mobile renderers can keep the visible window aligned without vendor-specific APIs.
+
+`AfOrganizationChart` closes the hierarchy track of `HU-032` with controlled expansion and selection, renderer-neutral node data and projected node/actions/loading/empty slots.
+
+### Wave 4 Current Status
+
+The repository now closes `HU-033` with this implemented panel/layout slice:
+
+- `AfTabs`
+- `AfAccordion`
+- `AfToolbar`
+- `AfDivider`
+- `AfFieldset`
+- `AfPanel`
+- `AfScrollPanel`
+- `AfStepper`
+- `AfSplitter`
+
+`AfTabs`, `AfAccordion`, `AfToolbar`, `AfDivider`, `AfFieldset`, `AfPanel` and `AfScrollPanel` now ship with adaptive, desktop and mobile implementations plus showcase exposure in the preserved `alpha` beta-consumer slot.
+
+`AfStepper` and `AfSplitter` now ship as the experimental HU-033 closure with renderer-neutral contracts, showcase coverage and documented mobile stacked fallback for `AfSplitter`.
 
 ## Renderer Policy
 

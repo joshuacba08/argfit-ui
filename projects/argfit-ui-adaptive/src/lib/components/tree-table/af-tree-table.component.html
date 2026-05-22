@@ -1,0 +1,59 @@
+<ng-template #treeTableActions>
+  <ng-content select="[afTreeTableActions]" />
+</ng-template>
+
+<ng-template #treeTableEmpty>
+  <ng-content select="[afTreeTableEmpty]" />
+</ng-template>
+
+<ng-template #treeTableLoading>
+  <ng-content select="[afTreeTableLoading]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-tree-table-mobile
+    [columns]="columns()"
+    [nodes]="nodes()"
+    [treeColumnKey]="treeColumnKey()"
+    [selectedIds]="selectedIds()"
+    [expandedIds]="expandedIds()"
+    [selectionMode]="selectionMode()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [cellTemplates]="cellTemplates()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (selectionChange)="selectionChange.emit($event)"
+    (expandedChange)="expandedChange.emit($event)"
+    (nodePressed)="nodePressed.emit($event)"
+  />
+} @else {
+  <af-tree-table-desktop
+    [columns]="columns()"
+    [nodes]="nodes()"
+    [treeColumnKey]="treeColumnKey()"
+    [selectedIds]="selectedIds()"
+    [expandedIds]="expandedIds()"
+    [selectionMode]="selectionMode()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [cellTemplates]="cellTemplates()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (selectionChange)="selectionChange.emit($event)"
+    (expandedChange)="expandedChange.emit($event)"
+    (nodePressed)="nodePressed.emit($event)"
+  />
+}
