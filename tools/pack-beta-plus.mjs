@@ -1,8 +1,8 @@
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 const BETA_PLUS_VERSION = '0.2.0-beta.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));

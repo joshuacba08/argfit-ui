@@ -1,8 +1,8 @@
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 import { chromium } from 'playwright';
 
