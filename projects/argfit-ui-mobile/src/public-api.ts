@@ -22,9 +22,11 @@ export * from './lib/components/input/af-input-mobile.component';
 export * from './lib/components/listbox/af-listbox-mobile.component';
 export * from './lib/components/metric-card/af-metric-card-mobile.component';
 export * from './lib/components/multi-select/af-multi-select-mobile.component';
+export * from './lib/components/order-list/af-order-list-mobile.component';
 export * from './lib/components/page-shell/af-page-shell-mobile.component';
 export * from './lib/components/paginator/af-paginator-mobile.component';
 export * from './lib/components/password/af-password-mobile.component';
+export * from './lib/components/pick-list/af-pick-list-mobile.component';
 export * from './lib/components/popover/af-popover-mobile.component';
 export * from './lib/components/progress/af-progress-mobile.component';
 export * from './lib/components/radio-group/af-radio-group-mobile.component';
@@ -36,4 +38,5 @@ export * from './lib/components/toast-viewport/af-toast-viewport-mobile.componen
 export * from './lib/components/toast/af-toast-mobile.component';
 export * from './lib/components/toggle/af-toggle-mobile.component';
 export * from './lib/components/tooltip/af-tooltip-mobile.component';
+export * from './lib/components/tree/af-tree-mobile.component';
 

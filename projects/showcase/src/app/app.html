@@ -497,6 +497,139 @@
               </div>
             </div>
           </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 3 current slice</span>
+                <h3 afCardTitle>Hierarchy Beta+: AfTimeline y AfTree</h3>
+              </div>
+              <af-badge tone="accent">HU-032</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid">
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Timeline</span>
+                <h4 class="alpha-wave-panel__title">Secuencia operativa para staff, readiness y analytics</h4>
+                <div class="alpha-form-stack">
+                  <af-timeline
+                    [items]="alphaTimelineItems"
+                    ariaLabel="Timeline beta plus de operaciones y seguimiento"
+                    (itemPressed)="recordAlphaTimelineItem($event)"
+                  >
+                    <div afTimelineActions class="alpha-inline-actions">
+                      <af-badge tone="neutral">{{ alphaTimelineItems.length }} hitos</af-badge>
+                      <af-badge tone="accent">Hoy</af-badge>
+                    </div>
+                  </af-timeline>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Tracking</span>
+                    <strong>Timeline adaptiva con slots, estados y press handling</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Tree</span>
+                <h4 class="alpha-wave-panel__title">Jerarquia navegable con expansion controlada y seleccion</h4>
+                <div class="alpha-form-stack">
+                  <af-tree
+                    [nodes]="alphaTreeNodes"
+                    [expandedIds]="alphaTreeExpandedIds()"
+                    [selectedIds]="alphaTreeSelectedIds()"
+                    selectionMode="single"
+                    ariaLabel="Arbol beta plus de estructuras operativas"
+                    (expandedChange)="setAlphaTreeExpanded($event)"
+                    (selectionChange)="setAlphaTreeSelection($event)"
+                    (nodePressed)="recordAlphaTreeNode($event)"
+                  >
+                    <div afTreeActions class="alpha-inline-actions">
+                      <af-button size="sm" variant="secondary" (pressed)="expandAlphaTree()">Expandir todo</af-button>
+                      <af-button size="sm" variant="secondary" (pressed)="resetAlphaTree()">Reset</af-button>
+                    </div>
+                  </af-tree>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Seleccion</span>
+                    <strong>{{ alphaTreeSelectionSummary() }}</strong>
+                  </div>
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Expansion</span>
+                    <strong>{{ alphaTreeExpandedSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="alpha-card alpha-card--wave">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Beta+ wave 3 transfer slice</span>
+                <h3 afCardTitle>Assignment Beta+: AfOrderList y AfPickList</h3>
+              </div>
+              <af-badge tone="accent">HU-032</af-badge>
+            </header>
+
+            <div afCardContent class="alpha-wave-grid">
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Order list</span>
+                <h4 class="alpha-wave-panel__title">Orden visual de tests y bloques de una sesion</h4>
+                <div class="alpha-form-stack">
+                  <af-order-list
+                    [items]="alphaOrderListItems()"
+                    [selectedIds]="alphaOrderListSelectedIds()"
+                    selectionMode="multiple"
+                    ariaLabel="Order list beta plus para tests de sesion"
+                    (selectionChange)="setAlphaOrderListSelection($event)"
+                    (reorderChange)="applyAlphaOrderListReorder($event)"
+                  >
+                    <div afOrderListActions class="alpha-inline-actions">
+                      <af-button size="sm" variant="secondary" (pressed)="resetAlphaOrderList()">Reset</af-button>
+                      <af-badge tone="neutral">{{ alphaOrderListItems().length }} tests</af-badge>
+                    </div>
+                  </af-order-list>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Orden actual</span>
+                    <strong>{{ alphaOrderListSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alpha-wave-panel alpha-wave-panel--wide">
+                <span class="alpha-wave-panel__eyebrow">Pick list</span>
+                <h4 class="alpha-wave-panel__title">Asignacion de atletas a una rutina sin acoplarse al renderer</h4>
+                <div class="alpha-form-stack">
+                  <af-pick-list
+                    [sourceItems]="alphaPickListSourceItems()"
+                    [targetItems]="alphaPickListTargetItems()"
+                    [sourceSelectedIds]="alphaPickListSourceSelectedIds()"
+                    [targetSelectedIds]="alphaPickListTargetSelectedIds()"
+                    sourceTitle="Atletas disponibles"
+                    sourceDescription="Pool listo para asignar a la rutina"
+                    targetTitle="Asignados al bloque"
+                    targetDescription="Participantes confirmados para la sesion"
+                    ariaLabel="Pick list beta plus para asignar atletas a una rutina"
+                    (sourceSelectionChange)="setAlphaPickListSourceSelection($event)"
+                    (targetSelectionChange)="setAlphaPickListTargetSelection($event)"
+                    (transferChange)="applyAlphaPickListChange($event)"
+                  >
+                    <div afPickListActions class="alpha-inline-actions">
+                      <af-button size="sm" variant="secondary" (pressed)="resetAlphaPickList()">Reset</af-button>
+                      <af-badge tone="accent">{{ alphaPickListTargetItems().length }} asignados</af-badge>
+                    </div>
+                  </af-pick-list>
+
+                  <div class="alpha-live-copy alpha-live-copy--wide">
+                    <span>Asignacion</span>
+                    <strong>{{ alphaPickListAssignedSummary() }}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </af-card>
         </div>
 
         <af-drawer

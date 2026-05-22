@@ -1,0 +1,120 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-order-list-desktop__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <div class="af-order-list-desktop__state af-order-list-desktop__state--loading">
+        @for (index of skeletonItems(); track index) {
+          <div class="af-order-list-desktop__skeleton-row" aria-hidden="true">
+            <span class="af-order-list-desktop__skeleton af-order-list-desktop__skeleton--body"></span>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-order-list-desktop__state af-order-list-desktop__state--error" role="alert">
+      <strong>No se pudo cargar la lista</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-order-list-desktop__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <div class="af-order-list-desktop__layout">
+      <section class="af-order-list-desktop__panel">
+        <div class="af-order-list-desktop__summary">
+          <strong>{{ selectedCount() }} seleccionados</strong>
+          <span>{{ items().length }} items</span>
+        </div>
+
+        <div
+          class="af-order-list-desktop__list"
+          role="listbox"
+          [attr.aria-label]="ariaLabel()"
+          [attr.aria-multiselectable]="selectionMode() === 'multiple' ? 'true' : null"
+        >
+          @for (item of items(); track item.id; let itemIndex = $index) {
+            <button
+              type="button"
+              class="af-order-list-desktop__item"
+              [attr.data-selected]="isSelected(item.id) ? '' : null"
+              [disabled]="isItemDisabled(item)"
+              role="option"
+              [attr.aria-selected]="isSelected(item.id) ? 'true' : 'false'"
+              (click)="onItemPressed(item)"
+              (keydown)="onItemKeydown($event, item)"
+            >
+              @if (itemTemplate(); as itemTemplateRef) {
+                <ng-container *ngTemplateOutlet="itemTemplateRef; context: itemContext(item, itemIndex)" />
+              } @else {
+                <div class="af-order-list-desktop__item-content">
+                  <div class="af-order-list-desktop__title-row">
+                    <span class="af-order-list-desktop__title-group">
+                      @if (item.icon; as iconName) {
+                        <af-icon [name]="iconName" size="xs" tone="muted" [decorative]="true" />
+                      }
+                      <span class="af-order-list-desktop__title">{{ item.label }}</span>
+                    </span>
+
+                    @if (item.badge; as badge) {
+                      <af-badge-desktop [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                        {{ badge.label }}
+                      </af-badge-desktop>
+                    }
+                  </div>
+
+                  @if (item.description || item.meta) {
+                    <div class="af-order-list-desktop__meta-row">
+                      @if (item.description) {
+                        <span class="af-order-list-desktop__description">{{ item.description }}</span>
+                      }
+                      @if (item.meta) {
+                        <span class="af-order-list-desktop__meta">{{ item.meta }}</span>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+            </button>
+          }
+        </div>
+      </section>
+
+      <div class="af-order-list-desktop__controls" aria-label="Reordenar items seleccionados">
+        @for (direction of moveDirections; track direction) {
+          <button
+            type="button"
+            class="af-order-list-desktop__control"
+            [attr.data-direction]="direction"
+            [disabled]="!canMove(direction)"
+            [attr.aria-label]="moveButtonText(direction)"
+            (click)="onMove(direction)"
+          >
+            <af-icon [name]="moveButtonIcon(direction)" size="xs" [decorative]="true" />
+            <span>{{ moveButtonText(direction) }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+}

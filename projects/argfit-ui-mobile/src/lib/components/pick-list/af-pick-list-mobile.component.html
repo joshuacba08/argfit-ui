@@ -1,0 +1,192 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-pick-list-mobile__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <div class="af-pick-list-mobile__state af-pick-list-mobile__state--loading">
+        @for (index of skeletonItems(); track index) {
+          <span class="af-pick-list-mobile__skeleton af-pick-list-mobile__skeleton--body"></span>
+        }
+      </div>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-pick-list-mobile__state af-pick-list-mobile__state--error" role="alert">
+      <strong>No se pudo cargar la asignacion</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @default {
+    <div class="af-pick-list-mobile__layout">
+      <section class="af-pick-list-mobile__panel">
+        <header class="af-pick-list-mobile__panel-header">
+          <div>
+            <strong>{{ sourceTitle() }}</strong>
+            @if (sourceDescription(); as sourceDescriptionText) {
+              <span>{{ sourceDescriptionText }}</span>
+            }
+          </div>
+          <af-badge-mobile tone="neutral" size="sm" variant="soft">{{ sourceItems().length }}</af-badge-mobile>
+        </header>
+
+        @if (sourceItems().length === 0) {
+          @if (sourceEmptyTemplate(); as sourceEmptyTemplateRef) {
+            <ng-container *ngTemplateOutlet="sourceEmptyTemplateRef" />
+          } @else {
+            <div class="af-pick-list-mobile__panel-empty">
+              <strong>{{ sourceEmptyTitle() }}</strong>
+              @if (sourceEmptyDescription(); as sourceEmptyDescriptionText) {
+                <span>{{ sourceEmptyDescriptionText }}</span>
+              }
+            </div>
+          }
+        } @else {
+          <div class="af-pick-list-mobile__list" role="listbox" [attr.aria-label]="ariaLabel() + ' disponibles'" aria-multiselectable="true">
+            @for (item of sourceItems(); track item.id; let itemIndex = $index) {
+              <button
+                type="button"
+                class="af-pick-list-mobile__item"
+                data-list="source"
+                [attr.data-selected]="isSelected('source', item.id) ? '' : null"
+                [disabled]="isItemDisabled(item)"
+                role="option"
+                [attr.aria-selected]="isSelected('source', item.id) ? 'true' : 'false'"
+                (click)="onItemPressed('source', item)"
+                (keydown)="onItemKeydown($event, 'source', item)"
+              >
+                @if (itemTemplate(); as itemTemplateRef) {
+                  <ng-container *ngTemplateOutlet="itemTemplateRef; context: itemContext(item, itemIndex, 'source')" />
+                } @else {
+                  <div class="af-pick-list-mobile__item-content">
+                    <div class="af-pick-list-mobile__title-row">
+                      <span class="af-pick-list-mobile__title-group">
+                        @if (item.icon; as iconName) {
+                          <af-icon [name]="iconName" size="xs" tone="muted" [decorative]="true" />
+                        }
+                        <span class="af-pick-list-mobile__title">{{ item.label }}</span>
+                      </span>
+
+                      @if (item.badge; as badge) {
+                        <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                          {{ badge.label }}
+                        </af-badge-mobile>
+                      }
+                    </div>
+
+                    @if (item.description || item.meta) {
+                      <div class="af-pick-list-mobile__meta-row">
+                        @if (item.description) {
+                          <span class="af-pick-list-mobile__description">{{ item.description }}</span>
+                        }
+                        @if (item.meta) {
+                          <span class="af-pick-list-mobile__meta">{{ item.meta }}</span>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </button>
+            }
+          </div>
+        }
+      </section>
+
+      <div class="af-pick-list-mobile__controls" aria-label="Transferir items seleccionados">
+        @for (direction of transferDirections; track direction) {
+          <button
+            type="button"
+            class="af-pick-list-mobile__control"
+            [attr.data-direction]="direction"
+            [disabled]="!canTransfer(direction)"
+            [attr.aria-label]="transferButtonText(direction)"
+            (click)="onTransfer(direction)"
+          >
+            <af-icon [name]="transferButtonIcon(direction)" size="xs" [decorative]="true" />
+            <span>{{ transferButtonText(direction) }}</span>
+          </button>
+        }
+      </div>
+
+      <section class="af-pick-list-mobile__panel">
+        <header class="af-pick-list-mobile__panel-header">
+          <div>
+            <strong>{{ targetTitle() }}</strong>
+            @if (targetDescription(); as targetDescriptionText) {
+              <span>{{ targetDescriptionText }}</span>
+            }
+          </div>
+          <af-badge-mobile tone="accent" size="sm" variant="soft">{{ targetItems().length }}</af-badge-mobile>
+        </header>
+
+        @if (targetItems().length === 0) {
+          @if (targetEmptyTemplate(); as targetEmptyTemplateRef) {
+            <ng-container *ngTemplateOutlet="targetEmptyTemplateRef" />
+          } @else {
+            <div class="af-pick-list-mobile__panel-empty">
+              <strong>{{ targetEmptyTitle() }}</strong>
+              @if (targetEmptyDescription(); as targetEmptyDescriptionText) {
+                <span>{{ targetEmptyDescriptionText }}</span>
+              }
+            </div>
+          }
+        } @else {
+          <div class="af-pick-list-mobile__list" role="listbox" [attr.aria-label]="ariaLabel() + ' asignados'" aria-multiselectable="true">
+            @for (item of targetItems(); track item.id; let itemIndex = $index) {
+              <button
+                type="button"
+                class="af-pick-list-mobile__item"
+                data-list="target"
+                [attr.data-selected]="isSelected('target', item.id) ? '' : null"
+                [disabled]="isItemDisabled(item)"
+                role="option"
+                [attr.aria-selected]="isSelected('target', item.id) ? 'true' : 'false'"
+                (click)="onItemPressed('target', item)"
+                (keydown)="onItemKeydown($event, 'target', item)"
+              >
+                @if (itemTemplate(); as itemTemplateRef) {
+                  <ng-container *ngTemplateOutlet="itemTemplateRef; context: itemContext(item, itemIndex, 'target')" />
+                } @else {
+                  <div class="af-pick-list-mobile__item-content">
+                    <div class="af-pick-list-mobile__title-row">
+                      <span class="af-pick-list-mobile__title-group">
+                        @if (item.icon; as iconName) {
+                          <af-icon [name]="iconName" size="xs" tone="muted" [decorative]="true" />
+                        }
+                        <span class="af-pick-list-mobile__title">{{ item.label }}</span>
+                      </span>
+
+                      @if (item.badge; as badge) {
+                        <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                          {{ badge.label }}
+                        </af-badge-mobile>
+                      }
+                    </div>
+
+                    @if (item.description || item.meta) {
+                      <div class="af-pick-list-mobile__meta-row">
+                        @if (item.description) {
+                          <span class="af-pick-list-mobile__description">{{ item.description }}</span>
+                        }
+                        @if (item.meta) {
+                          <span class="af-pick-list-mobile__meta">{{ item.meta }}</span>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </button>
+            }
+          </div>
+        }
+      </section>
+    </div>
+  }
+}

@@ -184,16 +184,20 @@ The repository now advances the next Beta+ wave with these current slices:
 
 `AfTreeSelect`, `AfAutoComplete` and the remaining advanced form track stay pending for later Beta+ slices.
 
-### Wave 3 Initial Status
+### Wave 3 Current Status
 
-The repository now opens `HU-032` with the first data-oriented Beta+ slice:
+The repository now advances `HU-032` with the current data-oriented Beta+ slice:
 
 - `AfDataView`
 - `AfPaginator`
+- `AfOrderList`
+- `AfPickList`
+- `AfTimeline`
+- `AfTree`
 
-`AfDataView` and `AfPaginator` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
+`AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline` and `AfTree` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
 
-`AfTimeline`, `AfTree`, `AfOrderList`, `AfPickList`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` remain pending for later HU-032 slices.
+`AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` remain pending for later HU-032 slices.
 
 ## Renderer Policy
 

@@ -47,6 +47,8 @@ import {
     AfListbox,
     AfMetricCard,
     AfMultiSelect,
+    AfOrderList,
+    AfOrderListActionsDirective,
     AfPageShell,
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,
@@ -54,6 +56,8 @@ import {
     AfPageShellUserDirective,
     AfPaginator,
     AfPassword,
+    AfPickList,
+    AfPickListActionsDirective,
     AfPopover,
     AfPopoverContentDirective,
     AfPopoverTriggerDirective,
@@ -62,9 +66,13 @@ import {
     AfSegmentedControl,
     AfSelect,
     AfTextarea,
+    AfTimeline,
+    AfTimelineActionsDirective,
     AfToastViewport,
     AfToggle,
     AfTooltip,
+    AfTree,
+    AfTreeActionsDirective,
 } from '@argfit-ui/adaptive';
 import {
     AfPlatformService,
@@ -85,9 +93,19 @@ import {
     type AfFormOption,
     type AfIconName,
     type AfNavigationItem,
+    type AfOrderListItem,
+    type AfOrderListReorderChange,
+    type AfOrderListSelectedIds,
     type AfPaginatorPageChange,
     type AfPaginatorState,
+    type AfPickListChange,
+    type AfPickListItem,
+    type AfPickListSelectedIds,
     type AfPlatformPreference,
+    type AfTimelineItem,
+    type AfTreeExpandedIds,
+    type AfTreeNode,
+    type AfTreeSelectedIds,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
@@ -159,6 +177,8 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfListbox,
     AfMetricCard,
     AfMultiSelect,
+    AfOrderList,
+    AfOrderListActionsDirective,
     AfPaginator,
     AfPageShell,
     AfPageShellBrandDirective,
@@ -166,6 +186,8 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfPageShellUserDirective,
     AfPageShellFooterDirective,
     AfPassword,
+    AfPickList,
+    AfPickListActionsDirective,
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
@@ -178,8 +200,12 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfSegmentedControl,
     AfSelect,
     AfTextarea,
+    AfTimeline,
+    AfTimelineActionsDirective,
     AfTooltip,
     AfToggle,
+    AfTree,
+    AfTreeActionsDirective,
     AfToastViewport,
     ReactiveFormsModule,
   ],
@@ -383,6 +409,194 @@ export class App {
       badge: { label: 'Resumen', tone: 'neutral' },
     },
   ];
+  protected readonly alphaTimelineItems: readonly AfTimelineItem[] = [
+    {
+      id: 'timeline-session-created',
+      title: 'Sesion operativa creada',
+      timestamp: 'Hoy 07:15',
+      eyebrow: 'Setup',
+      description: 'El staff preparo el bloque de potencia con atletas, sensores y umbrales listos.',
+      meta: 'Grupo principal · Cancha 2',
+      badge: { label: 'Activa', tone: 'success' },
+      icon: 'calendar',
+    },
+    {
+      id: 'timeline-screening-alert',
+      title: 'Screening de fatiga marcado',
+      timestamp: 'Hoy 08:40',
+      eyebrow: 'Readiness',
+      description: 'Dos atletas quedaron con alerta amarilla antes del bloque principal.',
+      meta: 'Requiere ajuste del warm-up',
+      badge: { label: 'Atencion', tone: 'warning' },
+      icon: 'activity',
+    },
+    {
+      id: 'timeline-export-ready',
+      title: 'Reporte de microciclo generado',
+      timestamp: 'Hoy 11:10',
+      eyebrow: 'Analytics',
+      description: 'Resumen de salto, RSI y carga disponible para compartir con el cuerpo tecnico.',
+      meta: 'PDF y CSV listos',
+      badge: { label: 'Listo', tone: 'accent' },
+      icon: 'bar-chart-3',
+    },
+    {
+      id: 'timeline-review-complete',
+      title: 'Revision medica completada',
+      timestamp: 'Hoy 13:25',
+      eyebrow: 'Staff',
+      description: 'Se valido la progresion de retorno y se actualizaron restricciones operativas.',
+      meta: 'Fisioterapia · 4 casos',
+      badge: { label: 'Cerrada', tone: 'neutral' },
+      icon: 'check-square',
+    },
+  ];
+  protected readonly alphaTreeNodes: readonly AfTreeNode[] = [
+    {
+      id: 'club-argfit',
+      label: 'Club ArgFit',
+      description: 'Estructura principal de trabajo',
+      meta: '3 unidades',
+      icon: 'users',
+      badge: { label: 'Online', tone: 'success' },
+      children: [
+        {
+          id: 'programs',
+          label: 'Programas de rendimiento',
+          description: 'Bloques activos del microciclo',
+          meta: '2 flujos',
+          icon: 'activity',
+          children: [
+            {
+              id: 'program-power',
+              label: 'Bloque de potencia',
+              description: 'CMJ, DJ y readiness',
+              meta: 'Hoy 10:30',
+              icon: 'bar-chart-3',
+            },
+            {
+              id: 'program-rehab',
+              label: 'Retorno progresivo',
+              description: 'Control medico y cargas sensibles',
+              meta: '4 atletas',
+              icon: 'check-square',
+              badge: { label: 'Sensibles', tone: 'warning' },
+            },
+          ],
+        },
+        {
+          id: 'squads',
+          label: 'Planteles',
+          description: 'Estructura deportiva activa',
+          meta: '2 equipos',
+          icon: 'users',
+          children: [
+            {
+              id: 'squad-first-team',
+              label: 'Primer equipo',
+              description: 'Seguimiento diario',
+              meta: '14 atletas',
+              icon: 'users',
+              children: [
+                {
+                  id: 'athlete-maria',
+                  label: 'Maria Garcia',
+                  description: 'Voleibol · CMJ prioritario',
+                  meta: 'Lista',
+                  icon: 'activity',
+                  badge: { label: 'Alta', tone: 'accent' },
+                },
+              ],
+            },
+            {
+              id: 'squad-u21',
+              label: 'U21',
+              description: 'Control de fuerza y salto',
+              meta: '12 atletas',
+              icon: 'users',
+            },
+          ],
+        },
+      ],
+    },
+  ];
+  private readonly alphaTreeInitialExpandedIds: AfTreeExpandedIds = ['club-argfit', 'squads'];
+  private readonly alphaTreeAllExpandableIds: AfTreeExpandedIds = this.collectAlphaTreeExpandableIds(this.alphaTreeNodes);
+  private readonly alphaOrderListInitialItems: readonly AfOrderListItem[] = [
+    {
+      id: 'alpha-order-warmup',
+      label: 'Warm-up neural',
+      description: 'Activacion y aterrizajes para el bloque principal.',
+      meta: '4 min',
+      icon: 'activity',
+      badge: { label: 'Start', tone: 'neutral' },
+    },
+    {
+      id: 'alpha-order-cmj',
+      label: 'CMJ principal',
+      description: 'Serie de potencia con captura completa.',
+      meta: '8 intentos',
+      icon: 'bar-chart-3',
+      badge: { label: 'Core', tone: 'accent' },
+    },
+    {
+      id: 'alpha-order-dj',
+      label: 'Drop Jump',
+      description: 'Chequeo de RSI y stiffness reactivo.',
+      meta: '4 intentos',
+      icon: 'check-square',
+      badge: { label: 'Reactive', tone: 'warning' },
+    },
+    {
+      id: 'alpha-order-export',
+      label: 'Export y cierre',
+      description: 'Resumen para staff y guardado de la sesion.',
+      meta: '2 min',
+      icon: 'file-text',
+      badge: { label: 'End', tone: 'success' },
+    },
+  ];
+  private readonly alphaPickListInitialSourceItems: readonly AfPickListItem[] = [
+    {
+      id: 'alpha-pick-lucia',
+      label: 'Lucia Perez',
+      description: 'Basquet · readiness alto',
+      meta: 'Disponible',
+      icon: 'users',
+    },
+    {
+      id: 'alpha-pick-bruno',
+      label: 'Bruno Silva',
+      description: 'Rugby · bloque de fuerza',
+      meta: 'Disponible',
+      icon: 'users',
+    },
+    {
+      id: 'alpha-pick-ines',
+      label: 'Ines Duarte',
+      description: 'Voleibol · monitoring CMJ',
+      meta: 'Disponible',
+      icon: 'users',
+    },
+  ];
+  private readonly alphaPickListInitialTargetItems: readonly AfPickListItem[] = [
+    {
+      id: 'alpha-pick-maria',
+      label: 'Maria Garcia',
+      description: 'Voleibol · prioridad de potencia',
+      meta: 'Asignada',
+      icon: 'users',
+      badge: { label: 'Core', tone: 'accent' },
+    },
+    {
+      id: 'alpha-pick-santiago',
+      label: 'Santiago Ruiz',
+      description: 'Rugby · seguimiento de fuerza',
+      meta: 'Asignado',
+      icon: 'users',
+      badge: { label: 'Ready', tone: 'success' },
+    },
+  ];
   protected readonly alphaInputCountControl = new FormControl<number>(6, { nonNullable: true });
   protected readonly alphaDatePickerControl = new FormControl<string>('2026-05-22', { nonNullable: true });
   protected readonly alphaListboxControl = new FormControl<readonly unknown[]>(['cmj', 'dj'], { nonNullable: true });
@@ -398,6 +612,36 @@ export class App {
     const start = page.pageIndex * page.pageSize;
     return this.alphaDataViewItems.slice(start, start + page.pageSize);
   });
+  protected readonly alphaTreeExpandedIds = signal<AfTreeExpandedIds>(this.alphaTreeInitialExpandedIds);
+  protected readonly alphaTreeSelectedIds = signal<AfTreeSelectedIds>(['athlete-maria']);
+  protected readonly alphaOrderListItems = signal<readonly AfOrderListItem[]>(this.alphaOrderListInitialItems);
+  protected readonly alphaOrderListSelectedIds = signal<AfOrderListSelectedIds>(['alpha-order-cmj']);
+  protected readonly alphaOrderListSummary = computed(() => this.alphaOrderListItems().map((item) => item.label).join(' · '));
+  protected readonly alphaPickListSourceItems = signal<readonly AfPickListItem[]>(this.alphaPickListInitialSourceItems);
+  protected readonly alphaPickListTargetItems = signal<readonly AfPickListItem[]>(this.alphaPickListInitialTargetItems);
+  protected readonly alphaPickListSourceSelectedIds = signal<AfPickListSelectedIds>(['alpha-pick-lucia']);
+  protected readonly alphaPickListTargetSelectedIds = signal<AfPickListSelectedIds>([]);
+  protected readonly alphaPickListAssignedSummary = computed(() => {
+    const targetItems = this.alphaPickListTargetItems();
+    if (targetItems.length === 0) {
+      return 'Sin atletas asignados';
+    }
+
+    return targetItems.map((item) => item.label).join(' · ');
+  });
+  protected readonly alphaTreeSelectionSummary = computed(() => {
+    const selectedIds = this.alphaTreeSelectedIds();
+    if (selectedIds.length === 0) {
+      return 'Sin nodo seleccionado';
+    }
+
+    return selectedIds
+      .map((selectedId) => this.findAlphaTreeNodeLabel(selectedId) ?? selectedId)
+      .join(' · ');
+  });
+  protected readonly alphaTreeExpandedSummary = computed(
+    () => `${this.alphaTreeExpandedIds().length} nodos abiertos`,
+  );
   protected readonly newAthleteForm = new FormGroup({
     name: new FormControl<string>('Maria Garcia', { nonNullable: true }),
     email: new FormControl<string>('maria@club.com.ar', { nonNullable: true }),
@@ -820,6 +1064,78 @@ export class App {
     this.recordAction(`Beta+ data view item → ${item.title}`);
   }
 
+  protected recordAlphaTimelineItem(item: AfTimelineItem): void {
+    this.recordAction(`Beta+ timeline item → ${item.title}`);
+  }
+
+  protected setAlphaOrderListSelection(selectedIds: AfOrderListSelectedIds): void {
+    this.alphaOrderListSelectedIds.set(selectedIds);
+    this.recordAction(`Beta+ order list selection → ${selectedIds.length}`);
+  }
+
+  protected applyAlphaOrderListReorder(change: AfOrderListReorderChange): void {
+    this.alphaOrderListItems.set(change.items);
+    this.alphaOrderListSelectedIds.set(change.selectedIds);
+    this.recordAction(`Beta+ order list → ${change.direction}`);
+  }
+
+  protected resetAlphaOrderList(): void {
+    this.alphaOrderListItems.set(this.alphaOrderListInitialItems);
+    this.alphaOrderListSelectedIds.set(['alpha-order-cmj']);
+    this.recordAction('Beta+ order list → reset');
+  }
+
+  protected setAlphaPickListSourceSelection(selectedIds: AfPickListSelectedIds): void {
+    this.alphaPickListSourceSelectedIds.set(selectedIds);
+    this.recordAction(`Beta+ pick list source → ${selectedIds.length}`);
+  }
+
+  protected setAlphaPickListTargetSelection(selectedIds: AfPickListSelectedIds): void {
+    this.alphaPickListTargetSelectedIds.set(selectedIds);
+    this.recordAction(`Beta+ pick list target → ${selectedIds.length}`);
+  }
+
+  protected applyAlphaPickListChange(change: AfPickListChange): void {
+    this.alphaPickListSourceItems.set(change.sourceItems);
+    this.alphaPickListTargetItems.set(change.targetItems);
+    this.alphaPickListSourceSelectedIds.set(change.sourceSelectedIds);
+    this.alphaPickListTargetSelectedIds.set(change.targetSelectedIds);
+    this.recordAction(`Beta+ pick list → ${change.direction}`);
+  }
+
+  protected resetAlphaPickList(): void {
+    this.alphaPickListSourceItems.set(this.alphaPickListInitialSourceItems);
+    this.alphaPickListTargetItems.set(this.alphaPickListInitialTargetItems);
+    this.alphaPickListSourceSelectedIds.set(['alpha-pick-lucia']);
+    this.alphaPickListTargetSelectedIds.set([]);
+    this.recordAction('Beta+ pick list → reset');
+  }
+
+  protected setAlphaTreeExpanded(expandedIds: AfTreeExpandedIds): void {
+    this.alphaTreeExpandedIds.set(expandedIds);
+    this.recordAction(`Beta+ tree expanded → ${expandedIds.length}`);
+  }
+
+  protected setAlphaTreeSelection(selectedIds: AfTreeSelectedIds): void {
+    this.alphaTreeSelectedIds.set(selectedIds);
+    this.recordAction(`Beta+ tree selection → ${this.alphaTreeSelectionSummary()}`);
+  }
+
+  protected expandAlphaTree(): void {
+    this.alphaTreeExpandedIds.set(this.alphaTreeAllExpandableIds);
+    this.recordAction('Beta+ tree → expandir todo');
+  }
+
+  protected resetAlphaTree(): void {
+    this.alphaTreeExpandedIds.set(this.alphaTreeInitialExpandedIds);
+    this.alphaTreeSelectedIds.set(['athlete-maria']);
+    this.recordAction('Beta+ tree → reset');
+  }
+
+  protected recordAlphaTreeNode(node: AfTreeNode): void {
+    this.recordAction(`Beta+ tree node → ${node.label}`);
+  }
+
   private formatAlphaSelection(value: unknown, emptyText: string): string {
     if (!Array.isArray(value) || value.length === 0) {
       return emptyText;
@@ -834,6 +1150,35 @@ export class App {
     }
 
     return labels.join(' · ');
+  }
+
+  private collectAlphaTreeExpandableIds(nodes: readonly AfTreeNode[]): AfTreeExpandedIds {
+    return nodes.flatMap((node) => {
+      if (!node.children || node.children.length === 0) {
+        return [];
+      }
+
+      return [node.id, ...this.collectAlphaTreeExpandableIds(node.children)];
+    });
+  }
+
+  private findAlphaTreeNodeLabel(nodeId: string, nodes: readonly AfTreeNode[] = this.alphaTreeNodes): string | undefined {
+    for (const node of nodes) {
+      if (node.id === nodeId) {
+        return node.label;
+      }
+
+      if (!node.children || node.children.length === 0) {
+        continue;
+      }
+
+      const nestedLabel = this.findAlphaTreeNodeLabel(nodeId, node.children);
+      if (nestedLabel) {
+        return nestedLabel;
+      }
+    }
+
+    return undefined;
   }
 
   protected openDetailsDialog(): void {

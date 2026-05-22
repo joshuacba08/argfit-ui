@@ -21,9 +21,11 @@ export * from './lib/components/input/af-input-desktop.component';
 export * from './lib/components/listbox/af-listbox-desktop.component';
 export * from './lib/components/metric-card/af-metric-card-desktop.component';
 export * from './lib/components/multi-select/af-multi-select-desktop.component';
+export * from './lib/components/order-list/af-order-list-desktop.component';
 export * from './lib/components/page-shell/af-page-shell-desktop.component';
 export * from './lib/components/paginator/af-paginator-desktop.component';
 export * from './lib/components/password/af-password-desktop.component';
+export * from './lib/components/pick-list/af-pick-list-desktop.component';
 export * from './lib/components/popover/af-popover-desktop.component';
 export * from './lib/components/progress/af-progress-desktop.component';
 export * from './lib/components/radio-group/af-radio-group-desktop.component';
@@ -37,4 +39,5 @@ export * from './lib/components/toast/af-toast-desktop.component';
 export * from './lib/components/toggle/af-toggle-desktop.component';
 export * from './lib/components/tooltip/af-tooltip-desktop.component';
 export * from './lib/components/topbar/af-topbar-desktop.component';
+export * from './lib/components/tree/af-tree-desktop.component';
 

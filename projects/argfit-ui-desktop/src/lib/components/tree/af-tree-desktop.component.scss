@@ -1,0 +1,195 @@
+.af-tree-desktop {
+  display: block;
+}
+
+.af-tree-desktop__actions {
+  margin-bottom: var(--af-space-4);
+}
+
+.af-tree-desktop__list {
+  display: grid;
+  gap: var(--af-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.af-tree-desktop__item {
+  margin-inline-start: calc((var(--af-tree-level) - 1) * var(--af-space-4));
+}
+
+.af-tree-desktop__row {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-2);
+}
+
+.af-tree-desktop__toggle,
+.af-tree-desktop__toggle-placeholder {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 28px;
+  height: 28px;
+  justify-content: center;
+  margin-top: 6px;
+  width: 28px;
+}
+
+.af-tree-desktop__toggle {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-soft);
+  cursor: pointer;
+}
+
+.af-tree-desktop__toggle:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-tree-desktop__label {
+  appearance: none;
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  color: inherit;
+  cursor: pointer;
+  min-width: 0;
+  padding: var(--af-space-3) var(--af-space-4);
+  text-align: left;
+  transition:
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    box-shadow var(--af-duration-fast) var(--af-ease-out),
+    transform var(--af-duration-fast) var(--af-ease-out);
+  width: 100%;
+}
+
+.af-tree-desktop__label:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--af-primary) 30%, var(--af-border-soft));
+  transform: translateY(-1px);
+}
+
+.af-tree-desktop__label:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-tree-desktop__label[data-selected] {
+  background: color-mix(in srgb, var(--af-primary) 8%, var(--af-bg-elevated));
+  border-color: color-mix(in srgb, var(--af-primary) 36%, var(--af-border-soft));
+}
+
+.af-tree-desktop__label:disabled,
+.af-tree-desktop[data-disabled] .af-tree-desktop__toggle {
+  cursor: default;
+  opacity: 0.64;
+}
+
+.af-tree-desktop__content {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-tree-desktop__title-row,
+.af-tree-desktop__meta-row {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.af-tree-desktop__title-group {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-2);
+  min-width: 0;
+}
+
+.af-tree-desktop__title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-tree-desktop__description,
+.af-tree-desktop__meta {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-tree-desktop__state {
+  align-items: center;
+  border: 1px dashed var(--af-border-soft);
+  border-radius: var(--af-radius-xl);
+  display: grid;
+  gap: var(--af-space-2);
+  justify-items: center;
+  min-height: 180px;
+  padding: var(--af-space-6);
+  text-align: center;
+}
+
+.af-tree-desktop__state strong {
+  color: var(--af-text-main);
+}
+
+.af-tree-desktop__state span {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+}
+
+.af-tree-desktop__state--error strong,
+.af-tree-desktop__state--error span {
+  color: var(--af-danger);
+}
+
+.af-tree-desktop__skeleton-row {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+  width: 100%;
+}
+
+.af-tree-desktop__skeleton {
+  animation: af-tree-desktop-pulse 1.2s ease-in-out infinite;
+  background: var(--af-bg-interactive);
+  border-radius: var(--af-radius-sm);
+  display: block;
+}
+
+.af-tree-desktop__skeleton--toggle {
+  flex: 0 0 24px;
+  height: 24px;
+  width: 24px;
+}
+
+.af-tree-desktop__skeleton--label {
+  height: 20px;
+  width: min(100%, 16rem);
+}
+
+.af-tree-desktop[data-density='compact'] .af-tree-desktop__label {
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+@keyframes af-tree-desktop-pulse {
+  0%,
+  100% {
+    opacity: 0.52;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-tree-desktop__label,
+  .af-tree-desktop__skeleton {
+    animation: none;
+    transition: none;
+  }
+}

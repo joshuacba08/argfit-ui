@@ -1,0 +1,51 @@
+<ng-template #orderListActions>
+  <ng-content select="[afOrderListActions]" />
+</ng-template>
+
+<ng-template #orderListEmpty>
+  <ng-content select="[afOrderListEmpty]" />
+</ng-template>
+
+<ng-template #orderListLoading>
+  <ng-content select="[afOrderListLoading]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-order-list-mobile
+    [items]="items()"
+    [selectedIds]="selectedIds()"
+    [selectionMode]="selectionMode()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (selectionChange)="selectionChange.emit($event)"
+    (reorderChange)="reorderChange.emit($event)"
+  />
+} @else {
+  <af-order-list-desktop
+    [items]="items()"
+    [selectedIds]="selectedIds()"
+    [selectionMode]="selectionMode()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (selectionChange)="selectionChange.emit($event)"
+    (reorderChange)="reorderChange.emit($event)"
+  />
+}

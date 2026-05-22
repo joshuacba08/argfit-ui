@@ -61,7 +61,7 @@ The following renderer decisions define the intended Beta+ expansion. They are n
 - Wave 1 for Beta+: `AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`.
 - Current implementation status: the full wave 1 list above is now implemented and covered in the adaptive suite plus showcase.
 - Wave 2 current status: `AfInputCount`, `AfMultiSelect`, `AfDatePicker`, `AfListbox` and the adaptive field composition helpers now have initial slices with focused specs and showcase coverage.
-- Wave 3 initial status: `AfDataView` and `AfPaginator` now have adaptive, desktop and mobile slices with focused specs and showcase coverage.
+- Wave 3 current status: `AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline` and `AfTree` now have adaptive, desktop and mobile slices with focused specs and showcase coverage.
 - High-priority Beta+ track: `AfMultiSelect`, `AfDatePicker`, `AfAutoComplete`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTabs`, `AfStepper`, `AfKanban`.
 - All remaining rows stay in-scope Beta+ candidates unless moved out explicitly.
 
@@ -93,10 +93,10 @@ The following renderer decisions define the intended Beta+ expansion. They are n
 | `AfSlider` | `Slider` / `ion-range` | Beta+ candidate |
 | `AfDataView` | `DataView` / ArgFit/Ionic cards or list/grid | Beta+ initial HU-032 slice implemented |
 | `AfPaginator` | `Paginator` / compact pagination, load-more or infinite pattern | Beta+ initial HU-032 slice implemented |
-| `AfOrderList` | `OrderList` or CDK DragDrop / CDK DragDrop or move actions | Beta+ candidate |
-| `AfPickList` | `PickList` or CDK DragDrop / dual-sheet/list pattern | Beta+ candidate |
-| `AfTimeline` | `Timeline` / custom or Ionic timeline list | Beta+ candidate |
-| `AfTree` | `Tree` / custom nested list with disclosure | Beta+ candidate |
+| `AfOrderList` | `OrderList` or CDK DragDrop / CDK DragDrop or move actions | Beta+ current HU-032 slice implemented |
+| `AfPickList` | `PickList` or CDK DragDrop / dual-sheet/list pattern | Beta+ current HU-032 slice implemented |
+| `AfTimeline` | `Timeline` / custom or Ionic timeline list | Beta+ current HU-032 slice implemented |
+| `AfTree` | `Tree` / custom nested list with disclosure | Beta+ current HU-032 slice implemented |
 | `AfTreeTable` | `TreeTable` / grouped cards or list, not table shrink | Beta+ candidate |
 | `AfVirtualScroller` | `VirtualScroller` or CDK virtual scroll / CDK virtual scroll or paginated fallback | Beta+ candidate |
 | `AfOrganizationChart` | `OrganizationChart` / compact hierarchy viewer | Beta+ experimental |

@@ -1,0 +1,73 @@
+<ng-template #pickListActions>
+  <ng-content select="[afPickListActions]" />
+</ng-template>
+
+<ng-template #pickListSourceEmpty>
+  <ng-content select="[afPickListSourceEmpty]" />
+</ng-template>
+
+<ng-template #pickListTargetEmpty>
+  <ng-content select="[afPickListTargetEmpty]" />
+</ng-template>
+
+<ng-template #pickListLoading>
+  <ng-content select="[afPickListLoading]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-pick-list-mobile
+    [sourceItems]="sourceItems()"
+    [targetItems]="targetItems()"
+    [sourceSelectedIds]="sourceSelectedIds()"
+    [targetSelectedIds]="targetSelectedIds()"
+    [sourceTitle]="sourceTitle()"
+    [sourceDescription]="sourceDescription()"
+    [targetTitle]="targetTitle()"
+    [targetDescription]="targetDescription()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [sourceEmptyTitle]="sourceEmptyTitle()"
+    [sourceEmptyDescription]="sourceEmptyDescription()"
+    [targetEmptyTitle]="targetEmptyTitle()"
+    [targetEmptyDescription]="targetEmptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [sourceEmptyTemplate]="projectedSourceEmptyTemplate()"
+    [targetEmptyTemplate]="projectedTargetEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (sourceSelectionChange)="sourceSelectionChange.emit($event)"
+    (targetSelectionChange)="targetSelectionChange.emit($event)"
+    (transferChange)="transferChange.emit($event)"
+  />
+} @else {
+  <af-pick-list-desktop
+    [sourceItems]="sourceItems()"
+    [targetItems]="targetItems()"
+    [sourceSelectedIds]="sourceSelectedIds()"
+    [targetSelectedIds]="targetSelectedIds()"
+    [sourceTitle]="sourceTitle()"
+    [sourceDescription]="sourceDescription()"
+    [targetTitle]="targetTitle()"
+    [targetDescription]="targetDescription()"
+    [density]="density()"
+    [disabled]="disabled()"
+    [loading]="loading()"
+    [error]="error()"
+    [sourceEmptyTitle]="sourceEmptyTitle()"
+    [sourceEmptyDescription]="sourceEmptyDescription()"
+    [targetEmptyTitle]="targetEmptyTitle()"
+    [targetEmptyDescription]="targetEmptyDescription()"
+    [ariaLabel]="ariaLabel()"
+    [itemTemplate]="projectedItemTemplate()"
+    [actionsTemplate]="projectedActionsTemplate()"
+    [sourceEmptyTemplate]="projectedSourceEmptyTemplate()"
+    [targetEmptyTemplate]="projectedTargetEmptyTemplate()"
+    [loadingTemplate]="projectedLoadingTemplate()"
+    (sourceSelectionChange)="sourceSelectionChange.emit($event)"
+    (targetSelectionChange)="targetSelectionChange.emit($event)"
+    (transferChange)="transferChange.emit($event)"
+  />
+}

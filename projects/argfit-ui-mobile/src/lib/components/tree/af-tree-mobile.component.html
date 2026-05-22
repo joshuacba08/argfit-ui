@@ -1,0 +1,128 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-tree-mobile__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+<ng-template #nodeList let-nodes let-level="level" let-parentId="parentId">
+  <ul
+    class="af-tree-mobile__list"
+    [attr.role]="level === 1 ? 'tree' : 'group'"
+    [attr.aria-label]="level === 1 ? ariaLabel() : null"
+    [attr.aria-multiselectable]="level === 1 && selectionMode() === 'multiple' ? 'true' : null"
+  >
+    @for (node of nodes; track node.id) {
+      <li class="af-tree-mobile__item" [style.--af-tree-level]="level">
+        <div class="af-tree-mobile__row">
+          @if (hasChildren(node)) {
+            <button
+              type="button"
+              class="af-tree-mobile__toggle"
+              [disabled]="disabled() || node.disabled"
+              [attr.aria-label]="isExpanded(node.id) ? 'Contraer nodo' : 'Expandir nodo'"
+              (click)="onToggleClick($event, node.id)"
+            >
+              <af-icon [name]="isExpanded(node.id) ? 'chevron-down' : 'chevron-right'" size="xs" [decorative]="true" />
+            </button>
+          } @else {
+            <span class="af-tree-mobile__toggle-placeholder" aria-hidden="true"></span>
+          }
+
+          <button
+            type="button"
+            class="af-tree-mobile__label"
+            [disabled]="disabled() || node.disabled"
+            [attr.data-node-id]="node.id"
+            [attr.data-parent-id]="parentId ?? null"
+            [attr.data-selected]="isSelected(node.id) ? '' : null"
+            role="treeitem"
+            [attr.aria-expanded]="hasChildren(node) ? (isExpanded(node.id) ? 'true' : 'false') : null"
+            [attr.aria-selected]="selectionEnabled() ? (isSelected(node.id) ? 'true' : 'false') : null"
+            [attr.aria-level]="level"
+            (click)="onNodePressed(node)"
+            (keydown)="onNodeKeydown($event, node, parentId)"
+          >
+            @if (nodeTemplate(); as nodeTemplateRef) {
+              <ng-container *ngTemplateOutlet="nodeTemplateRef; context: nodeContext(node, level)" />
+            } @else {
+              <div class="af-tree-mobile__content">
+                <div class="af-tree-mobile__title-row">
+                  <span class="af-tree-mobile__title-group">
+                    @if (node.icon; as iconName) {
+                      <af-icon [name]="iconName" size="xs" tone="muted" [decorative]="true" />
+                    }
+                    <span class="af-tree-mobile__title">{{ node.label }}</span>
+                  </span>
+
+                  @if (node.badge; as badge) {
+                    <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                      {{ badge.label }}
+                    </af-badge-mobile>
+                  }
+                </div>
+
+                @if (node.description || node.meta) {
+                  <div class="af-tree-mobile__meta-row">
+                    @if (node.description) {
+                      <span class="af-tree-mobile__description">{{ node.description }}</span>
+                    }
+                    @if (node.meta) {
+                      <span class="af-tree-mobile__meta">{{ node.meta }}</span>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </button>
+        </div>
+
+        @if (hasChildren(node) && isExpanded(node.id)) {
+          <ng-container
+            *ngTemplateOutlet="nodeList; context: { $implicit: node.children ?? [], level: level + 1, parentId: node.id }"
+          />
+        }
+      </li>
+    }
+  </ul>
+</ng-template>
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <div class="af-tree-mobile__state">
+        @for (index of skeletonItems(); track index) {
+          <div class="af-tree-mobile__skeleton-row" aria-hidden="true">
+            <span class="af-tree-mobile__skeleton af-tree-mobile__skeleton--toggle"></span>
+            <span class="af-tree-mobile__skeleton af-tree-mobile__skeleton--label"></span>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-tree-mobile__state af-tree-mobile__state--error" role="alert">
+      <strong>No se pudo cargar el arbol</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-tree-mobile__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <ng-container *ngTemplateOutlet="nodeList; context: { $implicit: nodes(), level: 1, parentId: null }" />
+  }
+}

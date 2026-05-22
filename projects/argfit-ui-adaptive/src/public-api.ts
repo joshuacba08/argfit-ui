@@ -123,6 +123,18 @@ export {
     AfMultiSelectComponent as AfMultiSelect, AfMultiSelectComponent
 } from './lib/components/multi-select/af-multi-select.component';
 export {
+    AfOrderListItemDirective
+} from './lib/components/order-list/af-order-list-item.directive';
+export {
+    AF_ORDER_LIST_SLOT_DIRECTIVES,
+    AfOrderListActionsDirective,
+    AfOrderListEmptyDirective,
+    AfOrderListLoadingDirective
+} from './lib/components/order-list/af-order-list-slots.directive';
+export {
+    AfOrderListComponent as AfOrderList, AfOrderListComponent
+} from './lib/components/order-list/af-order-list.component';
+export {
     AF_PAGE_SHELL_SLOT_DIRECTIVES,
     AfPageShellActionsDirective,
     AfPageShellBrandDirective,
@@ -135,6 +147,19 @@ export {
 export {
     AfPaginatorComponent as AfPaginator, AfPaginatorComponent
 } from './lib/components/paginator/af-paginator.component';
+export {
+    AfPickListItemDirective
+} from './lib/components/pick-list/af-pick-list-item.directive';
+export {
+    AF_PICK_LIST_SLOT_DIRECTIVES,
+    AfPickListActionsDirective,
+    AfPickListLoadingDirective,
+    AfPickListSourceEmptyDirective,
+    AfPickListTargetEmptyDirective
+} from './lib/components/pick-list/af-pick-list-slots.directive';
+export {
+    AfPickListComponent as AfPickList, AfPickListComponent
+} from './lib/components/pick-list/af-pick-list.component';
 export {
     AfPasswordComponent as AfPassword, AfPasswordComponent
 } from './lib/components/password/af-password.component';
@@ -185,4 +210,16 @@ export {
 export {
     AfTooltipComponent as AfTooltip, AfTooltipComponent
 } from './lib/components/tooltip/af-tooltip.component';
+export {
+    AfTreeNodeDirective
+} from './lib/components/tree/af-tree-node.directive';
+export {
+    AF_TREE_SLOT_DIRECTIVES,
+    AfTreeActionsDirective,
+    AfTreeEmptyDirective,
+    AfTreeLoadingDirective
+} from './lib/components/tree/af-tree-slots.directive';
+export {
+    AfTreeComponent as AfTree, AfTreeComponent
+} from './lib/components/tree/af-tree.component';
 

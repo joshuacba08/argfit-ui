@@ -35,7 +35,7 @@ The following new ArgFit-owned type families are approved to enter as `experimen
 | Overlay types | `AfPopover*`, `AfDrawer*`, `AfTooltip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must describe ArgFit semantics only; no PrimeNG/Ionic event leakage. |
 | Status and identity types | `AfProgress*`, `AfAvatar*`, `AfChip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must cover accessible labels, variants and renderer-independent state. |
 | Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfInputCount*`, `AfListbox*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. `AfInputCount`, `AfDatePicker`, `AfMultiSelect`, `AfListbox` and the current field/input composition helpers are now implemented as wave 2 slices; `AfTreeSelect` remains pending. |
-| Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. `AfDataView` and `AfPaginator` now have initial HU-032 slices; `AfTree` and workflow surfaces remain pending. |
+| Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfOrderList*`, `AfPickList*`, `AfTimeline*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. `AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline` and `AfTree` now have current HU-032 slices; `AfTreeTable`, `AfVirtualScroller` and broader workflow surfaces remain pending. |
 | Layout and panel types | `AfTabs*`, `AfStepper*`, `AfPanel*`, `AfToolbar*`, `AfSplitter*` and related families | `experimental-in-beta-plus` | Must preserve adaptive semantics across renderers. |
 
 ## `@argfit-ui/primitives`
@@ -100,6 +100,10 @@ The following exports are in scope for `0.2.0-beta.0` and should enter as `exper
 | `AfTreeSelect`, `AfTreeSelectComponent` | `experimental-in-beta-plus` | High-priority hierarchical selection surface. | May change during Beta+ with migration notes. |
 | `AfDataView`, `AfDataViewComponent` | `experimental-in-beta-plus` | High-priority list/grid presentation surface. | May change during Beta+ with migration notes. |
 | `AfPaginator`, `AfPaginatorComponent` | `experimental-in-beta-plus` | High-priority navigation surface for large data sets. | May change during Beta+ with migration notes. |
+| `AfOrderList`, `AfOrderListComponent` | `experimental-in-beta-plus` | Ordered list surface for explicit reordering workflows with controlled selection. | May change during Beta+ with migration notes. |
+| `AfPickList`, `AfPickListComponent` | `experimental-in-beta-plus` | Dual-list assignment surface for source/target transfer flows. | May change during Beta+ with migration notes. |
+| `AfTimeline`, `AfTimelineComponent` | `experimental-in-beta-plus` | Ordered event and process history surface with slot-based customization. | May change during Beta+ with migration notes. |
+| `AfTree`, `AfTreeComponent` | `experimental-in-beta-plus` | Hierarchical navigation and selection surface with controlled expansion state. | May change during Beta+ with migration notes. |
 | `AfTabs`, `AfTabsComponent` | `experimental-in-beta-plus` | High-priority panel navigation/composition surface. | May change during Beta+ with migration notes. |
 | `AfStepper`, `AfStepperComponent` | `experimental-in-beta-plus` | High-priority workflow progression surface. | May change during Beta+ with migration notes. |
 | `AfKanban`, `AfKanbanComponent` | `experimental-in-beta-plus` | Workflow-grade composite component and drag/drop proving ground. | May change during Beta+ with migration notes. |
@@ -133,6 +137,18 @@ Current implemented Beta+ adaptive exports in the repository:
 - `AfDataViewItemDirective`
 - `AfDataViewActionsDirective`, `AfDataViewEmptyDirective`, `AfDataViewLoadingDirective`, `AF_DATA_VIEW_SLOT_DIRECTIVES`
 - `AfPaginator`, `AfPaginatorComponent`
+- `AfOrderList`, `AfOrderListComponent`
+- `AfOrderListItemDirective`
+- `AfOrderListActionsDirective`, `AfOrderListEmptyDirective`, `AfOrderListLoadingDirective`, `AF_ORDER_LIST_SLOT_DIRECTIVES`
+- `AfPickList`, `AfPickListComponent`
+- `AfPickListItemDirective`
+- `AfPickListActionsDirective`, `AfPickListSourceEmptyDirective`, `AfPickListTargetEmptyDirective`, `AfPickListLoadingDirective`, `AF_PICK_LIST_SLOT_DIRECTIVES`
+- `AfTimeline`, `AfTimelineComponent`
+- `AfTimelineItemDirective`
+- `AfTimelineActionsDirective`, `AfTimelineEmptyDirective`, `AfTimelineLoadingDirective`, `AF_TIMELINE_SLOT_DIRECTIVES`
+- `AfTree`, `AfTreeComponent`
+- `AfTreeNodeDirective`
+- `AfTreeActionsDirective`, `AfTreeEmptyDirective`, `AfTreeLoadingDirective`, `AF_TREE_SLOT_DIRECTIVES`
 
 ## `@argfit-ui/desktop`
 

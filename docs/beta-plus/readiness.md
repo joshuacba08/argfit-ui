@@ -86,20 +86,28 @@ Current validation completed for the implemented wave 2 slices:
 
 `AfTreeSelect`, `AfAutoComplete` and the remaining advanced form backlog still need later Beta+ slices.
 
-## Wave 3 Initial Status
+## Wave 3 Current Status
 
-The repository now opens `HU-032` with these implemented data slices:
+The repository now advances `HU-032` with these implemented data slices:
 
 - `AfDataView`
 - `AfPaginator`
+- `AfOrderList`
+- `AfPickList`
+- `AfTimeline`
+- `AfTree`
 
-Current validation completed for the implemented wave 3 initial slice:
+Current validation completed for the implemented wave 3 slice:
 
 - focused adaptive spec for `AfDataView`
 - focused adaptive spec for `AfPaginator`
+- focused adaptive spec for `AfOrderList`
+- focused adaptive spec for `AfPickList`
+- focused adaptive spec for `AfTimeline`
+- focused adaptive spec for `AfTree`
 - showcase application spec extended for the current HU-032 slice in the preserved `alpha` slot
 
-`AfTimeline`, `AfTree`, `AfOrderList`, `AfPickList`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` still need later HU-032 slices.
+`AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` still need later HU-032 slices.
 
 ## Backlog HU Beta+
 
@@ -122,7 +130,7 @@ Beta+ is ready when:
 - `docs/beta-plus/scope.md` defines the Beta+ contract.
 - New components have adaptive, desktop and mobile implementations.
 - New components have accessibility and keyboard tests.
-- `AfMultiSelect`, `AfDatePicker`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTabs` and `AfStepper` are covered by showcase and consumer smoke.
+- `AfMultiSelect`, `AfDatePicker`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTimeline`, `AfTree`, `AfTabs` and `AfStepper` are covered by showcase and consumer smoke.
 - `AfKanban` supports drag/drop plus non-drag keyboard/fallback movement.
 - Showcase covers desktop/mobile, dark/light and core states.
 - Consumer smoke validates Beta+ imports from generated packages.

@@ -1,0 +1,193 @@
+.af-pick-list-mobile {
+  display: block;
+}
+
+.af-pick-list-mobile__actions {
+  margin-bottom: var(--af-space-3);
+}
+
+.af-pick-list-mobile__layout {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.af-pick-list-mobile__panel {
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: var(--af-space-3);
+  padding: var(--af-space-3);
+}
+
+.af-pick-list-mobile__panel-header {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.af-pick-list-mobile__panel-header strong {
+  color: var(--af-text-main);
+  display: block;
+  font-size: var(--af-text-sm);
+}
+
+.af-pick-list-mobile__panel-header span {
+  color: var(--af-text-soft);
+  display: block;
+  font-size: var(--af-text-xs);
+  margin-top: 2px;
+}
+
+.af-pick-list-mobile__list {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-pick-list-mobile__item {
+  appearance: none;
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  color: inherit;
+  padding: var(--af-space-3);
+  text-align: left;
+  width: 100%;
+}
+
+.af-pick-list-mobile__item:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-pick-list-mobile__item[data-selected] {
+  background: color-mix(in srgb, var(--af-primary) 9%, var(--af-bg-elevated));
+  border-color: color-mix(in srgb, var(--af-primary) 36%, var(--af-border-soft));
+}
+
+.af-pick-list-mobile__item:disabled,
+.af-pick-list-mobile[data-disabled] .af-pick-list-mobile__control {
+  cursor: default;
+  opacity: 0.64;
+}
+
+.af-pick-list-mobile__item-content {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.af-pick-list-mobile__title-row,
+.af-pick-list-mobile__meta-row {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.af-pick-list-mobile__title-group {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-2);
+}
+
+.af-pick-list-mobile__title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-pick-list-mobile__description,
+.af-pick-list-mobile__meta {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-pick-list-mobile__controls {
+  display: grid;
+  gap: var(--af-space-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.af-pick-list-mobile__control {
+  align-items: center;
+  appearance: none;
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: inline-flex;
+  gap: var(--af-space-2);
+  justify-content: center;
+  padding: var(--af-space-3);
+}
+
+.af-pick-list-mobile__control:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-pick-list-mobile__panel-empty,
+.af-pick-list-mobile__state {
+  align-items: center;
+  background: var(--af-bg-surface);
+  border: 1px dashed var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: var(--af-space-2);
+  justify-items: center;
+  min-height: 132px;
+  padding: var(--af-space-5);
+  text-align: center;
+}
+
+.af-pick-list-mobile__panel-empty strong,
+.af-pick-list-mobile__state strong {
+  color: var(--af-text-main);
+}
+
+.af-pick-list-mobile__panel-empty span,
+.af-pick-list-mobile__state span {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+}
+
+.af-pick-list-mobile__state--error strong,
+.af-pick-list-mobile__state--error span {
+  color: var(--af-danger);
+}
+
+.af-pick-list-mobile__skeleton {
+  animation: af-pick-list-mobile-pulse 1.2s ease-in-out infinite;
+  background: var(--af-bg-interactive);
+  border-radius: var(--af-radius-sm);
+  display: block;
+}
+
+.af-pick-list-mobile__skeleton--body {
+  height: 44px;
+  width: 100%;
+}
+
+.af-pick-list-mobile[data-density='compact'] .af-pick-list-mobile__panel,
+.af-pick-list-mobile[data-density='compact'] .af-pick-list-mobile__item {
+  padding: var(--af-space-2);
+}
+
+@keyframes af-pick-list-mobile-pulse {
+  0%,
+  100% {
+    opacity: 0.52;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-pick-list-mobile__skeleton {
+    animation: none;
+  }
+}
