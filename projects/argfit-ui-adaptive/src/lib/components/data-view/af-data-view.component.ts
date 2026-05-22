@@ -1,31 +1,31 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChild,
-  inject,
-  input,
-  output,
-  viewChild,
-  type TemplateRef,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChild,
+    inject,
+    input,
+    output,
+    viewChild,
+    type TemplateRef,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfDataViewDensity,
-  type AfDataViewItem,
-  type AfDataViewItemTemplate,
-  type AfDataViewLayout,
+    AfPlatformService,
+    type AfDataViewDensity,
+    type AfDataViewItem,
+    type AfDataViewItemTemplate,
+    type AfDataViewLayout,
 } from '@argfit-ui/core';
 import { AfDataViewDesktopComponent } from '@argfit-ui/desktop';
 import { AfDataViewMobileComponent } from '@argfit-ui/mobile';
 
 import { AfDataViewItemDirective } from './af-data-view-item.directive';
 import {
-  AfDataViewActionsDirective,
-  AfDataViewEmptyDirective,
-  AfDataViewLoadingDirective,
+    AfDataViewActionsDirective,
+    AfDataViewEmptyDirective,
+    AfDataViewLoadingDirective,
 } from './af-data-view-slots.directive';
 
 @Component({

@@ -184,6 +184,17 @@ The repository now advances the next Beta+ wave with these current slices:
 
 `AfTreeSelect`, `AfAutoComplete` and the remaining advanced form track stay pending for later Beta+ slices.
 
+### Wave 3 Initial Status
+
+The repository now opens `HU-032` with the first data-oriented Beta+ slice:
+
+- `AfDataView`
+- `AfPaginator`
+
+`AfDataView` and `AfPaginator` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
+
+`AfTimeline`, `AfTree`, `AfOrderList`, `AfPickList`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` remain pending for later HU-032 slices.
+
 ## Renderer Policy
 
 - Desktop renderer policy: PrimeNG-first.

@@ -35,7 +35,7 @@ The following new ArgFit-owned type families are approved to enter as `experimen
 | Overlay types | `AfPopover*`, `AfDrawer*`, `AfTooltip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must describe ArgFit semantics only; no PrimeNG/Ionic event leakage. |
 | Status and identity types | `AfProgress*`, `AfAvatar*`, `AfChip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must cover accessible labels, variants and renderer-independent state. |
 | Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfInputCount*`, `AfListbox*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. `AfInputCount`, `AfDatePicker`, `AfMultiSelect`, `AfListbox` and the current field/input composition helpers are now implemented as wave 2 slices; `AfTreeSelect` remains pending. |
-| Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. |
+| Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. `AfDataView` and `AfPaginator` now have initial HU-032 slices; `AfTree` and workflow surfaces remain pending. |
 | Layout and panel types | `AfTabs*`, `AfStepper*`, `AfPanel*`, `AfToolbar*`, `AfSplitter*` and related families | `experimental-in-beta-plus` | Must preserve adaptive semantics across renderers. |
 
 ## `@argfit-ui/primitives`
@@ -129,6 +129,10 @@ Current implemented Beta+ adaptive exports in the repository:
 - `AfInputGroupPrefixDirective`, `AfInputGroupControlDirective`, `AfInputGroupSuffixDirective`, `AF_INPUT_GROUP_SLOT_DIRECTIVES`
 - `AfListbox`, `AfListboxComponent`
 - `AfMultiSelect`, `AfMultiSelectComponent`
+- `AfDataView`, `AfDataViewComponent`
+- `AfDataViewItemDirective`
+- `AfDataViewActionsDirective`, `AfDataViewEmptyDirective`, `AfDataViewLoadingDirective`, `AF_DATA_VIEW_SLOT_DIRECTIVES`
+- `AfPaginator`, `AfPaginatorComponent`
 
 ## `@argfit-ui/desktop`
 

@@ -61,6 +61,7 @@ The following renderer decisions define the intended Beta+ expansion. They are n
 - Wave 1 for Beta+: `AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`.
 - Current implementation status: the full wave 1 list above is now implemented and covered in the adaptive suite plus showcase.
 - Wave 2 current status: `AfInputCount`, `AfMultiSelect`, `AfDatePicker`, `AfListbox` and the adaptive field composition helpers now have initial slices with focused specs and showcase coverage.
+- Wave 3 initial status: `AfDataView` and `AfPaginator` now have adaptive, desktop and mobile slices with focused specs and showcase coverage.
 - High-priority Beta+ track: `AfMultiSelect`, `AfDatePicker`, `AfAutoComplete`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTabs`, `AfStepper`, `AfKanban`.
 - All remaining rows stay in-scope Beta+ candidates unless moved out explicitly.
 
@@ -90,8 +91,8 @@ The following renderer decisions define the intended Beta+ expansion. They are n
 | `AfToggleButton` | `ToggleButton` / `ion-button` or custom pressed button | Beta+ candidate |
 | `AfTreeSelect` | `TreeSelect` / custom drilldown tree sheet | Beta+ high priority |
 | `AfSlider` | `Slider` / `ion-range` | Beta+ candidate |
-| `AfDataView` | `DataView` / ArgFit/Ionic cards or list/grid | Beta+ high priority |
-| `AfPaginator` | `Paginator` / compact pagination, load-more or infinite pattern | Beta+ high priority |
+| `AfDataView` | `DataView` / ArgFit/Ionic cards or list/grid | Beta+ initial HU-032 slice implemented |
+| `AfPaginator` | `Paginator` / compact pagination, load-more or infinite pattern | Beta+ initial HU-032 slice implemented |
 | `AfOrderList` | `OrderList` or CDK DragDrop / CDK DragDrop or move actions | Beta+ candidate |
 | `AfPickList` | `PickList` or CDK DragDrop / dual-sheet/list pattern | Beta+ candidate |
 | `AfTimeline` | `Timeline` / custom or Ionic timeline list | Beta+ candidate |

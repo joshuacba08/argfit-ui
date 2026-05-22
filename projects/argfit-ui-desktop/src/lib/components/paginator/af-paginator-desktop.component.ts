@@ -1,11 +1,11 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import type { AfPaginatorDensity, AfPaginatorPageChange } from '@argfit-ui/core';

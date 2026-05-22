@@ -1,0 +1,99 @@
+@if (actionsTemplate(); as actionsTemplateRef) {
+  <div class="af-timeline-mobile__actions">
+    <ng-container *ngTemplateOutlet="actionsTemplateRef" />
+  </div>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    @if (loadingTemplate(); as loadingTemplateRef) {
+      <ng-container *ngTemplateOutlet="loadingTemplateRef" />
+    } @else {
+      <section class="af-timeline-mobile__list" [attr.aria-label]="ariaLabel()">
+        @for (index of skeletonItems(); track index) {
+          <article class="af-timeline-mobile__item af-timeline-mobile__item--skeleton" aria-hidden="true">
+            <span class="af-timeline-mobile__marker" data-tone="neutral"></span>
+            <div class="af-timeline-mobile__card">
+              <span class="af-timeline-mobile__skeleton af-timeline-mobile__skeleton--eyebrow"></span>
+              <span class="af-timeline-mobile__skeleton af-timeline-mobile__skeleton--title"></span>
+              <span class="af-timeline-mobile__skeleton af-timeline-mobile__skeleton--body"></span>
+            </div>
+          </article>
+        }
+      </section>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-timeline-mobile__state af-timeline-mobile__state--error" role="alert">
+      <strong>No se pudo cargar la timeline</strong>
+      <span>{{ error() }}</span>
+    </div>
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-timeline-mobile__state">
+        <strong>{{ emptyTitle() }}</strong>
+        @if (emptyDescription(); as emptyDescriptionText) {
+          <span>{{ emptyDescriptionText }}</span>
+        }
+      </div>
+    }
+  }
+
+  @default {
+    <section class="af-timeline-mobile__list" [attr.aria-label]="ariaLabel()" role="list">
+      @for (item of items(); track item.id; let itemIndex = $index) {
+        <article
+          class="af-timeline-mobile__item"
+          [class.af-timeline-mobile__item--disabled]="item.disabled"
+          [attr.aria-disabled]="item.disabled ? 'true' : null"
+          [attr.tabindex]="item.disabled ? -1 : 0"
+          role="listitem"
+          (click)="onItemPressed(item)"
+          (keydown)="onItemKeydown($event, item)"
+        >
+          <span class="af-timeline-mobile__marker" [attr.data-tone]="markerTone(item)">
+            @if (item.icon; as iconName) {
+              <af-icon [name]="iconName" size="xs" tone="default" [decorative]="true" />
+            }
+          </span>
+
+          <div class="af-timeline-mobile__card">
+            @if (itemTemplate(); as itemTemplateRef) {
+              <ng-container *ngTemplateOutlet="itemTemplateRef; context: itemContext(item, itemIndex)" />
+            } @else {
+              <div class="af-timeline-mobile__meta-row">
+                <div>
+                  @if (item.eyebrow) {
+                    <span class="af-timeline-mobile__eyebrow">{{ item.eyebrow }}</span>
+                  }
+                  <strong class="af-timeline-mobile__timestamp">{{ item.timestamp }}</strong>
+                </div>
+
+                @if (item.badge; as badge) {
+                  <af-badge-mobile [tone]="badge.tone ?? 'neutral'" size="sm" variant="soft">
+                    {{ badge.label }}
+                  </af-badge-mobile>
+                }
+              </div>
+
+              <h3 class="af-timeline-mobile__title">{{ item.title }}</h3>
+
+              @if (item.description) {
+                <p class="af-timeline-mobile__description">{{ item.description }}</p>
+              }
+
+              @if (item.meta) {
+                <span class="af-timeline-mobile__supporting">{{ item.meta }}</span>
+              }
+            }
+          </div>
+        </article>
+      }
+    </section>
+  }
+}

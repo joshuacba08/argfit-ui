@@ -5,9 +5,9 @@ import { provideArgfitUi, type AfDataViewItem, type AfDataViewLayout } from '@ar
 
 import { AfDataViewItemDirective } from './af-data-view-item.directive';
 import {
-  AfDataViewActionsDirective,
-  AfDataViewEmptyDirective,
-  AfDataViewLoadingDirective,
+    AfDataViewActionsDirective,
+    AfDataViewEmptyDirective,
+    AfDataViewLoadingDirective,
 } from './af-data-view-slots.directive';
 import { AfDataViewComponent } from './af-data-view.component';
 

@@ -1,21 +1,21 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  type TemplateRef,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    type TemplateRef,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfDataViewDensity,
-  type AfDataViewItem,
-  type AfDataViewItemContext,
-  type AfDataViewItemTemplate,
-  type AfDataViewLayout,
+    type AfDataViewDensity,
+    type AfDataViewItem,
+    type AfDataViewItemContext,
+    type AfDataViewItemTemplate,
+    type AfDataViewLayout,
 } from '@argfit-ui/core';
 
 import { AfBadgeDesktopComponent } from '../badge/af-badge-desktop.component';

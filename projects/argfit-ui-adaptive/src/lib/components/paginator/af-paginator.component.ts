@@ -1,10 +1,10 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  input,
-  output,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    input,
+    output,
 } from '@angular/core';
 
 import { AfPlatformService, type AfPaginatorDensity, type AfPaginatorPageChange } from '@argfit-ui/core';

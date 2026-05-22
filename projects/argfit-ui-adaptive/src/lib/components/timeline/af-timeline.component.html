@@ -1,19 +1,18 @@
-<ng-template #dataViewActions>
-  <ng-content select="[afDataViewActions]" />
+<ng-template #timelineActions>
+  <ng-content select="[afTimelineActions]" />
 </ng-template>
 
-<ng-template #dataViewEmpty>
-  <ng-content select="[afDataViewEmpty]" />
+<ng-template #timelineEmpty>
+  <ng-content select="[afTimelineEmpty]" />
 </ng-template>
 
-<ng-template #dataViewLoading>
-  <ng-content select="[afDataViewLoading]" />
+<ng-template #timelineLoading>
+  <ng-content select="[afTimelineLoading]" />
 </ng-template>
 
 @if (isMobile()) {
-  <af-data-view-mobile
+  <af-timeline-mobile
     [items]="items()"
-    [layout]="layout()"
     [density]="density()"
     [loading]="loading()"
     [error]="error()"
@@ -27,9 +26,8 @@
     (itemPressed)="itemPressed.emit($event)"
   />
 } @else {
-  <af-data-view-desktop
+  <af-timeline-desktop
     [items]="items()"
-    [layout]="layout()"
     [density]="density()"
     [loading]="loading()"
     [error]="error()"

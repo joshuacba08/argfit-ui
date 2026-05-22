@@ -1,0 +1,208 @@
+.af-timeline-mobile {
+  display: block;
+}
+
+.af-timeline-mobile__actions {
+  margin-bottom: var(--af-space-3);
+}
+
+.af-timeline-mobile__list {
+  display: grid;
+  gap: var(--af-space-3);
+  position: relative;
+}
+
+.af-timeline-mobile__list::before {
+  background: color-mix(in srgb, var(--af-border-soft) 82%, transparent);
+  border-radius: var(--af-radius-pill);
+  content: '';
+  inset: 0 auto 0 11px;
+  position: absolute;
+  width: 2px;
+}
+
+.af-timeline-mobile__item {
+  align-items: flex-start;
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: auto minmax(0, 1fr);
+  min-width: 0;
+  position: relative;
+}
+
+.af-timeline-mobile__item:focus-visible {
+  outline: none;
+}
+
+.af-timeline-mobile__item--disabled {
+  opacity: 0.68;
+}
+
+.af-timeline-mobile__marker {
+  align-items: center;
+  background: var(--af-primary);
+  border: 2px solid var(--af-bg-canvas);
+  border-radius: 999px;
+  color: var(--af-primary-contrast);
+  display: inline-flex;
+  height: 24px;
+  justify-content: center;
+  position: relative;
+  width: 24px;
+  z-index: 1;
+}
+
+.af-timeline-mobile__marker[data-tone='primary'] {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+.af-timeline-mobile__marker[data-tone='accent'] {
+  background: var(--af-accent, var(--af-primary));
+  color: var(--af-primary-contrast);
+}
+
+.af-timeline-mobile__marker[data-tone='success'] {
+  background: var(--af-success);
+  color: #fff;
+}
+
+.af-timeline-mobile__marker[data-tone='warning'] {
+  background: var(--af-warning);
+  color: #08131f;
+}
+
+.af-timeline-mobile__marker[data-tone='danger'] {
+  background: var(--af-danger);
+  color: #fff;
+}
+
+.af-timeline-mobile__marker[data-tone='neutral'] {
+  background: var(--af-bg-surface);
+  color: var(--af-text-soft);
+}
+
+.af-timeline-mobile__card {
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: var(--af-space-2);
+  min-width: 0;
+  padding: var(--af-space-4);
+}
+
+.af-timeline-mobile__item:focus-visible .af-timeline-mobile__card {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-timeline-mobile__meta-row {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.af-timeline-mobile__eyebrow {
+  color: var(--af-primary);
+  display: block;
+  font-size: var(--af-text-2xs);
+  font-weight: var(--af-font-weight-semibold);
+  letter-spacing: var(--af-tracking-wide);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.af-timeline-mobile__timestamp {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+}
+
+.af-timeline-mobile__title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-base);
+  line-height: var(--af-line-height-tight);
+  margin: 0;
+}
+
+.af-timeline-mobile__description,
+.af-timeline-mobile__supporting {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-timeline-mobile__state {
+  align-items: center;
+  background: var(--af-bg-surface);
+  border: 1px dashed var(--af-border-soft);
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: var(--af-space-2);
+  justify-items: center;
+  min-height: 160px;
+  padding: var(--af-space-6);
+  text-align: center;
+}
+
+.af-timeline-mobile__state strong {
+  color: var(--af-text-main);
+}
+
+.af-timeline-mobile__state span {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+}
+
+.af-timeline-mobile__state--error strong,
+.af-timeline-mobile__state--error span {
+  color: var(--af-danger);
+}
+
+.af-timeline-mobile__item--skeleton {
+  pointer-events: none;
+}
+
+.af-timeline-mobile__skeleton {
+  animation: af-timeline-mobile-pulse 1.2s ease-in-out infinite;
+  background: var(--af-bg-interactive);
+  border-radius: var(--af-radius-sm);
+  display: block;
+}
+
+.af-timeline-mobile__skeleton--eyebrow {
+  height: 10px;
+  width: 38%;
+}
+
+.af-timeline-mobile__skeleton--title {
+  height: 16px;
+  width: 70%;
+}
+
+.af-timeline-mobile__skeleton--body {
+  height: 12px;
+  width: 100%;
+}
+
+.af-timeline-mobile[data-density='compact'] .af-timeline-mobile__card {
+  padding: var(--af-space-3);
+}
+
+@keyframes af-timeline-mobile-pulse {
+  0%,
+  100% {
+    opacity: 0.52;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-timeline-mobile__skeleton {
+    animation: none;
+  }
+}

@@ -37,23 +37,11 @@ export {
     AfChartComponent as AfChart, AfChartComponent
 } from './lib/components/chart/af-chart.component';
 export {
-    AfChipComponent as AfChip, AfChipComponent
-} from './lib/components/chip/af-chip.component';
-export {
     AfCheckboxComponent as AfCheckbox, AfCheckboxComponent
 } from './lib/components/checkbox/af-checkbox.component';
 export {
-    AfDataViewItemDirective
-} from './lib/components/data-view/af-data-view-item.directive';
-export {
-    AF_DATA_VIEW_SLOT_DIRECTIVES,
-    AfDataViewActionsDirective,
-    AfDataViewEmptyDirective,
-    AfDataViewLoadingDirective
-} from './lib/components/data-view/af-data-view-slots.directive';
-export {
-    AfDataViewComponent as AfDataView, AfDataViewComponent
-} from './lib/components/data-view/af-data-view.component';
+    AfChipComponent as AfChip, AfChipComponent
+} from './lib/components/chip/af-chip.component';
 export {
     AfDataTableCellDirective,
     AfDataTableExpandedRowDirective
@@ -67,11 +55,20 @@ export {
     AfDataTableComponent as AfDataTable, AfDataTableComponent
 } from './lib/components/data-table/af-data-table.component';
 export {
+    AfDataViewItemDirective
+} from './lib/components/data-view/af-data-view-item.directive';
+export {
+    AF_DATA_VIEW_SLOT_DIRECTIVES,
+    AfDataViewActionsDirective,
+    AfDataViewEmptyDirective,
+    AfDataViewLoadingDirective
+} from './lib/components/data-view/af-data-view-slots.directive';
+export {
+    AfDataViewComponent as AfDataView, AfDataViewComponent
+} from './lib/components/data-view/af-data-view.component';
+export {
     AfDatePickerComponent as AfDatePicker, AfDatePickerComponent
 } from './lib/components/date-picker/af-date-picker.component';
-export {
-    AfDrawerComponent as AfDrawer, AfDrawerComponent
-} from './lib/components/drawer/af-drawer.component';
 export {
     AF_DIALOG_SLOT_DIRECTIVES,
     AfDialogContentDirective,
@@ -84,13 +81,16 @@ export {
     AfDialogComponent as AfDialog, AfDialogComponent
 } from './lib/components/dialog/af-dialog.component';
 export {
+    AfDrawerComponent as AfDrawer, AfDrawerComponent
+} from './lib/components/drawer/af-drawer.component';
+export {
     AfFieldComponent as AfField, AfFieldComponent
 } from './lib/components/field/af-field.component';
 export {
     AF_ICON_FIELD_SLOT_DIRECTIVES,
     AfIconFieldControlDirective,
     AfIconFieldPrefixDirective,
-    AfIconFieldSuffixDirective,
+    AfIconFieldSuffixDirective
 } from './lib/components/icon-field/af-icon-field-slots.directive';
 export {
     AfIconFieldComponent as AfIconField, AfIconFieldComponent
@@ -99,20 +99,20 @@ export {
     AfInlineMessageComponent as AfInlineMessage, AfInlineMessageComponent
 } from './lib/components/inline-message/af-inline-message.component';
 export {
-    AfInputComponent as AfInput, AfInputComponent
-} from './lib/components/input/af-input.component';
-export {
     AfInputCountComponent as AfInputCount, AfInputCountComponent
 } from './lib/components/input-count/af-input-count.component';
 export {
     AF_INPUT_GROUP_SLOT_DIRECTIVES,
     AfInputGroupControlDirective,
     AfInputGroupPrefixDirective,
-    AfInputGroupSuffixDirective,
+    AfInputGroupSuffixDirective
 } from './lib/components/input-group/af-input-group-slots.directive';
 export {
     AfInputGroupComponent as AfInputGroup, AfInputGroupComponent
 } from './lib/components/input-group/af-input-group.component';
+export {
+    AfInputComponent as AfInput, AfInputComponent
+} from './lib/components/input/af-input.component';
 export {
     AfListboxComponent as AfListbox, AfListboxComponent
 } from './lib/components/listbox/af-listbox.component';
@@ -122,9 +122,6 @@ export {
 export {
     AfMultiSelectComponent as AfMultiSelect, AfMultiSelectComponent
 } from './lib/components/multi-select/af-multi-select.component';
-export {
-    AfPaginatorComponent as AfPaginator, AfPaginatorComponent
-} from './lib/components/paginator/af-paginator.component';
 export {
     AF_PAGE_SHELL_SLOT_DIRECTIVES,
     AfPageShellActionsDirective,
@@ -136,8 +133,16 @@ export {
     AfPageShellComponent as AfPageShell, AfPageShellComponent
 } from './lib/components/page-shell/af-page-shell.component';
 export {
+    AfPaginatorComponent as AfPaginator, AfPaginatorComponent
+} from './lib/components/paginator/af-paginator.component';
+export {
     AfPasswordComponent as AfPassword, AfPasswordComponent
 } from './lib/components/password/af-password.component';
+export {
+    AF_POPOVER_SLOT_DIRECTIVES,
+    AfPopoverContentDirective,
+    AfPopoverTriggerDirective
+} from './lib/components/popover/af-popover-slots.directive';
 export {
     AfPopoverComponent as AfPopover, AfPopoverComponent
 } from './lib/components/popover/af-popover.component';
@@ -157,20 +162,27 @@ export {
     AfTextareaComponent as AfTextarea, AfTextareaComponent
 } from './lib/components/textarea/af-textarea.component';
 export {
-    AfToastComponent as AfToast, AfToastComponent
-} from './lib/components/toast/af-toast.component';
+    AfTimelineItemDirective
+} from './lib/components/timeline/af-timeline-item.directive';
+export {
+    AF_TIMELINE_SLOT_DIRECTIVES,
+    AfTimelineActionsDirective,
+    AfTimelineEmptyDirective,
+    AfTimelineLoadingDirective
+} from './lib/components/timeline/af-timeline-slots.directive';
+export {
+    AfTimelineComponent as AfTimeline, AfTimelineComponent
+} from './lib/components/timeline/af-timeline.component';
 export {
     AfToastViewportComponent as AfToastViewport, AfToastViewportComponent
 } from './lib/components/toast-viewport/af-toast-viewport.component';
 export {
-    AfTooltipComponent as AfTooltip, AfTooltipComponent
-} from './lib/components/tooltip/af-tooltip.component';
+    AfToastComponent as AfToast, AfToastComponent
+} from './lib/components/toast/af-toast.component';
 export {
     AfToggleComponent as AfToggle, AfToggleComponent
 } from './lib/components/toggle/af-toggle.component';
 export {
-    AF_POPOVER_SLOT_DIRECTIVES,
-    AfPopoverContentDirective,
-    AfPopoverTriggerDirective,
-} from './lib/components/popover/af-popover-slots.directive';
+    AfTooltipComponent as AfTooltip, AfTooltipComponent
+} from './lib/components/tooltip/af-tooltip.component';
 
