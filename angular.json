@@ -183,6 +183,64 @@
         }
       }
     },
+    "argfit-ui-docs": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/argfit-ui-docs",
+      "sourceRoot": "projects/argfit-ui-docs/src",
+      "prefix": "docs",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/argfit-ui-docs/src/main.ts",
+            "tsConfig": "projects/argfit-ui-docs/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [],
+            "styles": ["projects/argfit-ui-docs/src/styles.css"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3.0MB",
+                  "maximumError": "3.4MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "16kB",
+                  "maximumError": "24kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "argfit-ui-docs:build:production"
+            },
+            "development": {
+              "buildTarget": "argfit-ui-docs:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    },
     "argfit-ui-primitives": {
       "projectType": "library",
       "root": "projects/argfit-ui-primitives",

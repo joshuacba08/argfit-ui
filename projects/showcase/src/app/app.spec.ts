@@ -128,6 +128,26 @@ describe('App', () => {
     expect(compiled.textContent).toContain('Showcase aligned to active slices');
   });
 
+  it('renders the productive docs front with component and API entry points', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.componentInstance['activeShellSection'].set('docs');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('[data-qa="section-docs-shell"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-qa="section-docs"]')).not.toBeNull();
+    expect(compiled.textContent).toContain('ArgFit UI docs front');
+    expect(compiled.textContent).toContain('Quickstart');
+    expect(compiled.textContent).toContain('Components');
+    expect(compiled.textContent).toContain('API reference');
+    expect(compiled.textContent).toContain('@argfit-ui/adaptive');
+    expect(compiled.textContent).toContain('stable components');
+    expect(compiled.querySelector('a[href="docs/productive/quickstart.md"]')).not.toBeNull();
+    expect(compiled.querySelector('a[href="docs/productive/components.md"]')).not.toBeNull();
+    expect(compiled.querySelector('a[href="docs/productive/api-reference.md"]')).not.toBeNull();
+  });
+
   it('should toggle the active theme', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

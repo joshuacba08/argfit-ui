@@ -34,6 +34,30 @@ const expectedFiles = [
   'docs/productive/semver-policy.md',
   'docs/productive/quality-gates.md',
   'docs/productive/enterprise-readiness.md',
+  'docs/productive/quickstart.md',
+  'docs/productive/components.md',
+  'docs/productive/api-reference.md',
+  'docs/productive/accessibility.md',
+  'docs/productive/theming.md',
+  'docs/productive/migration-beta-to-1-0.md',
+  'docs/productive/release-notes-1-0.md',
+  'projects/argfit-ui-docs/src/main.ts',
+  'projects/argfit-ui-docs/src/index.html',
+  'projects/argfit-ui-docs/src/styles.css',
+  'projects/argfit-ui-docs/src/app/app.config.ts',
+  'projects/argfit-ui-docs/src/app/app.routes.ts',
+  'projects/argfit-ui-docs/src/app/docs-data.ts',
+  'projects/argfit-ui-docs/src/app/app.ts',
+  'projects/argfit-ui-docs/src/app/app.html',
+  'projects/argfit-ui-docs/src/app/app.scss',
+  'projects/argfit-ui-docs/src/app/pages/docs-overview.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-components.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-api.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-guides.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-release.page.ts',
+  'projects/showcase/src/app/productive-docs-front.component.ts',
+  'projects/showcase/src/app/productive-docs-front.component.html',
+  'projects/showcase/src/app/productive-docs-front.component.scss',
   'tools/alpha-smoke.mjs',
   'tools/beta-smoke.mjs',
   'tools/pack-beta.mjs',
@@ -257,6 +281,15 @@ expectIncludes('README.md', [
   'Beta release notes',
   'Beta release checklist',
   'pnpm release:beta:check',
+  'Productive quickstart',
+  'Productive components',
+  'Productive API reference',
+  'Productive accessibility',
+  'Productive theming',
+  'Migration beta/Beta+ to 1.0',
+  'Productive release notes',
+  'argfit-ui-docs',
+  'pnpm start:docs',
 ]);
 
 expectIncludes('docs/productive/projection.md', [
@@ -312,7 +345,126 @@ expectIncludes('docs/productive/enterprise-readiness.md', [
   'single app-level overlay posture',
 ]);
 
+expectIncludes('docs/productive/quickstart.md', [
+  'Productive Quickstart',
+  'pnpm release:production:check',
+  '@argfit-ui/adaptive',
+  '1.0.0',
+]);
+
+expectIncludes('docs/productive/components.md', [
+  'Productive Components',
+  'AfButton',
+  'AfDataTable',
+  'AfKanban',
+  'AfTabs',
+]);
+
+expectIncludes('docs/productive/api-reference.md', [
+  'Productive API Reference',
+  '@argfit-ui/core',
+  '@argfit-ui/adaptive',
+  'Slot Directive Families',
+]);
+
+expectIncludes('docs/productive/accessibility.md', [
+  'Productive Accessibility',
+  'Focus Management Rules',
+  'Keyboard Rules',
+  'WCAG AA',
+]);
+
+expectIncludes('docs/productive/theming.md', [
+  'Productive Theming And Adaptive Rendering',
+  'ARGFIT_DARK_THEME',
+  'AfThemeService',
+  'AfPlatformService',
+]);
+
+expectIncludes('docs/productive/migration-beta-to-1-0.md', [
+  'Migration Beta And Beta+ To 1.0',
+  'What Changes At 1.0',
+  'What Does Not Enter 1.0',
+  '@argfit-ui/adaptive',
+]);
+
+expectIncludes('docs/productive/release-notes-1-0.md', [
+  'Release Notes: 1.0.0 Target',
+  'pnpm release:production:check',
+  'Productive quickstart',
+  '1.0.0',
+]);
+
+expectIncludes('projects/showcase/src/app/app.ts', [
+  'ProductiveDocsFrontComponent',
+  "{ id: 'docs', label: 'Docs 1.0', icon: 'file-text' }",
+  "docs: 'Docs 1.0'",
+]);
+
+expectIncludes('projects/showcase/src/app/app.html', [
+  "@case ('docs')",
+  'app-productive-docs-front',
+  'section-docs-shell',
+]);
+
+expectIncludes('projects/showcase/src/app/productive-docs-front.component.html', [
+  'ArgFit UI docs front',
+  'stable components',
+]);
+
+expectIncludes('projects/showcase/src/app/productive-docs-front.component.ts', [
+  'docs/productive/quickstart.md',
+  'docs/productive/components.md',
+  'docs/productive/api-reference.md',
+  'docs/productive/migration-beta-to-1-0.md',
+]);
+
+expectIncludes('angular.json', [
+  '"argfit-ui-docs"',
+  'projects/argfit-ui-docs/src/main.ts',
+  'argfit-ui-docs:build:production',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/app.html', [
+  'ArgFit UI Docs',
+  'Framework documentation platform',
+  'Dedicated docs application for ArgFit UI',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-components.page.ts', [
+  'Stable component catalog',
+  'Components',
+  'Productive component families',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-api.page.ts', [
+  'API Reference',
+  'PRODUCTIVE_PACKAGE_GUIDES',
+  '@argfit-ui/adaptive',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/docs-data.ts', [
+  '@argfit-ui/core',
+  '@argfit-ui/adaptive',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-guides.page.ts', [
+  'Guides',
+  'Migration posture',
+  'docs/productive/migration-beta-to-1-0.md',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-release.page.ts', [
+  'Release',
+  'release:production:check',
+  'The docs app is now its own Angular project.',
+]);
+
 expectIncludes('package.json', [
+  '"start:docs"',
+  '"build:docs"',
+  'ng serve argfit-ui-docs --port 4300',
+  'ng build argfit-ui-docs',
   '"release:beta:check"',
   '"release:production:check"',
   '"smoke:beta"',

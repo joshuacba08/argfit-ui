@@ -37,6 +37,7 @@ argfit-ui-primitives
 argfit-ui-desktop
 argfit-ui-mobile
 argfit-ui-adaptive
+argfit-ui-docs
 showcase
 ```
 
@@ -83,6 +84,20 @@ The current Beta+ expansion track is documented separately:
 - [Beta+ release checklist](docs/beta-plus/release-checklist.md)
 - [Beta+ release notes](docs/beta-plus/release-notes-beta-plus.md)
 
+The productive `1.0.0` documentation front is now documented here:
+
+- [Productive quickstart](docs/productive/quickstart.md)
+- [Productive components](docs/productive/components.md)
+- [Productive API reference](docs/productive/api-reference.md)
+- [Productive accessibility](docs/productive/accessibility.md)
+- [Productive theming](docs/productive/theming.md)
+- [Productive enterprise readiness](docs/productive/enterprise-readiness.md)
+- [Migration beta/Beta+ to 1.0](docs/productive/migration-beta-to-1-0.md)
+- [Productive release notes](docs/productive/release-notes-1-0.md)
+- [Productive quality gates](docs/productive/quality-gates.md)
+
+The dedicated documentation application now lives in the separate Angular project `argfit-ui-docs`. The showcase remains the demo and validation surface; the docs platform is served independently.
+
 The historical alpha distribution remains documented here:
 
 - [Alpha quickstart](docs/alpha/quickstart.md)
@@ -103,7 +118,13 @@ Run the showcase app:
 pnpm start
 ```
 
-Build all libraries and the showcase:
+Run the dedicated docs platform:
+
+```bash
+pnpm start:docs
+```
+
+Build all libraries, the showcase and the docs platform:
 
 ```bash
 pnpm build:all

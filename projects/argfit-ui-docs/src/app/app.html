@@ -1,0 +1,80 @@
+<div class="docs-shell">
+  <aside class="docs-shell__sidebar" aria-label="Documentation navigation">
+    <div class="docs-brand">
+      <span class="docs-brand__mark">AF</span>
+      <div class="docs-brand__copy">
+        <strong>ArgFit UI Docs</strong>
+        <small>Productive 1.0 platform</small>
+      </div>
+    </div>
+
+    <div class="docs-shell__intro">
+      <p>
+        Dedicated docs application for ArgFit UI. The showcase remains a demo playground;
+        this project is the navigable documentation layer.
+      </p>
+      <div class="docs-pill-row docs-pill-row--compact">
+        <af-badge tone="success" dot>separate app</af-badge>
+        <af-badge tone="primary">adaptive first</af-badge>
+      </div>
+    </div>
+
+    <nav class="docs-nav">
+      @for (item of navItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="docs-nav__link"
+        >
+          <span class="docs-nav__eyebrow">{{ item.eyebrow }}</span>
+          <strong>{{ item.label }}</strong>
+          <span class="docs-nav__description">{{ item.description }}</span>
+        </a>
+      }
+    </nav>
+  </aside>
+
+  <main class="docs-shell__main">
+    <header class="docs-shell__topbar">
+      <div>
+        <span class="docs-kicker">Documentation runtime</span>
+        <h1 class="docs-shell__title">Framework documentation platform</h1>
+      </div>
+
+      <div class="docs-shell__controls">
+        <div class="docs-platform-toggle" aria-label="Platform preview controls">
+          <button
+            type="button"
+            [class.is-active]="platform.preference() === 'auto'"
+            (click)="setPlatform('auto')"
+          >
+            Auto
+          </button>
+          <button
+            type="button"
+            [class.is-active]="platform.preference() === 'desktop'"
+            (click)="setPlatform('desktop')"
+          >
+            Desktop
+          </button>
+          <button
+            type="button"
+            [class.is-active]="platform.preference() === 'mobile'"
+            (click)="setPlatform('mobile')"
+          >
+            Mobile
+          </button>
+        </div>
+
+        <button type="button" class="docs-theme-toggle" (click)="toggleTheme()">
+          Theme: {{ theme.currentThemeName() }}
+        </button>
+      </div>
+    </header>
+
+    <div class="docs-shell__surface">
+      <router-outlet />
+    </div>
+  </main>
+</div>

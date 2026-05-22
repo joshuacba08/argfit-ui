@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Exo+2:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--af-primary) 16%, transparent), transparent 42%),
+    linear-gradient(180deg, #08111f 0%, #091521 52%, #07111c 100%);
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--af-text-main);
+  font-family: var(--af-font-body);
+  margin: 0;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--af-font-mono);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--af-font-display);
+  letter-spacing: var(--af-tracking-tight);
+  margin: 0;
+}
+
+p,
+ul {
+  margin: 0;
+}
+
+::selection {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--af-scrollbar-thumb);
+  border-radius: var(--af-radius-pill);
+}

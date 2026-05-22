@@ -82,6 +82,12 @@
   <af-toast-viewport />
 
   @switch (activeShellSection()) {
+    @case ('docs') {
+      <section class="shell-section" data-qa="section-docs-shell" aria-label="Productive documentation">
+        <app-productive-docs-front />
+      </section>
+    }
+
     @case ('alpha') {
       <section class="shell-section alpha-view" data-qa="section-alpha" aria-label="Beta plus">
         <div class="section-header section-header--inline">

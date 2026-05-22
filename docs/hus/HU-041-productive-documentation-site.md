@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Implemented
 
 ## Fase Del Roadmap
 
@@ -19,7 +19,7 @@ Esta HU depende de:
 
 Convertir el showcase/documentacion en una referencia productiva:
 
-- Docs site or showcase documentation mode.
+- Dedicated docs site, with showcase staying as demo/playground.
 - API reference.
 - Usage examples.
 - Migration guides.
