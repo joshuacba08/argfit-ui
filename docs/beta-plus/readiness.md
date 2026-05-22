@@ -63,18 +63,28 @@ Current validation completed for that wave:
 - showcase application spec covering the preserved `alpha` beta-consumer slot
 - `pnpm guard:architecture`
 
-## Current Wave 2 Opening Status
+## Current Wave 2 Status
 
-The next Beta+ wave is now open with the first form and advanced-selection vertical slices:
+The next Beta+ wave now includes these implemented slices:
 
 - `AfInputCount`
 - `AfMultiSelect`
+- `AfDatePicker`
+- `AfListbox`
+- `AfField`
+- `AfIconField`
+- `AfInputGroup`
 
-Current validation completed for that opening slice:
+Current validation completed for the implemented wave 2 slices:
 
 - focused adaptive spec for `AfInputCount`
 - focused adaptive spec for `AfMultiSelect`
-- showcase application spec extended for both components in the preserved `alpha` slot
+- focused adaptive spec for `AfDatePicker`
+- focused adaptive spec for `AfField` composition helpers
+- focused adaptive spec for `AfListbox`
+- showcase application spec extended for the current wave 2 surfaces in the preserved `alpha` slot
+
+`AfTreeSelect`, `AfAutoComplete` and the remaining advanced form backlog still need later Beta+ slices.
 
 ## Backlog HU Beta+
 

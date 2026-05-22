@@ -60,7 +60,7 @@ The following renderer decisions define the intended Beta+ expansion. They are n
 
 - Wave 1 for Beta+: `AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`.
 - Current implementation status: the full wave 1 list above is now implemented and covered in the adaptive suite plus showcase.
-- Wave 2 opening status: `AfInputCount` and `AfMultiSelect` now have initial adaptive slices with focused specs and showcase coverage.
+- Wave 2 current status: `AfInputCount`, `AfMultiSelect`, `AfDatePicker`, `AfListbox` and the adaptive field composition helpers now have initial slices with focused specs and showcase coverage.
 - High-priority Beta+ track: `AfMultiSelect`, `AfDatePicker`, `AfAutoComplete`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTabs`, `AfStepper`, `AfKanban`.
 - All remaining rows stay in-scope Beta+ candidates unless moved out explicitly.
 
@@ -75,17 +75,17 @@ The following renderer decisions define the intended Beta+ expansion. They are n
 | `AfAutoComplete` | `AutoComplete` / `ion-searchbar` plus modal-list pattern | Beta+ high priority |
 | `AfCascadeSelect` | `CascadeSelect` / custom drilldown sheet | Beta+ candidate |
 | `AfColorPicker` | `ColorPicker` / custom swatches plus native color input fallback | Beta+ candidate |
-| `AfDatePicker` | `DatePicker` / `ion-datetime`, `ion-datetime-button`, `ion-picker` | Beta+ candidate |
+| `AfDatePicker` | `DatePicker` / `ion-datetime`, `ion-datetime-button`, `ion-picker` | Beta+ wave 2 slice implemented |
 | `AfEditor` | `Editor`/Quill / textarea-first rich editor fallback | Beta+ experimental |
-| `AfField`, `AfFloatLabel`, `AfIftaLabel`, `AfIconField`, `AfInputGroup` | `FloatLabel`, `IftaLabel`, `IconField`, `InputGroup` / ArgFit field composition | Beta+ candidate |
+| `AfField`, `AfFloatLabel`, `AfIftaLabel`, `AfIconField`, `AfInputGroup` | `FloatLabel`, `IftaLabel`, `IconField`, `InputGroup` / ArgFit field composition | Beta+ wave 2 slice implemented |
 | `AfInputMask` | `InputMask` / custom mask directive or internal formatter | Beta+ candidate |
 | `AfInputNumber` | `InputNumber` / `ion-input` type number plus ArgFit formatting | Beta+ candidate |
-| `AfInputCount` | `InputNumber`, `Button`, `InputGroup` or custom tokenized wrapper / `ion-input`, `ion-button` or custom touch-first wrapper | Beta+ wave 2 opening implemented |
+| `AfInputCount` | `InputNumber`, `Button`, `InputGroup` or custom tokenized wrapper / `ion-input`, `ion-button` or custom touch-first wrapper | Beta+ wave 2 slice implemented |
 | `AfInputOtp` | `InputOtp` / custom segmented inputs | Beta+ candidate |
 | `AfKeyFilter` | `KeyFilter` / custom directive | Beta+ experimental |
 | `AfKnob` | `Knob` / custom SVG/range hybrid | Beta+ experimental |
-| `AfListbox` | `Listbox` / Ionic/custom selection list | Beta+ candidate |
-| `AfMultiSelect` | `MultiSelect` / Ionic/custom modal checklist with search | Beta+ wave 2 opening implemented |
+| `AfListbox` | `Listbox` / Ionic/custom selection list | Beta+ wave 2 slice implemented |
+| `AfMultiSelect` | `MultiSelect` / Ionic/custom modal checklist with search | Beta+ wave 2 slice implemented |
 | `AfRating` | `Rating` / custom touch-friendly rating | Beta+ candidate |
 | `AfToggleButton` | `ToggleButton` / `ion-button` or custom pressed button | Beta+ candidate |
 | `AfTreeSelect` | `TreeSelect` / custom drilldown tree sheet | Beta+ high priority |

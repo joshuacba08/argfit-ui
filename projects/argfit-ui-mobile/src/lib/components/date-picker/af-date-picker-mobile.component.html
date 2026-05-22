@@ -1,6 +1,6 @@
 <div class="af-date-picker-mobile__field">
   @if (label(); as labelText) {
-    <label class="af-date-picker-mobile__label" [attr.for]="resolvedInputId()">
+    <label class="af-date-picker-mobile__label" [id]="labelId()">
       {{ labelText }}
       @if (required()) {
         <span class="af-date-picker-mobile__required" aria-hidden="true">*</span>
@@ -8,30 +8,28 @@
     </label>
   }
 
-  <div class="af-date-picker-mobile__control">
-    <input
-      class="af-date-picker-mobile__input"
+  <button
+    type="button"
+    class="af-date-picker-mobile__trigger"
+    [disabled]="disabled()"
       [id]="resolvedInputId()"
-      type="date"
-      [value]="value()"
-      [attr.placeholder]="placeholder() ?? null"
-      [disabled]="disabled()"
-      [readonly]="readonly()"
-      [attr.name]="name() ?? null"
-      [attr.min]="min() ?? null"
-      [attr.max]="max() ?? null"
+    [attr.aria-labelledby]="ariaLabelledBy()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-haspopup]="readonly() ? null : 'dialog'"
+    [attr.aria-expanded]="readonly() ? null : open() ? 'true' : 'false'"
+    [attr.aria-controls]="readonly() ? null : modalId()"
       [attr.aria-invalid]="errorText() ? 'true' : null"
       [attr.aria-required]="required() ? 'true' : null"
       [attr.aria-describedby]="describedBy()"
-      (input)="onInput($event)"
-      (focus)="onFocus()"
-      (blur)="onBlur()"
-    />
-
+      (click)="requestOpen()"
+  >
+    <span class="af-date-picker-mobile__trigger-copy" [attr.data-placeholder]="value() ? null : ''">
+      {{ displayValue() }}
+    </span>
     <span class="af-date-picker-mobile__icon" aria-hidden="true">
       <af-icon name="calendar" tone="muted" size="sm" decorative />
     </span>
-  </div>
+  </button>
 
   @if (errorText(); as error) {
     <p class="af-date-picker-mobile__message af-date-picker-mobile__message--error" [id]="errorId()">{{ error }}</p>
@@ -39,3 +37,36 @@
     <p class="af-date-picker-mobile__message af-date-picker-mobile__message--hint" [id]="hintId()">{{ helper }}</p>
   }
 </div>
+
+@if (open()) {
+  <af-dialog-mobile
+    [attr.id]="modalId()"
+    [open]="open()"
+    size="sm"
+    [title]="label() ?? placeholder() ?? 'Selecciona una fecha'"
+    [ariaDescribedBy]="describedBy() ?? undefined"
+    presentation="sheet"
+    closeLabel="Cerrar calendario"
+    (openChange)="onOverlayOpenChange($event)"
+  >
+    <ion-datetime
+      class="af-date-picker-mobile__datetime"
+      [value]="datetimeValue()"
+      [min]="min() ?? undefined"
+      [max]="max() ?? undefined"
+      [name]="name() ?? undefined"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [firstDayOfWeek]="1"
+      locale="es-AR"
+      presentation="date"
+      [showDefaultButtons]="true"
+      [showClearButton]="!required()"
+      cancelText="Cancelar"
+      doneText="Aplicar"
+      clearText="Limpiar"
+      (ionChange)="onDatetimeChange($event)"
+      (ionCancel)="onModalDismiss()"
+    />
+  </af-dialog-mobile>
+}

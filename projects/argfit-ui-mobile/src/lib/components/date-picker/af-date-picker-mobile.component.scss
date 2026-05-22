@@ -1,78 +1,138 @@
 .af-date-picker-mobile {
   display: block;
+  font-family: var(--af-font-body);
+  min-width: 0;
+  width: 100%;
 }
 
 .af-date-picker-mobile__field {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--af-space-2);
+  min-width: 0;
 }
 
 .af-date-picker-mobile__label {
-  color: var(--af-text-main);
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
   font-size: var(--af-text-sm);
-  font-weight: var(--af-font-weight-semibold);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  letter-spacing: var(--af-tracking-wide);
+  line-height: var(--af-line-height-tight);
+  min-width: 0;
+  padding: 0 var(--af-space-2);
 }
 
 .af-date-picker-mobile__required {
   color: var(--af-danger);
 }
 
-.af-date-picker-mobile__control {
+.af-date-picker-mobile__trigger {
   align-items: center;
-  background: color-mix(in srgb, var(--af-bg-surface) 80%, transparent);
-  border: 1px solid color-mix(in srgb, var(--af-primary) 28%, var(--af-border-soft));
-  border-radius: var(--af-radius-2xl, 1.25rem);
-  display: grid;
-  gap: var(--af-space-2);
-  grid-template-columns: minmax(0, 1fr) auto;
-  min-height: 60px;
-  padding: 0 var(--af-space-4);
-}
-
-.af-date-picker-mobile[data-invalid] .af-date-picker-mobile__control {
-  border-color: color-mix(in srgb, var(--af-danger) 56%, transparent);
-}
-
-.af-date-picker-mobile__input {
-  background: transparent;
-  border: 0;
+  appearance: none;
+  background: var(--af-bg-elevated);
+  border: 1.5px solid var(--af-border);
+  border-radius: var(--af-radius-lg);
   color: var(--af-text-main);
-  font: inherit;
+  display: flex;
+  gap: var(--af-space-2);
+  min-height: 56px;
   min-width: 0;
+  padding: 0 var(--af-space-4);
+  text-align: left;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    box-shadow var(--af-duration-fast) var(--af-ease-out);
+  width: 100%;
 }
 
-.af-date-picker-mobile__input:focus-visible {
-  box-shadow: var(--af-focus-ring);
+.af-date-picker-mobile__trigger:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.18);
   outline: none;
+}
+
+.af-date-picker-mobile[data-invalid] .af-date-picker-mobile__trigger {
+  border-color: var(--af-danger);
+}
+
+.af-date-picker-mobile[data-invalid] .af-date-picker-mobile__trigger:focus-visible {
+  border-color: var(--af-danger);
+  box-shadow: 0 0 0 3px rgba(255, 61, 113, 0.22);
+}
+
+.af-date-picker-mobile[data-disabled] .af-date-picker-mobile__trigger {
+  background: var(--af-bg-surface);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.af-date-picker-mobile[data-readonly] .af-date-picker-mobile__trigger {
+  background: var(--af-bg-surface);
+}
+
+.af-date-picker-mobile__trigger-copy {
+  color: inherit;
+  flex: 1 1 auto;
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-medium);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-date-picker-mobile__trigger-copy[data-placeholder] {
+  color: var(--af-text-soft, var(--af-text-muted));
 }
 
 .af-date-picker-mobile__icon {
   align-items: center;
-  color: var(--af-text-soft);
+  color: var(--af-text-soft, var(--af-text-muted));
   display: inline-flex;
+  flex: 0 0 auto;
+  justify-content: center;
 }
 
 .af-date-picker-mobile__message {
   font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
   margin: 0;
+  padding: 0 var(--af-space-2);
 }
 
 .af-date-picker-mobile__message--hint {
-  color: var(--af-text-muted);
+  color: var(--af-text-soft, var(--af-text-muted));
 }
 
 .af-date-picker-mobile__message--error {
   color: var(--af-danger);
 }
 
-.af-date-picker-mobile[data-size='sm'] .af-date-picker-mobile__control {
+.af-date-picker-mobile__datetime {
+  --background: var(--af-bg-elevated);
+  --background-rgb: 11, 27, 47;
+  --border-color: color-mix(in srgb, var(--af-border) 84%, transparent);
+  --title-color: var(--af-text-main);
+  --wheel-highlight-background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+  align-self: center;
+  color: var(--af-text-main);
+  display: block;
+  margin-inline: auto;
+  max-width: min(100%, 22rem);
+  width: 100%;
+}
+
+.af-date-picker-mobile[data-size='sm'] .af-date-picker-mobile__trigger {
+  min-height: 48px;
+}
+
+.af-date-picker-mobile[data-size='lg'] .af-date-picker-mobile__trigger {
+  min-height: 64px;
+}
+
+.af-date-picker-mobile[data-density='compact'] .af-date-picker-mobile__trigger {
   min-height: 52px;
-}
-
-.af-date-picker-mobile[data-size='lg'] .af-date-picker-mobile__control {
-  min-height: 68px;
-}
-
-.af-date-picker-mobile[data-density='compact'] .af-date-picker-mobile__control {
-  gap: var(--af-space-1);
 }

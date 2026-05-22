@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
 import { provideArgfitUi } from '@argfit-ui/core';
+import { AfDatePickerDesktopComponent } from '@argfit-ui/desktop';
 
 import { AfDatePickerComponent } from './af-date-picker.component';
 
@@ -37,16 +39,15 @@ describe('AfDatePickerComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const root = fixture.nativeElement as HTMLElement;
-    const desktop = root.querySelector('af-date-picker-desktop') as HTMLElement | null;
-    const input = desktop?.querySelector('input') as HTMLInputElement | null;
+    const desktopDebug = fixture.debugElement.query(By.directive(AfDatePickerDesktopComponent));
+    const desktop = desktopDebug.nativeElement as HTMLElement;
+    const desktopInstance = desktopDebug.componentInstance as AfDatePickerDesktopComponent;
 
     expect(desktop).not.toBeNull();
-    expect(input?.value).toBe('2026-05-22');
+    expect(desktopInstance.value()).toBe('2026-05-22');
 
-    input!.value = '2026-06-15';
-    input!.dispatchEvent(new Event('input'));
-    input!.dispatchEvent(new Event('blur'));
+    desktopDebug.triggerEventHandler('valueChange', '2026-06-15');
+    desktopDebug.triggerEventHandler('focusChange', false);
     fixture.detectChanges();
 
     expect(fixture.componentInstance.sessionDate.value).toBe('2026-06-15');

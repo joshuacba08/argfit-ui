@@ -1,21 +1,29 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    signal,
+    ViewEncapsulation,
 } from '@angular/core';
+import { IonDatetime } from '@ionic/angular/standalone';
 
 import type { AfDatePickerDensity, AfDatePickerSize } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
+
+import { AfDialogMobileComponent } from '../dialog/af-dialog-mobile.component';
+
+interface AfIonDatetimeChangeDetail {
+  readonly value?: string | readonly string[] | null;
+}
 
 let nextAfMobileDatePickerId = 0;
 
 @Component({
   selector: 'af-date-picker-mobile',
-  imports: [AfIconComponent],
+  imports: [AfIconComponent, IonDatetime, AfDialogMobileComponent],
   templateUrl: './af-date-picker-mobile.component.html',
   styleUrl: './af-date-picker-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,8 +59,22 @@ export class AfDatePickerMobileComponent {
   readonly focusChange = output<boolean>();
 
   protected readonly resolvedInputId = computed(() => this.inputId() ?? this.defaultInputId);
+  protected readonly labelId = computed(() => `${this.resolvedInputId()}-label`);
+  protected readonly ariaLabelledBy = computed(() => (this.label() ? this.labelId() : null));
+  protected readonly ariaLabel = computed(() => (this.label() ? null : this.placeholder() ?? 'Selecciona una fecha'));
   protected readonly hintId = computed(() => `${this.resolvedInputId()}-hint`);
   protected readonly errorId = computed(() => `${this.resolvedInputId()}-error`);
+  protected readonly modalId = computed(() => `${this.resolvedInputId()}-dialog`);
+  protected readonly datetimeValue = computed(() => this.normalizeDatetimeValue(this.value()) || undefined);
+  protected readonly displayValue = computed(() => {
+    const normalizedValue = this.normalizeDatetimeValue(this.value());
+
+    if (!normalizedValue) {
+      return this.placeholder() ?? 'Selecciona una fecha';
+    }
+
+    return this.formatDisplayValue(normalizedValue);
+  });
   protected readonly describedBy = computed(() => {
     if (this.errorText()) {
       return this.errorId();
@@ -62,17 +84,70 @@ export class AfDatePickerMobileComponent {
     }
     return null;
   });
+  protected readonly open = signal(false);
 
-  protected onInput(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.valueChange.emit(target.value);
-  }
+  protected requestOpen(): void {
+    if (this.disabled() || this.readonly()) {
+      return;
+    }
 
-  protected onFocus(): void {
+    this.open.set(true);
     this.focusChange.emit(true);
   }
 
-  protected onBlur(): void {
+  protected onOverlayOpenChange(next: boolean): void {
+    if (next) {
+      if (!this.open()) {
+        this.open.set(true);
+        this.focusChange.emit(true);
+      }
+      return;
+    }
+
+    this.closeOverlay();
+  }
+
+  protected onDatetimeChange(event: CustomEvent<AfIonDatetimeChangeDetail>): void {
+    if (this.readonly()) {
+      return;
+    }
+
+    this.valueChange.emit(this.normalizeDatetimeValue(event.detail.value));
+    this.closeOverlay();
+  }
+
+  protected onModalDismiss(): void {
+    this.closeOverlay();
+  }
+
+  private closeOverlay(): void {
+    if (!this.open()) {
+      return;
+    }
+
+    this.open.set(false);
     this.focusChange.emit(false);
+  }
+
+  private normalizeDatetimeValue(value: string | readonly string[] | undefined | null): string {
+    const rawValue = Array.isArray(value) ? value[0] : value;
+
+    if (!rawValue) {
+      return '';
+    }
+
+    const isoPrefix = /^(\d{4}-\d{2}-\d{2})/.exec(rawValue);
+
+    return isoPrefix ? isoPrefix[1] : '';
+  }
+
+  private formatDisplayValue(value: string): string {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+    if (!match) {
+      return value;
+    }
+
+    return `${match[3]}/${match[2]}/${match[1]}`;
   }
 }

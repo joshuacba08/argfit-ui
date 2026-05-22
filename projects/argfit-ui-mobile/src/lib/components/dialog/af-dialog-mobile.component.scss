@@ -52,6 +52,11 @@
   max-height: 90vh;
 }
 
+.af-dialog-mobile__panel[data-presentation='sheet'][data-size='sm'] {
+  margin-inline: auto;
+  max-width: min(100%, 26rem);
+}
+
 .af-dialog-mobile__panel[data-presentation='fullscreen'] {
   border-radius: 0;
   height: 100vh;

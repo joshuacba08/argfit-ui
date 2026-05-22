@@ -1,6 +1,6 @@
 <div class="af-date-picker-desktop__field">
   @if (label(); as labelText) {
-    <label class="af-date-picker-desktop__label" [attr.for]="resolvedInputId()">
+    <label class="af-date-picker-desktop__label" [attr.for]="resolvedInputId()" [id]="labelId()">
       {{ labelText }}
       @if (required()) {
         <span class="af-date-picker-desktop__required" aria-hidden="true">*</span>
@@ -9,28 +9,40 @@
   }
 
   <div class="af-date-picker-desktop__control">
-    <input
-      class="af-date-picker-desktop__input"
-      [id]="resolvedInputId()"
-      type="date"
-      [value]="value()"
-      [attr.placeholder]="placeholder() ?? null"
-      [disabled]="disabled()"
-      [readonly]="readonly()"
-      [attr.name]="name() ?? null"
-      [attr.min]="min() ?? null"
-      [attr.max]="max() ?? null"
+    <p-datepicker
+      class="af-date-picker-desktop__picker"
+      [inputId]="resolvedInputId()"
+      [ngModel]="valueAsDate()"
+      [ngModelOptions]="{ standalone: true }"
+      [name]="name() ?? ''"
+      [placeholder]="placeholder() ?? 'Selecciona una fecha'"
+      [ariaLabelledBy]="ariaLabelledBy()"
+      [ariaLabel]="ariaLabel()"
+      [attr.aria-describedby]="describedBy()"
       [attr.aria-invalid]="errorText() ? 'true' : null"
       [attr.aria-required]="required() ? 'true' : null"
-      [attr.aria-describedby]="describedBy()"
-      (input)="onInput($event)"
+      [minDate]="minDate() ?? undefined"
+      [maxDate]="maxDate() ?? undefined"
+      [required]="required()"
+      [disabled]="disabled()"
+      [invalid]="!!errorText()"
+      [size]="pickerSize()"
+      [showIcon]="!readonly()"
+      iconDisplay="input"
+      [showOnFocus]="!readonly()"
+      [readonlyInput]="true"
+      [showButtonBar]="true"
+      [showClear]="!required() && !readonly()"
+      [fluid]="true"
+      dateFormat="dd/mm/yy"
+      inputStyleClass="af-date-picker-desktop__input"
+      panelStyleClass="af-date-picker-desktop__overlay"
+      [appendTo]="'body'"
+      [unstyled]="true"
+      (ngModelChange)="onModelChange($event)"
       (focus)="onFocus()"
       (blur)="onBlur()"
     />
-
-    <span class="af-date-picker-desktop__icon" aria-hidden="true">
-      <af-icon name="calendar" tone="muted" size="sm" decorative />
-    </span>
   </div>
 
   @if (errorText(); as error) {

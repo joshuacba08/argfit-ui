@@ -1,13 +1,14 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  ElementRef,
-  EnvironmentProviders,
-  inject,
-  input,
-  makeEnvironmentProviders,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    effect,
+    ElementRef,
+    EnvironmentProviders,
+    inject,
+    input,
+    makeEnvironmentProviders,
+    output,
 } from '@angular/core';
 
 export function provideIonicAngular(): EnvironmentProviders {
@@ -66,4 +67,48 @@ export class IonSelect {
 export class IonSelectOption {
   readonly value = input<string | undefined>(undefined);
   readonly disabled = input(false, { transform: booleanAttribute });
+}
+
+@Component({
+  selector: 'ion-datetime',
+  imports: [],
+  template: '<ng-content />',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[attr.value]': 'value() ?? null',
+    '[attr.min]': 'min() ?? null',
+    '[attr.max]': 'max() ?? null',
+    '[attr.name]': 'name() ?? null',
+    '[attr.disabled]': 'disabled() ? "" : null',
+    '[attr.readonly]': 'readonly() ? "" : null',
+    '[attr.locale]': 'locale() ?? null',
+    '[attr.presentation]': 'presentation() ?? null',
+  },
+})
+export class IonDatetime {
+  private readonly elementRef = inject<ElementRef<HTMLElement & { value?: string }>>(ElementRef);
+
+  readonly value = input<string | undefined>(undefined);
+  readonly min = input<string | undefined>(undefined);
+  readonly max = input<string | undefined>(undefined);
+  readonly name = input<string | undefined>(undefined);
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly readonly = input(false, { transform: booleanAttribute });
+  readonly firstDayOfWeek = input<number | undefined>(undefined);
+  readonly locale = input<string | undefined>(undefined);
+  readonly presentation = input<string | undefined>(undefined);
+  readonly showDefaultButtons = input(false, { transform: booleanAttribute });
+  readonly showClearButton = input(false, { transform: booleanAttribute });
+  readonly cancelText = input<string | undefined>(undefined);
+  readonly doneText = input<string | undefined>(undefined);
+  readonly clearText = input<string | undefined>(undefined);
+
+  readonly ionChange = output<CustomEvent<{ value?: string | readonly string[] | null }>>();
+  readonly ionCancel = output<Event>();
+
+  constructor() {
+    effect(() => {
+      this.elementRef.nativeElement.value = this.value();
+    });
+  }
 }

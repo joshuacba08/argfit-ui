@@ -166,14 +166,23 @@ The current repository state already implements the first low-risk/high-reuse wa
 
 These six surfaces now exist with adaptive, desktop and mobile implementations plus showcase coverage in the preserved `alpha` showcase slot.
 
-### Wave 2 Opening Status
+### Wave 2 Current Status
 
-The repository now also opens the next Beta+ wave with two first vertical slices:
+The repository now advances the next Beta+ wave with these current slices:
 
 - `AfInputCount`
 - `AfMultiSelect`
+- `AfDatePicker`
+- `AfListbox`
+- `AfField`
+- `AfIconField`
+- `AfInputGroup`
 
-Both surfaces currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
+`AfInputCount`, `AfMultiSelect`, `AfDatePicker` and `AfListbox` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
+
+`AfField`, `AfIconField` and `AfInputGroup` currently ship as adaptive composition helpers with focused specs and showcase coverage.
+
+`AfTreeSelect`, `AfAutoComplete` and the remaining advanced form track stay pending for later Beta+ slices.
 
 ## Renderer Policy
 

@@ -34,7 +34,7 @@ The following new ArgFit-owned type families are approved to enter as `experimen
 | --- | --- | --- | --- |
 | Overlay types | `AfPopover*`, `AfDrawer*`, `AfTooltip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must describe ArgFit semantics only; no PrimeNG/Ionic event leakage. |
 | Status and identity types | `AfProgress*`, `AfAvatar*`, `AfChip*` | `experimental-in-beta-plus` | Implemented in wave 1. Must cover accessible labels, variants and renderer-independent state. |
-| Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfInputCount*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. `AfInputCount` and `AfMultiSelect` are now implemented as the first wave 2 opening slices. |
+| Advanced form types | `AfAutoComplete*`, `AfDatePicker*`, `AfInputCount*`, `AfListbox*`, `AfMultiSelect*`, `AfTreeSelect*` and related field/input families | `experimental-in-beta-plus` | High-priority Beta+ form vocabulary. `AfInputCount`, `AfDatePicker`, `AfMultiSelect`, `AfListbox` and the current field/input composition helpers are now implemented as wave 2 slices; `AfTreeSelect` remains pending. |
 | Data and workflow types | `AfDataView*`, `AfPaginator*`, `AfTree*`, `AfKanban*` and related item/state models | `experimental-in-beta-plus` | Must stay product-semantic rather than mirroring renderer widgets. |
 | Layout and panel types | `AfTabs*`, `AfStepper*`, `AfPanel*`, `AfToolbar*`, `AfSplitter*` and related families | `experimental-in-beta-plus` | Must preserve adaptive semantics across renderers. |
 
@@ -92,6 +92,10 @@ The following exports are in scope for `0.2.0-beta.0` and should enter as `exper
 | `AfInputCount`, `AfInputCountComponent` | `experimental-in-beta-plus` | Numeric stepper/count control for dense operational forms and reactive form flows. | May change during Beta+ with migration notes. |
 | `AfAutoComplete`, `AfAutoCompleteComponent` | `experimental-in-beta-plus` | High-priority selection/search surface. | May change during Beta+ with migration notes. |
 | `AfDatePicker`, `AfDatePickerComponent` | `experimental-in-beta-plus` | High-priority date input surface. | May change during Beta+ with migration notes. |
+| `AfField`, `AfFieldComponent` | `experimental-in-beta-plus` | Adaptive field wrapper for labels, helper/error copy and shared form state. | May change during Beta+ with migration notes. |
+| `AfIconField`, `AfIconFieldComponent`, `AfIconFieldPrefixDirective`, `AfIconFieldControlDirective`, `AfIconFieldSuffixDirective`, `AF_ICON_FIELD_SLOT_DIRECTIVES` | `experimental-in-beta-plus` | Adaptive field composition helper for prefix/control/suffix layouts without vendor leakage. | May change during Beta+ with migration notes. |
+| `AfInputGroup`, `AfInputGroupComponent`, `AfInputGroupPrefixDirective`, `AfInputGroupControlDirective`, `AfInputGroupSuffixDirective`, `AF_INPUT_GROUP_SLOT_DIRECTIVES` | `experimental-in-beta-plus` | Adaptive grouped-field helper for units, inline actions and dense form composition. | May change during Beta+ with migration notes. |
+| `AfListbox`, `AfListboxComponent` | `experimental-in-beta-plus` | Inline selection list surface with vendor-independent single and multiple selection behavior. | May change during Beta+ with migration notes. |
 | `AfMultiSelect`, `AfMultiSelectComponent` | `experimental-in-beta-plus` | High-priority complex selection surface. | May change during Beta+ with migration notes. |
 | `AfTreeSelect`, `AfTreeSelectComponent` | `experimental-in-beta-plus` | High-priority hierarchical selection surface. | May change during Beta+ with migration notes. |
 | `AfDataView`, `AfDataViewComponent` | `experimental-in-beta-plus` | High-priority list/grid presentation surface. | May change during Beta+ with migration notes. |
@@ -117,6 +121,13 @@ Current implemented Beta+ adaptive exports in the repository:
 - `AfAvatar`, `AfAvatarComponent`
 - `AfChip`, `AfChipComponent`
 - `AfInputCount`, `AfInputCountComponent`
+- `AfDatePicker`, `AfDatePickerComponent`
+- `AfField`, `AfFieldComponent`
+- `AfIconField`, `AfIconFieldComponent`
+- `AfIconFieldPrefixDirective`, `AfIconFieldControlDirective`, `AfIconFieldSuffixDirective`, `AF_ICON_FIELD_SLOT_DIRECTIVES`
+- `AfInputGroup`, `AfInputGroupComponent`
+- `AfInputGroupPrefixDirective`, `AfInputGroupControlDirective`, `AfInputGroupSuffixDirective`, `AF_INPUT_GROUP_SLOT_DIRECTIVES`
+- `AfListbox`, `AfListboxComponent`
 - `AfMultiSelect`, `AfMultiSelectComponent`
 
 ## `@argfit-ui/desktop`
