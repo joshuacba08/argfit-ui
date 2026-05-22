@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  release-beta-check:
-    name: Beta release gate
+  release-production-check:
+    name: Production release gate
     runs-on: ubuntu-latest
 
     steps:
@@ -36,21 +36,21 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run beta release gate
-        run: pnpm release:beta:check
+      - name: Run production release gate
+        run: pnpm release:production:check
 
-      - name: Upload beta tarballs
+      - name: Upload production tarballs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: beta-tarballs
-          path: dist/beta-tarballs/*.tgz
+          name: beta-plus-tarballs
+          path: dist/beta-plus-tarballs/*.tgz
           if-no-files-found: ignore
 
-      - name: Upload visual smoke screenshots
+      - name: Upload production visual smoke screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: beta-visual-smoke
-          path: .tmp/visual-regression/current/*.png
+          name: beta-plus-visual-smoke
+          path: .tmp/visual-regression/beta-plus/*.png
           if-no-files-found: ignore

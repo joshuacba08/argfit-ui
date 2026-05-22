@@ -6,6 +6,14 @@ Recommended target: `1.0.0`.
 
 The productive version is not a bigger beta. It is the first version where ArgFit UI promises stable public APIs, a support policy, documented migrations and production-grade quality gates.
 
+The frozen `1.0.0` contract baseline lives in:
+
+- `docs/productive/scope.md`
+- `docs/productive/public-api.md`
+- `docs/productive/semver-policy.md`
+- `docs/productive/quality-gates.md`
+- `docs/productive/enterprise-readiness.md`
+
 ## Productive Definition
 
 ArgFit UI is ready for `1.0.0` when:
@@ -13,6 +21,7 @@ ArgFit UI is ready for `1.0.0` when:
 - The public API is frozen for the first semver-major contract.
 - Experimental APIs are either promoted, isolated or removed from the recommended path.
 - Visual, accessibility, consumer, performance and release gates are mandatory.
+- Enterprise usage guidance is explicit for data, forms, overlays, feedback and chart-heavy apps.
 - Documentation is complete enough for a team that has never seen the repo.
 - Publishing, changelog, migration and support policy are reproducible.
 

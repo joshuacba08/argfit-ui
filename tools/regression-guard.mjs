@@ -28,9 +28,17 @@ const expectedFiles = [
   'docs/alpha/release-checklist.md',
   'docs/beta/release-notes-beta.md',
   'docs/beta/release-checklist.md',
+  'docs/productive/projection.md',
+  'docs/productive/scope.md',
+  'docs/productive/public-api.md',
+  'docs/productive/semver-policy.md',
+  'docs/productive/quality-gates.md',
+  'docs/productive/enterprise-readiness.md',
   'tools/alpha-smoke.mjs',
   'tools/beta-smoke.mjs',
   'tools/pack-beta.mjs',
+  'tools/production-performance.mjs',
+  'tools/production-smoke.mjs',
   '.github/workflows/ci.yml',
   '.github/workflows/publish-alpha.yml',
   '.github/workflows/publish-beta.yml',
@@ -251,10 +259,66 @@ expectIncludes('README.md', [
   'pnpm release:beta:check',
 ]);
 
+expectIncludes('docs/productive/projection.md', [
+  'ArgFit UI - Productive Version Projection',
+  'docs/productive/scope.md',
+  'docs/productive/public-api.md',
+  'docs/productive/semver-policy.md',
+  'docs/productive/quality-gates.md',
+  'docs/productive/enterprise-readiness.md',
+  'HU-039 - Productive Quality Gates',
+]);
+
+expectIncludes('docs/productive/scope.md', [
+  'ArgFit UI 1.0.0 Scope',
+  '`1.0-foundation`',
+  '`1.0-adaptive`',
+  '`1.0-renderer-specific`',
+  'out-of-1.0',
+]);
+
+expectIncludes('docs/productive/public-api.md', [
+  'Productive Public API Inventory',
+  'projects/argfit-ui-core/src/public-api.ts',
+  'projects/argfit-ui-adaptive/src/public-api.ts',
+  '1.0-adaptive',
+  '1.0-renderer-specific',
+]);
+
+expectIncludes('docs/productive/semver-policy.md', [
+  'Productive Semver Policy',
+  'Patch releases (`1.0.x`)',
+  'Minor releases (`1.x.0`)',
+  'Major releases (`2.0.0`, `3.0.0`, and so on)',
+  'Deprecation Policy',
+  'Migration Policy',
+]);
+
+expectIncludes('docs/productive/quality-gates.md', [
+  'Productive Quality Gates',
+  'pnpm release:production:check',
+  'No active budget exceptions.',
+  '2.90 MB',
+  '650 kB',
+]);
+
+expectIncludes('docs/productive/enterprise-readiness.md', [
+  'Productive Enterprise Readiness',
+  'Data Table Production Profile',
+  'Forms Production Profile',
+  'Overlay And Feedback Orchestration',
+  'Chart Production Profile',
+  'server-side pagination',
+  'single app-level overlay posture',
+]);
+
 expectIncludes('package.json', [
   '"release:beta:check"',
+  '"release:production:check"',
   '"smoke:beta"',
+  '"smoke:production:dist"',
   '"pack:beta:dry-run:dist"',
+  '"measure:production-performance:dist"',
 ]);
 
 expectIncludes('.github/workflows/ci.yml', [
@@ -262,9 +326,10 @@ expectIncludes('.github/workflows/ci.yml', [
   'pull_request:',
   'push:',
   'pnpm install --frozen-lockfile',
-  'pnpm release:beta:check',
+  'pnpm release:production:check',
   'actions/upload-artifact@v4',
-  'dist/beta-tarballs/*.tgz',
+  'dist/beta-plus-tarballs/*.tgz',
+  '.tmp/visual-regression/beta-plus/*.png',
 ]);
 
 expectIncludes('.github/workflows/publish-alpha.yml', [
