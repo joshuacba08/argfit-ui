@@ -1,30 +1,30 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  contentChild,
-  inject,
-  input,
-  output,
-  viewChild,
-  type TemplateRef,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    contentChild,
+    inject,
+    input,
+    output,
+    viewChild,
+    type TemplateRef,
 } from '@angular/core';
 
 import {
-  AfPlatformService,
-  type AfTimelineDensity,
-  type AfTimelineItem,
-  type AfTimelineItemTemplate,
+    AfPlatformService,
+    type AfTimelineDensity,
+    type AfTimelineItem,
+    type AfTimelineItemTemplate,
 } from '@argfit-ui/core';
 import { AfTimelineDesktopComponent } from '@argfit-ui/desktop';
 import { AfTimelineMobileComponent } from '@argfit-ui/mobile';
 
 import { AfTimelineItemDirective } from './af-timeline-item.directive';
 import {
-  AfTimelineActionsDirective,
-  AfTimelineEmptyDirective,
-  AfTimelineLoadingDirective,
+    AfTimelineActionsDirective,
+    AfTimelineEmptyDirective,
+    AfTimelineLoadingDirective,
 } from './af-timeline-slots.directive';
 
 @Component({

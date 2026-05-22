@@ -40,6 +40,6 @@ export * from './lib/types/popover.types';
 export * from './lib/types/progress.types';
 export * from './lib/types/selection.types';
 export * from './lib/types/timeline.types';
-export * from './lib/types/tree.types';
 export * from './lib/types/tooltip.types';
+export * from './lib/types/tree.types';
 

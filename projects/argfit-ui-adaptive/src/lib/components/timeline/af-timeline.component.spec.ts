@@ -5,9 +5,9 @@ import { provideArgfitUi, type AfTimelineItem } from '@argfit-ui/core';
 
 import { AfTimelineItemDirective } from './af-timeline-item.directive';
 import {
-  AfTimelineActionsDirective,
-  AfTimelineEmptyDirective,
-  AfTimelineLoadingDirective,
+    AfTimelineActionsDirective,
+    AfTimelineEmptyDirective,
+    AfTimelineLoadingDirective,
 } from './af-timeline-slots.directive';
 import { AfTimelineComponent } from './af-timeline.component';
 

@@ -1,21 +1,21 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  type TemplateRef,
-  ViewEncapsulation,
+    booleanAttribute,
+    ChangeDetectionStrategy,
+    Component,
+    computed,
+    input,
+    output,
+    type TemplateRef,
+    ViewEncapsulation,
 } from '@angular/core';
 
 import {
-  type AfBadgeTone,
-  type AfTimelineDensity,
-  type AfTimelineItem,
-  type AfTimelineItemContext,
-  type AfTimelineItemTemplate,
+    type AfBadgeTone,
+    type AfTimelineDensity,
+    type AfTimelineItem,
+    type AfTimelineItemContext,
+    type AfTimelineItemTemplate,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
