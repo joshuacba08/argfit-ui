@@ -209,8 +209,11 @@ expectIncludes('projects/showcase/src/app/app.ts', [
 expectIncludes('projects/showcase/src/app/app.html', [
   "@case ('alpha')",
   'Beta+ consumer kit',
-  'docs/beta/quickstart.md',
-  'docs/beta/components.md',
+  'Instalacion Beta+ publicable',
+  '0.2.0-beta.0',
+  'docs/beta-plus/quickstart.md',
+  'docs/beta-plus/components.md',
+  'docs/beta-plus/release-notes-beta-plus.md',
   '<af-toast-viewport />',
   "@case ('feedback')",
   '<af-inline-message',

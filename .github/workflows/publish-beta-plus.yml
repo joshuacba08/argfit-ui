@@ -2,6 +2,14 @@ name: Publish Beta Plus
 
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Beta+ tag to publish
+        required: true
+        default: v0.2.0-beta.0
+      publish_confirmation:
+        description: Type publish-beta-plus-v0.2.0-beta.0 to continue
+        required: true
   push:
     tags:
       - 'v0.2.0-beta.*'
@@ -9,14 +17,54 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: beta-plus-publish-${{ github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref_name }}
+  cancel-in-progress: false
+
 jobs:
   publish-beta-plus:
     name: Publish Beta+ packages
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout tagged release
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
+
+      - name: Resolve release tag
+        id: release
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ "${{ inputs.publish_confirmation }}" != "publish-beta-plus-v0.2.0-beta.0" ]; then
+              echo "Invalid publish confirmation. Expected publish-beta-plus-v0.2.0-beta.0"
+              exit 1
+            fi
+            release_tag="${{ inputs.release_tag }}"
+          else
+            release_tag="$GITHUB_REF_NAME"
+          fi
+
+          if [ "$release_tag" != "v0.2.0-beta.0" ]; then
+            echo "This workflow only publishes v0.2.0-beta.0. Received: $release_tag"
+            exit 1
+          fi
+
+          if ! git rev-parse --verify "refs/tags/$release_tag" >/dev/null 2>&1; then
+            echo "Missing tag $release_tag in the checked out repository."
+            exit 1
+          fi
+
+          head_tag="$(git describe --tags --exact-match HEAD 2>/dev/null || true)"
+          if [ "$head_tag" != "$release_tag" ]; then
+            echo "Checked out revision is not exactly tagged as $release_tag."
+            echo "Current exact tag: ${head_tag:-<none>}"
+            exit 1
+          fi
+
+          echo "release_tag=$release_tag" >> "$GITHUB_OUTPUT"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -61,6 +109,7 @@ jobs:
             echo "No Beta+ tarballs were generated."
             exit 1
           fi
+          echo "Publishing ${#files[@]} tarballs from ${{ steps.release.outputs.release_tag }}"
           for file in "${files[@]}"; do
             npm publish "$file" --tag beta --access public
           done

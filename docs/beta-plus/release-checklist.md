@@ -1,6 +1,6 @@
 # Beta+ Release Checklist
 
-Use this checklist before dispatching the Beta+ publish workflow.
+Use this checklist before publishing the Beta+ release.
 
 ## Preconditions
 
@@ -30,10 +30,23 @@ pnpm exec playwright install chromium
 
 ## Publish Steps
 
-1. Create or push the intended Beta+ tag, or use `workflow_dispatch` on the Beta+ publish workflow.
-2. Ensure the `NPM_TOKEN` secret is present in GitHub Actions.
-3. Run `.github/workflows/publish-beta-plus.yml`.
-4. Verify packages land on npm under the `beta` dist-tag.
+1. Confirm the working tree is in the intended release state and rerun `pnpm release:beta-plus:check` if anything changed after the last green run.
+2. Create the annotated release tag locally:
+
+```bash
+git tag -a v0.2.0-beta.0 -m "ArgFit UI Beta+ 0.2.0-beta.0"
+```
+
+3. Push the tag:
+
+```bash
+git push origin v0.2.0-beta.0
+```
+
+4. Ensure the `NPM_TOKEN` secret is present in GitHub Actions.
+5. Let the tag push trigger `.github/workflows/publish-beta-plus.yml`. If you need a manual retry, dispatch it with `release_tag = v0.2.0-beta.0` and `publish_confirmation = publish-beta-plus-v0.2.0-beta.0`.
+6. Verify the workflow checks out and validates the exact tag before publishing.
+7. Verify packages land on npm under the `beta` dist-tag.
 
 ## Post-Publish Checks
 
