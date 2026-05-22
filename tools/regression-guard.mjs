@@ -55,9 +55,6 @@ const expectedFiles = [
   'projects/argfit-ui-docs/src/app/pages/docs-api.page.ts',
   'projects/argfit-ui-docs/src/app/pages/docs-guides.page.ts',
   'projects/argfit-ui-docs/src/app/pages/docs-release.page.ts',
-  'projects/showcase/src/app/productive-docs-front.component.ts',
-  'projects/showcase/src/app/productive-docs-front.component.html',
-  'projects/showcase/src/app/productive-docs-front.component.scss',
   'tools/alpha-smoke.mjs',
   'tools/beta-smoke.mjs',
   'tools/pack-beta.mjs',
@@ -393,30 +390,6 @@ expectIncludes('docs/productive/release-notes-1-0.md', [
   'pnpm release:production:check',
   'Productive quickstart',
   '1.0.0',
-]);
-
-expectIncludes('projects/showcase/src/app/app.ts', [
-  'ProductiveDocsFrontComponent',
-  "{ id: 'docs', label: 'Docs 1.0', icon: 'file-text' }",
-  "docs: 'Docs 1.0'",
-]);
-
-expectIncludes('projects/showcase/src/app/app.html', [
-  "@case ('docs')",
-  'app-productive-docs-front',
-  'section-docs-shell',
-]);
-
-expectIncludes('projects/showcase/src/app/productive-docs-front.component.html', [
-  'ArgFit UI docs front',
-  'stable components',
-]);
-
-expectIncludes('projects/showcase/src/app/productive-docs-front.component.ts', [
-  'docs/productive/quickstart.md',
-  'docs/productive/components.md',
-  'docs/productive/api-reference.md',
-  'docs/productive/migration-beta-to-1-0.md',
 ]);
 
 expectIncludes('angular.json', [

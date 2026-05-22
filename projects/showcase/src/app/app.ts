@@ -95,8 +95,6 @@ import {
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
-import { ProductiveDocsFrontComponent } from './productive-docs-front.component';
-
 interface ShowcaseAthlete {
   readonly id: string;
   readonly name: string;
@@ -187,7 +185,6 @@ type ShowcaseFormsTab = 'athlete' | 'test' | 'export';
     AfTooltip,
     AfToggle,
     AfToastViewport,
-    ProductiveDocsFrontComponent,
     ReactiveFormsModule,
   ],
   templateUrl: './app.html',
@@ -207,7 +204,6 @@ export class App {
 
   protected readonly shellNavItems: readonly AfNavigationItem[] = [
     { id: 'alpha', label: 'Beta+', icon: 'info' },
-    { id: 'docs', label: 'Docs 1.0', icon: 'file-text' },
     { id: 'dashboard', label: 'Dashboard', icon: 'layout-dashboard', badge: 3 },
     { id: 'athletes', label: 'Atletas', icon: 'users' },
     { id: 'data-table', label: 'Tabla avanzada', icon: 'table' },
@@ -221,7 +217,6 @@ export class App {
 
   protected readonly shellMobileTabs: readonly AfNavigationItem[] = [
     { id: 'alpha', label: 'Beta+', icon: 'info' },
-    { id: 'docs', label: 'Docs', icon: 'file-text' },
     { id: 'home', label: 'Inicio', icon: 'home' },
     { id: 'train', label: 'Entrenar', icon: 'play' },
     { id: 'analytics', label: 'Analytics', icon: 'bar-chart-3' },
@@ -231,7 +226,6 @@ export class App {
 
   private readonly sectionTitles: Readonly<Record<string, string>> = {
     alpha: 'Beta+',
-    docs: 'Docs 1.0',
     dashboard: 'Dashboard',
     athletes: 'Atletas',
     'data-table': 'Tabla avanzada',
@@ -245,7 +239,6 @@ export class App {
 
   private readonly sectionSubtitles: Readonly<Record<string, string>> = {
     alpha: 'Slices Beta+ activos: identidad, forms avanzados y workflow con kanban',
-    docs: 'Frente documental productivo para componentes, APIs, guias y release assets',
     dashboard: 'Centro operativo de rendimiento',
     athletes: 'Roster, altas y mediciones base',
     'data-table': 'Dataset operativo de atletas',
@@ -259,7 +252,6 @@ export class App {
 
   private readonly mobileTabSections: Readonly<Record<string, string>> = {
     alpha: 'alpha',
-    docs: 'docs',
     home: 'dashboard',
     train: 'athletes',
     analytics: 'analytics',
