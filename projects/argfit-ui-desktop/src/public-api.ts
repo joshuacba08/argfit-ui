@@ -21,6 +21,7 @@ export * from './lib/components/fieldset/af-fieldset-desktop.component';
 export * from './lib/components/inline-message/af-inline-message-desktop.component';
 export * from './lib/components/input-count/af-input-count-desktop.component';
 export * from './lib/components/input/af-input-desktop.component';
+export * from './lib/components/kanban/af-kanban-desktop.component';
 export * from './lib/components/listbox/af-listbox-desktop.component';
 export * from './lib/components/metric-card/af-metric-card-desktop.component';
 export * from './lib/components/multi-select/af-multi-select-desktop.component';

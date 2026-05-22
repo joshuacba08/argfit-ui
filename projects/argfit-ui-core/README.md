@@ -40,6 +40,14 @@ export const appConfig = {
 - [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/public-api.md)
 - [Migration alpha to beta](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/migration-alpha-to-beta.md)
 
+Beta+ track:
+
+- [Beta+ quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/quickstart.md)
+- [Beta+ components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/components.md)
+- [Beta+ public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/public-api.md)
+- [Beta+ known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/known-limitations.md)
+- [Migration beta to beta plus](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/migration-beta-to-beta-plus.md)
+
 ## Build
 
 ```bash

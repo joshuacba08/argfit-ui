@@ -2,6 +2,23 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 0.2.0-beta.0
+
+First dedicated Beta+ delivery channel for ArgFit UI.
+
+### Added
+
+- Parallel Beta+ tarball flow under `dist/beta-plus-tarballs/` stamped to `0.2.0-beta.0` without disturbing the historical `0.1.0-beta.0` source baseline.
+- Dedicated Beta+ consumer smoke, visual smoke, accessibility audit and public API guard through `pnpm beta-plus:consumer-smoke`, `pnpm visual:beta-plus`, `pnpm audit:accessibility:beta-plus` and `pnpm guard:beta-plus:api`.
+- Dedicated Beta+ release gate through `pnpm release:beta-plus:check` and the optional `publish-beta-plus.yml` workflow.
+- Beta+ release and validation docs through `docs/beta-plus/visual-qa.md`, `docs/beta-plus/release-checklist.md` and `docs/beta-plus/release-notes-beta-plus.md`.
+
+### Notes
+
+- The source workspace remains on the historical `0.1.0-beta.0` baseline so existing beta regression guards keep working.
+- Published Beta+ tarballs are generated as `0.2.0-beta.0` during packaging.
+- `AfTreeSelect` remains outside this release and the current selection validation uses `AfListbox` as the implemented hierarchical-selection fallback.
+
 ## 0.1.0-beta.0
 
 First dedicated beta channel for ArgFit UI.

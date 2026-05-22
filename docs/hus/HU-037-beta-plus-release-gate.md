@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Implemented
 
 ## Fase Del Roadmap
 
@@ -38,7 +38,7 @@ Crear release flow Beta+:
 
 ```json
 {
-  "release:beta-plus:check": "pnpm guard:architecture && pnpm build:all && pnpm test:all && pnpm audit:accessibility && pnpm visual:beta-plus && pnpm beta-plus:consumer-smoke && pnpm pack:beta-plus"
+  "release:beta-plus:check": "pnpm guard:architecture && pnpm build:all && pnpm test:all && pnpm audit:accessibility && pnpm pack:beta-plus:dry-run:dist && pnpm pack:beta-plus:dist && pnpm guard:beta-plus:api:dist && pnpm beta-plus:consumer-smoke:dist && pnpm audit:accessibility:beta-plus:dist && pnpm visual:beta-plus:dist"
 }
 ```
 

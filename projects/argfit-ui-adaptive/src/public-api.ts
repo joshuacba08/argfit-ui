@@ -49,6 +49,18 @@ export {
     AfChipComponent as AfChip, AfChipComponent
 } from './lib/components/chip/af-chip.component';
 export {
+    AfKanbanCardDirective
+} from './lib/components/kanban/af-kanban-card.directive';
+export {
+    AF_KANBAN_SLOT_DIRECTIVES,
+    AfKanbanCardFooterDirective,
+    AfKanbanColumnHeaderDirective,
+    AfKanbanEmptyDirective
+} from './lib/components/kanban/af-kanban-slots.directive';
+export {
+    AfKanbanComponent as AfKanban, AfKanbanComponent
+} from './lib/components/kanban/af-kanban.component';
+export {
     AfDataTableCellDirective,
     AfDataTableExpandedRowDirective
 } from './lib/components/data-table/af-data-table-cell.directive';

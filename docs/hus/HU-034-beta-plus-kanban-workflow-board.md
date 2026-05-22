@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Implemented
 
 ## Fase Del Roadmap
 
@@ -39,6 +39,14 @@ Implementar:
 - `AfKanbanMobile`
 - tipos publicos compartidos para columnas, tarjetas, filtros y eventos
 - soporte drag/drop con Angular CDK
+
+## Estado Actual De Implementacion
+
+- `projects/argfit-ui-core/src/lib/types/kanban.types.ts` expone la familia publica `AfKanban*`.
+- `projects/argfit-ui-adaptive/src/lib/components/kanban/*` publica `AfKanban` y sus slots proyectados.
+- `projects/argfit-ui-desktop/src/lib/components/kanban/*` implementa board desktop con `@angular/cdk/drag-drop`, drop targets conectados y acciones explicitas de mover.
+- `projects/argfit-ui-mobile/src/lib/components/kanban/*` implementa un board touch-first agrupado por estado con fallback no-drag para mover cards.
+- el showcase Beta+ ya expone una demo controlada de workflow de rutinas en la seccion `alpha`.
 
 ## Referencia Visual
 
@@ -129,6 +137,12 @@ Templates o slots:
 - Debe existir alternativa accesible sin drag: menu/acciones `Mover a...`.
 - Safe areas y viewport height deben estar contemplados.
 
+Nota de implementacion actual:
+
+- desktop usa drag/drop con CDK;
+- mobile actualmente prioriza acciones explicitas de mover por estado en lugar de touch drag;
+- la API se mantiene controlada y no muta inputs.
+
 ## Requisitos De Accesibilidad
 
 - El tablero debe tener `aria-label` o titulo accesible.
@@ -141,6 +155,8 @@ Templates o slots:
   - confirmar/cancelar.
 - Cambios de columna deben anunciarse con live region.
 - Drag/drop no puede ser el unico mecanismo para completar la tarea.
+
+La implementacion actual cubre el requisito no-drag con acciones de mover arriba/abajo/anterior/siguiente y anuncios por live region en desktop y mobile.
 
 ## Paths Esperados
 
@@ -177,6 +193,18 @@ Crear seccion `Kanban` con datos ArgFit:
 8. Tests cubren sorting, cross-column move, filtros y eventos.
 9. `pnpm guard:architecture` pasa.
 10. `pnpm test:all` pasa.
+
+## Validacion Ejecutada En Esta Iteracion
+
+- `pnpm build:all`
+- `ng test argfit-ui-adaptive --watch=false --include=projects/argfit-ui-adaptive/src/lib/components/kanban/af-kanban.component.spec.ts`
+- `ng test showcase --watch=false --include=projects/showcase/src/app/app-kanban.spec.ts`
+- `pnpm guard:architecture`
+- `pnpm visual:beta:dist`
+
+Nota:
+
+- la spec heredada `projects/showcase/src/app/app.spec.ts` sigue desalineada con el `app.html` actual porque espera waves Beta+ anteriores que hoy no estan presentes en el showcase efectivo; esa deuda no forma parte del slice HU-034.
 
 ## Comandos De Validacion
 

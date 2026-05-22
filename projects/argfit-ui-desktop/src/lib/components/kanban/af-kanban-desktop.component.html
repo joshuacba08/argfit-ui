@@ -1,0 +1,159 @@
+<div class="af-kanban-desktop__shell" role="region" [attr.aria-label]="ariaLabel()">
+  <div class="af-kanban-desktop__live" aria-live="polite">{{ liveMessage() }}</div>
+
+  <header class="af-kanban-desktop__toolbar">
+    <div class="af-kanban-desktop__heading">
+      @if (title()) {
+        <h3 class="af-kanban-desktop__title">{{ title() }}</h3>
+      }
+      <span class="af-kanban-desktop__summary">{{ cards().length }} rutinas</span>
+    </div>
+
+    @if (filters().length > 0) {
+      <div class="af-kanban-desktop__filters" role="toolbar" aria-label="Filtros de kanban">
+        @for (filter of filters(); track filter.id) {
+          <button
+            class="af-kanban-desktop__filter"
+            type="button"
+            [class.af-kanban-desktop__filter--active]="activeFilter() === filter.id || (!activeFilter() && filter.id === 'all')"
+            [disabled]="disabled() || filter.disabled"
+            (click)="onFilterClick(filter)"
+          >
+            <span>{{ filter.label }}</span>
+            @if (filter.count !== undefined) {
+              <small>{{ filter.count }}</small>
+            }
+          </button>
+        }
+      </div>
+    }
+
+    <button class="af-kanban-desktop__add-board" type="button" [disabled]="disabled() || readonly()" (click)="onBoardAdd()">
+      Nueva rutina
+    </button>
+  </header>
+
+  <div cdkDropListGroup class="af-kanban-desktop__board">
+    @for (column of columns(); track trackColumn($index, column)) {
+      @let visibleCards = visibleCardsForColumn(column.id);
+      <section
+        class="af-kanban-desktop__column"
+        [class.af-kanban-desktop__column--drop-active]="activeDropColumnId() === column.id"
+        [class.af-kanban-desktop__column--disabled]="column.disabled"
+        [style.--af-kanban-column-accent]="columnAccent(column)"
+      >
+        <header class="af-kanban-desktop__column-header">
+          @if (columnHeaderTemplate()) {
+            <ng-container [ngTemplateOutlet]="columnHeaderTemplate()" [ngTemplateOutletContext]="headerContext(column)" />
+          } @else {
+            <div class="af-kanban-desktop__column-copy">
+              <div class="af-kanban-desktop__column-title-row">
+                <span class="af-kanban-desktop__column-dot"></span>
+                <strong>{{ column.label }}</strong>
+                <span class="af-kanban-desktop__column-count">{{ visibleCards.length }}</span>
+              </div>
+              @if (column.description) {
+                <p>{{ column.description }}</p>
+              }
+            </div>
+          }
+
+          <button class="af-kanban-desktop__column-action" type="button" [disabled]="disabled()" (click)="onColumnActionClick(column)">
+            ...
+          </button>
+        </header>
+
+        <div
+          cdkDropList
+          class="af-kanban-desktop__column-body"
+          [id]="dropListId(column.id)"
+          [cdkDropListData]="visibleCards"
+          [cdkDropListConnectedTo]="connectedDropListIds()"
+          [cdkDropListDisabled]="dropDisabled(column)"
+          (cdkDropListDropped)="onDrop($event, column)"
+          (cdkDropListEntered)="onDropListEntered(column.id)"
+          (cdkDropListExited)="onDropListExited(column.id)"
+        >
+          @if (visibleCards.length === 0) {
+            @if (emptyTemplate()) {
+              <ng-container [ngTemplateOutlet]="emptyTemplate()" [ngTemplateOutletContext]="emptyContext(column)" />
+            } @else {
+              <div class="af-kanban-desktop__empty">
+                <strong>{{ emptyState().title }}</strong>
+                @if (emptyState().description) {
+                  <p>{{ emptyState().description }}</p>
+                }
+              </div>
+            }
+          }
+
+          @for (card of visibleCards; track trackCard($index, card); let index = $index) {
+            <article
+              class="af-kanban-desktop__card"
+              cdkDrag
+              [cdkDragData]="card"
+              [cdkDragDisabled]="disabled() || readonly() || card.disabled || isFiltering()"
+              [attr.data-priority]="card.priority ?? 'medium'"
+            >
+              <div
+                class="af-kanban-desktop__card-body"
+                role="button"
+                tabindex="0"
+                (click)="onCardClickSelect(card, column.id, index)"
+                (keydown.enter)="onCardClickSelect(card, column.id, index)"
+                (keydown.space)="$event.preventDefault(); onCardClickSelect(card, column.id, index)"
+              >
+                @if (cardTemplate()) {
+                  <ng-container [ngTemplateOutlet]="cardTemplate()" [ngTemplateOutletContext]="cardContext(card, column, index)" />
+                } @else {
+                  <div class="af-kanban-desktop__card-top-row">
+                    <span class="af-kanban-desktop__card-category">{{ card.category ?? 'Rutina' }}</span>
+                    <span class="af-kanban-desktop__card-priority">{{ priorityLabel(card.priority) }}</span>
+                  </div>
+
+                  <strong class="af-kanban-desktop__card-title">{{ card.title }}</strong>
+
+                  @if (card.description) {
+                    <p class="af-kanban-desktop__card-description">{{ card.description }}</p>
+                  }
+
+                  <div class="af-kanban-desktop__card-meta-row">
+                    <div class="af-kanban-desktop__card-assignee">
+                      <span class="af-kanban-desktop__card-avatar">{{ card.assigneeInitials ?? 'AF' }}</span>
+                      <span>{{ card.assigneeName ?? 'ArgFit' }}</span>
+                    </div>
+                    <span class="af-kanban-desktop__card-date">{{ card.dateLabel ?? 'Hoy' }}</span>
+                  </div>
+                }
+              </div>
+
+              <footer class="af-kanban-desktop__card-footer">
+                @if (cardFooterTemplate()) {
+                  <ng-container [ngTemplateOutlet]="cardFooterTemplate()" [ngTemplateOutletContext]="cardFooterContext(card, column)" />
+                } @else {
+                  <div class="af-kanban-desktop__card-metric-row">
+                    <span>{{ card.metricLabel ?? card.meta ?? 'Workflow' }}</span>
+                    @if (card.badge) {
+                      <span class="af-kanban-desktop__card-badge" [attr.data-tone]="card.badge.tone ?? 'neutral'">{{ card.badge.label }}</span>
+                    }
+                  </div>
+                }
+
+                <div class="af-kanban-desktop__move-actions">
+                  <button type="button" [disabled]="!canMove(card, 'up')" (click)="requestMove($event, card, 'up')">↑</button>
+                  <button type="button" [disabled]="!canMove(card, 'down')" (click)="requestMove($event, card, 'down')">↓</button>
+                  <button type="button" [disabled]="!canMove(card, 'previous-column')" (click)="requestMove($event, card, 'previous-column')">←</button>
+                  <button type="button" [disabled]="!canMove(card, 'next-column')" (click)="requestMove($event, card, 'next-column')">→</button>
+                </div>
+              </footer>
+            </article>
+          }
+        </div>
+
+        <button class="af-kanban-desktop__column-add" type="button" [disabled]="disabled() || readonly() || column.disabled" (click)="onColumnAdd(column)">
+          Agregar rutina
+        </button>
+      </section>
+    }
+  </div>
+</div>

@@ -28,7 +28,7 @@ const browser = await chromium.launch({ headless: true });
 
 try {
   await runScenario(browser, {
-    name: 'alpha-desktop-dark',
+    name: 'beta-plus-overview-desktop-dark',
     viewport: { width: 1440, height: 900 },
     execute: async (page) => {
       await setPlatform(page, 'desktop');
@@ -36,65 +36,70 @@ try {
       await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
       await assertMinimumCount(page, 'af-card-desktop', 3, 'alpha cards');
       await assertContainsText(page, '[data-qa="section-alpha"]', 'Adaptive API');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Beta+ wave 5 current slice');
     },
   });
 
   await runScenario(browser, {
-    name: 'alpha-tree-table-desktop-dark',
-    viewport: { width: 1440, height: 1100 },
-    execute: async (page) => {
-      await setPlatform(page, 'desktop');
-      await setTheme(page, 'dark');
-      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
-      await waitForVisible(page, 'af-tree-table-desktop');
-      await page.locator('af-tree-table-desktop').first().scrollIntoViewIfNeeded();
-      await assertMinimumCount(page, '.af-tree-table-desktop__row', 5, 'tree table rows');
-      await assertContainsText(page, '[data-qa="section-alpha"]', 'Potencia CMJ');
-    },
-  });
-
-  await runScenario(browser, {
-    name: 'alpha-virtual-scroller-desktop-dark',
-    viewport: { width: 1440, height: 1100 },
-    execute: async (page) => {
-      await setPlatform(page, 'desktop');
-      await setTheme(page, 'dark');
-      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
-      await waitForVisible(page, 'af-virtual-scroller-desktop');
-      await page.locator('af-virtual-scroller-desktop').first().scrollIntoViewIfNeeded();
-      await assertMinimumCount(page, '.alpha-virtual-template', 1, 'templated virtual rows');
-      await assertContainsText(page, '[data-qa="section-alpha"]', 'Window');
-    },
-  });
-
-  await runScenario(browser, {
-    name: 'alpha-organization-chart-desktop-dark',
+    name: 'beta-plus-forms-desktop-dark',
     viewport: { width: 1440, height: 1200 },
     execute: async (page) => {
       await setPlatform(page, 'desktop');
       await setTheme(page, 'dark');
       await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
-      await waitForVisible(page, 'af-organization-chart-desktop');
-      await page.locator('af-organization-chart-desktop').first().scrollIntoViewIfNeeded();
-      await assertMinimumCount(page, '.af-organization-chart-desktop__node-button', 4, 'organization chart nodes');
-      await assertContainsText(page, '[data-qa="section-alpha"]', 'ArgFit Leadership');
+      await waitForVisible(page, '.alpha-wave-grid--forms');
+      await page.locator('.alpha-wave-grid--forms').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, '.alpha-wave-grid--forms af-input-count-desktop', 1, 'input count controls');
+      await assertMinimumCount(page, '.alpha-wave-grid--forms af-multi-select-desktop', 1, 'multi select controls');
+      await assertMinimumCount(page, '.alpha-wave-grid--forms af-date-picker-desktop', 1, 'date picker controls');
+      await assertMinimumCount(page, '.alpha-wave-grid--forms af-listbox-desktop', 1, 'listbox controls');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Advanced forms: DatePicker, Listbox y field composition');
     },
   });
 
   await runScenario(browser, {
-    name: 'alpha-panel-layout-desktop-dark',
+    name: 'beta-plus-kanban-desktop-dark',
     viewport: { width: 1440, height: 1500 },
     execute: async (page) => {
       await setPlatform(page, 'desktop');
       await setTheme(page, 'dark');
       await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
-      await waitForVisible(page, 'af-stepper-desktop');
-      await page.locator('af-stepper-desktop').first().scrollIntoViewIfNeeded();
-      await assertMinimumCount(page, 'af-toolbar-desktop', 1, 'panel layout toolbars');
-      await assertMinimumCount(page, 'af-panel-desktop', 1, 'panel layout panels');
-      await assertMinimumCount(page, 'af-stepper-desktop .af-stepper-desktop__step', 3, 'stepper steps');
-      await assertMinimumCount(page, 'af-splitter-desktop', 1, 'splitter hosts');
-      await assertContainsText(page, '[data-qa="section-alpha"]', 'Brief operativo del dia');
+      await waitForVisible(page, 'af-kanban-desktop');
+      await page.locator('af-kanban-desktop').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, '.af-kanban-desktop__column', 4, 'kanban desktop columns');
+      await assertMinimumCount(page, '.af-kanban-desktop__card', 6, 'kanban desktop cards');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Workflow Beta+: AfKanban');
+    },
+  });
+
+  await runScenario(browser, {
+    name: 'beta-plus-kanban-drop-active-desktop-dark',
+    viewport: { width: 1440, height: 1500 },
+    execute: async (page) => {
+      await setPlatform(page, 'desktop');
+      await setTheme(page, 'dark');
+      await openDesktopSection(page, 'Beta+', '[data-qa="section-alpha"]');
+      await waitForVisible(page, 'af-kanban-desktop');
+      await page.locator('af-kanban-desktop').first().scrollIntoViewIfNeeded();
+      await page.evaluate(() => {
+        document.querySelectorAll('.af-kanban-desktop__column')[1]?.classList.add('af-kanban-desktop__column--drop-active');
+      });
+      await assertMinimumCount(page, '.af-kanban-desktop__column--drop-active', 1, 'active kanban drop target');
+    },
+  });
+
+  await runScenario(browser, {
+    name: 'beta-plus-kanban-mobile-dark',
+    viewport: { width: 390, height: 844 },
+    execute: async (page) => {
+      await setPlatform(page, 'mobile');
+      await setTheme(page, 'dark');
+      await openMobileTab(page, 'Beta+', '[data-qa="section-alpha"]');
+      await waitForVisible(page, 'af-kanban-mobile');
+      await page.locator('af-kanban-mobile').first().scrollIntoViewIfNeeded();
+      await assertMinimumCount(page, '.af-kanban-mobile__column', 4, 'kanban mobile columns');
+      await assertMinimumCount(page, '.af-kanban-mobile__card', 4, 'kanban mobile cards');
+      await assertContainsText(page, '[data-qa="section-alpha"]', 'Workflow Beta+: AfKanban');
     },
   });
 

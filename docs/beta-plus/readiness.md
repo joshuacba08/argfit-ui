@@ -111,7 +111,7 @@ Current validation completed for the implemented wave 3 slice:
 - focused adaptive spec for `AfTreeTable`
 - focused adaptive spec for `AfVirtualScroller`
 - focused adaptive spec for `AfOrganizationChart`
-- showcase application spec extended for the current HU-032 slice in the preserved `alpha` slot
+- Beta+ documentation remains the current reference for the implemented wave 3 catalog while the streamlined showcase stays focused on active waves 1, 2 and 5
 
 `AfVirtualScroller` is currently validated with an explicit fixed-height contract (`itemHeight`, `viewportHeight`) so the visible window stays deterministic across desktop and mobile renderers.
 
@@ -136,10 +136,36 @@ Current validation completed for the current wave 4 slice:
 - focused adaptive spec for `AfTabs`
 - focused adaptive spec for `AfAccordion`
 - library builds refreshed through `pnpm build:libs`
-- showcase application updated for the full HU-033 slice in the preserved `alpha` slot
-- targeted visual smoke now covers the wave 4 panel/layout section
+- Beta+ documentation remains the current reference for the implemented wave 4 catalog while the streamlined showcase stays focused on active waves 1, 2 and 5
+- targeted visual smoke remains centered on the current-state overview, forms and Kanban workflow slices
 
 `AfStepper` and `AfSplitter` remain experimental-in-beta-plus, while the stable HU-033 layout surfaces now ship end-to-end across adaptive, desktop and mobile renderers.
+
+## Wave 5 Current Status
+
+The repository now implements `HU-034` with this workflow slice:
+
+- `AfKanban`
+
+Current validation completed for the current wave 5 slice:
+
+- focused adaptive spec for `AfKanban`
+- focused showcase spec for the HU-034 Kanban section in the preserved `alpha` slot
+- `pnpm build:all` with the new Kanban showcase slice wired into generated packages
+- targeted visual smoke now covers desktop board, mobile board and the active drop-target state
+- `pnpm guard:architecture` revalidated after adding the workflow slice
+
+`AfKanban` currently ships with desktop CDK drag/drop plus a mobile grouped-list fallback based on explicit move actions and live-region announcements.
+
+## Current Showcase State
+
+The preserved `alpha` showcase slot is intentionally curated to the current Beta+ slices that remain active in product-facing validation:
+
+- wave 1 overlays, progress and identity (`AfPopover`, `AfDrawer`, `AfTooltip`, `AfProgress`, `AfAvatar`, `AfChip`)
+- wave 2 advanced forms and composition (`AfInputCount`, `AfMultiSelect`, `AfDatePicker`, `AfListbox`, `AfField`, `AfIconField`, `AfInputGroup`)
+- wave 5 workflow (`AfKanban`)
+
+Wave 3 data surfaces and wave 4 panel/layout components remain implemented in the repository, but they are currently documented here instead of being kept visible in the streamlined current-state showcase. Broader consumer and visual validation for the full Beta+ catalog belongs to HU-036.
 
 ## Backlog HU Beta+
 
@@ -162,7 +188,7 @@ Beta+ is ready when:
 - `docs/beta-plus/scope.md` defines the Beta+ contract.
 - New components have adaptive, desktop and mobile implementations.
 - New components have accessibility and keyboard tests.
-- `AfMultiSelect`, `AfDatePicker`, `AfTreeSelect`, `AfDataView`, `AfPaginator`, `AfTimeline`, `AfTree`, `AfTabs`, `AfAccordion` and `AfStepper` are covered by showcase and consumer smoke.
+- `AfInputCount`, `AfMultiSelect`, `AfDatePicker`, `AfListbox`, `AfDataView`, `AfTimeline`, `AfTree`, `AfTabs`, `AfStepper`, `AfSplitter` and `AfKanban` are covered by the Beta+ consumer smoke and visual gate; `AfTreeSelect` remains pending outside the gate.
 - `AfKanban` supports drag/drop plus non-drag keyboard/fallback movement.
 - Showcase covers desktop/mobile, dark/light and core states.
 - Consumer smoke validates Beta+ imports from generated packages.

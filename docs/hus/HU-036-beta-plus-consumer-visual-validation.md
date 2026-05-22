@@ -2,7 +2,7 @@
 
 ## Estado
 
-Ready for implementation
+Implemented
 
 ## Fase Del Roadmap
 
@@ -30,7 +30,7 @@ Expandir validaciones:
 - Consumer app imports representative Beta+ components from every family: overlays, form inputs, selection controls, data components, panel/layout, status/identity and `AfKanban`.
 - Visual QA captures overlay open states.
 - Mobile visual QA proves touch-first behavior.
-- Visual QA captures `AfInputCount`, `AfMultiSelect`, `AfDatePicker` and `AfTreeSelect` dark/light states.
+- Visual QA captures `AfInputCount`, `AfMultiSelect`, `AfDatePicker` and `AfListbox` dark/light states. `AfTreeSelect` remains pending and is intentionally excluded from this gate.
 - Visual QA captures `AfDataView`, `AfTimeline`, `AfTree`, `AfTabs`, `AfStepper` and `AfSplitter`.
 - Visual QA captures kanban desktop, mobile and active drop states.
 - CI runs the Beta+ validation command or documents why it is manual temporarily.

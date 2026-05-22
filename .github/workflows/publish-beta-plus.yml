@@ -1,0 +1,68 @@
+name: Publish Beta Plus
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v0.2.0-beta.*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish-beta-plus:
+    name: Publish Beta+ packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.2
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Validate release gate
+        run: pnpm release:beta-plus:check
+
+      - name: Pack public tarballs
+        run: pnpm pack:beta-plus
+
+      - name: Verify npm authentication
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "NPM_TOKEN secret is missing. Configure it as a GitHub Actions secret, not as a variable."
+            exit 1
+          fi
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish Beta+ tarballs
+        run: |
+          shopt -s nullglob
+          files=(dist/beta-plus-tarballs/*.tgz)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Beta+ tarballs were generated."
+            exit 1
+          fi
+          for file in "${files[@]}"; do
+            npm publish "$file" --tag beta --access public
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

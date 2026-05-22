@@ -198,7 +198,9 @@ The repository now advances `HU-032` with the current data-oriented Beta+ slice:
 - `AfVirtualScroller`
 - `AfOrganizationChart`
 
-`AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline`, `AfTree`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` currently ship with adaptive, desktop and mobile implementations, focused adaptive specs and showcase coverage in the preserved `alpha` beta-consumer slot.
+`AfDataView`, `AfPaginator`, `AfOrderList`, `AfPickList`, `AfTimeline`, `AfTree`, `AfTreeTable`, `AfVirtualScroller` and `AfOrganizationChart` currently ship with adaptive, desktop and mobile implementations plus focused adaptive specs.
+
+The current-state showcase is intentionally narrower and now centers on active waves 1, 2 and 5, so wave 3 remains documented in Beta+ docs rather than highlighted in the streamlined `alpha` consumer slice.
 
 `AfVirtualScroller` currently ships with an explicit fixed-height contract through `itemHeight` and `viewportHeight` so desktop and mobile renderers can keep the visible window aligned without vendor-specific APIs.
 
@@ -218,9 +220,23 @@ The repository now closes `HU-033` with this implemented panel/layout slice:
 - `AfStepper`
 - `AfSplitter`
 
-`AfTabs`, `AfAccordion`, `AfToolbar`, `AfDivider`, `AfFieldset`, `AfPanel` and `AfScrollPanel` now ship with adaptive, desktop and mobile implementations plus showcase exposure in the preserved `alpha` beta-consumer slot.
+`AfTabs`, `AfAccordion`, `AfToolbar`, `AfDivider`, `AfFieldset`, `AfPanel` and `AfScrollPanel` now ship with adaptive, desktop and mobile implementations.
 
-`AfStepper` and `AfSplitter` now ship as the experimental HU-033 closure with renderer-neutral contracts, showcase coverage and documented mobile stacked fallback for `AfSplitter`.
+`AfStepper` and `AfSplitter` now ship as the experimental HU-033 closure with renderer-neutral contracts and documented mobile stacked fallback for `AfSplitter`.
+
+The current-state showcase is intentionally narrower and now centers on active waves 1, 2 and 5, so wave 4 remains documented in Beta+ docs rather than highlighted in the streamlined `alpha` consumer slice.
+
+### Wave 5 Current Status
+
+The repository now opens and implements `HU-034` with this workflow slice:
+
+- `AfKanban`
+
+`AfKanban` now ships with shared core types, adaptive wrapper exports, projected slot directives and both desktop/mobile renderers.
+
+The current implementation keeps the API controlled through `cardMove`, `filterChange`, `addCard`, `cardClick` and `columnAction`, so consumers own the next board state.
+
+Desktop uses `@angular/cdk/drag-drop` internally for connected-list sorting and cross-column moves, while mobile currently prefers a grouped touch-first board with explicit move actions and live-region feedback instead of touch drag.
 
 ## Renderer Policy
 
@@ -231,13 +247,14 @@ The repository now closes `HU-033` with this implemented panel/layout slice:
 
 ### Kanban Interaction Decision
 
-`AfKanban` is approved to use `@angular/cdk/drag-drop` as the interaction engine in both desktop and mobile implementations.
+`AfKanban` is approved to use `@angular/cdk/drag-drop` as the interaction engine inside renderer implementations.
 
 Rules for that decision:
 
 - Drag and drop is an internal implementation detail, not public API.
 - Desktop may compose PrimeNG visuals around the board.
 - Mobile must remain touch-first.
+- Mobile may fall back to explicit move actions when touch drag would compete with board scroll.
 - A non-drag accessible move flow is mandatory for keyboard and assistive technology users.
 
 ## Out Of Beta+

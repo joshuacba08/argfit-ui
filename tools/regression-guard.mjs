@@ -198,7 +198,7 @@ expectIncludes('projects/argfit-ui-desktop/src/lib/components/topbar/af-topbar-d
 ]);
 
 expectIncludes('projects/showcase/src/app/app.ts', [
-  "{ id: 'alpha', label: 'Alpha', icon: 'info' }",
+  "{ id: 'alpha', label: 'Beta+', icon: 'info' }",
   'AfToastService',
   'AfToastViewport',
   'AfInlineMessage',
@@ -208,7 +208,7 @@ expectIncludes('projects/showcase/src/app/app.ts', [
 
 expectIncludes('projects/showcase/src/app/app.html', [
   "@case ('alpha')",
-  'Beta consumer kit',
+  'Beta+ consumer kit',
   'docs/beta/quickstart.md',
   'docs/beta/components.md',
   '<af-toast-viewport />',
@@ -233,8 +233,8 @@ expectIncludes('projects/showcase/src/app/app.html', [
 ]);
 
 expectIncludes('projects/showcase/src/app/app.spec.ts', [
-  'renders the beta consumer showcase section inside the alpha slot',
-  'Beta consumer kit',
+  'renders the current beta plus showcase section inside the legacy alpha slot',
+  'Beta+ consumer kit',
   'af-password-desktop',
   'af-password-mobile',
   'ion-input-password-toggle',

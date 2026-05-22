@@ -22,6 +22,7 @@ export * from './lib/components/fieldset/af-fieldset-mobile.component';
 export * from './lib/components/inline-message/af-inline-message-mobile.component';
 export * from './lib/components/input-count/af-input-count-mobile.component';
 export * from './lib/components/input/af-input-mobile.component';
+export * from './lib/components/kanban/af-kanban-mobile.component';
 export * from './lib/components/listbox/af-listbox-mobile.component';
 export * from './lib/components/metric-card/af-metric-card-mobile.component';
 export * from './lib/components/multi-select/af-multi-select-mobile.component';

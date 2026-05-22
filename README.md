@@ -21,9 +21,11 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI is currently prepared as `0.1.0-beta.0`. The workspace contains the core architecture, token/theme infrastructure, accessibility primitives, adaptive orchestration, package metadata, beta tarball generation, and the current enterprise component slices.
+ArgFit UI keeps the source workspace aligned with the historical `0.1.0-beta.0` baseline so the existing beta regression contract remains stable. The dedicated Beta+ packaging flow now produces `0.2.0-beta.0` tarballs in parallel for the current release candidate.
 
 The official `0.1.0-beta.0` surface is tracked in the beta docs. Stable-for-beta components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Analytics, data-table, expanded form controls and feedback components remain public as `experimental-in-beta` APIs.
+
+The Beta+ track is already taking shape in the repository. The current showcase intentionally highlights the active Beta+ slices only: wave 1 overlays and identity, wave 2 advanced forms, and wave 5 workflow with `AfKanban`.
 
 Alpha docs remain in the repository as the historical baseline and migration source for prerelease consumers.
 
@@ -68,6 +70,19 @@ For the current beta consumer contract, start with:
 - [Beta known limitations](docs/beta/known-limitations.md)
 - [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
 
+The current Beta+ expansion track is documented separately:
+
+- [Beta+ scope](docs/beta-plus/scope.md)
+- [Beta+ public API](docs/beta-plus/public-api.md)
+- [Beta+ quickstart](docs/beta-plus/quickstart.md)
+- [Beta+ components](docs/beta-plus/components.md)
+- [Beta+ known limitations](docs/beta-plus/known-limitations.md)
+- [Migration beta to Beta+](docs/beta-plus/migration-beta-to-beta-plus.md)
+- [Beta+ readiness](docs/beta-plus/readiness.md)
+- [Beta+ visual QA](docs/beta-plus/visual-qa.md)
+- [Beta+ release checklist](docs/beta-plus/release-checklist.md)
+- [Beta+ release notes](docs/beta-plus/release-notes-beta-plus.md)
+
 The historical alpha distribution remains documented here:
 
 - [Alpha quickstart](docs/alpha/quickstart.md)
@@ -104,6 +119,26 @@ Run the beta release gate before tagging or publishing:
 
 ```bash
 pnpm release:beta:check
+```
+
+Run the Beta+ consumer smoke locally:
+
+```bash
+pnpm beta-plus:consumer-smoke
+```
+
+Run the Beta+ accessibility and visual smoke locally:
+
+```bash
+pnpm audit:accessibility:beta-plus
+pnpm exec playwright install chromium
+pnpm visual:beta-plus
+```
+
+Run the Beta+ prerelease gate before dispatching the Beta+ publish workflow:
+
+```bash
+pnpm release:beta-plus:check
 ```
 
 Run the beta package dry-run locally:

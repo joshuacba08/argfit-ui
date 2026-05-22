@@ -86,7 +86,7 @@ describe('App', () => {
     expect(compiled.querySelector('.shell-section h2')?.textContent?.trim()).toBe('Atletas');
   });
 
-  it('renders the beta consumer showcase section inside the alpha slot', async () => {
+  it('renders the current beta plus showcase section inside the legacy alpha slot', async () => {
     const fixture = TestBed.createComponent(App);
     fixture.componentInstance['activeShellSection'].set('alpha');
     fixture.detectChanges();
@@ -95,15 +95,10 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.alpha-view')).not.toBeNull();
     expect(compiled.textContent).toContain('Beta+ consumer kit');
+    expect(compiled.textContent).toContain('Beta+ current state');
     expect(compiled.textContent).toContain('Beta+ wave 1');
     expect(compiled.textContent).toContain('Beta+ wave 2 current slice');
-    expect(compiled.textContent).toContain('Beta+ wave 3 initial slice');
-    expect(compiled.textContent).toContain('Beta+ wave 3 current slice');
-    expect(compiled.textContent).toContain('Beta+ wave 3 transfer slice');
-    expect(compiled.textContent).toContain('Beta+ wave 3 closing slice');
-    expect(compiled.textContent).toContain('Beta+ wave 3 completion slice');
-    expect(compiled.textContent).toContain('Beta+ wave 4 current slice');
-    expect(compiled.textContent).toContain('Beta+ wave 4 experimental slice');
+    expect(compiled.textContent).toContain('Beta+ wave 5 current slice');
     expect(compiled.querySelector('a[href="docs/beta/quickstart.md"]')).not.toBeNull();
     expect(compiled.querySelector('a[href="docs/beta/components.md"]')).not.toBeNull();
     expect(compiled.querySelector('af-input-desktop')).not.toBeNull();
@@ -123,42 +118,12 @@ describe('App', () => {
     expect(compiled.querySelector('.alpha-wave-grid--forms af-field')).not.toBeNull();
     expect(compiled.querySelector('.alpha-wave-grid--forms af-icon-field')).not.toBeNull();
     expect(compiled.querySelector('.alpha-wave-grid--forms af-input-group')).not.toBeNull();
-    expect(compiled.querySelector('af-data-view-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-paginator-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-timeline-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-tree-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-order-list-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-pick-list-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-tree-table-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-virtual-scroller-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-organization-chart-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-divider-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-toolbar-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-panel-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-fieldset-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-scroll-panel-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-tabs-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-accordion-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-stepper-desktop')).not.toBeNull();
-    expect(compiled.querySelector('af-splitter-desktop')).not.toBeNull();
-    expect(compiled.querySelectorAll('af-data-view-desktop .af-data-view-desktop__item').length).toBeGreaterThanOrEqual(4);
-    expect(compiled.querySelectorAll('af-timeline-desktop .af-timeline-desktop__item').length).toBeGreaterThanOrEqual(4);
-    expect(compiled.querySelectorAll('af-tree-desktop .af-tree-desktop__label').length).toBeGreaterThanOrEqual(4);
-    expect(compiled.querySelectorAll('af-order-list-desktop .af-order-list-desktop__item').length).toBeGreaterThanOrEqual(4);
-    expect(compiled.querySelectorAll('af-pick-list-desktop .af-pick-list-desktop__item').length).toBeGreaterThanOrEqual(4);
-    expect(compiled.querySelectorAll('af-tree-table-desktop .af-tree-table-desktop__row').length).toBeGreaterThanOrEqual(5);
-    expect(compiled.querySelectorAll('af-virtual-scroller-desktop .af-virtual-scroller-desktop__item').length).toBeGreaterThanOrEqual(4);
-    expect(compiled.querySelector('.alpha-tree-table-status')?.textContent).toContain('05:30');
-    expect(compiled.querySelector('.alpha-tabs-template')?.textContent).toContain('Performance Ops');
-    expect(compiled.querySelector('.alpha-accordion-template')?.textContent).toContain('Evaluacion');
-    expect(compiled.querySelector('.alpha-stepper-template')?.textContent).toContain('Performance Ops');
-    expect(compiled.querySelector('.alpha-scroll-entry')?.textContent).toContain('Readiness sync');
-    expect(compiled.querySelector('.alpha-splitter-pane')?.textContent).toContain('Brief operativo del dia');
-    expect(compiled.querySelector('.alpha-virtual-template')?.textContent).toContain('Window');
-    expect(compiled.querySelector('.alpha-org-template')?.textContent).toContain('ArgFit Leadership');
-    expect(compiled.querySelectorAll('af-organization-chart-desktop .af-organization-chart-desktop__node-button').length).toBeGreaterThanOrEqual(4);
+    expect(compiled.querySelector('af-kanban-desktop')).not.toBeNull();
+    expect(compiled.querySelectorAll('af-kanban-desktop .af-kanban-desktop__column').length).toBeGreaterThanOrEqual(4);
+    expect(compiled.querySelectorAll('af-kanban-desktop .af-kanban-desktop__card').length).toBeGreaterThanOrEqual(6);
+    expect(compiled.querySelector('.alpha-kanban-header')?.textContent).toContain('Pendientes');
     expect(compiled.textContent).toContain('Adaptive API');
-    expect(compiled.textContent).toContain('Beta+ wave 1');
+    expect(compiled.textContent).toContain('Showcase aligned to active slices');
   });
 
   it('should toggle the active theme', async () => {

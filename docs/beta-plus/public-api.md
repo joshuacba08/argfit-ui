@@ -182,6 +182,11 @@ Current implemented Beta+ adaptive exports in the repository:
 - `AfStepPanelDirective`
 - `AfSplitter`, `AfSplitterComponent`
 - `AfSplitterPrimaryDirective`, `AfSplitterSecondaryDirective`, `AF_SPLITTER_SLOT_DIRECTIVES`
+- `AfKanban`, `AfKanbanComponent`
+- `AfKanbanCardDirective`
+- `AfKanbanColumnHeaderDirective`, `AfKanbanEmptyDirective`, `AfKanbanCardFooterDirective`, `AF_KANBAN_SLOT_DIRECTIVES`
+
+`AfKanban` now ships as the HU-034 workflow slice with an ArgFit-owned controlled API, projected card/header/empty/footer slots, desktop CDK drag/drop and a touch-first mobile fallback based on explicit move actions.
 
 ## `@argfit-ui/desktop`
 

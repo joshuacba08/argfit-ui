@@ -32,6 +32,7 @@ export * from './lib/types/form-field.types';
 export * from './lib/types/icon.types';
 export * from './lib/types/input-count.types';
 export * from './lib/types/input.types';
+export * from './lib/types/kanban.types';
 export * from './lib/types/metric-card.types';
 export * from './lib/types/navigation.types';
 export * from './lib/types/order-list.types';
