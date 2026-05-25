@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "baseUrl": "../../",
+    "paths": {
+      "@argfit-ui/adaptive": ["projects/argfit-ui-adaptive/src/public-api.ts"],
+      "@argfit-ui/core": ["projects/argfit-ui-core/src/public-api.ts"],
+      "@argfit-ui/desktop": ["projects/argfit-ui-desktop/src/public-api.ts"],
+      "@argfit-ui/mobile": ["projects/argfit-ui-mobile/src/public-api.ts"],
+      "@argfit-ui/primitives": ["projects/argfit-ui-primitives/src/public-api.ts"]
+    }
+  }
+}

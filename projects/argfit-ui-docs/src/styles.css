@@ -10,10 +10,38 @@
   box-sizing: border-box;
 }
 
+:root {
+  --docs-bg-glow: color-mix(in srgb, var(--af-primary, #2599d5) 10%, transparent);
+  --docs-bg-start: color-mix(in srgb, var(--af-bg-main, #0a1628) 82%, #020712);
+  --docs-bg-end: color-mix(in srgb, var(--af-bg-main, #0a1628) 74%, #020712);
+  --docs-sidebar-bg: color-mix(in srgb, var(--af-bg-elevated, #0f1d32) 94%, transparent);
+  --docs-sidebar-border: color-mix(in srgb, var(--af-primary, #2599d5) 8%, var(--af-border-soft, rgba(37, 153, 213, 0.06)));
+  --docs-surface-bg: color-mix(in srgb, var(--af-bg-surface, #0f1d32) 84%, transparent);
+  --docs-elevated-bg: color-mix(in srgb, var(--af-bg-main, #0a1628) 74%, transparent);
+  --docs-soft-bg: color-mix(in srgb, var(--af-bg-main, #0a1628) 88%, transparent);
+  --docs-shadow: 0 18px 48px rgba(1, 9, 17, 0.22);
+  --docs-page-overlay: linear-gradient(transparent, transparent);
+}
+
+:root[data-theme='light'] {
+  --docs-bg-glow: color-mix(in srgb, var(--af-primary) 11%, transparent);
+  --docs-bg-start: color-mix(in srgb, var(--af-bg-main) 46%, white);
+  --docs-bg-end: color-mix(in srgb, var(--af-bg-main) 78%, white);
+  --docs-sidebar-bg: color-mix(in srgb, var(--af-bg-elevated) 92%, transparent);
+  --docs-sidebar-border: color-mix(in srgb, var(--af-text-main) 10%, transparent);
+  --docs-surface-bg: color-mix(in srgb, var(--af-bg-surface) 96%, transparent);
+  --docs-elevated-bg: color-mix(in srgb, var(--af-bg-elevated) 92%, transparent);
+  --docs-soft-bg: color-mix(in srgb, var(--af-bg-main) 72%, white);
+  --docs-shadow: 0 16px 40px rgba(16, 42, 67, 0.1);
+  --docs-page-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0));
+}
+
 html {
   background:
-    radial-gradient(circle at top, color-mix(in srgb, var(--af-primary) 16%, transparent), transparent 42%),
-    linear-gradient(180deg, #08111f 0%, #091521 52%, #07111c 100%);
+    var(--docs-page-overlay),
+    radial-gradient(circle at 72% 0%, var(--docs-bg-glow), transparent 34%),
+    linear-gradient(180deg, var(--docs-bg-start) 0%, var(--docs-bg-end) 100%);
+  height: auto;
   min-height: 100%;
   overflow-x: hidden;
 }
@@ -21,10 +49,18 @@ html {
 body {
   color: var(--af-text-main);
   font-family: var(--af-font-body);
+  height: auto;
   margin: 0;
   min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: static;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+docs-root {
+  display: block;
 }
 
 button,

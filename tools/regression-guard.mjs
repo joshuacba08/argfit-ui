@@ -48,13 +48,20 @@ const expectedFiles = [
   'projects/argfit-ui-docs/src/app/app.routes.ts',
   'projects/argfit-ui-docs/src/app/docs-data.ts',
   'projects/argfit-ui-docs/src/app/app.ts',
+  'projects/argfit-ui-docs/src/app/docs-layout.component.ts',
   'projects/argfit-ui-docs/src/app/app.html',
   'projects/argfit-ui-docs/src/app/app.scss',
+  'projects/argfit-ui-docs/src/app/pages/home-landing.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/home-landing.page.html',
+  'projects/argfit-ui-docs/src/app/pages/home-landing.page.scss',
   'projects/argfit-ui-docs/src/app/pages/docs-overview.page.ts',
   'projects/argfit-ui-docs/src/app/pages/docs-components.page.ts',
   'projects/argfit-ui-docs/src/app/pages/docs-api.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-component-detail.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-api-detail.page.ts',
   'projects/argfit-ui-docs/src/app/pages/docs-guides.page.ts',
   'projects/argfit-ui-docs/src/app/pages/docs-release.page.ts',
+  'projects/argfit-ui-docs/src/app/pages/docs-search.page.ts',
   'tools/alpha-smoke.mjs',
   'tools/beta-smoke.mjs',
   'tools/pack-beta.mjs',
@@ -401,24 +408,79 @@ expectIncludes('angular.json', [
 expectIncludes('projects/argfit-ui-docs/src/app/app.html', [
   'ArgFit UI Docs',
   'Framework documentation platform',
-  'Dedicated docs application for ArgFit UI',
+  'Home introduces the framework story.',
+  'Search docs',
+  'Component navigation',
+  'Back to home',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/app.routes.ts', [
+  'home-landing.page',
+  'docs-layout.component',
+  "path: 'search'",
+  "path: 'components/:slug'",
+  "path: 'api/:slug'",
+  'loadComponent',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/home-landing.page.html', [
+  'One semantic UI framework for desktop density and mobile fluency.',
+  'Framework attributes',
+  'Documentation entry',
+  'Enter documentation',
+  'Desktop control tower',
+  'Workflow mock panel',
+  'Mobile sheet mock',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/home-landing.page.ts', [
+  'HomeLandingPageComponent',
+  'Adaptive contract',
+  'AfPageShell',
+  'release:production:check',
+  'proofMetrics',
+  'workflowColumns',
+  'architectureSteps',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-components.page.ts', [
   'Stable component catalog',
   'Components',
   'Productive component families',
+  'Component index',
+  'componentRoute',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-api.page.ts', [
   'API Reference',
   'PRODUCTIVE_PACKAGE_GUIDES',
   '@argfit-ui/adaptive',
+  'Open package page',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-component-detail.page.ts', [
+  'Component detail',
+  'Related components',
+  'Back to components',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-api-detail.page.ts', [
+  'Package detail',
+  'What belongs here',
+  'Back to API index',
+]);
+
+expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-search.page.ts', [
+  'Search docs',
+  'Use the docs search from the sidebar',
+  'Open result',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/docs-data.ts', [
   '@argfit-ui/core',
   '@argfit-ui/adaptive',
+  'PRODUCTIVE_COMPONENT_DOCS',
+  'searchDocs',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-guides.page.ts', [

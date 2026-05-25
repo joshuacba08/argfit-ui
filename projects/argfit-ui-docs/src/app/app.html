@@ -1,23 +1,47 @@
 <div class="docs-shell">
   <aside class="docs-shell__sidebar" aria-label="Documentation navigation">
-    <div class="docs-brand">
+    <a routerLink="/" class="docs-brand">
       <span class="docs-brand__mark">AF</span>
       <div class="docs-brand__copy">
         <strong>ArgFit UI Docs</strong>
         <small>Productive 1.0 platform</small>
       </div>
-    </div>
+    </a>
 
-    <div class="docs-shell__intro">
-      <p>
-        Dedicated docs application for ArgFit UI. The showcase remains a demo playground;
-        this project is the navigable documentation layer.
-      </p>
-      <div class="docs-pill-row docs-pill-row--compact">
-        <af-badge tone="success" dot>separate app</af-badge>
-        <af-badge tone="primary">adaptive first</af-badge>
+    <section class="docs-search-panel" aria-label="Documentation search">
+      <div class="docs-search-panel__header">
+        <span class="docs-nav__eyebrow">Search</span>
+        <strong>Search docs</strong>
       </div>
-    </div>
+
+      <div class="docs-search-field">
+        <input
+          #searchBox
+          class="docs-search-input"
+          type="search"
+          [value]="searchQuery()"
+          placeholder="Search component, package or guide"
+          aria-label="Search documentation"
+          (input)="updateSearch(searchBox.value)"
+          (keyup.enter)="openSearch()"
+        />
+        <button type="button" class="docs-search-button" (click)="openSearch()">Go</button>
+      </div>
+
+      <p class="docs-search-hint">Try AfButton, data table, adaptive or theming.</p>
+
+      @if (quickSearchResults().length > 0) {
+        <div class="docs-quick-results" aria-label="Quick search results">
+          @for (result of quickSearchResults(); track result.route + result.title) {
+            <a [routerLink]="result.route" class="docs-search-result">
+              <span class="docs-nav__eyebrow">{{ result.eyebrow }}</span>
+              <strong>{{ result.title }}</strong>
+              <span class="docs-search-result__meta">{{ result.kind }} · {{ result.matchedFields.join(', ') }}</span>
+            </a>
+          }
+        </div>
+      }
+    </section>
 
     <nav class="docs-nav">
       @for (item of navItems; track item.route) {
@@ -29,17 +53,41 @@
         >
           <span class="docs-nav__eyebrow">{{ item.eyebrow }}</span>
           <strong>{{ item.label }}</strong>
-          <span class="docs-nav__description">{{ item.description }}</span>
         </a>
       }
     </nav>
+
+    <section class="docs-component-nav" aria-label="Component navigation">
+      <div class="docs-component-nav__header">
+        <span class="docs-nav__eyebrow">{{ componentNavEyebrow() }}</span>
+        <strong>Component navigation</strong>
+      </div>
+
+      <div class="docs-component-nav__list">
+        @for (group of componentNavGroups(); track group.family) {
+          <div class="docs-component-nav__group">
+            <span class="docs-nav__eyebrow">{{ group.family }} · {{ group.components.length }}</span>
+            @for (component of group.components; track component.slug) {
+              <a [routerLink]="component.route" class="docs-component-nav__link">
+                <span>{{ component.name }}</span>
+                <small>{{ component.category }}</small>
+              </a>
+            }
+          </div>
+        }
+      </div>
+
+      <a routerLink="/components" class="docs-action-link docs-action-link--secondary">
+        Browse full catalog
+      </a>
+    </section>
   </aside>
 
   <main class="docs-shell__main">
     <header class="docs-shell__topbar">
       <div>
-        <span class="docs-kicker">Documentation runtime</span>
-        <h1 class="docs-shell__title">Framework documentation platform</h1>
+        <span class="docs-kicker">Documentation</span>
+        <h1 class="docs-shell__title">ArgFit UI</h1>
       </div>
 
       <div class="docs-shell__controls">

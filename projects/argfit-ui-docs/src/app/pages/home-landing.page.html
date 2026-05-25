@@ -1,0 +1,346 @@
+<div class="landing-page">
+  <div class="landing-shell">
+    <header class="landing-topbar">
+      <a routerLink="/" class="landing-brand">
+        <span class="landing-brand__mark">AF</span>
+        <div class="landing-brand__copy landing-grid-stack">
+          <strong>ArgFit UI</strong>
+          <small>Adaptive Angular framework</small>
+        </div>
+      </a>
+
+      <nav class="landing-nav" aria-label="Landing sections">
+        <a href="#attributes">Components</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#spotlight">Spotlight</a>
+        <a href="#docs">Docs</a>
+        <a routerLink="/overview" class="landing-nav__cta">Open documentation</a>
+      </nav>
+    </header>
+
+    <section class="landing-hero" id="home">
+      <div class="landing-hero__copy landing-grid-stack">
+        <div class="landing-pill-row">
+          <af-badge tone="success" dot>Angular 21</af-badge>
+          <af-badge tone="primary">adaptive first</af-badge>
+          <af-badge tone="accent">PrimeNG + Ionic internal</af-badge>
+          <af-badge tone="neutral">enterprise workflows</af-badge>
+        </div>
+
+        <div class="landing-hero__headline landing-grid-stack">
+          <span class="landing-eyebrow">Adaptive Angular documentation</span>
+          <h1>ArgFit UI</h1>
+          <p class="landing-hero__subhead">
+            A dark-first component system for dashboards, workflow boards, dense forms and adaptive product shells.
+            One semantic API, two renderer paths and a documentation experience built for serious implementation work.
+          </p>
+        </div>
+
+        <p class="landing-lead">
+          ArgFit UI is not a showcase of disconnected widgets. It is a premium adaptive framework for serious product surfaces,
+          with a guarded public contract, strong renderer boundaries and a documentation platform that explains the system like a product.
+        </p>
+
+        <div class="landing-action-row">
+          <a routerLink="/overview" class="landing-action landing-action--primary">Enter documentation</a>
+          <a href="#attributes" class="landing-action">See framework attributes</a>
+          <a href="#spotlight" class="landing-action landing-action--ghost">Watch the operating model</a>
+        </div>
+
+        <div class="landing-metric-grid landing-grid-stack" aria-label="Framework metrics">
+          @for (metric of proofMetrics; track metric.label) {
+            <div class="landing-metric-card">
+              <strong>{{ metric.value }}</strong>
+              <span>{{ metric.label }}</span>
+              <small>{{ metric.detail }}</small>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="landing-hero__visual">
+        <div class="landing-stage">
+          <div class="landing-stage__grid" aria-hidden="true"></div>
+
+          <af-card variant="panel" tone="primary" class="landing-card landing-card--hero landing-motion-block">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Desktop control tower</span>
+                <h2 afCardTitle>Framework attributes in a premium operating surface</h2>
+              </div>
+              <af-badge tone="success">production-minded</af-badge>
+            </header>
+            <div afCardContent class="landing-stack">
+              <div class="landing-shell-mock landing-grid-stack">
+                <div class="landing-shell-mock__sidebar">
+                  <span class="landing-shell-mock__brand">AF</span>
+                  <div class="landing-shell-mock__rail landing-grid-stack">
+                    @for (item of shellRail; track item) {
+                      <span>{{ item }}</span>
+                    }
+                  </div>
+                </div>
+
+                <div class="landing-shell-mock__body landing-grid-stack">
+                  <div class="landing-shell-mock__topbar">
+                    <div class="landing-shell-mock__search">Performance workspace</div>
+                    <div class="landing-shell-mock__status">adaptive runtime</div>
+                  </div>
+
+                  <div class="landing-shell-mock__metrics landing-grid-stack">
+                    @for (metric of shellMetrics; track metric.label) {
+                      <div class="landing-shell-mock__metric">
+                        <span>{{ metric.label }}</span>
+                        <strong>{{ metric.value }}</strong>
+                        <small>{{ metric.trend }}</small>
+                      </div>
+                    }
+                  </div>
+
+                  <div class="landing-shell-mock__grid landing-grid-stack">
+                    <div class="landing-chart-mock">
+                      <div class="landing-chart-mock__header">
+                        <span>Adaptive analytics</span>
+                        <strong>High-signal dashboard</strong>
+                      </div>
+                      <div class="landing-chart-mock__bars" aria-hidden="true">
+                        <span style="height: 34%"></span>
+                        <span style="height: 52%"></span>
+                        <span style="height: 68%"></span>
+                        <span style="height: 58%"></span>
+                        <span style="height: 82%"></span>
+                        <span style="height: 72%"></span>
+                      </div>
+                      <div class="landing-chart-mock__line" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="landing-table-mock">
+                      <div class="landing-table-mock__row landing-table-mock__row--head">
+                        <span>Surface</span>
+                        <span>Status</span>
+                        <span>Outcome</span>
+                      </div>
+                      <div class="landing-table-mock__row">
+                        <span>AfPageShell</span>
+                        <span>stable</span>
+                        <span>navigation orchestration</span>
+                      </div>
+                      <div class="landing-table-mock__row">
+                        <span>AfDataTable</span>
+                        <span>stable</span>
+                        <span>dense operational reading</span>
+                      </div>
+                      <div class="landing-table-mock__row">
+                        <span>AfKanban</span>
+                        <span>workflow</span>
+                        <span>stateful product flow</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="landing-card landing-card--workflow landing-motion-block">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Workflow mock panel</span>
+                <h3 afCardTitle>Kanban-like execution without leaving the framework</h3>
+              </div>
+              <af-badge tone="accent">operational</af-badge>
+            </header>
+            <div afCardContent class="landing-board-mock landing-grid-stack">
+              @for (column of workflowColumns; track column.title) {
+                <div class="landing-board-mock__column">
+                  <div class="landing-board-mock__header">
+                    <span>{{ column.title }}</span>
+                    <af-badge [tone]="column.tone">{{ column.count }}</af-badge>
+                  </div>
+                  <div class="landing-board-mock__stack landing-grid-stack">
+                    @for (item of column.items; track item) {
+                      <div class="landing-board-mock__card">{{ item }}</div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </af-card>
+
+          <af-card variant="panel" tone="primary" class="landing-card landing-card--mobile landing-motion-block">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>Mobile sheet mock</span>
+                <h3 afCardTitle>Touch-first behavior on the same contract</h3>
+              </div>
+              <af-badge tone="success">same API</af-badge>
+            </header>
+            <div afCardContent class="landing-mobile-mock landing-grid-stack">
+              <div class="landing-mobile-mock__screen landing-grid-stack">
+                <div class="landing-mobile-mock__handle"></div>
+                <div class="landing-mobile-mock__hero">
+                  <span>Field workflow</span>
+                  <strong>Adaptive task sheet</strong>
+                </div>
+                <div class="landing-mobile-mock__list landing-grid-stack">
+                  @for (moment of mobileMoments; track moment) {
+                    <div class="landing-mobile-mock__item">{{ moment }}</div>
+                  }
+                </div>
+              </div>
+            </div>
+          </af-card>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-trust-strip landing-grid-stack" aria-label="Framework proof points">
+      @for (item of trustStrip; track item.label) {
+        <div class="landing-trust-strip__item">
+          <strong>{{ item.label }}</strong>
+          <span>{{ item.detail }}</span>
+        </div>
+      }
+    </section>
+
+    <section class="landing-section landing-grid-stack" id="attributes">
+      <div class="landing-section__header landing-grid-stack">
+        <span class="landing-eyebrow">Framework attributes</span>
+        <h2>What makes ArgFit UI different</h2>
+        <p>
+          A robust UI framework needs more than components. It needs a coherent contract, renderer discipline,
+          product-grade workflows and documentation that explains why the system exists.
+        </p>
+      </div>
+
+      <div class="landing-feature-grid landing-grid-stack">
+        @for (highlight of highlights; track highlight.title) {
+          <af-card variant="panel" tone="primary" class="landing-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>{{ highlight.eyebrow }}</span>
+                <h3 afCardTitle>{{ highlight.title }}</h3>
+              </div>
+              <af-badge [tone]="highlight.tone">feature</af-badge>
+            </header>
+            <div afCardContent class="landing-stack">
+              <p>{{ highlight.summary }}</p>
+              <ul>
+                @for (bullet of highlight.bullets; track bullet) {
+                  <li>{{ bullet }}</li>
+                }
+              </ul>
+            </div>
+          </af-card>
+        }
+      </div>
+    </section>
+
+    <section class="landing-section landing-section--contrast landing-grid-stack" id="architecture">
+      <div class="landing-section__header landing-grid-stack">
+        <span class="landing-eyebrow">Architecture</span>
+        <h2>Structured like a framework, not a bag of wrappers</h2>
+        <p>
+          The package split keeps responsibilities clean: core and primitives stay vendor-agnostic,
+          adaptive remains the application-facing contract, and renderer-specific layers stay internal on purpose.
+        </p>
+      </div>
+
+      <div class="landing-architecture-proof landing-grid-stack">
+        @for (step of architectureSteps; track step.title) {
+          <div class="landing-architecture-proof__step landing-grid-stack">
+            <strong>{{ step.title }}</strong>
+            <p>{{ step.summary }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="landing-layer-grid landing-grid-stack">
+        @for (pkg of packageGuides; track pkg.slug) {
+          <af-card variant="panel" tone="primary" class="landing-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>package layer</span>
+                <h3 afCardTitle>{{ pkg.name }}</h3>
+              </div>
+              <af-badge tone="neutral">{{ pkg.slug }}</af-badge>
+            </header>
+            <div afCardContent class="landing-stack">
+              <p>{{ pkg.purpose }}</p>
+            </div>
+            <footer afCardFooter>
+              <a [routerLink]="pkg.route" class="landing-inline-link">Open package docs</a>
+            </footer>
+          </af-card>
+        }
+      </div>
+    </section>
+
+    <section class="landing-section landing-grid-stack" id="spotlight">
+      <div class="landing-section__header landing-grid-stack">
+        <span class="landing-eyebrow">Workflow spotlight</span>
+        <h2>Built around real product surfaces</h2>
+        <p>
+          The framework is biased toward enterprise use cases: dashboards, workflow boards, overlays,
+          shell navigation and dense forms that need to look premium and behave predictably.
+        </p>
+      </div>
+
+      <div class="landing-scenario-grid landing-grid-stack">
+        @for (scenario of scenarios; track scenario.title) {
+          <div class="landing-scenario-card">
+            <strong>{{ scenario.title }}</strong>
+            <p>{{ scenario.summary }}</p>
+            <span>{{ scenario.outcome }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="landing-spotlight-row landing-grid-stack" aria-label="Featured framework surfaces">
+        @for (component of featuredComponents; track component.slug) {
+          <a [routerLink]="component.route" class="landing-spotlight-chip">
+            <span>{{ component.name }}</span>
+            <small>{{ component.family }}</small>
+          </a>
+        }
+      </div>
+    </section>
+
+    <section class="landing-section landing-section--cta landing-grid-stack" id="docs">
+      <div class="landing-section__header landing-grid-stack">
+        <span class="landing-eyebrow">Documentation entry</span>
+        <h2>Move from framework story into implementation details</h2>
+        <p>
+          The documentation area already reads like a framework platform: onboarding, components, APIs, guides,
+          release contract and direct deep links for serious consumers.
+        </p>
+      </div>
+
+      <div class="landing-doc-grid landing-grid-stack">
+        @for (entry of entryPoints; track entry.title) {
+          <af-card variant="panel" tone="primary" class="landing-card">
+            <header afCardHeader>
+              <div>
+                <span afCardEyebrow>{{ entry.badge }}</span>
+                <h3 afCardTitle>{{ entry.title }}</h3>
+              </div>
+              <af-badge tone="accent">docs</af-badge>
+            </header>
+            <div afCardContent class="landing-stack">
+              <p>{{ entry.summary }}</p>
+            </div>
+            <footer afCardFooter class="landing-action-row landing-action-row--compact">
+              <a [routerLink]="entry.route" class="landing-action landing-action--small">Open</a>
+            </footer>
+          </af-card>
+        }
+      </div>
+
+      <div class="landing-command-row" aria-label="Validation commands">
+        @for (command of validationCommands; track command) {
+          <code>{{ command }}</code>
+        }
+      </div>
+    </section>
+  </div>
+</div>

@@ -156,6 +156,7 @@
               "outputHashing": "all"
             },
             "development": {
+              "tsConfig": "projects/argfit-ui-docs/tsconfig.app.dev.json",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

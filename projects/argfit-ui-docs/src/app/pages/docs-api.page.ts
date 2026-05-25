@@ -1,24 +1,26 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import {
-  AfBadge,
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardFooterDirective,
-  AfCardHeaderDirective,
-  AfCardTitleDirective,
+    AfBadge,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardFooterDirective,
+    AfCardHeaderDirective,
+    AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
 
 import {
-  PRODUCTIVE_ADAPTIVE_EXAMPLE,
-  PRODUCTIVE_BOOTSTRAP_EXAMPLE,
-  PRODUCTIVE_PACKAGE_GUIDES,
+    PRODUCTIVE_ADAPTIVE_EXAMPLE,
+    PRODUCTIVE_BOOTSTRAP_EXAMPLE,
+    PRODUCTIVE_PACKAGE_GUIDES,
 } from '../docs-data';
 
 @Component({
   selector: 'app-docs-api-page',
   imports: [
+    RouterLink,
     AfBadge,
     AfCard,
     AfCardContentDirective,
@@ -37,6 +39,10 @@ import {
       <p class="docs-page__lead">
         The API surface is documented by package responsibility, import posture and the ArgFit-owned runtime contracts that matter to consumers.
       </p>
+      <div class="docs-pill-row">
+        <af-badge tone="primary">{{ packages.length }} public packages</af-badge>
+        <af-badge tone="success">individual package pages</af-badge>
+      </div>
     </div>
 
     <section class="docs-card-grid docs-card-grid--three">
@@ -58,7 +64,7 @@ import {
             </ul>
           </div>
           <footer afCardFooter class="docs-source-row">
-            <code>docs/productive/api-reference.md</code>
+            <a [routerLink]="pkg.route" class="docs-action-link">Open package page</a>
           </footer>
         </af-card>
       }
