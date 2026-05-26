@@ -68,3 +68,9 @@ La proyeccion productiva vive en [docs/productive/projection.md](../productive/p
 41. [HU-041 — Productive Documentation Site](./HU-041-productive-documentation-site.md)
 42. [HU-042 — Productive Release Operations And Support Policy](./HU-042-productive-release-operations-support.md)
 43. [HU-043 — Production 1.0 Release Gate](./HU-043-production-1-release-gate.md)
+
+## Camino PWA Y Device Capabilities
+
+Este tramo valida ArgFit UI como base para aplicaciones instalables en desktop, tablet y mobile. Las capacidades de dispositivo viven en apps consumidoras o starters; ArgFit UI mantiene el contrato visual/adaptive y no absorbe APIs de hardware en core.
+
+44. [HU-044 — PWA Starter And Device Capability Demo](./HU-044-pwa-starter-device-capabilities.md)

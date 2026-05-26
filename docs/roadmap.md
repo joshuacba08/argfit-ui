@@ -608,6 +608,35 @@ The productive version is ready when:
 
 ---
 
+# Phase 14 — PWA And Device Capability Starter
+
+# Goal
+
+Prove ArgFit UI can support installable applications across desktop, tablet and mobile while keeping hardware and device APIs outside the core UI packages.
+
+## Status
+
+PLANNED
+
+## Scope
+
+This phase creates a PWA starter application that uses the adaptive ArgFit UI contract and demonstrates:
+
+- PWA installability.
+- Offline app shell.
+- Service worker update feedback.
+- Network and secure-context awareness.
+- Web Bluetooth capability detection.
+- BLE demo flow on supported Chromium browsers.
+- Clear fallback for iOS/iPadOS Safari and unsupported desktop browsers.
+- Transport abstraction for future native/hybrid implementations.
+
+## Planned HUs
+
+- HU-044 — [PWA Starter And Device Capability Demo](./hus/HU-044-pwa-starter-device-capabilities.md)
+
+---
+
 # Long-Term Vision
 
 ArgFit UI should evolve into:
