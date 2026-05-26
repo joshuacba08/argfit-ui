@@ -24,6 +24,7 @@ for (const packageDefinition of packageDefinitions) {
 validateTarballs();
 validateTypeScriptConsumerSmoke();
 validateWorkflowShape();
+validateProductionPublishWorkflowShape();
 validateDocsShape();
 
 rmSync(smokeDirectory, { recursive: true, force: true });
@@ -139,6 +140,33 @@ function validateWorkflowShape() {
   }
 }
 
+function validateProductionPublishWorkflowShape() {
+  const workflowPath = resolve(repoRoot, '.github', 'workflows', 'publish-production.yml');
+
+  if (!existsSync(workflowPath)) {
+    failures.push('.github/workflows/publish-production.yml: expected production publish workflow to exist');
+    return;
+  }
+
+  const workflow = readFileSync(workflowPath, 'utf8');
+
+  for (const snippet of [
+    'name: Publish Production',
+    'workflow_dispatch:',
+    "- 'v1.*.*'",
+    'NPM_TOKEN',
+    'NODE_AUTH_TOKEN',
+    'pnpm release:production:check',
+    'pnpm build:libs',
+    "manifest.publishConfig?.tag !== 'latest'",
+    'npm publish "$package_dir" --tag latest --access public',
+  ]) {
+    if (!workflow.includes(snippet)) {
+      failures.push(`.github/workflows/publish-production.yml: missing ${JSON.stringify(snippet)}`);
+    }
+  }
+}
+
 function validateDocsShape() {
   for (const [filePath, snippets] of [
     ['package.json', ['"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
@@ -146,6 +174,8 @@ function validateDocsShape() {
     ['docs/productive/scope.md', ['ArgFit UI 1.0.0 Scope', '`1.0-adaptive`']],
     ['docs/productive/public-api.md', ['Productive Public API Inventory', '1.0-renderer-specific']],
     ['docs/productive/semver-policy.md', ['Productive Semver Policy', 'Deprecation Policy']],
+    ['docs/productive/release-operations.md', ['Productive Release Operations', 'Branch And Tag Strategy', 'npm Publish Process', 'Patch Release Procedure', 'Changelog Policy', 'publish-production.yml', 'NPM_TOKEN', 'latest']],
+    ['docs/productive/support-policy.md', ['Productive Support Policy', 'Support Window', 'Security And Dependency Update Policy', 'Deprecation Process', '1.x']],
   ]) {
     const absolutePath = resolve(repoRoot, filePath);
 

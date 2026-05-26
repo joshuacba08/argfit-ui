@@ -325,6 +325,8 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 - [Beta readiness evaluation](docs/beta/readiness.md)
 - [Beta+ readiness plan](docs/beta-plus/readiness.md)
 - [Productive version projection](docs/productive/projection.md)
+- [Productive release operations](docs/productive/release-operations.md)
+- [Productive support policy](docs/productive/support-policy.md)
 - [Changelog](CHANGELOG.md)
 - [Human units](docs/hus/README.md)
 

@@ -13,6 +13,8 @@ The frozen `1.0.0` contract baseline lives in:
 - `docs/productive/semver-policy.md`
 - `docs/productive/quality-gates.md`
 - `docs/productive/enterprise-readiness.md`
+- `docs/productive/release-operations.md`
+- `docs/productive/support-policy.md`
 
 ## Productive Definition
 

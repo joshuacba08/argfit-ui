@@ -34,6 +34,8 @@ const expectedFiles = [
   'docs/productive/semver-policy.md',
   'docs/productive/quality-gates.md',
   'docs/productive/enterprise-readiness.md',
+  'docs/productive/release-operations.md',
+  'docs/productive/support-policy.md',
   'docs/productive/quickstart.md',
   'docs/productive/components.md',
   'docs/productive/api-reference.md',
@@ -68,6 +70,7 @@ const expectedFiles = [
   'tools/production-performance.mjs',
   'tools/production-smoke.mjs',
   '.github/workflows/ci.yml',
+  '.github/workflows/publish-production.yml',
   '.github/workflows/publish-alpha.yml',
   '.github/workflows/publish-beta.yml',
   'CHANGELOG.md',
@@ -303,6 +306,8 @@ expectIncludes('docs/productive/projection.md', [
   'docs/productive/semver-policy.md',
   'docs/productive/quality-gates.md',
   'docs/productive/enterprise-readiness.md',
+  'docs/productive/release-operations.md',
+  'docs/productive/support-policy.md',
   'HU-039 - Productive Quality Gates',
 ]);
 
@@ -337,6 +342,25 @@ expectIncludes('docs/productive/quality-gates.md', [
   'No active budget exceptions.',
   '2.90 MB',
   '650 kB',
+]);
+
+expectIncludes('docs/productive/release-operations.md', [
+  'Productive Release Operations',
+  'Branch And Tag Strategy',
+  'npm Publish Process',
+  'Patch Release Procedure',
+  'Changelog Policy',
+  'publish-production.yml',
+  'NPM_TOKEN',
+  'latest',
+]);
+
+expectIncludes('docs/productive/support-policy.md', [
+  'Productive Support Policy',
+  'Support Window',
+  'Security And Dependency Update Policy',
+  'Deprecation Process',
+  '1.x',
 ]);
 
 expectIncludes('docs/productive/enterprise-readiness.md', [
@@ -407,11 +431,10 @@ expectIncludes('angular.json', [
 
 expectIncludes('projects/argfit-ui-docs/src/app/app.html', [
   'ArgFit UI Docs',
-  'Framework documentation platform',
-  'Home introduces the framework story.',
+  'Productive 1.0 platform',
   'Search docs',
   'Component navigation',
-  'Back to home',
+  'Browse full catalog',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/app.routes.ts', [
@@ -424,13 +447,12 @@ expectIncludes('projects/argfit-ui-docs/src/app/app.routes.ts', [
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/home-landing.page.html', [
-  'One semantic UI framework for desktop density and mobile fluency.',
+  'Adaptive Angular documentation',
   'Framework attributes',
-  'Documentation entry',
   'Enter documentation',
   'Desktop control tower',
-  'Workflow mock panel',
-  'Mobile sheet mock',
+  'Workflow panel',
+  'Mobile sheet',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/home-landing.page.ts', [
@@ -446,9 +468,9 @@ expectIncludes('projects/argfit-ui-docs/src/app/pages/home-landing.page.ts', [
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-components.page.ts', [
   'Stable component catalog',
   'Components',
-  'Productive component families',
+  'Browse the catalog',
   'Component index',
-  'componentRoute',
+  'selectComponent',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-api.page.ts', [
@@ -471,15 +493,18 @@ expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-api-detail.page.ts', 
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-search.page.ts', [
-  'Search docs',
-  'Use the docs search from the sidebar',
-  'Open result',
+  'Smart search',
+  'Find components, APIs and patterns',
+  'Search the contract by component name',
+  'docs-search-result-card',
 ]);
 
 expectIncludes('projects/argfit-ui-docs/src/app/docs-data.ts', [
   '@argfit-ui/core',
   '@argfit-ui/adaptive',
   'PRODUCTIVE_COMPONENT_DOCS',
+  'docs/productive/release-operations.md',
+  'docs/productive/support-policy.md',
   'searchDocs',
 ]);
 
@@ -492,6 +517,7 @@ expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-guides.page.ts', [
 expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-release.page.ts', [
   'Release',
   'release:production:check',
+  'PRODUCTIVE_RELEASE_ASSETS',
   'The docs app is now its own Angular project.',
 ]);
 
@@ -517,6 +543,18 @@ expectIncludes('.github/workflows/ci.yml', [
   'actions/upload-artifact@v4',
   'dist/beta-plus-tarballs/*.tgz',
   '.tmp/visual-regression/beta-plus/*.png',
+]);
+
+expectIncludes('.github/workflows/publish-production.yml', [
+  'name: Publish Production',
+  'workflow_dispatch:',
+  "- 'v1.*.*'",
+  'NPM_TOKEN',
+  'NODE_AUTH_TOKEN',
+  'pnpm release:production:check',
+  'pnpm build:libs',
+  '--tag latest',
+  '--access public',
 ]);
 
 expectIncludes('.github/workflows/publish-alpha.yml', [

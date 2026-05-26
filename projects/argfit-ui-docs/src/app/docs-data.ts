@@ -384,6 +384,18 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
     summary: 'The operational contract that keeps the productive line honest.',
     bullets: ['release:production:check', 'Performance budgets', 'CI artifact expectations'],
   },
+  {
+    title: 'Release operations',
+    sourcePath: 'docs/productive/release-operations.md',
+    summary: 'Branching, tagging, npm publish, patch release and changelog rules for production releases.',
+    bullets: ['publish-production.yml', 'latest dist-tag guard', 'Patch release procedure'],
+  },
+  {
+    title: 'Support policy',
+    sourcePath: 'docs/productive/support-policy.md',
+    summary: 'Support window, security, dependency update and deprecation rules for the productive line.',
+    bullets: ['1.x support window', 'Security and dependency updates', 'Deprecation process'],
+  },
 ];
 
 export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
@@ -406,6 +418,16 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
     title: 'Quality gates',
     sourcePath: 'docs/productive/quality-gates.md',
     summary: 'The production gate, budgets and the CI expectation for the release line.',
+  },
+  {
+    title: 'Release operations',
+    sourcePath: 'docs/productive/release-operations.md',
+    summary: 'Branch and tag strategy, npm publish process, patch release steps and changelog policy.',
+  },
+  {
+    title: 'Support policy',
+    sourcePath: 'docs/productive/support-policy.md',
+    summary: 'Support window, security maintenance, dependency update and deprecation process for 1.x.',
   },
   {
     title: 'Release notes',

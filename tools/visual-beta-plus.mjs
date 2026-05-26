@@ -35,9 +35,12 @@ try {
       await setTheme(page, 'dark');
       await waitForVisible(page, '[data-qa="overlays"]');
       await page.locator('[data-qa="overlays"]').scrollIntoViewIfNeeded();
-      await clickQa(page, 'popover-toggle');
-      await clickQa(page, 'drawer-open');
-      await waitForVisible(page, 'af-drawer-desktop');
+      await activateQa(page, 'popover-toggle');
+      await waitForVisible(page, '.af-popover-desktop__panel');
+      await activateQa(page, 'popover-toggle');
+      await page.locator('.af-popover-desktop__panel').first().waitFor({ state: 'hidden' });
+      await activateQa(page, 'drawer-open');
+      await waitForVisible(page, 'af-drawer-desktop[data-open] .af-drawer-desktop__panel');
       await assertMinimumCount(page, 'af-tooltip-desktop', 1, 'desktop tooltips');
       await assertMinimumCount(page, 'af-popover-desktop', 1, 'desktop popovers');
       await assertMinimumCount(page, 'af-drawer-desktop', 1, 'desktop drawers');
@@ -283,6 +286,14 @@ async function clickQa(page, dataQa) {
   await locator.first().click({ force: true });
 }
 
+async function activateQa(page, dataQa) {
+  const locator = page.locator(`[data-qa="${dataQa}"]`);
+  if ((await locator.count()) === 0) {
+    throw new Error(`Expected to find data-qa selector ${dataQa}.`);
+  }
+  await locator.first().evaluate((element) => element.click());
+}
+
 async function setPlatform(page, platform) {
   await clickQa(page, `platform-${platform}`);
   await page.waitForFunction(
@@ -316,7 +327,7 @@ async function openMobileMultiSelect(page) {
     throw new Error('Expected a mobile multi-select trigger.');
   }
   await trigger.first().click({ force: true });
-  await waitForVisible(page, '[data-qa="multi-select-control"] af-drawer-mobile[data-open]');
+  await waitForVisible(page, '[data-qa="multi-select-control"] af-drawer-mobile[data-open] .af-drawer-mobile__panel');
 }
 
 async function waitForVisible(page, selector) {

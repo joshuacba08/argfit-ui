@@ -16,7 +16,7 @@ This page documents the intended `1.0.0` release story and the hardening already
 - Scope freeze and `1.0.x` rules documented in [scope](./scope.md) and [semver policy](./semver-policy.md)
 - Production validation through `pnpm release:production:check`
 - Performance budgets and package smoke for the current publishable substrate
-- Productive docs for quickstart, components, API, theming, accessibility, enterprise readiness, migration and release notes
+- Productive docs for quickstart, components, API, theming, accessibility, enterprise readiness, release operations, support policy, migration and release notes
 - Showcase documentation front that exposes the productive docs posture through the current Angular app
 
 ## Consumer Notes
@@ -38,7 +38,7 @@ pnpm release:production:check
 
 ## Publish Reality
 
-The documentation, public API freeze and production gate now describe the `1.0.0` contract, but the final package version alignment and release workflow are still completed later in the roadmap. Until that step lands, the productive gate intentionally reuses the Beta+ packaging substrate.
+The documentation, public API freeze, support policy, release operations and production gate now describe the `1.0.0` contract. The production publish workflow is present, but it refuses to publish until `HU-043` aligns package versions and package metadata to the stable `latest` channel. Until that step lands, the productive gate intentionally reuses the Beta+ packaging substrate.
 
 ## Recommended Reading
 
@@ -48,3 +48,5 @@ The documentation, public API freeze and production gate now describe the `1.0.0
 - [Productive theming](./theming.md)
 - [Productive enterprise readiness](./enterprise-readiness.md)
 - [Productive quality gates](./quality-gates.md)
+- [Productive release operations](./release-operations.md)
+- [Productive support policy](./support-policy.md)
