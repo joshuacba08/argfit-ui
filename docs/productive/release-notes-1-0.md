@@ -1,8 +1,8 @@
-# Release Notes: 1.0.0 Target
+# Release Notes: 1.0.0 Target Archive
 
 ArgFit UI `1.0.0` is the first productive contract for the platform.
 
-This page documents the intended `1.0.0` release story and the hardening already completed in the repository. It is a target release note until the final publish alignment work lands.
+This page preserves the earlier target release story. The canonical shipped release notes now live in [release notes 1.0.0](./release-notes-1.0.0.md).
 
 ## Summary
 
@@ -15,7 +15,7 @@ This page documents the intended `1.0.0` release story and the hardening already
 - Frozen public barrels documented in [productive public API](./public-api.md)
 - Scope freeze and `1.0.x` rules documented in [scope](./scope.md) and [semver policy](./semver-policy.md)
 - Production validation through `pnpm release:production:check`
-- Performance budgets and package smoke for the current publishable substrate
+- Performance budgets and package smoke for production `1.0.0` tarballs
 - Productive docs for quickstart, components, API, theming, accessibility, enterprise readiness, release operations, support policy, migration and release notes
 - Showcase documentation front that exposes the productive docs posture through the current Angular app
 
@@ -38,7 +38,7 @@ pnpm release:production:check
 
 ## Publish Reality
 
-The documentation, public API freeze, support policy, release operations and production gate now describe the `1.0.0` contract. The production publish workflow is present, but it refuses to publish until `HU-043` aligns package versions and package metadata to the stable `latest` channel. Until that step lands, the productive gate intentionally reuses the Beta+ packaging substrate.
+The documentation, public API freeze, support policy, release operations, package metadata and production gate now describe the `1.0.0` contract. The production publish workflow refuses prerelease metadata and publishes only with the `latest` dist-tag.
 
 ## Recommended Reading
 

@@ -32,10 +32,10 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
       <h1>Release</h1>
       <p class="docs-page__lead">
         Productive release work is anchored in the frozen public API, semver policy and the production gate.
-        The final package-version alignment still lands later in the roadmap.
+        Package metadata, production tarballs and npm latest publishing are aligned for the 1.0 contract.
       </p>
       <div class="docs-pill-row">
-        <af-badge tone="warning">1.0 target</af-badge>
+        <af-badge tone="success">1.0.0 stable</af-badge>
         <af-badge tone="success">release:production:check</af-badge>
       </div>
     </div>
@@ -85,7 +85,7 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
           <ul>
             <li>The docs app is now its own Angular project.</li>
             <li>The productive markdown corpus remains the authored source of truth.</li>
-            <li>The production gate still reuses the Beta+ packaging substrate until HU-043.</li>
+            <li>The production gate rebuilds stable packages and writes production tarballs after the Beta+ regression substrate.</li>
           </ul>
         </div>
       </af-card>

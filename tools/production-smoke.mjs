@@ -6,18 +6,52 @@ import ts from 'typescript';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'production-smoke');
-const tarballDirectory = resolve(repoRoot, 'dist', 'beta-plus-tarballs');
+const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
+const PRODUCTION_VERSION = '1.0.0';
 const failures = [];
 
 const packageDefinitions = [
-  { name: '@argfit-ui/core', distDirectory: 'dist/argfit-ui-core', tarballPrefix: 'argfit-ui-core-' },
-  { name: '@argfit-ui/primitives', distDirectory: 'dist/argfit-ui-primitives', tarballPrefix: 'argfit-ui-primitives-' },
-  { name: '@argfit-ui/desktop', distDirectory: 'dist/argfit-ui-desktop', tarballPrefix: 'argfit-ui-desktop-' },
-  { name: '@argfit-ui/mobile', distDirectory: 'dist/argfit-ui-mobile', tarballPrefix: 'argfit-ui-mobile-' },
-  { name: '@argfit-ui/adaptive', distDirectory: 'dist/argfit-ui-adaptive', tarballPrefix: 'argfit-ui-adaptive-' },
+  {
+    name: '@argfit-ui/core',
+    projectManifest: 'projects/argfit-ui-core/package.json',
+    distDirectory: 'dist/argfit-ui-core',
+    tarballPrefix: 'argfit-ui-core-',
+    internalPeers: [],
+  },
+  {
+    name: '@argfit-ui/primitives',
+    projectManifest: 'projects/argfit-ui-primitives/package.json',
+    distDirectory: 'dist/argfit-ui-primitives',
+    tarballPrefix: 'argfit-ui-primitives-',
+    internalPeers: ['@argfit-ui/core'],
+  },
+  {
+    name: '@argfit-ui/desktop',
+    projectManifest: 'projects/argfit-ui-desktop/package.json',
+    distDirectory: 'dist/argfit-ui-desktop',
+    tarballPrefix: 'argfit-ui-desktop-',
+    internalPeers: ['@argfit-ui/core', '@argfit-ui/primitives'],
+  },
+  {
+    name: '@argfit-ui/mobile',
+    projectManifest: 'projects/argfit-ui-mobile/package.json',
+    distDirectory: 'dist/argfit-ui-mobile',
+    tarballPrefix: 'argfit-ui-mobile-',
+    internalPeers: ['@argfit-ui/core', '@argfit-ui/primitives'],
+  },
+  {
+    name: '@argfit-ui/adaptive',
+    projectManifest: 'projects/argfit-ui-adaptive/package.json',
+    distDirectory: 'dist/argfit-ui-adaptive',
+    tarballPrefix: 'argfit-ui-adaptive-',
+    internalPeers: ['@argfit-ui/core', '@argfit-ui/desktop', '@argfit-ui/mobile', '@argfit-ui/primitives'],
+  },
 ];
 
+validateRootManifest();
+
 for (const packageDefinition of packageDefinitions) {
+  validateSourcePackage(packageDefinition);
   validateDistPackage(packageDefinition);
 }
 
@@ -41,6 +75,28 @@ if (failures.length > 0) {
 
 console.log('Production smoke passed.');
 
+function validateRootManifest() {
+  const manifestPath = resolve(repoRoot, 'package.json');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+
+  if (manifest.version !== PRODUCTION_VERSION) {
+    failures.push(`package.json: expected version ${PRODUCTION_VERSION}, found ${manifest.version}`);
+  }
+}
+
+function validateSourcePackage(packageDefinition) {
+  const manifestPath = resolve(repoRoot, packageDefinition.projectManifest);
+
+  if (!existsSync(manifestPath)) {
+    failures.push(`${packageDefinition.projectManifest}: expected source package manifest to exist`);
+    return;
+  }
+
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+
+  validatePackageManifest(packageDefinition, manifest, packageDefinition.projectManifest);
+}
+
 function validateDistPackage(packageDefinition) {
   const packageDirectory = resolve(repoRoot, packageDefinition.distDirectory);
   const manifestPath = resolve(packageDirectory, 'package.json');
@@ -61,6 +117,8 @@ function validateDistPackage(packageDefinition) {
     failures.push(`${packageDefinition.distDirectory}: expected package name ${packageDefinition.name}, found ${manifest.name}`);
   }
 
+  validatePackageManifest(packageDefinition, manifest, packageDefinition.distDirectory);
+
   const rootExport = manifest.exports?.['.'];
   const typeEntry = rootExport?.types ?? manifest.typings ?? manifest.types;
   const runtimeEntry = rootExport?.default ?? manifest.module ?? manifest.fesm2022;
@@ -75,19 +133,45 @@ function validateDistPackage(packageDefinition) {
 
 }
 
+function validatePackageManifest(packageDefinition, manifest, label) {
+  if (manifest.version !== PRODUCTION_VERSION) {
+    failures.push(`${label}: expected version ${PRODUCTION_VERSION}, found ${manifest.version}`);
+  }
+
+  if (typeof manifest.version === 'string' && manifest.version.includes('-')) {
+    failures.push(`${label}: production package version must not include a prerelease identifier`);
+  }
+
+  if (manifest.publishConfig?.access !== 'public') {
+    failures.push(`${label}: publishConfig.access must be public`);
+  }
+
+  if (manifest.publishConfig?.tag !== 'latest') {
+    failures.push(`${label}: publishConfig.tag must be latest`);
+  }
+
+  const peerDependencies = manifest.peerDependencies ?? {};
+
+  for (const internalPeerName of packageDefinition.internalPeers) {
+    if (peerDependencies[internalPeerName] !== PRODUCTION_VERSION) {
+      failures.push(`${label}: peer ${internalPeerName} must be ${PRODUCTION_VERSION}, found ${peerDependencies[internalPeerName]}`);
+    }
+  }
+}
+
 function validateTarballs() {
   if (!existsSync(tarballDirectory)) {
-    failures.push('dist/beta-plus-tarballs: expected tarball output directory to exist after pnpm pack:beta-plus:dist');
+    failures.push('dist/production-tarballs: expected tarball output directory to exist after pnpm pack:production:dist');
     return;
   }
 
   const tarballFiles = readdirSync(tarballDirectory).filter((entry) => entry.endsWith('.tgz'));
 
   for (const packageDefinition of packageDefinitions) {
-    const matchingTarball = tarballFiles.find((entry) => entry.startsWith(packageDefinition.tarballPrefix));
+    const matchingTarball = tarballFiles.find((entry) => entry === `${packageDefinition.tarballPrefix}${PRODUCTION_VERSION}.tgz`);
 
     if (!matchingTarball) {
-      failures.push(`dist/beta-plus-tarballs: missing tarball for ${packageDefinition.name}`);
+      failures.push(`dist/production-tarballs: missing ${packageDefinition.tarballPrefix}${PRODUCTION_VERSION}.tgz for ${packageDefinition.name}`);
     }
   }
 }
@@ -131,7 +215,7 @@ function validateWorkflowShape() {
     'pull_request:',
     'push:',
     'pnpm release:production:check',
-    'dist/beta-plus-tarballs/*.tgz',
+    'dist/production-tarballs/*.tgz',
     '.tmp/visual-regression/beta-plus/*.png',
   ]) {
     if (!workflow.includes(snippet)) {
@@ -169,13 +253,16 @@ function validateProductionPublishWorkflowShape() {
 
 function validateDocsShape() {
   for (const [filePath, snippets] of [
-    ['package.json', ['"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
-    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '650 kB']],
+    ['package.json', ['"version": "1.0.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
+    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '650 kB', 'Production tarball total']],
     ['docs/productive/scope.md', ['ArgFit UI 1.0.0 Scope', '`1.0-adaptive`']],
     ['docs/productive/public-api.md', ['Productive Public API Inventory', '1.0-renderer-specific']],
     ['docs/productive/semver-policy.md', ['Productive Semver Policy', 'Deprecation Policy']],
     ['docs/productive/release-operations.md', ['Productive Release Operations', 'Branch And Tag Strategy', 'npm Publish Process', 'Patch Release Procedure', 'Changelog Policy', 'publish-production.yml', 'NPM_TOKEN', 'latest']],
     ['docs/productive/support-policy.md', ['Productive Support Policy', 'Support Window', 'Security And Dependency Update Policy', 'Deprecation Process', '1.x']],
+    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.0.0', 'pnpm release:production:check', 'v1.0.0', 'latest']],
+    ['docs/productive/release-notes-1.0.0.md', ['Release Notes: 1.0.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
+    ['CHANGELOG.md', ['## 1.0.0', 'latest dist-tag', 'pnpm release:production:check']],
   ]) {
     const absolutePath = resolve(repoRoot, filePath);
 

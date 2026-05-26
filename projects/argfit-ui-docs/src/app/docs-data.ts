@@ -223,10 +223,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1-0.md',
-    summary: 'The release shape of 1.0, from frozen scope through the production gate.',
+    sourcePath: 'docs/productive/release-notes-1.0.0.md',
+    summary: 'The shipped 1.0 release shape, from frozen scope through the production gate.',
     badge: 'ship',
-    bullets: ['Scope and semver policy', 'Quality gates and budgets', 'Final publish still aligns later in roadmap'],
+    bullets: ['Scope and semver policy', 'Quality gates and budgets', '1.0.0 package metadata aligned'],
   },
 ];
 
@@ -391,6 +391,12 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
     bullets: ['publish-production.yml', 'latest dist-tag guard', 'Patch release procedure'],
   },
   {
+    title: 'Production release checklist',
+    sourcePath: 'docs/productive/release-checklist.md',
+    summary: 'Final pre-tag checks for version alignment, docs, workflow publish and recovery.',
+    bullets: ['1.0.0 metadata', 'release:production:check', 'latest dist-tag verification'],
+  },
+  {
     title: 'Support policy',
     sourcePath: 'docs/productive/support-policy.md',
     summary: 'Support window, security, dependency update and deprecation rules for the productive line.',
@@ -425,14 +431,19 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
     summary: 'Branch and tag strategy, npm publish process, patch release steps and changelog policy.',
   },
   {
+    title: 'Production release checklist',
+    sourcePath: 'docs/productive/release-checklist.md',
+    summary: 'The final checklist for 1.0.0 metadata, docs, tagging, npm latest and recovery posture.',
+  },
+  {
     title: 'Support policy',
     sourcePath: 'docs/productive/support-policy.md',
     summary: 'Support window, security maintenance, dependency update and deprecation process for 1.x.',
   },
   {
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1-0.md',
-    summary: 'The target release story for 1.0 and the hardening already landed in the repo.',
+    sourcePath: 'docs/productive/release-notes-1.0.0.md',
+    summary: 'The canonical 1.0.0 release notes and production publish posture.',
   },
 ];
 

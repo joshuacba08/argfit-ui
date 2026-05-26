@@ -1,15 +1,15 @@
 # @argfit-ui/core
 
-Core runtime package for ArgFit UI `0.1.0-beta.0`.
+Core runtime package for ArgFit UI `1.0.0`.
 
 It contains vendor-agnostic tokens, themes, shared types, platform services and `provideArgfitUi`. This package must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
 
-This package participates in the current `0.1.0-beta.0` contract.
+This package participates in the current `1.0.0` production contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@0.1.0-beta.0
+pnpm add @argfit-ui/core@1.0.0
 ```
 
 Peer dependencies:
@@ -33,20 +33,13 @@ export const appConfig = {
 };
 ```
 
-## Beta Docs
+## Productive Docs
 
-- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/quickstart.md)
-- [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/theming.md)
-- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/public-api.md)
-- [Migration alpha to beta](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/migration-alpha-to-beta.md)
-
-Beta+ track:
-
-- [Beta+ quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/quickstart.md)
-- [Beta+ components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/components.md)
-- [Beta+ public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/public-api.md)
-- [Beta+ known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/known-limitations.md)
-- [Migration beta to beta plus](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/migration-beta-to-beta-plus.md)
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/quickstart.md)
+- [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/theming.md)
+- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/public-api.md)
+- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.0.0.md)
+- [Support policy](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/support-policy.md)
 
 ## Build
 

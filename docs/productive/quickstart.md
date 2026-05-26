@@ -1,8 +1,8 @@
 # Productive Quickstart
 
-This guide describes the intended consumer posture for the frozen `1.0.0` ArgFit UI contract.
+This guide describes the consumer posture for the frozen `1.0.0` ArgFit UI contract.
 
-The documentation target is `1.0.0`, but the repository still validates publishable artifacts through the Beta+ substrate until `HU-043` aligns package publishing to the final major version. Treat this page as the source of truth for the productive API posture, not as a claim that `1.0.0` has already been published.
+The repository now validates stable `1.0.0` package metadata and production tarballs through the production release gate.
 
 ## Requirements
 
@@ -27,7 +27,7 @@ pnpm add @argfit-ui/desktop@1.0.0 @argfit-ui/mobile@1.0.0
 pnpm add @argfit-ui/adaptive@1.0.0
 ```
 
-Until the final `1.0.0` publish flow lands, validate the productive contract directly from this repository:
+For local validation, run the productive contract directly from this repository:
 
 ```bash
 pnpm install
@@ -128,5 +128,5 @@ Use the broader gate before tagging or opening a final release workflow. `pnpm b
 - [Productive accessibility](./accessibility.md)
 - [Productive theming](./theming.md)
 - [Migration beta/Beta+ to 1.0](./migration-beta-to-1-0.md)
-- [Productive release notes](./release-notes-1-0.md)
+- [Productive release notes](./release-notes-1.0.0.md)
 - [Productive quality gates](./quality-gates.md)

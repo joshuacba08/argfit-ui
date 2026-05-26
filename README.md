@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-10.28-F69220?logo=pnpm&logoColor=white)
-![Status](https://img.shields.io/badge/status-0.1.0--beta.0-2599D5)
+![Status](https://img.shields.io/badge/status-1.0.0-2599D5)
 
 ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile-first workflows.
 
@@ -21,13 +21,11 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI keeps the source workspace aligned with the historical `0.1.0-beta.0` baseline so the existing beta regression contract remains stable. The dedicated Beta+ packaging flow now produces `0.2.0-beta.0` tarballs in parallel for the current release candidate.
+ArgFit UI is aligned on the stable `1.0.0` production contract. Publishable packages use exact `1.0.0` internal peers, public npm metadata and the `latest` dist-tag.
 
-The official `0.1.0-beta.0` surface is tracked in the beta docs. Stable-for-beta components include `AfButton`, `AfCard`, `AfInput`, `AfDialog`, `AfChart`, `AfBadge`, `AfPageShell`, and `AfMetricCard`. Analytics, data-table, expanded form controls and feedback components remain public as `experimental-in-beta` APIs.
+The production release gate keeps the broad Beta+ validation substrate for regression confidence, then rebuilds and validates stable production packages under `dist/production-tarballs/`.
 
-The Beta+ track is already taking shape in the repository. The current showcase intentionally highlights the active Beta+ slices only: wave 1 overlays and identity, wave 2 advanced forms, and wave 5 workflow with `AfKanban`.
-
-Alpha docs remain in the repository as the historical baseline and migration source for prerelease consumers.
+Alpha, beta and Beta+ docs remain in the repository as historical baselines and migration sources for prerelease consumers.
 
 ## Package Architecture
 
@@ -63,7 +61,22 @@ The public contract is the scoped package API. Implementation project names are 
 
 ## Quick Start
 
-For the current beta consumer contract, start with:
+For the production consumer contract, start with:
+
+- [Productive quickstart](docs/productive/quickstart.md)
+- [Productive components](docs/productive/components.md)
+- [Productive API reference](docs/productive/api-reference.md)
+- [Productive accessibility](docs/productive/accessibility.md)
+- [Productive theming](docs/productive/theming.md)
+- [Productive enterprise readiness](docs/productive/enterprise-readiness.md)
+- [Migration beta/Beta+ to 1.0](docs/productive/migration-beta-to-1-0.md)
+- [Productive release checklist](docs/productive/release-checklist.md)
+- [Productive release notes](docs/productive/release-notes-1.0.0.md)
+- [Productive release operations](docs/productive/release-operations.md)
+- [Productive support policy](docs/productive/support-policy.md)
+- [Productive quality gates](docs/productive/quality-gates.md)
+
+The historical beta consumer contract remains documented here:
 
 - [Beta quickstart](docs/beta/quickstart.md)
 - [Beta theming and adaptive rendering](docs/beta/theming.md)
@@ -83,18 +96,6 @@ The current Beta+ expansion track is documented separately:
 - [Beta+ visual QA](docs/beta-plus/visual-qa.md)
 - [Beta+ release checklist](docs/beta-plus/release-checklist.md)
 - [Beta+ release notes](docs/beta-plus/release-notes-beta-plus.md)
-
-The productive `1.0.0` documentation front is now documented here:
-
-- [Productive quickstart](docs/productive/quickstart.md)
-- [Productive components](docs/productive/components.md)
-- [Productive API reference](docs/productive/api-reference.md)
-- [Productive accessibility](docs/productive/accessibility.md)
-- [Productive theming](docs/productive/theming.md)
-- [Productive enterprise readiness](docs/productive/enterprise-readiness.md)
-- [Migration beta/Beta+ to 1.0](docs/productive/migration-beta-to-1-0.md)
-- [Productive release notes](docs/productive/release-notes-1-0.md)
-- [Productive quality gates](docs/productive/quality-gates.md)
 
 The dedicated documentation application now lives in the separate Angular project `argfit-ui-docs`. The showcase remains the demo and validation surface; the docs platform is served independently.
 
@@ -160,6 +161,12 @@ Run the Beta+ prerelease gate before dispatching the Beta+ publish workflow:
 
 ```bash
 pnpm release:beta-plus:check
+```
+
+Run the production release gate before tagging or publishing `1.0.0`:
+
+```bash
+pnpm release:production:check
 ```
 
 Run the beta package dry-run locally:
@@ -360,4 +367,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `0.1.0-beta.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages are MIT licensed and prepared for public npm distribution with the `beta` dist-tag, while tarballs remain available for manual verification under `dist/beta-tarballs/`.
+The workspace and publishable packages are aligned on `1.0.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.

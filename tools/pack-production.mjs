@@ -4,10 +4,10 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const BETA_PLUS_VERSION = '0.2.0-beta.0';
+const PRODUCTION_VERSION = '1.0.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
-const tarballDestination = resolve(repoRoot, 'dist', 'beta-plus-tarballs');
+const tarballDestination = resolve(repoRoot, 'dist', 'production-tarballs');
 const rootLicensePath = resolve(repoRoot, 'LICENSE');
 
 const packageDefinitions = [
@@ -68,7 +68,7 @@ for (const packageDefinition of packageDefinitions) {
   }
 
   ensureLicenseFile(packageDirectory);
-  rewritePackageForBetaPlus(packageDefinition, packageDirectory, manifestPath);
+  rewritePackageForProduction(packageDefinition, packageDirectory, manifestPath);
 
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
   validateManifest(packageDefinition, manifest);
@@ -106,20 +106,20 @@ if (!isDryRun) {
   console.log(`Tarballs written to ${tarballDestination}`);
 }
 
-function rewritePackageForBetaPlus(packageDefinition, packageDirectory, manifestPath) {
+function rewritePackageForProduction(packageDefinition, packageDirectory, manifestPath) {
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 
-  manifest.version = BETA_PLUS_VERSION;
+  manifest.version = PRODUCTION_VERSION;
   manifest.peerDependencies ??= {};
   manifest.publishConfig = {
     ...manifest.publishConfig,
     access: 'public',
-    tag: 'beta',
+    tag: 'latest',
   };
 
   for (const internalPeerName of packageDefinition.internalPeers) {
     if (manifest.peerDependencies[internalPeerName]) {
-      manifest.peerDependencies[internalPeerName] = BETA_PLUS_VERSION;
+      manifest.peerDependencies[internalPeerName] = PRODUCTION_VERSION;
     }
   }
 
@@ -128,16 +128,8 @@ function rewritePackageForBetaPlus(packageDefinition, packageDirectory, manifest
   const readmePath = resolve(packageDirectory, 'README.md');
   if (existsSync(readmePath)) {
     const readme = readFileSync(readmePath, 'utf8');
-    writeFileSync(readmePath, rewriteReadmeVersion(readme, BETA_PLUS_VERSION), 'utf8');
+    writeFileSync(readmePath, rewriteReadmeVersion(readme, PRODUCTION_VERSION), 'utf8');
   }
-}
-
-function rewriteReadmeVersion(readme, version) {
-  return readme
-    .replaceAll('0.1.0-alpha.0', version)
-    .replaceAll('0.1.0-beta.0', version)
-    .replaceAll('0.2.0-beta.0', version)
-    .replaceAll('1.0.0', version);
 }
 
 function validateManifest(packageDefinition, manifest) {
@@ -149,12 +141,16 @@ function validateManifest(packageDefinition, manifest) {
     fail(`${packageDefinition.name} must use the @argfit-ui scope.`);
   }
 
-  if (manifest.version !== BETA_PLUS_VERSION) {
-    fail(`${packageDefinition.name} must be version ${BETA_PLUS_VERSION}, found ${manifest.version}.`);
+  if (manifest.version !== PRODUCTION_VERSION) {
+    fail(`${packageDefinition.name} must be version ${PRODUCTION_VERSION}, found ${manifest.version}.`);
+  }
+
+  if (manifest.version.includes('-')) {
+    fail(`${packageDefinition.name} must not use a prerelease version for production packaging.`);
   }
 
   if (manifest.private === true) {
-    fail(`${packageDefinition.name} must not be private for beta plus packaging.`);
+    fail(`${packageDefinition.name} must not be private for production packaging.`);
   }
 
   for (const fieldName of ['description', 'keywords', 'author', 'license', 'repository', 'homepage', 'bugs']) {
@@ -171,8 +167,8 @@ function validateManifest(packageDefinition, manifest) {
     fail(`${packageDefinition.name} must set sideEffects to false.`);
   }
 
-  if (manifest.publishConfig?.tag !== 'beta') {
-    fail(`${packageDefinition.name} publishConfig.tag must be beta.`);
+  if (manifest.publishConfig?.tag !== 'latest') {
+    fail(`${packageDefinition.name} publishConfig.tag must be latest.`);
   }
 
   if (manifest.publishConfig?.access !== 'public') {
@@ -188,9 +184,9 @@ function validateManifest(packageDefinition, manifest) {
   }
 
   for (const internalPeerName of packageDefinition.internalPeers) {
-    if (peerDependencies[internalPeerName] !== BETA_PLUS_VERSION) {
+    if (peerDependencies[internalPeerName] !== PRODUCTION_VERSION) {
       fail(
-        `${packageDefinition.name} peer ${internalPeerName} must be ${BETA_PLUS_VERSION}, found ${peerDependencies[internalPeerName]}.`,
+        `${packageDefinition.name} peer ${internalPeerName} must be ${PRODUCTION_VERSION}, found ${peerDependencies[internalPeerName]}.`,
       );
     }
   }
@@ -204,8 +200,12 @@ function validateManifest(packageDefinition, manifest) {
 }
 
 function validatePackEntry(packageDefinition, npmPackEntry) {
-  if (!npmPackEntry || npmPackEntry.name !== packageDefinition.name || npmPackEntry.version !== BETA_PLUS_VERSION) {
-    fail(`${packageDefinition.name} npm pack metadata does not match the beta plus manifest.`);
+  if (!npmPackEntry || npmPackEntry.name !== packageDefinition.name || npmPackEntry.version !== PRODUCTION_VERSION) {
+    fail(`${packageDefinition.name} npm pack metadata does not match the production manifest.`);
+  }
+
+  if (npmPackEntry.version.includes('-')) {
+    fail(`${packageDefinition.name} production tarball must not use a prerelease version.`);
   }
 
   const filePaths = (npmPackEntry.files ?? []).map((packFile) => packFile.path);
@@ -221,6 +221,14 @@ function validatePackEntry(packageDefinition, npmPackEntry) {
       fail(`${packageDefinition.name} tarball includes forbidden file: ${filePath}.`);
     }
   }
+}
+
+function rewriteReadmeVersion(readme, version) {
+  return readme
+    .replaceAll('0.1.0-alpha.0', version)
+    .replaceAll('0.1.0-beta.0', version)
+    .replaceAll('0.2.0-beta.0', version)
+    .replaceAll('1.0.0', version);
 }
 
 function parseNpmPackJson(packageName, stdout) {

@@ -1,8 +1,8 @@
 # ArgFit UI - Productive Version Projection
 
-## Target
+## Current Release
 
-Recommended target: `1.0.0`.
+Current production release: `1.0.0`.
 
 The productive version is not a bigger beta. It is the first version where ArgFit UI promises stable public APIs, a support policy, documented migrations and production-grade quality gates.
 
@@ -15,10 +15,12 @@ The frozen `1.0.0` contract baseline lives in:
 - `docs/productive/enterprise-readiness.md`
 - `docs/productive/release-operations.md`
 - `docs/productive/support-policy.md`
+- `docs/productive/release-checklist.md`
+- `docs/productive/release-notes-1.0.0.md`
 
 ## Productive Definition
 
-ArgFit UI is ready for `1.0.0` when:
+ArgFit UI is considered production-ready when:
 
 - The public API is frozen for the first semver-major contract.
 - Experimental APIs are either promoted, isolated or removed from the recommended path.
@@ -27,7 +29,7 @@ ArgFit UI is ready for `1.0.0` when:
 - Documentation is complete enough for a team that has never seen the repo.
 - Publishing, changelog, migration and support policy are reproducible.
 
-## Backlog HU Productive
+## Productive HU Trail
 
 1. [HU-038 - Productive Scope And Semver Freeze](../hus/HU-038-productive-scope-semver-freeze.md)
 2. [HU-039 - Productive Quality Gates](../hus/HU-039-productive-quality-gates.md)
@@ -36,7 +38,7 @@ ArgFit UI is ready for `1.0.0` when:
 5. [HU-042 - Productive Release Operations And Support Policy](../hus/HU-042-productive-release-operations-support.md)
 6. [HU-043 - Production 1.0 Release Gate](../hus/HU-043-production-1-release-gate.md)
 
-## Recommended Sequence
+## Historical Sequence
 
 1. Finish base beta.
 2. Ship Beta+ with the small component expansion.

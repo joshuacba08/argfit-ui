@@ -1,15 +1,15 @@
 # @argfit-ui/desktop
 
-Desktop renderer package for ArgFit UI `0.1.0-beta.0`.
+Desktop renderer package for ArgFit UI `1.0.0`.
 
 This package contains desktop-oriented implementations backed by PrimeNG internally while keeping ArgFit public APIs vendor-independent. Application consumers should normally import components from `@argfit-ui/adaptive` instead of this renderer package.
 
-This package participates in the current `0.1.0-beta.0` contract.
+This package participates in the current `1.0.0` production contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@0.1.0-beta.0 @argfit-ui/primitives@0.1.0-beta.0 @argfit-ui/desktop@0.1.0-beta.0
+pnpm add @argfit-ui/core@1.0.0 @argfit-ui/primitives@1.0.0 @argfit-ui/desktop@1.0.0
 pnpm add @angular/cdk@^21.2.0 @angular/forms@^21.2.0 primeng@^21.1.8 echarts@^6.1.0
 ```
 
@@ -25,20 +25,13 @@ Renderer components are documented for advanced cases. Prefer adaptive imports i
 import { AfButton, AfCard, AfInput } from '@argfit-ui/adaptive';
 ```
 
-## Beta Docs
+## Productive Docs
 
-- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/quickstart.md)
-- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/public-api.md)
-- [Package matrix](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/package-matrix.md)
-- [Known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta/known-limitations.md)
-
-Beta+ track:
-
-- [Beta+ quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/quickstart.md)
-- [Beta+ components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/components.md)
-- [Beta+ public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/public-api.md)
-- [Beta+ known limitations](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/known-limitations.md)
-- [Migration beta to beta plus](https://github.com/joshuacba08/argfit-ui/blob/main/docs/beta-plus/migration-beta-to-beta-plus.md)
+- [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/quickstart.md)
+- [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/public-api.md)
+- [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/components.md)
+- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.0.0.md)
+- [Migration beta/Beta+ to 1.0](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/migration-beta-to-1-0.md)
 
 ## Build
 

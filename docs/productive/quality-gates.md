@@ -2,7 +2,7 @@
 
 ArgFit UI uses `pnpm release:production:check` as the mandatory production-readiness gate.
 
-Until `HU-043` aligns the publishable package versions to `1.0.0`, this gate intentionally reuses the broader Beta+ packaging and consumer-validation flow as the production validation substrate.
+The gate keeps the broad Beta+ validation substrate for regression coverage, then rebuilds and verifies stable `1.0.0` production packages.
 
 ## Required Local Gate
 
@@ -16,10 +16,10 @@ pnpm release:production:check
 - regression guard
 - full library and showcase tests
 - accessibility audit across the workspace test targets
-- Beta+ packaging and API guard
-- external consumer compatibility smoke
+- Beta+ packaging, API guard and external consumer compatibility smoke
 - focused Beta+ accessibility audit
 - focused Beta+ visual smoke
+- production package dry-run and tarball packaging
 - production package smoke
 - production performance budgets
 
@@ -32,7 +32,7 @@ These budgets are enforced by `pnpm measure:production-performance:dist`.
 | Showcase initial asset total | `2.90 MB` raw |
 | Showcase main bundle | `2.75 MB` raw |
 | Showcase styles bundle | `60 kB` raw |
-| Beta+ tarball total | `650 kB` |
+| Production tarball total | `650 kB` |
 | `@argfit-ui/core` tarball | `35 kB` |
 | `@argfit-ui/primitives` tarball | `15 kB` |
 | `@argfit-ui/adaptive` tarball | `130 kB` |
@@ -47,4 +47,4 @@ If a budget ever needs to move, the exception must be documented in this file in
 
 ## CI Expectation
 
-CI must execute `pnpm release:production:check` on `pull_request` and on pushes to `main`, and it must upload the generated Beta+ tarballs and visual smoke screenshots for debugging.
+CI must execute `pnpm release:production:check` on `pull_request` and on pushes to `main`, and it must upload the generated production tarballs and visual smoke screenshots for debugging.

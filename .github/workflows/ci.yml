@@ -43,8 +43,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: beta-plus-tarballs
-          path: dist/beta-plus-tarballs/*.tgz
+          name: production-tarballs
+          path: dist/production-tarballs/*.tgz
           if-no-files-found: ignore
 
       - name: Upload production visual smoke screenshots

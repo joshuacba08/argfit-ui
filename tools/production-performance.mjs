@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
-const tarballDirectory = resolve(repoRoot, 'dist', 'beta-plus-tarballs');
+const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
 
 const budgets = {
   initialTotal: 2_900_000,
@@ -28,7 +28,7 @@ if (!existsSync(showcaseIndex)) {
 }
 
 if (!existsSync(tarballDirectory)) {
-  throw new Error('Missing dist/beta-plus-tarballs. Run pnpm pack:beta-plus:dist before measuring production performance.');
+  throw new Error('Missing dist/production-tarballs. Run pnpm pack:production:dist before measuring production performance.');
 }
 
 const initialAssets = readInitialAssets();
@@ -41,7 +41,7 @@ const tarballTotal = sumBytes(tarballAssets);
 checkBudget('showcase initial total', initialTotal, budgets.initialTotal);
 checkBudget('showcase main bundle', mainBundle.bytes, budgets.mainBundle);
 checkBudget('showcase styles bundle', stylesBundle.bytes, budgets.stylesBundle);
-checkBudget('beta-plus tarball total', tarballTotal, budgets.tarballTotal);
+checkBudget('production tarball total', tarballTotal, budgets.tarballTotal);
 
 for (const tarballAsset of tarballAssets) {
   const budget = budgets.tarballs[tarballAsset.prefix];
@@ -52,7 +52,7 @@ console.log('Production performance budgets:');
 console.log(`- showcase initial total: ${formatBytes(initialTotal)} / ${formatBytes(budgets.initialTotal)}`);
 console.log(`- showcase main bundle: ${formatBytes(mainBundle.bytes)} / ${formatBytes(budgets.mainBundle)}`);
 console.log(`- showcase styles bundle: ${formatBytes(stylesBundle.bytes)} / ${formatBytes(budgets.stylesBundle)}`);
-console.log(`- beta-plus tarball total: ${formatBytes(tarballTotal)} / ${formatBytes(budgets.tarballTotal)}`);
+console.log(`- production tarball total: ${formatBytes(tarballTotal)} / ${formatBytes(budgets.tarballTotal)}`);
 
 for (const tarballAsset of tarballAssets) {
   console.log(`- ${tarballAsset.fileName}: ${formatBytes(tarballAsset.bytes)} / ${formatBytes(budgets.tarballs[tarballAsset.prefix])}`);

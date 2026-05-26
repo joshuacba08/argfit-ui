@@ -2,6 +2,24 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.0.0
+
+First production release of ArgFit UI.
+
+### Added
+
+- Stable `1.0.0` package metadata across `@argfit-ui/core`, `@argfit-ui/primitives`, `@argfit-ui/desktop`, `@argfit-ui/mobile` and `@argfit-ui/adaptive`.
+- Exact internal `@argfit-ui/*` peer dependency alignment on `1.0.0` for the production package set.
+- npm latest dist-tag metadata and production publish validation through `publish-production.yml`.
+- Production tarball flow under `dist/production-tarballs/` through `pnpm pack:production:dist`.
+- Production release checklist and canonical `1.0.0` release notes under `docs/productive/`.
+
+### Notes
+
+- `pnpm release:production:check` is the required gate before tagging or publishing production releases.
+- Production packages must publish with the `latest` dist-tag and public npm access.
+- Prerelease alpha, beta and Beta+ docs remain available as historical upgrade context.
+
 ## 0.2.0-beta.0
 
 First dedicated Beta+ delivery channel for ArgFit UI.

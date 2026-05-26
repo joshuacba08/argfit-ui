@@ -2,7 +2,7 @@
 
 This document defines the release operations policy for the productive `1.0.x` line.
 
-The final package-version alignment to `1.0.0` lands in `HU-043`. Until then, the production publish workflow exists and is intentionally guarded so it cannot publish prerelease package manifests or packages whose `publishConfig.tag` is not `latest`.
+The source manifests, publishable package manifests and production packaging flow are aligned to stable `1.0.0` metadata. Production packages publish only through the `latest` npm dist-tag.
 
 ## Branch And Tag Strategy
 
@@ -22,6 +22,8 @@ pnpm release:production:check
 ```
 
 The gate must pass locally and in CI. If any source, docs, package metadata or workflow file changes after the last green gate, rerun the gate before tagging.
+
+Use [production release checklist](./release-checklist.md) for the final pre-tag review.
 
 ## npm Publish Process
 

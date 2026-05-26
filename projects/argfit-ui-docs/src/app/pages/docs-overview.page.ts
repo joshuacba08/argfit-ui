@@ -109,7 +109,7 @@ const FRAMEWORK_PRINCIPLES: readonly FrameworkPrinciple[] = [
           Build dashboards, workflow boards and dense forms without coupling your app to PrimeNG or Ionic.
         </p>
         <div class="docs-pill-row">
-          <af-badge tone="success" dot>1.0 target</af-badge>
+          <af-badge tone="success" dot>1.0 stable</af-badge>
           <af-badge tone="primary">adaptive first</af-badge>
           <af-badge tone="accent">PrimeNG + Ionic internal</af-badge>
           <af-badge tone="neutral">Angular 21</af-badge>
