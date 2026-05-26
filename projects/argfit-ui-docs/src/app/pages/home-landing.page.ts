@@ -178,9 +178,9 @@ export class HomeLandingPageComponent {
   ];
 
   protected readonly shellMetrics: readonly LandingShellMetric[] = [
-    { label: 'Live platform', value: 'auto', trend: 'desktop or mobile' },
-    { label: 'Operational readiness', value: '94%', trend: '+8 this sprint' },
-    { label: 'Workflow health', value: '12 boards', trend: 'kanban active' },
+    { label: 'Runtime', value: 'Auto', trend: 'adaptive' },
+    { label: 'Ready', value: '94%', trend: 'checks' },
+    { label: 'Flow', value: '12', trend: 'boards' },
   ];
 
   protected readonly shellRail: readonly string[] = [
@@ -212,7 +212,7 @@ export class HomeLandingPageComponent {
   ];
 
   protected readonly mobileMoments: readonly string[] = [
-    'Drawer and dialog flows that still follow the same semantic contract.',
+    'Same contract across drawer, dialog and task flows.',
     'Touch-first editing without forking the public API surface.',
     'Platform-aware rendering controlled by runtime, not app duplication.',
   ];

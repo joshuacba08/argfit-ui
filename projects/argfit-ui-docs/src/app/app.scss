@@ -4,6 +4,7 @@ app-docs-layout {
 }
 
 .docs-shell {
+  align-items: start;
   display: grid;
   gap: 0;
   grid-template-columns: minmax(220px, 252px) minmax(0, 1fr);
@@ -17,6 +18,10 @@ app-docs-layout {
   box-shadow: 1px 0 0 color-mix(in srgb, var(--af-bg-elevated) 36%, transparent);
   display: grid;
   gap: var(--af-space-3);
+  height: 100svh;
+  max-height: 100svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--af-space-3);
   position: sticky;
   top: 0;
@@ -591,6 +596,7 @@ pre {
 }
 
 .docs-discovery-panel,
+.docs-component-workbench,
 .docs-search-workbench,
 .docs-family-panel,
 .docs-search-result-card,
@@ -602,6 +608,7 @@ pre {
 }
 
 .docs-discovery-panel,
+.docs-component-workbench,
 .docs-search-workbench,
 .docs-family-panel {
   display: grid;
@@ -610,6 +617,7 @@ pre {
 }
 
 .docs-discovery-panel__header,
+.docs-component-workbench__header,
 .docs-family-panel__header,
 .docs-search-workbench__bar,
 .docs-search-result-card,
@@ -620,12 +628,14 @@ pre {
 }
 
 .docs-discovery-panel__header,
+.docs-component-workbench__header,
 .docs-family-panel__header,
 .docs-search-result-card {
   justify-content: space-between;
 }
 
 .docs-discovery-panel h2,
+.docs-component-workbench h2,
 .docs-family-panel h2,
 .docs-search-result-card strong,
 .docs-suggestion-card strong {
@@ -744,7 +754,43 @@ pre {
 }
 
 .docs-component-tile--atlas {
-  min-height: 152px;
+  min-height: 172px;
+  padding: 0;
+}
+
+.docs-component-tile--atlas.is-active {
+  background: color-mix(in srgb, var(--af-primary) 10%, var(--docs-surface-bg));
+  border-color: color-mix(in srgb, var(--af-primary) 34%, var(--af-border-soft));
+}
+
+.docs-component-tile__preview {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  flex: 1;
+  font: inherit;
+  gap: var(--af-space-2);
+  min-width: 0;
+  padding: 0.62rem 0.72rem;
+  text-align: start;
+}
+
+.docs-component-tile__preview:focus-visible,
+.docs-component-tile__link:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--af-primary) 34%, transparent);
+  outline-offset: 2px;
+}
+
+.docs-component-tile__link {
+  border-top: 1px solid var(--af-border-soft);
+  color: var(--af-text-main);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  padding: 0.62rem 0.72rem;
+  text-decoration: none;
 }
 
 .docs-component-tile__meta {
@@ -795,7 +841,10 @@ pre {
   }
 
   .docs-shell__sidebar {
+    height: auto;
+    max-height: none;
     min-height: auto;
+    overflow: visible;
     position: static;
   }
 }
@@ -821,6 +870,7 @@ pre {
   }
 
   .docs-discovery-panel__header,
+  .docs-component-workbench__header,
   .docs-family-panel__header,
   .docs-search-workbench__bar,
   .docs-search-result-card,

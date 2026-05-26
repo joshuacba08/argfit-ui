@@ -178,7 +178,209 @@ app-docs-component-preview {
   min-width: 0;
 }
 
+.docs-live-lab__actual--composition {
+  align-items: center;
+  justify-items: stretch;
+}
+
+.docs-card-demo {
+  display: grid;
+  margin-inline: auto;
+  max-width: 560px;
+  width: 100%;
+}
+
+.docs-card-demo af-card {
+  display: block;
+  width: 100%;
+}
+
+.docs-card-demo .af-card-desktop,
+.docs-card-demo .af-card-mobile {
+  width: 100%;
+}
+
+.docs-card-demo__badge {
+  align-self: start;
+  background: color-mix(in srgb, var(--docs-lab-accent) 14%, var(--af-bg-surface));
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 24%, var(--af-border-soft));
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-main);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  padding: 0.34rem 0.58rem;
+}
+
+.docs-card-demo__metric {
+  align-items: baseline;
+  display: flex;
+  gap: var(--af-space-2);
+}
+
+.docs-card-demo__metric strong {
+  color: var(--af-text-main);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+}
+
+.docs-card-demo__metric span,
+.docs-card-demo p,
+.docs-card-demo footer span {
+  color: var(--af-text-soft);
+}
+
+.docs-card-demo p,
+.docs-card-demo footer span,
+.docs-page-shell-demo__content p,
+.docs-page-shell-demo__footer span {
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-relaxed);
+}
+
+.docs-card-demo code {
+  color: var(--af-text-main);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.docs-dialog-demo {
+  align-items: center;
+  display: grid;
+  gap: var(--af-space-3);
+  justify-items: center;
+  margin-inline: auto;
+  max-width: 520px;
+  text-align: center;
+  width: 100%;
+}
+
+.docs-dialog-demo__trigger,
+.docs-dialog-demo__button {
+  appearance: none;
+  background: color-mix(in srgb, var(--docs-lab-accent) 88%, var(--af-bg-surface));
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 36%, var(--af-border-soft));
+  border-radius: var(--af-radius-pill);
+  color: var(--af-primary-contrast);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-bold);
+  min-height: 42px;
+  padding: 0.7rem 1rem;
+}
+
+.docs-dialog-demo__trigger:hover,
+.docs-dialog-demo__button:hover {
+  filter: brightness(1.06);
+}
+
+.docs-dialog-demo__status {
+  color: var(--af-text-soft);
+  display: grid;
+  font-size: var(--af-text-sm);
+  gap: var(--af-space-1);
+}
+
+.docs-dialog-demo__status strong,
+.docs-dialog-demo__content strong {
+  color: var(--af-text-main);
+}
+
+.docs-dialog-demo__content {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.docs-dialog-demo__content div {
+  background: color-mix(in srgb, var(--af-bg-surface) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 12%, var(--af-border-soft));
+  border-radius: var(--af-radius-md);
+  display: grid;
+  gap: var(--af-space-1);
+  padding: var(--af-space-3);
+}
+
+.docs-dialog-demo__content span,
+.docs-dialog-demo__content p {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+  line-height: var(--af-leading-relaxed);
+}
+
+.docs-dialog-demo__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+  justify-content: end;
+}
+
+.docs-dialog-demo__button--ghost {
+  background: color-mix(in srgb, var(--af-bg-surface) 82%, transparent);
+  color: var(--af-text-main);
+}
+
+.docs-input-group-demo {
+  display: grid;
+  gap: var(--af-space-3);
+  margin-inline: auto;
+  max-width: 520px;
+  width: 100%;
+}
+
+.docs-input-group-demo__input {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--af-text-main);
+  font: inherit;
+  min-height: 52px;
+  outline: 0;
+  padding: 0 var(--af-space-3);
+}
+
+.docs-input-group-demo__input:disabled,
+.docs-input-group-demo__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.docs-input-group-demo__button {
+  appearance: none;
+  background: color-mix(in srgb, var(--docs-lab-accent) 18%, transparent);
+  border: 0;
+  color: var(--af-text-main);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-bold);
+  padding: 0 var(--af-space-3);
+}
+
+.docs-input-group-demo__button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--docs-lab-accent) 28%, transparent);
+}
+
+.docs-input-group-demo__status {
+  align-items: center;
+  color: var(--af-text-soft);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.docs-input-group-demo__status strong {
+  color: var(--af-text-main);
+}
+
 .docs-live-lab[data-component='accordion'] .docs-live-lab__actual,
+.docs-live-lab[data-component='card'] .docs-live-lab__actual,
+.docs-live-lab[data-component='input-group'] .docs-live-lab__actual,
+.docs-live-lab[data-component='page-shell'] .docs-live-lab__actual,
+.docs-live-lab[data-component='splitter'] .docs-live-lab__actual,
+.docs-live-lab[data-component='toast'] .docs-live-lab__actual,
+.docs-live-lab[data-component='toast-viewport'] .docs-live-lab__actual,
 .docs-live-lab[data-component='data-table'] .docs-live-lab__actual,
 .docs-live-lab[data-component='data-view'] .docs-live-lab__actual,
 .docs-live-lab[data-component='tree-table'] .docs-live-lab__actual,
@@ -188,6 +390,12 @@ app-docs-component-preview {
 }
 
 .docs-live-lab[data-component='accordion'] .docs-live-lab__actual > af-accordion,
+.docs-live-lab[data-component='card'] .docs-live-lab__actual > .docs-card-demo,
+.docs-live-lab[data-component='input-group'] .docs-live-lab__actual > .docs-input-group-demo,
+.docs-live-lab[data-component='page-shell'] .docs-live-lab__actual > .docs-page-shell-demo,
+.docs-live-lab[data-component='splitter'] .docs-live-lab__actual > .docs-splitter-demo,
+.docs-live-lab[data-component='toast'] .docs-live-lab__actual > .docs-toast-demo,
+.docs-live-lab[data-component='toast-viewport'] .docs-live-lab__actual > .docs-toast-demo,
 .docs-live-lab[data-component='data-table'] .docs-live-lab__actual > af-data-table,
 .docs-live-lab[data-component='data-view'] .docs-live-lab__actual > af-data-view,
 .docs-live-lab[data-component='tree-table'] .docs-live-lab__actual > af-tree-table,

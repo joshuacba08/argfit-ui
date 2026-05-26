@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { AfBadge } from '@argfit-ui/adaptive';
 
@@ -47,22 +48,22 @@ import {
 
       <div class="docs-filter-stack">
         <div class="docs-filter-row" aria-label="Filter components by family">
-          <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === 'all'" (click)="setFamily('all')">
+          <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === 'all'" [attr.aria-pressed]="activeFamily() === 'all'" (click)="setFamily('all')">
             All families
           </button>
           @for (group of groups; track group.family) {
-            <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === group.family" (click)="setFamily(group.family)">
+            <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === group.family" [attr.aria-pressed]="activeFamily() === group.family" (click)="setFamily(group.family)">
               {{ familyLabel(group.family) }}
             </button>
           }
         </div>
 
         <div class="docs-filter-row" aria-label="Filter components by category">
-          <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === 'all'" (click)="setCategory('all')">
+          <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === 'all'" [attr.aria-pressed]="activeCategory() === 'all'" (click)="setCategory('all')">
             All categories
           </button>
           @for (category of categories; track category) {
-            <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === category" (click)="setCategory(category)">
+            <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === category" [attr.aria-pressed]="activeCategory() === category" (click)="setCategory(category)">
               {{ category }}
             </button>
           }
@@ -70,55 +71,85 @@ import {
       </div>
     </section>
 
-    <section class="docs-showcase-wall" aria-label="Interactive component previews">
-      @for (component of spotlightComponents(); track component.slug) {
-        <app-docs-component-preview [component]="component" [compact]="true" />
-      }
-    </section>
-
-    <section class="docs-component-atlas" aria-label="Component atlas">
-      @for (group of visibleGroups(); track group.family) {
-        <article class="docs-family-panel">
-          <header class="docs-family-panel__header">
-            <div>
-              <span class="docs-kicker">{{ group.components.length }} components</span>
-              <h2>{{ group.family }}</h2>
-            </div>
-            <div class="docs-api-count-row docs-api-count-row--panel">
-              <span><b>{{ groupInputCount(group.components) }}</b> inputs</span>
-              <span><b>{{ groupOutputCount(group.components) }}</b> outputs</span>
-              <span><b>{{ groupSlotCount(group.components) }}</b> slots</span>
-            </div>
-          </header>
-
-          <p class="docs-page__lead">{{ group.summary }}</p>
-
-          <div class="docs-component-index-grid docs-component-index-grid--atlas" aria-label="Component index">
-            @for (component of group.components; track component.slug) {
-              <a [routerLink]="component.route" class="docs-component-tile docs-component-tile--atlas">
-                <span>{{ component.name }}</span>
-                <small>{{ component.summary }}</small>
-                <div class="docs-component-tile__meta">
-                  <b>{{ component.category }}</b>
-                  <b>{{ component.complexity }}</b>
-                  <span>{{ component.api.inputs.length }} in · {{ component.api.outputs.length }} out</span>
-                </div>
-              </a>
-            }
+    @if (selectedComponent(); as selectedComponent) {
+      <section class="docs-component-workbench" aria-label="Selected component interactive preview">
+        <header class="docs-component-workbench__header">
+          <div>
+            <span class="docs-kicker">Live component workbench</span>
+            <h2>{{ selectedComponent.name }}</h2>
+            <p class="docs-page__lead">Use the atlas below to swap this preview without leaving the component catalog.</p>
           </div>
-        </article>
-      }
-    </section>
+          <a [routerLink]="selectedComponent.route" class="docs-action-link">Open full docs</a>
+        </header>
+
+        <app-docs-component-preview [component]="selectedComponent" />
+      </section>
+
+      <section class="docs-component-atlas" aria-label="Component atlas">
+        @for (group of visibleGroups(); track group.family) {
+          <article class="docs-family-panel">
+            <header class="docs-family-panel__header">
+              <div>
+                <span class="docs-kicker">{{ group.components.length }} components</span>
+                <h2>{{ group.family }}</h2>
+              </div>
+              <div class="docs-api-count-row docs-api-count-row--panel">
+                <span><b>{{ groupInputCount(group.components) }}</b> inputs</span>
+                <span><b>{{ groupOutputCount(group.components) }}</b> outputs</span>
+                <span><b>{{ groupSlotCount(group.components) }}</b> slots</span>
+              </div>
+            </header>
+
+            <p class="docs-page__lead">{{ group.summary }}</p>
+
+            <div class="docs-component-index-grid docs-component-index-grid--atlas" aria-label="Component index">
+              @for (component of group.components; track component.slug) {
+                  <article class="docs-component-tile docs-component-tile--atlas" [class.is-active]="selectedComponent.slug === component.slug">
+                    <button
+                      type="button"
+                      class="docs-component-tile__preview"
+                      [attr.aria-pressed]="selectedComponent.slug === component.slug"
+                      (click)="selectComponent(component.slug)"
+                    >
+                      <span>{{ component.name }}</span>
+                      <small>{{ component.summary }}</small>
+                      <div class="docs-component-tile__meta">
+                        <b>{{ component.category }}</b>
+                        <b>{{ component.complexity }}</b>
+                        <span>{{ component.api.inputs.length }} in · {{ component.api.outputs.length }} out</span>
+                      </div>
+                    </button>
+                    <a [routerLink]="component.route" class="docs-component-tile__link">Open docs</a>
+                  </article>
+              }
+            </div>
+          </article>
+        }
+      </section>
+    } @else {
+      <section class="docs-empty-state" aria-live="polite">
+        <span class="docs-kicker">No matching components</span>
+        <strong>Try a broader filter combination</strong>
+        <p class="docs-page__lead">The current family and category filters do not overlap in the public component catalog.</p>
+        <button type="button" class="docs-filter-button" (click)="resetFilters()">Reset filters</button>
+      </section>
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocsComponentsPageComponent {
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   protected readonly components = PRODUCTIVE_COMPONENT_DOCS;
   protected readonly groups = PRODUCTIVE_COMPONENT_GROUPS;
   protected readonly categories = Array.from(new Set(PRODUCTIVE_COMPONENT_DOCS.map((component) => component.category))).sort();
   protected readonly activeFamily = signal<string | 'all'>('all');
   protected readonly activeCategory = signal<ProductiveComponentCategory | 'all'>('all');
-  private readonly spotlightNames = ['AfButton', 'AfMetricCard', 'AfDataTable', 'AfSelect', 'AfKanban', 'AfChart'];
+  protected readonly selectedSlug = signal<string | null>(null);
+  private readonly knownFamilies = new Set(PRODUCTIVE_COMPONENT_GROUPS.map((group) => group.family));
+  private readonly knownCategories = new Set<ProductiveComponentCategory>(this.categories);
+  private readonly knownSlugs = new Set(PRODUCTIVE_COMPONENT_DOCS.map((component) => component.slug));
+  private readonly defaultPreviewNames = ['AfButton', 'AfMetricCard', 'AfDataTable', 'AfSelect', 'AfKanban', 'AfChart'];
   protected readonly filteredComponents = computed(() =>
     this.components.filter((component) => this.matchesActiveFilters(component)),
   );
@@ -128,10 +159,17 @@ export class DocsComponentsPageComponent {
       components: group.components.filter((component) => this.matchesActiveFilters(component)),
     })).filter((group) => group.components.length > 0),
   );
-  protected readonly spotlightComponents = computed(() => {
+  protected readonly selectedComponent = computed(() => {
     const filteredComponents = this.filteredComponents();
-    const spotlightComponents = filteredComponents.filter((component) => this.spotlightNames.includes(component.name));
-    return (spotlightComponents.length > 0 ? spotlightComponents : filteredComponents).slice(0, 6);
+    const selectedSlug = this.selectedSlug();
+    const selectedComponent = selectedSlug
+      ? filteredComponents.find((component) => component.slug === selectedSlug)
+      : undefined;
+
+    return selectedComponent
+      ?? filteredComponents.find((component) => this.defaultPreviewNames.includes(component.name))
+      ?? filteredComponents[0]
+      ?? null;
   });
   protected readonly familyCount = PRODUCTIVE_COMPONENT_GROUPS.length;
   protected readonly stableComponentCount = computed(() =>
@@ -144,12 +182,34 @@ export class DocsComponentsPageComponent {
     PRODUCTIVE_COMPONENT_DOCS.reduce((total, component) => total + component.api.variations.length, 0),
   );
 
+  constructor() {
+    this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((params) => {
+      this.applyQueryParams(params.get('family'), params.get('category'), params.get('component'));
+    });
+  }
+
   protected setFamily(family: string | 'all'): void {
     this.activeFamily.set(family);
+    this.selectedSlug.set(null);
+    this.updateFilterUrl();
   }
 
   protected setCategory(category: ProductiveComponentCategory | 'all'): void {
     this.activeCategory.set(category);
+    this.selectedSlug.set(null);
+    this.updateFilterUrl();
+  }
+
+  protected resetFilters(): void {
+    this.activeFamily.set('all');
+    this.activeCategory.set('all');
+    this.selectedSlug.set(null);
+    this.updateFilterUrl();
+  }
+
+  protected selectComponent(slug: string): void {
+    this.selectedSlug.set(slug);
+    this.updateFilterUrl(slug);
   }
 
   protected familyLabel(family: string): string {
@@ -171,5 +231,27 @@ export class DocsComponentsPageComponent {
   private matchesActiveFilters(component: ProductiveComponentDoc): boolean {
     return (this.activeFamily() === 'all' || component.family === this.activeFamily())
       && (this.activeCategory() === 'all' || component.category === this.activeCategory());
+  }
+
+  private applyQueryParams(family: string | null, category: string | null, component: string | null): void {
+    this.activeFamily.set(family && this.knownFamilies.has(family) ? family : 'all');
+    this.activeCategory.set(category && this.isKnownCategory(category) ? category : 'all');
+    this.selectedSlug.set(component && this.knownSlugs.has(component) ? component : null);
+  }
+
+  private updateFilterUrl(componentSlug: string | null = this.selectedSlug()): void {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        family: this.activeFamily() === 'all' ? null : this.activeFamily(),
+        category: this.activeCategory() === 'all' ? null : this.activeCategory(),
+        component: componentSlug,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  private isKnownCategory(category: string): category is ProductiveComponentCategory {
+    return this.knownCategories.has(category as ProductiveComponentCategory);
   }
 }

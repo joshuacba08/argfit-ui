@@ -2,6 +2,53 @@ import { DOCUMENT, NgComponentOutlet, NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import {
+  AfCard,
+  AfCardContentDirective,
+  AfCardEyebrowDirective,
+  AfCardFooterDirective,
+  AfCardHeaderDirective,
+  AfCardSubtitleDirective,
+  AfCardTitleDirective,
+  AfDialog,
+  AfDialogContentDirective,
+  AfDialogFooterDirective,
+  AfInputGroup,
+  AfInputGroupControlDirective,
+  AfInputGroupPrefixDirective,
+  AfInputGroupSuffixDirective,
+  AfPageShell,
+  AfPageShellActionsDirective,
+  AfPageShellBrandDirective,
+  AfPageShellFooterDirective,
+  AfPageShellUserDirective,
+  AfSplitter,
+  AfSplitterPrimaryDirective,
+  AfSplitterSecondaryDirective,
+  AfToastViewport,
+} from '@argfit-ui/adaptive';
+import type {
+  AfBreadcrumbItem,
+  AfCardDensity,
+  AfCardTone,
+  AfCardVariant,
+  AfDialogMobilePresentation,
+  AfDialogSize,
+  AfDialogTone,
+  AfFeedbackSeverity,
+  AfFieldDensity,
+  AfFieldLabelMode,
+  AfFieldState,
+  AfNavigationItem,
+  AfPageShellDensity,
+  AfPageShellVariant,
+  AfSplitterOrientation,
+  AfToastPlacement,
+} from '@argfit-ui/core';
+import {
+  AfToastService,
+} from '@argfit-ui/core';
+
 import type { ProductiveComponentApiAttribute, ProductiveComponentDoc, ProductiveComponentVariation } from './docs-data';
 
 interface PreviewBar {
@@ -106,20 +153,47 @@ const SAMPLE_INDICATORS = [
   { name: 'Mobile', max: 100 },
 ];
 
-const SAMPLE_NAV_ITEMS = [
+const SAMPLE_NAV_ITEMS: readonly AfNavigationItem[] = [
   { id: 'overview', label: 'Overview', badge: 'live' },
   { id: 'components', label: 'Components', badge: 52 },
   { id: 'release', label: 'Release' },
 ];
 
-const SAMPLE_BREADCRUMBS = [
+const SAMPLE_BREADCRUMBS: readonly AfBreadcrumbItem[] = [
   { id: 'docs', label: 'Docs' },
   { id: 'components', label: 'Components' },
 ];
 
 @Component({
   selector: 'app-docs-component-preview',
-  imports: [NgComponentOutlet, NgFor, RouterLink],
+  imports: [
+    NgComponentOutlet,
+    NgFor,
+    RouterLink,
+    AfCard,
+    AfCardHeaderDirective,
+    AfCardEyebrowDirective,
+    AfCardTitleDirective,
+    AfCardSubtitleDirective,
+    AfCardContentDirective,
+    AfCardFooterDirective,
+    AfDialog,
+    AfDialogContentDirective,
+    AfDialogFooterDirective,
+    AfInputGroup,
+    AfInputGroupPrefixDirective,
+    AfInputGroupControlDirective,
+    AfInputGroupSuffixDirective,
+    AfPageShell,
+    AfPageShellBrandDirective,
+    AfPageShellActionsDirective,
+    AfPageShellUserDirective,
+    AfPageShellFooterDirective,
+    AfSplitter,
+    AfSplitterPrimaryDirective,
+    AfSplitterSecondaryDirective,
+    AfToastViewport,
+  ],
   template: `
     @if (component(); as component) {
       <section
@@ -144,7 +218,7 @@ const SAMPLE_BREADCRUMBS = [
               </div>
               <a [routerLink]="component.route" class="docs-live-lab__route">{{ component.selector }}</a>
             } @else {
-              <span class="docs-live-lab__route">{{ component.selector }}</span>
+              <a [routerLink]="component.route" class="docs-live-lab__route" [attr.aria-label]="'Open ' + component.name + ' documentation'">{{ component.selector }}</a>
             }
           </div>
         </header>
@@ -159,7 +233,300 @@ const SAMPLE_BREADCRUMBS = [
               <span>Live preview</span>
               <b>{{ component.category }}</b>
             </div>
-            @if (canRenderLiveComponent()) {
+            @if (component.name === 'AfCard') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-card-demo" (click)="$event.stopPropagation()">
+                  <af-card
+                    [variant]="cardVariant()"
+                    [density]="cardDensity()"
+                    [tone]="cardTone()"
+                    [interactive]="booleanValue('interactive')"
+                    [selected]="booleanValue('selected')"
+                    (pressed)="onCardPressed($event)"
+                  >
+                    <header afCardHeader>
+                      <div>
+                        <span afCardEyebrow>Release surface</span>
+                        <h3 afCardTitle>Product health</h3>
+                        <p afCardSubtitle>Interactive card contract</p>
+                      </div>
+                      <span class="docs-card-demo__badge">{{ booleanValue('selected') ? 'Selected' : 'Ready' }}</span>
+                    </header>
+
+                    <div afCardContent>
+                      <div class="docs-card-demo__metric">
+                        <strong>94%</strong>
+                        <span>API coverage</span>
+                      </div>
+                      <p>
+                        This preview uses the real card slots and emits <code>pressed</code> when interactive mode is enabled.
+                      </p>
+                    </div>
+
+                    <footer afCardFooter>
+                      <span>{{ cardAction() }}</span>
+                      <strong>{{ cardVariant() }} · {{ cardTone() }}</strong>
+                    </footer>
+                  </af-card>
+                </div>
+              </div>
+            } @else if (component.name === 'AfPageShell') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-page-shell-demo" (click)="$event.stopPropagation()">
+                  <af-page-shell
+                    title="Documentation cockpit"
+                    subtitle="Adaptive shell preview"
+                    [navItems]="pageShellNavItems"
+                    [mobileTabs]="pageShellNavItems"
+                    [breadcrumbs]="pageShellBreadcrumbs"
+                    [activeItem]="pageShellActiveItem()"
+                    [activeTab]="pageShellActiveItem()"
+                    [density]="pageShellDensity()"
+                    [variant]="pageShellVariant()"
+                    [collapsible]="booleanValue('collapsible')"
+                    [collapsed]="booleanValue('collapsed')"
+                    [showSearch]="booleanValue('showSearch')"
+                    searchPlaceholder="Search components"
+                    [notificationCount]="7"
+                    userInitials="AF"
+                    ariaLabel="Documentation preview navigation"
+                    (navItemSelected)="selectPageShellNavItem($event)"
+                    (tabSelected)="selectPageShellNavItem($event)"
+                    (breadcrumbSelected)="selectPageShellBreadcrumb($event)"
+                    (collapsedChange)="setPageShellCollapsed($event)"
+                    (searchChanged)="setPageShellSearch($event)"
+                  >
+                    <div afPageShellBrand class="docs-page-shell-demo__brand">
+                      <span>AF</span>
+                      <strong>ArgFit Docs</strong>
+                    </div>
+
+                    <button afPageShellActions type="button" class="docs-page-shell-demo__action" (click)="activatePageShellCommand($event, 'New audit queued')">
+                      New audit
+                    </button>
+
+                    <div afPageShellUser class="docs-page-shell-demo__user">
+                      <span>AF</span>
+                      <strong>Platform</strong>
+                    </div>
+
+                    <div afPageShellFooter class="docs-page-shell-demo__footer">
+                      <span>Beta plus</span>
+                      <strong>{{ pageShellAction() }}</strong>
+                    </div>
+
+                    <section class="docs-page-shell-demo__content" aria-label="Preview shell content">
+                      <div>
+                        <span>Active section</span>
+                        <strong>{{ pageShellActiveLabel() }}</strong>
+                      </div>
+                      <p>
+                        Search, navigation, breadcrumbs and collapse events are wired to the documentation event log.
+                      </p>
+                      <button type="button" (click)="activatePageShellCommand($event, 'Primary shell action fired')">
+                        Run shell action
+                      </button>
+                    </section>
+                  </af-page-shell>
+                </div>
+              </div>
+            } @else if (component.name === 'AfSplitter') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-splitter-demo" (click)="$event.stopPropagation()">
+                  <div class="docs-splitter-demo__status" aria-live="polite">
+                    <strong>{{ splitterOrientation() }} splitter</strong>
+                    <span>{{ splitterAction() }}</span>
+                    <b>primary pane {{ splitterPrimarySize() }}%</b>
+                  </div>
+
+                  <af-splitter
+                    primaryLabel="Primary workspace"
+                    secondaryLabel="Execution lane"
+                    [orientation]="splitterOrientation()"
+                    [primarySize]="splitterPrimarySize()"
+                    [minPrimarySize]="30"
+                    [minSecondarySize]="25"
+                    ariaLabel="Documentation preview splitter"
+                    (primarySizeChange)="onSplitterPrimarySizeChange($event)"
+                  >
+                    <ng-template afSplitterPrimary>
+                      <section class="docs-splitter-demo__pane docs-splitter-demo__pane--primary">
+                        <span>Primary panel</span>
+                        <strong>Workspace composition</strong>
+                        <p>Pin filters, navigation or a dense editing surface in the lead pane while keeping context visible.</p>
+                        <div class="docs-splitter-demo__chips" aria-label="Primary panel content">
+                          <b>Filters</b>
+                          <b>Selection</b>
+                          <b>Inspector</b>
+                        </div>
+                      </section>
+                    </ng-template>
+
+                    <ng-template afSplitterSecondary>
+                      <section class="docs-splitter-demo__pane docs-splitter-demo__pane--secondary">
+                        <span>Secondary panel</span>
+                        <strong>Execution feedback</strong>
+                        <p>Use the supporting pane for logs, summaries or validation notes without leaving the current workflow.</p>
+                        <div class="docs-splitter-demo__metrics" aria-label="Secondary panel metrics">
+                          <div>
+                            <strong>12</strong>
+                            <span>events</span>
+                          </div>
+                          <div>
+                            <strong>3</strong>
+                            <span>panes</span>
+                          </div>
+                          <div>
+                            <strong>AA</strong>
+                            <span>focus</span>
+                          </div>
+                        </div>
+                      </section>
+                    </ng-template>
+                  </af-splitter>
+                </div>
+              </div>
+            } @else if (component.name === 'AfToast' || component.name === 'AfToastViewport') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-toast-demo" (click)="$event.stopPropagation()">
+                  <div class="docs-toast-demo__callout">
+                    <strong>Service-driven preview</strong>
+                    <p>{{ toastContextMessage() }}</p>
+                  </div>
+
+                  <div class="docs-toast-demo__actions">
+                    <button type="button" class="docs-toast-demo__button" (click)="showPreviewToast($event)">
+                      Show {{ toastSeverity() }} toast
+                    </button>
+                    <button type="button" class="docs-toast-demo__button docs-toast-demo__button--ghost" (click)="clearPreviewToasts($event)">
+                      Clear
+                    </button>
+                  </div>
+
+                  <div class="docs-toast-demo__status" aria-live="polite">
+                    <strong>{{ previewToasts().length > 0 ? 'Toast visible' : 'No active toasts' }}</strong>
+                    <span>{{ toastAction() }}</span>
+                    <b>{{ toastStatusMeta() }}</b>
+                  </div>
+
+                  <div class="docs-toast-demo__frame">
+                    <div class="docs-toast-demo__frame-top">
+                      <span>Viewport</span>
+                      <b>{{ toastPlacement() }}</b>
+                    </div>
+
+                    @if (previewToasts().length === 0) {
+                      <div class="docs-toast-demo__empty">
+                        <strong>Trigger a preview toast</strong>
+                        <span>{{ toastEmptyMessage() }}</span>
+                      </div>
+                    }
+
+                    <af-toast-viewport
+                      [placement]="toastPlacement()"
+                      ariaLabel="Preview notifications"
+                      closeLabel="Dismiss preview notification"
+                    />
+                  </div>
+                </div>
+              </div>
+            } @else if (component.name === 'AfDialog') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-dialog-demo" (click)="$event.stopPropagation()">
+                  <button type="button" class="docs-dialog-demo__trigger" (click)="openDialog($event)">
+                    Open dialog
+                  </button>
+                  <div class="docs-dialog-demo__status" aria-live="polite">
+                    <strong>{{ dialogOpen() ? 'Dialog open' : 'Dialog closed' }}</strong>
+                    <span>{{ dialogAction() }}</span>
+                  </div>
+                </div>
+
+                <af-dialog
+                  [open]="dialogOpen()"
+                  title="Review release scope"
+                  description="Confirm the component contract before publishing documentation updates."
+                  [size]="dialogSize()"
+                  [tone]="dialogTone()"
+                  [mobilePresentation]="dialogMobilePresentation()"
+                  [dismissible]="booleanValue('dismissible')"
+                  [closeOnBackdrop]="booleanValue('closeOnBackdrop')"
+                  [closeOnEscape]="booleanValue('closeOnEscape')"
+                  closeLabel="Close preview dialog"
+                  (openChange)="setDialogOpen($event)"
+                  (opened)="onDialogOpened()"
+                  (closed)="onDialogClosed()"
+                  (backdropPress)="onDialogBackdropPress()"
+                  (escapePress)="onDialogEscapePress($event)"
+                >
+                  <div afDialogContent class="docs-dialog-demo__content">
+                    <div>
+                      <span>Component</span>
+                      <strong>AfDialog</strong>
+                    </div>
+                    <div>
+                      <span>Contract</span>
+                      <strong>{{ dialogSize() }} · {{ dialogTone() }}</strong>
+                    </div>
+                    <p>
+                      This preview uses the real adaptive dialog, including backdrop, escape and close-button events.
+                    </p>
+                  </div>
+                  <div afDialogFooter class="docs-dialog-demo__footer">
+                    <button type="button" class="docs-dialog-demo__button docs-dialog-demo__button--ghost" (click)="closeDialog($event, 'Cancelled')">
+                      Cancel
+                    </button>
+                    <button type="button" class="docs-dialog-demo__button" (click)="closeDialog($event, 'Release scope confirmed')">
+                      Confirm scope
+                    </button>
+                  </div>
+                </af-dialog>
+              </div>
+            } @else if (component.name === 'AfInputGroup') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-input-group-demo" (click)="$event.stopPropagation()">
+                  <af-input-group
+                    label="Load target"
+                    [helperText]="inputGroupHelperText()"
+                    [errorText]="inputGroupErrorText()"
+                    [density]="inputGroupDensity()"
+                    [labelMode]="inputGroupLabelMode()"
+                    [state]="inputGroupState()"
+                    inputId="docs-input-group-target"
+                    [required]="booleanValue('required')"
+                    [disabled]="booleanValue('disabled')"
+                    [readonly]="booleanValue('readonly')"
+                  >
+                    <span afInputGroupPrefix>kg</span>
+                    <input
+                      afInputGroupControl
+                      id="docs-input-group-target"
+                      class="docs-input-group-demo__input"
+                      inputmode="numeric"
+                      [value]="inputGroupValue()"
+                      [disabled]="booleanValue('disabled')"
+                      [readOnly]="booleanValue('readonly')"
+                      (click)="$event.stopPropagation()"
+                      (input)="setInputGroupValue($event)"
+                    />
+                    <button
+                      afInputGroupSuffix
+                      type="button"
+                      class="docs-input-group-demo__button"
+                      [disabled]="booleanValue('disabled')"
+                      (click)="applyInputGroupValue($event)"
+                    >
+                      Apply
+                    </button>
+                  </af-input-group>
+
+                  <div class="docs-input-group-demo__status" aria-live="polite">
+                    <span>Current target <strong>{{ inputGroupValue() }} kg</strong></span>
+                    <span>{{ inputGroupAction() }}</span>
+                  </div>
+                </div>
+              </div>
+            } @else if (canRenderLiveComponent()) {
               <div class="docs-live-lab__actual">
                 <ng-container
                   [ngComponentOutlet]="component.componentType"
@@ -289,9 +656,24 @@ export class DocsComponentPreviewComponent {
   readonly compact = input(false);
 
   private readonly document = inject(DOCUMENT);
+  private readonly toastService = inject(AfToastService);
   private readonly selectedValues = signal<Record<string, string>>({});
   private readonly selectedBooleans = signal<Record<string, boolean>>({});
   private readonly selectedExpandedIds = signal<Record<string, readonly string[]>>({});
+  protected readonly cardAction = signal('Ready for card press');
+  protected readonly dialogOpen = signal(false);
+  protected readonly dialogAction = signal('Ready to open');
+  protected readonly inputGroupValue = signal('92');
+  protected readonly inputGroupAction = signal('Ready to apply');
+  protected readonly pageShellActiveItem = signal('overview');
+  protected readonly pageShellAction = signal('Overview selected');
+  protected readonly pageShellQuery = signal('');
+  protected readonly pageShellBreadcrumbs = SAMPLE_BREADCRUMBS;
+  protected readonly pageShellNavItems = SAMPLE_NAV_ITEMS;
+  protected readonly splitterPrimarySize = signal(58);
+  protected readonly splitterAction = signal('Drag the divider or switch orientation.');
+  protected readonly previewToasts = this.toastService.toasts;
+  protected readonly toastAction = signal('Mount the viewport and trigger a preview toast.');
   protected readonly viewMode = signal<PreviewMode>('canvas');
   protected readonly eventLog = signal<readonly string[]>(['Ready']);
 
@@ -349,14 +731,44 @@ export class DocsComponentPreviewComponent {
 
   protected selectValue(attribute: string, value: string): void {
     this.selectedValues.update((current) => ({ ...current, [attribute]: value }));
+
+    if (this.component().name === 'AfSplitter' && attribute === 'orientation') {
+      this.splitterAction.set(`Orientation set to ${value}`);
+    }
+
     this.pushEvent(`${attribute}: ${value}`);
   }
 
   protected booleanValue(attribute: string): boolean {
+    if (this.component().name === 'AfDialog' && attribute === 'open') {
+      return this.dialogOpen();
+    }
+
     return this.selectedBooleans()[attribute] ?? this.defaultBooleanValue(attribute);
   }
 
   protected toggleBoolean(attribute: string): void {
+    if (this.component().name === 'AfDialog' && attribute === 'open') {
+      const nextValue = !this.dialogOpen();
+      this.dialogOpen.set(nextValue);
+      this.dialogAction.set(nextValue ? 'Opening preview dialog' : 'Dialog close requested');
+      this.pushEvent(`open: ${nextValue}`);
+      return;
+    }
+
+    if (this.component().name === 'AfPageShell' && attribute === 'collapsed') {
+      this.setPageShellCollapsed(!this.booleanValue(attribute));
+      return;
+    }
+
+    if (this.component().name === 'AfCard' && attribute === 'selected') {
+      const nextValue = !this.booleanValue(attribute);
+      this.selectedBooleans.update((current) => ({ ...current, [attribute]: nextValue }));
+      this.cardAction.set(nextValue ? 'Selected from control' : 'Cleared from control');
+      this.pushEvent(`selected: ${nextValue ? 'on' : 'off'}`);
+      return;
+    }
+
     const nextValue = !this.booleanValue(attribute);
     this.selectedBooleans.update((current) => ({ ...current, [attribute]: nextValue }));
     this.pushEvent(`${attribute}: ${nextValue ? 'on' : 'off'}`);
@@ -385,6 +797,242 @@ export class DocsComponentPreviewComponent {
     }
 
     this.recordInteraction('preview click');
+  }
+
+  protected cardVariant(): AfCardVariant {
+    return this.selectedValue('variant', ['surface', 'elevated', 'metric', 'device', 'panel']) as AfCardVariant;
+  }
+
+  protected cardDensity(): AfCardDensity {
+    return this.selectedValue('density', ['compact', 'comfortable']) as AfCardDensity;
+  }
+
+  protected cardTone(): AfCardTone {
+    return this.selectedValue('tone', ['neutral', 'primary', 'success', 'warning', 'danger']) as AfCardTone;
+  }
+
+  protected onCardPressed(event: Event): void {
+    event.stopPropagation();
+
+    const selected = !this.booleanValue('selected');
+    this.selectedBooleans.update((current) => ({ ...current, selected }));
+    this.cardAction.set(selected ? 'Pressed event selected the card' : 'Pressed event cleared selection');
+    this.pushEvent(`pressed: ${selected ? 'selected' : 'cleared'}`);
+  }
+
+  protected pageShellDensity(): AfPageShellDensity {
+    return this.selectedValue('density', ['compact', 'comfortable']) as AfPageShellDensity;
+  }
+
+  protected pageShellVariant(): AfPageShellVariant {
+    return this.selectedValue('variant', ['app', 'dashboard', 'contained']) as AfPageShellVariant;
+  }
+
+  protected pageShellActiveLabel(): string {
+    return this.pageShellNavItems.find((item) => item.id === this.pageShellActiveItem())?.label ?? 'Overview';
+  }
+
+  protected selectPageShellNavItem(item: AfNavigationItem): void {
+    if (item.disabled) {
+      return;
+    }
+
+    this.pageShellActiveItem.set(item.id);
+    this.pageShellAction.set(`${item.label} selected`);
+    this.pushEvent(`nav: ${item.label}`);
+  }
+
+  protected selectPageShellBreadcrumb(item: AfBreadcrumbItem): void {
+    this.pageShellAction.set(`${item.label} breadcrumb selected`);
+    this.pushEvent(`breadcrumb: ${item.label}`);
+  }
+
+  protected setPageShellCollapsed(collapsed: boolean): void {
+    this.selectedBooleans.update((current) => ({ ...current, collapsed }));
+    this.pageShellAction.set(collapsed ? 'Navigation collapsed' : 'Navigation expanded');
+    this.pushEvent(collapsed ? 'collapsed' : 'expanded');
+  }
+
+  protected setPageShellSearch(query: string): void {
+    this.pageShellQuery.set(query);
+    this.pageShellAction.set(query ? `Search: ${query}` : 'Search cleared');
+    this.pushEvent(query ? `search: ${query}` : 'search cleared');
+  }
+
+  protected activatePageShellCommand(event: MouseEvent, action: string): void {
+    event.stopPropagation();
+    this.pageShellAction.set(action);
+    this.pushEvent(action.toLowerCase());
+  }
+
+  protected splitterOrientation(): AfSplitterOrientation {
+    return this.selectedValue('orientation', ['horizontal', 'vertical']) as AfSplitterOrientation;
+  }
+
+  protected onSplitterPrimarySizeChange(size: number): void {
+    const roundedSize = Math.round(size);
+    this.splitterPrimarySize.set(roundedSize);
+    this.splitterAction.set(`Primary pane resized to ${roundedSize}%`);
+    this.pushEvent(`primarySize: ${roundedSize}%`);
+  }
+
+  protected toastSeverity(): AfFeedbackSeverity {
+    return this.selectedValue('severity', ['success', 'info', 'warning', 'danger']) as AfFeedbackSeverity;
+  }
+
+  protected toastPlacement(): AfToastPlacement {
+    return this.selectedValue('placement', ['top-end', 'top-center', 'bottom-center']) as AfToastPlacement;
+  }
+
+  protected toastContextMessage(): string {
+    return this.component().name === 'AfToast'
+      ? 'AfToast is the notification payload. In real product flows it becomes visible through AfToastViewport and is usually triggered by AfToastService.'
+      : 'AfToastViewport is the shell-level mount point. It listens to AfToastService and positions the active stack on screen.';
+  }
+
+  protected toastEmptyMessage(): string {
+    return this.component().name === 'AfToast'
+      ? 'Dispatch the current severity to inspect the rendered toast inside the viewport.'
+      : 'Change placement from the controls and trigger a preview toast to verify the stack position.';
+  }
+
+  protected toastStatusMeta(): string {
+    const activeToast = this.previewToasts().at(-1);
+
+    if (!activeToast) {
+      return `placement: ${this.toastPlacement()}`;
+    }
+
+    return `${activeToast.id} · ${activeToast.severity}${activeToast.persistent ? ' · persistent' : ''}`;
+  }
+
+  protected showPreviewToast(event: MouseEvent): void {
+    event.stopPropagation();
+
+    const severity = this.toastSeverity();
+    const persistent = this.component().name === 'AfToast' ? this.booleanValue('persistent') : false;
+
+    this.toastService.show({
+      id: 'docs-preview-toast',
+      title: this.toastTitle(severity),
+      description: this.toastDescription(severity),
+      severity,
+      duration: persistent ? 0 : 5000,
+      persistent,
+    });
+
+    this.toastAction.set(
+      persistent
+        ? `${severity} toast pinned until dismissed or cleared.`
+        : `${severity} toast dispatched through AfToastService.`,
+    );
+    this.pushEvent(`toast: ${severity}`);
+  }
+
+  protected clearPreviewToasts(event: MouseEvent): void {
+    event.stopPropagation();
+    this.toastService.clear();
+    this.toastAction.set('Preview toasts cleared.');
+    this.pushEvent('toast: cleared');
+  }
+
+  protected dialogSize(): AfDialogSize {
+    return this.selectedValue('size', ['sm', 'md', 'lg', 'xl', 'fullscreen']) as AfDialogSize;
+  }
+
+  protected dialogTone(): AfDialogTone {
+    return this.selectedValue('tone', ['neutral', 'info', 'success', 'danger']) as AfDialogTone;
+  }
+
+  protected dialogMobilePresentation(): AfDialogMobilePresentation {
+    return this.selectedValue('mobilePresentation', ['sheet', 'fullscreen']) as AfDialogMobilePresentation;
+  }
+
+  protected openDialog(event: MouseEvent): void {
+    event.stopPropagation();
+    this.dialogOpen.set(true);
+    this.dialogAction.set('Opening preview dialog');
+    this.pushEvent('open requested');
+  }
+
+  protected setDialogOpen(open: boolean): void {
+    this.dialogOpen.set(open);
+    this.dialogAction.set(open ? 'Dialog opened' : 'Dialog close requested');
+    this.pushEvent(`open: ${open}`);
+  }
+
+  protected closeDialog(event: MouseEvent, action: string): void {
+    event.stopPropagation();
+    this.dialogOpen.set(false);
+    this.dialogAction.set(action);
+    this.pushEvent(action.toLowerCase());
+  }
+
+  protected onDialogOpened(): void {
+    this.dialogAction.set('Dialog mounted and focus trapped');
+    this.pushEvent('opened');
+  }
+
+  protected onDialogClosed(): void {
+    this.dialogAction.update((current) => current === 'Dialog close requested' ? 'Dialog closed' : current);
+    this.pushEvent('closed');
+  }
+
+  protected onDialogBackdropPress(): void {
+    this.dialogAction.set('Backdrop pressed');
+    this.pushEvent('backdrop press');
+  }
+
+  protected onDialogEscapePress(event: KeyboardEvent): void {
+    event.stopPropagation();
+    this.dialogAction.set('Escape pressed');
+    this.pushEvent('escape press');
+  }
+
+  protected inputGroupDensity(): AfFieldDensity {
+    return this.selectedValue('density', ['compact', 'comfortable']) as AfFieldDensity;
+  }
+
+  protected inputGroupLabelMode(): AfFieldLabelMode {
+    return this.selectedValue('labelMode', ['stacked', 'float', 'ifta']) as AfFieldLabelMode;
+  }
+
+  protected inputGroupState(): AfFieldState {
+    return this.selectedValue('state', ['default', 'error', 'success']) as AfFieldState;
+  }
+
+  protected inputGroupHelperText(): string {
+    if (this.inputGroupState() === 'success') {
+      return 'Target value is ready for the current workflow.';
+    }
+
+    return 'Edit the value and apply it through the suffix action.';
+  }
+
+  protected inputGroupErrorText(): string | undefined {
+    return this.inputGroupState() === 'error'
+      ? 'Review the target before applying it.'
+      : undefined;
+  }
+
+  protected setInputGroupValue(event: Event): void {
+    event.stopPropagation();
+
+    const target = event.target;
+
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    this.inputGroupValue.set(target.value);
+    this.inputGroupAction.set('Draft value updated');
+    this.pushEvent(`value: ${target.value}`);
+  }
+
+  protected applyInputGroupValue(event: MouseEvent): void {
+    event.stopPropagation();
+    this.inputGroupAction.set(`Applied ${this.inputGroupValue()} kg`);
+    this.pushEvent(`applied ${this.inputGroupValue()} kg`);
   }
 
   private sampleValueForInput(componentName: string, apiInput: ProductiveComponentApiAttribute): unknown {
@@ -552,6 +1200,34 @@ export class DocsComponentPreviewComponent {
     return SAMPLE_COLLECTION_ITEMS;
   }
 
+  private toastTitle(severity: AfFeedbackSeverity): string {
+    switch (severity) {
+      case 'success':
+        return 'Session saved';
+      case 'warning':
+        return 'Review the pending checks';
+      case 'danger':
+        return 'Release blocked';
+      case 'info':
+      default:
+        return 'Sync completed';
+    }
+  }
+
+  private toastDescription(severity: AfFeedbackSeverity): string {
+    switch (severity) {
+      case 'success':
+        return 'The athlete profile is now available to the coaching staff.';
+      case 'warning':
+        return 'Some contract fields still need confirmation before publishing.';
+      case 'danger':
+        return 'The release remains blocked until the failing checks are resolved.';
+      case 'info':
+      default:
+        return 'Documentation indexes and previews were refreshed successfully.';
+    }
+  }
+
   private sampleValue(componentName: string): unknown {
     if (componentName === 'AfProgress' || componentName === 'AfInputCount') {
       return 68;
@@ -581,6 +1257,10 @@ export class DocsComponentPreviewComponent {
       if (attribute === 'tone' && values.includes('neutral')) {
         return 'neutral';
       }
+    }
+
+    if (componentName === 'AfPageShell' && attribute === 'variant' && values.includes('dashboard')) {
+      return 'dashboard';
     }
 
     if (attribute === 'density' && values.includes('comfortable')) {
@@ -666,6 +1346,10 @@ export class DocsComponentPreviewComponent {
       'allowReorder',
       'checked',
       'clearable',
+      'closeOnBackdrop',
+      'closeOnEscape',
+      'collapsible',
+      'dismissible',
       'interactive',
       'legend',
       'searchable',
