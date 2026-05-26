@@ -1,0 +1,603 @@
+# ArgFit UI
+
+> Adaptive Angular UI framework for serious product surfaces.
+
+Canonical documentation domain: https://argfit-ui.oroyajs.com
+Primary LLM index: https://argfit-ui.oroyajs.com/llms.txt
+Full LLM context: https://argfit-ui.oroyajs.com/llms-full.txt
+
+ArgFit UI is an Angular UI framework built around a semantic adaptive public API. Consumers write application code against ArgFit-owned components and services. The adaptive layer decides whether the desktop or mobile renderer is used at runtime. PrimeNG and Ionic are internal renderer dependencies, not the normal application-facing API.
+
+## Documentation Map
+
+- [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
+- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the shape of the 1.0 contract.
+- [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
+- [LLMs.txt](https://argfit-ui.oroyajs.com/llms): Human-readable page for AI-oriented documentation endpoints.
+- [Components](https://argfit-ui.oroyajs.com/components): Stable adaptive component catalog with live previews and detail pages.
+- [API Reference](https://argfit-ui.oroyajs.com/api): Packages, imports, shared types and runtime services.
+- [Guides](https://argfit-ui.oroyajs.com/guides): Accessibility, theming, enterprise readiness, quality gates and migration guidance.
+- [Release](https://argfit-ui.oroyajs.com/release): Scope, semver, public API inventory and release notes.
+- [Search](https://argfit-ui.oroyajs.com/search): Search docs by component, package, guide or release topic.
+
+## LLM Endpoint Map
+
+- [Compact index](https://argfit-ui.oroyajs.com/llms.txt): Concise navigation, packages, install guidance and component list.
+- [Full context](https://argfit-ui.oroyajs.com/llms-full.txt): Expanded context file for agents that need a fuller picture before generating code.
+- [Compact alias](https://argfit-ui.oroyajs.com/llms/llms.txt): PrimeNG-style alias for `/llms.txt`.
+- [Full alias](https://argfit-ui.oroyajs.com/llms/llms-full.txt): PrimeNG-style alias for `/llms-full.txt`.
+
+## Agent Rules
+
+- Prefer `@argfit-ui/adaptive` imports for application components.
+- Use `@argfit-ui/core` for `provideArgfitUi`, theme runtime, platform runtime and toast service.
+- Keep every `@argfit-ui/*` dependency aligned to the same version.
+- Do not tell consumers to import PrimeNG or Ionic unless the user is intentionally working on renderer internals.
+- Treat renderer-specific packages (`@argfit-ui/desktop` and `@argfit-ui/mobile`) as opt-in integration paths.
+- For UI examples, use the public `Af*` component names, `af-*` selectors and documented slot directives.
+- Preserve accessibility semantics: labels, hints, errors, focus return, keyboard activation and live regions.
+- For dense operational screens, prioritize scanability, explicit actions, pagination, filtering and controlled state.
+- Use the docs component detail route when you need exact inputs, outputs, slots and examples.
+
+## Install
+
+```bash
+pnpm add @argfit-ui/core @argfit-ui/primitives @argfit-ui/adaptive
+pnpm add @argfit-ui/desktop @argfit-ui/mobile
+```
+
+Renderer packages are shipped as part of the contract but should remain secondary to adaptive imports for application screens.
+
+## Bootstrap
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { ARGFIT_DARK_THEME, provideArgfitUi } from '@argfit-ui/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideArgfitUi({ theme: ARGFIT_DARK_THEME, platform: 'auto' }),
+  ],
+};
+```
+
+## Adaptive Component Example
+
+```ts
+import { AfButton, AfCard, AfCardContentDirective, AfCardHeaderDirective, AfCardTitleDirective } from '@argfit-ui/adaptive';
+```
+
+```html
+<af-card variant="panel" tone="primary">
+  <header afCardHeader>
+    <h2 afCardTitle>Productive dashboard</h2>
+  </header>
+  <div afCardContent>
+    <af-button>Ship 1.0</af-button>
+  </div>
+</af-card>
+```
+
+## Public Packages
+
+### @argfit-ui/core
+
+Route: https://argfit-ui.oroyajs.com/api/core
+
+Purpose: Bootstrap, theme runtime, platform runtime, toast service and shared ArgFit-owned type families.
+
+Highlights:
+- `provideArgfitUi`
+- `AfThemeService`
+- `AfPlatformService`
+- `AfToastService`
+- Shared types for chart, data table, feedback and workflow components.
+
+### @argfit-ui/primitives
+
+Route: https://argfit-ui.oroyajs.com/api/primitives
+
+Purpose: Vendor-agnostic accessibility helpers and low-level building blocks.
+
+Highlights:
+- `AfVisuallyHiddenComponent`
+- `AfFocusTrapDirective`
+- `AfFocusInitialDirective`
+- `AfEscapeKeyDirective`
+- `AfIconComponent`
+
+### @argfit-ui/adaptive
+
+Route: https://argfit-ui.oroyajs.com/api/adaptive
+
+Purpose: Recommended application-facing package. Semantic components choose the correct renderer for the current platform.
+
+Highlights:
+- Foundation surfaces
+- Feedback and overlays
+- Forms and selection
+- Data and workflow
+- Layout and navigation
+
+### @argfit-ui/desktop
+
+Route: https://argfit-ui.oroyajs.com/api/desktop
+
+Purpose: Renderer-specific desktop surfaces for intentional integration paths, not the default application contract.
+
+Highlights:
+- PrimeNG remains internal.
+- Opt-in path only.
+- Useful for infrastructure-specific examples.
+- Secondary to adaptive imports.
+
+### @argfit-ui/mobile
+
+Route: https://argfit-ui.oroyajs.com/api/mobile
+
+Purpose: Renderer-specific mobile surfaces for intentional integration and testing paths.
+
+Highlights:
+- Ionic remains internal.
+- Touch-first renderer path.
+- Opt-in only.
+- Secondary to adaptive imports.
+
+## Framework Layers
+
+- Application: Product code imports adaptive components and stays free of vendor APIs.
+- Adaptive: Recommended public surface. Semantic components select the renderer at runtime.
+- Renderers: Opt-in desktop and mobile surfaces. PrimeNG and Ionic stay internal.
+- Foundation: Runtime, theme, platform, toast orchestration and accessibility primitives.
+
+## Component Families
+
+### Foundation and base composition
+
+Use these pieces to structure dashboards, record views and task flows before adding specialized data or workflow surfaces. Preserve landmarks, clear titles, input labels and focus return when opening dialogs.
+
+- [AfButton](https://argfit-ui.oroyajs.com/components/button)
+- [AfCard](https://argfit-ui.oroyajs.com/components/card)
+- [AfDialog](https://argfit-ui.oroyajs.com/components/dialog)
+- [AfInput](https://argfit-ui.oroyajs.com/components/input)
+- [AfPageShell](https://argfit-ui.oroyajs.com/components/page-shell)
+
+### Analytics, feedback and status
+
+Summary blocks, status indicators and transient or persistent feedback for operational UIs. Use inline message for persistent local errors and reserve toast/live-region behavior for brief global state changes.
+
+- [AfAnalyticsCard](https://argfit-ui.oroyajs.com/components/analytics-card)
+- [AfBadge](https://argfit-ui.oroyajs.com/components/badge)
+- [AfChip](https://argfit-ui.oroyajs.com/components/chip)
+- [AfInlineMessage](https://argfit-ui.oroyajs.com/components/inline-message)
+- [AfMetricCard](https://argfit-ui.oroyajs.com/components/metric-card)
+- [AfProgress](https://argfit-ui.oroyajs.com/components/progress)
+- [AfToast](https://argfit-ui.oroyajs.com/components/toast)
+- [AfToastViewport](https://argfit-ui.oroyajs.com/components/toast-viewport)
+
+### Overlay and identity
+
+Contextual disclosure, secondary task panels and ownership surfaces. Critical product meaning must not live behind hover-only disclosure.
+
+- [AfAvatar](https://argfit-ui.oroyajs.com/components/avatar)
+- [AfDrawer](https://argfit-ui.oroyajs.com/components/drawer)
+- [AfPopover](https://argfit-ui.oroyajs.com/components/popover)
+- [AfTooltip](https://argfit-ui.oroyajs.com/components/tooltip)
+
+### Forms and selection
+
+Productive data entry and choice surfaces for desktop-density and touch-first flows. Keep label-hint-error relationships synchronized and preserve native-button affordances.
+
+- [AfCheckbox](https://argfit-ui.oroyajs.com/components/checkbox)
+- [AfDatePicker](https://argfit-ui.oroyajs.com/components/date-picker)
+- [AfField](https://argfit-ui.oroyajs.com/components/field)
+- [AfFieldset](https://argfit-ui.oroyajs.com/components/fieldset)
+- [AfIconField](https://argfit-ui.oroyajs.com/components/icon-field)
+- [AfInputCount](https://argfit-ui.oroyajs.com/components/input-count)
+- [AfInputGroup](https://argfit-ui.oroyajs.com/components/input-group)
+- [AfListbox](https://argfit-ui.oroyajs.com/components/listbox)
+- [AfMultiSelect](https://argfit-ui.oroyajs.com/components/multi-select)
+- [AfPassword](https://argfit-ui.oroyajs.com/components/password)
+- [AfRadioGroup](https://argfit-ui.oroyajs.com/components/radio-group)
+- [AfSegmentedControl](https://argfit-ui.oroyajs.com/components/segmented-control)
+- [AfSelect](https://argfit-ui.oroyajs.com/components/select)
+- [AfTextarea](https://argfit-ui.oroyajs.com/components/textarea)
+- [AfToggle](https://argfit-ui.oroyajs.com/components/toggle)
+
+### Data, hierarchy and workflow
+
+High-signal reading, paged data, workflow state and hierarchy-oriented product surfaces. Keep expensive filtering, sorting and aggregation out of templates and let the app own state transitions.
+
+- [AfChart](https://argfit-ui.oroyajs.com/components/chart)
+- [AfDataTable](https://argfit-ui.oroyajs.com/components/data-table)
+- [AfDataView](https://argfit-ui.oroyajs.com/components/data-view)
+- [AfKanban](https://argfit-ui.oroyajs.com/components/kanban)
+- [AfOrderList](https://argfit-ui.oroyajs.com/components/order-list)
+- [AfOrganizationChart](https://argfit-ui.oroyajs.com/components/organization-chart)
+- [AfPaginator](https://argfit-ui.oroyajs.com/components/paginator)
+- [AfPickList](https://argfit-ui.oroyajs.com/components/pick-list)
+- [AfTimeline](https://argfit-ui.oroyajs.com/components/timeline)
+- [AfTree](https://argfit-ui.oroyajs.com/components/tree)
+- [AfTreeTable](https://argfit-ui.oroyajs.com/components/tree-table)
+- [AfVirtualScroller](https://argfit-ui.oroyajs.com/components/virtual-scroller)
+
+### Layout and navigation
+
+Progressive structure for multi-step, multi-panel or tool-heavy interfaces. Active or expanded state must remain explicit and reading order should stay clear.
+
+- [AfAccordion](https://argfit-ui.oroyajs.com/components/accordion)
+- [AfDivider](https://argfit-ui.oroyajs.com/components/divider)
+- [AfPanel](https://argfit-ui.oroyajs.com/components/panel)
+- [AfScrollPanel](https://argfit-ui.oroyajs.com/components/scroll-panel)
+- [AfSplitter](https://argfit-ui.oroyajs.com/components/splitter)
+- [AfStepper](https://argfit-ui.oroyajs.com/components/stepper)
+- [AfTabs](https://argfit-ui.oroyajs.com/components/tabs)
+- [AfToolbar](https://argfit-ui.oroyajs.com/components/toolbar)
+
+## Component Catalog Details
+
+Each component detail page follows this route pattern:
+
+```text
+https://argfit-ui.oroyajs.com/components/{component-slug}
+```
+
+Every adaptive component is imported from `@argfit-ui/adaptive` unless a renderer-specific integration is explicitly requested.
+
+- `AfButton`
+  - Route: https://argfit-ui.oroyajs.com/components/button
+  - Selector: `af-button`
+  - Family: Foundation and base composition
+  - Summary: Trigger primary and secondary actions across dense dashboards and touch workflows.
+
+- `AfCard`
+  - Route: https://argfit-ui.oroyajs.com/components/card
+  - Selector: `af-card`
+  - Family: Foundation and base composition
+  - Summary: Group related content, actions and status inside semantic product surfaces.
+  - Slots include `afCardHeader`, `afCardEyebrow`, `afCardTitle`, `afCardSubtitle`, `afCardContent` and `afCardFooter`.
+
+- `AfDialog`
+  - Route: https://argfit-ui.oroyajs.com/components/dialog
+  - Selector: `af-dialog`
+  - Family: Foundation and base composition
+  - Summary: Run focused modal tasks that temporarily take over the screen context.
+  - Slots include `afDialogHeader`, `afDialogTitle`, `afDialogDescription`, `afDialogContent` and `afDialogFooter`.
+
+- `AfInput`
+  - Route: https://argfit-ui.oroyajs.com/components/input
+  - Selector: `af-input`
+  - Family: Foundation and base composition
+  - Summary: Capture short textual, numeric or search-oriented values with a stable field contract.
+
+- `AfPageShell`
+  - Route: https://argfit-ui.oroyajs.com/components/page-shell
+  - Selector: `af-page-shell`
+  - Family: Foundation and base composition
+  - Summary: Frame app-wide navigation, breadcrumbs, search and action affordances.
+  - Slots include `afPageShellBrand`, `afPageShellActions`, `afPageShellUser` and `afPageShellFooter`.
+
+- `AfAnalyticsCard`
+  - Route: https://argfit-ui.oroyajs.com/components/analytics-card
+  - Selector: `af-analytics-card`
+  - Family: Analytics, feedback and status
+  - Summary: Combine insight narrative, metrics and trend context in a single executive summary surface.
+  - Slots include `afAnalyticsCardActions`, `afAnalyticsCardMetrics`, `afAnalyticsCardLegend` and `afAnalyticsCardFooter`.
+
+- `AfBadge`
+  - Route: https://argfit-ui.oroyajs.com/components/badge
+  - Selector: `af-badge`
+  - Family: Analytics, feedback and status
+  - Summary: Label inline status, severity, counters or state changes without breaking layout density.
+
+- `AfChip`
+  - Route: https://argfit-ui.oroyajs.com/components/chip
+  - Selector: `af-chip`
+  - Family: Analytics, feedback and status
+  - Summary: Represent compact entities, filters or removable selections with strong scanability.
+
+- `AfInlineMessage`
+  - Route: https://argfit-ui.oroyajs.com/components/inline-message
+  - Selector: `af-inline-message`
+  - Family: Analytics, feedback and status
+  - Summary: Keep persistent validation or operational guidance attached to the local workflow.
+
+- `AfMetricCard`
+  - Route: https://argfit-ui.oroyajs.com/components/metric-card
+  - Selector: `af-metric-card`
+  - Family: Analytics, feedback and status
+  - Summary: Surface a single KPI with tone, icon and trend in dashboards or summaries.
+
+- `AfProgress`
+  - Route: https://argfit-ui.oroyajs.com/components/progress
+  - Selector: `af-progress`
+  - Family: Analytics, feedback and status
+  - Summary: Communicate completion, load or quota state in a compact visual indicator.
+
+- `AfToast`
+  - Route: https://argfit-ui.oroyajs.com/components/toast
+  - Selector: `af-toast`
+  - Family: Analytics, feedback and status
+  - Summary: Raise short-lived global notifications for cross-screen outcomes.
+
+- `AfToastViewport`
+  - Route: https://argfit-ui.oroyajs.com/components/toast-viewport
+  - Selector: `af-toast-viewport`
+  - Family: Analytics, feedback and status
+  - Summary: Mount and coordinate toast presentation at the application shell level.
+
+- `AfAvatar`
+  - Route: https://argfit-ui.oroyajs.com/components/avatar
+  - Selector: `af-avatar`
+  - Family: Overlay and identity
+  - Summary: Show people, teams or ownership cues with initials, icons or imagery.
+
+- `AfDrawer`
+  - Route: https://argfit-ui.oroyajs.com/components/drawer
+  - Selector: `af-drawer`
+  - Family: Overlay and identity
+  - Summary: Open supporting or secondary tasks from the edge without leaving the current screen.
+
+- `AfPopover`
+  - Route: https://argfit-ui.oroyajs.com/components/popover
+  - Selector: `af-popover`
+  - Family: Overlay and identity
+  - Summary: Reveal anchored contextual actions or extra detail next to a trigger.
+  - Slots include `afPopoverTrigger` and `afPopoverContent`.
+
+- `AfTooltip`
+  - Route: https://argfit-ui.oroyajs.com/components/tooltip
+  - Selector: `af-tooltip`
+  - Family: Overlay and identity
+  - Summary: Add concise hover and focus hints where the UI needs lightweight explanation.
+
+- `AfCheckbox`
+  - Route: https://argfit-ui.oroyajs.com/components/checkbox
+  - Selector: `af-checkbox`
+  - Family: Forms and selection
+  - Summary: Capture binary choices inside settings, checklists or bulk selection flows.
+
+- `AfDatePicker`
+  - Route: https://argfit-ui.oroyajs.com/components/date-picker
+  - Selector: `af-date-picker`
+  - Family: Forms and selection
+  - Summary: Collect structured date values with a consistent cross-platform calendar affordance.
+
+- `AfField`
+  - Route: https://argfit-ui.oroyajs.com/components/field
+  - Selector: `af-field`
+  - Family: Forms and selection
+  - Summary: Compose custom field layouts with ArgFit-owned label, hint and error semantics.
+
+- `AfFieldset`
+  - Route: https://argfit-ui.oroyajs.com/components/fieldset
+  - Selector: `af-fieldset`
+  - Family: Forms and selection
+  - Summary: Group related controls under a shared legend and supporting copy.
+
+- `AfIconField`
+  - Route: https://argfit-ui.oroyajs.com/components/icon-field
+  - Selector: `af-icon-field`
+  - Family: Forms and selection
+  - Summary: Attach prefix or suffix icon affordances to compact text entry flows.
+  - Slots include `afIconFieldPrefix`, `afIconFieldControl` and `afIconFieldSuffix`.
+
+- `AfInputCount`
+  - Route: https://argfit-ui.oroyajs.com/components/input-count
+  - Selector: `af-input-count`
+  - Family: Forms and selection
+  - Summary: Capture bounded counts with stepper-like adjustments and clear feedback.
+
+- `AfInputGroup`
+  - Route: https://argfit-ui.oroyajs.com/components/input-group
+  - Selector: `af-input-group`
+  - Family: Forms and selection
+  - Summary: Pair an input with unit labels, prefixes or appended actions.
+  - Slots include `afInputGroupPrefix`, `afInputGroupControl` and `afInputGroupSuffix`.
+
+- `AfListbox`
+  - Route: https://argfit-ui.oroyajs.com/components/listbox
+  - Selector: `af-listbox`
+  - Family: Forms and selection
+  - Summary: Present long-form single or multi-selection in a readable scrolling list.
+
+- `AfMultiSelect`
+  - Route: https://argfit-ui.oroyajs.com/components/multi-select
+  - Selector: `af-multi-select`
+  - Family: Forms and selection
+  - Summary: Capture multiple values from dense data sets without exposing vendor details.
+
+- `AfPassword`
+  - Route: https://argfit-ui.oroyajs.com/components/password
+  - Selector: `af-password`
+  - Family: Forms and selection
+  - Summary: Collect secrets with reveal and validation semantics that stay accessible.
+
+- `AfRadioGroup`
+  - Route: https://argfit-ui.oroyajs.com/components/radio-group
+  - Selector: `af-radio-group`
+  - Family: Forms and selection
+  - Summary: Let users choose one option from a small explicit set.
+
+- `AfSegmentedControl`
+  - Route: https://argfit-ui.oroyajs.com/components/segmented-control
+  - Selector: `af-segmented-control`
+  - Family: Forms and selection
+  - Summary: Switch between a few mutually exclusive states with immediate visual feedback.
+
+- `AfSelect`
+  - Route: https://argfit-ui.oroyajs.com/components/select
+  - Selector: `af-select`
+  - Family: Forms and selection
+  - Summary: Choose one option from a collapsed option set with a stable adaptive API.
+
+- `AfTextarea`
+  - Route: https://argfit-ui.oroyajs.com/components/textarea
+  - Selector: `af-textarea`
+  - Family: Forms and selection
+  - Summary: Capture long-form notes, narrative and comments without leaving the form flow.
+
+- `AfToggle`
+  - Route: https://argfit-ui.oroyajs.com/components/toggle
+  - Selector: `af-toggle`
+  - Family: Forms and selection
+  - Summary: Flip immediate on/off settings with a concise control posture.
+
+- `AfChart`
+  - Route: https://argfit-ui.oroyajs.com/components/chart
+  - Selector: `af-chart`
+  - Family: Data, hierarchy and workflow
+  - Summary: Render comparison and trend visuals without leaking the charting vendor contract.
+
+- `AfDataTable`
+  - Route: https://argfit-ui.oroyajs.com/components/data-table
+  - Selector: `af-data-table`
+  - Family: Data, hierarchy and workflow
+  - Summary: Present dense structured datasets with pagination, sorting and operational affordances.
+  - Slots include `afDataTableToolbar`, `afDataTableCell`, `afDataTableExpandedRow` and `afDataTableEmpty`.
+
+- `AfDataView`
+  - Route: https://argfit-ui.oroyajs.com/components/data-view
+  - Selector: `af-data-view`
+  - Family: Data, hierarchy and workflow
+  - Summary: Render list or card collections that share pagination and filtering posture.
+  - Slots include `afDataViewItem`, `afDataViewActions`, `afDataViewEmpty` and `afDataViewLoading`.
+
+- `AfKanban`
+  - Route: https://argfit-ui.oroyajs.com/components/kanban
+  - Selector: `af-kanban`
+  - Family: Data, hierarchy and workflow
+  - Summary: Manage stateful work items across workflow columns and movement rules.
+  - Slots include `afKanbanColumnHeader`, `afKanbanCard`, `afKanbanCardFooter` and `afKanbanEmpty`.
+
+- `AfOrderList`
+  - Route: https://argfit-ui.oroyajs.com/components/order-list
+  - Selector: `af-order-list`
+  - Family: Data, hierarchy and workflow
+  - Summary: Reorder homogeneous lists explicitly where sequence is part of the task.
+  - Slots include `afOrderListItem`, `afOrderListActions`, `afOrderListEmpty` and `afOrderListLoading`.
+
+- `AfOrganizationChart`
+  - Route: https://argfit-ui.oroyajs.com/components/organization-chart
+  - Selector: `af-organization-chart`
+  - Family: Data, hierarchy and workflow
+  - Summary: Visualize reporting or domain hierarchy with readable node relationships.
+  - Slots include `afOrganizationChartNode`, `afOrganizationChartActions`, `afOrganizationChartEmpty` and `afOrganizationChartLoading`.
+
+- `AfPaginator`
+  - Route: https://argfit-ui.oroyajs.com/components/paginator
+  - Selector: `af-paginator`
+  - Family: Data, hierarchy and workflow
+  - Summary: Drive paged data traversal without rebuilding pager behavior by hand.
+
+- `AfPickList`
+  - Route: https://argfit-ui.oroyajs.com/components/pick-list
+  - Selector: `af-pick-list`
+  - Family: Data, hierarchy and workflow
+  - Summary: Move items between source and target sets in curation workflows.
+  - Slots include `afPickListItem`, `afPickListActions`, `afPickListSourceEmpty`, `afPickListTargetEmpty` and `afPickListLoading`.
+
+- `AfTimeline`
+  - Route: https://argfit-ui.oroyajs.com/components/timeline
+  - Selector: `af-timeline`
+  - Family: Data, hierarchy and workflow
+  - Summary: Narrate milestones, events and sequence state in chronological views.
+  - Slots include `afTimelineItem`, `afTimelineActions`, `afTimelineEmpty` and `afTimelineLoading`.
+
+- `AfTree`
+  - Route: https://argfit-ui.oroyajs.com/components/tree
+  - Selector: `af-tree`
+  - Family: Data, hierarchy and workflow
+  - Summary: Browse nested structures with expandable hierarchical context.
+  - Slots include `afTreeNode`, `afTreeActions`, `afTreeEmpty` and `afTreeLoading`.
+
+- `AfTreeTable`
+  - Route: https://argfit-ui.oroyajs.com/components/tree-table
+  - Selector: `af-tree-table`
+  - Family: Data, hierarchy and workflow
+  - Summary: Mix hierarchy and tabular comparison when both structure and columns matter.
+  - Slots include `afTreeTableCell`, `afTreeTableActions`, `afTreeTableEmpty` and `afTreeTableLoading`.
+
+- `AfVirtualScroller`
+  - Route: https://argfit-ui.oroyajs.com/components/virtual-scroller
+  - Selector: `af-virtual-scroller`
+  - Family: Data, hierarchy and workflow
+  - Summary: Keep very large collections performant by virtualizing rendered rows or cards.
+  - Slots include `afVirtualScrollerItem`, `afVirtualScrollerActions`, `afVirtualScrollerEmpty` and `afVirtualScrollerLoading`.
+
+- `AfAccordion`
+  - Route: https://argfit-ui.oroyajs.com/components/accordion
+  - Selector: `af-accordion`
+  - Family: Layout and navigation
+  - Summary: Reveal grouped content progressively without pushing users into a new page.
+  - Slots include `afAccordionPanel`.
+
+- `AfDivider`
+  - Route: https://argfit-ui.oroyajs.com/components/divider
+  - Selector: `af-divider`
+  - Family: Layout and navigation
+  - Summary: Separate related regions while keeping visual rhythm and hierarchy clear.
+
+- `AfPanel`
+  - Route: https://argfit-ui.oroyajs.com/components/panel
+  - Selector: `af-panel`
+  - Family: Layout and navigation
+  - Summary: Wrap titled content blocks that may need collapse or emphasis.
+
+- `AfScrollPanel`
+  - Route: https://argfit-ui.oroyajs.com/components/scroll-panel
+  - Selector: `af-scroll-panel`
+  - Family: Layout and navigation
+  - Summary: Constrain long content areas with a styled local scrolling region.
+
+- `AfSplitter`
+  - Route: https://argfit-ui.oroyajs.com/components/splitter
+  - Selector: `af-splitter`
+  - Family: Layout and navigation
+  - Summary: Resize adjacent work areas in dense productivity layouts.
+  - Slots include `afSplitterPrimary` and `afSplitterSecondary`.
+
+- `AfStepper`
+  - Route: https://argfit-ui.oroyajs.com/components/stepper
+  - Selector: `af-stepper`
+  - Family: Layout and navigation
+  - Summary: Lead users through a sequence of explicit steps or phases.
+  - Slots include `afStepPanel`.
+
+- `AfTabs`
+  - Route: https://argfit-ui.oroyajs.com/components/tabs
+  - Selector: `af-tabs`
+  - Family: Layout and navigation
+  - Summary: Switch between peer views while preserving strong information scent.
+  - Slots include `afTabPanel`.
+
+- `AfToolbar`
+  - Route: https://argfit-ui.oroyajs.com/components/toolbar
+  - Selector: `af-toolbar`
+  - Family: Layout and navigation
+  - Summary: Arrange dense action sets and supporting context in a horizontal command strip.
+  - Slots include `afToolbarStart`, `afToolbarCenter` and `afToolbarEnd`.
+
+## Validation Commands
+
+Use these commands in the repository when validating framework changes:
+
+```bash
+pnpm install
+pnpm build:docs
+pnpm build:all
+pnpm release:production:check
+```
+
+## When Generating UI Code
+
+1. Start with `provideArgfitUi` in the Angular app config.
+2. Import adaptive components and slot directives from `@argfit-ui/adaptive`.
+3. Use stable `Af*` names and `af-*` selectors.
+4. Keep state controlled by the application for forms, filters, pagination, overlays and workflow movement.
+5. Keep text concise inside compact panels and tool surfaces.
+6. Use labels, hints and error text for form controls.
+7. Use dialogs and drawers for complete tasks, popovers and tooltips for lightweight context.
+8. Use data table, data view, paginator and virtual scroller for dense or large collections.
+9. Use inline message for persistent local feedback and toast for brief global outcomes.
+10. Keep renderer-specific imports out of normal application examples.

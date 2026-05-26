@@ -1,7 +1,7 @@
 import type { Type } from '@angular/core';
 import * as ArgfitAdaptive from '@argfit-ui/adaptive';
 
-export type DocsRoutePath = '/overview' | '/components' | '/api' | '/guides' | '/release' | '/search';
+export type DocsRoutePath = '/overview' | '/quickstart' | '/llms' | '/components' | '/api' | '/guides' | '/release' | '/search';
 export type DocsSearchKind = 'component' | 'package' | 'guide' | 'release' | 'page';
 export type ProductiveComponentCategory = 'action' | 'surface' | 'feedback' | 'identity' | 'overlay' | 'form' | 'selection' | 'data' | 'workflow' | 'navigation' | 'layout';
 export type ProductiveComponentInteraction = 'command' | 'display' | 'input' | 'selection' | 'disclosure' | 'navigation' | 'workflow';
@@ -138,8 +138,20 @@ export const DOCS_NAV_ITEMS: readonly DocsNavItem[] = [
   {
     route: '/overview',
     label: 'Overview',
+    eyebrow: 'Start here',
+    description: 'Product posture, framework map and the shape of the 1.0 contract.',
+  },
+  {
+    route: '/quickstart',
+    label: 'Quickstart',
     eyebrow: 'Get started',
-    description: 'Quickstart, product posture and the shape of the 1.0 contract.',
+    description: 'Install, bootstrap and validate the productive contract in four steps.',
+  },
+  {
+    route: '/llms',
+    label: 'LLMs.txt',
+    eyebrow: 'AI Tools',
+    description: 'LLM-optimized documentation endpoints for agents and code assistants.',
   },
   {
     route: '/components',
@@ -170,11 +182,19 @@ export const DOCS_NAV_ITEMS: readonly DocsNavItem[] = [
 export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Quickstart',
-    route: '/overview',
+    route: '/quickstart',
     sourcePath: 'docs/productive/quickstart.md',
     summary: 'Bootstrap, package posture and the local validation flow for the productive contract.',
     badge: 'start',
     bullets: ['Angular 21 standalone app', 'Adaptive-first imports', 'release:production:check as the real gate'],
+  },
+  {
+    title: 'LLMs.txt',
+    route: '/llms',
+    sourcePath: 'projects/argfit-ui-docs/public/llms.txt',
+    summary: 'Machine-readable entry points for AI agents to understand ArgFit UI documentation and component contracts.',
+    badge: 'ai',
+    bullets: ['Canonical domain argfit-ui.oroyajs.com', 'Concise and full text indexes', 'Root and PrimeNG-style endpoint aliases'],
   },
   {
     title: 'Components',

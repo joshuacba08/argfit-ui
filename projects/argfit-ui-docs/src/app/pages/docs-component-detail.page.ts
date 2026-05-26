@@ -19,6 +19,7 @@ import {
     getProductiveFamilyGuide,
     PRODUCTIVE_COMPONENT_DOCS,
 } from '../docs-data';
+import { DocsCodeBlockComponent } from '../shared/code-block.component';
 
 @Component({
   selector: 'app-docs-component-detail-page',
@@ -32,6 +33,7 @@ import {
     AfCardHeaderDirective,
     AfCardTitleDirective,
     DocsComponentPreviewComponent,
+    DocsCodeBlockComponent,
   ],
   host: {
     class: 'docs-page',
@@ -84,7 +86,11 @@ import {
             </div>
           </header>
           <div afCardContent class="docs-stack">
-            <pre><code>{{ component.api.example }}</code></pre>
+            <docs-code-block
+              [code]="component.api.example"
+              language="html"
+              [filename]="component.selector + '.html'"
+            />
           </div>
         </af-card>
 
@@ -277,7 +283,11 @@ import {
             </div>
           </header>
           <div afCardContent class="docs-stack">
-            <pre><code>{{ importExample() }}</code></pre>
+            <docs-code-block
+              [code]="importExample()"
+              language="typescript"
+              [filename]="component.importPath"
+            />
             <p>Use the adaptive package as the application-facing contract unless you intentionally opt into a renderer-specific path.</p>
           </div>
         </af-card>

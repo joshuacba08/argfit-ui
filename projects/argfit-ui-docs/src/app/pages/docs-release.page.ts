@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
-  AfBadge,
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardHeaderDirective,
-  AfCardTitleDirective,
+    AfBadge,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardHeaderDirective,
+    AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
 
 import { PRODUCTIVE_RELEASE_ASSETS, PRODUCTIVE_VALIDATION_COMMANDS } from '../docs-data';
+import { DocsCodeBlockComponent } from '../shared/code-block.component';
 
 @Component({
   selector: 'app-docs-release-page',
@@ -20,6 +21,7 @@ import { PRODUCTIVE_RELEASE_ASSETS, PRODUCTIVE_VALIDATION_COMMANDS } from '../do
     AfCardEyebrowDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
+    DocsCodeBlockComponent,
   ],
   host: {
     class: 'docs-page',
@@ -63,10 +65,12 @@ import { PRODUCTIVE_RELEASE_ASSETS, PRODUCTIVE_VALIDATION_COMMANDS } from '../do
             <h2 afCardTitle>Release commands</h2>
           </div>
         </header>
-        <div afCardContent class="docs-command-list">
-          @for (command of commands; track command) {
-            <code>{{ command }}</code>
-          }
+        <div afCardContent>
+          <docs-code-block
+            [code]="commands.join('\n')"
+            language="bash"
+            filename="terminal"
+          />
         </div>
       </af-card>
 

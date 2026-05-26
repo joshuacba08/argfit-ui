@@ -201,7 +201,17 @@
             "browser": "projects/argfit-ui-docs/src/main.ts",
             "tsConfig": "projects/argfit-ui-docs/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/argfit-ui-docs/public"
+              },
+              {
+                "glob": "llms*.txt",
+                "input": "projects/argfit-ui-docs/public",
+                "output": "/llms"
+              }
+            ],
             "styles": ["projects/argfit-ui-docs/src/styles.css"]
           },
           "configurations": {
@@ -214,13 +224,14 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "16kB",
-                  "maximumError": "24kB"
+                  "maximumWarning": "40kB",
+                  "maximumError": "48kB"
                 }
               ],
               "outputHashing": "all"
             },
             "development": {
+              "tsConfig": "projects/argfit-ui-docs/tsconfig.app.dev.json",
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

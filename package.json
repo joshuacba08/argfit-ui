@@ -72,6 +72,7 @@
     "@primeuix/themes": "^2.0.3",
     "@tailwindcss/postcss": "^4.3.0",
     "echarts": "^6.1.0",
+    "highlight.js": "^11.11.1",
     "postcss": "^8.5.14",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.8",

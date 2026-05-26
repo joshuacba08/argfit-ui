@@ -23,7 +23,7 @@ import {
     class: 'docs-page',
   },
   template: `
-    <div class="docs-page__header">
+    <div class="docs-page__header docs-page__header--hero">
       <span class="docs-kicker">Stable component catalog</span>
       <h1>Components</h1>
       <p class="docs-page__lead">
@@ -37,59 +37,49 @@ import {
       </div>
     </div>
 
-    <section class="docs-discovery-panel" aria-label="Component discovery controls">
-      <div class="docs-discovery-panel__header">
-        <div>
-          <span class="docs-kicker">Browse by job</span>
-          <h2>Find the right surface</h2>
+    <section class="docs-catalog-toolbar" aria-label="Component discovery controls">
+      <div class="docs-catalog-toolbar__head">
+        <div class="docs-catalog-toolbar__heading">
+          <span class="docs-kicker">Browse the catalog</span>
+          <h2>{{ filteredComponents().length }} components match</h2>
         </div>
-        <af-badge tone="primary">{{ filteredComponents().length }} shown</af-badge>
+        @if (activeFamily() !== 'all' || activeCategory() !== 'all') {
+          <button type="button" class="docs-filter-button docs-filter-button--ghost" (click)="resetFilters()">
+            Clear filters
+          </button>
+        }
       </div>
 
-      <div class="docs-filter-stack">
-        <div class="docs-filter-row" aria-label="Filter components by family">
-          <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === 'all'" [attr.aria-pressed]="activeFamily() === 'all'" (click)="setFamily('all')">
-            All families
+      <div class="docs-filter-row" aria-label="Filter components by family">
+        <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === 'all'" [attr.aria-pressed]="activeFamily() === 'all'" (click)="setFamily('all')">
+          All families
+        </button>
+        @for (group of groups; track group.family) {
+          <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === group.family" [attr.aria-pressed]="activeFamily() === group.family" (click)="setFamily(group.family)">
+            <span class="docs-filter-dot" [attr.data-tone]="familyTone(group.family)"></span>
+            {{ familyLabel(group.family) }}
           </button>
-          @for (group of groups; track group.family) {
-            <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === group.family" [attr.aria-pressed]="activeFamily() === group.family" (click)="setFamily(group.family)">
-              {{ familyLabel(group.family) }}
-            </button>
-          }
-        </div>
+        }
+      </div>
 
-        <div class="docs-filter-row" aria-label="Filter components by category">
-          <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === 'all'" [attr.aria-pressed]="activeCategory() === 'all'" (click)="setCategory('all')">
-            All categories
+      <div class="docs-filter-row docs-filter-row--quiet" aria-label="Filter components by category">
+        <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === 'all'" [attr.aria-pressed]="activeCategory() === 'all'" (click)="setCategory('all')">
+          All categories
+        </button>
+        @for (category of categories; track category) {
+          <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === category" [attr.aria-pressed]="activeCategory() === category" (click)="setCategory(category)">
+            {{ category }}
           </button>
-          @for (category of categories; track category) {
-            <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === category" [attr.aria-pressed]="activeCategory() === category" (click)="setCategory(category)">
-              {{ category }}
-            </button>
-          }
-        </div>
+        }
       </div>
     </section>
 
     @if (selectedComponent(); as selectedComponent) {
-      <section class="docs-component-workbench" aria-label="Selected component interactive preview">
-        <header class="docs-component-workbench__header">
-          <div>
-            <span class="docs-kicker">Live component workbench</span>
-            <h2>{{ selectedComponent.name }}</h2>
-            <p class="docs-page__lead">Use the atlas below to swap this preview without leaving the component catalog.</p>
-          </div>
-          <a [routerLink]="selectedComponent.route" class="docs-action-link">Open full docs</a>
-        </header>
-
-        <app-docs-component-preview [component]="selectedComponent" />
-      </section>
-
       <section class="docs-component-atlas" aria-label="Component atlas">
         @for (group of visibleGroups(); track group.family) {
-          <article class="docs-family-panel">
+          <article class="docs-family-panel" [attr.data-tone]="familyTone(group.family)">
             <header class="docs-family-panel__header">
-              <div>
+              <div class="docs-family-panel__heading">
                 <span class="docs-kicker">{{ group.components.length }} components</span>
                 <h2>{{ group.family }}</h2>
               </div>
@@ -102,29 +92,43 @@ import {
 
             <p class="docs-page__lead">{{ group.summary }}</p>
 
-            <div class="docs-component-index-grid docs-component-index-grid--atlas" aria-label="Component index">
+            <div class="docs-catalog-grid" aria-label="Component index">
               @for (component of group.components; track component.slug) {
-                  <article class="docs-component-tile docs-component-tile--atlas" [class.is-active]="selectedComponent.slug === component.slug">
-                    <button
-                      type="button"
-                      class="docs-component-tile__preview"
-                      [attr.aria-pressed]="selectedComponent.slug === component.slug"
-                      (click)="selectComponent(component.slug)"
-                    >
-                      <span>{{ component.name }}</span>
-                      <small>{{ component.summary }}</small>
-                      <div class="docs-component-tile__meta">
-                        <b>{{ component.category }}</b>
-                        <b>{{ component.complexity }}</b>
-                        <span>{{ component.api.inputs.length }} in · {{ component.api.outputs.length }} out</span>
-                      </div>
-                    </button>
-                    <a [routerLink]="component.route" class="docs-component-tile__link">Open docs</a>
-                  </article>
+                <article class="docs-catalog-tile" [attr.data-tone]="familyTone(group.family)" [class.is-active]="selectedComponent.slug === component.slug">
+                  <button
+                    type="button"
+                    class="docs-catalog-tile__preview"
+                    [attr.aria-pressed]="selectedComponent.slug === component.slug"
+                    (click)="selectComponent(component.slug)"
+                  >
+                    <span class="docs-catalog-tile__glyph" aria-hidden="true">{{ componentInitials(component.name) }}</span>
+                    <span class="docs-catalog-tile__title">{{ component.name }}</span>
+                    <small class="docs-catalog-tile__summary">{{ component.summary }}</small>
+                    <div class="docs-catalog-tile__meta">
+                      <span class="docs-catalog-tile__chip">{{ component.category }}</span>
+                      <span class="docs-catalog-tile__chip docs-catalog-tile__chip--quiet">{{ component.complexity }}</span>
+                      <span class="docs-catalog-tile__chip docs-catalog-tile__chip--quiet">{{ component.api.inputs.length }} in · {{ component.api.outputs.length }} out</span>
+                    </div>
+                  </button>
+                  <a [routerLink]="component.route" class="docs-catalog-tile__link">Open docs →</a>
+                </article>
               }
             </div>
           </article>
         }
+      </section>
+
+      <section class="docs-component-workbench" id="workbench" aria-label="Selected component interactive preview">
+        <header class="docs-component-workbench__header">
+          <div>
+            <span class="docs-kicker">Live workbench</span>
+            <h2>{{ selectedComponent.name }}</h2>
+            <p class="docs-page__lead">Tweak inputs in place. Switch components by clicking any tile in the atlas above.</p>
+          </div>
+          <a [routerLink]="selectedComponent.route" class="docs-action-link">Open full docs</a>
+        </header>
+
+        <app-docs-component-preview [component]="selectedComponent" />
       </section>
     } @else {
       <section class="docs-empty-state" aria-live="polite">
@@ -210,10 +214,25 @@ export class DocsComponentsPageComponent {
   protected selectComponent(slug: string): void {
     this.selectedSlug.set(slug);
     this.updateFilterUrl(slug);
+    if (typeof document !== 'undefined') {
+      const target = document.getElementById('workbench');
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   protected familyLabel(family: string): string {
     return family.replace(' and ', ' / ');
+  }
+
+  protected familyTone(family: string): string {
+    const index = this.groups.findIndex((group) => group.family === family);
+    return String(((index >= 0 ? index : 0) % 6) + 1);
+  }
+
+  protected componentInitials(name: string): string {
+    const cleaned = name.startsWith('Af') ? name.slice(2) : name;
+    const matches = cleaned.match(/[A-Z][a-z]?/g) ?? [cleaned.slice(0, 2)];
+    return matches.slice(0, 2).join('').slice(0, 2).toUpperCase();
   }
 
   protected groupInputCount(components: readonly ProductiveComponentDoc[]): number {

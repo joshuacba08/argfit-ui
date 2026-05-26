@@ -16,6 +16,7 @@ import {
     PRODUCTIVE_BOOTSTRAP_EXAMPLE,
     PRODUCTIVE_PACKAGE_GUIDES,
 } from '../docs-data';
+import { DocsCodeBlockComponent } from '../shared/code-block.component';
 
 @Component({
   selector: 'app-docs-api-page',
@@ -28,6 +29,7 @@ import {
     AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
+    DocsCodeBlockComponent,
   ],
   host: {
     class: 'docs-page',
@@ -80,7 +82,11 @@ import {
           <af-badge tone="success">core</af-badge>
         </header>
         <div afCardContent>
-          <pre><code>{{ bootstrapExample }}</code></pre>
+          <docs-code-block
+            [code]="bootstrapExample"
+            language="typescript"
+            filename="src/app/app.config.ts"
+          />
         </div>
       </af-card>
 
@@ -93,7 +99,11 @@ import {
           <af-badge tone="primary">recommended</af-badge>
         </header>
         <div afCardContent>
-          <pre><code>{{ adaptiveExample }}</code></pre>
+          <docs-code-block
+            [code]="adaptiveExample"
+            language="typescript"
+            filename="src/app/pages/dashboard.page.ts"
+          />
         </div>
       </af-card>
     </section>

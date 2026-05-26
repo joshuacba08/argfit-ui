@@ -14,6 +14,7 @@ import {
 } from '@argfit-ui/adaptive';
 
 import { findProductivePackageGuide, PRODUCTIVE_COMPONENT_DOCS } from '../docs-data';
+import { DocsCodeBlockComponent } from '../shared/code-block.component';
 
 @Component({
   selector: 'app-docs-api-detail-page',
@@ -26,6 +27,7 @@ import { findProductivePackageGuide, PRODUCTIVE_COMPONENT_DOCS } from '../docs-d
     AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
+    DocsCodeBlockComponent,
   ],
   host: {
     class: 'docs-page',
@@ -71,7 +73,11 @@ import { findProductivePackageGuide, PRODUCTIVE_COMPONENT_DOCS } from '../docs-d
             </div>
           </header>
           <div afCardContent class="docs-stack">
-            <pre><code>{{ importExample() }}</code></pre>
+            <docs-code-block
+              [code]="importExample()"
+              language="typescript"
+              [filename]="pkg.importPath"
+            />
             <p>Packages stay scoped and semantic. Use renderer-specific packages only when the application intentionally needs that lower-level boundary.</p>
           </div>
         </af-card>

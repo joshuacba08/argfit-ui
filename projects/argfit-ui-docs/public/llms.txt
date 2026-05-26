@@ -1,0 +1,118 @@
+# ArgFit UI
+
+> Adaptive Angular UI framework for product surfaces.
+
+Canonical documentation domain: https://argfit-ui.oroyajs.com
+
+ArgFit UI provides an application-facing adaptive component API for Angular. Application code should prefer `@argfit-ui/adaptive`; desktop and mobile renderer packages remain intentional opt-in paths. PrimeNG and Ionic are renderer internals, not the default consumer contract.
+
+## LLM Endpoints
+
+- [LLMs.txt](https://argfit-ui.oroyajs.com/llms): Human-readable page describing AI-oriented documentation endpoints.
+- [Compact text index](https://argfit-ui.oroyajs.com/llms.txt): This concise navigation and context file.
+- [Full text context](https://argfit-ui.oroyajs.com/llms-full.txt): Expanded package, usage and component catalog context.
+- [PrimeNG-style compact alias](https://argfit-ui.oroyajs.com/llms/llms.txt): Alias for tools that resolve endpoint paths relative to `/llms`.
+- [PrimeNG-style full alias](https://argfit-ui.oroyajs.com/llms/llms-full.txt): Alias for tools that resolve endpoint paths relative to `/llms`.
+
+## Documentation
+
+- [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
+- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the shape of the 1.0 contract.
+- [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
+- [Components](https://argfit-ui.oroyajs.com/components): Stable adaptive component catalog with previews and detail pages.
+- [API Reference](https://argfit-ui.oroyajs.com/api): Packages, imports, shared types and runtime services.
+- [Guides](https://argfit-ui.oroyajs.com/guides): Accessibility, theming, enterprise readiness, quality gates and migration guidance.
+- [Release](https://argfit-ui.oroyajs.com/release): Scope, semver, public API inventory and release notes.
+- [Search](https://argfit-ui.oroyajs.com/search): Search docs by component, package, guide or release topic.
+
+## Public Packages
+
+- [@argfit-ui/core](https://argfit-ui.oroyajs.com/api/core): Bootstrap, theme runtime, platform runtime, toast service and shared ArgFit-owned types.
+- [@argfit-ui/primitives](https://argfit-ui.oroyajs.com/api/primitives): Vendor-agnostic accessibility helpers and low-level building blocks.
+- [@argfit-ui/adaptive](https://argfit-ui.oroyajs.com/api/adaptive): Recommended application-facing package. Semantic components choose the correct renderer at runtime.
+- [@argfit-ui/desktop](https://argfit-ui.oroyajs.com/api/desktop): Renderer-specific desktop surfaces for intentional integration paths.
+- [@argfit-ui/mobile](https://argfit-ui.oroyajs.com/api/mobile): Renderer-specific mobile surfaces for intentional mobile integration and testing paths.
+
+## Install
+
+```bash
+pnpm add @argfit-ui/core @argfit-ui/primitives @argfit-ui/adaptive
+pnpm add @argfit-ui/desktop @argfit-ui/mobile
+```
+
+## Bootstrap
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { ARGFIT_DARK_THEME, provideArgfitUi } from '@argfit-ui/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideArgfitUi({ theme: ARGFIT_DARK_THEME, platform: 'auto' }),
+  ],
+};
+```
+
+## Agent Guidance
+
+- Prefer `@argfit-ui/adaptive` for application UI code.
+- Keep all `@argfit-ui/*` package versions aligned.
+- Do not ask consumers to import PrimeNG or Ionic for normal ArgFit UI usage.
+- Use `provideArgfitUi` from `@argfit-ui/core` to wire theme, platform and toast runtime.
+- Use component detail pages for exact selectors, inputs, outputs, slot directives and examples.
+- Use `llms-full.txt` before generating code, migrations or architectural recommendations.
+
+## Components
+
+- [AfButton](https://argfit-ui.oroyajs.com/components/button): Trigger primary and secondary actions across dense dashboards and touch workflows.
+- [AfCard](https://argfit-ui.oroyajs.com/components/card): Group related content, actions and status inside semantic product surfaces.
+- [AfDialog](https://argfit-ui.oroyajs.com/components/dialog): Run focused modal tasks that temporarily take over the screen context.
+- [AfInput](https://argfit-ui.oroyajs.com/components/input): Capture short textual, numeric or search-oriented values with a stable field contract.
+- [AfPageShell](https://argfit-ui.oroyajs.com/components/page-shell): Frame app-wide navigation, breadcrumbs, search and action affordances.
+- [AfAnalyticsCard](https://argfit-ui.oroyajs.com/components/analytics-card): Combine insight narrative, metrics and trend context.
+- [AfBadge](https://argfit-ui.oroyajs.com/components/badge): Label inline status, severity, counters or state changes.
+- [AfChip](https://argfit-ui.oroyajs.com/components/chip): Represent compact entities, filters or removable selections.
+- [AfInlineMessage](https://argfit-ui.oroyajs.com/components/inline-message): Attach persistent validation or operational guidance to a workflow.
+- [AfMetricCard](https://argfit-ui.oroyajs.com/components/metric-card): Surface a single KPI with tone, icon and trend.
+- [AfProgress](https://argfit-ui.oroyajs.com/components/progress): Communicate completion, load or quota state.
+- [AfToast](https://argfit-ui.oroyajs.com/components/toast): Raise short-lived global notifications.
+- [AfToastViewport](https://argfit-ui.oroyajs.com/components/toast-viewport): Mount and coordinate toast presentation.
+- [AfAvatar](https://argfit-ui.oroyajs.com/components/avatar): Show people, teams or ownership cues.
+- [AfDrawer](https://argfit-ui.oroyajs.com/components/drawer): Open supporting tasks from the edge.
+- [AfPopover](https://argfit-ui.oroyajs.com/components/popover): Reveal anchored contextual actions or extra detail.
+- [AfTooltip](https://argfit-ui.oroyajs.com/components/tooltip): Add concise hover and focus hints.
+- [AfCheckbox](https://argfit-ui.oroyajs.com/components/checkbox): Capture binary choices.
+- [AfDatePicker](https://argfit-ui.oroyajs.com/components/date-picker): Collect structured date values.
+- [AfField](https://argfit-ui.oroyajs.com/components/field): Compose custom field layouts with ArgFit-owned semantics.
+- [AfFieldset](https://argfit-ui.oroyajs.com/components/fieldset): Group related controls under a shared legend.
+- [AfIconField](https://argfit-ui.oroyajs.com/components/icon-field): Attach prefix or suffix icons to text entry.
+- [AfInputCount](https://argfit-ui.oroyajs.com/components/input-count): Capture bounded counts with stepper-like adjustments.
+- [AfInputGroup](https://argfit-ui.oroyajs.com/components/input-group): Pair an input with unit labels, prefixes or actions.
+- [AfListbox](https://argfit-ui.oroyajs.com/components/listbox): Present single or multi-selection in a scrolling list.
+- [AfMultiSelect](https://argfit-ui.oroyajs.com/components/multi-select): Capture multiple values from dense data sets.
+- [AfPassword](https://argfit-ui.oroyajs.com/components/password): Collect secrets with reveal and validation semantics.
+- [AfRadioGroup](https://argfit-ui.oroyajs.com/components/radio-group): Choose one option from a small explicit set.
+- [AfSegmentedControl](https://argfit-ui.oroyajs.com/components/segmented-control): Switch between a few mutually exclusive states.
+- [AfSelect](https://argfit-ui.oroyajs.com/components/select): Choose one option from a collapsed option set.
+- [AfTextarea](https://argfit-ui.oroyajs.com/components/textarea): Capture long-form notes and comments.
+- [AfToggle](https://argfit-ui.oroyajs.com/components/toggle): Flip immediate on/off settings.
+- [AfChart](https://argfit-ui.oroyajs.com/components/chart): Render comparison and trend visuals.
+- [AfDataTable](https://argfit-ui.oroyajs.com/components/data-table): Present dense structured datasets with pagination and sorting.
+- [AfDataView](https://argfit-ui.oroyajs.com/components/data-view): Render list or card collections.
+- [AfKanban](https://argfit-ui.oroyajs.com/components/kanban): Manage stateful work items across workflow columns.
+- [AfOrderList](https://argfit-ui.oroyajs.com/components/order-list): Reorder homogeneous lists.
+- [AfOrganizationChart](https://argfit-ui.oroyajs.com/components/organization-chart): Visualize reporting or domain hierarchy.
+- [AfPaginator](https://argfit-ui.oroyajs.com/components/paginator): Drive paged data traversal.
+- [AfPickList](https://argfit-ui.oroyajs.com/components/pick-list): Move items between source and target sets.
+- [AfTimeline](https://argfit-ui.oroyajs.com/components/timeline): Narrate milestones and sequence state.
+- [AfTree](https://argfit-ui.oroyajs.com/components/tree): Browse nested structures.
+- [AfTreeTable](https://argfit-ui.oroyajs.com/components/tree-table): Mix hierarchy and tabular comparison.
+- [AfVirtualScroller](https://argfit-ui.oroyajs.com/components/virtual-scroller): Keep very large collections performant.
+- [AfAccordion](https://argfit-ui.oroyajs.com/components/accordion): Reveal grouped content progressively.
+- [AfDivider](https://argfit-ui.oroyajs.com/components/divider): Separate related regions.
+- [AfPanel](https://argfit-ui.oroyajs.com/components/panel): Wrap titled content blocks.
+- [AfScrollPanel](https://argfit-ui.oroyajs.com/components/scroll-panel): Constrain long content areas.
+- [AfSplitter](https://argfit-ui.oroyajs.com/components/splitter): Resize adjacent work areas.
+- [AfStepper](https://argfit-ui.oroyajs.com/components/stepper): Lead users through explicit steps.
+- [AfTabs](https://argfit-ui.oroyajs.com/components/tabs): Switch between peer views.
+- [AfToolbar](https://argfit-ui.oroyajs.com/components/toolbar): Arrange dense action sets and supporting context.
