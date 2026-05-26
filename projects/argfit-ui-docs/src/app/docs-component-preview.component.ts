@@ -3,50 +3,62 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, inject
 import { RouterLink } from '@angular/router';
 
 import {
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardFooterDirective,
-  AfCardHeaderDirective,
-  AfCardSubtitleDirective,
-  AfCardTitleDirective,
-  AfDialog,
-  AfDialogContentDirective,
-  AfDialogFooterDirective,
-  AfInputGroup,
-  AfInputGroupControlDirective,
-  AfInputGroupPrefixDirective,
-  AfInputGroupSuffixDirective,
-  AfPageShell,
-  AfPageShellActionsDirective,
-  AfPageShellBrandDirective,
-  AfPageShellFooterDirective,
-  AfPageShellUserDirective,
-  AfSplitter,
-  AfSplitterPrimaryDirective,
-  AfSplitterSecondaryDirective,
-  AfToastViewport,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardFooterDirective,
+    AfCardHeaderDirective,
+    AfCardSubtitleDirective,
+    AfCardTitleDirective,
+    AfDialog,
+    AfDialogContentDirective,
+    AfDialogFooterDirective,
+    AfDrawer,
+    AfInputGroup,
+    AfInputGroupControlDirective,
+    AfInputGroupPrefixDirective,
+    AfInputGroupSuffixDirective,
+    AfPageShell,
+    AfPageShellActionsDirective,
+    AfPageShellBrandDirective,
+    AfPageShellFooterDirective,
+    AfPageShellUserDirective,
+    AfPopover,
+    AfPopoverContentDirective,
+    AfPopoverTriggerDirective,
+    AfSplitter,
+    AfSplitterPrimaryDirective,
+    AfSplitterSecondaryDirective,
+    AfToastViewport,
+    AfTooltip,
 } from '@argfit-ui/adaptive';
 import type {
-  AfBreadcrumbItem,
-  AfCardDensity,
-  AfCardTone,
-  AfCardVariant,
-  AfDialogMobilePresentation,
-  AfDialogSize,
-  AfDialogTone,
-  AfFeedbackSeverity,
-  AfFieldDensity,
-  AfFieldLabelMode,
-  AfFieldState,
-  AfNavigationItem,
-  AfPageShellDensity,
-  AfPageShellVariant,
-  AfSplitterOrientation,
-  AfToastPlacement,
+    AfBreadcrumbItem,
+    AfCardDensity,
+    AfCardTone,
+    AfCardVariant,
+    AfDialogMobilePresentation,
+    AfDialogSize,
+    AfDialogTone,
+    AfDrawerPlacement,
+    AfDrawerSize,
+    AfDrawerTone,
+    AfFeedbackSeverity,
+    AfFieldDensity,
+    AfFieldLabelMode,
+    AfFieldState,
+    AfNavigationItem,
+    AfPageShellDensity,
+    AfPageShellVariant,
+    AfPopoverPlacement,
+    AfPopoverTone,
+    AfSplitterOrientation,
+    AfToastPlacement,
+    AfTooltipPlacement,
+    AfTooltipTone,
 } from '@argfit-ui/core';
 import {
-  AfToastService,
+    AfToastService,
 } from '@argfit-ui/core';
 
 import type { ProductiveComponentApiAttribute, ProductiveComponentDoc, ProductiveComponentVariation } from './docs-data';
@@ -180,6 +192,7 @@ const SAMPLE_BREADCRUMBS: readonly AfBreadcrumbItem[] = [
     AfDialog,
     AfDialogContentDirective,
     AfDialogFooterDirective,
+    AfDrawer,
     AfInputGroup,
     AfInputGroupPrefixDirective,
     AfInputGroupControlDirective,
@@ -189,10 +202,14 @@ const SAMPLE_BREADCRUMBS: readonly AfBreadcrumbItem[] = [
     AfPageShellActionsDirective,
     AfPageShellUserDirective,
     AfPageShellFooterDirective,
+    AfPopover,
+    AfPopoverTriggerDirective,
+    AfPopoverContentDirective,
     AfSplitter,
     AfSplitterPrimaryDirective,
     AfSplitterSecondaryDirective,
     AfToastViewport,
+    AfTooltip,
   ],
   template: `
     @if (component(); as component) {
@@ -482,6 +499,142 @@ const SAMPLE_BREADCRUMBS: readonly AfBreadcrumbItem[] = [
                   </div>
                 </af-dialog>
               </div>
+            } @else if (component.name === 'AfDrawer') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-drawer-demo" (click)="$event.stopPropagation()">
+                  <div class="docs-drawer-demo__status" aria-live="polite">
+                    <span>Drawer state</span>
+                    <strong>{{ drawerOpen() ? 'Open' : 'Closed' }}</strong>
+                    <b>{{ drawerStatusMeta() }}</b>
+                  </div>
+
+                  <div class="docs-drawer-demo__actions">
+                    <button type="button" class="docs-drawer-demo__button" (click)="openDrawer($event)">
+                      {{ drawerOpen() ? 'Refresh drawer' : 'Open drawer' }}
+                    </button>
+                    <button
+                      type="button"
+                      class="docs-drawer-demo__button docs-drawer-demo__button--ghost"
+                      [disabled]="!drawerOpen()"
+                      (click)="closeDrawer($event, 'Drawer closed from preview controls')"
+                    >
+                      Close
+                    </button>
+                  </div>
+
+                  <p class="docs-drawer-demo__note">{{ drawerAction() }}</p>
+
+                  <af-drawer
+                    [open]="drawerOpen()"
+                    title="Session checklist"
+                    description="Keep secondary tasks attached to the current workflow without pushing users to a separate page."
+                    [placement]="drawerPlacement()"
+                    [size]="drawerSize()"
+                    [tone]="drawerTone()"
+                    [dismissible]="booleanValue('dismissible')"
+                    [closeOnBackdrop]="booleanValue('closeOnBackdrop')"
+                    [closeOnEscape]="booleanValue('closeOnEscape')"
+                    ariaLabel="Preview drawer"
+                    closeLabel="Close preview drawer"
+                    (openChange)="setDrawerOpen($event)"
+                    (opened)="onDrawerOpened()"
+                    (closed)="onDrawerClosed()"
+                    (backdropPress)="onDrawerBackdropPress()"
+                    (escapePress)="onDrawerEscapePress($event)"
+                  >
+                    <div class="docs-drawer-demo__content">
+                      <div>
+                        <span>Placement</span>
+                        <strong>{{ drawerPlacement() }}</strong>
+                      </div>
+                      <div>
+                        <span>Surface</span>
+                        <strong>{{ drawerSize() }} · {{ drawerTone() }}</strong>
+                      </div>
+                      <p>
+                        Drawers are better for side tasks, audit notes and short approval flows that should not interrupt the main screen.
+                      </p>
+                      <div class="docs-drawer-demo__footer">
+                        <button type="button" class="docs-drawer-demo__button docs-drawer-demo__button--ghost" (click)="closeDrawer($event, 'Drawer dismissed')">
+                          Dismiss
+                        </button>
+                        <button type="button" class="docs-drawer-demo__button" (click)="closeDrawer($event, 'Workflow queued from drawer')">
+                          Queue workflow
+                        </button>
+                      </div>
+                    </div>
+                  </af-drawer>
+                </div>
+              </div>
+            } @else if (component.name === 'AfPopover') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-popover-demo" (click)="$event.stopPropagation()">
+                  <div class="docs-popover-demo__status" aria-live="polite">
+                    <span>Popover state</span>
+                    <strong>{{ popoverOpen() ? 'Open' : 'Closed' }}</strong>
+                    <b>{{ popoverStatusMeta() }}</b>
+                  </div>
+
+                  <af-popover
+                    [open]="popoverOpen()"
+                    title="Context actions"
+                    [placement]="popoverPlacement()"
+                    [tone]="popoverTone()"
+                    [dismissible]="booleanValue('dismissible')"
+                    [closeOnBackdrop]="booleanValue('closeOnBackdrop')"
+                    [closeOnEscape]="booleanValue('closeOnEscape')"
+                    ariaLabel="Preview popover actions"
+                    closeLabel="Close preview popover"
+                    (openChange)="setPopoverOpen($event)"
+                    (opened)="onPopoverOpened()"
+                    (closed)="onPopoverClosed()"
+                    (backdropPress)="onPopoverBackdropPress()"
+                    (escapePress)="onPopoverEscapePress($event)"
+                  >
+                    <ng-template afPopoverTrigger>
+                      <button type="button" class="docs-popover-demo__trigger">
+                        {{ popoverOpen() ? 'Close context' : 'Open context' }}
+                      </button>
+                    </ng-template>
+
+                    <ng-template afPopoverContent>
+                      <div class="docs-popover-demo__content">
+                        <p>Use popover for anchored contextual actions and short supporting detail.</p>
+                        <div class="docs-popover-demo__actions">
+                          <button type="button" (click)="selectPopoverAction($event, 'Assigned owner')">Assign</button>
+                          <button type="button" (click)="selectPopoverAction($event, 'Queued review')">Queue</button>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </af-popover>
+
+                  <p class="docs-popover-demo__note">{{ popoverAction() }}</p>
+                </div>
+              </div>
+            } @else if (component.name === 'AfTooltip') {
+              <div class="docs-live-lab__actual docs-live-lab__actual--composition">
+                <div class="docs-tooltip-demo" (click)="$event.stopPropagation()">
+                  <div class="docs-tooltip-demo__status" aria-live="polite">
+                    <span>Tooltip state</span>
+                    <strong>{{ tooltipOpen() ? 'Visible' : 'Hidden' }}</strong>
+                    <b>{{ tooltipStatusMeta() }}</b>
+                  </div>
+
+                  <af-tooltip
+                    [open]="tooltipOpen()"
+                    text="Concise hints should add context without interrupting the workflow."
+                    [placement]="tooltipPlacement()"
+                    [tone]="tooltipTone()"
+                    ariaLabel="Preview tooltip"
+                  >
+                    <button type="button" class="docs-tooltip-demo__trigger" (click)="toggleTooltip($event)">
+                      {{ tooltipOpen() ? 'Hide helper' : 'Show helper' }}
+                    </button>
+                  </af-tooltip>
+
+                  <p class="docs-tooltip-demo__note">{{ tooltipAction() }}</p>
+                </div>
+              </div>
             } @else if (component.name === 'AfInputGroup') {
               <div class="docs-live-lab__actual docs-live-lab__actual--composition">
                 <div class="docs-input-group-demo" (click)="$event.stopPropagation()">
@@ -663,6 +816,8 @@ export class DocsComponentPreviewComponent {
   protected readonly cardAction = signal('Ready for card press');
   protected readonly dialogOpen = signal(false);
   protected readonly dialogAction = signal('Ready to open');
+  protected readonly drawerOpen = signal(false);
+  protected readonly drawerAction = signal('Open the preview drawer to inspect the overlay contract.');
   protected readonly inputGroupValue = signal('92');
   protected readonly inputGroupAction = signal('Ready to apply');
   protected readonly pageShellActiveItem = signal('overview');
@@ -672,8 +827,12 @@ export class DocsComponentPreviewComponent {
   protected readonly pageShellNavItems = SAMPLE_NAV_ITEMS;
   protected readonly splitterPrimarySize = signal(58);
   protected readonly splitterAction = signal('Drag the divider or switch orientation.');
+  protected readonly popoverOpen = signal(true);
+  protected readonly popoverAction = signal('Popover mounted with contextual actions.');
   protected readonly previewToasts = this.toastService.toasts;
   protected readonly toastAction = signal('Mount the viewport and trigger a preview toast.');
+  protected readonly tooltipOpen = signal(true);
+  protected readonly tooltipAction = signal('Tooltip visible on the trigger.');
   protected readonly viewMode = signal<PreviewMode>('canvas');
   protected readonly eventLog = signal<readonly string[]>(['Ready']);
 
@@ -744,6 +903,18 @@ export class DocsComponentPreviewComponent {
       return this.dialogOpen();
     }
 
+    if (this.component().name === 'AfDrawer' && attribute === 'open') {
+      return this.drawerOpen();
+    }
+
+    if (this.component().name === 'AfPopover' && attribute === 'open') {
+      return this.popoverOpen();
+    }
+
+    if (this.component().name === 'AfTooltip' && attribute === 'open') {
+      return this.tooltipOpen();
+    }
+
     return this.selectedBooleans()[attribute] ?? this.defaultBooleanValue(attribute);
   }
 
@@ -753,6 +924,21 @@ export class DocsComponentPreviewComponent {
       this.dialogOpen.set(nextValue);
       this.dialogAction.set(nextValue ? 'Opening preview dialog' : 'Dialog close requested');
       this.pushEvent(`open: ${nextValue}`);
+      return;
+    }
+
+    if (this.component().name === 'AfDrawer' && attribute === 'open') {
+      this.setDrawerOpen(!this.drawerOpen());
+      return;
+    }
+
+    if (this.component().name === 'AfPopover' && attribute === 'open') {
+      this.setPopoverOpen(!this.popoverOpen());
+      return;
+    }
+
+    if (this.component().name === 'AfTooltip' && attribute === 'open') {
+      this.setTooltipOpen(!this.tooltipOpen());
       return;
     }
 
@@ -987,6 +1173,131 @@ export class DocsComponentPreviewComponent {
     event.stopPropagation();
     this.dialogAction.set('Escape pressed');
     this.pushEvent('escape press');
+  }
+
+  protected drawerPlacement(): AfDrawerPlacement {
+    return this.selectedValue('placement', ['start', 'end', 'bottom']) as AfDrawerPlacement;
+  }
+
+  protected drawerSize(): AfDrawerSize {
+    return this.selectedValue('size', ['sm', 'md', 'lg', 'full']) as AfDrawerSize;
+  }
+
+  protected drawerTone(): AfDrawerTone {
+    return this.selectedValue('tone', ['neutral', 'primary']) as AfDrawerTone;
+  }
+
+  protected drawerStatusMeta(): string {
+    return `${this.drawerPlacement()} | ${this.drawerSize()} | ${this.drawerTone()}`;
+  }
+
+  protected openDrawer(event: MouseEvent): void {
+    event.stopPropagation();
+    this.drawerOpen.set(true);
+    this.drawerAction.set('Opening preview drawer');
+    this.pushEvent('drawer open requested');
+  }
+
+  protected setDrawerOpen(open: boolean): void {
+    this.drawerOpen.set(open);
+    this.drawerAction.set(open ? 'Drawer opened from the preview trigger.' : 'Drawer close requested');
+    this.pushEvent(`drawer: ${open ? 'open' : 'closed'}`);
+  }
+
+  protected closeDrawer(event: MouseEvent, action: string): void {
+    event.stopPropagation();
+    this.drawerOpen.set(false);
+    this.drawerAction.set(action);
+    this.pushEvent(action.toLowerCase());
+  }
+
+  protected onDrawerOpened(): void {
+    this.drawerAction.set('Drawer mounted and ready for supporting tasks.');
+    this.pushEvent('drawer opened');
+  }
+
+  protected onDrawerClosed(): void {
+    this.drawerAction.update((current) => current === 'Drawer close requested' ? 'Drawer closed' : current);
+    this.pushEvent('drawer closed');
+  }
+
+  protected onDrawerBackdropPress(): void {
+    this.drawerAction.set('Backdrop press detected.');
+    this.pushEvent('drawer backdrop');
+  }
+
+  protected onDrawerEscapePress(event: KeyboardEvent): void {
+    event.stopPropagation();
+    this.drawerAction.set('Escape press detected.');
+    this.pushEvent('drawer escape');
+  }
+
+  protected popoverPlacement(): AfPopoverPlacement {
+    return this.selectedValue('placement', ['top', 'right', 'bottom', 'left']) as AfPopoverPlacement;
+  }
+
+  protected popoverTone(): AfPopoverTone {
+    return this.selectedValue('tone', ['neutral', 'primary']) as AfPopoverTone;
+  }
+
+  protected popoverStatusMeta(): string {
+    return `${this.popoverPlacement()} | ${this.popoverTone()}`;
+  }
+
+  protected setPopoverOpen(open: boolean): void {
+    this.popoverOpen.set(open);
+    this.popoverAction.set(open ? 'Popover opened from the trigger.' : 'Popover closed from the trigger.');
+    this.pushEvent(`popover: ${open ? 'open' : 'closed'}`);
+  }
+
+  protected onPopoverOpened(): void {
+    this.popoverAction.set('Panel is open and focus behavior is active.');
+    this.pushEvent('popover opened');
+  }
+
+  protected onPopoverClosed(): void {
+    this.popoverAction.set('Panel closed and focus returned to the trigger.');
+    this.pushEvent('popover closed');
+  }
+
+  protected onPopoverBackdropPress(): void {
+    this.popoverAction.set('Backdrop press detected.');
+    this.pushEvent('popover backdrop');
+  }
+
+  protected onPopoverEscapePress(event: KeyboardEvent): void {
+    event.stopPropagation();
+    this.popoverAction.set('Escape press detected.');
+    this.pushEvent('popover escape');
+  }
+
+  protected selectPopoverAction(event: MouseEvent, action: string): void {
+    event.stopPropagation();
+    this.popoverAction.set(`${action} from popover content.`);
+    this.pushEvent(`popover action: ${action.toLowerCase()}`);
+  }
+
+  protected tooltipPlacement(): AfTooltipPlacement {
+    return this.selectedValue('placement', ['top', 'right', 'bottom', 'left']) as AfTooltipPlacement;
+  }
+
+  protected tooltipTone(): AfTooltipTone {
+    return this.selectedValue('tone', ['neutral', 'primary']) as AfTooltipTone;
+  }
+
+  protected tooltipStatusMeta(): string {
+    return `${this.tooltipPlacement()} | ${this.tooltipTone()}`;
+  }
+
+  protected setTooltipOpen(open: boolean): void {
+    this.tooltipOpen.set(open);
+    this.tooltipAction.set(open ? 'Tooltip visible with the current helper copy.' : 'Tooltip hidden until the trigger is used again.');
+    this.pushEvent(`tooltip: ${open ? 'open' : 'closed'}`);
+  }
+
+  protected toggleTooltip(event: MouseEvent): void {
+    event.stopPropagation();
+    this.setTooltipOpen(!this.tooltipOpen());
   }
 
   protected inputGroupDensity(): AfFieldDensity {
@@ -1261,6 +1572,10 @@ export class DocsComponentPreviewComponent {
 
     if (componentName === 'AfPageShell' && attribute === 'variant' && values.includes('dashboard')) {
       return 'dashboard';
+    }
+
+    if (componentName === 'AfPopover' && attribute === 'placement' && values.includes('bottom')) {
+      return 'bottom';
     }
 
     if (attribute === 'density' && values.includes('comfortable')) {

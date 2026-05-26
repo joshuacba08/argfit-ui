@@ -319,6 +319,208 @@ app-docs-component-preview {
   color: var(--af-text-main);
 }
 
+.docs-drawer-demo {
+  display: grid;
+  gap: var(--af-space-4);
+  margin-inline: auto;
+  min-height: 250px;
+  padding: var(--af-space-4);
+  width: min(100%, 560px);
+}
+
+.docs-drawer-demo__status {
+  background: color-mix(in srgb, var(--af-bg-surface) 74%, transparent);
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 18%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: 0.28rem;
+  padding: var(--af-space-3);
+}
+
+.docs-drawer-demo__status span,
+.docs-drawer-demo__status b,
+.docs-drawer-demo__note,
+.docs-drawer-demo__content p,
+.docs-drawer-demo__content span,
+.docs-tooltip-demo__status span,
+.docs-tooltip-demo__status b,
+.docs-tooltip-demo__note {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+}
+
+.docs-drawer-demo__status strong,
+.docs-drawer-demo__content strong,
+.docs-tooltip-demo__status strong {
+  color: var(--af-text-main);
+}
+
+.docs-drawer-demo__actions,
+.docs-drawer-demo__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+}
+
+.docs-drawer-demo__button,
+.docs-tooltip-demo__trigger {
+  appearance: none;
+  background: color-mix(in srgb, var(--docs-lab-accent) 18%, var(--af-bg-surface));
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 28%, var(--af-border-soft));
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-main);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-bold);
+  min-height: 42px;
+  padding: 0.68rem 1rem;
+}
+
+.docs-drawer-demo__button:hover:not(:disabled),
+.docs-tooltip-demo__trigger:hover {
+  border-color: color-mix(in srgb, var(--docs-lab-accent) 40%, var(--af-border-soft));
+}
+
+.docs-drawer-demo__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.docs-drawer-demo__button--ghost {
+  background: color-mix(in srgb, var(--af-bg-surface) 82%, transparent);
+}
+
+.docs-drawer-demo__content {
+  display: grid;
+  gap: var(--af-space-3);
+}
+
+.docs-drawer-demo__content div {
+  background: color-mix(in srgb, var(--af-bg-surface) 76%, transparent);
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 14%, var(--af-border-soft));
+  border-radius: var(--af-radius-md);
+  display: grid;
+  gap: var(--af-space-1);
+  padding: var(--af-space-3);
+}
+
+.docs-drawer-demo__content p,
+.docs-tooltip-demo__note {
+  line-height: var(--af-leading-relaxed);
+  margin: 0;
+}
+
+.docs-tooltip-demo {
+  align-items: center;
+  display: grid;
+  gap: var(--af-space-4);
+  justify-items: center;
+  margin-inline: auto;
+  min-height: 220px;
+  padding: var(--af-space-4);
+  text-align: center;
+  width: min(100%, 420px);
+}
+
+.docs-tooltip-demo__status {
+  background: color-mix(in srgb, var(--af-bg-surface) 74%, transparent);
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 18%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: 0.28rem;
+  min-width: min(100%, 260px);
+  padding: var(--af-space-3);
+}
+
+.docs-popover-demo {
+  align-items: center;
+  display: grid;
+  gap: var(--af-space-4);
+  justify-items: center;
+  margin-inline: auto;
+  min-height: 270px;
+  padding: var(--af-space-4);
+  text-align: center;
+  width: min(100%, 560px);
+}
+
+.docs-popover-demo__status {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, #f897fe 16%, transparent), transparent),
+    color-mix(in srgb, var(--af-bg-surface) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 22%, var(--af-border-soft));
+  border-radius: var(--af-radius-lg);
+  display: grid;
+  gap: 0.28rem;
+  min-width: min(100%, 280px);
+  padding: var(--af-space-3);
+}
+
+.docs-popover-demo__status span,
+.docs-popover-demo__status b,
+.docs-popover-demo__note,
+.docs-popover-demo__content p {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-sm);
+}
+
+.docs-popover-demo__status strong {
+  color: var(--af-text-main);
+  font-size: var(--af-text-xl);
+}
+
+.docs-popover-demo__trigger {
+  appearance: none;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, #f897fe 82%, var(--docs-lab-accent)), color-mix(in srgb, #483acc 76%, var(--docs-lab-accent)));
+  border: 1px solid color-mix(in srgb, #f897fe 44%, transparent);
+  border-radius: var(--af-radius-pill);
+  box-shadow: 0 18px 42px -24px color-mix(in srgb, #f897fe 92%, transparent);
+  color: var(--af-primary-contrast);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-bold);
+  min-height: 44px;
+  padding: 0.74rem 1.05rem;
+}
+
+.docs-popover-demo__content {
+  display: grid;
+  gap: var(--af-space-3);
+  text-align: start;
+}
+
+.docs-popover-demo__content p {
+  line-height: var(--af-leading-relaxed);
+  margin: 0;
+}
+
+.docs-popover-demo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+}
+
+.docs-popover-demo__actions button {
+  appearance: none;
+  background: color-mix(in srgb, var(--docs-lab-accent) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 26%, var(--af-border-soft));
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-main);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  min-height: 34px;
+  padding: 0.48rem 0.72rem;
+}
+
+.docs-popover-demo__note {
+  margin: 0;
+}
+
 .docs-input-group-demo {
   display: grid;
   gap: var(--af-space-3);
@@ -378,12 +580,15 @@ app-docs-component-preview {
 .docs-live-lab[data-component='card'] .docs-live-lab__actual,
 .docs-live-lab[data-component='input-group'] .docs-live-lab__actual,
 .docs-live-lab[data-component='page-shell'] .docs-live-lab__actual,
+.docs-live-lab[data-component='popover'] .docs-live-lab__actual,
+.docs-live-lab[data-component='drawer'] .docs-live-lab__actual,
 .docs-live-lab[data-component='splitter'] .docs-live-lab__actual,
 .docs-live-lab[data-component='toast'] .docs-live-lab__actual,
 .docs-live-lab[data-component='toast-viewport'] .docs-live-lab__actual,
 .docs-live-lab[data-component='data-table'] .docs-live-lab__actual,
 .docs-live-lab[data-component='data-view'] .docs-live-lab__actual,
 .docs-live-lab[data-component='tree-table'] .docs-live-lab__actual,
+.docs-live-lab[data-component='tooltip'] .docs-live-lab__actual,
 .docs-live-lab[data-component='virtual-scroller'] .docs-live-lab__actual {
   align-items: stretch;
   justify-items: stretch;
@@ -391,16 +596,28 @@ app-docs-component-preview {
 
 .docs-live-lab[data-component='accordion'] .docs-live-lab__actual > af-accordion,
 .docs-live-lab[data-component='card'] .docs-live-lab__actual > .docs-card-demo,
+.docs-live-lab[data-component='drawer'] .docs-live-lab__actual > .docs-drawer-demo,
 .docs-live-lab[data-component='input-group'] .docs-live-lab__actual > .docs-input-group-demo,
 .docs-live-lab[data-component='page-shell'] .docs-live-lab__actual > .docs-page-shell-demo,
+.docs-live-lab[data-component='popover'] .docs-live-lab__actual > .docs-popover-demo,
 .docs-live-lab[data-component='splitter'] .docs-live-lab__actual > .docs-splitter-demo,
 .docs-live-lab[data-component='toast'] .docs-live-lab__actual > .docs-toast-demo,
 .docs-live-lab[data-component='toast-viewport'] .docs-live-lab__actual > .docs-toast-demo,
 .docs-live-lab[data-component='data-table'] .docs-live-lab__actual > af-data-table,
 .docs-live-lab[data-component='data-view'] .docs-live-lab__actual > af-data-view,
 .docs-live-lab[data-component='tree-table'] .docs-live-lab__actual > af-tree-table,
+.docs-live-lab[data-component='tooltip'] .docs-live-lab__actual > .docs-tooltip-demo,
 .docs-live-lab[data-component='virtual-scroller'] .docs-live-lab__actual > af-virtual-scroller {
   width: 100%;
+}
+
+.docs-live-lab[data-component='drawer'] .docs-live-lab__actual,
+.docs-live-lab[data-component='popover'] .docs-live-lab__actual {
+  overflow: visible;
+}
+
+.docs-live-lab[data-component='tooltip'] .docs-live-lab__actual {
+  overflow: visible;
 }
 
 .docs-live-lab[data-component='avatar'] .docs-live-lab__actual {

@@ -6,10 +6,10 @@ import { AfBadge } from '@argfit-ui/adaptive';
 
 import { DocsComponentPreviewComponent } from '../docs-component-preview.component';
 import {
-    PRODUCTIVE_COMPONENT_DOCS,
-    PRODUCTIVE_COMPONENT_GROUPS,
-    type ProductiveComponentCategory,
-    type ProductiveComponentDoc,
+  PRODUCTIVE_COMPONENT_DOCS,
+  PRODUCTIVE_COMPONENT_GROUPS,
+  type ProductiveComponentCategory,
+  type ProductiveComponentDoc,
 } from '../docs-data';
 
 @Component({
@@ -23,11 +23,12 @@ import {
     class: 'docs-page',
   },
   template: `
-    <div class="docs-page__header docs-page__header--hero">
+    <div class="docs-page__header docs-page__header--hero docs-components-hero">
       <span class="docs-kicker">Stable component catalog</span>
       <h1>Components</h1>
       <p class="docs-page__lead">
-        Explore the adaptive contract through live previews, controls and complete API detail for every public component.
+        Explore the adaptive contract with the live preview pinned close to the catalog. Component families are grouped
+        in collapsible sections so the workbench stays within reach.
       </p>
       <div class="docs-pill-row">
         <af-badge tone="primary">{{ familyCount }} families</af-badge>
@@ -37,98 +38,108 @@ import {
       </div>
     </div>
 
-    <section class="docs-catalog-toolbar" aria-label="Component discovery controls">
-      <div class="docs-catalog-toolbar__head">
-        <div class="docs-catalog-toolbar__heading">
-          <span class="docs-kicker">Browse the catalog</span>
-          <h2>{{ filteredComponents().length }} components match</h2>
-        </div>
-        @if (activeFamily() !== 'all' || activeCategory() !== 'all') {
-          <button type="button" class="docs-filter-button docs-filter-button--ghost" (click)="resetFilters()">
-            Clear filters
-          </button>
-        }
-      </div>
-
-      <div class="docs-filter-row" aria-label="Filter components by family">
-        <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === 'all'" [attr.aria-pressed]="activeFamily() === 'all'" (click)="setFamily('all')">
-          All families
-        </button>
-        @for (group of groups; track group.family) {
-          <button type="button" class="docs-filter-button" [class.is-active]="activeFamily() === group.family" [attr.aria-pressed]="activeFamily() === group.family" (click)="setFamily(group.family)">
-            <span class="docs-filter-dot" [attr.data-tone]="familyTone(group.family)"></span>
-            {{ familyLabel(group.family) }}
-          </button>
-        }
-      </div>
-
-      <div class="docs-filter-row docs-filter-row--quiet" aria-label="Filter components by category">
-        <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === 'all'" [attr.aria-pressed]="activeCategory() === 'all'" (click)="setCategory('all')">
-          All categories
-        </button>
-        @for (category of categories; track category) {
-          <button type="button" class="docs-filter-button docs-filter-button--quiet" [class.is-active]="activeCategory() === category" [attr.aria-pressed]="activeCategory() === category" (click)="setCategory(category)">
-            {{ category }}
-          </button>
-        }
-      </div>
-    </section>
-
     @if (selectedComponent(); as selectedComponent) {
-      <section class="docs-component-atlas" aria-label="Component atlas">
-        @for (group of visibleGroups(); track group.family) {
-          <article class="docs-family-panel" [attr.data-tone]="familyTone(group.family)">
-            <header class="docs-family-panel__header">
-              <div class="docs-family-panel__heading">
-                <span class="docs-kicker">{{ group.components.length }} components</span>
-                <h2>{{ group.family }}</h2>
-              </div>
-              <div class="docs-api-count-row docs-api-count-row--panel">
-                <span><b>{{ groupInputCount(group.components) }}</b> inputs</span>
-                <span><b>{{ groupOutputCount(group.components) }}</b> outputs</span>
-                <span><b>{{ groupSlotCount(group.components) }}</b> slots</span>
-              </div>
-            </header>
+      <section class="docs-components-studio" aria-label="Component preview and catalog">
+        <section class="docs-component-workbench docs-components-studio__preview" id="workbench" aria-label="Selected component interactive preview">
+          <header class="docs-component-workbench__header">
+            <div>
+              <span class="docs-kicker">Live workbench</span>
+              <h2>{{ selectedComponent.name }}</h2>
+              <p class="docs-page__lead">
+                Preview, controls and contract data stay pinned while you browse the catalog.
+              </p>
+            </div>
+            <a [routerLink]="selectedComponent.route" class="docs-action-link">Open full docs</a>
+          </header>
 
-            <p class="docs-page__lead">{{ group.summary }}</p>
+          <app-docs-component-preview [component]="selectedComponent" />
+        </section>
 
-            <div class="docs-catalog-grid" aria-label="Component index">
-              @for (component of group.components; track component.slug) {
-                <article class="docs-catalog-tile" [attr.data-tone]="familyTone(group.family)" [class.is-active]="selectedComponent.slug === component.slug">
-                  <button
-                    type="button"
-                    class="docs-catalog-tile__preview"
-                    [attr.aria-pressed]="selectedComponent.slug === component.slug"
-                    (click)="selectComponent(component.slug)"
-                  >
-                    <span class="docs-catalog-tile__glyph" aria-hidden="true">{{ componentInitials(component.name) }}</span>
-                    <span class="docs-catalog-tile__title">{{ component.name }}</span>
-                    <small class="docs-catalog-tile__summary">{{ component.summary }}</small>
-                    <div class="docs-catalog-tile__meta">
-                      <span class="docs-catalog-tile__chip">{{ component.category }}</span>
-                      <span class="docs-catalog-tile__chip docs-catalog-tile__chip--quiet">{{ component.complexity }}</span>
-                      <span class="docs-catalog-tile__chip docs-catalog-tile__chip--quiet">{{ component.api.inputs.length }} in · {{ component.api.outputs.length }} out</span>
-                    </div>
-                  </button>
-                  <a [routerLink]="component.route" class="docs-catalog-tile__link">Open docs →</a>
-                </article>
+        <section class="docs-components-studio__catalog" aria-label="Component atlas">
+          <section class="docs-catalog-toolbar" aria-label="Component discovery controls">
+            <div class="docs-catalog-toolbar__head">
+              <div class="docs-catalog-toolbar__heading">
+                <span class="docs-kicker">Browse the catalog</span>
+                <h2>{{ filteredComponents().length }} components match</h2>
+              </div>
+              @if (activeFamily() !== 'all' || activeCategory() !== 'all') {
+                <button type="button" class="docs-filter-button docs-filter-button--ghost" (click)="resetFilters()">
+                  Clear filters
+                </button>
               }
             </div>
-          </article>
-        }
-      </section>
 
-      <section class="docs-component-workbench" id="workbench" aria-label="Selected component interactive preview">
-        <header class="docs-component-workbench__header">
-          <div>
-            <span class="docs-kicker">Live workbench</span>
-            <h2>{{ selectedComponent.name }}</h2>
-            <p class="docs-page__lead">Tweak inputs in place. Switch components by clicking any tile in the atlas above.</p>
+            <div class="docs-catalog-select-grid">
+              <label class="docs-catalog-select-field">
+                <span>Family</span>
+                <select [value]="activeFamily()" (change)="setFamilyFromEvent($event)" aria-label="Filter components by family">
+                  <option value="all">All families</option>
+                  @for (group of groups; track group.family) {
+                    <option [value]="group.family">{{ familyLabel(group.family) }}</option>
+                  }
+                </select>
+              </label>
+
+              <label class="docs-catalog-select-field">
+                <span>Category</span>
+                <select [value]="activeCategory()" (change)="setCategoryFromEvent($event)" aria-label="Filter components by category">
+                  <option value="all">All categories</option>
+                  @for (category of categories; track category) {
+                    <option [value]="category">{{ category }}</option>
+                  }
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <div class="docs-family-accordion-list" aria-label="Component family sections">
+            @for (group of visibleGroups(); track group.family) {
+              <details
+                class="docs-family-accordion"
+                [attr.data-tone]="familyTone(group.family)"
+                [open]="isGroupOpen(group.family, selectedComponent.family)"
+              >
+                <summary class="docs-family-accordion__summary">
+                  <span class="docs-filter-dot" [attr.data-tone]="familyTone(group.family)"></span>
+                  <span class="docs-family-accordion__title">
+                    <span class="docs-kicker">{{ group.components.length }} components</span>
+                    <strong>{{ group.family }}</strong>
+                  </span>
+                  <span class="docs-family-accordion__meta">
+                    {{ groupInputCount(group.components) }} inputs | {{ groupOutputCount(group.components) }} outputs
+                  </span>
+                </summary>
+
+                <div class="docs-family-accordion__body">
+                  <p class="docs-page__lead">{{ group.summary }}</p>
+
+                  <div class="docs-catalog-grid" aria-label="Component index">
+                    @for (component of group.components; track component.slug) {
+                      <article class="docs-catalog-tile" [attr.data-tone]="familyTone(group.family)" [class.is-active]="selectedComponent.slug === component.slug">
+                        <button
+                          type="button"
+                          class="docs-catalog-tile__preview"
+                          [attr.aria-pressed]="selectedComponent.slug === component.slug"
+                          (click)="selectComponent(component.slug)"
+                        >
+                          <span class="docs-catalog-tile__glyph" aria-hidden="true">{{ componentInitials(component.name) }}</span>
+                          <span class="docs-catalog-tile__title">{{ component.name }}</span>
+                          <small class="docs-catalog-tile__summary">{{ component.summary }}</small>
+                          <div class="docs-catalog-tile__meta">
+                            <span class="docs-catalog-tile__chip">{{ component.category }}</span>
+                            <span class="docs-catalog-tile__chip docs-catalog-tile__chip--quiet">{{ component.complexity }}</span>
+                            <span class="docs-catalog-tile__chip docs-catalog-tile__chip--quiet">{{ component.api.inputs.length }} in | {{ component.api.outputs.length }} out</span>
+                          </div>
+                        </button>
+                        <a [routerLink]="component.route" class="docs-catalog-tile__link">Open docs</a>
+                      </article>
+                    }
+                  </div>
+                </div>
+              </details>
+            }
           </div>
-          <a [routerLink]="selectedComponent.route" class="docs-action-link">Open full docs</a>
-        </header>
-
-        <app-docs-component-preview [component]="selectedComponent" />
+        </section>
       </section>
     } @else {
       <section class="docs-empty-state" aria-live="polite">
@@ -204,6 +215,22 @@ export class DocsComponentsPageComponent {
     this.updateFilterUrl();
   }
 
+  protected setFamilyFromEvent(event: Event): void {
+    const value = event.target instanceof HTMLSelectElement ? event.target.value : 'all';
+    this.setFamily(value === 'all' ? 'all' : value);
+  }
+
+  protected setCategoryFromEvent(event: Event): void {
+    const value = event.target instanceof HTMLSelectElement ? event.target.value : 'all';
+
+    if (value === 'all') {
+      this.setCategory('all');
+      return;
+    }
+
+    this.setCategory(this.isKnownCategory(value) ? value : 'all');
+  }
+
   protected resetFilters(): void {
     this.activeFamily.set('all');
     this.activeCategory.set('all');
@@ -214,7 +241,7 @@ export class DocsComponentsPageComponent {
   protected selectComponent(slug: string): void {
     this.selectedSlug.set(slug);
     this.updateFilterUrl(slug);
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && typeof window !== 'undefined' && window.matchMedia('(max-width: 1120px)').matches) {
       const target = document.getElementById('workbench');
       target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -235,16 +262,16 @@ export class DocsComponentsPageComponent {
     return matches.slice(0, 2).join('').slice(0, 2).toUpperCase();
   }
 
+  protected isGroupOpen(groupFamily: string, selectedFamily: string): boolean {
+    return this.activeFamily() !== 'all' || groupFamily === selectedFamily;
+  }
+
   protected groupInputCount(components: readonly ProductiveComponentDoc[]): number {
     return components.reduce((total, component) => total + component.api.inputs.length, 0);
   }
 
   protected groupOutputCount(components: readonly ProductiveComponentDoc[]): number {
     return components.reduce((total, component) => total + component.api.outputs.length, 0);
-  }
-
-  protected groupSlotCount(components: readonly ProductiveComponentDoc[]): number {
-    return components.reduce((total, component) => total + component.api.slots.length, 0);
   }
 
   private matchesActiveFilters(component: ProductiveComponentDoc): boolean {

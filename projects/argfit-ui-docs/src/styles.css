@@ -11,7 +11,7 @@
 }
 
 :root {
-  --docs-bg-glow: color-mix(in srgb, var(--af-primary, #2599d5) 10%, transparent);
+  --docs-bg-glow: color-mix(in srgb, var(--af-primary, #2599d5) 4%, transparent);
   --docs-bg-start: color-mix(in srgb, var(--af-bg-main, #0a1628) 82%, #020712);
   --docs-bg-end: color-mix(in srgb, var(--af-bg-main, #0a1628) 74%, #020712);
   --docs-sidebar-bg: color-mix(in srgb, var(--af-bg-elevated, #0f1d32) 94%, transparent);
@@ -19,12 +19,12 @@
   --docs-surface-bg: color-mix(in srgb, var(--af-bg-surface, #0f1d32) 84%, transparent);
   --docs-elevated-bg: color-mix(in srgb, var(--af-bg-main, #0a1628) 74%, transparent);
   --docs-soft-bg: color-mix(in srgb, var(--af-bg-main, #0a1628) 88%, transparent);
-  --docs-shadow: 0 18px 48px rgba(1, 9, 17, 0.22);
+  --docs-shadow: 0 10px 24px rgba(1, 9, 17, 0.14);
   --docs-page-overlay: linear-gradient(transparent, transparent);
 }
 
 :root[data-theme='light'] {
-  --docs-bg-glow: color-mix(in srgb, var(--af-primary) 11%, transparent);
+  --docs-bg-glow: color-mix(in srgb, var(--af-primary) 4%, transparent);
   --docs-bg-start: color-mix(in srgb, var(--af-bg-main) 46%, white);
   --docs-bg-end: color-mix(in srgb, var(--af-bg-main) 78%, white);
   --docs-sidebar-bg: color-mix(in srgb, var(--af-bg-elevated) 92%, transparent);
@@ -32,14 +32,14 @@
   --docs-surface-bg: color-mix(in srgb, var(--af-bg-surface) 96%, transparent);
   --docs-elevated-bg: color-mix(in srgb, var(--af-bg-elevated) 92%, transparent);
   --docs-soft-bg: color-mix(in srgb, var(--af-bg-main) 72%, white);
-  --docs-shadow: 0 16px 40px rgba(16, 42, 67, 0.1);
+  --docs-shadow: 0 10px 24px rgba(16, 42, 67, 0.08);
   --docs-page-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0));
 }
 
 html {
   background:
     var(--docs-page-overlay),
-    radial-gradient(circle at 72% 0%, var(--docs-bg-glow), transparent 34%),
+    radial-gradient(circle at 72% 0%, var(--docs-bg-glow), transparent 24%),
     linear-gradient(180deg, var(--docs-bg-start) 0%, var(--docs-bg-end) 100%);
   height: 100%;
   min-height: 100%;
