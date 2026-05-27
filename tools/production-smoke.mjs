@@ -243,7 +243,7 @@ function validateProductionPublishWorkflowShape() {
     'pnpm release:production:check',
     'pnpm build:libs',
     "manifest.publishConfig?.tag !== 'latest'",
-    'npm publish "$package_dir" --tag latest --access public',
+    'npm publish "./$package_dir" --tag latest --access public',
   ]) {
     if (!workflow.includes(snippet)) {
       failures.push(`.github/workflows/publish-production.yml: missing ${JSON.stringify(snippet)}`);
