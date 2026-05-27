@@ -1,0 +1,92 @@
+<section class="pwa-page" data-testid="offline-page">
+  <header class="pwa-page__header">
+    <div class="pwa-page__title">
+      <div class="pwa-title-lockup">
+        <img class="pwa-app-mark" src="icons/icon.svg" alt="" width="44" height="44" />
+        <h1>Offline shell</h1>
+      </div>
+      <p>The starter keeps the app shell usable after the first production load, then lets product code decide what data can sync later.</p>
+    </div>
+    <div class="pwa-page__actions">
+      <af-badge icon="monitor" [tone]="network.online() ? 'success' : 'warning'">
+        {{ network.online() ? 'online' : 'offline' }}
+      </af-badge>
+    </div>
+  </header>
+
+  @if (network.online()) {
+    <af-inline-message
+      severity="success"
+      title="Network available"
+      description="The app can sync captured device data when product services are connected."
+    />
+  } @else {
+    <af-inline-message
+      severity="warning"
+      title="Network unavailable"
+      description="The installed app shell still loads. Disable device sync actions that require remote services."
+    />
+  }
+
+  <div class="pwa-grid pwa-grid--three">
+    <af-metric-card
+      label="Shell cache"
+      value="App"
+      helper="HTML, JS, CSS and manifest"
+      icon="layout-dashboard"
+      tone="success"
+    />
+    <af-metric-card
+      label="Device scan"
+      [value]="network.online() ? 'Allowed' : 'Local only'"
+      helper="Hardware depends on browser support"
+      icon="bluetooth"
+      tone="primary"
+    />
+    <af-metric-card
+      label="Sync"
+      [value]="network.online() ? 'Ready' : 'Paused'"
+      helper="App-level backend concern"
+      icon="upload"
+      [tone]="network.online() ? 'success' : 'warning'"
+    />
+  </div>
+
+  <af-card variant="panel" tone="neutral">
+    <div class="pwa-card-content">
+      <div class="pwa-card-header">
+        <div>
+          <h2>Offline operating rules</h2>
+          <p>Keep the shell useful, but do not pretend background BLE or remote sync are guaranteed.</p>
+        </div>
+      </div>
+
+      <div class="pwa-status-list">
+        <div class="pwa-status-row">
+          <span class="pwa-status-row__icon"><af-icon name="check-square" /></span>
+          <span>
+            <strong>Cached shell</strong>
+            <small>Use Angular service worker assets for reliable app startup.</small>
+          </span>
+          <af-badge tone="success">included</af-badge>
+        </div>
+        <div class="pwa-status-row">
+          <span class="pwa-status-row__icon"><af-icon name="bluetooth" /></span>
+          <span>
+            <strong>BLE workflow</strong>
+            <small>Started from user action on supported browsers; not from the service worker.</small>
+          </span>
+          <af-badge tone="warning">foreground</af-badge>
+        </div>
+        <div class="pwa-status-row">
+          <span class="pwa-status-row__icon"><af-icon name="upload" /></span>
+          <span>
+            <strong>Data sync</strong>
+            <small>Queue only non-sensitive product data after a privacy review.</small>
+          </span>
+          <af-badge tone="neutral">app-level</af-badge>
+        </div>
+      </div>
+    </div>
+  </af-card>
+</section>

@@ -616,7 +616,7 @@ Prove ArgFit UI can support installable applications across desktop, tablet and 
 
 ## Status
 
-PLANNED
+INITIAL SLICE COMPLETE
 
 ## Scope
 

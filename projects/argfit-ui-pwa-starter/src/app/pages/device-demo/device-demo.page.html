@@ -1,0 +1,191 @@
+<section class="pwa-page" data-testid="device-demo-page">
+  <header class="pwa-page__header">
+    <div class="pwa-page__title">
+      <div class="pwa-title-lockup">
+        <img class="pwa-app-mark" src="icons/icon.svg" alt="" width="44" height="44" />
+        <h1>Device capability console</h1>
+      </div>
+      <p>Operational starter for installable ArgFit UI apps that need browser-safe device connection flows.</p>
+    </div>
+    <div class="pwa-page__actions">
+      <af-badge [tone]="connectionTone()" icon="bluetooth">{{ connectionLabel() }}</af-badge>
+      <af-button variant="secondary" (pressed)="refresh()">
+        <span class="pwa-button-label">
+          <af-icon name="activity" size="sm" />
+          Refresh capabilities
+        </span>
+      </af-button>
+    </div>
+  </header>
+
+  @if (error(); as currentError) {
+    <af-inline-message
+      severity="warning"
+      title="Device transport is not available"
+      [description]="currentError.message"
+    />
+  } @else if (!capabilities().secureContext) {
+    <af-inline-message
+      severity="warning"
+      title="Secure context required"
+      description="Serve the app over HTTPS, localhost or 127.0.0.1 before opening device APIs."
+    />
+  } @else if (!canUseWebBluetooth()) {
+    <af-inline-message
+      severity="info"
+      title="Fallback path active"
+      description="The app remains installable and usable. BLE will need Chromium Web Bluetooth or a native bridge on this platform."
+    />
+  }
+
+  <div class="pwa-grid pwa-grid--metrics">
+    <af-metric-card
+      label="PWA"
+      [value]="capabilities().pwaInstallable || capabilities().standaloneDisplay ? 'Ready' : 'Waiting'"
+      helper="Install prompt or standalone mode"
+      icon="download"
+      tone="primary"
+    />
+    <af-metric-card
+      label="Network"
+      [value]="capabilities().online ? 'Online' : 'Offline'"
+      helper="Network state for app sync"
+      icon="monitor"
+      [tone]="capabilities().online ? 'success' : 'warning'"
+    />
+    <af-metric-card
+      label="Secure origin"
+      [value]="capabilities().secureContext ? 'Trusted' : 'Blocked'"
+      helper="Required for device APIs"
+      icon="check-square"
+      [tone]="capabilities().secureContext ? 'success' : 'danger'"
+    />
+    <af-metric-card
+      label="BLE"
+      [value]="canUseWebBluetooth() ? 'Available' : 'Fallback'"
+      helper="Web Bluetooth availability"
+      icon="bluetooth"
+      [tone]="canUseWebBluetooth() ? 'success' : 'warning'"
+    />
+  </div>
+
+  <div class="pwa-grid pwa-grid--two">
+    <af-card variant="panel" tone="primary">
+      <div class="pwa-card-content">
+        <div class="pwa-card-header">
+          <div>
+            <h2>BLE device session</h2>
+            <p>Standard Battery Service demo filter with explicit optional services.</p>
+          </div>
+          <af-badge variant="soft" [tone]="connectionTone()">{{ status() }}</af-badge>
+        </div>
+
+        <div class="pwa-device-visual" aria-label="Device connection status">
+          <div class="pwa-device-visual__panel">
+            <af-icon name="bluetooth" size="xl" tone="primary" />
+            <strong>{{ device()?.name ?? 'No device connected' }}</strong>
+            <span>{{ lastPayload() }}</span>
+          </div>
+        </div>
+
+        <af-progress
+          [value]="connectionProgress()"
+          tone="primary"
+          ariaLabel="Bluetooth connection progress"
+        />
+
+        <div class="pwa-connection-actions">
+          @if (status() === 'connected') {
+            <af-button variant="danger" (pressed)="disconnect()">
+              <span class="pwa-button-label">
+                <af-icon name="x" size="sm" />
+                Disconnect
+              </span>
+            </af-button>
+          } @else {
+            <af-button
+              [disabled]="!canUseWebBluetooth() || status() === 'scanning' || status() === 'connecting'"
+              [loading]="status() === 'scanning' || status() === 'connecting'"
+              (pressed)="connect()"
+            >
+              <span class="pwa-button-label">
+                <af-icon name="bluetooth" size="sm" />
+                Connect BLE
+              </span>
+            </af-button>
+          }
+          <af-badge tone="warning" icon="info">Demo filter: battery_service</af-badge>
+        </div>
+      </div>
+    </af-card>
+
+    <af-card variant="panel" tone="neutral">
+      <div class="pwa-card-content">
+        <div class="pwa-card-header">
+          <div>
+            <h2>Capability matrix</h2>
+            <p>Unsupported states are treated as product states, not app failures.</p>
+          </div>
+        </div>
+
+        <div class="pwa-status-list">
+          <div class="pwa-status-row">
+            <span class="pwa-status-row__icon"><af-icon name="download" /></span>
+            <span>
+              <strong>Install prompt</strong>
+              <small>{{ capabilities().pwaInstallable ? 'Browser can show install prompt' : 'Prompt not currently available' }}</small>
+            </span>
+            <af-badge [tone]="capabilities().pwaInstallable ? 'success' : 'neutral'">{{ capabilities().pwaInstallable ? 'ready' : 'passive' }}</af-badge>
+          </div>
+          <div class="pwa-status-row">
+            <span class="pwa-status-row__icon"><af-icon name="monitor" /></span>
+            <span>
+              <strong>Standalone display</strong>
+              <small>{{ capabilities().standaloneDisplay ? 'Running as installed app' : 'Running in browser tab' }}</small>
+            </span>
+            <af-badge [tone]="capabilities().standaloneDisplay ? 'success' : 'neutral'">{{ capabilities().standaloneDisplay ? 'app' : 'browser' }}</af-badge>
+          </div>
+          <div class="pwa-status-row">
+            <span class="pwa-status-row__icon"><af-icon name="check-square" /></span>
+            <span>
+              <strong>Secure context</strong>
+              <small>{{ capabilities().secureContext ? 'Device APIs can be requested' : 'HTTPS or localhost required' }}</small>
+            </span>
+            <af-badge [tone]="capabilities().secureContext ? 'success' : 'danger'">{{ capabilities().secureContext ? 'trusted' : 'blocked' }}</af-badge>
+          </div>
+          <div class="pwa-status-row">
+            <span class="pwa-status-row__icon"><af-icon name="bluetooth" /></span>
+            <span>
+              <strong>Web Bluetooth</strong>
+              <small>{{ capabilities().webBluetoothSupported ? 'navigator.bluetooth detected' : 'Use fallback/native bridge path' }}</small>
+            </span>
+            <af-badge [tone]="canUseWebBluetooth() ? 'success' : 'warning'">{{ canUseWebBluetooth() ? 'available' : 'fallback' }}</af-badge>
+          </div>
+          <div class="pwa-status-row">
+            <span class="pwa-status-row__icon"><af-icon name="cpu" /></span>
+            <span>
+              <strong>Native bridge</strong>
+              <small>{{ capabilities().nativeBridgeSupported ? 'Native runtime detected' : 'Stub ready for Capacitor BLE' }}</small>
+            </span>
+            <af-badge [tone]="capabilities().nativeBridgeSupported ? 'success' : 'neutral'">{{ capabilities().nativeBridgeSupported ? 'native' : 'stub' }}</af-badge>
+          </div>
+        </div>
+      </div>
+    </af-card>
+  </div>
+
+  @if (session(); as activeSession) {
+    <af-card variant="surface" tone="success">
+      <div class="pwa-key-value">
+        <div>
+          <strong>Connected at</strong>
+          <span>{{ activeSession.connectedAt.toLocaleString() }}</span>
+        </div>
+        <div>
+          <strong>Transport</strong>
+          <span>{{ activeSession.transport }}</span>
+        </div>
+      </div>
+    </af-card>
+  }
+</section>

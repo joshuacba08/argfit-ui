@@ -253,6 +253,77 @@
         }
       }
     },
+    "argfit-ui-pwa-starter": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/argfit-ui-pwa-starter",
+      "sourceRoot": "projects/argfit-ui-pwa-starter/src",
+      "prefix": "pwa",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/argfit-ui-pwa-starter/src/main.ts",
+            "tsConfig": "projects/argfit-ui-pwa-starter/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/argfit-ui-pwa-starter/public"
+              }
+            ],
+            "styles": ["projects/argfit-ui-pwa-starter/src/styles.css"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3.0MB",
+                  "maximumError": "3.3MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "12kB",
+                  "maximumError": "16kB"
+                }
+              ],
+              "outputHashing": "all",
+              "serviceWorker": "projects/argfit-ui-pwa-starter/ngsw-config.json"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "argfit-ui-pwa-starter:build:production"
+            },
+            "development": {
+              "buildTarget": "argfit-ui-pwa-starter:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "runnerConfig": "vitest.config.ts",
+            "tsConfig": "projects/argfit-ui-pwa-starter/tsconfig.spec.json"
+          }
+        }
+      }
+    },
     "argfit-ui-primitives": {
       "projectType": "library",
       "root": "projects/argfit-ui-primitives",

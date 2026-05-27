@@ -36,6 +36,7 @@ argfit-ui-desktop
 argfit-ui-mobile
 argfit-ui-adaptive
 argfit-ui-docs
+argfit-ui-pwa-starter
 showcase
 ```
 
@@ -46,6 +47,8 @@ showcase
 | Desktop | `@argfit-ui/desktop` | PrimeNG-backed desktop implementations kept behind ArgFit APIs |
 | Mobile | `@argfit-ui/mobile` | Ionic-backed mobile implementations kept behind ArgFit APIs |
 | Adaptive | `@argfit-ui/adaptive` | Public adaptive components that select desktop or mobile rendering |
+
+The `argfit-ui-pwa-starter` workspace app demonstrates installable app behavior, service worker updates, offline shell state and app-level device capability detection.
 
 The public contract is the scoped package API. Implementation project names are workspace details.
 
@@ -75,6 +78,12 @@ For the production consumer contract, start with:
 - [Productive release operations](docs/productive/release-operations.md)
 - [Productive support policy](docs/productive/support-policy.md)
 - [Productive quality gates](docs/productive/quality-gates.md)
+
+For installable app and device capability work, start with:
+
+- [PWA quickstart](docs/pwa/quickstart.md)
+- [PWA device capabilities](docs/pwa/device-capabilities.md)
+- [PWA browser support](docs/pwa/browser-support.md)
 
 The historical beta consumer contract remains documented here:
 
@@ -123,6 +132,12 @@ Run the dedicated docs platform:
 
 ```bash
 pnpm start:docs
+```
+
+Run the PWA starter:
+
+```bash
+pnpm start:pwa
 ```
 
 Build all libraries, the showcase and the docs platform:

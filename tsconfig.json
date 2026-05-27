@@ -65,6 +65,12 @@
     },
     {
       "path": "./projects/showcase/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/argfit-ui-pwa-starter/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/argfit-ui-pwa-starter/tsconfig.spec.json"
     }
   ]
 }

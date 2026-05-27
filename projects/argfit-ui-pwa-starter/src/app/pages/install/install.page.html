@@ -1,0 +1,121 @@
+<section class="pwa-page" data-testid="install-page">
+  <header class="pwa-page__header">
+    <div class="pwa-page__title">
+      <div class="pwa-title-lockup">
+        <img class="pwa-app-mark" src="icons/icon.svg" alt="" width="44" height="44" />
+        <h1>Install and update center</h1>
+      </div>
+      <p>Production builds register the Angular service worker and expose install/update state through the app UI.</p>
+    </div>
+    <div class="pwa-page__actions">
+      <af-badge icon="download" [tone]="installPrompt.standaloneDisplay() ? 'success' : 'primary'">
+        {{ installPrompt.standaloneDisplay() ? 'installed' : 'browser' }}
+      </af-badge>
+    </div>
+  </header>
+
+  @if (!updates.enabled()) {
+    <af-inline-message
+      severity="info"
+      title="Development mode"
+      description="Service worker registration is disabled until this app is built and served with the production configuration."
+    />
+  } @else if (updates.updateAvailable()) {
+    <af-inline-message
+      severity="success"
+      title="Update ready"
+      description="A new cached version is available. Activate it when the current workflow can reload safely."
+    />
+  }
+
+  <div class="pwa-grid pwa-grid--three">
+    <af-metric-card
+      label="Display mode"
+      [value]="installPrompt.standaloneDisplay() ? 'Standalone' : 'Browser tab'"
+      helper="Manifest display target"
+      icon="monitor"
+      [tone]="installPrompt.standaloneDisplay() ? 'success' : 'primary'"
+    />
+    <af-metric-card
+      label="Install prompt"
+      [value]="installPrompt.canPrompt() ? 'Ready' : 'Passive'"
+      helper="beforeinstallprompt state"
+      icon="download"
+      [tone]="installPrompt.canPrompt() ? 'success' : 'warning'"
+    />
+    <af-metric-card
+      label="Update"
+      [value]="updates.status()"
+      helper="Angular SwUpdate state"
+      icon="activity"
+      [tone]="updates.updateAvailable() ? 'success' : 'primary'"
+    />
+  </div>
+
+  <div class="pwa-grid pwa-grid--two">
+    <af-card variant="panel" tone="primary">
+      <div class="pwa-card-content">
+        <div class="pwa-card-header">
+          <div>
+            <h2>Installation flow</h2>
+            <p>The browser decides when the prompt is available. iOS uses Safari Add to Home Screen.</p>
+          </div>
+        </div>
+
+        <ol class="pwa-steps">
+          <li>Build with `ng build argfit-ui-pwa-starter --configuration production`.</li>
+          <li>Serve `dist/argfit-ui-pwa-starter/browser` from localhost or HTTPS.</li>
+          <li>Open the app in a compatible browser and install from the browser UI or prompt.</li>
+        </ol>
+
+        <div class="pwa-connection-actions">
+          <af-button [disabled]="!installPrompt.canPrompt()" (pressed)="promptInstall()">
+            <span class="pwa-button-label">
+              <af-icon name="download" size="sm" />
+              Install app
+            </span>
+          </af-button>
+          <af-badge tone="neutral">Outcome: {{ installPrompt.outcome() }}</af-badge>
+        </div>
+      </div>
+    </af-card>
+
+    <af-card variant="panel" tone="neutral">
+      <div class="pwa-card-content">
+        <div class="pwa-card-header">
+          <div>
+            <h2>Update flow</h2>
+            <p>Updates are visible so the app never reloads in the middle of a device workflow.</p>
+          </div>
+          <af-badge [tone]="updates.updateAvailable() ? 'success' : 'neutral'">{{ updates.status() }}</af-badge>
+        </div>
+
+        <div class="pwa-key-value">
+          <div>
+            <strong>Service worker</strong>
+            <span>{{ updates.enabled() ? 'enabled' : 'disabled' }}</span>
+          </div>
+          <div>
+            <strong>Latest event</strong>
+            <span>{{ updates.latestEvent()?.type ?? 'none' }}</span>
+          </div>
+        </div>
+
+        <div class="pwa-connection-actions">
+          <af-button variant="secondary" [disabled]="!updates.enabled()" (pressed)="checkForUpdate()">
+            <span class="pwa-button-label">
+              <af-icon name="activity" size="sm" />
+              Check update
+            </span>
+          </af-button>
+          <af-button [disabled]="!updates.updateAvailable()" (pressed)="activateUpdate()">
+            <span class="pwa-button-label">
+              <af-icon name="check" size="sm" />
+              Activate update
+            </span>
+          </af-button>
+        </div>
+      </div>
+    </af-card>
+  </div>
+</section>

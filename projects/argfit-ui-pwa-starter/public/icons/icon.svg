@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="ArgFit PWA icon">
+  <rect width="512" height="512" rx="112" fill="#101828"/>
+  <path d="M132 342c42-96 83-164 124-204 41 40 82 108 124 204" fill="none" stroke="#36d399" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M168 320h176" stroke="#60a5fa" stroke-width="28" stroke-linecap="round"/>
+  <path d="M256 118v276" stroke="#f8fafc" stroke-width="24" stroke-linecap="round"/>
+  <path d="M256 118l68 68-68 68m0 140 68-68-68-68" fill="none" stroke="#f8fafc" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
