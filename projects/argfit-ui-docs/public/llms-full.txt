@@ -13,6 +13,7 @@ ArgFit UI is an Angular UI framework built around a semantic adaptive public API
 - [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
 - [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the shape of the 1.0 contract.
 - [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
+- [PWA Applications](https://argfit-ui.oroyajs.com/pwa): Build installable desktop, tablet and mobile apps with Angular service worker, manifest metadata, offline shell state and device capability flows.
 - [LLMs.txt](https://argfit-ui.oroyajs.com/llms): Human-readable page for AI-oriented documentation endpoints.
 - [Components](https://argfit-ui.oroyajs.com/components): Stable adaptive component catalog with live previews and detail pages.
 - [API Reference](https://argfit-ui.oroyajs.com/api): Packages, imports, shared types and runtime services.
@@ -38,6 +39,7 @@ ArgFit UI is an Angular UI framework built around a semantic adaptive public API
 - Preserve accessibility semantics: labels, hints, errors, focus return, keyboard activation and live regions.
 - For dense operational screens, prioritize scanability, explicit actions, pagination, filtering and controlled state.
 - Use the docs component detail route when you need exact inputs, outputs, slots and examples.
+- For PWA work, keep the install/offline/update shell adaptive and keep browser device APIs behind explicit user gestures, secure origin checks and app-owned transport services.
 
 ## Install
 
@@ -47,6 +49,20 @@ pnpm add @argfit-ui/desktop @argfit-ui/mobile
 ```
 
 Renderer packages are shipped as part of the contract but should remain secondary to adaptive imports for application screens.
+
+## PWA Applications
+
+Route: https://argfit-ui.oroyajs.com/pwa
+
+Use ArgFit UI with Angular service worker and manifest metadata to create installable applications for desktop, tablet and mobile.
+
+Recommended posture:
+- Use `AfPageShell` as the adaptive application frame.
+- Surface install, standalone, network, secure-origin and device capability states with ArgFit feedback components.
+- Register `ngsw-worker.js` only for production builds.
+- Keep Web Bluetooth requests behind a user action and explicit service filters.
+- Treat unsupported device APIs as product state, not as app crashes.
+- Use `projects/argfit-ui-pwa-starter` as the reference implementation inside this repository.
 
 ## Bootstrap
 

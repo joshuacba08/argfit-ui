@@ -19,6 +19,7 @@ ArgFit UI provides an application-facing adaptive component API for Angular. App
 - [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
 - [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the shape of the 1.0 contract.
 - [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
+- [PWA Applications](https://argfit-ui.oroyajs.com/pwa): Build installable desktop, tablet and mobile apps with offline shell and device capability flows.
 - [Components](https://argfit-ui.oroyajs.com/components): Stable adaptive component catalog with previews and detail pages.
 - [API Reference](https://argfit-ui.oroyajs.com/api): Packages, imports, shared types and runtime services.
 - [Guides](https://argfit-ui.oroyajs.com/guides): Accessibility, theming, enterprise readiness, quality gates and migration guidance.
@@ -59,6 +60,7 @@ export const appConfig: ApplicationConfig = {
 - Keep all `@argfit-ui/*` package versions aligned.
 - Do not ask consumers to import PrimeNG or Ionic for normal ArgFit UI usage.
 - Use `provideArgfitUi` from `@argfit-ui/core` to wire theme, platform and toast runtime.
+- For PWAs, combine ArgFit adaptive shells with Angular service worker, manifest metadata and app-owned device transport services.
 - Use component detail pages for exact selectors, inputs, outputs, slot directives and examples.
 - Use `llms-full.txt` before generating code, migrations or architectural recommendations.
 

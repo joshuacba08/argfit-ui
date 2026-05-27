@@ -1,7 +1,7 @@
 import type { Type } from '@angular/core';
 import * as ArgfitAdaptive from '@argfit-ui/adaptive';
 
-export type DocsRoutePath = '/overview' | '/quickstart' | '/llms' | '/components' | '/api' | '/guides' | '/release' | '/search';
+export type DocsRoutePath = '/overview' | '/quickstart' | '/pwa' | '/llms' | '/components' | '/api' | '/guides' | '/release' | '/search';
 export type DocsSearchKind = 'component' | 'package' | 'guide' | 'release' | 'page';
 export type ProductiveComponentCategory = 'action' | 'surface' | 'feedback' | 'identity' | 'overlay' | 'form' | 'selection' | 'data' | 'workflow' | 'navigation' | 'layout';
 export type ProductiveComponentInteraction = 'command' | 'display' | 'input' | 'selection' | 'disclosure' | 'navigation' | 'workflow';
@@ -148,6 +148,12 @@ export const DOCS_NAV_ITEMS: readonly DocsNavItem[] = [
     description: 'Install, bootstrap and validate the productive contract in four steps.',
   },
   {
+    route: '/pwa',
+    label: 'PWA',
+    eyebrow: 'Installable',
+    description: 'Build installable desktop, tablet and mobile apps with offline and device capability flows.',
+  },
+  {
     route: '/llms',
     label: 'LLMs.txt',
     eyebrow: 'AI Tools',
@@ -187,6 +193,14 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
     summary: 'Bootstrap, package posture and the local validation flow for the productive contract.',
     badge: 'start',
     bullets: ['Angular 21 standalone app', 'Adaptive-first imports', 'release:production:check as the real gate'],
+  },
+  {
+    title: 'PWA applications',
+    route: '/pwa',
+    sourcePath: 'docs/pwa/quickstart.md',
+    summary: 'Create installable ArgFit UI applications with manifest metadata, Angular service worker caching and browser-safe device capability flows.',
+    badge: 'pwa',
+    bullets: ['Installable desktop, tablet and mobile shell', 'Offline and update posture', 'Web Bluetooth and native bridge boundaries'],
   },
   {
     title: 'LLMs.txt',
@@ -365,6 +379,12 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
     sourcePath: 'docs/productive/theming.md',
     summary: 'Theme bootstrap, token contract and platform preference behavior.',
     bullets: ['Dark and light shipped themes', 'Token-first overrides', 'No vendor-selector dependency'],
+  },
+  {
+    title: 'PWA app setup',
+    sourcePath: 'docs/pwa/quickstart.md',
+    summary: 'How to use ArgFit UI to create installable PWA shells for desktop, tablet and mobile with safe device capability detection.',
+    bullets: ['Angular service worker', 'Manifest and standalone display', 'Web Bluetooth guarded by secure origin and user gesture'],
   },
   {
     title: 'Enterprise readiness',
@@ -1316,6 +1336,7 @@ export const PRODUCTIVE_SEARCH_HINTS: readonly string[] = [
   'kanban workflow',
   'overlay focus',
   'adaptive',
+  'PWA Bluetooth offline',
   'theming',
   'release',
 ];
