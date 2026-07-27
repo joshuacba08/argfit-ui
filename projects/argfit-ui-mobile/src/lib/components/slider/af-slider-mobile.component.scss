@@ -1,0 +1,178 @@
+.af-slider-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+  min-width: 0;
+  width: 100%;
+}
+
+.af-slider-mobile__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  min-width: 0;
+}
+
+.af-slider-mobile__header {
+  align-items: baseline;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.af-slider-mobile__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  letter-spacing: var(--af-tracking-wide);
+}
+
+.af-slider-mobile__required {
+  color: var(--af-danger);
+}
+
+.af-slider-mobile__value {
+  color: var(--af-text-main);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-slider-mobile__control {
+  --af-slider-progress: 0;
+  align-items: center;
+  display: flex;
+  min-height: var(--af-space-8);
+}
+
+/* §20 «Accesibilidad» exige objetivos táctiles de al menos 44 px. El pulgar es más
+   grande que en escritorio y la pista reserva esa altura, porque en campo el control
+   se usa de pie y con guantes. */
+.af-slider-mobile__input {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: 44px;
+  margin: 0;
+  width: 100%;
+}
+
+.af-slider-mobile__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* La barra se pinta con un degradado duro en el punto de progreso: un único elemento
+   para recorrido y resto, sin nodos extra que el lector de pantalla tenga que ignorar. */
+.af-slider-mobile__input::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    var(--af-primary) 0%,
+    var(--af-primary) calc(var(--af-slider-progress) * 1%),
+    var(--af-bg-interactive) calc(var(--af-slider-progress) * 1%),
+    var(--af-bg-interactive) 100%
+  );
+  border-radius: var(--af-radius-pill);
+  height: 6px;
+}
+
+.af-slider-mobile__input::-moz-range-track {
+  background: var(--af-bg-interactive);
+  border-radius: var(--af-radius-pill);
+  height: 6px;
+}
+
+.af-slider-mobile__input::-moz-range-progress {
+  background: var(--af-primary);
+  border-radius: var(--af-radius-pill);
+  height: 6px;
+}
+
+.af-slider-mobile__input::-webkit-slider-thumb {
+  appearance: none;
+  background: var(--af-primary);
+  border: 3px solid var(--af-bg-main);
+  border-radius: 50%;
+  height: 28px;
+  margin-top: -11px;
+  width: 28px;
+}
+
+.af-slider-mobile__input::-moz-range-thumb {
+  background: var(--af-primary);
+  border: 3px solid var(--af-bg-main);
+  border-radius: 50%;
+  height: 28px;
+  width: 28px;
+}
+
+.af-slider-mobile__input:focus-visible {
+  outline: none;
+}
+
+.af-slider-mobile__input:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-slider-mobile__input:focus-visible::-moz-range-thumb {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-slider-mobile[data-invalid] .af-slider-mobile__input::-webkit-slider-thumb {
+  background: var(--af-danger);
+}
+
+.af-slider-mobile[data-invalid] .af-slider-mobile__input::-moz-range-thumb {
+  background: var(--af-danger);
+}
+
+/* Incluso en `sm` el pulgar se mantiene por encima del mínimo táctil: el tamaño ajusta
+   la densidad visual, no la facilidad de acertar con el dedo. */
+.af-slider-mobile[data-size='sm'] .af-slider-mobile__input::-webkit-slider-thumb {
+  height: 24px;
+  margin-top: -9px;
+  width: 24px;
+}
+
+.af-slider-mobile[data-size='lg'] .af-slider-mobile__input::-webkit-slider-thumb {
+  height: 32px;
+  margin-top: -13px;
+  width: 32px;
+}
+
+.af-slider-mobile__marks {
+  height: var(--af-space-4);
+  position: relative;
+}
+
+.af-slider-mobile__mark {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Las marcas de los extremos se alinean hacia dentro para no desbordar el contenedor. */
+.af-slider-mobile__mark:first-child {
+  transform: translateX(0);
+}
+
+.af-slider-mobile__mark:last-child {
+  transform: translateX(-100%);
+}
+
+.af-slider-mobile__message {
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-slider-mobile__message--hint {
+  color: var(--af-text-soft, var(--af-text-muted));
+}
+
+.af-slider-mobile__message--error {
+  color: var(--af-danger);
+}

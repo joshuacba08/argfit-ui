@@ -1,6 +1,6 @@
 # Productive Public API Inventory
 
-This document freezes the public API surface for `1.1.0`.
+This document freezes the public API surface for `1.2.0`.
 
 The source of truth is the set of symbols re-exported from these package barrels:
 
@@ -143,6 +143,10 @@ All exports re-exported from `projects/argfit-ui-adaptive/src/public-api.ts` are
 - `AfSegmentedControl`, `AfSegmentedControlComponent`
 - `AfSelect`, `AfSelectComponent`
 - `AfTextarea`, `AfTextareaComponent`
+- `AfFileUpload`, `AfFileUploadComponent`
+- `AfSlider`, `AfSliderComponent`
+- `AfEmptyState`, `AfEmptyStateComponent`
+- `AfSkeleton`, `AfSkeletonComponent`
 - `AfTimePicker`, `AfTimePickerComponent`
 - `AfToggle`, `AfToggleComponent`
 

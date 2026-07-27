@@ -109,3 +109,24 @@
 .af-listbox-desktop[data-density='compact'] .af-listbox-desktop__option {
   padding: var(--af-space-2) var(--af-space-3);
 }
+
+.af-listbox-desktop__search {
+  margin-bottom: var(--af-space-2);
+}
+
+.af-listbox-desktop__search-input {
+  background: var(--af-input-bg, var(--af-bg-elevated));
+  border: 1.5px solid var(--af-input-border, var(--af-border));
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  font-family: inherit;
+  font-size: var(--af-text-sm);
+  padding: var(--af-space-2) var(--af-space-3);
+  width: 100%;
+}
+
+.af-listbox-desktop__search-input:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}

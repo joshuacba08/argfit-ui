@@ -237,10 +237,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.1.0.md',
-    summary: 'The shipped 1.1 release shape, from frozen scope through the production gate.',
+    sourcePath: 'docs/productive/release-notes-1.2.0.md',
+    summary: 'The shipped 1.2 release shape, from frozen scope through the production gate.',
     badge: 'ship',
-    bullets: ['Scope and semver policy', 'Quality gates and budgets', '1.1.0 package metadata aligned'],
+    bullets: ['Scope and semver policy', 'Quality gates and budgets', '1.2.0 package metadata aligned'],
   },
 ];
 
@@ -271,7 +271,7 @@ export const PRODUCTIVE_COMPONENT_FAMILIES: readonly ProductiveFamilyGuide[] = [
     summary: 'Productive data entry and choice surfaces for desktop-density and touch-first flows.',
     usage: 'Prefer clear labels, local validation and mobile presentations that use sheets, drawers or fullscreen disclosure for dense editing.',
     a11y: 'Keep label-hint-error relationships synchronized and preserve native-button affordances for reveal, clear and dismiss actions.',
-    components: ['AfCheckbox', 'AfDatePicker', 'AfField', 'AfFieldset', 'AfIconField', 'AfInputCount', 'AfInputGroup', 'AfListbox', 'AfMultiSelect', 'AfPassword', 'AfRadioGroup', 'AfSegmentedControl', 'AfSelect', 'AfTextarea', 'AfTimePicker', 'AfToggle'],
+    components: ['AfCheckbox', 'AfDatePicker', 'AfField', 'AfFieldset', 'AfIconField', 'AfInputCount', 'AfInputGroup', 'AfListbox', 'AfMultiSelect', 'AfPassword', 'AfRadioGroup', 'AfSegmentedControl', 'AfSelect', 'AfSlider', 'AfTextarea', 'AfTimePicker', 'AfToggle'],
   },
   {
     family: 'Data, hierarchy and workflow',
@@ -462,8 +462,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   },
   {
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.1.0.md',
-    summary: 'The canonical 1.1.0 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.2.0.md',
+    summary: 'The canonical 1.2.0 release notes and production publish posture.',
   },
 ];
 
@@ -1299,6 +1299,10 @@ export const PRODUCTIVE_COMPONENT_DOCS: readonly ProductiveComponentDoc[] = [
   createComponentDoc('Forms and selection', 'AfSegmentedControl', 'Switch between a few mutually exclusive states with immediate visual feedback.'),
   createComponentDoc('Forms and selection', 'AfSelect', 'Choose one option from a collapsed option set with a stable adaptive API.'),
   createComponentDoc('Forms and selection', 'AfTextarea', 'Capture long-form notes, narrative and comments without leaving the form flow.'),
+  createComponentDoc('Forms and selection', 'AfFileUpload', 'Select files with declared limits, reported rejections and application-driven upload progress.'),
+  createComponentDoc('Forms and selection', 'AfSlider', 'Capture a bounded value where the position on the scale is the information.'),
+  createComponentDoc('Analytics, feedback and status', 'AfEmptyState', 'Explain why a surface is empty and offer the next action.'),
+  createComponentDoc('Analytics, feedback and status', 'AfSkeleton', 'Hold a loading surface shape without inventing placeholder data.'),
   createComponentDoc('Forms and selection', 'AfTimePicker', 'Collect a civil HH:mm time that stays anchored to the venue clock instead of drifting with the reader timezone.'),
   createComponentDoc('Forms and selection', 'AfToggle', 'Flip immediate on/off settings with a concise control posture.'),
   createComponentDoc('Data, hierarchy and workflow', 'AfChart', 'Render comparison and trend visuals without leaking the charting vendor contract.'),

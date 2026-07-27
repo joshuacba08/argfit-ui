@@ -154,3 +154,16 @@
 .af-sidebar-desktop--collapsed .af-sidebar-desktop__collapse af-icon {
   transform: rotate(180deg);
 }
+
+/* El motivo del bloqueo se expone a la tecnología asistiva mediante aria-describedby.
+   Visualmente lo transporta el tooltip nativo, así que aquí solo se oculta sin sacarlo
+   del árbol de accesibilidad. */
+.af-sidebar-desktop__reason {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

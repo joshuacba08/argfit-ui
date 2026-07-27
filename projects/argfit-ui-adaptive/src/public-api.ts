@@ -105,11 +105,17 @@ export {
     AfDrawerComponent as AfDrawer, AfDrawerComponent
 } from './lib/components/drawer/af-drawer.component';
 export {
+    AfEmptyStateComponent as AfEmptyState, AfEmptyStateComponent
+} from './lib/components/empty-state/af-empty-state.component';
+export {
     AfFieldComponent as AfField, AfFieldComponent
 } from './lib/components/field/af-field.component';
 export {
     AfFieldsetComponent as AfFieldset, AfFieldsetComponent
 } from './lib/components/fieldset/af-fieldset.component';
+export {
+    AfFileUploadComponent as AfFileUpload, AfFileUploadComponent
+} from './lib/components/file-upload/af-file-upload.component';
 export {
     AF_ICON_FIELD_SLOT_DIRECTIVES,
     AfIconFieldControlDirective,
@@ -230,6 +236,12 @@ export {
     AfSplitterPrimaryDirective,
     AfSplitterSecondaryDirective
 } from './lib/components/splitter/af-splitter-slots.directive';
+export {
+    AfSkeletonComponent as AfSkeleton, AfSkeletonComponent
+} from './lib/components/skeleton/af-skeleton.component';
+export {
+    AfSliderComponent as AfSlider, AfSliderComponent
+} from './lib/components/slider/af-slider.component';
 export {
     AfSplitterComponent as AfSplitter, AfSplitterComponent
 } from './lib/components/splitter/af-splitter.component';

@@ -1,0 +1,27 @@
+<ng-template #emptyStateExtra><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-empty-state-mobile
+    [title]="title()"
+    [description]="description()"
+    [tone]="tone()"
+    [size]="size()"
+    [icon]="icon()"
+    [actions]="actions()"
+    (actionSelected)="actionSelected.emit($event)"
+  >
+    <ng-container *ngTemplateOutlet="emptyStateExtra" />
+  </af-empty-state-mobile>
+} @else {
+  <af-empty-state-desktop
+    [title]="title()"
+    [description]="description()"
+    [tone]="tone()"
+    [size]="size()"
+    [icon]="icon()"
+    [actions]="actions()"
+    (actionSelected)="actionSelected.emit($event)"
+  >
+    <ng-container *ngTemplateOutlet="emptyStateExtra" />
+  </af-empty-state-desktop>
+}

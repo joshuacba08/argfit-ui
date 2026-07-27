@@ -82,8 +82,39 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   readonly loading = input(false, { transform: booleanAttribute });
   readonly emptyMessage = input<string>('Sin datos disponibles');
   readonly ariaLabel = input<string | undefined>(undefined);
+  /**
+   * Publica la serie como tabla accesible junto al gráfico.
+   *
+   * §20 exige que todo gráfico tenga resumen textual. Un lienzo no es navegable ni
+   * legible para tecnología asistiva, así que esta tabla es la representación real de
+   * los mismos datos, no un adorno.
+   */
+  readonly dataTable = input(false, { transform: booleanAttribute });
+  readonly dataTableLabel = input('Datos del gráfico');
+  readonly dataTableSeriesHeader = input('Serie');
 
   readonly pointSelect = output<AfChartPointEvent>();
+
+  /** Etiquetas de las columnas: categorías declaradas o índice de punto. */
+  protected readonly tableColumns = computed<readonly string[]>(() => {
+    if (this.categories().length > 0) {
+      return this.categories();
+    }
+    const longest = Math.max(0, ...this.series().map((serie) => serie.data.length));
+    return Array.from({ length: longest }, (_, index) => String(index + 1));
+  });
+
+  protected tableCell(seriesIndex: number, columnIndex: number): string {
+    const point = this.series()[seriesIndex]?.data[columnIndex];
+    if (point === undefined) {
+      return '—';
+    }
+    if (typeof point === 'number') {
+      return String(point);
+    }
+    const value = point.value;
+    return Array.isArray(value) ? value.join(' / ') : String(value);
+  }
 
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);

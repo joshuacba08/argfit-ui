@@ -38,6 +38,17 @@ export class AfSelectComponent implements ControlValueAccessor {
   readonly label = input<string | undefined>(undefined);
   readonly placeholder = input<string | undefined>(undefined);
   readonly hint = input<string | undefined>(undefined);
+  /**
+   * Filtra las opciones dentro del propio selector.
+   *
+   * §19 «Reglas de formularios» lo exige para listas largas. Cada renderer lo resuelve
+   * como su plataforma permite: uno filtra dentro del propio panel desplegable; el otro,
+   * que no puede filtrar dentro de su control nativo, cambia a un disparador con hoja de
+   * búsqueda. El contrato que ve la aplicación es el mismo en ambos.
+   */
+  readonly searchable = input(false, { transform: booleanAttribute });
+  readonly searchPlaceholder = input('Buscar…');
+  readonly searchEmptyText = input('Sin resultados');
   readonly error = input<string | undefined>(undefined);
   readonly state = input<AfValidationState>('default');
   readonly size = input<AfControlSize>('md');

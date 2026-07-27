@@ -1,0 +1,28 @@
+<span class="af-empty-state-mobile__icon" aria-hidden="true">
+  <af-icon [name]="resolvedIcon()" size="lg" decorative />
+</span>
+
+<p class="af-empty-state-mobile__title">{{ title() }}</p>
+
+@if (description(); as descriptionText) {
+  <p class="af-empty-state-mobile__description">{{ descriptionText }}</p>
+}
+
+@if (actions().length > 0) {
+  <div class="af-empty-state-mobile__actions">
+    @for (action of actions(); track action.id) {
+      <af-button-mobile
+        [variant]="action.variant ?? 'secondary'"
+        size="sm"
+        [disabled]="action.disabled ?? false"
+        (pressed)="actionSelected.emit(action.id)"
+      >
+        {{ action.label }}
+      </af-button-mobile>
+    }
+  </div>
+}
+
+<div class="af-empty-state-mobile__extra">
+  <ng-content />
+</div>

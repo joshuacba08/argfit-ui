@@ -15,7 +15,16 @@ export type AfChartType =
   | 'radar'
   | 'heatmap'
   | 'boxplot'
-  | 'parallel';
+  | 'parallel'
+  /** Relación entre dos variables continuas. Cada punto usa `x` e `y`. */
+  | 'scatter'
+  /**
+   * Dispersión donde el tamaño del punto codifica una tercera variable.
+   *
+   * Se lee `z` como magnitud; el radio se escala por raíz cuadrada porque el ojo compara
+   * áreas, no radios, y escalar linealmente exagera las diferencias.
+   */
+  | 'bubble';
 
 /**
  * Semantic colour tone for a chart series.

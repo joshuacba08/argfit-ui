@@ -1,0 +1,58 @@
+.af-skeleton-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  width: 100%;
+}
+
+.af-skeleton-desktop__bar {
+  background: linear-gradient(
+    90deg,
+    var(--af-bg-interactive),
+    color-mix(in srgb, var(--af-primary) 12%, var(--af-bg-interactive)),
+    var(--af-bg-interactive)
+  );
+  border-radius: var(--af-radius-sm);
+  display: block;
+  height: 0.85rem;
+  width: 100%;
+}
+
+.af-skeleton-desktop[data-shape='rect'] .af-skeleton-desktop__bar {
+  border-radius: var(--af-radius-md);
+  height: 8rem;
+}
+
+.af-skeleton-desktop[data-shape='circle'] {
+  width: auto;
+}
+
+.af-skeleton-desktop[data-shape='circle'] .af-skeleton-desktop__bar {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.af-skeleton-desktop[data-animation='pulse'] .af-skeleton-desktop__bar {
+  animation: af-skeleton-desktop-pulse var(--af-duration-slower) var(--af-ease-in-out) infinite
+    alternate;
+}
+
+@keyframes af-skeleton-desktop-pulse {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* §20 «Accesibilidad»: soporte de reducción de movimiento. Un marcador que late sin
+   parar es exactamente el tipo de animación que esa preferencia existe para detener. */
+@media (prefers-reduced-motion: reduce) {
+  .af-skeleton-desktop[data-animation='pulse'] .af-skeleton-desktop__bar {
+    animation: none;
+    opacity: 0.75;
+  }
+}

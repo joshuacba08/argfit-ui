@@ -41,6 +41,10 @@ export class AfSelectDesktopComponent {
   readonly label = input<string | undefined>(undefined);
   readonly placeholder = input<string | undefined>(undefined);
   readonly hint = input<string | undefined>(undefined);
+  /** §19 «Reglas de formularios»: selectores con búsqueda para listas largas. */
+  readonly searchable = input(false, { transform: booleanAttribute });
+  readonly searchPlaceholder = input('Buscar…');
+  readonly searchEmptyText = input('Sin resultados');
   readonly error = input<string | undefined>(undefined);
   readonly state = input<AfValidationState>('default');
   readonly size = input<AfControlSize>('md');

@@ -1,10 +1,10 @@
-# ArgFit UI 1.1.0 Scope
+# ArgFit UI 1.2.0 Scope
 
 ## Status
 
-This document defines the frozen public scope for `1.1.0`.
+This document defines the frozen public scope for `1.2.0`.
 
-ArgFit UI `1.1.0` is not a broader beta. It is the first semver-major contract where the public barrels, recommended usage path and support expectations are intentionally frozen.
+ArgFit UI `1.2.0` is not a broader beta. It is the first semver-major contract where the public barrels, recommended usage path and support expectations are intentionally frozen.
 
 ## 1.0 Categories
 
@@ -13,9 +13,9 @@ ArgFit UI `1.1.0` is not a broader beta. It is the first semver-major contract w
 | `1.0-foundation` | Stable bootstrap, token, runtime and shared type contracts that application code may depend on directly. |
 | `1.0-adaptive` | Stable semantic component APIs exported from `@argfit-ui/adaptive`. This is the recommended application-facing path. |
 | `1.0-renderer-specific` | Stable renderer package APIs exported from `@argfit-ui/desktop` and `@argfit-ui/mobile`. Supported, but secondary to the adaptive path. |
-| `out-of-1.0` | Planned or historical surfaces that are not part of the `1.1.0` contract because they are not publicly exported or are intentionally outside the recommended path. |
+| `out-of-1.0` | Planned or historical surfaces that are not part of the `1.2.0` contract because they are not publicly exported or are intentionally outside the recommended path. |
 
-Every public export included in the current package barrels must belong to one of the `1.0-*` categories above. There is no `experimental` public category in the `1.1.0` contract.
+Every public export included in the current package barrels must belong to one of the `1.0-*` categories above. There is no `experimental` public category in the `1.2.0` contract.
 
 ## Product Decision
 
@@ -27,7 +27,7 @@ import { AfButton, AfDialog, AfInput, AfPageShell } from '@argfit-ui/adaptive';
 import { AfIconComponent } from '@argfit-ui/primitives';
 ```
 
-The `1.1.0` product rules are:
+The `1.2.0` product rules are:
 
 - application code should prefer `@argfit-ui/adaptive` over renderer packages
 - `@argfit-ui/core` remains vendor-agnostic and owns the shared runtime contract
@@ -36,9 +36,9 @@ The `1.1.0` product rules are:
 - mobile remains Ionic-first internally
 - renderer packages stay public, but they are an intentional opt-in path rather than the recommended default
 
-This is how the former beta and Beta+ experimental surface is resolved for `1.1.0`: promoted exports stay public and frozen, renderer-specific exports stay isolated in renderer packages, and backlog ideas that never shipped stay outside the `1.1.0` contract.
+This is how the former beta and Beta+ experimental surface is resolved for `1.2.0`: promoted exports stay public and frozen, renderer-specific exports stay isolated in renderer packages, and backlog ideas that never shipped stay outside the `1.2.0` contract.
 
-## Included In 1.1.0
+## Included In 1.2.0
 
 ### `@argfit-ui/core` as `1.0-foundation`
 
@@ -68,7 +68,7 @@ Included and frozen for `1.0.x`:
 - panel and layout surfaces already exported in the adaptive barrel
 - slot directives and slot-directive constants exported alongside those adaptive families
 
-The adaptive barrel is the canonical application contract for `1.1.0`.
+The adaptive barrel is the canonical application contract for `1.2.0`.
 
 ### `@argfit-ui/desktop` and `@argfit-ui/mobile` as `1.0-renderer-specific`
 
@@ -79,7 +79,7 @@ Included and frozen for `1.0.x`:
 
 These exports are supported, but they are not the preferred application-facing path. New application examples, migration guides and docs should continue to point teams toward adaptive imports unless a renderer-specific integration is intentional.
 
-## Out Of 1.1.0
+## Out Of 1.2.0
 
 The following surfaces are `out-of-1.0` because they are not part of the current public barrels or were intentionally deferred:
 
@@ -118,9 +118,9 @@ For `1.0.x`:
 
 ## Recommended Migration Posture
 
-Teams moving from beta or Beta+ to `1.1.0` should:
+Teams moving from beta or Beta+ to `1.2.0` should:
 
 - prefer `@argfit-ui/adaptive` imports for application code
 - treat renderer-package imports as advanced or infrastructure-level integration points
 - remove reliance on planned-but-unshipped Beta+ backlog surfaces
-- align their internal wrappers with the frozen `1.1.0` names and semantics documented in the productive API inventory
+- align their internal wrappers with the frozen `1.2.0` names and semantics documented in the productive API inventory

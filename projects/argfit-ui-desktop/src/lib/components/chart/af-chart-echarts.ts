@@ -7,6 +7,7 @@ import {
   ParallelChart,
   PieChart,
   RadarChart,
+  ScatterChart,
 } from 'echarts/charts';
 import {
   GridComponent,
@@ -47,6 +48,7 @@ export function ensureEchartsRegistered(): void {
     PieChart,
     GaugeChart,
     RadarChart,
+    ScatterChart,
     HeatmapChart,
     BoxplotChart,
     ParallelChart,
@@ -692,6 +694,68 @@ function buildBoxplotOption(
   } satisfies EChartsCoreOption;
 }
 
+/**
+ * Dispersión y burbujas.
+ *
+ * Ambos comparten ejes continuos; `bubble` añade el tamaño como tercera variable. El radio
+ * se escala por raíz cuadrada del valor porque la percepción compara áreas: escalar el
+ * radio linealmente hace que un valor doble parezca cuatro veces mayor.
+ */
+function buildScatterOption(
+  ctx: AfChartBuildContext,
+  doc: Document,
+  tokens: ChartTokens,
+): EChartsCoreOption {
+  const isBubble = ctx.type === 'bubble';
+  const magnitudes = ctx.series.flatMap((s) =>
+    s.data.map((point) => (typeof point === 'number' ? 0 : Number(point.z ?? 0))),
+  );
+  const maxMagnitude = Math.max(1, ...magnitudes);
+
+  return {
+    animationDuration: animationDuration(ctx, doc),
+    backgroundColor: 'transparent',
+    grid: { top: ctx.title ? 34 : 12, right: 16, bottom: 32, left: 46 },
+    title: titleOption(ctx, tokens),
+    tooltip: { ...tooltipOption(ctx, tokens), trigger: 'item' },
+    legend: legendOption(ctx, tokens),
+    xAxis: {
+      type: 'value',
+      splitLine: { show: ctx.showGrid, lineStyle: { color: tokens.grid } },
+      axisLabel: axisLabelStyle(ctx, tokens),
+      axisLine: { lineStyle: { color: tokens.axis } },
+      axisTick: { show: false },
+    },
+    yAxis: {
+      type: 'value',
+      splitLine: { show: ctx.showGrid, lineStyle: { color: tokens.grid } },
+      axisLabel: axisLabelStyle(ctx, tokens),
+      axisLine: { show: false },
+      axisTick: { show: false },
+    },
+    series: ctx.series.map((serie, index) => ({
+      name: serie.name,
+      type: 'scatter',
+      data: serie.data.map((point, pointIndex) => {
+        if (typeof point === 'number') {
+          return [pointIndex, point, 0];
+        }
+        const x = Number(point.x ?? pointIndex);
+        const y = Number(point.y ?? (Array.isArray(point.value) ? point.value[0] : point.value));
+        const z = Number(point.z ?? 0);
+        return [x, y, z];
+      }),
+      symbolSize: isBubble
+        ? (value: readonly number[]) => 8 + Math.sqrt(Number(value[2] ?? 0) / maxMagnitude) * 28
+        : 10,
+      itemStyle: {
+        color: seriesColor(serie, index, ctx, doc),
+        opacity: isBubble ? 0.7 : 0.9,
+      },
+    })),
+  } satisfies EChartsCoreOption;
+}
+
 function buildParallelOption(
   ctx: AfChartBuildContext,
   doc: Document,
@@ -769,6 +833,9 @@ export function buildEchartsOption(ctx: AfChartBuildContext, doc: Document): ECh
       return buildBoxplotOption(ctx, doc, tokens);
     case 'parallel':
       return buildParallelOption(ctx, doc, tokens);
+    case 'scatter':
+    case 'bubble':
+      return buildScatterOption(ctx, doc, tokens);
     case 'area':
     case 'bar':
     case 'horizontal-bar':

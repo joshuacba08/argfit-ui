@@ -46,6 +46,16 @@ export class AfSidebarDesktopComponent {
     return item.ariaLabel ?? null;
   }
 
+  /**
+   * Identificador del texto que explica por qué el elemento está bloqueado.
+   *
+   * Devuelve `null` cuando no hay motivo, de modo que `aria-describedby` no apunte a un
+   * nodo inexistente — un descriptor roto es peor que ninguno.
+   */
+  protected disabledReasonId(item: AfNavigationItem): string | null {
+    return item.disabled && item.disabledReason ? `af-nav-reason-${item.id}` : null;
+  }
+
   protected onItemClick(event: Event, item: AfNavigationItem): void {
     if (item.disabled) {
       event.preventDefault();

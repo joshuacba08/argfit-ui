@@ -15,3 +15,30 @@
   class="af-chart-desktop__canvas"
   [attr.aria-hidden]="state() !== 'ready' ? 'true' : null"
 ></div>
+
+@if (dataTable() && state() === 'ready') {
+  <!-- §20: alternativa navegable al lienzo, con los mismos datos. -->
+  <div class="af-chart-desktop-table-wrapper">
+    <table class="af-chart-desktop-table">
+      <caption>{{ dataTableLabel() }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{{ dataTableSeriesHeader() }}</th>
+          @for (column of tableColumns(); track column) {
+            <th scope="col">{{ column }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (serie of series(); track serie.name; let seriesIndex = $index) {
+          <tr>
+            <th scope="row">{{ serie.name }}</th>
+            @for (column of tableColumns(); track column; let columnIndex = $index) {
+              <td>{{ tableCell(seriesIndex, columnIndex) }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

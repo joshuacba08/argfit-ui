@@ -1,0 +1,96 @@
+<div class="af-file-upload-desktop__field">
+  @if (label(); as labelText) {
+    <label class="af-file-upload-desktop__label" [attr.for]="resolvedInputId()" [id]="labelId()">
+      {{ labelText }}
+      @if (required()) {
+        <span class="af-file-upload-desktop__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <!-- La zona de arrastre es una mejora sobre el input, nunca la única vía de entrada. -->
+  <div
+    class="af-file-upload-desktop__dropzone"
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+  >
+    <span class="af-file-upload-desktop__dropzone-icon" aria-hidden="true">
+      <af-icon name="upload" size="lg" tone="primary" decorative />
+    </span>
+
+    <input
+      class="af-file-upload-desktop__input"
+      type="file"
+      [id]="resolvedInputId()"
+      [name]="name() ?? null"
+      [accept]="accept() ?? null"
+      [multiple]="multiple()"
+      [disabled]="disabled()"
+      [attr.aria-labelledby]="label() ? labelId() : null"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-invalid]="errorText() ? 'true' : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      (change)="onSelect($event)"
+    />
+
+    <label class="af-file-upload-desktop__button" [attr.for]="resolvedInputId()">
+      {{ buttonLabel() }}
+    </label>
+
+    <span class="af-file-upload-desktop__drop-copy">{{ dropLabel() }}</span>
+  </div>
+
+  @if (constraintsText(); as constraints) {
+    <p class="af-file-upload-desktop__constraints" [id]="constraintsId()">{{ constraints }}</p>
+  } @else {
+    <span class="af-file-upload-desktop__constraints" [id]="constraintsId()" hidden></span>
+  }
+
+  @if (files().length > 0) {
+    <ul class="af-file-upload-desktop__list">
+      @for (file of files(); track file.name + file.size) {
+        <li class="af-file-upload-desktop__item">
+          <span class="af-file-upload-desktop__item-icon" aria-hidden="true">
+            <af-icon name="file-text" size="sm" tone="muted" decorative />
+          </span>
+
+          <span class="af-file-upload-desktop__item-copy">
+            <span class="af-file-upload-desktop__item-name">{{ file.name }}</span>
+            <span class="af-file-upload-desktop__item-meta">{{ sizeOf(file) }}</span>
+          </span>
+
+          @if (progressFor(file); as entry) {
+            <span
+              class="af-file-upload-desktop__item-status"
+              [attr.data-status]="entry.status"
+              [attr.role]="entry.status === 'error' ? 'alert' : null"
+            >
+              {{ entry.message ?? (entry.percent !== undefined ? entry.percent + ' %' : '') }}
+            </span>
+          }
+
+          <button
+            type="button"
+            class="af-file-upload-desktop__remove"
+            [attr.aria-label]="removeLabel() + ': ' + file.name"
+            [disabled]="disabled()"
+            (click)="remove(file)"
+          >
+            <af-icon name="x" size="xs" tone="muted" decorative />
+          </button>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (errorText(); as error) {
+    <p class="af-file-upload-desktop__message af-file-upload-desktop__message--error" [id]="errorId()">
+      {{ error }}
+    </p>
+  } @else if (helperText(); as helper) {
+    <p class="af-file-upload-desktop__message af-file-upload-desktop__message--hint" [id]="hintId()">
+      {{ helper }}
+    </p>
+  }
+</div>

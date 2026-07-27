@@ -1,0 +1,9 @@
+@for (line of [].constructor(lineCount()); track $index) {
+  <span
+    class="af-skeleton-mobile__bar"
+    aria-hidden="true"
+    [style.width]="lineWidth($index)"
+    [style.height]="height() ?? null"
+    [style.border-radius]="radius() ?? null"
+  ></span>
+}

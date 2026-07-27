@@ -48,6 +48,9 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [interactive]="interactive()"
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
+        [dataTable]="dataTable()"
+        [dataTableLabel]="dataTableLabel()"
+        [dataTableSeriesHeader]="dataTableSeriesHeader()"
         [ariaLabel]="ariaLabel()"
         (pointSelect)="pointSelect.emit($event)"
       />
@@ -67,6 +70,9 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [interactive]="interactive()"
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
+        [dataTable]="dataTable()"
+        [dataTableLabel]="dataTableLabel()"
+        [dataTableSeriesHeader]="dataTableSeriesHeader()"
         [ariaLabel]="ariaLabel()"
         (pointSelect)="pointSelect.emit($event)"
       />
@@ -94,6 +100,15 @@ export class AfChartComponent {
   readonly loading = input(false, { transform: booleanAttribute });
   readonly emptyMessage = input<string>('Sin datos disponibles');
   readonly ariaLabel = input<string | undefined>(undefined);
+  /**
+   * Publica la serie como tabla accesible junto al gráfico.
+   *
+   * §20 exige resumen textual en todo gráfico. Un lienzo no es navegable por teclado ni
+   * legible por tecnología asistiva: esta tabla contiene los mismos datos, no un resumen.
+   */
+  readonly dataTable = input(false, { transform: booleanAttribute });
+  readonly dataTableLabel = input('Datos del gráfico');
+  readonly dataTableSeriesHeader = input('Serie');
 
   readonly pointSelect = output<AfChartPointEvent>();
 

@@ -1,0 +1,199 @@
+.af-file-upload-mobile {
+  display: block;
+  font-family: var(--af-font-body);
+  min-width: 0;
+  width: 100%;
+}
+
+.af-file-upload-mobile__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  min-width: 0;
+}
+
+.af-file-upload-mobile__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  letter-spacing: var(--af-tracking-wide);
+}
+
+.af-file-upload-mobile__required {
+  color: var(--af-danger);
+}
+
+.af-file-upload-mobile__dropzone {
+  align-items: center;
+  background: var(--af-bg-elevated);
+  border: 1.5px dashed var(--af-border);
+  border-radius: var(--af-radius-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-3);
+  justify-content: center;
+  padding: var(--af-space-6) var(--af-space-4);
+  position: relative;
+  text-align: center;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-file-upload-mobile[data-dragging] .af-file-upload-mobile__dropzone {
+  background: var(--af-primary-soft);
+  border-color: var(--af-primary);
+}
+
+.af-file-upload-mobile[data-invalid] .af-file-upload-mobile__dropzone {
+  border-color: var(--af-danger);
+}
+
+.af-file-upload-mobile[data-disabled] .af-file-upload-mobile__dropzone {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* El input se oculta visualmente pero sigue siendo el control real: recibe foco,
+   abre el selector del sistema y es lo que anuncia el lector de pantalla. */
+.af-file-upload-mobile__input {
+  height: 100%;
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.af-file-upload-mobile__input:disabled {
+  cursor: not-allowed;
+}
+
+/* §20: objetivo táctil mínimo de 44 px. El botón ocupa el ancho completo porque en
+   móvil es la única vía de entrada, no una alternativa al arrastre. */
+.af-file-upload-mobile__button {
+  align-items: center;
+  background: var(--af-primary);
+  border-radius: var(--af-radius-md);
+  color: var(--af-primary-contrast);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-semibold);
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--af-space-2) var(--af-space-4);
+  position: relative;
+  width: 100%;
+}
+
+.af-file-upload-mobile__input:focus-visible + .af-file-upload-mobile__button {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-file-upload-mobile__drop-copy {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+}
+
+.af-file-upload-mobile__constraints {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  margin: 0;
+}
+
+.af-file-upload-mobile__list {
+  display: grid;
+  gap: var(--af-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.af-file-upload-mobile__item {
+  align-items: center;
+  background: var(--af-bg-interactive);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-md);
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+.af-file-upload-mobile__item-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.af-file-upload-mobile__item-name {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-file-upload-mobile__item-meta {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.af-file-upload-mobile__item-status {
+  font-size: var(--af-text-xs);
+  white-space: nowrap;
+}
+
+.af-file-upload-mobile__item-status[data-status='uploading'] {
+  color: var(--af-accent);
+}
+
+.af-file-upload-mobile__item-status[data-status='done'] {
+  color: var(--af-success);
+}
+
+.af-file-upload-mobile__item-status[data-status='error'] {
+  color: var(--af-danger);
+}
+
+.af-file-upload-mobile__remove {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-soft);
+  cursor: pointer;
+  display: inline-flex;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  width: 44px;
+}
+
+.af-file-upload-mobile__remove:hover:not(:disabled) {
+  background: var(--af-bg-elevated);
+  color: var(--af-danger);
+}
+
+.af-file-upload-mobile__remove:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-file-upload-mobile__message {
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-file-upload-mobile__message--hint {
+  color: var(--af-text-soft, var(--af-text-muted));
+}
+
+.af-file-upload-mobile__message--error {
+  color: var(--af-danger);
+}

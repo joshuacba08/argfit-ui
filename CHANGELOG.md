@@ -2,6 +2,50 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.2.0
+
+Additive minor release. Closes nine of the ten remaining `GAP-UI-nnn` findings from building
+ArgFit Football: four new components and five extensions. Nothing was renamed or removed, so
+upgrading from `1.1.0` costs nothing.
+
+### Added
+
+- `AfSlider` (`GAP-UI-006`) across core, desktop, mobile and adaptive. Native range input,
+  `min`/`max`/`step`, labelled `marks`, `ControlValueAccessor`, and a thumb that stays above
+  the 44 px touch target on mobile at every size.
+- `AfFileUpload` (`GAP-UI-005`). `accept`, `multiple`, `maxSizeBytes`, `maxFiles`,
+  application-reported `progress`, desktop drag-and-drop over a real `<input type="file">`.
+  Constraints are announced before choosing and rejected files are returned with a reason.
+- `AfEmptyState` (`GAP-UI-008`) with `tone` (`empty`, `filtered`, `error`, `permission`) and
+  required-by-contract `actions`.
+- `AfSkeleton` (`GAP-UI-014`) with `shape` (`text`, `rect`, `circle`), `lines`, and a pulse
+  that stops under `prefers-reduced-motion`.
+- Core helpers: `afClampToStep`, `afFormatFileSize`, `afMatchesAccept`, `afSplitPlacement`,
+  `isAfDateValue`, `isAfDateRange`, plus `AfDateRange` and the type modules for the new
+  components.
+
+### Changed
+
+- `AfChart` accepts `scatter` and `bubble` (`GAP-UI-009`); bubble radius scales by square
+  root so areas compare correctly.
+- `AfChart` gains `dataTable` (`GAP-UI-010`), publishing the series as an accessible table
+  beside the canvas.
+- `AfSelect` and `AfListbox` gain `searchable`, `searchPlaceholder` and `searchEmptyText`
+  (`GAP-UI-004`). On mobile the searchable select swaps to a trigger plus a sheet, because
+  Ionic cannot filter inside `ion-select`.
+- `AfPopoverPlacement` gains `-start` and `-end` variants for all four sides (`GAP-UI-012`).
+- `AfNavigationItem` gains `disabledReason` (`GAP-UI-013`), surfaced as a tooltip and through
+  `aria-describedby`.
+- All publishable packages move to `1.2.0` with internal peers realigned.
+
+### Notes
+
+- `GAP-UI-003` (range selection in `AfDatePicker`) is **not** in this release. Ionic has no
+  range-capable datetime, and a control that behaves differently per platform defeats the
+  adaptive layer. The period types ship so applications composing two pickers share one
+  validated contract.
+- Release notes: `docs/productive/release-notes-1.2.0.md`.
+
 ## 1.1.0
 
 Additive minor release. Closes the four blocking gaps found while building ArgFit Football on

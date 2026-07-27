@@ -1,0 +1,28 @@
+<span class="af-empty-state-desktop__icon" aria-hidden="true">
+  <af-icon [name]="resolvedIcon()" size="lg" decorative />
+</span>
+
+<p class="af-empty-state-desktop__title">{{ title() }}</p>
+
+@if (description(); as descriptionText) {
+  <p class="af-empty-state-desktop__description">{{ descriptionText }}</p>
+}
+
+@if (actions().length > 0) {
+  <div class="af-empty-state-desktop__actions">
+    @for (action of actions(); track action.id) {
+      <af-button-desktop
+        [variant]="action.variant ?? 'secondary'"
+        size="sm"
+        [disabled]="action.disabled ?? false"
+        (pressed)="actionSelected.emit(action.id)"
+      >
+        {{ action.label }}
+      </af-button-desktop>
+    }
+  </div>
+}
+
+<div class="af-empty-state-desktop__extra">
+  <ng-content />
+</div>

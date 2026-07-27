@@ -2,7 +2,7 @@
 
 This document defines the release operations policy for the productive `1.x` line.
 
-The source manifests, publishable package manifests and production packaging flow are aligned to stable `1.1.0` metadata. Production packages publish only through the `latest` npm dist-tag.
+The source manifests, publishable package manifests and production packaging flow are aligned to stable `1.2.0` metadata. Production packages publish only through the `latest` npm dist-tag.
 
 ## Branch And Tag Strategy
 

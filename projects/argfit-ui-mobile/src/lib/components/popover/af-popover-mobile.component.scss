@@ -42,14 +42,26 @@
   --af-popover-border: color-mix(in srgb, var(--af-primary) 28%, transparent);
 }
 
-.af-popover-mobile__panel[data-placement='top'] {
+/* En móvil el panel ocupa el ancho disponible, así que la alineación al borde no cambia
+   nada: `bottom-start` y `bottom-end` se comportan como `bottom`. Se aceptan igualmente
+   para que un consumidor pueda declarar una sola posición para ambas plataformas. */
+
+.af-popover-mobile__panel[data-placement='top'],
+.af-popover-mobile__panel[data-placement='top-start'],
+.af-popover-mobile__panel[data-placement='top-end'] {
   margin-inline: auto;
   top: max(var(--af-space-4), env(safe-area-inset-top));
 }
 
 .af-popover-mobile__panel[data-placement='left'],
+.af-popover-mobile__panel[data-placement='left-start'],
+.af-popover-mobile__panel[data-placement='left-end'],
 .af-popover-mobile__panel[data-placement='right'],
-.af-popover-mobile__panel[data-placement='bottom'] {
+.af-popover-mobile__panel[data-placement='right-start'],
+.af-popover-mobile__panel[data-placement='right-end'],
+.af-popover-mobile__panel[data-placement='bottom'],
+.af-popover-mobile__panel[data-placement='bottom-start'],
+.af-popover-mobile__panel[data-placement='bottom-end'] {
   bottom: max(var(--af-space-4), env(safe-area-inset-bottom));
   margin-inline: auto;
 }

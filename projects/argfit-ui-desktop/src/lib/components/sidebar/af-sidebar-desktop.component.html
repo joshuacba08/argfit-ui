@@ -28,10 +28,18 @@
         [attr.aria-current]="isActive(item) ? 'page' : null"
         [attr.aria-disabled]="item.disabled ? 'true' : null"
         [attr.tabindex]="item.disabled ? -1 : null"
+        [attr.title]="item.disabled ? (item.disabledReason ?? null) : null"
+        [attr.aria-describedby]="disabledReasonId(item)"
         (click)="onItemClick($event, item)"
       >
         <ng-container *ngTemplateOutlet="navItemContent; context: { $implicit: item }" />
       </a>
+      @if (item.disabled && item.disabledReason) {
+        <!-- Un candado sin explicación dice que estás bloqueado, no qué te desbloquearía. -->
+        <span class="af-sidebar-desktop__reason" [id]="disabledReasonId(item)">
+          {{ item.disabledReason }}
+        </span>
+      }
     } @else {
       <button
         class="af-sidebar-desktop__item"
@@ -40,10 +48,17 @@
         [disabled]="item.disabled"
         [attr.aria-label]="itemAriaLabel(item)"
         [attr.aria-current]="isActive(item) ? 'page' : null"
+        [attr.title]="item.disabled ? (item.disabledReason ?? null) : null"
+        [attr.aria-describedby]="disabledReasonId(item)"
         (click)="onItemClick($event, item)"
       >
         <ng-container *ngTemplateOutlet="navItemContent; context: { $implicit: item }" />
       </button>
+      @if (item.disabled && item.disabledReason) {
+        <span class="af-sidebar-desktop__reason" [id]="disabledReasonId(item)">
+          {{ item.disabledReason }}
+        </span>
+      }
     }
   }
 </nav>

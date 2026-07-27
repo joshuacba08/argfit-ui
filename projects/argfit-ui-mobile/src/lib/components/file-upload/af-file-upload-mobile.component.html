@@ -1,0 +1,90 @@
+<div class="af-file-upload-mobile__field">
+  @if (label(); as labelText) {
+    <label class="af-file-upload-mobile__label" [attr.for]="resolvedInputId()" [id]="labelId()">
+      {{ labelText }}
+      @if (required()) {
+        <span class="af-file-upload-mobile__required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <!-- En móvil no hay arrastre que ofrecer: el botón abre la cámara o el explorador
+       del sistema, y ocupa todo el ancho para no fallar el objetivo táctil. -->
+  <div class="af-file-upload-mobile__dropzone">
+    <span class="af-file-upload-mobile__dropzone-icon" aria-hidden="true">
+      <af-icon name="upload" size="lg" tone="primary" decorative />
+    </span>
+
+    <input
+      class="af-file-upload-mobile__input"
+      type="file"
+      [id]="resolvedInputId()"
+      [name]="name() ?? null"
+      [accept]="accept() ?? null"
+      [multiple]="multiple()"
+      [disabled]="disabled()"
+      [attr.aria-labelledby]="label() ? labelId() : null"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-invalid]="errorText() ? 'true' : null"
+      [attr.aria-required]="required() ? 'true' : null"
+      (change)="onSelect($event)"
+    />
+
+    <label class="af-file-upload-mobile__button" [attr.for]="resolvedInputId()">
+      {{ buttonLabel() }}
+    </label>
+  </div>
+
+  @if (constraintsText(); as constraints) {
+    <p class="af-file-upload-mobile__constraints" [id]="constraintsId()">{{ constraints }}</p>
+  } @else {
+    <span class="af-file-upload-mobile__constraints" [id]="constraintsId()" hidden></span>
+  }
+
+  @if (files().length > 0) {
+    <ul class="af-file-upload-mobile__list">
+      @for (file of files(); track file.name + file.size) {
+        <li class="af-file-upload-mobile__item">
+          <span class="af-file-upload-mobile__item-icon" aria-hidden="true">
+            <af-icon name="file-text" size="sm" tone="muted" decorative />
+          </span>
+
+          <span class="af-file-upload-mobile__item-copy">
+            <span class="af-file-upload-mobile__item-name">{{ file.name }}</span>
+            <span class="af-file-upload-mobile__item-meta">{{ sizeOf(file) }}</span>
+          </span>
+
+          @if (progressFor(file); as entry) {
+            <span
+              class="af-file-upload-mobile__item-status"
+              [attr.data-status]="entry.status"
+              [attr.role]="entry.status === 'error' ? 'alert' : null"
+            >
+              {{ entry.message ?? (entry.percent !== undefined ? entry.percent + ' %' : '') }}
+            </span>
+          }
+
+          <button
+            type="button"
+            class="af-file-upload-mobile__remove"
+            [attr.aria-label]="removeLabel() + ': ' + file.name"
+            [disabled]="disabled()"
+            (click)="remove(file)"
+          >
+            <af-icon name="x" size="xs" tone="muted" decorative />
+          </button>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (errorText(); as error) {
+    <p class="af-file-upload-mobile__message af-file-upload-mobile__message--error" [id]="errorId()">
+      {{ error }}
+    </p>
+  } @else if (helperText(); as helper) {
+    <p class="af-file-upload-mobile__message af-file-upload-mobile__message--hint" [id]="hintId()">
+      {{ helper }}
+    </p>
+  }
+</div>

@@ -1,0 +1,173 @@
+.af-slider-desktop {
+  display: block;
+  font-family: var(--af-font-body);
+  min-width: 0;
+  width: 100%;
+}
+
+.af-slider-desktop__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  min-width: 0;
+}
+
+.af-slider-desktop__header {
+  align-items: baseline;
+  display: flex;
+  gap: var(--af-space-3);
+  justify-content: space-between;
+}
+
+.af-slider-desktop__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  letter-spacing: var(--af-tracking-wide);
+}
+
+.af-slider-desktop__required {
+  color: var(--af-danger);
+}
+
+.af-slider-desktop__value {
+  color: var(--af-text-main);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-slider-desktop__control {
+  --af-slider-progress: 0;
+  align-items: center;
+  display: flex;
+  min-height: var(--af-space-8);
+}
+
+.af-slider-desktop__input {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: var(--af-space-6);
+  margin: 0;
+  width: 100%;
+}
+
+.af-slider-desktop__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* La barra se pinta con un degradado duro en el punto de progreso: un único elemento
+   para recorrido y resto, sin nodos extra que el lector de pantalla tenga que ignorar. */
+.af-slider-desktop__input::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    var(--af-primary) 0%,
+    var(--af-primary) calc(var(--af-slider-progress) * 1%),
+    var(--af-bg-interactive) calc(var(--af-slider-progress) * 1%),
+    var(--af-bg-interactive) 100%
+  );
+  border-radius: var(--af-radius-pill);
+  height: 6px;
+}
+
+.af-slider-desktop__input::-moz-range-track {
+  background: var(--af-bg-interactive);
+  border-radius: var(--af-radius-pill);
+  height: 6px;
+}
+
+.af-slider-desktop__input::-moz-range-progress {
+  background: var(--af-primary);
+  border-radius: var(--af-radius-pill);
+  height: 6px;
+}
+
+.af-slider-desktop__input::-webkit-slider-thumb {
+  appearance: none;
+  background: var(--af-primary);
+  border: 2px solid var(--af-bg-main);
+  border-radius: 50%;
+  height: 18px;
+  margin-top: -6px;
+  width: 18px;
+}
+
+.af-slider-desktop__input::-moz-range-thumb {
+  background: var(--af-primary);
+  border: 2px solid var(--af-bg-main);
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+}
+
+.af-slider-desktop__input:focus-visible {
+  outline: none;
+}
+
+.af-slider-desktop__input:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-slider-desktop__input:focus-visible::-moz-range-thumb {
+  box-shadow: var(--af-focus-ring);
+}
+
+.af-slider-desktop[data-invalid] .af-slider-desktop__input::-webkit-slider-thumb {
+  background: var(--af-danger);
+}
+
+.af-slider-desktop[data-invalid] .af-slider-desktop__input::-moz-range-thumb {
+  background: var(--af-danger);
+}
+
+.af-slider-desktop[data-size='sm'] .af-slider-desktop__input::-webkit-slider-thumb {
+  height: 14px;
+  margin-top: -4px;
+  width: 14px;
+}
+
+.af-slider-desktop[data-size='lg'] .af-slider-desktop__input::-webkit-slider-thumb {
+  height: 22px;
+  margin-top: -8px;
+  width: 22px;
+}
+
+.af-slider-desktop__marks {
+  height: var(--af-space-4);
+  position: relative;
+}
+
+.af-slider-desktop__mark {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Las marcas de los extremos se alinean hacia dentro para no desbordar el contenedor. */
+.af-slider-desktop__mark:first-child {
+  transform: translateX(0);
+}
+
+.af-slider-desktop__mark:last-child {
+  transform: translateX(-100%);
+}
+
+.af-slider-desktop__message {
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-normal);
+  margin: 0;
+}
+
+.af-slider-desktop__message--hint {
+  color: var(--af-text-soft, var(--af-text-muted));
+}
+
+.af-slider-desktop__message--error {
+  color: var(--af-danger);
+}

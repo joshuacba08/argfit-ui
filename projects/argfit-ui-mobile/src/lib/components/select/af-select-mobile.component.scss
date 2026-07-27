@@ -191,3 +191,134 @@ ion-alert.af-select-mobile__overlay .alert-button {
 .af-select-mobile__message--error {
   color: var(--af-danger);
 }
+
+/* ── Modo con búsqueda ─────────────────────────────────────────────────────
+   Ionic no filtra dentro de `ion-select`, así que este modo sustituye el control
+   por un disparador y una hoja. Todos los objetivos táctiles respetan los 44 px
+   que exige §20. */
+
+.af-select-mobile__standalone-label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  letter-spacing: var(--af-tracking-wide);
+  margin-bottom: var(--af-space-1);
+}
+
+.af-select-mobile__required {
+  color: var(--af-danger);
+}
+
+.af-select-mobile__trigger {
+  align-items: center;
+  background: var(--af-input-bg, var(--af-bg-elevated));
+  border: 1.5px solid var(--af-input-border, var(--af-border));
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: var(--af-text-base);
+  gap: var(--af-space-2);
+  justify-content: space-between;
+  min-height: 44px;
+  padding: var(--af-space-2) var(--af-space-3);
+  text-align: start;
+  width: 100%;
+}
+
+.af-select-mobile__trigger:focus-visible {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+.af-select-mobile__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.af-select-mobile__trigger-copy {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-select-mobile__trigger-copy[data-placeholder] {
+  color: var(--af-text-muted);
+}
+
+.af-select-mobile__search {
+  align-items: center;
+  background: var(--af-bg-interactive);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-md);
+  display: flex;
+  gap: var(--af-space-2);
+  margin-bottom: var(--af-space-3);
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+.af-select-mobile__search-input {
+  background: transparent;
+  border: none;
+  color: var(--af-text-main);
+  flex: 1;
+  font-family: inherit;
+  font-size: var(--af-text-base);
+  min-height: 36px;
+  min-width: 0;
+  outline: none;
+}
+
+.af-select-mobile__search-empty {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-sm);
+  margin: 0;
+  padding: var(--af-space-4) 0;
+  text-align: center;
+}
+
+.af-select-mobile__options {
+  display: grid;
+  gap: var(--af-space-1);
+  list-style: none;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.af-select-mobile__option {
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  font-family: inherit;
+  font-size: var(--af-text-base);
+  gap: var(--af-space-2);
+  justify-content: space-between;
+  min-height: 44px;
+  padding: var(--af-space-2) var(--af-space-3);
+  text-align: start;
+  width: 100%;
+}
+
+.af-select-mobile__option[aria-selected='true'] {
+  background: var(--af-primary-soft);
+}
+
+.af-select-mobile__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.af-select-mobile__option:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}

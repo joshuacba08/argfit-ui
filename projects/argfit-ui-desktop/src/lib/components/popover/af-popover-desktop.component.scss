@@ -69,6 +69,62 @@
   transform: translateY(-50%);
 }
 
+/* Variantes alineadas al borde. Un disparador pegado al borde del viewport —el selector
+   de contexto a la izquierda de una cabecera, el indicador de estado a la derecha— empuja
+   su panel fuera de pantalla si siempre se centra. */
+
+.af-popover-desktop__panel[data-placement='top-start'],
+.af-popover-desktop__panel[data-placement='bottom-start'] {
+  left: 0;
+  right: auto;
+  transform: none;
+}
+
+.af-popover-desktop__panel[data-placement='top-end'],
+.af-popover-desktop__panel[data-placement='bottom-end'] {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.af-popover-desktop__panel[data-placement='top-start'],
+.af-popover-desktop__panel[data-placement='top-end'] {
+  bottom: calc(100% + var(--af-space-2));
+  top: auto;
+}
+
+.af-popover-desktop__panel[data-placement='bottom-start'],
+.af-popover-desktop__panel[data-placement='bottom-end'] {
+  bottom: auto;
+  top: calc(100% + var(--af-space-2));
+}
+
+.af-popover-desktop__panel[data-placement='left-start'],
+.af-popover-desktop__panel[data-placement='right-start'] {
+  bottom: auto;
+  top: 0;
+  transform: none;
+}
+
+.af-popover-desktop__panel[data-placement='left-end'],
+.af-popover-desktop__panel[data-placement='right-end'] {
+  bottom: 0;
+  top: auto;
+  transform: none;
+}
+
+.af-popover-desktop__panel[data-placement='left-start'],
+.af-popover-desktop__panel[data-placement='left-end'] {
+  left: auto;
+  right: calc(100% + var(--af-space-2));
+}
+
+.af-popover-desktop__panel[data-placement='right-start'],
+.af-popover-desktop__panel[data-placement='right-end'] {
+  left: calc(100% + var(--af-space-2));
+  right: auto;
+}
+
 .af-popover-desktop__header {
   align-items: center;
   border-bottom: 1px solid var(--af-border-soft);

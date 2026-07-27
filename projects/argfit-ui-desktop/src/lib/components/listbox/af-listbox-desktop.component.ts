@@ -5,6 +5,7 @@ import {
   computed,
   input,
   output,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
 
@@ -44,6 +45,10 @@ export class AfListboxDesktopComponent {
   readonly required = input(false, { transform: booleanAttribute });
   readonly density = input<AfSelectionDensity>('comfortable');
   readonly inputId = input<string | undefined>(undefined);
+  /** §19: selectores con búsqueda para listas largas. */
+  readonly searchable = input(false, { transform: booleanAttribute });
+  readonly searchPlaceholder = input('Buscar…');
+  readonly searchEmptyText = input('Sin resultados');
 
   readonly valueChange = output<unknown>();
   readonly focusChange = output<boolean>();
@@ -52,6 +57,21 @@ export class AfListboxDesktopComponent {
   protected readonly hintId = computed(() => `${this.resolvedInputId()}-hint`);
   protected readonly errorId = computed(() => `${this.resolvedInputId()}-error`);
   protected readonly emptyText = computed(() => this.placeholder() ?? 'No hay opciones disponibles.');
+
+  protected readonly query = signal('');
+
+  /** El filtro no altera la selección: solo decide qué se ve. */
+  protected readonly visibleOptions = computed(() => {
+    const query = this.query().trim().toLowerCase();
+    if (!this.searchable() || query === '') {
+      return this.options();
+    }
+    return this.options().filter((option) => option.label.toLowerCase().includes(query));
+  });
+
+  protected onQueryInput(event: Event): void {
+    this.query.set((event.target as HTMLInputElement).value);
+  }
 
   protected onToggle(option: AfResolvedListboxOption): void {
     if (this.isOptionDisabled(option)) {
