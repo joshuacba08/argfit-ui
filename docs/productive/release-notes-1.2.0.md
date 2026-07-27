@@ -121,10 +121,38 @@ prevent. It needs a purpose-built two-step sheet on mobile and is deferred to a 
 release. The period types above ship in the meantime so applications composing two
 `AfDatePicker` fields have a shared, validated contract.
 
+## Size budgets
+
+Four new components on every layer move the published tarballs, so the budgets in
+`tools/production-performance.mjs` were recalibrated for this release:
+
+| Package | 1.2.0 | New budget | Previous |
+| --- | --- | --- | --- |
+| `@argfit-ui/core` | 38.7 kB | 41 kB | 35 kB |
+| `@argfit-ui/primitives` | 10.2 kB | 15 kB | unchanged |
+| `@argfit-ui/adaptive` | 124.6 kB | 130 kB | unchanged |
+| `@argfit-ui/desktop` | 256.4 kB | 270 kB | 250 kB |
+| `@argfit-ui/mobile` | 237.3 kB | 250 kB | 230 kB |
+| Total | 667.2 kB | 700 kB | 650 kB |
+
+The growth is proportionate to what shipped: desktop gained 6.4 kB and mobile 7.3 kB for four
+components each. Budgets keep roughly 5 % headroom, so they still fail on unintended growth.
+
+Two figures are worth watching in 1.3.0: `adaptive` sits 4 % under its unchanged ceiling, and
+the showcase main bundle measures 2.59 MB against a 2.62 MB budget. Neither was raised here —
+they pass, and raising a passing budget with no release to justify it is how a ratchet stops
+working — but both will need a decision next time.
+
 ## Validation
+
+The production gate must pass before tagging or publishing:
 
 ```bash
 pnpm release:production:check
 ```
+
+It builds every package, runs the full test suite and the accessibility audit, verifies that no
+PrimeNG or Ionic type leaks through the public declarations, then writes the package set to
+`dist/production-tarballs/`, measures it against the budgets above and smoke-tests the result.
 
 Tag as `v1.2.0` and publish to the `latest` dist-tag with public access.

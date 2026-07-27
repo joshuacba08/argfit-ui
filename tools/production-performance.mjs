@@ -10,17 +10,23 @@ const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
 
+// Recalibrated for 1.2.0, which adds four components (AfSlider, AfFileUpload, AfEmptyState,
+// AfSkeleton) to every layer. Measured 1.2.0: core 38.7 kB, primitives 10.2 kB, adaptive
+// 124.6 kB, desktop 256.4 kB, mobile 237.3 kB, total 667.2 kB. Each budget sits roughly 5 %
+// above its measurement so the ratchet still catches unintended growth: these are ceilings to
+// justify raising, not targets to grow into. Raise them only alongside a release that says in
+// its notes what was added.
 const budgets = {
   initialTotal: 2_900_000,
   mainBundle: 2_750_000,
   stylesBundle: 60_000,
-  tarballTotal: 650_000,
+  tarballTotal: 700_000,
   tarballs: {
-    'argfit-ui-core': 35_000,
+    'argfit-ui-core': 41_000,
     'argfit-ui-primitives': 15_000,
     'argfit-ui-adaptive': 130_000,
-    'argfit-ui-desktop': 250_000,
-    'argfit-ui-mobile': 230_000,
+    'argfit-ui-desktop': 270_000,
+    'argfit-ui-mobile': 250_000,
   },
 };
 
