@@ -2,20 +2,20 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
-  AfBadge,
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardFooterDirective,
-  AfCardHeaderDirective,
-  AfCardTitleDirective,
+    AfBadge,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardFooterDirective,
+    AfCardHeaderDirective,
+    AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
 
 import {
-  PRODUCTIVE_ADAPTIVE_EXAMPLE,
-  PRODUCTIVE_BOOTSTRAP_EXAMPLE,
-  PRODUCTIVE_QUICKSTART_STEPS,
-  PRODUCTIVE_VALIDATION_COMMANDS,
+    PRODUCTIVE_ADAPTIVE_EXAMPLE,
+    PRODUCTIVE_BOOTSTRAP_EXAMPLE,
+    PRODUCTIVE_QUICKSTART_STEPS,
+    PRODUCTIVE_VALIDATION_COMMANDS,
 } from '../docs-data';
 import { DocsCodeBlockComponent, type AfCodeBlockLanguage } from '../shared/code-block.component';
 

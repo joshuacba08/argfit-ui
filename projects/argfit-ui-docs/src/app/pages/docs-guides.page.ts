@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
-  AfBadge,
-  AfCard,
-  AfCardContentDirective,
-  AfCardEyebrowDirective,
-  AfCardFooterDirective,
-  AfCardHeaderDirective,
-  AfCardTitleDirective,
+    AfBadge,
+    AfCard,
+    AfCardContentDirective,
+    AfCardEyebrowDirective,
+    AfCardFooterDirective,
+    AfCardHeaderDirective,
+    AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
 
 import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-data';
