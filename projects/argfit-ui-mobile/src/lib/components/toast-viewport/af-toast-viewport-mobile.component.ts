@@ -3,10 +3,15 @@ import {
     Component,
     inject,
     input,
+    output,
     ViewEncapsulation,
 } from '@angular/core';
 
-import { AfToastService, type AfToastPlacement } from '@argfit-ui/core';
+import {
+    AfToastService,
+    type AfToastActionEvent,
+    type AfToastPlacement,
+} from '@argfit-ui/core';
 
 import { AfToastMobileComponent } from '../toast/af-toast-mobile.component';
 
@@ -21,6 +26,7 @@ import { AfToastMobileComponent } from '../toast/af-toast-mobile.component';
             [toast]="toast"
             [closeLabel]="closeLabel()"
             (dismissed)="dismissToast($event)"
+            (actionInvoked)="actionInvoked.emit($event)"
           />
         }
       </section>
@@ -63,6 +69,13 @@ export class AfToastViewportMobileComponent {
   readonly placement = input<AfToastPlacement>('top-center');
   readonly ariaLabel = input('Notificaciones');
   readonly closeLabel = input('Cerrar notificacion');
+
+  /**
+   * El viewport vive una sola vez en la raíz, así que aquí es donde la aplicación
+   * despacha por `event.action.id`. El servicio no guarda manejadores: mantener funciones
+   * de componente dentro de un singleton de core filtraría estado de UI a la capa de datos.
+   */
+  readonly actionInvoked = output<AfToastActionEvent>();
 
   protected readonly toasts = this.toastService.toasts;
 

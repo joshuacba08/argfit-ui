@@ -43,6 +43,7 @@ export * from './lib/components/splitter/af-splitter-desktop.component';
 export * from './lib/components/stepper/af-stepper-desktop.component';
 export * from './lib/components/tabs/af-tabs-desktop.component';
 export * from './lib/components/textarea/af-textarea-desktop.component';
+export * from './lib/components/time-picker/af-time-picker-desktop.component';
 export * from './lib/components/timeline/af-timeline-desktop.component';
 export * from './lib/components/toast-viewport/af-toast-viewport-desktop.component';
 export * from './lib/components/toast/af-toast-desktop.component';

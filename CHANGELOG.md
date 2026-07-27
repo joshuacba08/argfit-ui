@@ -2,6 +2,50 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.1.0
+
+Additive minor release. Closes the four blocking gaps found while building ArgFit Football on
+`1.0.0` (`GAP-UI-001`, `GAP-UI-002`, `GAP-UI-007`, `GAP-UI-011`). No existing input, output,
+selector or type was renamed or removed, so upgrading from `1.0.0` costs nothing.
+
+Published to the npm `latest` dist-tag through `pnpm release:production:check`.
+
+### Added
+
+- `AfTimePicker` across core, desktop, mobile and adaptive (`GAP-UI-002`). Civil `HH:mm`
+  value on a 24-hour clock, `min`/`max` bounds, `minuteStep` granularity and
+  `ControlValueAccessor` support. Desktop renders PrimeNG in `timeOnly` mode; mobile opens
+  an Ionic wheel inside a sheet.
+- Civil-time helpers in core: `isAfTimeValue`, `afTimeToMinutes`, `afMinutesToTime`, plus
+  `AfTimePickerSize`, `AfTimePickerDensity`, `AfTimePickerValue` and `AfTimePickerMinuteStep`.
+- 19 icons in `AfIconName` (`GAP-UI-001`): `arrow-left`, `arrow-right`, `copy`,
+  `external-link`, `image`, `log-out`, `map-pin`, `more-horizontal`, `more-vertical`,
+  `pause`, `refresh-cw`, `save`, `share-2`, `target`, `undo-2`, `user`, `video`, `wifi`
+  and `wifi-off`. The set now covers 63 names.
+- `AF_ICON_NAMES` runtime array so the icon registry can be verified in tests; the
+  primitive's spec now renders every declared name and fails if one does not resolve.
+- `state`, `emptyText`, `emptyDescription`, `errorText`, `sample`, `period`, `provenance`
+  and `provenanceLabel` on `AfMetricCard` (`GAP-UI-007`), plus `AfMetricCardState`,
+  `AfMetricSample`, `AfMetricProvenance` and `AF_METRIC_PROVENANCE_LABEL` in core. A metric
+  without a sample now renders its empty text instead of a misleading `0`.
+- `action` on `AfToastOptions` and `AfToast`, with an `actionInvoked` output on
+  `AfToastViewport` (`GAP-UI-011`). Activating the action also dismisses the toast.
+
+### Changed
+
+- All publishable packages move to `1.1.0`, with internal `@argfit-ui/*` peer dependencies
+  realigned to the exact `1.1.0` version.
+- `AfMetricCard` gained a separate `errorDescription` so the error state no longer borrows the
+  empty state's copy.
+
+### Notes
+
+- `AfMetricCard.loading` still takes precedence over `state`, so existing consumers passing
+  only the boolean keep their current behaviour.
+- The toast service intentionally stores no handlers: the viewport is a single root-level
+  element, so applications dispatch on `event.action.id`.
+- Release notes: `docs/productive/release-notes-1.1.0.md`.
+
 ## 1.0.0
 
 First production release of ArgFit UI.

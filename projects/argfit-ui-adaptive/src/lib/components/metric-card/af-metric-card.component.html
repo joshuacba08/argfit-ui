@@ -17,6 +17,15 @@
     [loading]="loading()"
     [interactive]="interactive()"
     [ariaLabel]="ariaLabel()"
+    [state]="state()"
+    [emptyText]="emptyText()"
+    [emptyDescription]="emptyDescription()"
+    [errorText]="errorText()"
+    [errorDescription]="errorDescription()"
+    [sample]="sample()"
+    [period]="period()"
+    [provenance]="provenance()"
+    [provenanceLabel]="provenanceLabel()"
     (pressed)="pressed.emit($event)"
   >
     <ng-container *ngTemplateOutlet="metricCardContent" />
@@ -38,6 +47,15 @@
     [loading]="loading()"
     [interactive]="interactive()"
     [ariaLabel]="ariaLabel()"
+    [state]="state()"
+    [emptyText]="emptyText()"
+    [emptyDescription]="emptyDescription()"
+    [errorText]="errorText()"
+    [errorDescription]="errorDescription()"
+    [sample]="sample()"
+    [period]="period()"
+    [provenance]="provenance()"
+    [provenanceLabel]="provenanceLabel()"
     (pressed)="pressed.emit($event)"
   >
     <ng-container *ngTemplateOutlet="metricCardContent" />

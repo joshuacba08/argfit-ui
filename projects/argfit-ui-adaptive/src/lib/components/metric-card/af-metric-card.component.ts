@@ -13,8 +13,11 @@ import {
     type AfIconName,
     type AfMetricCardDensity,
     type AfMetricCardSize,
+    type AfMetricCardState,
     type AfMetricCardTone,
     type AfMetricCardVariant,
+    type AfMetricProvenance,
+    type AfMetricSample,
     type AfMetricTrendDirection,
 } from '@argfit-ui/core';
 import { AfMetricCardDesktopComponent } from '@argfit-ui/desktop';
@@ -45,6 +48,22 @@ export class AfMetricCardComponent {
   readonly loading = input(false, { transform: booleanAttribute });
   readonly interactive = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string | undefined>(undefined);
+
+  /**
+   * Ciclo de vida del valor. `empty` es una afirmación sobre el dato, no un estilo:
+   * una métrica sin muestra debe decirlo, nunca renderizar `0`, porque un cero es en sí
+   * mismo una medición válida.
+   */
+  readonly state = input<AfMetricCardState>('ready');
+  readonly emptyText = input('Sin muestra');
+  readonly emptyDescription = input<string | undefined>(undefined);
+  readonly errorText = input('Dato no disponible');
+  readonly errorDescription = input<string | undefined>(undefined);
+  /** Numerador y denominador tras un agregado: `1/1` y `240/240` no valen lo mismo. */
+  readonly sample = input<AfMetricSample | undefined>(undefined);
+  readonly period = input<string | undefined>(undefined);
+  readonly provenance = input<AfMetricProvenance | undefined>(undefined);
+  readonly provenanceLabel = input<string | undefined>(undefined);
 
   readonly pressed = output<MouseEvent | KeyboardEvent>();
 

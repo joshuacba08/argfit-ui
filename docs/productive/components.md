@@ -1,6 +1,6 @@
 # Productive Components
 
-This page documents the stable adaptive component surface for the frozen `1.0.0` contract.
+This page documents the stable adaptive component surface for the frozen `1.1.0` contract.
 
 Every component listed below is already public through `@argfit-ui/adaptive`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
 
@@ -73,6 +73,7 @@ Slot directives used in this family:
 | `AfSegmentedControl` | Small exclusive mode switching | Segment text must remain concise and state must be visually obvious. |
 | `AfSelect` | Bounded option sets and standard dropdown choices | Mobile disclosure must stay touch-safe and not depend on hover. |
 | `AfTextarea` | Multi-line notes, comments and longer form input | Preserve label, helper text and error messaging. |
+| `AfTimePicker` | Civil `HH:mm` time selection anchored to the venue clock | Value carries no timezone; announce the selected time in both renderers. |
 | `AfToggle` | Immediate on/off preferences or lightweight settings | State meaning must remain explicit, not implied by color alone. |
 
 ## Data, Hierarchy And Workflow

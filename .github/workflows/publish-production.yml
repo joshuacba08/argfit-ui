@@ -6,9 +6,9 @@ on:
       release_tag:
         description: Production tag to publish
         required: true
-        default: v1.0.0
+        default: v1.1.0
       publish_confirmation:
-        description: Type publish-production-v1.0.0 to continue
+        description: Type publish-production-v1.1.0 to continue
         required: true
   push:
     tags:

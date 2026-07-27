@@ -1,10 +1,18 @@
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const PRODUCTION_VERSION = '1.0.0';
+const PRODUCTION_VERSION = '1.1.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
 const tarballDestination = resolve(repoRoot, 'dist', 'production-tarballs');
@@ -57,6 +65,15 @@ const forbiddenPackFilePatterns = [
 
 if (!isDryRun) {
   mkdirSync(tarballDestination, { recursive: true });
+
+  // Los tarballs de versiones anteriores se quedaban aquí y contaminaban las medidas:
+  // `production-performance.mjs` resolvía el archivo por prefijo y podía quedarse con el
+  // `.tgz` viejo, dando presupuestos en verde sin haber mirado el release en curso.
+  for (const staleTarball of readdirSync(tarballDestination)) {
+    if (staleTarball.endsWith('.tgz') && !staleTarball.includes(`-${PRODUCTION_VERSION}.tgz`)) {
+      rmSync(resolve(tarballDestination, staleTarball));
+    }
+  }
 }
 
 for (const packageDefinition of packageDefinitions) {

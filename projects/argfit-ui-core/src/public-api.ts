@@ -47,6 +47,7 @@ export * from './lib/types/progress.types';
 export * from './lib/types/selection.types';
 export * from './lib/types/stepper.types';
 export * from './lib/types/tabs.types';
+export * from './lib/types/time-picker.types';
 export * from './lib/types/timeline.types';
 export * from './lib/types/tooltip.types';
 export * from './lib/types/tree-table.types';

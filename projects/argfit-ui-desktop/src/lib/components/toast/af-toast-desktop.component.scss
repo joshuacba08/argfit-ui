@@ -73,6 +73,38 @@
   overflow-wrap: anywhere;
 }
 
+/* La acción va antes del cierre y con más peso visual: es la razón por la que el aviso
+   sigue en pantalla, no un control secundario. */
+.af-toast-desktop__action {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-primary);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  justify-content: center;
+  padding: var(--af-space-1) var(--af-space-2);
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+  white-space: nowrap;
+}
+
+.af-toast-desktop__action:hover {
+  background: var(--af-primary-soft);
+}
+
+.af-toast-desktop__action:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
 .af-toast-desktop__close {
   align-items: center;
   appearance: none;

@@ -9,6 +9,17 @@
   }
 </span>
 
+@if (toast().action; as action) {
+  <button
+    type="button"
+    class="af-toast-desktop__action"
+    [attr.aria-label]="action.ariaLabel ?? null"
+    (click)="onAction()"
+  >
+    {{ action.label }}
+  </button>
+}
+
 <button
   type="button"
   class="af-toast-desktop__close"

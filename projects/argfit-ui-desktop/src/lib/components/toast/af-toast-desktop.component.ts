@@ -7,7 +7,13 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 
-import type { AfFeedbackSeverity, AfIconName, AfIconTone, AfToast } from '@argfit-ui/core';
+import type {
+    AfFeedbackSeverity,
+    AfIconName,
+    AfIconTone,
+    AfToast,
+    AfToastActionEvent,
+} from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
 @Component({
@@ -29,6 +35,7 @@ export class AfToastDesktopComponent {
   readonly toast = input.required<AfToast>();
   readonly closeLabel = input('Cerrar notificacion');
   readonly dismissed = output<string>();
+  readonly actionInvoked = output<AfToastActionEvent>();
 
   protected readonly role = computed<'status' | 'alert'>(() =>
     this.isAssertive(this.toast().severity) ? 'alert' : 'status',
@@ -40,6 +47,19 @@ export class AfToastDesktopComponent {
   protected readonly iconTone = computed<AfIconTone>(() => this.iconToneFor(this.toast().severity));
 
   protected onDismiss(): void {
+    this.dismissed.emit(this.toast().id);
+  }
+
+  /**
+   * Activar la acción también cierra el aviso: el toast ya cumplió su función y dejarlo
+   * abierto obligaría al usuario a descartarlo por segunda vez.
+   */
+  protected onAction(): void {
+    const action = this.toast().action;
+    if (!action) {
+      return;
+    }
+    this.actionInvoked.emit({ toastId: this.toast().id, action });
     this.dismissed.emit(this.toast().id);
   }
 

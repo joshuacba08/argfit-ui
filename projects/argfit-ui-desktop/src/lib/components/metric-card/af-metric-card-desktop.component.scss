@@ -175,6 +175,43 @@
   opacity: 0.82;
 }
 
+/* Sin muestra y error se distinguen tipográficamente del valor: no comparten la
+   familia display ni el tamaño, para que no se lean como una cifra. */
+.af-metric-card-desktop__empty,
+.af-metric-card-desktop__error {
+  font-size: var(--af-text-lg);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-tight);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.af-metric-card-desktop__empty {
+  color: var(--af-text-muted);
+}
+
+.af-metric-card-desktop__error {
+  color: var(--af-danger);
+}
+
+.af-metric-card-desktop__meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+}
+
+.af-metric-card-desktop__period {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-metric-card-desktop__sample {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
 .af-metric-card-desktop__helper,
 .af-metric-card-desktop__footer {
   color: var(--af-text-soft);

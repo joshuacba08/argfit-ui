@@ -249,6 +249,9 @@ export {
     AfTextareaComponent as AfTextarea, AfTextareaComponent
 } from './lib/components/textarea/af-textarea.component';
 export {
+    AfTimePickerComponent as AfTimePicker, AfTimePickerComponent
+} from './lib/components/time-picker/af-time-picker.component';
+export {
     AfTimelineItemDirective
 } from './lib/components/timeline/af-timeline-item.directive';
 export {

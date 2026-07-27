@@ -1,7 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { AF_ICON_NAMES, type AfIconName } from '@argfit-ui/core';
 
 import { AfIconComponent } from './af-icon.component';
+
+@Component({
+  standalone: true,
+  imports: [AfIconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<af-icon [name]="name()" data-testid="icon" />`,
+})
+class SingleIconHostComponent {
+  readonly name = signal<AfIconName>('activity');
+}
 
 @Component({
   standalone: true,
@@ -52,5 +63,34 @@ describe('AfIconComponent', () => {
     const check = host.querySelector('[data-testid="check"]') as HTMLElement;
     const checkSvg = check.querySelector('svg') as SVGElement;
     expect(checkSvg.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  /**
+   * El registro es la única fuente de verdad del bundle de iconos, y una unión de tipos
+   * no detecta un nombre kebab mal escrito: Lucide resuelve por `iconData.name`, y un
+   * nombre inexistente no lanza — renderiza un `<svg>` vacío.
+   *
+   * Este test recorre `AF_ICON_NAMES` y falla si alguno no dibuja nada, de modo que
+   * ampliar el set no puede introducir un icono fantasma en silencio.
+   */
+  describe('registro completo', () => {
+    it.each([...AF_ICON_NAMES])('resuelve el icono «%s» a un trazado real', (name) => {
+      const fixture = TestBed.createComponent(SingleIconHostComponent);
+      fixture.componentInstance.name.set(name);
+      fixture.detectChanges();
+
+      const svg = (fixture.nativeElement as HTMLElement).querySelector(
+        '[data-testid="icon"] svg',
+      ) as SVGElement | null;
+
+      expect(svg).not.toBeNull();
+      expect(
+        svg!.querySelectorAll('path,circle,line,rect,polyline,polygon,ellipse').length,
+      ).toBeGreaterThan(0);
+    });
+
+    it('no declara nombres duplicados', () => {
+      expect(new Set(AF_ICON_NAMES).size).toBe(AF_ICON_NAMES.length);
+    });
   });
 });
