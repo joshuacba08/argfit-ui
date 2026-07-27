@@ -63,7 +63,7 @@ Not included in the `1.0.0` profile:
 
 - schema-driven form generation
 - built-in async validation orchestration or draft persistence
-- backlog controls that remain `out-of-1.0`, such as `AfAutoComplete`, `AfInputMask`, `AfInputNumber`, `AfInputOtp`, `AfRating` and `AfSlider`
+- backlog controls that remain `out-of-1.2.0`, such as `AfAutoComplete`, `AfInputMask`, `AfInputNumber`, `AfInputOtp` and `AfRating`
 
 Accessibility caveats:
 

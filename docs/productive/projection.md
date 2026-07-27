@@ -2,11 +2,11 @@
 
 ## Current Release
 
-Current production release: `1.0.0`.
+Current production release: `1.2.0`.
 
-The productive version is not a bigger beta. It is the first version where ArgFit UI promises stable public APIs, a support policy, documented migrations and production-grade quality gates.
+The current productive release extends the stable public API, support policy, documented migrations and production-grade quality gates established in `1.0.0`.
 
-The frozen `1.0.0` contract baseline lives in:
+The original frozen `1.0.0` contract baseline lives in:
 
 - `docs/productive/scope.md`
 - `docs/productive/public-api.md`
@@ -17,6 +17,8 @@ The frozen `1.0.0` contract baseline lives in:
 - `docs/productive/support-policy.md`
 - `docs/productive/release-checklist.md`
 - `docs/productive/release-notes-1.0.0.md`
+
+The current release is documented in `docs/productive/release-notes-1.2.0.md`.
 
 ## Productive Definition
 

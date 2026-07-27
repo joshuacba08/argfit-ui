@@ -2849,7 +2849,7 @@ export class DocsComponentPreviewComponent {
       case 'activeItem':
       case 'activeTab':
       case 'value':
-        return this.sampleValue(componentName);
+        return componentName === 'AfSlider' ? 6 : this.sampleValue(componentName);
       case 'ariaDescribedBy':
       case 'ariaLabel':
         if (componentName === 'AfAvatar') {
@@ -2872,6 +2872,17 @@ export class DocsComponentPreviewComponent {
         return ['shell'];
       case 'filters':
         return SAMPLE_FILTERS;
+      case 'files':
+      case 'progress':
+        return [];
+      case 'marks':
+        return componentName === 'AfSlider'
+          ? [
+              { value: 0, label: 'Very light' },
+              { value: 6, label: 'Working' },
+              { value: 10, label: 'Maximum' },
+            ]
+          : [];
       case 'icon':
         return componentName === 'AfAvatar' && this.avatarPresentationMode() === 'icon' ? 'users' : undefined;
       case 'imageAlt':
@@ -2930,6 +2941,10 @@ export class DocsComponentPreviewComponent {
       case 'max':
       case 'maxValue':
         return 100;
+      case 'maxFiles':
+        return 3;
+      case 'maxSizeBytes':
+        return 10 * 1024 * 1024;
       case 'maxLength':
         return 180;
       case 'maxSelected':
@@ -2956,8 +2971,12 @@ export class DocsComponentPreviewComponent {
         return 1;
       case 'skeletonWidth':
         return '72%';
+      case 'actions':
+        return componentName === 'AfEmptyState'
+          ? [{ id: 'create', label: 'Create item', variant: 'primary' }]
+          : [];
       case 'title':
-        return `${componentName} preview`;
+        return componentName === 'AfEmptyState' ? 'No sessions yet' : `${componentName} preview`;
       case 'label':
         return componentName === 'AfAvatar'
           ? this.avatarPresentationMode() === 'initials'

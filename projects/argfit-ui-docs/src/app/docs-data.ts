@@ -139,7 +139,7 @@ export const DOCS_NAV_ITEMS: readonly DocsNavItem[] = [
     route: '/overview',
     label: 'Overview',
     eyebrow: 'Start here',
-    description: 'Product posture, framework map and the shape of the 1.0 contract.',
+    description: 'Product posture, framework map and the stable 1.2.0 contract.',
   },
   {
     route: '/quickstart',
@@ -371,7 +371,7 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
   {
     title: 'Accessibility posture',
     sourcePath: 'docs/productive/accessibility.md',
-    summary: 'Focus, keyboard, live-region and mobile disclosure rules for the 1.0 contract.',
+    summary: 'Focus, keyboard, live-region and mobile disclosure rules for the stable 1.2.0 contract.',
     bullets: ['WCAG AA baseline', 'Dialog and drawer focus return', 'Severity-driven feedback semantics'],
   },
   {
@@ -782,8 +782,16 @@ const COMPONENT_INPUT_VALUES: Readonly<Record<string, Readonly<Record<string, re
     size: ['sm', 'md', 'lg', 'full'],
     tone: ['neutral', 'primary'],
   },
+  AfEmptyState: {
+    size: ['sm', 'md', 'lg'],
+    tone: ['empty', 'filtered', 'error', 'permission'],
+  },
   AfField: { density: ['compact', 'comfortable'], labelMode: ['stacked', 'float', 'ifta'], state: ['default', 'error', 'success'] },
   AfFieldset: { density: ['compact', 'comfortable'], tone: ['neutral', 'accent', 'success', 'warning'] },
+  AfFileUpload: {
+    density: ['compact', 'comfortable'],
+    size: ['sm', 'md', 'lg'],
+  },
   AfIconField: { density: ['compact', 'comfortable'], labelMode: ['stacked', 'float', 'ifta'], state: ['default', 'error', 'success'] },
   AfInlineMessage: { severity: ['success', 'info', 'warning', 'danger'] },
   AfInput: {
@@ -820,6 +828,15 @@ const COMPONENT_INPUT_VALUES: Readonly<Record<string, Readonly<Record<string, re
   AfScrollPanel: { direction: ['vertical', 'horizontal', 'both'] },
   AfSegmentedControl: { size: ['sm', 'md', 'lg'], state: ['default', 'error', 'success'] },
   AfSelect: { size: ['sm', 'md', 'lg'], state: ['default', 'error', 'success'] },
+  AfSkeleton: {
+    animation: ['pulse', 'none'],
+    shape: ['text', 'rect', 'circle'],
+  },
+  AfSlider: {
+    density: ['compact', 'comfortable'],
+    size: ['sm', 'md', 'lg'],
+    valueDisplay: ['none', 'inline', 'tooltip'],
+  },
   AfSplitter: { orientation: ['horizontal', 'vertical'] },
   AfStepper: { density: ['compact', 'comfortable'] },
   AfTabs: { density: ['compact', 'comfortable'] },

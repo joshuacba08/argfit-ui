@@ -30,7 +30,6 @@ Examples that remain outside `1.0.0` include:
 - `AfInputMask`
 - `AfInputNumber`
 - `AfInputOtp`
-- `AfFileUpload`
 - `AfCalendarScheduler`
 - `AfVirtualKanban`
 

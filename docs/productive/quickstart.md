@@ -94,7 +94,7 @@ import {
       </header>
 
       <div afCardContent>
-        <af-inline-message severity="info" title="1.0 contract">
+        <af-inline-message severity="info" title="1.2.0 stable">
           Adaptive components remain the preferred app-facing path.
         </af-inline-message>
 

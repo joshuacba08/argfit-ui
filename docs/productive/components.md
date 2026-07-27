@@ -31,9 +31,11 @@ Slot directives used in this family:
 | `AfAnalyticsCard` | KPI plus chart, loading, empty and error panels | Loading and empty states must stay explicit and legible without color alone. |
 | `AfBadge` | Compact status markers and counters | Do not rely on badge color as the only meaning carrier. |
 | `AfChip` | Compact tokens, tags and removable filters | If removable, the remove action must stay keyboard reachable. |
+| `AfEmptyState` | A route, detail or section with no available content | Explain the reason and give users a reachable next action. |
 | `AfInlineMessage` | Persistent local warnings, errors and informational guidance | Severity-driven role/live-region behavior must match the message intent. |
 | `AfMetricCard` | Single KPI or small summary block | Pair numeric emphasis with a readable label and trend context. |
 | `AfProgress` | Determinate progress, spinner and skeleton loading | Always provide an `ariaLabel` when the state is meaningful. |
+| `AfSkeleton` | Loading placeholders that preserve a surface's layout | Mark the loading region as busy and respect reduced-motion preferences. |
 | `AfToast` | Transient global feedback after a completed action | Do not use toast as the only place for blocking validation or recovery steps. |
 | `AfToastViewport` | Single application-level host for toasts | Mount once and keep dismiss actions keyboard reachable. |
 
