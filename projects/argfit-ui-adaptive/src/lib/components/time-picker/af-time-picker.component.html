@@ -1,0 +1,41 @@
+@if (isMobile()) {
+  <af-time-picker-mobile
+    [value]="resolvedValue()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [helperText]="helperText()"
+    [errorText]="errorText()"
+    [min]="min()"
+    [max]="max()"
+    [minuteStep]="minuteStep()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [size]="size()"
+    [density]="density()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+} @else {
+  <af-time-picker-desktop
+    [value]="resolvedValue()"
+    [label]="label()"
+    [placeholder]="placeholder()"
+    [helperText]="helperText()"
+    [errorText]="errorText()"
+    [min]="min()"
+    [max]="max()"
+    [minuteStep]="minuteStep()"
+    [required]="required()"
+    [disabled]="resolvedDisabled()"
+    [readonly]="readonly()"
+    [size]="size()"
+    [density]="density()"
+    [name]="name()"
+    [inputId]="inputId()"
+    (valueChange)="onInternalValueChange($event)"
+    (focusChange)="onInternalFocusChange($event)"
+  />
+}

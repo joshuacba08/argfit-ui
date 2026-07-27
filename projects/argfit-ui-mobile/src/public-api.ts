@@ -43,6 +43,7 @@ export * from './lib/components/splitter/af-splitter-mobile.component';
 export * from './lib/components/stepper/af-stepper-mobile.component';
 export * from './lib/components/tabs/af-tabs-mobile.component';
 export * from './lib/components/textarea/af-textarea-mobile.component';
+export * from './lib/components/time-picker/af-time-picker-mobile.component';
 export * from './lib/components/timeline/af-timeline-mobile.component';
 export * from './lib/components/toast-viewport/af-toast-viewport-mobile.component';
 export * from './lib/components/toast/af-toast-mobile.component';

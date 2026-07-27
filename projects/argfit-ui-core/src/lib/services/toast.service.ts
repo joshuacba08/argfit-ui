@@ -1,6 +1,11 @@
 import { Injectable, OnDestroy, signal } from '@angular/core';
 
-import type { AfFeedbackSeverity, AfToast, AfToastOptions } from '../types/feedback.types';
+import type {
+  AfFeedbackSeverity,
+  AfToast,
+  AfToastAction,
+  AfToastOptions,
+} from '../types/feedback.types';
 
 const AF_TOAST_DEFAULT_DURATION = 4000;
 
@@ -25,6 +30,7 @@ export class AfToastService implements OnDestroy {
       severity: options.severity ?? 'info',
       duration,
       persistent,
+      action: options.action,
     };
 
     this.clearTimer(id);

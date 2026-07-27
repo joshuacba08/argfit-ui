@@ -3,6 +3,9 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
+const PRODUCTION_VERSION = JSON.parse(
+  readFileSync(resolve(repoRoot, 'package.json'), 'utf8'),
+).version;
 const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
@@ -98,10 +101,17 @@ function readTarballAssets() {
   const tarballFiles = readdirSync(tarballDirectory).filter((entry) => entry.endsWith('.tgz'));
 
   return Object.keys(budgets.tarballs).map((prefix) => {
-    const fileName = tarballFiles.find((entry) => entry.startsWith(`${prefix}-`));
+    // Se exige el tarball de la versión que se está publicando. Antes se resolvía por
+    // prefijo, así que un `.tgz` de un release anterior que hubiera quedado en el
+    // directorio podía ser el medido, y los presupuestos pasaban sin haber examinado
+    // el artefacto real.
+    const expectedFileName = `${prefix}-${PRODUCTION_VERSION}.tgz`;
+    const fileName = tarballFiles.find((entry) => entry === expectedFileName);
 
     if (!fileName) {
-      throw new Error(`Missing expected tarball for ${prefix}.`);
+      throw new Error(
+        `Missing expected tarball ${expectedFileName}. Run pnpm pack:production:dist first.`,
+      );
     }
 
     return {

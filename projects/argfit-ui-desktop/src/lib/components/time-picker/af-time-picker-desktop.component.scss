@@ -1,0 +1,300 @@
+.af-time-picker-desktop {
+  display: block;
+  font-family: var(--af-font-body);
+  min-width: 0;
+  width: 100%;
+}
+
+.af-time-picker-desktop__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-1_5, var(--af-space-2));
+  min-width: 0;
+}
+
+.af-time-picker-desktop__label {
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  letter-spacing: var(--af-tracking-wide);
+  line-height: var(--af-line-height-tight);
+}
+
+.af-time-picker-desktop__required {
+  color: var(--af-danger);
+}
+
+.af-time-picker-desktop__control {
+  align-items: center;
+  background: var(--af-bg-elevated);
+  border: 1.5px solid var(--af-border);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  display: flex;
+  min-height: var(--af-button-height-md);
+  min-width: 0;
+  position: relative;
+  transition:
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    box-shadow var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-time-picker-desktop__control:focus-within {
+  border-color: var(--af-primary);
+  box-shadow: 0 0 0 3px rgba(37, 153, 213, 0.18);
+}
+
+.af-time-picker-desktop[data-invalid] .af-time-picker-desktop__control {
+  border-color: var(--af-danger);
+}
+
+.af-time-picker-desktop[data-invalid] .af-time-picker-desktop__control:focus-within {
+  border-color: var(--af-danger);
+  box-shadow: 0 0 0 3px rgba(255, 61, 113, 0.18);
+}
+
+.af-time-picker-desktop[data-disabled] .af-time-picker-desktop__control {
+  background: var(--af-bg-surface);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.af-time-picker-desktop[data-readonly] .af-time-picker-desktop__control {
+  background: var(--af-bg-surface);
+}
+
+.af-time-picker-desktop__picker,
+.af-time-picker-desktop__picker.p-datepicker {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 38px;
+  min-width: 0;
+  width: 100%;
+}
+
+.af-time-picker-desktop__input,
+.af-time-picker-desktop__picker :is(.p-datepicker-input, [data-pc-section='pcinputtext'] input) {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--af-text-main);
+  display: block;
+  flex: 1 1 auto;
+  font: inherit;
+  font-size: var(--af-text-sm);
+  height: 38px;
+  line-height: var(--af-line-height-normal);
+  min-width: 0;
+  outline: none;
+  padding: 0 var(--af-space-2) 0 var(--af-space-3);
+  width: 100%;
+}
+
+.af-time-picker-desktop__input::placeholder,
+.af-time-picker-desktop__picker :is(.p-datepicker-input, [data-pc-section='pcinputtext'] input)::placeholder {
+  color: var(--af-text-soft, var(--af-text-muted));
+}
+
+.af-time-picker-desktop__picker :is(.p-datepicker-dropdown, [data-pc-section='dropdown']) {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  margin-inline-end: var(--af-space-3);
+  margin-inline-start: auto;
+  min-height: inherit;
+  padding-inline: var(--af-space-2);
+  width: calc(var(--af-space-8) + var(--af-space-3));
+}
+
+.af-time-picker-desktop__picker :is([data-pc-section='inputiconcontainer']) {
+  align-items: center;
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: inline-flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  margin-inline-end: var(--af-space-3);
+  margin-inline-start: auto;
+}
+
+.af-time-picker-desktop__picker :is(.p-datepicker-dropdown, [data-pc-section='dropdown']):focus-visible {
+  box-shadow: none;
+  outline: none;
+}
+
+.af-time-picker-desktop__picker :is(.p-datepicker-input-icon, [data-pc-section='inputicon']) {
+  color: currentColor;
+}
+
+.af-time-picker-desktop[data-size='sm'] .af-time-picker-desktop__picker,
+.af-time-picker-desktop[data-size='sm'] .af-time-picker-desktop__picker.p-datepicker {
+  min-height: 32px;
+}
+
+.af-time-picker-desktop[data-size='sm'] .af-time-picker-desktop__input,
+.af-time-picker-desktop[data-size='sm'] .af-time-picker-desktop__picker :is(.p-datepicker-input, [data-pc-section='pcinputtext'] input) {
+  height: 32px;
+}
+
+.af-time-picker-desktop[data-size='lg'] .af-time-picker-desktop__picker,
+.af-time-picker-desktop[data-size='lg'] .af-time-picker-desktop__picker.p-datepicker {
+  min-height: 44px;
+}
+
+.af-time-picker-desktop[data-size='lg'] .af-time-picker-desktop__input,
+.af-time-picker-desktop[data-size='lg'] .af-time-picker-desktop__picker :is(.p-datepicker-input, [data-pc-section='pcinputtext'] input) {
+  font-size: var(--af-text-base);
+  height: 44px;
+}
+
+.af-time-picker-desktop__overlay {
+  background: color-mix(in srgb, var(--af-bg-elevated) 94%, var(--af-bg-main));
+  border: 1px solid var(--af-border-strong, var(--af-border));
+  border-radius: var(--af-radius-lg);
+  box-shadow: 0 24px 48px rgba(6, 15, 28, 0.32);
+  color: var(--af-text-main);
+  font-family: var(--af-font-body);
+  margin-top: var(--af-space-2);
+  overflow: hidden;
+  padding: var(--af-space-2);
+}
+
+html[data-theme='light'] .af-time-picker-desktop__overlay {
+  box-shadow: 0 20px 40px rgba(16, 42, 67, 0.14);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-header, [data-pc-section='header']) {
+  align-items: center;
+  display: grid;
+  gap: var(--af-space-2);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: var(--af-space-1) var(--af-space-1) var(--af-space-3);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-title, [data-pc-section='title']) {
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  gap: var(--af-space-1);
+  justify-content: center;
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-prev-button, .p-datepicker-next-button, [data-pc-section='pcprevbutton'], [data-pc-section='pcnextbutton']) {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-prev-button, .p-datepicker-next-button, [data-pc-section='pcprevbutton'], [data-pc-section='pcnextbutton']):hover {
+  background: color-mix(in srgb, var(--af-primary) 10%, transparent);
+  color: var(--af-text-main);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-calendar-container, [data-pc-section='calendarcontainer']) {
+  padding: 0 var(--af-space-1) var(--af-space-1);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-calendar, [data-pc-section='calendar']) {
+  width: 100%;
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-table, [data-pc-section='table']) {
+  border-collapse: separate;
+  border-spacing: 0.35rem;
+  width: 100%;
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-weekday, [data-pc-section='weekday']) {
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  padding-bottom: var(--af-space-1);
+  text-align: center;
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-day, [data-pc-section='day']) {
+  align-items: center;
+  border-radius: 999px;
+  color: var(--af-text-main);
+  display: inline-flex;
+  height: 2.35rem;
+  justify-content: center;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+  width: 2.35rem;
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-day:not(.p-disabled), [data-pc-section='day'][data-p-disabled='false']):hover,
+.af-time-picker-desktop__overlay :is(.p-datepicker-day.p-focus, [data-p-focused='true']) {
+  background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-day.p-datepicker-day-selected, [data-p-selected='true']) {
+  background: color-mix(in srgb, var(--af-primary) 72%, transparent);
+  color: var(--af-primary-contrast, #f7fbff);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-today > .p-datepicker-day, [data-p-today='true'] [data-pc-section='day']) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--af-primary) 36%, transparent);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-buttonbar, [data-pc-section='buttonbar']) {
+  border-top: 1px solid color-mix(in srgb, var(--af-border) 78%, transparent);
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: flex-end;
+  margin-top: var(--af-space-2);
+  padding: var(--af-space-3) var(--af-space-1) var(--af-space-1);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-today-button, .p-datepicker-clear-button, [data-pc-section='pctodaybutton'], [data-pc-section='pcclearbutton']) {
+  align-items: center;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--af-primary) 22%, transparent);
+  border-radius: 999px;
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  min-height: 2rem;
+  padding: 0 var(--af-space-3);
+}
+
+.af-time-picker-desktop__overlay :is(.p-datepicker-today-button:hover, .p-datepicker-clear-button:hover, [data-pc-section='pctodaybutton']:hover, [data-pc-section='pcclearbutton']:hover) {
+  background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+}
+
+.af-time-picker-desktop__message {
+  font-size: var(--af-text-xs);
+  line-height: var(--af-leading-snug);
+  margin: 0;
+}
+
+.af-time-picker-desktop__message--hint {
+  color: var(--af-text-soft, var(--af-text-muted));
+}
+
+.af-time-picker-desktop__message--error {
+  color: var(--af-danger);
+}

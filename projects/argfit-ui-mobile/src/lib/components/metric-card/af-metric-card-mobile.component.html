@@ -8,32 +8,71 @@
   }
 </div>
 
-@if (loading()) {
-  <div class="af-metric-card-mobile__skeleton af-metric-card-mobile__skeleton--value"></div>
-  <div class="af-metric-card-mobile__skeleton af-metric-card-mobile__skeleton--trend"></div>
-} @else {
-  <div class="af-metric-card-mobile__value-row">
-    <span class="af-metric-card-mobile__value">{{ value() }}</span>
-    @if (unit(); as unitText) {
-      <span class="af-metric-card-mobile__unit">{{ unitText }}</span>
+@switch (effectiveState()) {
+  @case ('loading') {
+    <div class="af-metric-card-mobile__skeleton af-metric-card-mobile__skeleton--value"></div>
+    <div class="af-metric-card-mobile__skeleton af-metric-card-mobile__skeleton--trend"></div>
+  }
+
+  @case ('empty') {
+    <!-- Sin muestra no se representa con un 0: un cero es una medición válida. -->
+    <div class="af-metric-card-mobile__value-row">
+      <span class="af-metric-card-mobile__empty">{{ emptyText() }}</span>
+    </div>
+    @if (emptyDescription(); as emptyDetail) {
+      <p class="af-metric-card-mobile__helper">{{ emptyDetail }}</p>
+    }
+  }
+
+  @case ('error') {
+    <div class="af-metric-card-mobile__value-row" role="alert">
+      <span class="af-metric-card-mobile__error">{{ errorText() }}</span>
+    </div>
+    @if (errorDescription(); as errorDetail) {
+      <p class="af-metric-card-mobile__helper">{{ errorDetail }}</p>
+    }
+  }
+
+  @default {
+    <div class="af-metric-card-mobile__value-row">
+      <span class="af-metric-card-mobile__value">{{ value() }}</span>
+      @if (unit(); as unitText) {
+        <span class="af-metric-card-mobile__unit">{{ unitText }}</span>
+      }
+    </div>
+
+    @if (trendDisplayValue(); as trendText) {
+      <af-badge-mobile
+        class="af-metric-card-mobile__trend"
+        [tone]="trendBadgeTone()"
+        variant="soft"
+        size="sm"
+      >
+        <span class="af-metric-card-mobile__trend-value">{{ trendText }}</span>
+        @if (trendLabel(); as trendLabelText) {
+          <span class="af-metric-card-mobile__trend-label">{{ trendLabelText }}</span>
+        }
+      </af-badge-mobile>
+    } @else if (helper(); as helperText) {
+      <p class="af-metric-card-mobile__helper">{{ helperText }}</p>
+    }
+  }
+}
+
+@if (hasMeta()) {
+  <div class="af-metric-card-mobile__meta">
+    @if (provenanceText(); as provenance) {
+      <af-badge-mobile [tone]="provenanceTone()" variant="outline" size="sm">
+        {{ provenance }}
+      </af-badge-mobile>
+    }
+    @if (period(); as periodText) {
+      <span class="af-metric-card-mobile__period">{{ periodText }}</span>
+    }
+    @if (sampleText(); as sample) {
+      <span class="af-metric-card-mobile__sample">{{ sample }}</span>
     }
   </div>
-
-  @if (trendDisplayValue(); as trendText) {
-    <af-badge-mobile
-      class="af-metric-card-mobile__trend"
-      [tone]="trendBadgeTone()"
-      variant="soft"
-      size="sm"
-    >
-      <span class="af-metric-card-mobile__trend-value">{{ trendText }}</span>
-      @if (trendLabel(); as trendLabelText) {
-        <span class="af-metric-card-mobile__trend-label">{{ trendLabelText }}</span>
-      }
-    </af-badge-mobile>
-  } @else if (helper(); as helperText) {
-    <p class="af-metric-card-mobile__helper">{{ helperText }}</p>
-  }
 }
 
 <div class="af-metric-card-mobile__footer">

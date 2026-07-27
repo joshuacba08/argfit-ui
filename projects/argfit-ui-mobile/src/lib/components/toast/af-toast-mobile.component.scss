@@ -76,6 +76,31 @@
   overflow: hidden;
 }
 
+/* En móvil el objetivo táctil manda: la acción respeta los 44 px mínimos. */
+.af-toast-mobile__action {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-primary);
+  cursor: pointer;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--af-space-1) var(--af-space-3);
+  white-space: nowrap;
+}
+
+.af-toast-mobile__action:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
 .af-toast-mobile__close {
   align-items: center;
   appearance: none;

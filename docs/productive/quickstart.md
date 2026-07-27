@@ -1,8 +1,8 @@
 # Productive Quickstart
 
-This guide describes the consumer posture for the frozen `1.0.0` ArgFit UI contract.
+This guide describes the consumer posture for the frozen `1.1.0` ArgFit UI contract.
 
-The repository now validates stable `1.0.0` package metadata and production tarballs through the production release gate.
+The repository now validates stable `1.1.0` package metadata and production tarballs through the production release gate.
 
 ## Requirements
 
@@ -18,13 +18,13 @@ The repository now validates stable `1.0.0` package metadata and production tarb
 
 The recommended application-facing path remains `@argfit-ui/adaptive`.
 
-When `1.0.0` is published, keep every ArgFit package aligned to the exact same release:
+When `1.1.0` is published, keep every ArgFit package aligned to the exact same release:
 
 ```bash
-pnpm add @argfit-ui/core@1.0.0
-pnpm add @argfit-ui/primitives@1.0.0
-pnpm add @argfit-ui/desktop@1.0.0 @argfit-ui/mobile@1.0.0
-pnpm add @argfit-ui/adaptive@1.0.0
+pnpm add @argfit-ui/core@1.1.0
+pnpm add @argfit-ui/primitives@1.1.0
+pnpm add @argfit-ui/desktop@1.1.0 @argfit-ui/mobile@1.1.0
+pnpm add @argfit-ui/adaptive@1.1.0
 ```
 
 For local validation, run the productive contract directly from this repository:
@@ -128,5 +128,5 @@ Use the broader gate before tagging or opening a final release workflow. `pnpm b
 - [Productive accessibility](./accessibility.md)
 - [Productive theming](./theming.md)
 - [Migration beta/Beta+ to 1.0](./migration-beta-to-1-0.md)
-- [Productive release notes](./release-notes-1.0.0.md)
+- [Productive release notes](./release-notes-1.1.0.md)
 - [Productive quality gates](./quality-gates.md)

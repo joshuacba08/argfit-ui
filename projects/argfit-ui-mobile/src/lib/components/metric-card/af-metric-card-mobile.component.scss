@@ -172,6 +172,43 @@
   display: none;
 }
 
+/* Sin muestra y error se distinguen tipográficamente del valor: no comparten la
+   familia display ni el tamaño, para que no se lean como una cifra. */
+.af-metric-card-mobile__empty,
+.af-metric-card-mobile__error {
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-tight);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.af-metric-card-mobile__empty {
+  color: var(--af-text-muted);
+}
+
+.af-metric-card-mobile__error {
+  color: var(--af-danger);
+}
+
+.af-metric-card-mobile__meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+}
+
+.af-metric-card-mobile__period {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-metric-card-mobile__sample {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
 .af-metric-card-mobile__helper,
 .af-metric-card-mobile__footer {
   color: var(--af-text-soft);
