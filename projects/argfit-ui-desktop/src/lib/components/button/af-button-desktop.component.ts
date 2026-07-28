@@ -10,14 +10,17 @@ import { ButtonDirective } from 'primeng/button';
 
 import {
   AfThemeService,
+  type AfButtonIconPosition,
   type AfButtonSize,
   type AfButtonType,
   type AfButtonVariant,
+  type AfIconName,
 } from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
 
 @Component({
   selector: 'af-button-desktop',
-  imports: [ButtonDirective],
+  imports: [ButtonDirective, AfIconComponent],
   templateUrl: './af-button-desktop.component.html',
   styleUrl: './af-button-desktop.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +35,8 @@ export class AfButtonDesktopComponent {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly fullWidth = input(false, { transform: booleanAttribute });
+  readonly icon = input<AfIconName | null>(null);
+  readonly iconPosition = input<AfButtonIconPosition>('start');
   readonly label = input<string | null>(null);
   readonly ariaLabel = input<string | null>(null);
   readonly pressed = output<MouseEvent>();

@@ -10,15 +10,19 @@ import {
 
 import {
   AfThemeService,
+  type AfButtonIconPosition,
   type AfButtonSize,
   type AfButtonType,
   type AfButtonVariant,
+  type AfIconName,
 } from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
 
 let nextAfMobileButtonId = 0;
 
 @Component({
   selector: 'af-button-mobile',
+  imports: [AfIconComponent],
   templateUrl: './af-button-mobile.component.html',
   styleUrl: './af-button-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +38,8 @@ export class AfButtonMobileComponent {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly fullWidth = input(false, { transform: booleanAttribute });
+  readonly icon = input<AfIconName | null>(null);
+  readonly iconPosition = input<AfButtonIconPosition>('start');
   readonly label = input<string | null>(null);
   readonly ariaLabel = input<string | null>(null);
   readonly pressed = output<MouseEvent>();

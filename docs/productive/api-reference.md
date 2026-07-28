@@ -1,6 +1,6 @@
 # Productive API Reference
 
-This page summarizes the public `1.2.0` API contract at a package and composition level.
+This page summarizes the public `1.3.0` API contract at a package and composition level.
 
 The canonical export inventory remains [productive public API](./public-api.md). Use this page when you need the practical import path, the intended responsibility of a package, or the slot directive family that accompanies a component.
 
@@ -49,6 +49,23 @@ import {
   AfDialog,
   AfInlineMessage,
 } from '@argfit-ui/adaptive';
+```
+
+### `AfButton`
+
+```ts
+type AfButtonIconPosition = 'start' | 'end';
+```
+
+The adaptive button accepts `variant`, `size`, `type`, `disabled`, `loading`,
+`fullWidth`, `icon`, `iconPosition` and `ariaLabel`. `icon` uses the curated
+`AfIconName` contract, so application code does not need private SVG markup or
+renderer-specific CSS.
+
+```html
+<af-button icon="save">Guardar</af-button>
+<af-button icon="arrow-right" iconPosition="end">Siguiente</af-button>
+<af-button icon="log-in" fullWidth>Ingresar con Hub Identity</af-button>
 ```
 
 Avoid mixing the adaptive path with desktop/mobile package imports in normal app components unless the integration is explicitly renderer-specific.

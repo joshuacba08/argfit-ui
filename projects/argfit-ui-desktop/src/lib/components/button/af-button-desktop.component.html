@@ -18,6 +18,8 @@
 >
   @if (loading()) {
     <span class="af-button-desktop__spinner" aria-hidden="true"></span>
+  } @else if (icon() && iconPosition() === 'start') {
+    <af-icon [name]="icon()!" decorative />
   }
 
   <span class="af-button-desktop__content">
@@ -27,4 +29,8 @@
       <ng-content />
     }
   </span>
+
+  @if (!loading() && icon() && iconPosition() === 'end') {
+    <af-icon [name]="icon()!" decorative />
+  }
 </button>

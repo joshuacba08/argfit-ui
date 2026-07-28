@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+:host(.af-button-host-full) .af-button-mobile {
+  width: 100%;
+}
+
 .af-button-mobile {
   --border-radius: var(--af-radius-lg);
   --border-style: solid;
@@ -88,6 +92,14 @@
   align-items: center;
   display: inline-flex;
   min-width: 0;
+}
+
+.af-button-mobile__icon {
+  margin-inline: 0 var(--af-button-gap);
+}
+
+.af-button-mobile__content + .af-button-mobile__icon {
+  margin-inline: var(--af-button-gap) 0;
 }
 
 .af-button-mobile__spinner {

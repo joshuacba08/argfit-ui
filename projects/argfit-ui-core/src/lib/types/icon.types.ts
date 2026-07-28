@@ -78,6 +78,7 @@ export type AfIconName =
   | 'map-pin'
   | 'video'
   // ── Identidad ───────────────────────────────────────────────────────
+  | 'log-in'
   | 'log-out'
   | 'settings'
   | 'user'
@@ -126,6 +127,7 @@ export const AF_ICON_NAMES: readonly AfIconName[] = [
   'info',
   'kanban',
   'layout-dashboard',
+  'log-in',
   'log-out',
   'map-pin',
   'menu',

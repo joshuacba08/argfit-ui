@@ -1,6 +1,6 @@
 # Productive Components
 
-This page documents the stable adaptive component surface for the frozen `1.2.0` contract.
+This page documents the stable adaptive component surface for the `1.3.0` contract.
 
 Every component listed below is already public through `@argfit-ui/adaptive`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
 
@@ -19,6 +19,25 @@ Slot directives used most often in this family:
 | `AfDialog` | Blocking confirmation, focused editing and high-risk actions | Keep focus trap, `Escape`, close affordance and focus return intact. |
 | `AfInput` | Short text, search and compact field entry | Maintain label, hint and error relationships on the underlying control. |
 | `AfPageShell` | Application chrome, navigation and breadcrumbs | Preserve `main`, navigation landmarks and visible active state. |
+
+### Buttons with icons and full-width actions
+
+`AfButton` owns the icon layout across renderers. Use the typed `icon` input instead
+of projecting an SVG or applying renderer-specific spacing. `iconPosition` defaults
+to `start`; `fullWidth` stretches both desktop and mobile renderers.
+
+```html
+<af-button icon="log-in" fullWidth>
+  Ingresar con Hub Identity
+</af-button>
+
+<af-button icon="arrow-right" iconPosition="end">
+  Continuar
+</af-button>
+```
+
+Icons that accompany visible text are decorative. For an icon-only action, provide
+an explicit `ariaLabel`.
 
 ## Analytics, Feedback And Status
 

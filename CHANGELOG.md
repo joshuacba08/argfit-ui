@@ -2,6 +2,35 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.3.0
+
+Minor release driven by the first production integration in ArgFit Football. It
+promotes icon-bearing, full-width actions into the shared adaptive contract so
+applications do not need renderer-specific CSS or hand-authored SVG markup.
+
+### Added
+
+- `AfButton.icon`, typed as `AfIconName`, across adaptive, desktop and mobile.
+- `AfButton.iconPosition` with `start` and `end` placement.
+- `AfButtonIconPosition` as a public core type.
+- `log-in` in the curated `AfIconName` registry for identity-provider actions.
+- Productive documentation and showcase examples for icon buttons, trailing
+  actions and the full-width Hub Identity login pattern.
+
+### Fixed
+
+- Mobile `AfButton.fullWidth` now stretches both the Angular host and the inner
+  Ionic button to the full available width.
+- Button icons are decorative when visible text supplies the accessible name;
+  icon-only actions remain supported through `ariaLabel`.
+
+### Release
+
+- All five publishable packages move to `1.3.0`, with internal peer versions
+  aligned exactly.
+- Validated with `pnpm release:production:check` before tagging.
+- Published through the `latest` dist-tag.
+
 ## 1.2.0
 
 Additive minor release. Closes nine of the ten remaining `GAP-UI-nnn` findings from building

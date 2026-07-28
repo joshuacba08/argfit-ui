@@ -67,7 +67,7 @@
       <span class="theme-toggle__value">{{ theme.currentThemeName() }}</span>
     </button>
 
-    <af-button data-qa="quick-test-cta" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
+    <af-button data-qa="quick-test-cta" icon="plus" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
   </div>
 
   <div afPageShellUser class="shell-user">
@@ -668,14 +668,10 @@
               (valueChange)="updateAthleteTableSearch($event)"
             />
             <div class="data-table-toolbar__actions">
-              <af-button size="sm" variant="secondary" (pressed)="recordAction('Tabla → CSV')">
-                <af-icon name="download" size="sm" [decorative]="true" />
+              <af-button size="sm" variant="secondary" icon="download" (pressed)="recordAction('Tabla → CSV')">
                 CSV
               </af-button>
-              <af-button size="sm" (pressed)="openQuickTestDialog()">
-                <af-icon name="plus" size="sm" [decorative]="true" />
-                Nuevo test
-              </af-button>
+              <af-button size="sm" icon="plus" (pressed)="openQuickTestDialog()">Nuevo test</af-button>
             </div>
           </div>
 

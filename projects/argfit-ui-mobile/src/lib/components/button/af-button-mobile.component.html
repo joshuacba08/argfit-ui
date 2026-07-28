@@ -17,6 +17,8 @@
 >
   @if (loading()) {
     <ion-spinner class="af-button-mobile__spinner" name="crescent" aria-hidden="true" />
+  } @else if (icon() && iconPosition() === 'start') {
+    <af-icon class="af-button-mobile__icon" [name]="icon()!" decorative />
   }
 
   <span class="af-button-mobile__content" [id]="contentId">
@@ -26,4 +28,8 @@
       <ng-content />
     }
   </span>
+
+  @if (!loading() && icon() && iconPosition() === 'end') {
+    <af-icon class="af-button-mobile__icon" [name]="icon()!" decorative />
+  }
 </ion-button>

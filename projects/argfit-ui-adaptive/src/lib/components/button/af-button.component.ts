@@ -9,9 +9,11 @@ import {
 
 import {
   AfPlatformService,
+  type AfButtonIconPosition,
   type AfButtonSize,
   type AfButtonType,
   type AfButtonVariant,
+  type AfIconName,
 } from '@argfit-ui/core';
 import { AfButtonDesktopComponent } from '@argfit-ui/desktop';
 import { AfButtonMobileComponent } from '@argfit-ui/mobile';
@@ -32,6 +34,8 @@ export class AfButtonComponent {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly fullWidth = input(false, { transform: booleanAttribute });
+  readonly icon = input<AfIconName | null>(null);
+  readonly iconPosition = input<AfButtonIconPosition>('start');
   readonly ariaLabel = input<string | null>(null);
   readonly pressed = output<MouseEvent>();
 

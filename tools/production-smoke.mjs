@@ -7,7 +7,7 @@ import ts from 'typescript';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'production-smoke');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
-const PRODUCTION_VERSION = '1.2.0';
+const PRODUCTION_VERSION = '1.3.0';
 const failures = [];
 
 const packageDefinitions = [
@@ -253,16 +253,16 @@ function validateProductionPublishWorkflowShape() {
 
 function validateDocsShape() {
   for (const [filePath, snippets] of [
-    ['package.json', ['"version": "1.2.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
+    ['package.json', ['"version": "1.3.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
     ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '650 kB', 'Production tarball total']],
-    ['docs/productive/scope.md', ['ArgFit UI 1.2.0 Scope', '`1.0-adaptive`']],
+    ['docs/productive/scope.md', ['ArgFit UI 1.3.0 Scope', '`1.0-adaptive`']],
     ['docs/productive/public-api.md', ['Productive Public API Inventory', '1.0-renderer-specific']],
     ['docs/productive/semver-policy.md', ['Productive Semver Policy', 'Deprecation Policy']],
     ['docs/productive/release-operations.md', ['Productive Release Operations', 'Branch And Tag Strategy', 'npm Publish Process', 'Patch Release Procedure', 'Changelog Policy', 'publish-production.yml', 'NPM_TOKEN', 'latest']],
     ['docs/productive/support-policy.md', ['Productive Support Policy', 'Support Window', 'Security And Dependency Update Policy', 'Deprecation Process', '1.x']],
-    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.2.0', 'pnpm release:production:check', 'v1.2.0', 'latest']],
-    ['docs/productive/release-notes-1.2.0.md', ['Release Notes: 1.2.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
-    ['CHANGELOG.md', ['## 1.2.0', 'latest dist-tag', 'pnpm release:production:check']],
+    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.3.0', 'pnpm release:production:check', 'v1.3.0', 'latest']],
+    ['docs/productive/release-notes-1.3.0.md', ['Release Notes: 1.3.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
+    ['CHANGELOG.md', ['## 1.3.0', 'latest dist-tag', 'pnpm release:production:check']],
   ]) {
     const absolutePath = resolve(repoRoot, filePath);
 
@@ -283,7 +283,7 @@ function validateDocsShape() {
 
 function createSmokeSource() {
   return `import { ARGFIT_DARK_THEME, provideArgfitUi } from '@argfit-ui/core';
-import type { AfButtonVariant, AfNavigationItem, AfPlatformPreference } from '@argfit-ui/core';
+import type { AfButtonIconPosition, AfButtonVariant, AfIconName, AfNavigationItem, AfPlatformPreference } from '@argfit-ui/core';
 import { AfIconComponent, AfVisuallyHiddenComponent } from '@argfit-ui/primitives';
 import { AfButtonDesktopComponent } from '@argfit-ui/desktop';
 import { AfButtonMobileComponent } from '@argfit-ui/mobile';
@@ -291,11 +291,15 @@ import { AfButton, AfCard, AfDialog, AfInput, AfKanban, AfPageShell, AfTabs, AfT
 
 const providers = provideArgfitUi({ theme: ARGFIT_DARK_THEME, platform: 'auto' });
 const variant: AfButtonVariant = 'primary';
+const buttonIcon: AfIconName = 'log-in';
+const buttonIconPosition: AfButtonIconPosition = 'end';
 const preference: AfPlatformPreference = 'auto';
 const navigation: readonly AfNavigationItem[] = [{ id: 'home', label: 'Home' }];
 
 void providers;
 void variant;
+void buttonIcon;
+void buttonIconPosition;
 void preference;
 void navigation;
 void AfIconComponent;

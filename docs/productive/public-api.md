@@ -1,6 +1,6 @@
 # Productive Public API Inventory
 
-This document freezes the public API surface for `1.2.0`.
+This document records the public API surface for `1.3.0`.
 
 The source of truth is the set of symbols re-exported from these package barrels:
 
