@@ -139,7 +139,7 @@ export const DOCS_NAV_ITEMS: readonly DocsNavItem[] = [
     route: '/overview',
     label: 'Overview',
     eyebrow: 'Start here',
-    description: 'Product posture, framework map and the stable 1.3.1 contract.',
+    description: 'Product posture, framework map and the stable 1.3.2 contract.',
   },
   {
     route: '/quickstart',
@@ -237,10 +237,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.3.1.md',
-    summary: 'The shipped 1.3.1 patch, from adaptive shell slots through interactive filters.',
+    sourcePath: 'docs/productive/release-notes-1.3.2.md',
+    summary: 'The shipped 1.3.2 patch for compact line tabs and app-owned result regions.',
     badge: 'ship',
-    bullets: ['Reliable page-shell slots', 'Interactive filter chips', '1.3.1 package metadata aligned'],
+    bullets: ['Compact line tabs', 'Tablet width detection', '1.3.2 package metadata aligned'],
   },
 ];
 
@@ -371,7 +371,7 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
   {
     title: 'Accessibility posture',
     sourcePath: 'docs/productive/accessibility.md',
-    summary: 'Focus, keyboard, live-region and mobile disclosure rules for the stable 1.3.1 contract.',
+    summary: 'Focus, keyboard, live-region and mobile disclosure rules for the stable 1.3.2 contract.',
     bullets: ['WCAG AA baseline', 'Dialog and drawer focus return', 'Severity-driven feedback semantics'],
   },
   {
@@ -462,8 +462,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   },
   {
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.3.1.md',
-    summary: 'The canonical 1.3.1 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.3.2.md',
+    summary: 'The canonical 1.3.2 release notes and production publish posture.',
   },
 ];
 

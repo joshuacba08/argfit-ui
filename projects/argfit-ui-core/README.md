@@ -1,15 +1,15 @@
 # @argfit-ui/core
 
-Core runtime package for ArgFit UI `1.3.1`.
+Core runtime package for ArgFit UI `1.3.2`.
 
 It contains vendor-agnostic tokens, themes, shared types, platform services and `provideArgfitUi`. This package must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
 
-This package participates in the current `1.3.1` production contract.
+This package participates in the current `1.3.2` production contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@1.3.1
+pnpm add @argfit-ui/core@1.3.2
 ```
 
 Peer dependencies:
@@ -38,7 +38,7 @@ export const appConfig = {
 - [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/quickstart.md)
 - [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/theming.md)
 - [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/public-api.md)
-- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.3.1.md)
+- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.3.2.md)
 - [Support policy](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/support-policy.md)
 
 ## Build

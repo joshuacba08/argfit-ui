@@ -1,6 +1,6 @@
 # Productive API Reference
 
-This page summarizes the public `1.3.1` API contract at a package and composition level.
+This page summarizes the public `1.3.2` API contract at a package and composition level.
 
 The canonical export inventory remains [productive public API](./public-api.md). Use this page when you need the practical import path, the intended responsibility of a package, or the slot directive family that accompanies a component.
 

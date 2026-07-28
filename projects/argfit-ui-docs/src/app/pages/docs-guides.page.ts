@@ -31,7 +31,7 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
       <span class="docs-kicker">Operational guidance</span>
       <h1>Guides</h1>
       <p class="docs-page__lead">
-        These guides explain how to operate the stable 1.3.1 contract safely: theme it, validate it, migrate to it and apply it to enterprise scenarios.
+        These guides explain how to operate the stable 1.3.2 contract safely: theme it, validate it, migrate to it and apply it to enterprise scenarios.
       </p>
     </div>
 

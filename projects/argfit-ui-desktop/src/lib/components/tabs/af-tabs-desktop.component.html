@@ -8,7 +8,7 @@
       [class.is-active]="selectedId() === item.id"
       [id]="tabId(item.id)"
       [attr.aria-selected]="selectedId() === item.id"
-      [attr.aria-controls]="panelId(item.id)"
+      [attr.aria-controls]="renderPanel() ? panelId(item.id) : null"
       [attr.tabindex]="tabIndex(item.id)"
       [disabled]="disabled() || item.disabled"
       (click)="selectTab(item, itemIndex)"
@@ -37,24 +37,26 @@
   }
 </div>
 
-@if (selectedItem(); as activeItem) {
-  <section
-    class="af-tabs-desktop__panel"
-    role="tabpanel"
-    [id]="panelId(activeItem.id)"
-    [attr.aria-labelledby]="tabId(activeItem.id)"
-  >
-    @if (selectedPanelTemplate(); as panelTemplateRef) {
-      <ng-container *ngTemplateOutlet="panelTemplateRef; context: panelContext(activeItem, selectedIndex())" />
-    } @else {
-      <div class="af-tabs-desktop__panel-copy">
-        <strong>{{ activeItem.label }}</strong>
-        @if (activeItem.description) {
-          <p>{{ activeItem.description }}</p>
-        }
-      </div>
-    }
-  </section>
-} @else {
-  <div class="af-tabs-desktop__empty">Sin tabs configurados</div>
+@if (renderPanel()) {
+  @if (selectedItem(); as activeItem) {
+    <section
+      class="af-tabs-desktop__panel"
+      role="tabpanel"
+      [id]="panelId(activeItem.id)"
+      [attr.aria-labelledby]="tabId(activeItem.id)"
+    >
+      @if (selectedPanelTemplate(); as panelTemplateRef) {
+        <ng-container *ngTemplateOutlet="panelTemplateRef; context: panelContext(activeItem, selectedIndex())" />
+      } @else {
+        <div class="af-tabs-desktop__panel-copy">
+          <strong>{{ activeItem.label }}</strong>
+          @if (activeItem.description) {
+            <p>{{ activeItem.description }}</p>
+          }
+        </div>
+      }
+    </section>
+  } @else {
+    <div class="af-tabs-desktop__empty">Sin tabs configurados</div>
+  }
 }

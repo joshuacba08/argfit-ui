@@ -121,7 +121,7 @@ const NEXT_STEPS = [
       <span class="docs-kicker">Get started</span>
       <h1>Quickstart</h1>
       <p class="docs-page__lead">
-        Bootstrap an Angular 21 standalone application against the stable ArgFit UI 1.3.1 contract in four steps.
+        Bootstrap an Angular 21 standalone application against the stable ArgFit UI 1.3.2 contract in four steps.
         Keep imports adaptive-first and validate the productive gate before shipping.
       </p>
       <div class="docs-pill-row">

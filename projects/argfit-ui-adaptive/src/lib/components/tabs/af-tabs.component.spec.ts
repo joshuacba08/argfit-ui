@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { provideArgfitUi, type AfTabChange, type AfTabItem } from '@argfit-ui/core';
+import {
+  provideArgfitUi,
+  type AfTabChange,
+  type AfTabItem,
+  type AfTabsVariant,
+} from '@argfit-ui/core';
 
 import { AfTabPanelDirective } from './af-tab-panel.directive';
 import { AfTabsComponent } from './af-tabs.component';
@@ -13,6 +18,8 @@ import { AfTabsComponent } from './af-tabs.component';
     <af-tabs
       [items]="items()"
       [activeId]="activeId()"
+      [variant]="variant()"
+      [renderPanel]="renderPanel()"
       ariaLabel="Athlete tabs"
       (activeIdChange)="activeId.set($event)"
       (tabChange)="changes.set([...changes(), $event])"
@@ -48,6 +55,8 @@ class AdaptiveTabsHostComponent {
     },
   ]);
   readonly activeId = signal<string | undefined>('profile');
+  readonly variant = signal<AfTabsVariant>('cards');
+  readonly renderPanel = signal(true);
   readonly changes = signal<readonly AfTabChange[]>([]);
 }
 
@@ -104,5 +113,42 @@ describe('AfTabsComponent', () => {
 
     expect(fixture.componentInstance.activeId()).toBe('readiness');
     expect(root.querySelector('.tab-panel')?.textContent).toContain('Readiness');
+  });
+
+  it('renders compact line navigation without an implicit panel', async () => {
+    await TestBed.configureTestingModule({
+      imports: [AdaptiveTabsHostComponent],
+      providers: [provideArgfitUi({ platform: 'desktop' })],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(AdaptiveTabsHostComponent);
+    fixture.componentInstance.variant.set('line');
+    fixture.componentInstance.renderPanel.set(false);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('af-tabs-desktop')?.getAttribute('data-variant')).toBe('line');
+    expect(root.querySelector('.af-tabs-desktop__panel')).toBeNull();
+    expect(root.querySelector('.af-tabs-desktop__empty')).toBeNull();
+    expect(root.querySelector('.af-tabs-desktop__tab-button')?.hasAttribute('aria-controls')).toBe(false);
+  });
+
+  it('uses the same line navigation contract on mobile', async () => {
+    await TestBed.configureTestingModule({
+      imports: [AdaptiveTabsHostComponent],
+      providers: [provideArgfitUi({ platform: 'mobile' })],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(AdaptiveTabsHostComponent);
+    fixture.componentInstance.variant.set('line');
+    fixture.componentInstance.renderPanel.set(false);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('af-tabs-mobile')?.getAttribute('data-variant')).toBe('line');
+    expect(root.querySelector('.af-tabs-mobile__panel')).toBeNull();
+    expect(root.querySelector('.af-tabs-mobile__tab-button')?.hasAttribute('aria-controls')).toBe(false);
   });
 });

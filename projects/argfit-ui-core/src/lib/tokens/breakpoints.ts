@@ -4,6 +4,9 @@ export const AF_BREAKPOINTS = {
   desktopMin: '1024px',
 } as const;
 
-export const AF_MOBILE_MEDIA_QUERY =
-  `(max-width: ${AF_BREAKPOINTS.mobileMax}), ` +
-  `(hover: none) and (pointer: coarse) and (max-width: ${AF_BREAKPOINTS.tabletMax})`;
+/**
+ * El renderer adaptativo responde al espacio disponible, no al dispositivo de
+ * entrada. Una tablet táctil conserva así el layout tablet desde 768 px en vez
+ * de degradarse al shell móvil sólo por exponer un puntero coarse.
+ */
+export const AF_MOBILE_MEDIA_QUERY = `(max-width: ${AF_BREAKPOINTS.mobileMax})`;

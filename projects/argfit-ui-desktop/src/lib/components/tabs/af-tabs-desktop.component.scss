@@ -95,3 +95,38 @@
 .af-tabs-desktop[data-density='compact'] .af-tabs-desktop__panel {
   padding: var(--af-space-4);
 }
+
+.af-tabs-desktop[data-variant='line'] {
+  gap: var(--af-space-3);
+}
+
+.af-tabs-desktop[data-variant='line'] .af-tabs-desktop__tablist {
+  border-bottom: 1px solid var(--af-border-soft);
+  flex-wrap: nowrap;
+  gap: var(--af-space-5);
+  overflow-x: auto;
+}
+
+.af-tabs-desktop[data-variant='line'] .af-tabs-desktop__tab-button {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  flex: 0 0 auto;
+  padding: var(--af-space-3) 0;
+}
+
+.af-tabs-desktop[data-variant='line'] .af-tabs-desktop__tab-button:hover:not(:disabled) {
+  border-bottom-color: color-mix(in srgb, var(--af-primary) 45%, transparent);
+}
+
+.af-tabs-desktop[data-variant='line'] .af-tabs-desktop__tab-button.is-active {
+  background: transparent;
+  border-bottom-color: var(--af-primary);
+  box-shadow: none;
+  color: var(--af-primary);
+}
+
+.af-tabs-desktop[data-density='compact'][data-variant='line'] .af-tabs-desktop__tab-button {
+  padding: var(--af-space-2) 0;
+}

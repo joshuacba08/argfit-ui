@@ -2,7 +2,7 @@
 
 ## Current Release
 
-Current production release: `1.3.1`.
+Current production release: `1.3.2`.
 
 The current productive release extends the stable public API, support policy, documented migrations and production-grade quality gates established in `1.0.0`.
 
@@ -18,7 +18,7 @@ The original frozen `1.0.0` contract baseline lives in:
 - `docs/productive/release-checklist.md`
 - `docs/productive/release-notes-1.0.0.md`
 
-The current release is documented in `docs/productive/release-notes-1.3.1.md`.
+The current release is documented in `docs/productive/release-notes-1.3.2.md`.
 
 ## Productive Definition
 

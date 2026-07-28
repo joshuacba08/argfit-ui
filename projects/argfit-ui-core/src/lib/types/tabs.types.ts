@@ -4,6 +4,7 @@ import type { AfBadgeTone } from './badge.types';
 import type { AfIconName } from './icon.types';
 
 export type AfTabsDensity = 'compact' | 'comfortable';
+export type AfTabsVariant = 'cards' | 'line';
 
 export interface AfTabBadge {
   readonly label: string;

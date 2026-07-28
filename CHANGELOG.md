@@ -2,6 +2,34 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.3.2
+
+Patch release driven by the compact collection navigation used in ArgFit
+Football.
+
+### Added
+
+- `AfTabs.variant="line"` for compact horizontal tab bars on desktop and mobile.
+- `AfTabs.renderPanel` for tabs that control application-owned content instead
+  of an ArgFit UI projected panel.
+- Productive guidance for line tabs and their accessibility ownership.
+
+### Fixed
+
+- Line tabs no longer inherit the minimum card width that caused short labels to
+  wrap into a vertical stack.
+- Tabs without a rendered panel omit dangling `aria-controls` references.
+- Automatic renderer selection now uses available width only. Touch tablets at
+  768 px or wider keep the tablet/desktop renderer instead of collapsing to the
+  mobile shell because of a coarse pointer.
+
+### Release
+
+- All five publishable packages move to `1.3.2`, with internal peer versions
+  aligned exactly.
+- Validated through the production release gate and published with the `latest`
+  dist-tag.
+
 ## 1.3.1
 
 Patch release driven by the responsive ArgFit Football shell and exercise

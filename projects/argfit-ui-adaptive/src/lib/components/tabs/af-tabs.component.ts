@@ -15,6 +15,7 @@ import {
     type AfTabItem,
     type AfTabPanelDefinition,
     type AfTabsDensity,
+    type AfTabsVariant,
 } from '@argfit-ui/core';
 import { AfTabsDesktopComponent } from '@argfit-ui/desktop';
 import { AfTabsMobileComponent } from '@argfit-ui/mobile';
@@ -35,6 +36,8 @@ export class AfTabsComponent {
   readonly items = input<readonly AfTabItem[]>([]);
   readonly activeId = input<string | undefined>(undefined);
   readonly density = input<AfTabsDensity>('comfortable');
+  readonly variant = input<AfTabsVariant>('cards');
+  readonly renderPanel = input(true, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input('Tabs');
 

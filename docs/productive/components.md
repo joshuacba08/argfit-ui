@@ -1,6 +1,6 @@
 # Productive Components
 
-This page documents the stable adaptive component surface for the `1.3.1` contract.
+This page documents the stable adaptive component surface for the `1.3.2` contract.
 
 Every component listed below is already public through `@argfit-ui/adaptive`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
 
@@ -185,6 +185,26 @@ Slot directives used in this family:
 | `AfStepper` | Linear or staged workflows | Current step and validation status should remain explicit. |
 | `AfTabs` | Peer views that switch within the same surface | Active tab state and panel association must stay explicit. |
 | `AfToolbar` | Grouped actions, filters and local controls | Keep button labels visible and groupings understandable. |
+
+Use the default `cards` variant when each tab owns a projected panel. Use
+`variant="line"` with `[renderPanel]="false"` when tabs only control an
+application-owned region, such as a library filter:
+
+```html
+<af-tabs
+  variant="line"
+  density="compact"
+  [renderPanel]="false"
+  [items]="libraryTabs"
+  [activeId]="activeLibraryTab()"
+  (activeIdChange)="activeLibraryTab.set($event)"
+/>
+```
+
+When `renderPanel` is false, `AfTabs` omits its implicit panel and does not emit
+`aria-controls` references to elements that are not rendered. The application
+must keep the controlled result region labelled and expose its loading or empty
+state.
 
 ## Recommended Production Posture
 

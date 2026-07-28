@@ -17,6 +17,7 @@ import {
     type AfTabPanelContext,
     type AfTabPanelDefinition,
     type AfTabsDensity,
+    type AfTabsVariant,
 } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
@@ -34,6 +35,7 @@ let nextAfTabsDesktopId = 0;
   host: {
     class: 'af-tabs-desktop',
     '[attr.data-density]': 'density()',
+    '[attr.data-variant]': 'variant()',
     '[attr.data-disabled]': 'disabled() ? "" : null',
   },
 })
@@ -43,6 +45,8 @@ export class AfTabsDesktopComponent {
   readonly items = input<readonly AfTabItem[]>([]);
   readonly activeId = input<string | undefined>(undefined);
   readonly density = input<AfTabsDensity>('comfortable');
+  readonly variant = input<AfTabsVariant>('cards');
+  readonly renderPanel = input(true, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input('Tabs');
   readonly panelTemplates = input<readonly AfTabPanelDefinition[]>([]);

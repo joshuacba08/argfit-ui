@@ -31,8 +31,14 @@ import { ARGFIT_DARK_THEME } from './themes/argfit-dark.theme';
 import { ARGFIT_LIGHT_THEME } from './themes/argfit-light.theme';
 import { AfThemeService } from './themes/theme.service';
 import { AF_THEME_TOKEN_NAMES } from './tokens/theme-token-names';
+import { AF_MOBILE_MEDIA_QUERY } from './tokens/breakpoints';
 
 describe('ArgFit core systems', () => {
+  it('selects the mobile renderer by available width without collapsing touch tablets', () => {
+    expect(AF_MOBILE_MEDIA_QUERY).toBe('(max-width: 767.98px)');
+    expect(AF_MOBILE_MEDIA_QUERY).not.toContain('pointer');
+  });
+
   it('allows platform preference overrides', () => {
     const platform = TestBed.inject(AfPlatformService);
 
