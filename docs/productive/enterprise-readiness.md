@@ -63,7 +63,7 @@ Not included in the `1.0.0` profile:
 
 - schema-driven form generation
 - built-in async validation orchestration or draft persistence
-- backlog controls that remain outside the current `1.3.0` scope, such as `AfAutoComplete`, `AfInputMask`, `AfInputNumber`, `AfInputOtp` and `AfRating`
+- backlog controls that remain outside the current `1.3.1` scope, such as `AfAutoComplete`, `AfInputMask`, `AfInputNumber`, `AfInputOtp` and `AfRating`
 
 Accessibility caveats:
 

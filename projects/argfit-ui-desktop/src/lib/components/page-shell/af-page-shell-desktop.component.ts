@@ -4,6 +4,7 @@ import {
     Component,
     input,
     output,
+    type TemplateRef,
     ViewEncapsulation,
 } from '@angular/core';
 
@@ -46,6 +47,10 @@ export class AfPageShellDesktopComponent {
   readonly notificationCount = input<number | undefined>(undefined);
   readonly userInitials = input<string | undefined>(undefined);
   readonly ariaLabel = input('Navegacion principal');
+  readonly brandTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly actionsTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly userTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly footerTemplate = input<TemplateRef<unknown> | null>(null);
 
   readonly navItemSelected = output<AfNavigationItem>();
   readonly breadcrumbSelected = output<AfBreadcrumbItem>();

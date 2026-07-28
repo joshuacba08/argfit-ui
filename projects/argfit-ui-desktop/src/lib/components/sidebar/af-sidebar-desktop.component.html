@@ -1,5 +1,6 @@
 <div class="af-sidebar-desktop__brand">
   <ng-content select="[afPageShellBrand]" />
+  <ng-container *ngTemplateOutlet="brandTemplate()" />
 </div>
 
 <nav class="af-sidebar-desktop__nav" [attr.aria-label]="ariaLabel()">
@@ -67,6 +68,7 @@
 
 <div class="af-sidebar-desktop__footer">
   <ng-content select="[afPageShellFooter]" />
+  <ng-container *ngTemplateOutlet="footerTemplate()" />
 </div>
 
 @if (collapsible()) {

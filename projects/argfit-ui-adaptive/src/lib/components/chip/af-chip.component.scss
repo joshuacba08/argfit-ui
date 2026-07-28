@@ -1,3 +1,27 @@
 :host {
   display: inline-flex;
 }
+
+:host([data-interactive]) {
+  border-radius: var(--af-radius-pill);
+  cursor: pointer;
+}
+
+:host([data-interactive]):focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
+:host([data-interactive]):hover af-chip-desktop,
+:host([data-interactive]):hover af-chip-mobile {
+  filter: brightness(1.08);
+}
+
+:host([data-selected]) af-chip-desktop,
+:host([data-selected]) af-chip-mobile {
+  --af-chip-tone: var(--af-primary);
+  --af-chip-fg: var(--af-primary-hover);
+  --af-chip-bg-soft: color-mix(in srgb, var(--af-primary) 22%, var(--af-bg-interactive));
+  --af-chip-bg-outline: color-mix(in srgb, var(--af-primary) 14%, transparent);
+  --af-chip-border-outline: color-mix(in srgb, var(--af-primary) 58%, transparent);
+}

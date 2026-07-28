@@ -47,6 +47,7 @@
   }
 
   <ng-content select="[afPageShellActions]" />
+  <ng-container *ngTemplateOutlet="actionsTemplate()" />
 
   @if (notificationCount() !== undefined) {
     <button class="af-topbar-desktop__notification" type="button" aria-label="Notificaciones">
@@ -64,4 +65,5 @@
   }
 
   <ng-content select="[afPageShellUser]" />
+  <ng-container *ngTemplateOutlet="userTemplate()" />
 </div>

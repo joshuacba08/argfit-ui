@@ -1,6 +1,6 @@
 # Productive Components
 
-This page documents the stable adaptive component surface for the `1.3.0` contract.
+This page documents the stable adaptive component surface for the `1.3.1` contract.
 
 Every component listed below is already public through `@argfit-ui/adaptive`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
 
@@ -39,6 +39,24 @@ to `start`; `fullWidth` stretches both desktop and mobile renderers.
 Icons that accompany visible text are decorative. For an icon-only action, provide
 an explicit `ariaLabel`.
 
+### Adaptive page shell slots
+
+`AfPageShell` keeps each projected region attached to its semantic destination while
+switching renderers. Brand and footer content land in the desktop sidebar; actions
+and user content land in the desktop topbar. On mobile those same slots are composed
+into the compact header and footer without application-specific wrappers.
+
+```html
+<af-page-shell title="Biblioteca" [navItems]="navigation" [mobileTabs]="mobileTabs">
+  <div afPageShellBrand>ARGFIT Football</div>
+  <af-button afPageShellActions size="sm">Crear ejercicio</af-button>
+  <div afPageShellUser>Valeria · Entrenadora</div>
+  <small afPageShellFooter>ArgFit Point</small>
+
+  <router-outlet />
+</af-page-shell>
+```
+
 ## Analytics, Feedback And Status
 
 Slot directives used in this family:
@@ -57,6 +75,27 @@ Slot directives used in this family:
 | `AfSkeleton` | Loading placeholders that preserve a surface's layout | Mark the loading region as busy and respect reduced-motion preferences. |
 | `AfToast` | Transient global feedback after a completed action | Do not use toast as the only place for blocking validation or recovery steps. |
 | `AfToastViewport` | Single application-level host for toasts | Mount once and keep dismiss actions keyboard reachable. |
+
+### Interactive filter chips
+
+Use `interactive` when a chip changes a filter or compact selection. Bind `selected`
+so ArgFit UI exposes `aria-pressed` and the active visual state, and react to
+`pressed`. A removable chip emits `removed` independently; use removal and
+press-selection as separate chip modes so the component never nests interactive
+targets.
+
+```html
+@for (collection of collections; track collection.id) {
+  <af-chip
+    interactive
+    [selected]="activeCollection() === collection.id"
+    [ariaLabel]="'Filtrar por ' + collection.label"
+    (pressed)="activeCollection.set(collection.id)"
+  >
+    {{ collection.label }}
+  </af-chip>
+}
+```
 
 ## Overlay And Identity
 

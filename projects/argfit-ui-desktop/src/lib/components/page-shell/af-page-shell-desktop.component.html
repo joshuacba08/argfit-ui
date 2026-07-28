@@ -4,6 +4,8 @@
   [collapsed]="collapsed()"
   [collapsible]="collapsible()"
   [ariaLabel]="ariaLabel()"
+  [brandTemplate]="brandTemplate()"
+  [footerTemplate]="footerTemplate()"
   (navItemSelected)="navItemSelected.emit($event)"
   (collapsedChange)="collapsedChange.emit($event)"
 >
@@ -20,6 +22,8 @@
     [searchPlaceholder]="searchPlaceholder()"
     [notificationCount]="notificationCount()"
     [userInitials]="userInitials()"
+    [actionsTemplate]="actionsTemplate()"
+    [userTemplate]="userTemplate()"
     (breadcrumbSelected)="breadcrumbSelected.emit($event)"
     (searchChanged)="searchChanged.emit($event)"
   >

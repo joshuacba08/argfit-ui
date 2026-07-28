@@ -13,8 +13,12 @@ import { AfChipComponent } from './af-chip.component';
       tone="success"
       variant="outline"
       size="md"
+      interactive
+      [selected]="selected"
       removeAriaLabel="Remove athlete"
+      ariaLabel="Filter by athlete"
       (removed)="removedCount = removedCount + 1"
+      (pressed)="pressedCount = pressedCount + 1"
     >
       Athlete
     </af-chip>
@@ -22,8 +26,10 @@ import { AfChipComponent } from './af-chip.component';
 })
 class AfChipHostComponent {
   icon: AfIconName | undefined = 'bluetooth';
-  removable = true;
+  removable = false;
+  selected = true;
   removedCount = 0;
+  pressedCount = 0;
 }
 
 describe('AfChipComponent', () => {
@@ -50,12 +56,24 @@ describe('AfChipComponent', () => {
     expect(desktop!.getAttribute('data-variant')).toBe('outline');
     expect(desktop!.getAttribute('data-size')).toBe('md');
     expect(desktop!.querySelector('af-icon')).not.toBeNull();
-    expect(removeButton).not.toBeNull();
+    expect(removeButton).toBeNull();
+    expect((desktop!.parentElement as HTMLElement).getAttribute('role')).toBe('button');
+    expect((desktop!.parentElement as HTMLElement).getAttribute('aria-pressed')).toBe('true');
 
-    removeButton!.click();
+    (desktop!.parentElement as HTMLElement).click();
+    expect(fixture.componentInstance.pressedCount).toBe(1);
+
+    fixture.componentInstance.removable = true;
+    fixture.detectChanges();
+    const enabledRemoveButton = desktop?.querySelector(
+      '.af-chip-desktop__remove',
+    ) as HTMLButtonElement | null;
+    expect((desktop!.parentElement as HTMLElement).getAttribute('role')).toBeNull();
+    enabledRemoveButton!.click();
     fixture.detectChanges();
 
     expect(fixture.componentInstance.removedCount).toBe(1);
+    expect(fixture.componentInstance.pressedCount).toBe(1);
   });
 
   it('renders the mobile implementation without a remove button when not removable', async () => {

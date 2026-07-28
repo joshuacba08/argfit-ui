@@ -4,8 +4,10 @@ import {
     computed,
     input,
     output,
+    type TemplateRef,
     ViewEncapsulation,
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 import type {
     AfNavigationItem,
@@ -17,7 +19,7 @@ import { AfBottomTabsMobileComponent } from '../bottom-tabs/af-bottom-tabs-mobil
 
 @Component({
   selector: 'af-page-shell-mobile',
-  imports: [AfBottomTabsMobileComponent],
+  imports: [AfBottomTabsMobileComponent, NgTemplateOutlet],
   templateUrl: './af-page-shell-mobile.component.html',
   styleUrl: './af-page-shell-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +40,10 @@ export class AfPageShellMobileComponent {
   readonly density = input<AfPageShellDensity>('comfortable');
   readonly variant = input<AfPageShellVariant>('dashboard');
   readonly ariaLabel = input('Navegacion inferior');
+  readonly brandTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly actionsTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly userTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly footerTemplate = input<TemplateRef<unknown> | null>(null);
 
   readonly tabSelected = output<AfNavigationItem>();
 

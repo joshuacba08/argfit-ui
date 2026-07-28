@@ -5,6 +5,7 @@ import {
     Component,
     input,
     output,
+    type TemplateRef,
     ViewEncapsulation,
 } from '@angular/core';
 
@@ -31,6 +32,8 @@ export class AfSidebarDesktopComponent {
   readonly collapsed = input(false, { transform: booleanAttribute });
   readonly collapsible = input(true, { transform: booleanAttribute });
   readonly ariaLabel = input('Navegacion principal');
+  readonly brandTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly footerTemplate = input<TemplateRef<unknown> | null>(null);
 
   readonly navItemSelected = output<AfNavigationItem>();
   readonly collapsedChange = output<boolean>();

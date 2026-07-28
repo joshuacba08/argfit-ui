@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, input, output, ViewEncapsulation } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+  type TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 
 import type { AfBreadcrumbItem } from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
@@ -7,7 +15,7 @@ import { AfBadgeDesktopComponent } from '../badge/af-badge-desktop.component';
 
 @Component({
   selector: 'af-topbar-desktop',
-  imports: [AfBadgeDesktopComponent, AfIconComponent],
+  imports: [AfBadgeDesktopComponent, AfIconComponent, NgTemplateOutlet],
   templateUrl: './af-topbar-desktop.component.html',
   styleUrl: './af-topbar-desktop.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,6 +30,8 @@ export class AfTopbarDesktopComponent {
   readonly searchPlaceholder = input('Buscar...');
   readonly notificationCount = input<number | undefined>(undefined);
   readonly userInitials = input<string | undefined>(undefined);
+  readonly actionsTemplate = input<TemplateRef<unknown> | null>(null);
+  readonly userTemplate = input<TemplateRef<unknown> | null>(null);
 
   readonly breadcrumbSelected = output<AfBreadcrumbItem>();
   readonly searchChanged = output<string>();

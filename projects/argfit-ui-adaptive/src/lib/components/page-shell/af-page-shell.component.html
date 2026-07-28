@@ -1,4 +1,8 @@
-<ng-template #shellContent><ng-content /></ng-template>
+<ng-template #brandContent><ng-content select="[afPageShellBrand]" /></ng-template>
+<ng-template #actionsContent><ng-content select="[afPageShellActions]" /></ng-template>
+<ng-template #userContent><ng-content select="[afPageShellUser]" /></ng-template>
+<ng-template #footerContent><ng-content select="[afPageShellFooter]" /></ng-template>
+<ng-template #mainContent><ng-content /></ng-template>
 
 @if (isMobile()) {
   <af-page-shell-mobile
@@ -11,9 +15,13 @@
     [density]="density()"
     [variant]="variant()"
     [ariaLabel]="ariaLabel()"
+    [brandTemplate]="brandContent"
+    [actionsTemplate]="actionsContent"
+    [userTemplate]="userContent"
+    [footerTemplate]="footerContent"
     (tabSelected)="tabSelected.emit($event)"
   >
-    <ng-container *ngTemplateOutlet="shellContent" />
+    <ng-container *ngTemplateOutlet="mainContent" />
   </af-page-shell-mobile>
 } @else {
   <af-page-shell-desktop
@@ -31,11 +39,15 @@
     [notificationCount]="notificationCount()"
     [userInitials]="userInitials()"
     [ariaLabel]="ariaLabel()"
+    [brandTemplate]="brandContent"
+    [actionsTemplate]="actionsContent"
+    [userTemplate]="userContent"
+    [footerTemplate]="footerContent"
     (navItemSelected)="navItemSelected.emit($event)"
     (breadcrumbSelected)="breadcrumbSelected.emit($event)"
     (collapsedChange)="collapsedChange.emit($event)"
     (searchChanged)="searchChanged.emit($event)"
   >
-    <ng-container *ngTemplateOutlet="shellContent" />
+    <ng-container *ngTemplateOutlet="mainContent" />
   </af-page-shell-desktop>
 }

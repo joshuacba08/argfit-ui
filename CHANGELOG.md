@@ -2,6 +2,33 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.3.1
+
+Patch release driven by the responsive ArgFit Football shell and exercise
+library implementation.
+
+### Added
+
+- `AfChip.interactive`, `AfChip.selected` and the `pressed` event for compact,
+  keyboard-operable filter chips with an explicit `aria-pressed` state.
+- Productive examples for interactive filters and the four `AfPageShell` slot
+  regions.
+
+### Fixed
+
+- `AfPageShell` now preserves brand, action, user and footer projection while
+  switching between its desktop and mobile renderers. Previously those nodes
+  could fall through into the main content region.
+- Desktop page-shell templates now cross the sidebar and topbar composition
+  boundary without losing their semantic destination.
+
+### Release
+
+- All five publishable packages move to `1.3.1`, with internal peer versions
+  aligned exactly.
+- Validated through the production release gate and published with the `latest`
+  dist-tag.
+
 ## 1.3.0
 
 Minor release driven by the first production integration in ArgFit Football. It
