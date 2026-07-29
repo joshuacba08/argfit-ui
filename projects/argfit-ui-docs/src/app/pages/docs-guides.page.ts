@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
-    AfBadge,
     AfCard,
     AfCardContentDirective,
     AfCardEyebrowDirective,
@@ -17,7 +16,6 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
   selector: 'app-docs-guides-page',
   imports: [
     RouterLink,
-    AfBadge,
     AfCard,
     AfCardContentDirective,
     AfCardEyebrowDirective,
@@ -45,10 +43,8 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
               <span afCardEyebrow>guide</span>
               <h2 afCardTitle>{{ guide.title }}</h2>
             </div>
-            <af-badge tone="neutral">{{ guide.sourcePath }}</af-badge>
           </header>
           <div afCardContent class="docs-stack">
-            <p>{{ guide.summary }}</p>
             <ul>
               @for (bullet of guide.bullets; track bullet) {
                 <li>{{ bullet }}</li>

@@ -213,10 +213,8 @@ const FRAMEWORK_PRINCIPLES: readonly FrameworkPrinciple[] = [
                 <span afCardEyebrow>{{ entry.badge }}</span>
                 <h2 afCardTitle>{{ entry.title }}</h2>
               </div>
-              <af-badge tone="neutral">{{ entry.sourcePath }}</af-badge>
             </header>
             <div afCardContent class="docs-stack">
-              <p>{{ entry.summary }}</p>
               <ul>
                 @for (bullet of entry.bullets; track bullet) {
                   <li>{{ bullet }}</li>

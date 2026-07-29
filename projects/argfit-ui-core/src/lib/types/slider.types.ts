@@ -4,6 +4,9 @@ export type AfSliderSize = AfControlSize;
 
 export type AfSliderDensity = 'compact' | 'comfortable';
 
+/** Semantic tone used by the active track and knob. */
+export type AfSliderTone = 'primary' | 'success' | 'warning' | 'danger';
+
 /**
  * Labelled stop shown under the track.
  *

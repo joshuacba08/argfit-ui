@@ -17,6 +17,7 @@ import {
   type AfSliderDensity,
   type AfSliderMark,
   type AfSliderSize,
+  type AfSliderTone,
   type AfSliderValueDisplay,
 } from '@argfit-ui/core';
 import { AfSliderDesktopComponent } from '@argfit-ui/desktop';
@@ -57,6 +58,8 @@ export class AfSliderComponent implements ControlValueAccessor {
   readonly unit = input<string | undefined>(undefined);
   /** Paradas etiquetadas bajo la barra. Convierten un número en un juicio interpretable. */
   readonly marks = input<readonly AfSliderMark[]>([]);
+  readonly ticks = input(false, { transform: booleanAttribute });
+  readonly tone = input<AfSliderTone>('primary');
   readonly valueDisplay = input<AfSliderValueDisplay>('inline');
   readonly helperText = input<string | undefined>(undefined);
   readonly errorText = input<string | undefined>(undefined);

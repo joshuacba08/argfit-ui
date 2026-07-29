@@ -14,7 +14,11 @@
     </div>
   }
 
-  <div class="af-slider-desktop__control" [style.--af-slider-progress.%]="progress()">
+  <div
+    class="af-slider-desktop__control"
+    [style.--af-slider-progress]="progress() + '%'"
+    [style.--af-slider-tick-step]="tickStep() + '%'"
+  >
     <input
       class="af-slider-desktop__input"
       type="range"

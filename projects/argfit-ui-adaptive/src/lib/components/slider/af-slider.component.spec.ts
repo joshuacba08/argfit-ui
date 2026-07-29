@@ -21,6 +21,9 @@ const RPE_MARKS: readonly AfSliderMark[] = [
       [max]="10"
       [step]="1"
       [marks]="marks"
+      [ticks]="true"
+      [tone]="tone()"
+      size="lg"
       helperText="Escala 1–10 declarada por el atleta"
       (valueChange)="emitted = $event"
     />
@@ -28,6 +31,7 @@ const RPE_MARKS: readonly AfSliderMark[] = [
 })
 class HostComponent {
   readonly value = signal(6);
+  readonly tone = signal<'primary' | 'success' | 'warning' | 'danger'>('success');
   readonly marks = RPE_MARKS;
   emitted: number | undefined;
 }
@@ -66,6 +70,16 @@ describe('AfSliderComponent', () => {
     expect(input.min).toBe('1');
     expect(input.max).toBe('10');
     expect(input.value).toBe('6');
+    const renderer = fixture.nativeElement.querySelector('af-slider-desktop') as HTMLElement;
+    const control = fixture.nativeElement.querySelector(
+      '.af-slider-desktop__control',
+    ) as HTMLElement;
+    expect(renderer.getAttribute('data-tone')).toBe('success');
+    expect(renderer.hasAttribute('data-ticks')).toBe(true);
+    expect(renderer.getAttribute('data-size')).toBe('lg');
+    expect(control.style.getPropertyValue('--af-slider-progress')).toBe(
+      '55.55555555555556%',
+    );
   });
 
   it('renderiza el renderer móvil con el mismo contrato', async () => {

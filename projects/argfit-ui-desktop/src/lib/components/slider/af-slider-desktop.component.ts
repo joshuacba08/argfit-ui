@@ -14,6 +14,7 @@ import {
     type AfSliderDensity,
     type AfSliderMark,
     type AfSliderSize,
+    type AfSliderTone,
     type AfSliderValueDisplay,
 } from '@argfit-ui/core';
 
@@ -39,6 +40,8 @@ let nextAfDesktopSliderId = 0;
     '[attr.data-disabled]': 'disabled() ? "" : null',
     '[attr.data-readonly]': 'readonly() ? "" : null',
     '[attr.data-invalid]': 'errorText() ? "" : null',
+    '[attr.data-ticks]': 'ticks() ? "" : null',
+    '[attr.data-tone]': 'tone()',
   },
 })
 export class AfSliderDesktopComponent {
@@ -51,6 +54,8 @@ export class AfSliderDesktopComponent {
   readonly step = input(1, { transform: numberAttribute });
   readonly unit = input<string | undefined>(undefined);
   readonly marks = input<readonly AfSliderMark[]>([]);
+  readonly ticks = input(false, { transform: booleanAttribute });
+  readonly tone = input<AfSliderTone>('primary');
   readonly valueDisplay = input<AfSliderValueDisplay>('inline');
   readonly helperText = input<string | undefined>(undefined);
   readonly errorText = input<string | undefined>(undefined);
@@ -93,6 +98,15 @@ export class AfSliderDesktopComponent {
       return 0;
     }
     return ((this.boundedValue() - this.min()) / span) * 100;
+  });
+
+  protected readonly tickStep = computed(() => {
+    const span = this.max() - this.min();
+    const step = this.step();
+    if (span <= 0 || step <= 0 || step >= span) {
+      return 100;
+    }
+    return (step / span) * 100;
   });
 
   protected readonly displayValue = computed(() => {

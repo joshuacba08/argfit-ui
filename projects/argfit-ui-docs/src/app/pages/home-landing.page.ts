@@ -6,7 +6,6 @@ import {
     AfCard,
     AfCardContentDirective,
     AfCardEyebrowDirective,
-    AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
@@ -19,9 +18,7 @@ import { PRODUCTIVE_COMPONENT_DOCS } from '../docs-data';
 interface LandingHighlight {
   readonly eyebrow: string;
   readonly title: string;
-  readonly summary: string;
   readonly bullets: readonly string[];
-  readonly tone: 'primary' | 'accent' | 'success' | 'warning' | 'neutral';
   readonly icon: AfIconName;
 }
 
@@ -63,7 +60,6 @@ interface LandingWorkflowColumn {
     AfCard,
     AfCardContentDirective,
     AfCardEyebrowDirective,
-    AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
     AfIconComponent,
@@ -114,45 +110,37 @@ export class HomeLandingPageComponent {
     {
       eyebrow: 'Adaptive contract',
       title: 'One semantic API across desktop and mobile',
-      summary: 'Teams build product concepts once and let ArgFit decide how the renderer should behave for each platform.',
       bullets: [
         'Adaptive-first imports through @argfit-ui/adaptive',
         'Desktop density without a second component API',
         'Touch-first behavior paths without vendor branching',
       ],
-      tone: 'primary',
       icon: 'zap',
     },
     {
       eyebrow: 'Vendor boundary',
       title: 'PrimeNG and Ionic stay internal',
-      summary: 'The framework hides renderer details behind ArgFit-owned contracts so the application stays portable and coherent.',
       bullets: [
         'Core remains vendor-agnostic',
         'Desktop and mobile packages stay secondary',
         'Public APIs stay semantic and stable',
       ],
-      tone: 'accent',
       icon: 'filter',
     },
     {
       eyebrow: 'System design',
       title: 'Token-driven theming and dark-first posture',
-      summary: 'ArgFit is built for premium enterprise interfaces with design tokens, CSS variables and a focused visual language.',
       bullets: [
         'Dark-first visual baseline',
         'No hardcoded vendor selectors',
         'Theme and platform runtime at bootstrap',
       ],
-      tone: 'success',
       icon: 'grid-2x2',
     },
     {
       eyebrow: 'Operational discipline',
       title: 'Release gates protect the contract',
-      summary: 'The framework ships with architecture guards, build budgets and a production release check instead of visual improvisation.',
       bullets: ['release:production:check', 'Regression guard coverage', 'Monorepo build integrity'],
-      tone: 'warning',
       icon: 'circle-check',
     },
   ];

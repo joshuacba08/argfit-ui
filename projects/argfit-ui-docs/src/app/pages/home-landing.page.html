@@ -205,23 +205,14 @@
                 <span afCardEyebrow>{{ highlight.eyebrow }}</span>
                 <h3 afCardTitle>{{ highlight.title }}</h3>
               </div>
-              <div class="landing-highlight-meta">
-                <span class="landing-highlight-step">0{{ index + 1 }}</span>
-                <af-badge [tone]="highlight.tone">feature</af-badge>
-              </div>
             </header>
             <div afCardContent class="landing-stack landing-stack--feature">
-              <p>{{ highlight.summary }}</p>
               <ul class="landing-highlight-list">
                 @for (bullet of highlight.bullets; track bullet) {
                   <li>{{ bullet }}</li>
                 }
               </ul>
             </div>
-            <footer afCardFooter class="landing-highlight-footer">
-              <span>ArgFit-owned contract</span>
-              <strong>{{ highlight.eyebrow }}</strong>
-            </footer>
             </af-card>
           }
         </div>
