@@ -20,6 +20,7 @@ export const routes: Routes = [
       { path: 'api/:slug', loadComponent: () => import('./pages/docs-api-detail.page').then((module) => module.DocsApiDetailPageComponent) },
       { path: 'guides', loadComponent: () => import('./pages/docs-guides.page').then((module) => module.DocsGuidesPageComponent) },
       { path: 'release', loadComponent: () => import('./pages/docs-release.page').then((module) => module.DocsReleasePageComponent) },
+      { path: 'docs/:slug', loadComponent: () => import('./pages/docs-content-detail.page').then((module) => module.DocsContentDetailPageComponent) },
       { path: 'search', loadComponent: () => import('./pages/docs-search.page').then((module) => module.DocsSearchPageComponent) },
     ],
   },

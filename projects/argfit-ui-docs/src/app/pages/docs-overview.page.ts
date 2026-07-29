@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -10,8 +10,11 @@ import {
     AfCardHeaderDirective,
     AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
+import { AfIconComponent } from '@argfit-ui/primitives';
+import type { AfIconName } from '@argfit-ui/core';
 
 import {
+    PRODUCTIVE_COMPONENT_DOCS,
     PRODUCTIVE_COMPONENT_FAMILIES,
     PRODUCTIVE_ENTRY_POINTS,
     PRODUCTIVE_PACKAGE_GUIDES,
@@ -31,6 +34,7 @@ interface FrameworkLayer {
 interface FrameworkPrinciple {
   readonly title: string;
   readonly description: string;
+  readonly icon: AfIconName;
 }
 
 const FRAMEWORK_LAYERS: readonly FrameworkLayer[] = [
@@ -68,18 +72,22 @@ const FRAMEWORK_PRINCIPLES: readonly FrameworkPrinciple[] = [
   {
     title: 'Adaptive first',
     description: 'One semantic API resolves to the right renderer. Consumers do not import PrimeNG or Ionic.',
+    icon: 'zap',
   },
   {
     title: 'Token-driven theming',
     description: 'Dark-first themes, CSS variables and a token contract instead of vendor selector overrides.',
+    icon: 'grid-2x2',
   },
   {
     title: 'Renderer discipline',
     description: 'Strict boundaries between core, primitives, desktop, mobile and adaptive keep upgrades safe.',
+    icon: 'layout-dashboard',
   },
   {
     title: 'Enterprise posture',
     description: 'Dense forms, workflow boards, data tables and analytics surfaces are first-class concerns.',
+    icon: 'bar-chart-3',
   },
 ];
 
@@ -92,6 +100,7 @@ const FRAMEWORK_PRINCIPLES: readonly FrameworkPrinciple[] = [
     AfCardContentDirective,
     AfCardEyebrowDirective,
     AfCardFooterDirective,
+    AfIconComponent,
     AfCardHeaderDirective,
     AfCardTitleDirective,
     DocsCodeBlockComponent,
@@ -125,7 +134,7 @@ const FRAMEWORK_PRINCIPLES: readonly FrameworkPrinciple[] = [
         <span class="docs-nav__eyebrow">Snapshot</span>
         <ul class="docs-overview-hero__stats">
           <li>
-            <strong>{{ stableComponentCount() }}</strong>
+            <strong>{{ stableComponentCount }}</strong>
             <span>stable components</span>
           </li>
           <li>
@@ -152,6 +161,9 @@ const FRAMEWORK_PRINCIPLES: readonly FrameworkPrinciple[] = [
       <div class="docs-principle-grid">
         @for (principle of principles; track principle.title) {
           <article class="docs-principle-card">
+            <span class="docs-principle-card__icon">
+              <af-icon [name]="principle.icon" size="lg" tone="primary" />
+            </span>
             <strong>{{ principle.title }}</strong>
             <p>{{ principle.description }}</p>
           </article>
@@ -291,7 +303,5 @@ export class DocsOverviewPageComponent {
   protected readonly principles = FRAMEWORK_PRINCIPLES;
   protected readonly packageCount = PRODUCTIVE_PACKAGE_GUIDES.length;
   protected readonly familyCount = PRODUCTIVE_COMPONENT_FAMILIES.length;
-  protected readonly stableComponentCount = computed(() =>
-    PRODUCTIVE_COMPONENT_FAMILIES.reduce((total, family) => total + family.components.length, 0),
-  );
+  protected readonly stableComponentCount = PRODUCTIVE_COMPONENT_DOCS.length;
 }

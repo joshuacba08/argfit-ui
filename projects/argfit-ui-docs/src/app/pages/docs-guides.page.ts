@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import {
     AfBadge,
@@ -15,6 +16,7 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
 @Component({
   selector: 'app-docs-guides-page',
   imports: [
+    RouterLink,
     AfBadge,
     AfCard,
     AfCardContentDirective,
@@ -53,6 +55,9 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
               }
             </ul>
           </div>
+          <footer afCardFooter>
+            <a [routerLink]="guide.route" class="docs-action-link">Read guide</a>
+          </footer>
         </af-card>
       }
     </section>
@@ -73,7 +78,7 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
           </ul>
         </div>
         <footer afCardFooter class="docs-source-row">
-          <code>docs/productive/migration-beta-to-1-0.md</code>
+          <a routerLink="/docs/migration-beta-to-1-0" class="docs-action-link">Read full guide</a>
         </footer>
       </af-card>
 

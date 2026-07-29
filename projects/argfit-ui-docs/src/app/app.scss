@@ -175,7 +175,23 @@ app-docs-layout {
   display: grid;
   gap: var(--af-space-4);
   min-width: 0;
+  overflow-x: hidden;
   padding: var(--af-space-4);
+}
+
+/* Cards wrapping wide/scrollable content (e.g. API tables) must let their
+   flex chain shrink below content size, or the table's min-width leaks
+   upward and overflows the whole page on narrow viewports. */
+.docs-card--wide,
+.docs-card--wide af-card-mobile,
+.docs-card--wide af-card-desktop,
+.docs-card--wide .af-card__content {
+  min-width: 0;
+}
+
+.docs-table-scroll {
+  min-width: 0;
+  width: 100%;
 }
 
 .docs-shell__topbar,
@@ -197,6 +213,55 @@ app-docs-layout {
 .docs-shell__title {
   color: var(--af-text-main);
   font-size: var(--af-text-xl);
+}
+
+.docs-shell__topbar-heading {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-3);
+}
+
+.docs-shell__sidebar-head {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+  justify-content: space-between;
+}
+
+.docs-mobile-nav-toggle,
+.docs-mobile-nav-close {
+  appearance: none;
+  background: var(--docs-surface-bg);
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.docs-mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  height: 40px;
+  justify-content: center;
+  padding: 0 0.7rem;
+  width: 44px;
+}
+
+.docs-mobile-nav-toggle span {
+  background: var(--af-text-main);
+  border-radius: 2px;
+  display: block;
+  height: 2px;
+  width: 100%;
+}
+
+.docs-mobile-nav-close {
+  display: none;
+  font-size: var(--af-text-sm);
+  height: 36px;
+  width: 36px;
 }
 
 .docs-shell__surface {
@@ -288,6 +353,15 @@ app-docs-layout {
   line-height: var(--af-leading-relaxed);
 }
 
+/* Cap prose measure for readability on wide viewports. */
+.docs-page p {
+  max-width: 75ch;
+}
+
+.docs-page li {
+  max-width: 70ch;
+}
+
 .docs-kicker,
 .docs-nav__eyebrow,
 .docs-stat-card span {
@@ -317,11 +391,20 @@ app-docs-layout {
 }
 
 .docs-nav__link {
+  align-items: baseline;
   color: inherit;
-  display: grid;
-  gap: 0.2rem;
-  padding: 0.5rem 0.56rem;
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
   text-decoration: none;
+}
+
+.docs-nav__link .docs-nav__eyebrow {
+  display: none;
+}
+
+.docs-nav__link.is-active .docs-nav__eyebrow {
+  display: inline;
 }
 
 .docs-search-result,
@@ -634,7 +717,14 @@ app-docs-layout {
 }
 
 .docs-chip--link {
+  border-color: color-mix(in srgb, var(--af-primary) 20%, var(--af-border-soft));
   text-decoration: none;
+  transition: border-color 140ms, transform 140ms;
+}
+
+.docs-chip--link:hover {
+  border-color: color-mix(in srgb, var(--af-primary) 40%, var(--af-border-soft));
+  transform: translateY(-1px);
 }
 
 .docs-empty-state {
@@ -1229,7 +1319,7 @@ pre {
 .docs-components-hero {
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--af-primary) 10%, transparent), transparent 38%),
-    linear-gradient(180deg, color-mix(in srgb, var(--af-bg-main) 90%, #03042c), color-mix(in srgb, var(--af-bg-elevated) 82%, #030510));
+    linear-gradient(180deg, var(--docs-bg-start), var(--docs-bg-end));
   border: 1px solid color-mix(in srgb, var(--af-primary) 18%, var(--af-border-soft));
   border-radius: var(--af-radius-xl, 24px);
   box-shadow: 0 12px 28px rgba(1, 9, 17, 0.12);
@@ -1293,9 +1383,9 @@ pre {
 .docs-catalog-select-field select {
   appearance: none;
   background:
-    linear-gradient(135deg, color-mix(in srgb, #483acc 15%, transparent), transparent),
+    linear-gradient(135deg, color-mix(in srgb, var(--af-primary) 15%, transparent), transparent),
     var(--docs-soft-bg);
-  border: 1px solid color-mix(in srgb, #935af0 22%, var(--af-border-soft));
+  border: 1px solid color-mix(in srgb, var(--af-primary) 22%, var(--af-border-soft));
   border-radius: var(--af-radius-md);
   color: var(--af-text-main);
   cursor: pointer;
@@ -1311,7 +1401,7 @@ pre {
 
 .docs-catalog-select-field::after {
   border-inline: 5px solid transparent;
-  border-top: 6px solid color-mix(in srgb, #f897fe 70%, var(--af-text-soft));
+  border-top: 6px solid color-mix(in srgb, var(--af-primary) 70%, var(--af-text-soft));
   bottom: 1rem;
   content: '';
   pointer-events: none;
@@ -1350,7 +1440,7 @@ pre {
 }
 
 .docs-family-accordion__summary::after {
-  color: color-mix(in srgb, #f897fe 72%, var(--af-text-soft));
+  color: color-mix(in srgb, var(--af-primary) 72%, var(--af-text-soft));
   content: '+';
   font-size: 1.45rem;
   font-weight: 700;
@@ -1402,13 +1492,13 @@ pre {
 .docs-components-studio .docs-catalog-tile {
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--docs-tone-a, var(--af-primary)) 16%, transparent), transparent 58%),
-    linear-gradient(180deg, color-mix(in srgb, #03042c 38%, var(--docs-surface-bg)), var(--docs-surface-bg));
+    linear-gradient(180deg, color-mix(in srgb, var(--af-bg-main) 38%, var(--docs-surface-bg)), var(--docs-surface-bg));
 }
 
 .docs-components-studio .docs-catalog-tile__glyph {
   background:
-    linear-gradient(140deg, color-mix(in srgb, #f897fe 55%, var(--docs-tone-a, var(--af-primary))), color-mix(in srgb, #483acc 62%, var(--docs-tone-b, var(--af-accent))));
-  box-shadow: 0 12px 28px -18px color-mix(in srgb, #f897fe 90%, transparent);
+    linear-gradient(140deg, var(--docs-tone-a, var(--af-primary)), var(--docs-tone-b, var(--af-accent)));
+  box-shadow: 0 12px 28px -18px color-mix(in srgb, var(--docs-tone-a, var(--af-primary)) 90%, transparent);
 }
 
 @media (max-width: 1500px) {
@@ -1577,21 +1667,19 @@ pre {
   position: relative;
 }
 
-.docs-principle-card::before {
-  background: linear-gradient(135deg, var(--af-primary), var(--af-accent));
-  border-radius: 999px;
-  content: '';
-  height: 6px;
-  left: var(--af-space-4);
-  position: absolute;
-  top: var(--af-space-4);
-  width: 28px;
+.docs-principle-card__icon {
+  align-items: center;
+  background: color-mix(in srgb, var(--af-primary) 14%, transparent);
+  border-radius: var(--af-radius-md);
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
 }
 
 .docs-principle-card strong {
   color: var(--af-text-main);
   font-size: var(--af-text-md);
-  margin-top: var(--af-space-3);
 }
 
 .docs-principle-card p {
@@ -1727,6 +1815,39 @@ pre {
   line-height: var(--af-leading-relaxed);
 }
 
+/* ---------- Rendered markdown content ---------- */
+
+.docs-markdown h2,
+.docs-markdown h3 {
+  color: var(--af-text-main);
+  scroll-margin-top: var(--af-space-4);
+}
+
+.docs-markdown h2 {
+  border-top: 1px solid var(--af-border-soft);
+  font-size: var(--af-text-xl);
+  padding-top: var(--af-space-4);
+}
+
+.docs-markdown h3 {
+  font-size: var(--af-text-lg);
+}
+
+.docs-markdown > h2:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.docs-markdown a {
+  color: var(--af-primary);
+}
+
+.docs-markdown hr {
+  border: 0;
+  border-top: 1px solid var(--af-border-soft);
+  margin: 0;
+}
+
 /* ---------- Quickstart page ---------- */
 
 .docs-quickstart-steps {
@@ -1755,7 +1876,7 @@ pre {
   width: 44px;
 }
 
-.docs-stat-card__value {
+.docs-stat-card .docs-stat-card__value {
   font-family: var(--af-font-mono);
   font-size: clamp(1.1rem, 1.6vw, 1.4rem);
 }
@@ -1804,12 +1925,59 @@ pre {
     justify-content: flex-start;
   }
 
+  .docs-mobile-nav-toggle,
+  .docs-mobile-nav-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .docs-shell__sidebar {
-    height: auto;
-    max-height: none;
-    min-height: auto;
-    overflow: visible;
-    position: static;
+    background: var(--docs-sidebar-bg);
+    border-inline-end: 1px solid var(--docs-sidebar-border);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    height: 100svh;
+    inset-block: 0;
+    inset-inline-start: 0;
+    max-height: 100svh;
+    max-width: 340px;
+    overflow-y: auto;
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 220ms ease;
+    width: min(86vw, 340px);
+    z-index: 40;
+  }
+
+  .docs-shell__sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .docs-shell__backdrop {
+    background: rgba(4, 8, 16, 0.6);
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    transition: opacity 220ms ease;
+    z-index: 39;
+  }
+
+  .docs-shell__backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.docs-nav-open {
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 1121px) {
+  .docs-mobile-nav-toggle,
+  .docs-mobile-nav-close,
+  .docs-shell__backdrop {
+    display: none;
   }
 }
 

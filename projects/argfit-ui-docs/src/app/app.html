@@ -1,12 +1,34 @@
 <div class="docs-shell">
-  <aside class="docs-shell__sidebar" aria-label="Documentation navigation">
-    <a routerLink="/" class="docs-brand">
-      <span class="docs-brand__mark">AF</span>
-      <div class="docs-brand__copy">
-        <strong>ArgFit UI Docs</strong>
-        <small>Productive 1.0 platform</small>
-      </div>
-    </a>
+  <div
+    class="docs-shell__backdrop"
+    [class.is-open]="mobileNavOpen()"
+    (click)="closeMobileNav()"
+  ></div>
+
+  <aside
+    id="docs-mobile-sidebar"
+    class="docs-shell__sidebar"
+    [class.is-open]="mobileNavOpen()"
+    aria-label="Documentation navigation"
+  >
+    <div class="docs-shell__sidebar-head">
+      <a routerLink="/" class="docs-brand">
+        <span class="docs-brand__mark">AF</span>
+        <div class="docs-brand__copy">
+          <strong>ArgFit UI Docs</strong>
+          <small>Productive 1.0 platform</small>
+        </div>
+      </a>
+
+      <button
+        type="button"
+        class="docs-mobile-nav-close"
+        (click)="closeMobileNav()"
+        aria-label="Close navigation"
+      >
+        ✕
+      </button>
+    </div>
 
     <section class="docs-search-panel" aria-label="Documentation search">
       <div class="docs-search-panel__header">
@@ -57,37 +79,52 @@
       }
     </nav>
 
-    <section class="docs-component-nav" aria-label="Component navigation">
-      <div class="docs-component-nav__header">
-        <span class="docs-nav__eyebrow">{{ componentNavEyebrow() }}</span>
-        <strong>Component navigation</strong>
-      </div>
+    @if (isComponentsSection()) {
+      <section class="docs-component-nav" aria-label="Component navigation">
+        <div class="docs-component-nav__header">
+          <span class="docs-nav__eyebrow">{{ componentNavEyebrow() }}</span>
+          <strong>Component navigation</strong>
+        </div>
 
-      <div class="docs-component-nav__list">
-        @for (group of componentNavGroups(); track group.family) {
-          <div class="docs-component-nav__group">
-            <span class="docs-nav__eyebrow">{{ group.family }} · {{ group.components.length }}</span>
-            @for (component of group.components; track component.slug) {
-              <a [routerLink]="component.route" class="docs-component-nav__link">
-                <span>{{ component.name }}</span>
-                <small>{{ component.category }}</small>
-              </a>
-            }
-          </div>
-        }
-      </div>
+        <div class="docs-component-nav__list">
+          @for (group of componentNavGroups(); track group.family) {
+            <div class="docs-component-nav__group">
+              <span class="docs-nav__eyebrow">{{ group.family }} · {{ group.components.length }}</span>
+              @for (component of group.components; track component.slug) {
+                <a [routerLink]="component.route" class="docs-component-nav__link">
+                  <span>{{ component.name }}</span>
+                  <small>{{ component.category }}</small>
+                </a>
+              }
+            </div>
+          }
+        </div>
 
-      <a routerLink="/components" class="docs-action-link docs-action-link--secondary">
-        Browse full catalog
-      </a>
-    </section>
+        <a routerLink="/components" class="docs-action-link docs-action-link--secondary">
+          Browse full catalog
+        </a>
+      </section>
+    }
   </aside>
 
   <main class="docs-shell__main">
     <header class="docs-shell__topbar">
-      <div>
-        <span class="docs-kicker">Documentation</span>
-        <h1 class="docs-shell__title">ArgFit UI</h1>
+      <div class="docs-shell__topbar-heading">
+        <button
+          type="button"
+          class="docs-mobile-nav-toggle"
+          (click)="toggleMobileNav()"
+          aria-controls="docs-mobile-sidebar"
+          [attr.aria-expanded]="mobileNavOpen()"
+          aria-label="Toggle documentation navigation"
+        >
+          <span></span><span></span><span></span>
+        </button>
+
+        <div>
+          <span class="docs-kicker">Documentation</span>
+          <h1 class="docs-shell__title">ArgFit UI</h1>
+        </div>
       </div>
 
       <div class="docs-shell__controls">

@@ -2,6 +2,8 @@ import { DOCUMENT, NgComponentOutlet, NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { DocsCodeBlockComponent } from './shared/code-block.component';
+
 import {
     AfCard,
     AfCardContentDirective,
@@ -302,7 +304,7 @@ const SAMPLE_INDICATORS = [
 
 const SAMPLE_NAV_ITEMS: readonly AfNavigationItem[] = [
   { id: 'overview', label: 'Overview', badge: 'live' },
-  { id: 'components', label: 'Components', badge: 52 },
+  { id: 'components', label: 'Components', badge: 57 },
   { id: 'release', label: 'Release' },
 ];
 
@@ -580,6 +582,7 @@ const PREVIEW_STEPPER_STEPS = [
     NgComponentOutlet,
     NgFor,
     RouterLink,
+    DocsCodeBlockComponent,
     AfChart,
     AfCard,
     AfCardHeaderDirective,
@@ -1776,6 +1779,13 @@ const PREVIEW_STEPPER_STEPS = [
           </div>
         }
 
+        @if (!compact() && (visibleVariations().length > 0 || booleanInputs().length > 0)) {
+          <div class="docs-live-lab__snippet">
+            <span class="docs-live-lab__snippet-label">Live snippet &mdash; reflects the controls above</span>
+            <docs-code-block [code]="liveExampleCode()" language="html" />
+          </div>
+        }
+
         @if (!compact()) {
           <div class="docs-live-lab__event-row" aria-live="polite">
             @for (event of eventLog(); track $index) {
@@ -1921,6 +1931,30 @@ export class DocsComponentPreviewComponent {
   protected readonly booleanInputs = computed(() => {
     const limit = this.compact() ? 3 : 8;
     return this.component().api.inputs.filter((apiInput) => this.isBooleanValues(apiInput.values)).slice(0, limit);
+  });
+  protected readonly liveExampleCode = computed(() => {
+    const component = this.component();
+    const requiredAttrs = component.api.inputs
+      .filter((apiInput) => apiInput.required)
+      .slice(0, 2)
+      .map((apiInput) => `[${apiInput.name}]="${apiInput.name}"`);
+    const realInputNames = new Set(component.api.inputs.map((apiInput) => apiInput.name));
+    const variationAttrs = this.visibleVariations()
+      .filter((variation) => realInputNames.has(variation.attribute))
+      .map((variation) => `${variation.attribute}="${this.selectedValue(variation.attribute, variation.values)}"`);
+    const booleanAttrs = this.booleanInputs().map(
+      (apiInput) => `[${apiInput.name}]="${this.booleanValue(apiInput.name)}"`,
+    );
+    const attributes = [...requiredAttrs, ...variationAttrs, ...booleanAttrs].join(' ');
+    const openTag = attributes.length > 0 ? `<${component.selector} ${attributes}>` : `<${component.selector}>`;
+    const slots = component.api.slots;
+
+    if (slots.length > 0) {
+      const slotAttr = slots[0].selector.replace('[', '').replace(']', '');
+      return [openTag, `  <ng-template ${slotAttr}>`, '    Custom content', '  </ng-template>', `</${component.selector}>`].join('\n');
+    }
+
+    return [openTag, '  Content', `</${component.selector}>`].join('\n');
   });
   protected readonly contractInputs = computed(() => this.component().api.inputs.slice(0, 8));
   protected readonly contractOutputs = computed(() => this.component().api.outputs.slice(0, 6));

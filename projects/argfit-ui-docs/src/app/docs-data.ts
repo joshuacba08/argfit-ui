@@ -126,12 +126,57 @@ export interface ProductiveGuideCard {
   readonly sourcePath: string;
   readonly summary: string;
   readonly bullets: readonly string[];
+  readonly slug: string;
+  readonly route: string;
 }
 
 export interface ProductiveReleaseAsset {
   readonly title: string;
   readonly sourcePath: string;
   readonly summary: string;
+  readonly slug: string;
+  readonly route: string;
+}
+
+export interface ProductiveDocRef {
+  readonly slug: string;
+  readonly title: string;
+  readonly summary: string;
+  readonly sourcePath: string;
+  readonly contentUrl: string;
+  readonly section: 'guide' | 'release';
+  readonly backRoute: string;
+  readonly backLabel: string;
+}
+
+function slugFromSourcePath(sourcePath: string): string {
+  const file = sourcePath.split('/').pop() ?? sourcePath;
+  return file.replace(/\.md$/, '');
+}
+
+function contentUrlFromSourcePath(sourcePath: string): string {
+  return `/content/${sourcePath.replace(/^docs\//, '')}`;
+}
+
+function guideCard(input: {
+  readonly title: string;
+  readonly sourcePath: string;
+  readonly summary: string;
+  readonly bullets: readonly string[];
+  readonly route?: string;
+}): ProductiveGuideCard {
+  const slug = slugFromSourcePath(input.sourcePath);
+  return { ...input, slug, route: input.route ?? `/docs/${slug}` };
+}
+
+function releaseAsset(input: {
+  readonly title: string;
+  readonly sourcePath: string;
+  readonly summary: string;
+  readonly route?: string;
+}): ProductiveReleaseAsset {
+  const slug = slugFromSourcePath(input.sourcePath);
+  return { ...input, slug, route: input.route ?? `/docs/${slug}` };
 }
 
 export const DOCS_NAV_ITEMS: readonly DocsNavItem[] = [
@@ -257,7 +302,7 @@ export const PRODUCTIVE_COMPONENT_FAMILIES: readonly ProductiveFamilyGuide[] = [
     summary: 'Summary blocks, status indicators and transient or persistent feedback for operational UIs.',
     usage: 'Pair metric and analytics surfaces with local inline guidance when the screen needs to explain risk, loading or action outcomes.',
     a11y: 'Use inline message for persistent local errors and reserve toast/live region behavior for brief global state changes.',
-    components: ['AfAnalyticsCard', 'AfBadge', 'AfChip', 'AfInlineMessage', 'AfMetricCard', 'AfProgress', 'AfToast', 'AfToastViewport'],
+    components: ['AfAnalyticsCard', 'AfBadge', 'AfChip', 'AfEmptyState', 'AfInlineMessage', 'AfMetricCard', 'AfProgress', 'AfSkeleton', 'AfToast', 'AfToastViewport'],
   },
   {
     family: 'Overlay and identity',
@@ -271,7 +316,7 @@ export const PRODUCTIVE_COMPONENT_FAMILIES: readonly ProductiveFamilyGuide[] = [
     summary: 'Productive data entry and choice surfaces for desktop-density and touch-first flows.',
     usage: 'Prefer clear labels, local validation and mobile presentations that use sheets, drawers or fullscreen disclosure for dense editing.',
     a11y: 'Keep label-hint-error relationships synchronized and preserve native-button affordances for reveal, clear and dismiss actions.',
-    components: ['AfCheckbox', 'AfDatePicker', 'AfField', 'AfFieldset', 'AfIconField', 'AfInputCount', 'AfInputGroup', 'AfListbox', 'AfMultiSelect', 'AfPassword', 'AfRadioGroup', 'AfSegmentedControl', 'AfSelect', 'AfSlider', 'AfTextarea', 'AfTimePicker', 'AfToggle'],
+    components: ['AfCheckbox', 'AfDatePicker', 'AfField', 'AfFieldset', 'AfFileUpload', 'AfIconField', 'AfInputCount', 'AfInputGroup', 'AfListbox', 'AfMultiSelect', 'AfPassword', 'AfRadioGroup', 'AfSegmentedControl', 'AfSelect', 'AfSlider', 'AfTextarea', 'AfTimePicker', 'AfToggle'],
   },
   {
     family: 'Data, hierarchy and workflow',
@@ -368,103 +413,104 @@ export const PRODUCTIVE_PACKAGE_GUIDES: readonly ProductivePackageGuide[] = [
 ];
 
 export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
-  {
+  guideCard({
     title: 'Accessibility posture',
     sourcePath: 'docs/productive/accessibility.md',
     summary: 'Focus, keyboard, live-region and mobile disclosure rules for the stable 1.3.2 contract.',
     bullets: ['WCAG AA baseline', 'Dialog and drawer focus return', 'Severity-driven feedback semantics'],
-  },
-  {
+  }),
+  guideCard({
     title: 'Theming and adaptive runtime',
     sourcePath: 'docs/productive/theming.md',
     summary: 'Theme bootstrap, token contract and platform preference behavior.',
     bullets: ['Dark and light shipped themes', 'Token-first overrides', 'No vendor-selector dependency'],
-  },
-  {
+  }),
+  guideCard({
     title: 'PWA app setup',
     sourcePath: 'docs/pwa/quickstart.md',
     summary: 'How to use ArgFit UI to create installable PWA shells for desktop, tablet and mobile with safe device capability detection.',
     bullets: ['Angular service worker', 'Manifest and standalone display', 'Web Bluetooth guarded by secure origin and user gesture'],
-  },
-  {
+    route: '/pwa',
+  }),
+  guideCard({
     title: 'Enterprise readiness',
     sourcePath: 'docs/productive/enterprise-readiness.md',
     summary: 'Production posture for data-heavy, form-heavy, overlay-heavy and analytics-heavy screens.',
     bullets: ['Server-side pagination posture', 'App-level overlay rules', 'Prepared insight for charts'],
-  },
-  {
+  }),
+  guideCard({
     title: 'Migration beta/Beta+ to 1.0',
     sourcePath: 'docs/productive/migration-beta-to-1-0.md',
     summary: 'How to move from prerelease assumptions to a stable semver-major contract.',
     bullets: ['No vendor pivot', 'Experimental public category disappears', 'Version alignment remains mandatory'],
-  },
-  {
+  }),
+  guideCard({
     title: 'Quality gates',
     sourcePath: 'docs/productive/quality-gates.md',
     summary: 'The operational contract that keeps the productive line honest.',
     bullets: ['release:production:check', 'Performance budgets', 'CI artifact expectations'],
-  },
-  {
+  }),
+  guideCard({
     title: 'Release operations',
     sourcePath: 'docs/productive/release-operations.md',
     summary: 'Branching, tagging, npm publish, patch release and changelog rules for production releases.',
     bullets: ['publish-production.yml', 'latest dist-tag guard', 'Patch release procedure'],
-  },
-  {
+  }),
+  guideCard({
     title: 'Production release checklist',
     sourcePath: 'docs/productive/release-checklist.md',
     summary: 'Final pre-tag checks for version alignment, docs, workflow publish and recovery.',
     bullets: ['1.0.0 metadata', 'release:production:check', 'latest dist-tag verification'],
-  },
-  {
+  }),
+  guideCard({
     title: 'Support policy',
     sourcePath: 'docs/productive/support-policy.md',
     summary: 'Support window, security, dependency update and deprecation rules for the productive line.',
     bullets: ['1.x support window', 'Security and dependency updates', 'Deprecation process'],
-  },
+  }),
 ];
 
 export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
-  {
+  releaseAsset({
     title: '1.0 scope',
     sourcePath: 'docs/productive/scope.md',
     summary: 'What enters 1.0, what stays out and what remains frozen in 1.0.x.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Public API inventory',
     sourcePath: 'docs/productive/public-api.md',
     summary: 'The source of truth for the public contract by package barrel.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Semver policy',
     sourcePath: 'docs/productive/semver-policy.md',
     summary: 'Rules for patch, minor, major, deprecations and migration responsibility.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Quality gates',
     sourcePath: 'docs/productive/quality-gates.md',
     summary: 'The production gate, budgets and the CI expectation for the release line.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Release operations',
     sourcePath: 'docs/productive/release-operations.md',
     summary: 'Branch and tag strategy, npm publish process, patch release steps and changelog policy.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Production release checklist',
     sourcePath: 'docs/productive/release-checklist.md',
     summary: 'The final checklist for 1.0.0 metadata, docs, tagging, npm latest and recovery posture.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Support policy',
     sourcePath: 'docs/productive/support-policy.md',
     summary: 'Support window, security maintenance, dependency update and deprecation process for 1.x.',
-  },
-  {
+  }),
+  releaseAsset({
     title: 'Release notes',
     sourcePath: 'docs/productive/release-notes-1.3.2.md',
     summary: 'The canonical 1.3.2 release notes and production publish posture.',
-  },
+  }),
 ];
 
 export const PRODUCTIVE_QUICKSTART_STEPS: readonly string[] = [
@@ -1378,6 +1424,38 @@ export function findProductivePackageGuide(slug: string): ProductivePackageGuide
   return PRODUCTIVE_PACKAGE_GUIDES.find((pkg) => pkg.slug === slug);
 }
 
+export function findProductiveDoc(slug: string): ProductiveDocRef | undefined {
+  const guide = PRODUCTIVE_GUIDE_CARDS.find((candidate) => candidate.slug === slug);
+  if (guide) {
+    return {
+      slug,
+      title: guide.title,
+      summary: guide.summary,
+      sourcePath: guide.sourcePath,
+      contentUrl: contentUrlFromSourcePath(guide.sourcePath),
+      section: 'guide',
+      backRoute: '/guides',
+      backLabel: 'Back to guides',
+    };
+  }
+
+  const asset = PRODUCTIVE_RELEASE_ASSETS.find((candidate) => candidate.slug === slug);
+  if (asset) {
+    return {
+      slug,
+      title: asset.title,
+      summary: asset.summary,
+      sourcePath: asset.sourcePath,
+      contentUrl: contentUrlFromSourcePath(asset.sourcePath),
+      section: 'release',
+      backRoute: '/release',
+      backLabel: 'Back to release',
+    };
+  }
+
+  return undefined;
+}
+
 function buildSearchEntryTags(...parts: readonly string[]): readonly string[] {
   return parts
     .flatMap((part) => part.split(/[^a-zA-Z0-9@.+-]+/))
@@ -1416,7 +1494,7 @@ export const PRODUCTIVE_SEARCH_ENTRIES: readonly DocsSearchEntry[] = [
   })),
   ...PRODUCTIVE_GUIDE_CARDS.map((guide) => ({
     title: guide.title,
-    route: '/guides',
+    route: guide.route,
     kind: 'guide' as const,
     eyebrow: 'guide',
     summary: guide.summary,
@@ -1424,7 +1502,7 @@ export const PRODUCTIVE_SEARCH_ENTRIES: readonly DocsSearchEntry[] = [
   })),
   ...PRODUCTIVE_RELEASE_ASSETS.map((asset) => ({
     title: asset.title,
-    route: '/release',
+    route: asset.route,
     kind: 'release' as const,
     eyebrow: 'release asset',
     summary: asset.summary,

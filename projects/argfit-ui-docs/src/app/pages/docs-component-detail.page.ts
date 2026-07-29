@@ -55,45 +55,13 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
 
       <nav class="docs-anchor-strip" aria-label="Component detail sections">
         <a href="#preview">Preview</a>
-        <a href="#contract">Contract</a>
         <a href="#inputs">Inputs</a>
         <a href="#outputs">Outputs</a>
         <a href="#composition">Composition</a>
         <a href="#related">Related</a>
       </nav>
 
-      <section class="docs-stat-grid" aria-label="Component API summary">
-        <div class="docs-stat-card">
-          <strong>{{ component.api.inputs.length }}</strong>
-          <span>inputs</span>
-        </div>
-        <div class="docs-stat-card">
-          <strong>{{ component.api.outputs.length }}</strong>
-          <span>outputs</span>
-        </div>
-        <div class="docs-stat-card">
-          <strong>{{ component.api.variations.length }}</strong>
-          <span>variations</span>
-        </div>
-      </section>
-
-      <section class="docs-detail-grid">
-        <af-card id="contract" variant="panel" tone="primary" class="docs-card">
-          <header afCardHeader>
-            <div>
-              <span afCardEyebrow>Usage example</span>
-              <h2 afCardTitle>Copy the adaptive contract shape</h2>
-            </div>
-          </header>
-          <div afCardContent class="docs-stack">
-            <docs-code-block
-              [code]="component.api.example"
-              language="html"
-              [filename]="component.selector + '.html'"
-            />
-          </div>
-        </af-card>
-
+      <section class="docs-detail-grid docs-detail-grid--single">
         <af-card variant="panel" tone="primary" class="docs-card">
           <header afCardHeader>
             <div>
@@ -242,39 +210,22 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
       </section>
 
       <section class="docs-detail-grid">
-        <af-card id="related" variant="panel" tone="primary" class="docs-card">
+        <af-card id="guidance" variant="panel" tone="primary" class="docs-card">
           <header afCardHeader>
             <div>
               <span afCardEyebrow>Use it for</span>
-              <h2 afCardTitle>Product posture</h2>
+              <h2 afCardTitle>Product posture and accessibility</h2>
             </div>
           </header>
           <div afCardContent class="docs-stack">
             <p>{{ familyGuide()?.usage }}</p>
-            <p>{{ familyGuide()?.summary }}</p>
+            <p><strong>Accessibility:</strong> {{ familyGuide()?.a11y }}</p>
           </div>
           <footer afCardFooter class="docs-source-row">
             <code>{{ component.sourcePath }}</code>
           </footer>
         </af-card>
 
-        <af-card variant="panel" tone="primary" class="docs-card">
-          <header afCardHeader>
-            <div>
-              <span afCardEyebrow>Accessibility</span>
-              <h2 afCardTitle>Interaction rule</h2>
-            </div>
-          </header>
-          <div afCardContent class="docs-stack">
-            <p>{{ familyGuide()?.a11y }}</p>
-          </div>
-          <footer afCardFooter class="docs-source-row">
-            <code>{{ component.importPath }}</code>
-          </footer>
-        </af-card>
-      </section>
-
-      <section class="docs-detail-grid">
         <af-card variant="panel" tone="primary" class="docs-card">
           <header afCardHeader>
             <div>
@@ -291,8 +242,10 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
             <p>Use the adaptive package as the application-facing contract unless you intentionally opt into a renderer-specific path.</p>
           </div>
         </af-card>
+      </section>
 
-        <af-card variant="panel" tone="primary" class="docs-card">
+      <section class="docs-detail-grid docs-detail-grid--single">
+        <af-card id="related" variant="panel" tone="primary" class="docs-card">
           <header afCardHeader>
             <div>
               <span afCardEyebrow>Siblings</span>

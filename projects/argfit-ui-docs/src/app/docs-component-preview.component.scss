@@ -452,7 +452,7 @@ app-docs-component-preview {
 
 .docs-popover-demo__status {
   background:
-    linear-gradient(135deg, color-mix(in srgb, #f897fe 16%, transparent), transparent),
+    linear-gradient(135deg, color-mix(in srgb, var(--docs-lab-accent) 16%, transparent), transparent),
     color-mix(in srgb, var(--af-bg-surface) 70%, transparent);
   border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 22%, var(--af-border-soft));
   border-radius: var(--af-radius-lg);
@@ -477,11 +477,10 @@ app-docs-component-preview {
 
 .docs-popover-demo__trigger {
   appearance: none;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, #f897fe 82%, var(--docs-lab-accent)), color-mix(in srgb, #483acc 76%, var(--docs-lab-accent)));
-  border: 1px solid color-mix(in srgb, #f897fe 44%, transparent);
+  background: linear-gradient(135deg, var(--docs-lab-accent), color-mix(in srgb, var(--af-primary) 70%, var(--docs-lab-accent)));
+  border: 1px solid color-mix(in srgb, var(--docs-lab-accent) 44%, transparent);
   border-radius: var(--af-radius-pill);
-  box-shadow: 0 18px 42px -24px color-mix(in srgb, #f897fe 92%, transparent);
+  box-shadow: 0 18px 42px -24px color-mix(in srgb, var(--docs-lab-accent) 92%, transparent);
   color: var(--af-primary-contrast);
   cursor: pointer;
   font: inherit;
@@ -1278,6 +1277,18 @@ app-docs-component-preview {
 .docs-live-lab__boolean b {
   color: var(--af-text-soft);
   font-size: var(--af-text-xs);
+  text-transform: uppercase;
+}
+
+.docs-live-lab__snippet {
+  display: grid;
+  gap: var(--af-space-2);
+}
+
+.docs-live-lab__snippet-label {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
   text-transform: uppercase;
 }
 

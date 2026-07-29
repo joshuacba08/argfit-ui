@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import {
@@ -11,13 +11,10 @@ import {
     AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
 
-import {
-    PRODUCTIVE_COMPONENT_DOCS,
-    PRODUCTIVE_COMPONENT_FAMILIES,
-    PRODUCTIVE_ENTRY_POINTS,
-    PRODUCTIVE_PACKAGE_GUIDES,
-    PRODUCTIVE_VALIDATION_COMMANDS,
-} from '../docs-data';
+import { AfIconComponent } from '@argfit-ui/primitives';
+import type { AfIconName } from '@argfit-ui/core';
+
+import { PRODUCTIVE_COMPONENT_DOCS } from '../docs-data';
 
 interface LandingHighlight {
   readonly eyebrow: string;
@@ -25,6 +22,7 @@ interface LandingHighlight {
   readonly summary: string;
   readonly bullets: readonly string[];
   readonly tone: 'primary' | 'accent' | 'success' | 'warning' | 'neutral';
+  readonly icon: AfIconName;
 }
 
 interface LandingScenario {
@@ -57,11 +55,6 @@ interface LandingWorkflowColumn {
   readonly items: readonly string[];
 }
 
-interface LandingArchitectureStep {
-  readonly title: string;
-  readonly summary: string;
-}
-
 @Component({
   selector: 'app-home-landing-page',
   imports: [
@@ -73,6 +66,7 @@ interface LandingArchitectureStep {
     AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
+    AfIconComponent,
   ],
   templateUrl: './home-landing.page.html',
   styleUrl: './home-landing.page.scss',
@@ -81,7 +75,7 @@ interface LandingArchitectureStep {
 export class HomeLandingPageComponent {
   protected readonly proofMetrics: readonly LandingProofMetric[] = [
     {
-      value: '52',
+      value: String(PRODUCTIVE_COMPONENT_DOCS.length),
       label: 'stable components',
       detail: 'Forms, overlays, analytics, shell and workflow surfaces under one semantic language.',
     },
@@ -127,6 +121,7 @@ export class HomeLandingPageComponent {
         'Touch-first behavior paths without vendor branching',
       ],
       tone: 'primary',
+      icon: 'zap',
     },
     {
       eyebrow: 'Vendor boundary',
@@ -138,6 +133,7 @@ export class HomeLandingPageComponent {
         'Public APIs stay semantic and stable',
       ],
       tone: 'accent',
+      icon: 'filter',
     },
     {
       eyebrow: 'System design',
@@ -149,6 +145,7 @@ export class HomeLandingPageComponent {
         'Theme and platform runtime at bootstrap',
       ],
       tone: 'success',
+      icon: 'grid-2x2',
     },
     {
       eyebrow: 'Operational discipline',
@@ -156,6 +153,7 @@ export class HomeLandingPageComponent {
       summary: 'The framework ships with architecture guards, build budgets and a production release check instead of visual improvisation.',
       bullets: ['release:production:check', 'Regression guard coverage', 'Monorepo build integrity'],
       tone: 'warning',
+      icon: 'circle-check',
     },
   ];
 
@@ -217,28 +215,7 @@ export class HomeLandingPageComponent {
     'Platform-aware rendering controlled by runtime, not app duplication.',
   ];
 
-  protected readonly architectureSteps: readonly LandingArchitectureStep[] = [
-    {
-      title: 'Core owns runtime and tokens',
-      summary: 'Theme, platform and shared types stay ArgFit-owned and vendor-agnostic.',
-    },
-    {
-      title: 'Adaptive owns the app contract',
-      summary: 'Applications import semantic surfaces instead of renderer-specific widgets.',
-    },
-    {
-      title: 'Desktop and mobile stay internal',
-      summary: 'PrimeNG and Ionic remain implementation details behind the framework boundary.',
-    },
-  ];
-
-  protected readonly entryPoints = PRODUCTIVE_ENTRY_POINTS;
-  protected readonly packageGuides = PRODUCTIVE_PACKAGE_GUIDES;
-  protected readonly validationCommands = PRODUCTIVE_VALIDATION_COMMANDS.slice(0, 3);
   protected readonly featuredComponents = PRODUCTIVE_COMPONENT_DOCS.filter((component) =>
     new Set(['AfButton', 'AfDialog', 'AfDataTable', 'AfPageShell', 'AfKanban']).has(component.name),
-  );
-  protected readonly stableComponentCount = computed(() =>
-    PRODUCTIVE_COMPONENT_FAMILIES.reduce((total, family) => total + family.components.length, 0),
   );
 }

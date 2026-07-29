@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, ViewEncapsulation, computed, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
@@ -28,7 +28,24 @@ export class DocsLayoutComponent {
     ),
     { initialValue: this.readInitialSearchQuery() },
   );
+  private readonly navigationCount = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((_, index) => index + 1),
+    ),
+    { initialValue: 0 },
+  );
+  private readonly currentUrlPath = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => event.urlAfterRedirects),
+      startWith(this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
+  protected readonly isComponentsSection = computed(() => this.currentUrlPath().startsWith('/components'));
   protected readonly searchQuery = signal(this.readInitialSearchQuery());
+  protected readonly mobileNavOpen = signal(false);
   protected readonly quickSearchResults = computed(() => {
     const query = this.searchQuery().trim();
 
@@ -49,9 +66,30 @@ export class DocsLayoutComponent {
   private readonly syncSearchQuery = effect(() => {
     this.searchQuery.set(this.routeSearchQuery());
   });
+  private readonly closeMobileNavOnNavigate = effect(() => {
+    if (this.navigationCount() > 0) {
+      this.mobileNavOpen.set(false);
+    }
+  });
+  private readonly lockScrollWhileNavOpen = effect(() => {
+    document.body.classList.toggle('docs-nav-open', this.mobileNavOpen());
+  });
 
   protected setPlatform(preference: AfPlatformPreference): void {
     this.platform.setPreference(preference);
+  }
+
+  protected toggleMobileNav(): void {
+    this.mobileNavOpen.update((open) => !open);
+  }
+
+  protected closeMobileNav(): void {
+    this.mobileNavOpen.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  protected handleEscape(): void {
+    this.closeMobileNav();
   }
 
   protected updateSearch(query: string): void {

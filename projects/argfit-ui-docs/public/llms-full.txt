@@ -11,7 +11,7 @@ ArgFit UI is an Angular UI framework built around a semantic adaptive public API
 ## Documentation Map
 
 - [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
-- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the stable 1.3.1 contract.
+- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the stable 1.3.2 contract.
 - [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
 - [PWA Applications](https://argfit-ui.oroyajs.com/pwa): Build installable desktop, tablet and mobile apps with Angular service worker, manifest metadata, offline shell state and device capability flows.
 - [LLMs.txt](https://argfit-ui.oroyajs.com/llms): Human-readable page for AI-oriented documentation endpoints.
@@ -190,6 +190,8 @@ Summary blocks, status indicators and transient or persistent feedback for opera
 - [AfProgress](https://argfit-ui.oroyajs.com/components/progress)
 - [AfToast](https://argfit-ui.oroyajs.com/components/toast)
 - [AfToastViewport](https://argfit-ui.oroyajs.com/components/toast-viewport)
+- [AfEmptyState](https://argfit-ui.oroyajs.com/components/empty-state)
+- [AfSkeleton](https://argfit-ui.oroyajs.com/components/skeleton)
 
 ### Overlay and identity
 
@@ -219,6 +221,9 @@ Productive data entry and choice surfaces for desktop-density and touch-first fl
 - [AfSelect](https://argfit-ui.oroyajs.com/components/select)
 - [AfTextarea](https://argfit-ui.oroyajs.com/components/textarea)
 - [AfToggle](https://argfit-ui.oroyajs.com/components/toggle)
+- [AfFileUpload](https://argfit-ui.oroyajs.com/components/file-upload)
+- [AfSlider](https://argfit-ui.oroyajs.com/components/slider)
+- [AfTimePicker](https://argfit-ui.oroyajs.com/components/time-picker)
 
 ### Data, hierarchy and workflow
 
@@ -342,6 +347,18 @@ Every adaptive component is imported from `@argfit-ui/adaptive` unless a rendere
   - Family: Analytics, feedback and status
   - Summary: Mount and coordinate toast presentation at the application shell level.
 
+- `AfEmptyState`
+  - Route: https://argfit-ui.oroyajs.com/components/empty-state
+  - Selector: `af-empty-state`
+  - Family: Analytics, feedback and status
+  - Summary: Explain why a surface is empty and offer the next action.
+
+- `AfSkeleton`
+  - Route: https://argfit-ui.oroyajs.com/components/skeleton
+  - Selector: `af-skeleton`
+  - Family: Analytics, feedback and status
+  - Summary: Hold a loading surface shape without inventing placeholder data.
+
 - `AfAvatar`
   - Route: https://argfit-ui.oroyajs.com/components/avatar
   - Selector: `af-avatar`
@@ -458,6 +475,24 @@ Every adaptive component is imported from `@argfit-ui/adaptive` unless a rendere
   - Selector: `af-toggle`
   - Family: Forms and selection
   - Summary: Flip immediate on/off settings with a concise control posture.
+
+- `AfFileUpload`
+  - Route: https://argfit-ui.oroyajs.com/components/file-upload
+  - Selector: `af-file-upload`
+  - Family: Forms and selection
+  - Summary: Select files with declared limits, reported rejections and application-driven upload progress.
+
+- `AfSlider`
+  - Route: https://argfit-ui.oroyajs.com/components/slider
+  - Selector: `af-slider`
+  - Family: Forms and selection
+  - Summary: Capture a bounded value where the position on the scale is the information.
+
+- `AfTimePicker`
+  - Route: https://argfit-ui.oroyajs.com/components/time-picker
+  - Selector: `af-time-picker`
+  - Family: Forms and selection
+  - Summary: Collect a civil HH:mm time that stays anchored to the venue clock instead of drifting with the reader timezone.
 
 - `AfChart`
   - Route: https://argfit-ui.oroyajs.com/components/chart

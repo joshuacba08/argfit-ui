@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import {
     AfBadge,
     AfCard,
     AfCardContentDirective,
     AfCardEyebrowDirective,
+    AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
 } from '@argfit-ui/adaptive';
@@ -15,10 +17,12 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
 @Component({
   selector: 'app-docs-release-page',
   imports: [
+    RouterLink,
     AfBadge,
     AfCard,
     AfCardContentDirective,
     AfCardEyebrowDirective,
+    AfCardFooterDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
     DocsCodeBlockComponent,
@@ -53,6 +57,9 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
           <div afCardContent class="docs-stack">
             <p>{{ asset.summary }}</p>
           </div>
+          <footer afCardFooter>
+            <a [routerLink]="asset.route" class="docs-action-link">Read details</a>
+          </footer>
         </af-card>
       }
     </section>

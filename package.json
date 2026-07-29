@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "pnpm build:libs && ng serve",
-    "start:docs": "pnpm build:libs && ng serve argfit-ui-docs --port 4300",
+    "start:docs": "pnpm sync:docs-content && pnpm build:libs && ng serve argfit-ui-docs --port 4300",
     "start:pwa": "pnpm build:libs && ng serve argfit-ui-pwa-starter --port 4400",
     "build": "ng build",
-    "build:docs": "pnpm build:libs && ng build argfit-ui-docs",
+    "build:docs": "pnpm sync:docs-content && pnpm build:libs && ng build argfit-ui-docs",
+    "sync:docs-content": "node tools/sync-docs-content.mjs",
     "build:pwa": "pnpm build:libs && ng build argfit-ui-pwa-starter",
     "build:core": "ng build argfit-ui-core",
     "build:primitives": "ng build argfit-ui-primitives",
