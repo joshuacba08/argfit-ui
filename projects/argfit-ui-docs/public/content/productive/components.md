@@ -1,6 +1,6 @@
 # Productive Components
 
-This page documents the stable adaptive component surface for the `1.3.2` contract.
+This page documents the stable adaptive component surface for the `1.3.3` contract.
 
 Every component listed below is already public through `@argfit-ui/adaptive`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
 

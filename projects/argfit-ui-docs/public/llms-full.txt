@@ -11,7 +11,7 @@ ArgFit UI is an Angular UI framework built around a semantic adaptive public API
 ## Documentation Map
 
 - [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
-- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the stable 1.3.2 contract.
+- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the stable 1.3.3 contract.
 - [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
 - [PWA Applications](https://argfit-ui.oroyajs.com/pwa): Build installable desktop, tablet and mobile apps with Angular service worker, manifest metadata, offline shell state and device capability flows.
 - [LLMs.txt](https://argfit-ui.oroyajs.com/llms): Human-readable page for AI-oriented documentation endpoints.

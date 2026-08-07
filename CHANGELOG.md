@@ -2,7 +2,7 @@
 
 All notable changes to ArgFit UI are documented here.
 
-## 1.3.2
+## 1.3.3
 
 Patch release driven by the compact collection navigation used in ArgFit
 Football.
@@ -25,7 +25,7 @@ Football.
 
 ### Release
 
-- All five publishable packages move to `1.3.2`, with internal peer versions
+- All five publishable packages move to `1.3.3`, with internal peer versions
   aligned exactly.
 - Validated through the production release gate and published with the `latest`
   dist-tag.

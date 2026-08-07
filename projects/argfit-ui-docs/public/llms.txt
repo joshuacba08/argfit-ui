@@ -17,7 +17,7 @@ ArgFit UI provides an application-facing adaptive component API for Angular. App
 ## Documentation
 
 - [Home](https://argfit-ui.oroyajs.com/): Product landing and entry point.
-- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the stable 1.3.2 contract.
+- [Overview](https://argfit-ui.oroyajs.com/overview): Product posture, framework map and the stable 1.3.3 contract.
 - [Quickstart](https://argfit-ui.oroyajs.com/quickstart): Install, bootstrap and validate ArgFit UI in an Angular standalone app.
 - [PWA Applications](https://argfit-ui.oroyajs.com/pwa): Build installable desktop, tablet and mobile apps with offline shell and device capability flows.
 - [Components](https://argfit-ui.oroyajs.com/components): Stable adaptive component catalog with previews and detail pages.

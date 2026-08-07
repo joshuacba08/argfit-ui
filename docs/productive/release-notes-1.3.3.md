@@ -1,11 +1,11 @@
-# Release Notes: 1.3.2
+# Release Notes: 1.3.3
 
-ArgFit UI `1.3.2` adds the compact tab treatment required by application
+ArgFit UI `1.3.3` adds the compact tab treatment required by application
 collection and source filters.
 
 ## Release Identity
 
-- Stable version: `1.3.2`
+- Stable version: `1.3.3`
 - npm dist-tag: `latest`
 - Validation gate: `pnpm release:production:check`
 - Tarballs: `dist/production-tarballs/`
@@ -52,8 +52,8 @@ the same width.
 Keep all ArgFit UI packages aligned:
 
 ```bash
-pnpm add @argfit-ui/core@1.3.2 @argfit-ui/primitives@1.3.2
-pnpm add @argfit-ui/desktop@1.3.2 @argfit-ui/mobile@1.3.2 @argfit-ui/adaptive@1.3.2
+pnpm add @argfit-ui/core@1.3.3 @argfit-ui/primitives@1.3.3
+pnpm add @argfit-ui/desktop@1.3.3 @argfit-ui/mobile@1.3.3 @argfit-ui/adaptive@1.3.3
 ```
 
 No migration is required. Existing tabs keep the `cards` variant and rendered

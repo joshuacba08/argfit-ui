@@ -36,10 +36,10 @@ import { DocsCodeBlockComponent } from '../shared/code-block.component';
       <h1>Release</h1>
       <p class="docs-page__lead">
         Productive release work is anchored in the frozen public API, semver policy and the production gate.
-        Package metadata, production tarballs and npm latest publishing are aligned for stable 1.3.2, with the 1.0.0 contract retained as the compatibility baseline.
+        Package metadata, production tarballs and npm latest publishing are aligned for stable 1.3.3, with the 1.0.0 contract retained as the compatibility baseline.
       </p>
       <div class="docs-pill-row">
-        <af-badge tone="success">1.3.2 stable</af-badge>
+        <af-badge tone="success">1.3.3 stable</af-badge>
         <af-badge tone="success">release:production:check</af-badge>
       </div>
     </div>
