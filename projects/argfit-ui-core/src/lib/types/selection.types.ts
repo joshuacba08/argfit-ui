@@ -25,3 +25,11 @@ export interface AfResolvedListboxOption<TValue = AfSelectionValue> extends AfLi
   readonly searchText: string;
   readonly selected: boolean;
 }
+
+export type AfSelectSearchMode = 'client' | 'server';
+
+export interface AfSelectLoadMoreEvent {
+  readonly query: string;
+  readonly offset: number;
+}
+

@@ -127,19 +127,25 @@
 
 .af-popover-desktop__header {
   align-items: center;
+  background: color-mix(in srgb, var(--af-bg-interactive) 78%, transparent);
   border-bottom: 1px solid var(--af-border-soft);
   display: flex;
-  gap: var(--af-space-2);
+  gap: var(--af-space-3);
   justify-content: space-between;
+  min-height: 2.75rem;
   padding: var(--af-space-3) var(--af-space-4);
 }
 
 .af-popover-desktop__title {
   color: var(--af-text-main);
-  font-size: var(--af-text-sm);
-  font-weight: var(--af-font-weight-semibold);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-wider);
   line-height: var(--af-leading-snug);
   margin: 0;
+  min-width: 0;
+  text-transform: uppercase;
 }
 
 .af-popover-desktop__close {
@@ -151,21 +157,28 @@
   color: var(--af-text-soft, var(--af-text-muted));
   cursor: pointer;
   display: inline-flex;
-  font-size: var(--af-text-base);
-  height: 28px;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: var(--af-text-lg);
+  height: 32px;
   justify-content: center;
   line-height: 1;
+  margin-inline-end: calc(var(--af-space-1) * -1);
   padding: 0;
-  width: 28px;
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    color var(--af-duration-fast) var(--af-ease-out);
+  width: 32px;
 }
 
 .af-popover-desktop__close:hover {
-  background: var(--af-bg-interactive);
+  background: var(--af-bg-interactive, var(--af-bg-surface));
   color: var(--af-text-main);
 }
 
 .af-popover-desktop__close:focus-visible {
-  border-color: var(--af-border-focus);
+  border-color: var(--af-border-focus, var(--af-primary));
   box-shadow: var(--af-focus-ring);
   outline: none;
 }

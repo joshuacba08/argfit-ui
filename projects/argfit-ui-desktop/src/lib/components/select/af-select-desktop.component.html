@@ -20,6 +20,7 @@
       optionDisabled="disabled"
       [placeholder]="placeholder() ?? undefined"
       [disabled]="disabled()"
+      [loading]="loading()"
       [filter]="searchable()"
       filterBy="label"
       [filterPlaceholder]="searchPlaceholder()"
@@ -32,7 +33,19 @@
       (onChange)="onChange($event)"
       (onFocus)="onFocus()"
       (onBlur)="onBlur()"
-    />
+      (onFilter)="onFilter($event)"
+      (onShow)="onShow()"
+      (onHide)="onHide()"
+    >
+      <ng-template #footer>
+        @if (loadingMore()) {
+          <div class="af-select-desktop__loading-more">
+            <span class="af-select-desktop__spinner" aria-hidden="true"></span>
+            <span>Cargando más opciones…</span>
+          </div>
+        }
+      </ng-template>
+    </p-select>
   </div>
 
   @if (error(); as errorText) {

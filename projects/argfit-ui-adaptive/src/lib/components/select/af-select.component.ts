@@ -11,7 +11,14 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { AfPlatformService, type AfControlSize, type AfFormOption, type AfValidationState } from '@argfit-ui/core';
+import {
+  AfPlatformService,
+  type AfControlSize,
+  type AfFormOption,
+  type AfSelectLoadMoreEvent,
+  type AfSelectSearchMode,
+  type AfValidationState,
+} from '@argfit-ui/core';
 import { AfSelectDesktopComponent } from '@argfit-ui/desktop';
 import { AfSelectMobileComponent } from '@argfit-ui/mobile';
 
@@ -49,6 +56,13 @@ export class AfSelectComponent implements ControlValueAccessor {
   readonly searchable = input(false, { transform: booleanAttribute });
   readonly searchPlaceholder = input('Buscar…');
   readonly searchEmptyText = input('Sin resultados');
+  readonly searchMode = input<AfSelectSearchMode>('client');
+  readonly loading = input(false, { transform: booleanAttribute });
+  readonly loadingMore = input(false, { transform: booleanAttribute });
+  readonly scrollLoad = input(false, { transform: booleanAttribute });
+  readonly scrollThreshold = input(50);
+  readonly debounceTime = input(300);
+  readonly selectedOption = input<AfFormOption | null>(null);
   readonly error = input<string | undefined>(undefined);
   readonly state = input<AfValidationState>('default');
   readonly size = input<AfControlSize>('md');
@@ -59,6 +73,9 @@ export class AfSelectComponent implements ControlValueAccessor {
 
   readonly valueChange = output<string>();
   readonly focusChange = output<boolean>();
+  readonly searchChange = output<string>();
+  readonly loadMore = output<AfSelectLoadMoreEvent>();
+  readonly clearSearch = output<void>();
 
   protected readonly isMobile = this.platform.isMobile;
   protected readonly internalValue = signal('');

@@ -1118,8 +1118,20 @@
               </div>
 
               <div class="forms-grid forms-grid--two">
-                <af-select label="Rango de fechas" [options]="dateRangeOptions" formControlName="range" />
-                <af-select label="Atleta" [options]="exportAthleteOptions" formControlName="athlete" />
+                <af-select label="Rango de fechas" [options]="dateRangeOptions" formControlName="range" searchable />
+                <af-select
+                  label="Atleta (Scroll Load & Búsqueda Paginada API)"
+                  [options]="remoteSelectOptions()"
+                  [formControl]="remoteSelectControl"
+                  searchable
+                  searchMode="server"
+                  scrollLoad
+                  [loading]="remoteSelectLoading()"
+                  [loadingMore]="remoteSelectLoadingMore()"
+                  hint="Busca en servidor o scrollea al final para cargar +10 resultados."
+                  (searchChange)="onSelectSearch($event)"
+                  (loadMore)="onSelectLoadMore()"
+                />
               </div>
 
               <div class="forms-panel__subsection">

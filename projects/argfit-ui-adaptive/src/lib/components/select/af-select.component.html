@@ -8,6 +8,13 @@
     [searchable]="searchable()"
     [searchPlaceholder]="searchPlaceholder()"
     [searchEmptyText]="searchEmptyText()"
+    [searchMode]="searchMode()"
+    [loading]="loading()"
+    [loadingMore]="loadingMore()"
+    [scrollLoad]="scrollLoad()"
+    [scrollThreshold]="scrollThreshold()"
+    [debounceTime]="debounceTime()"
+    [selectedOption]="selectedOption()"
     [error]="error()"
     [state]="state()"
     [size]="size()"
@@ -17,6 +24,9 @@
     [inputId]="inputId()"
     (valueChange)="onInternalValueChange($event)"
     (focusChange)="onInternalFocusChange($event)"
+    (searchChange)="searchChange.emit($event)"
+    (loadMore)="loadMore.emit($event)"
+    (clearSearch)="clearSearch.emit()"
   />
 } @else {
   <af-select-desktop
@@ -28,6 +38,13 @@
     [searchable]="searchable()"
     [searchPlaceholder]="searchPlaceholder()"
     [searchEmptyText]="searchEmptyText()"
+    [searchMode]="searchMode()"
+    [loading]="loading()"
+    [loadingMore]="loadingMore()"
+    [scrollLoad]="scrollLoad()"
+    [scrollThreshold]="scrollThreshold()"
+    [debounceTime]="debounceTime()"
+    [selectedOption]="selectedOption()"
     [error]="error()"
     [state]="state()"
     [size]="size()"
@@ -37,5 +54,8 @@
     [inputId]="inputId()"
     (valueChange)="onInternalValueChange($event)"
     (focusChange)="onInternalFocusChange($event)"
+    (searchChange)="searchChange.emit($event)"
+    (loadMore)="loadMore.emit($event)"
+    (clearSearch)="clearSearch.emit()"
   />
 }

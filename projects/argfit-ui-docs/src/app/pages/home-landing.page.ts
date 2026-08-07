@@ -203,6 +203,8 @@ export class HomeLandingPageComponent {
     'Platform-aware rendering controlled by runtime, not app duplication.',
   ];
 
+  protected readonly architectureSteps: readonly string[] = [];
+
   protected readonly featuredComponents = PRODUCTIVE_COMPONENT_DOCS.filter((component) =>
     new Set(['AfButton', 'AfDialog', 'AfDataTable', 'AfPageShell', 'AfKanban']).has(component.name),
   );

@@ -1,17 +1,25 @@
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
   inject,
-    input,
-    output,
-    signal,
-    ViewEncapsulation,
+  input,
+  OnDestroy,
+  output,
+  signal,
+  ViewEncapsulation,
 } from '@angular/core';
 import { IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 
-import { AfThemeService, type AfControlSize, type AfFormOption, type AfValidationState } from '@argfit-ui/core';
+import {
+  AfThemeService,
+  type AfControlSize,
+  type AfFormOption,
+  type AfSelectLoadMoreEvent,
+  type AfSelectSearchMode,
+  type AfValidationState,
+} from '@argfit-ui/core';
 import { AfIconComponent } from '@argfit-ui/primitives';
 
 import { AfDialogMobileComponent } from '../dialog/af-dialog-mobile.component';
@@ -32,8 +40,9 @@ let nextAfMobileSelectId = 0;
     '[attr.data-disabled]': 'disabled() ? "" : null',
   },
 })
-export class AfSelectMobileComponent {
+export class AfSelectMobileComponent implements OnDestroy {
   private readonly defaultSelectId = `af-select-mobile-${++nextAfMobileSelectId}`;
+  private searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   readonly value = input<string>('');
   readonly options = input<readonly AfFormOption[]>([]);
@@ -57,24 +66,53 @@ export class AfSelectMobileComponent {
   readonly searchable = input(false, { transform: booleanAttribute });
   readonly searchPlaceholder = input('Buscar…');
   readonly searchEmptyText = input('Sin resultados');
+  readonly searchMode = input<AfSelectSearchMode>('client');
+  readonly loading = input(false, { transform: booleanAttribute });
+  readonly loadingMore = input(false, { transform: booleanAttribute });
+  readonly scrollLoad = input(false, { transform: booleanAttribute });
+  readonly scrollThreshold = input(50);
+  readonly debounceTime = input(300);
+  readonly selectedOption = input<AfFormOption | null>(null);
 
   readonly valueChange = output<string>();
   readonly focusChange = output<boolean>();
+  readonly searchChange = output<string>();
+  readonly loadMore = output<AfSelectLoadMoreEvent>();
+  readonly clearSearch = output<void>();
 
   protected readonly sheetOpen = signal(false);
   protected readonly query = signal('');
 
+  ngOnDestroy(): void {
+    if (this.searchDebounceTimer) {
+      clearTimeout(this.searchDebounceTimer);
+    }
+  }
+
+  protected readonly selectOptions = computed(() => {
+    const opts = [...this.options()];
+    const val = this.value();
+    const selected = this.selectedOption();
+    if (val && selected && selected.value === val && !opts.some((option) => option.value === val)) {
+      return [selected, ...opts];
+    }
+    return opts;
+  });
+
   protected readonly filteredOptions = computed(() => {
+    if (this.searchMode() === 'server') {
+      return this.selectOptions();
+    }
     const query = this.query().trim().toLowerCase();
     if (query === '') {
-      return this.options();
+      return this.selectOptions();
     }
-    return this.options().filter((option) => option.label.toLowerCase().includes(query));
+    return this.selectOptions().filter((option) => option.label.toLowerCase().includes(query));
   });
 
   protected readonly selectedLabel = computed(
     () =>
-      this.options().find((option) => option.value === this.value())?.label ??
+      this.selectOptions().find((option) => option.value === this.value())?.label ??
       this.placeholder() ??
       'Selecciona una opción',
   );
@@ -107,7 +145,31 @@ export class AfSelectMobileComponent {
   }
 
   protected onQueryInput(event: Event): void {
-    this.query.set((event.target as HTMLInputElement).value);
+    const query = (event.target as HTMLInputElement).value;
+    this.query.set(query);
+
+    if (this.searchDebounceTimer) {
+      clearTimeout(this.searchDebounceTimer);
+    }
+    this.searchDebounceTimer = setTimeout(() => {
+      this.searchChange.emit(query);
+    }, this.debounceTime());
+  }
+
+  protected clearQuery(): void {
+    this.query.set('');
+    this.clearSearch.emit();
+    this.searchChange.emit('');
+  }
+
+  protected onListScroll(event: Event): void {
+    if (!this.scrollLoad() || this.loading() || this.loadingMore()) {
+      return;
+    }
+    const target = event.target as HTMLElement;
+    if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - this.scrollThreshold()) {
+      this.loadMore.emit({ query: this.query(), offset: this.options().length });
+    }
   }
 
   constructor() {
@@ -154,3 +216,4 @@ export class AfSelectMobileComponent {
     this.focusChange.emit(false);
   }
 }
+

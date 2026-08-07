@@ -322,3 +322,44 @@ ion-alert.af-select-mobile__overlay .alert-button {
   box-shadow: var(--af-focus-ring);
   outline: none;
 }
+
+.af-select-mobile__search-clear {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  min-height: 32px;
+  min-width: 32px;
+  padding: 0;
+}
+
+.af-select-mobile__loading-item {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  font-size: var(--af-text-sm);
+  gap: var(--af-space-2);
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--af-space-2);
+}
+
+.af-select-mobile__spinner {
+  animation: af-select-mobile-spin 0.8s linear infinite;
+  border: 2px solid color-mix(in srgb, var(--af-primary) 25%, transparent);
+  border-radius: 50%;
+  border-top-color: var(--af-primary);
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+}
+
+@keyframes af-select-mobile-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+

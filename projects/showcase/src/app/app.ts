@@ -554,6 +554,65 @@ export class App {
     totalItems: this.filteredAthleteTableRows().length,
   }));
 
+  protected readonly remoteSelectQuery = signal('');
+  protected readonly remoteSelectLoading = signal(false);
+  protected readonly remoteSelectLoadingMore = signal(false);
+  protected readonly remoteSelectOptions = signal<readonly AfFormOption[]>([]);
+  protected readonly remoteSelectControl = new FormControl<string>('athlete-1', { nonNullable: true });
+
+  private readonly allRemoteAthletes: readonly AfFormOption[] = Array.from({ length: 60 }, (_, i) => ({
+    value: `athlete-${i + 1}`,
+    label: `Atleta #${i + 1} - ${['Voleibol', 'Futbol', 'Rugby', 'Basquet', 'Atletismo'][i % 5]} (Club #${(i % 4) + 1})`,
+  }));
+
+  constructor() {
+    inject(AfThemeService);
+    this.loadInitialRemoteSelectOptions();
+  }
+
+  private loadInitialRemoteSelectOptions(): void {
+    this.remoteSelectLoading.set(true);
+    setTimeout(() => {
+      this.remoteSelectOptions.set(this.allRemoteAthletes.slice(0, 10));
+      this.remoteSelectLoading.set(false);
+    }, 400);
+  }
+
+  protected onSelectSearch(query: string): void {
+    this.remoteSelectQuery.set(query);
+    this.remoteSelectLoading.set(true);
+    setTimeout(() => {
+      const filtered = this.allRemoteAthletes.filter((a) =>
+        a.label.toLowerCase().includes(query.toLowerCase()),
+      );
+      this.remoteSelectOptions.set(filtered.slice(0, 10));
+      this.remoteSelectLoading.set(false);
+      this.recordAction(`Select API busca → "${query}"`);
+    }, 400);
+  }
+
+  protected onSelectLoadMore(): void {
+    if (this.remoteSelectLoadingMore() || this.remoteSelectLoading()) {
+      return;
+    }
+    const currentCount = this.remoteSelectOptions().length;
+    const query = this.remoteSelectQuery().toLowerCase();
+    const filtered = this.allRemoteAthletes.filter((a) =>
+      a.label.toLowerCase().includes(query),
+    );
+
+    if (currentCount >= filtered.length) {
+      return;
+    }
+
+    setTimeout(() => {
+      const nextBatch = filtered.slice(0, currentCount + 10);
+      this.remoteSelectOptions.set(nextBatch);
+      this.remoteSelectLoadingMore.set(false);
+      this.recordAction(`Select API scroll load → ${nextBatch.length} elementos`);
+    }, 600);
+  }
+
   protected setPlatform(preference: AfPlatformPreference): void {
     this.platform.setPreference(preference);
   }

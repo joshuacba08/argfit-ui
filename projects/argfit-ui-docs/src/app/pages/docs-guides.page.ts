@@ -75,6 +75,7 @@ import { PRODUCTIVE_GUIDE_CARDS, PRODUCTIVE_MIGRATION_CHECKLIST } from '../docs-
         </div>
         <footer afCardFooter class="docs-source-row">
           <a routerLink="/docs/migration-beta-to-1-0" class="docs-action-link">Read full guide</a>
+          <!-- docs/productive/migration-beta-to-1-0.md -->
         </footer>
       </af-card>
 

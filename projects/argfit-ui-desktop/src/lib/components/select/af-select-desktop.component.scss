@@ -226,3 +226,53 @@ html[data-theme='light'] .af-select-desktop__overlay {
 .af-select-desktop__message--error {
   color: var(--af-danger);
 }
+
+.af-select-desktop__overlay :is(.p-select-filter-container, [data-pc-section='header']) {
+  border-bottom: 1px solid var(--af-border);
+  padding: var(--af-space-2);
+}
+
+.af-select-desktop__overlay :is(.p-select-filter, [data-pc-section='filter']) {
+  background: var(--af-bg-surface);
+  border: 1px solid var(--af-border);
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-main);
+  font-family: var(--af-font-body);
+  font-size: var(--af-text-sm);
+  outline: none;
+  padding: var(--af-space-1_5) var(--af-space-2_5);
+  width: 100%;
+
+  &:focus {
+    border-color: var(--af-primary);
+    box-shadow: 0 0 0 2px rgba(37, 153, 213, 0.15);
+  }
+}
+
+.af-select-desktop__loading-more {
+  align-items: center;
+  border-top: 1px solid var(--af-border);
+  color: var(--af-text-soft, var(--af-text-muted));
+  display: flex;
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-2);
+  justify-content: center;
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+.af-select-desktop__spinner {
+  animation: af-select-spin 0.8s linear infinite;
+  border: 2px solid color-mix(in srgb, var(--af-primary) 25%, transparent);
+  border-radius: 50%;
+  border-top-color: var(--af-primary);
+  display: inline-block;
+  height: 14px;
+  width: 14px;
+}
+
+@keyframes af-select-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+

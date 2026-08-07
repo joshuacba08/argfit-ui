@@ -74,7 +74,11 @@
     (openChange)="onSheetOpenChange($event)"
   >
     <div class="af-select-mobile__search">
-      <af-icon name="search" size="sm" tone="muted" decorative />
+      @if (loading()) {
+        <span class="af-select-mobile__spinner" aria-hidden="true"></span>
+      } @else {
+        <af-icon name="search" size="sm" tone="muted" decorative />
+      }
       <input
         class="af-select-mobile__search-input"
         type="search"
@@ -83,12 +87,27 @@
         [attr.aria-label]="searchPlaceholder()"
         (input)="onQueryInput($event)"
       />
+      @if (query()) {
+        <button
+          type="button"
+          class="af-select-mobile__search-clear"
+          aria-label="Limpiar búsqueda"
+          (click)="clearQuery()"
+        >
+          <af-icon name="x" size="xs" tone="muted" decorative />
+        </button>
+      }
     </div>
 
-    @if (filteredOptions().length === 0) {
+    @if (!loading() && filteredOptions().length === 0) {
       <p class="af-select-mobile__search-empty" role="status">{{ searchEmptyText() }}</p>
     } @else {
-      <ul class="af-select-mobile__options" role="listbox" [attr.aria-label]="label() ?? null">
+      <ul
+        class="af-select-mobile__options"
+        role="listbox"
+        [attr.aria-label]="label() ?? null"
+        (scroll)="onListScroll($event)"
+      >
         @for (option of filteredOptions(); track option.value) {
           <li>
             <button
@@ -104,6 +123,12 @@
                 <af-icon name="check" size="sm" tone="primary" decorative />
               }
             </button>
+          </li>
+        }
+        @if (loadingMore()) {
+          <li class="af-select-mobile__loading-item">
+            <span class="af-select-mobile__spinner"></span>
+            <span>Cargando más opciones…</span>
           </li>
         }
       </ul>
