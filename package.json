@@ -1,6 +1,6 @@
 {
   "name": "argfit-ui",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "scripts": {
     "ng": "ng",
     "start": "pnpm build:libs && ng serve",
@@ -68,7 +68,9 @@
     "release:patch": "node scripts/release.mjs patch",
     "release:minor": "node scripts/release.mjs minor",
     "release:major": "node scripts/release.mjs major",
-    "prepare": "husky"
+    "prepare": "husky",
+    "storybook": "pnpm --dir tools/storybook dev",
+    "build-storybook": "pnpm --dir tools/storybook build"
   },
   "private": true,
   "packageManager": "pnpm@10.28.2",
@@ -104,6 +106,7 @@
     "playwright": "^1.60.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
+    "vite": "7.3.2",
     "vitest": "^4.0.8"
   }
 }

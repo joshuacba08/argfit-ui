@@ -282,10 +282,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.3.3.md',
-    summary: 'The shipped 1.3.3 patch for compact line tabs and app-owned result regions.',
+    sourcePath: 'docs/productive/release-notes-1.3.4.md',
+    summary: 'The shipped 1.3.4 patch for searchable selects and adjacent-month dates.',
     badge: 'ship',
-    bullets: ['Compact line tabs', 'Tablet width detection', '1.3.3 package metadata aligned'],
+    bullets: ['Paginated select UX', 'Adjacent-month date selection', '1.3.4 package metadata aligned'],
   },
 ];
 
@@ -508,8 +508,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.3.3.md',
-    summary: 'The canonical 1.3.3 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.3.4.md',
+    summary: 'The canonical 1.3.4 release notes and production publish posture.',
   }),
 ];
 

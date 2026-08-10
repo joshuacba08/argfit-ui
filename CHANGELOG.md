@@ -2,6 +2,31 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.3.4
+
+Patch release focused on searchable, paginated selects and calendar correctness.
+
+### Fixed
+
+- Searchable selects keep their filter visible while scrolling and expose a
+  clearer, themed scrollbar for API-backed infinite loading.
+- Infinite-scroll listeners bind to the select panel that owns the trigger,
+  avoiding cross-talk when a page contains multiple openable selects.
+- Date pickers allow selecting the visible days that belong to the previous or
+  next month.
+
+### Developer experience
+
+- Storybook now boots with the ArgFit UI theme and global styles.
+- Select stories cover search, long result sets and loading-more states.
+
+### Release
+
+- All five publishable packages move to `1.3.4`, with internal peer versions
+  aligned exactly.
+- Validated through the production release gate and published with the `latest`
+  dist-tag.
+
 ## 1.3.3
 
 Patch release driven by the compact collection navigation used in ArgFit

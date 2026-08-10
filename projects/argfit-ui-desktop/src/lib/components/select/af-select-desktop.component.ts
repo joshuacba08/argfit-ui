@@ -106,7 +106,9 @@ export class AfSelectDesktopComponent implements OnDestroy {
   });
   protected readonly hintId = computed(() => `${this.resolvedSelectId()}-hint`);
   protected readonly errorId = computed(() => `${this.resolvedSelectId()}-error`);
-  protected readonly effectiveState = computed<AfValidationState>(() => (this.error() ? 'error' : this.state()));
+  protected readonly effectiveState = computed<AfValidationState>(() =>
+    this.error() ? 'error' : this.state(),
+  );
   protected readonly describedBy = computed(() => {
     if (this.error()) {
       return this.errorId();
@@ -127,7 +129,9 @@ export class AfSelectDesktopComponent implements OnDestroy {
   protected onChange(event: AfSelectChangeEvent): void {
     const selectedValue = event.value;
 
-    this.valueChange.emit(typeof selectedValue === 'string' ? selectedValue : String(selectedValue ?? ''));
+    this.valueChange.emit(
+      typeof selectedValue === 'string' ? selectedValue : String(selectedValue ?? ''),
+    );
   }
 
   protected onFocus(): void {
@@ -155,8 +159,13 @@ export class AfSelectDesktopComponent implements OnDestroy {
       return;
     }
     setTimeout(() => {
-      const container = document.querySelector(
-        '.af-select-desktop__overlay .p-select-list-container',
+      // PrimeNG mueve el panel a <body>. Resolverlo desde el id propio evita que dos
+      // selects abiertos/animándose compartan por accidente el listener de paginado.
+      const trigger = document.getElementById(this.resolvedSelectId());
+      const listId = trigger?.getAttribute('aria-controls');
+      const list = listId ? document.getElementById(listId) : null;
+      const container = list?.closest(
+        '.p-select-list-container, [data-pc-section="listcontainer"]',
       ) as HTMLElement | null;
       if (container) {
         const handler = (e: Event) => this.onListScroll(e);
@@ -175,7 +184,10 @@ export class AfSelectDesktopComponent implements OnDestroy {
       return;
     }
     const target = event.target as HTMLElement;
-    if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - this.scrollThreshold()) {
+    if (
+      target &&
+      target.scrollTop + target.clientHeight >= target.scrollHeight - this.scrollThreshold()
+    ) {
       this.loadMore.emit({ query: this.currentFilterQuery, offset: this.options().length });
     }
   }
@@ -187,4 +199,3 @@ export class AfSelectDesktopComponent implements OnDestroy {
     }
   }
 }
-

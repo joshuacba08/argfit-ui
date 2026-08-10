@@ -1,6 +1,6 @@
 {
   "name": "@argfit-ui/core",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Core tokens, themes, services, and shared types for ArgFit UI.",
   "keywords": [
     "angular",

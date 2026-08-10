@@ -1,0 +1,23 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../out-tsc/storybook",
+    "types": ["node"],
+    "paths": {
+      "@argfit-ui/core": ["../../../projects/argfit-ui-core/src/public-api.ts"],
+      "@argfit-ui/desktop": ["../../../projects/argfit-ui-desktop/src/public-api.ts"],
+      "@argfit-ui/mobile": ["../../../projects/argfit-ui-mobile/src/public-api.ts"],
+      "@argfit-ui/adaptive": ["../../../projects/argfit-ui-adaptive/src/public-api.ts"],
+      "@argfit-ui/primitives": ["../../../projects/argfit-ui-primitives/src/public-api.ts"]
+    }
+  },
+  "include": [
+    "../../../projects/argfit-ui-core/src/**/*.ts",
+    "../../../projects/argfit-ui-desktop/src/**/*.ts",
+    "../../../projects/argfit-ui-mobile/src/**/*.ts",
+    "../../../projects/argfit-ui-adaptive/src/**/*.ts",
+    "../../../projects/argfit-ui-primitives/src/**/*.ts",
+    "./*.ts"
+  ],
+  "exclude": ["../../../projects/**/src/**/*.spec.ts"]
+}

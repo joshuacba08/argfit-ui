@@ -1,15 +1,15 @@
 # @argfit-ui/primitives
 
-Vendor-agnostic primitive package for ArgFit UI `1.3.3`.
+Vendor-agnostic primitive package for ArgFit UI `1.3.4`.
 
 Contains small building blocks shared by desktop, mobile and adaptive layers. Primitives may depend on `@argfit-ui/core` and `@angular/cdk`, but must not import PrimeNG, Ionic, desktop, mobile or adaptive implementations.
 
-This package participates in the current `1.3.3` production contract.
+This package participates in the current `1.3.4` production contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@1.3.3 @argfit-ui/primitives@1.3.3
+pnpm add @argfit-ui/core@1.3.4 @argfit-ui/primitives@1.3.4
 pnpm add @angular/cdk@^21.2.0 @lucide/angular@^1.16.0
 ```
 
@@ -52,7 +52,7 @@ import {
 - [Components](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/components.md)
 - [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/public-api.md)
 - [Accessibility](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/accessibility.md)
-- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.3.3.md)
+- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.3.4.md)
 
 ## Build
 

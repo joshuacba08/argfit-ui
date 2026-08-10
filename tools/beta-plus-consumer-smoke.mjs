@@ -84,6 +84,7 @@ function assertBuildOutputExists() {
 
 function writeWorkspaceFiles() {
   writeFileSync(resolve(smokeDirectory, 'package.json'), createPackageManifest(), 'utf8');
+  writeFileSync(resolve(smokeDirectory, 'pnpm-workspace.yaml'), createPnpmWorkspaceSource(), 'utf8');
   writeFileSync(resolve(smokeDirectory, 'angular.json'), createAngularWorkspaceSource(), 'utf8');
   writeFileSync(resolve(smokeDirectory, 'tsconfig.json'), createTsconfigSource(), 'utf8');
   writeFileSync(resolve(smokeDirectory, 'tsconfig.app.json'), createTsconfigAppSource(), 'utf8');
@@ -94,6 +95,10 @@ function writeWorkspaceFiles() {
   writeFileSync(resolve(smokeDirectory, 'src', 'app', 'app.ts'), createAppComponentSource(), 'utf8');
   writeFileSync(resolve(smokeDirectory, 'src', 'app', 'app.html'), createAppTemplateSource(), 'utf8');
   writeFileSync(resolve(smokeDirectory, 'src', 'app', 'app.css'), createAppStylesSource(), 'utf8');
+}
+
+function createPnpmWorkspaceSource() {
+  return `packages:\n  - '.'\n\nonlyBuiltDependencies:\n  - '@parcel/watcher'\n  - esbuild\n  - lmdb\n  - msgpackr-extract\n`;
 }
 
 function assertPublicImportsOnly() {

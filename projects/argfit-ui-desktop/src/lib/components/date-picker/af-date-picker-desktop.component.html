@@ -33,6 +33,7 @@
       [readonlyInput]="true"
       [showButtonBar]="true"
       [showClear]="!required() && !readonly()"
+      [selectOtherMonths]="true"
       [fluid]="true"
       dateFormat="dd/mm/yy"
       inputStyleClass="af-date-picker-desktop__input"
@@ -46,8 +47,18 @@
   </div>
 
   @if (errorText(); as error) {
-    <p class="af-date-picker-desktop__message af-date-picker-desktop__message--error" [id]="errorId()">{{ error }}</p>
+    <p
+      class="af-date-picker-desktop__message af-date-picker-desktop__message--error"
+      [id]="errorId()"
+    >
+      {{ error }}
+    </p>
   } @else if (helperText(); as helper) {
-    <p class="af-date-picker-desktop__message af-date-picker-desktop__message--hint" [id]="hintId()">{{ helper }}</p>
+    <p
+      class="af-date-picker-desktop__message af-date-picker-desktop__message--hint"
+      [id]="hintId()"
+    >
+      {{ helper }}
+    </p>
   }
 </div>

@@ -1,0 +1,32 @@
+{
+  "name": "@argfit-ui/storybook-tooling",
+  "private": true,
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o ../../dist/storybook/showcase"
+  },
+  "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^2.6.4",
+    "@angular-devkit/architect": "0.2102.11",
+    "@angular-devkit/core": "21.2.11",
+    "@angular/animations": "21.2.13",
+    "@angular/build": "^21.2.11",
+    "@angular/cli": "^21.2.2",
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/compiler-cli": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@compodoc/compodoc": "^2.0.0",
+    "@storybook/addon-a11y": "^10.5.7",
+    "@storybook/addon-docs": "^10.5.7",
+    "@storybook/angular-vite": "^10.5.7",
+    "@types/node": "^20",
+    "rxjs": "~7.8.0",
+    "storybook": "^10.5.7",
+    "typescript": "~5.9.2",
+    "vite": "8.2.1",
+    "zone.js": "^0.16.0"
+  }
+}
