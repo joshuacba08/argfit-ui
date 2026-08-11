@@ -5,6 +5,7 @@
 export * from './lib/components/accordion/af-accordion-mobile.component';
 export * from './lib/components/analytics-card/af-analytics-card-mobile.component';
 export * from './lib/components/avatar/af-avatar-mobile.component';
+export * from './lib/components/auth-shell/af-auth-shell-mobile.component';
 export * from './lib/components/badge/af-badge-mobile.component';
 export * from './lib/components/bottom-tabs/af-bottom-tabs-mobile.component';
 export * from './lib/components/button/af-button-mobile.component';
@@ -21,6 +22,7 @@ export * from './lib/components/drawer/af-drawer-mobile.component';
 export * from './lib/components/empty-state/af-empty-state-mobile.component';
 export * from './lib/components/fieldset/af-fieldset-mobile.component';
 export * from './lib/components/file-upload/af-file-upload-mobile.component';
+export * from './lib/components/image-cropper/af-image-cropper-mobile.component';
 export * from './lib/components/inline-message/af-inline-message-mobile.component';
 export * from './lib/components/input-count/af-input-count-mobile.component';
 export * from './lib/components/input/af-input-mobile.component';
@@ -57,4 +59,3 @@ export * from './lib/components/tooltip/af-tooltip-mobile.component';
 export * from './lib/components/tree-table/af-tree-table-mobile.component';
 export * from './lib/components/tree/af-tree-mobile.component';
 export * from './lib/components/virtual-scroller/af-virtual-scroller-mobile.component';
-

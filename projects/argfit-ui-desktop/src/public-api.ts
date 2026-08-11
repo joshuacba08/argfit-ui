@@ -5,6 +5,7 @@
 export * from './lib/components/accordion/af-accordion-desktop.component';
 export * from './lib/components/analytics-card/af-analytics-card-desktop.component';
 export * from './lib/components/avatar/af-avatar-desktop.component';
+export * from './lib/components/auth-shell/af-auth-shell-desktop.component';
 export * from './lib/components/badge/af-badge-desktop.component';
 export * from './lib/components/button/af-button-desktop.component';
 export * from './lib/components/card/af-card-desktop.component';
@@ -20,6 +21,7 @@ export * from './lib/components/drawer/af-drawer-desktop.component';
 export * from './lib/components/empty-state/af-empty-state-desktop.component';
 export * from './lib/components/fieldset/af-fieldset-desktop.component';
 export * from './lib/components/file-upload/af-file-upload-desktop.component';
+export * from './lib/components/image-cropper/af-image-cropper-desktop.component';
 export * from './lib/components/inline-message/af-inline-message-desktop.component';
 export * from './lib/components/input-count/af-input-count-desktop.component';
 export * from './lib/components/input/af-input-desktop.component';
@@ -58,4 +60,3 @@ export * from './lib/components/topbar/af-topbar-desktop.component';
 export * from './lib/components/tree-table/af-tree-table-desktop.component';
 export * from './lib/components/tree/af-tree-desktop.component';
 export * from './lib/components/virtual-scroller/af-virtual-scroller-desktop.component';
-

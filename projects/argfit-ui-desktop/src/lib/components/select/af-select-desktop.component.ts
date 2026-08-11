@@ -50,6 +50,7 @@ export class AfSelectDesktopComponent implements OnDestroy {
   private scrollListenerRemover: (() => void) | null = null;
   private searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
   private currentFilterQuery = '';
+  private lastLoadRequestKey: string | null = null;
 
   readonly value = input<string>('');
   readonly options = input<readonly AfFormOption[]>([]);
@@ -64,6 +65,7 @@ export class AfSelectDesktopComponent implements OnDestroy {
   readonly loading = input(false, { transform: booleanAttribute });
   readonly loadingMore = input(false, { transform: booleanAttribute });
   readonly scrollLoad = input(false, { transform: booleanAttribute });
+  readonly hasMore = input(true, { transform: booleanAttribute });
   readonly scrollThreshold = input(50);
   readonly debounceTime = input(300);
   readonly selectedOption = input<AfFormOption | null>(null);
@@ -155,6 +157,7 @@ export class AfSelectDesktopComponent implements OnDestroy {
   }
 
   protected onShow(): void {
+    this.lastLoadRequestKey = null;
     if (!this.scrollLoad()) {
       return;
     }
@@ -180,7 +183,7 @@ export class AfSelectDesktopComponent implements OnDestroy {
   }
 
   private onListScroll(event: Event): void {
-    if (!this.scrollLoad() || this.loading() || this.loadingMore()) {
+    if (!this.scrollLoad() || !this.hasMore() || this.loading() || this.loadingMore()) {
       return;
     }
     const target = event.target as HTMLElement;
@@ -188,7 +191,13 @@ export class AfSelectDesktopComponent implements OnDestroy {
       target &&
       target.scrollTop + target.clientHeight >= target.scrollHeight - this.scrollThreshold()
     ) {
-      this.loadMore.emit({ query: this.currentFilterQuery, offset: this.options().length });
+      const offset = this.options().length;
+      const requestKey = `${this.currentFilterQuery}\u0000${offset}`;
+      if (requestKey === this.lastLoadRequestKey) {
+        return;
+      }
+      this.lastLoadRequestKey = requestKey;
+      this.loadMore.emit({ query: this.currentFilterQuery, offset });
     }
   }
 

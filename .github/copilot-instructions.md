@@ -272,3 +272,12 @@ ArgFit UI aims to become:
 All generated code should align with this vision.
 
 Run `pnpm guard:architecture` after changing imports across libraries.
+
+# Canonical Component Workflow
+
+Storybook is the single source of truth for component documentation. Before creating
+or changing a public component, follow
+`projects/showcase/src/stories/component-workflow.docs.mdx`. Every new adaptive
+component must ship with a colocated story and either `tags: ['autodocs']` or a
+colocated `.docs.mdx` page. Do not create new component documentation in the legacy
+`projects/argfit-ui-docs` application.

@@ -2,10 +2,35 @@ import type { Meta, StoryObj } from '@storybook/angular-vite';
 import { AfInputComponent } from './af-input.component';
 
 const meta: Meta<AfInputComponent> = {
-  title: 'Adaptive/Input',
+  title: 'Components/Forms/Input',
   component: AfInputComponent,
   tags: ['autodocs'],
+  parameters: {
+    argfit: {
+      category: 'Forms',
+      importName: 'AfInput',
+      useWhen: ['single-line text entry', 'labelled form values with validation'],
+      avoidWhen: ['multi-line content', 'selection from a fixed option list'],
+      platforms: ['desktop', 'mobile'],
+      tokens: ['--af-input-bg', '--af-input-border', '--af-border-focus'],
+      related: ['AfSelect', 'AfTextarea', 'AfDatePicker'],
+    },
+    docs: {
+      description: {
+        component: 'Accessible text input supporting labels, hints, errors and affixes.',
+      },
+    },
+  },
   argTypes: {
+    label: { control: 'text' },
+    placeholder: { control: 'text' },
+    hint: { control: 'text' },
+    error: { control: 'text' },
+    value: { control: 'text' },
+    prefix: { control: 'text' },
+    suffix: { control: 'text' },
+    ariaLabel: { control: 'text' },
+    autocomplete: { control: 'text' },
     type: {
       control: 'select',
       options: ['text', 'password', 'email', 'number', 'tel', 'url'],

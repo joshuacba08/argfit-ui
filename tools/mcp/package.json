@@ -1,0 +1,74 @@
+{
+  "name": "@argfit-ui/mcp",
+  "version": "1.4.0",
+  "description": "Read-only MCP server for discovering, composing and validating ArgFit UI usage.",
+  "keywords": [
+    "argfit-ui",
+    "mcp",
+    "model-context-protocol",
+    "angular",
+    "design-system"
+  ],
+  "author": "ArgFit UI maintainers",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "argfit-ui-mcp": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./http": {
+      "types": "./dist/http.d.ts",
+      "import": "./dist/http.js"
+    },
+    "./catalog": "./argfit-catalog.json"
+  },
+  "files": [
+    "dist",
+    "argfit-catalog.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "tools/mcp"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  },
+  "scripts": {
+    "prebuild": "node ../../tools/generate-mcp-catalog.mjs",
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "node ../../tools/stage-mcp-package.mjs",
+    "start": "node dist/cli.js",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "smoke": "node dist/smoke.js",
+    "inspect": "pnpm dlx @modelcontextprotocol/inspector@2.1.0 node dist/cli.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.15",
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.2",
+    "vitest": "4.0.18"
+  }
+}

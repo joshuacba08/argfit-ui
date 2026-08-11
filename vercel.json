@@ -1,8 +1,16 @@
 {
-  "buildCommand": "pnpm build:docs",
+  "buildCommand": "pnpm build:portal",
   "outputDirectory": "dist/argfit-ui-docs/browser",
   "installCommand": "pnpm install --frozen-lockfile",
   "rewrites": [
+    {
+      "source": "/mcp",
+      "destination": "/api/mcp"
+    },
+    {
+      "source": "/storybook",
+      "destination": "/storybook/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

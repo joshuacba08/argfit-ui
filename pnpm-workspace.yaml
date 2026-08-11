@@ -1,5 +1,6 @@
 packages:
   - '.'
+  - 'tools/mcp'
   - 'tools/storybook'
 
 resolvePeersFromWorkspaceRoot: false

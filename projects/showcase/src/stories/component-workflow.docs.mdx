@@ -1,0 +1,316 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/New Component Workflow" />
+
+# Crear, documentar y desplegar un componente
+
+Esta es la guía oficial de ArgFit UI para personas y agentes de IA. **Storybook es la
+única fuente de verdad para el contrato visual, los estados, la API y los ejemplos de
+uso de cada componente.** La aplicación Angular de documentación anterior queda como
+contenido histórico y operativo; no recibe nuevas páginas de componentes.
+
+<div className="af-doc-callout">
+  <strong>Regla de terminado</strong>
+
+  Un componente no está terminado cuando compila. Está terminado cuando su API adaptativa,
+  historias, documentación, accesibilidad y matriz desktop/mobile × dark/light son verificables
+  desde Storybook.
+</div>
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="component-workflow-tabs" id="workflow-tab-overview" value="overview" aria-label="Principios" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="component-workflow-tabs" id="workflow-tab-create" value="create" aria-label="Crear" />
+  <input className="af-doc-tabs__input" type="radio" name="component-workflow-tabs" id="workflow-tab-document" value="document" aria-label="Documentar" />
+  <input className="af-doc-tabs__input" type="radio" name="component-workflow-tabs" id="workflow-tab-validate" value="validate" aria-label="Validar" />
+  <input className="af-doc-tabs__input" type="radio" name="component-workflow-tabs" id="workflow-tab-deploy" value="deploy" aria-label="Desplegar" />
+  <input className="af-doc-tabs__input" type="radio" name="component-workflow-tabs" id="workflow-tab-ai" value="ai" aria-label="Checklist IA" />
+
+  <div className="af-doc-tabs__list" aria-label="Proceso de desarrollo de componentes">
+    <label className="af-doc-tabs__tab" data-tab="overview" htmlFor="workflow-tab-overview">Principios</label>
+    <label className="af-doc-tabs__tab" data-tab="create" htmlFor="workflow-tab-create">Crear</label>
+    <label className="af-doc-tabs__tab" data-tab="document" htmlFor="workflow-tab-document">Documentar</label>
+    <label className="af-doc-tabs__tab" data-tab="validate" htmlFor="workflow-tab-validate">Validar</label>
+    <label className="af-doc-tabs__tab" data-tab="deploy" htmlFor="workflow-tab-deploy">Desplegar</label>
+    <label className="af-doc-tabs__tab" data-tab="ai" htmlFor="workflow-tab-ai">Checklist IA</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="overview">
+
+## Principios y responsabilidades
+
+ArgFit Football y las demás aplicaciones consumidoras deben componer interfaces con
+`@argfit-ui/adaptive`; no deben reconstruir controles, colores o layouts reutilizables con
+HTML y CSS propios. ArgFit UI resuelve presentación e interacción genérica. La aplicación
+conserva navegación, permisos, datos, OAuth, temporizadores y estados de negocio.
+
+<table className="af-doc-table">
+  <thead><tr><th>Capa</th><th>Responsabilidad</th><th>No debe contener</th></tr></thead>
+  <tbody>
+    <tr><td><code>core</code></td><td>Tipos, tokens, tema y servicios compartidos.</td><td>PrimeNG, Ionic o renderers.</td></tr>
+    <tr><td><code>primitives</code></td><td>Piezas estructurales y accesibles sin vendor.</td><td>Componentes adaptativos o wrappers de vendor.</td></tr>
+    <tr><td><code>desktop</code></td><td>Renderer productivo y denso; PrimeNG es interno.</td><td>API pública acoplada a PrimeNG.</td></tr>
+    <tr><td><code>mobile</code></td><td>Renderer táctil, safe areas e Ionic interno.</td><td>API pública acoplada a Ionic.</td></tr>
+    <tr><td><code>adaptive</code></td><td>Contrato público y selección de renderer.</td><td>Lógica de producto o duplicación visual.</td></tr>
+    <tr><td><code>Storybook</code></td><td>Contrato ejecutable, estados, API y guía de uso.</td><td>Demos ficticias sin valor documental.</td></tr>
+  </tbody>
+</table>
+
+### Antes de escribir código
+
+1. Busca si el concepto ya existe y puede extenderse sin romper su API.
+2. Define el concepto semántico: `AfDatePicker`, no `AfPrimeCalendar`.
+3. Escribe primero el contrato público: inputs, outputs, slots y estados.
+4. Decide qué pertenece a UI y qué debe permanecer en la aplicación consumidora.
+5. Diseña los cuatro resultados: desktop/dark, desktop/light, mobile/dark y mobile/light.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="create">
+
+## Crear el componente
+
+### Estructura esperada
+
+```text
+projects/
+  argfit-ui-core/src/lib/types/<name>.types.ts
+  argfit-ui-desktop/src/lib/components/<name>/
+    af-<name>-desktop.component.{ts,html,scss,spec.ts}
+  argfit-ui-mobile/src/lib/components/<name>/
+    af-<name>-mobile.component.{ts,html,scss,spec.ts}
+  argfit-ui-adaptive/src/lib/components/<name>/
+    af-<name>.component.{ts,html,scss,spec.ts}
+    af-<name>.stories.ts
+    af-<name>.docs.mdx        # cuando necesita guía editorial propia
+```
+
+No todos los componentes necesitan archivos HTML o SCSS separados, pero las responsabilidades
+de las capas no cambian.
+
+### Orden de implementación
+
+1. **Contrato:** añade tipos vendor-neutral en `core` y expórtalos desde su `public-api.ts`.
+2. **Renderers:** implementa desktop y mobile con la misma semántica, estados y accesibilidad.
+3. **Fachada adaptativa:** usa `AfPlatformService`, delega el render y reexpone una sola API.
+4. **Exports:** exporta renderers en sus paquetes y el componente público en `adaptive/public-api.ts`.
+5. **Pruebas unitarias:** cubre inputs, outputs, slots, teclado, ARIA y cambio de plataforma.
+6. **Tokens:** usa `--af-*`; ningún color, radio o espaciado de producto debe quedar hardcoded.
+
+### Esqueleto de la fachada adaptativa
+
+```ts
+@Component({
+  selector: 'af-example',
+  imports: [AfExampleDesktopComponent, AfExampleMobileComponent],
+  templateUrl: './af-example.component.html',
+  styleUrl: './af-example.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AfExampleComponent {
+  private readonly platform = inject(AfPlatformService);
+
+  readonly value = input<string | null>(null);
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly valueChange = output<string | null>();
+  protected readonly isMobile = this.platform.isMobile;
+}
+```
+
+La fachada transforma sólo lo necesario para mantener un contrato estable. No consulta APIs,
+no navega y no conoce reglas de ArgFit Football.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="document">
+
+## Documentar en Storybook
+
+La historia vive junto al componente adaptativo. Todo nuevo componente debe tener una página
+Docs: usa `tags: ['autodocs']` para el caso simple o un archivo `.docs.mdx` para componentes
+con decisiones de uso, composición, theming o ejemplos extensos.
+
+### Historia mínima aceptable
+
+```ts
+import type { Meta, StoryObj } from '@storybook/angular-vite';
+import { expect, fn, userEvent } from 'storybook/test';
+import { AfExampleComponent } from './af-example.component';
+
+const meta: Meta<AfExampleComponent> = {
+  title: 'Components/Forms/Example',
+  component: AfExampleComponent,
+  tags: ['autodocs'],
+  parameters: {
+    argfit: {
+      category: 'Forms',
+      importName: 'AfExample',
+      useWhen: ['Describe the user intent this component solves.'],
+      avoidWhen: ['Describe the closest misuse or product responsibility.'],
+      platforms: ['desktop', 'mobile'],
+      tokens: ['--af-input-bg', '--af-border-focus'],
+      related: ['AfInput'],
+    },
+    docs: { description: { component: 'Qué resuelve y cuándo usarlo.' } },
+  },
+  argTypes: {
+    disabled: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+  },
+};
+
+export default meta;
+type Story = StoryObj<AfExampleComponent>;
+
+export const Default: Story = {
+  args: { disabled: false, valueChange: fn() },
+  play: async ({ args, canvas }) => {
+    await userEvent.click(canvas.getByRole('button'));
+    await expect(args.valueChange).toHaveBeenCalledOnce();
+  },
+};
+```
+
+### Contenido obligatorio
+
+<div className="af-doc-checklist">
+  <div><strong>Canónica</strong>Una historia `Default` o equivalente que explique el uso normal.</div>
+  <div><strong>Estados</strong>Loading, empty, error, disabled, readonly y variantes relevantes.</div>
+  <div><strong>Controles</strong><code>argTypes</code> tipados para la API que una persona debe explorar.</div>
+  <div><strong>Interacción</strong><code>play</code> para teclado, selección, eventos y flujos importantes.</div>
+  <div><strong>API</strong>Descripción, imports públicos y límites de responsabilidad.</div>
+  <div><strong>Theming</strong>Tokens públicos relevantes; nunca una lista de colores privados.</div>
+  <div><strong>MCP</strong><code>parameters.argfit</code> completo para búsqueda, recomendaciones y ejemplos verificables.</div>
+</div>
+
+Usa las categorías `Components`, `Data`, `Feedback`, `Patterns` o `Experimental`. Un componente
+estable no debe permanecer en `Experimental`. Para documentación editorial con tabs, toma
+`af-date-picker.docs.mdx` como referencia.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="validate">
+
+## Probar y validar
+
+Durante el desarrollo ejecuta Storybook directamente desde source; no hace falta precompilar
+las librerías:
+
+```bash
+pnpm storybook
+```
+
+Antes de abrir o actualizar un PR:
+
+```bash
+pnpm guard:architecture
+pnpm guard:storybook
+pnpm build-storybook
+pnpm test-storybook
+pnpm test-storybook:a11y
+pnpm test-storybook:visual
+pnpm guard:mcp-catalog
+pnpm mcp:test
+```
+
+`guard:storybook` impide introducir un componente adaptativo sin historia y también rechaza
+historias sin `autodocs` ni MDX. Las excepciones históricas viven en una allowlist explícita;
+no se añaden componentes nuevos a esa lista.
+
+`guard:mcp-catalog` comprueba que el catálogo derivado coincide con Storybook, Compodoc,
+exports y tokens. No edites `tools/mcp/argfit-catalog.json` manualmente: actualiza la historia
+o el contrato público y ejecuta `pnpm generate:mcp-catalog`.
+
+### Matriz de aceptación
+
+<table className="af-doc-table">
+  <thead><tr><th>Matriz</th><th>Qué revisar</th></tr></thead>
+  <tbody>
+    <tr><td>Desktop / Dark</td><td>Densidad, teclado, overlays, contraste y foco.</td></tr>
+    <tr><td>Desktop / Light</td><td>Tokens, bordes, elevación y ausencia de colores hardcoded.</td></tr>
+    <tr><td>Mobile / Dark</td><td>Touch targets, scroll, safe areas y renderer correcto.</td></tr>
+    <tr><td>Mobile / Light</td><td>Legibilidad, estados nativos y layout estrecho.</td></tr>
+  </tbody>
+</table>
+
+El trabajo falla si hay canvas vacío, error de consola, request fallido, token requerido ausente,
+violación axe seria/crítica o diferencia visual no revisada.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="deploy">
+
+## Desplegar cambios
+
+### Preview de documentación
+
+1. Sube una rama y abre un PR.
+2. El job **Storybook quality gate** ejecuta coverage, build, smoke, axe y capturas de la matriz.
+3. Revisa el artifact `storybook` de GitHub Actions cuando haya una diferencia visual.
+4. Vercel usa `pnpm build:portal`; el catálogo estático se publica bajo `/storybook/` y la
+   integración de Vercel genera la preview del PR.
+5. Prueba navegación directa a una página Docs y a una Story antes de aprobar.
+
+```bash
+pnpm build:portal
+```
+
+La documentación de componentes se edita sólo en Storybook aunque el portal Angular histórico
+siga disponible en `/`. No copies el mismo contenido a ambos sitios.
+
+### Publicación de paquetes npm
+
+Publicar Storybook y publicar `@argfit-ui/*` son procesos distintos. Un cambio de componente
+puede desplegar su preview sin publicar una versión npm. Para una release estable, actualiza
+versiones y changelog, ejecuta el gate completo y usa el workflow protegido:
+
+```bash
+pnpm release:production:check
+```
+
+Después se crea el tag estable correspondiente y `.github/workflows/publish-production.yml`
+publica los cinco paquetes con `latest`. No ejecutes `npm publish` manualmente desde una rama.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="ai">
+
+## Protocolo para agentes de IA
+
+Un agente debe seguir este orden y reportar evidencia concreta:
+
+1. Leer esta guía, `docs/architecture.md` y los archivos del componente más cercano por función.
+2. Inspeccionar cambios sin confirmar y preservar trabajo ajeno.
+3. Diseñar la API pública antes de elegir PrimeNG, Ionic o markup interno.
+4. Implementar las capas mínimas necesarias sin mover lógica de negocio a la librería.
+5. Añadir exports, specs, historia, Docs y estados en el mismo cambio.
+6. Verificar visualmente la misma instancia de Storybook en las cuatro matrices.
+7. Ejecutar guards y pruebas proporcionales; no declarar éxito sólo porque TypeScript compila.
+8. Consultar `get_component` y ejecutar `validate_usage` mediante el MCP cuando esté disponible.
+9. Entregar archivos cambiados, comandos ejecutados y cualquier deuda restante.
+
+### Prohibido
+
+- Crear un componente público sin historia o sin Docs.
+- Crear una historia sin el bloque tipado <code>parameters.argfit</code>.
+- Añadir la nueva carpeta a la allowlist de Storybook.
+- Documentar el componente en `projects/argfit-ui-docs`.
+- Exponer tipos de PrimeNG/Ionic en la API adaptativa.
+- Introducir colores, spacing o tipografía de producto fuera de los tokens `--af-*`.
+- Incorporar OAuth, routing, permisos, fetching o máquinas de estado de una aplicación.
+- Abrir otro servidor de Storybook si el puerto `6006` ya está en uso.
+
+### Definición de terminado
+
+<div className="af-doc-checklist">
+  <div><strong>01 · API</strong>Vendor-neutral, estable y exportada.</div>
+  <div><strong>02 · Renderers</strong>Desktop y mobile correctos, o decisión explícita de renderer compartido.</div>
+  <div><strong>03 · Unit tests</strong>Contrato, accesibilidad, eventos y proyección cubiertos.</div>
+  <div><strong>04 · Stories</strong>Historia canónica, estados y controles tipados.</div>
+  <div><strong>05 · Docs</strong><code>autodocs</code> o MDX con import, uso, API y theming.</div>
+  <div><strong>06 · Matriz</strong>Desktop/mobile × dark/light revisado.</div>
+  <div><strong>07 · Gates</strong>Guard, build, smoke, axe y visual sin fallos.</div>
+  <div><strong>08 · Preview</strong>Navegación directa bajo <code>/storybook/</code>.</div>
+</div>
+
+  </section>
+</div>

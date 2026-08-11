@@ -1,0 +1,83 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as ImageCropperStories from './af-image-cropper.stories';
+
+<Meta of={ImageCropperStories} />
+
+# ImageCropper
+
+Editor adaptativo para encuadrar, redimensionar, rotar y exportar imágenes. El área seleccionada se puede mover y redimensionar desde cualquiera de sus cuatro esquinas.
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="imagecropper-doc-tabs" id="imagecropper-tab-features" value="features" aria-label="Características" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="imagecropper-doc-tabs" id="imagecropper-tab-api" value="api" aria-label="API" />
+  <input className="af-doc-tabs__input" type="radio" name="imagecropper-doc-tabs" id="imagecropper-tab-theming" value="theming" aria-label="Tematización" />
+  <input className="af-doc-tabs__input" type="radio" name="imagecropper-doc-tabs" id="imagecropper-tab-playground" value="playground" aria-label="Playground" />
+
+  <div className="af-doc-tabs__list" aria-label="Secciones de ImageCropper">
+    <label className="af-doc-tabs__tab" data-tab="features" htmlFor="imagecropper-tab-features">Características</label>
+    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="imagecropper-tab-api">API</label>
+    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="imagecropper-tab-theming">Theming</label>
+    <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="imagecropper-tab-playground">Playground</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="features">
+
+## Características
+
+```ts
+import { AfImageCropperComponent } from '@argfit-ui/adaptive';
+```
+
+- Redimensionado por las cuatro esquinas, limitado a los bordes de la imagen.
+- Movimiento del área mediante arrastre o teclado.
+- Relaciones libres, cuadradas, circulares y panorámicas.
+- Salida PNG, JPEG o WebP con dimensiones y calidad configurables.
+- Interacción unificada mediante Pointer Events para ratón, lápiz y touch.
+
+<Canvas of={ImageCropperStories.Default} sourceState="shown" />
+
+### Avatar circular
+
+<Canvas of={ImageCropperStories.SquareAvatar} sourceState="hidden" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## API
+
+<ArgTypes
+  of={ImageCropperStories}
+  include={['src', 'aspectRatio', 'maintainAspectRatio', 'resizeWidth', 'resizeHeight', 'format', 'quality', 'circularCrop', 'disabled', 'showControls', 'fileName', 'cropped', 'cancel', 'imageLoaded', 'imageError']}
+  sort="requiredFirst"
+/>
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="theming">
+
+## Theming
+
+<table className="af-doc-table">
+  <thead><tr><th>Token</th><th>Uso</th></tr></thead>
+  <tbody>
+    <tr><td><code>--af-accent</code></td><td>Borde y tiradores del área de recorte.</td></tr>
+    <tr><td><code>--af-bg-surface</code></td><td>Superficie principal del editor.</td></tr>
+    <tr><td><code>--af-bg-elevated</code></td><td>Grupos compactos de configuración.</td></tr>
+    <tr><td><code>--af-primary</code></td><td>Acción principal, sliders y foco.</td></tr>
+  </tbody>
+</table>
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="playground">
+
+## Playground
+
+Modifica la relación, formato, calidad y plataforma desde los controles globales.
+
+<Canvas of={ImageCropperStories.Default} sourceState="shown" />
+<Controls of={ImageCropperStories.Default} />
+
+  </section>
+</div>

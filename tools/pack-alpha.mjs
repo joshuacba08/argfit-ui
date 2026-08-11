@@ -41,6 +41,12 @@ const packageDefinitions = [
     internalPeers: ['@argfit-ui/core', '@argfit-ui/primitives', '@argfit-ui/desktop', '@argfit-ui/mobile'],
     requiredPeers: ['@angular/common', '@angular/core', '@angular/forms'],
   },
+  {
+    name: '@argfit-ui/mcp',
+    distDirectory: 'dist/argfit-ui-mcp',
+    internalPeers: [],
+    requiredPeers: [],
+  },
 ];
 
 const forbiddenPackFilePatterns = [
@@ -64,7 +70,7 @@ for (const packageDefinition of packageDefinitions) {
   const manifestPath = resolve(packageDirectory, 'package.json');
 
   if (!existsSync(manifestPath)) {
-    fail(`Missing built package manifest for ${packageDefinition.name}. Run pnpm build:libs first.`);
+    fail(`Missing built package manifest for ${packageDefinition.name}. Run pnpm build:packages first.`);
   }
 
   ensureLicenseFile(packageDirectory);

@@ -264,22 +264,45 @@ html[data-theme='light'] .af-select-desktop__overlay {
 .af-select-desktop__overlay :is(.p-select-filter-container, [data-pc-section='header']) {
   background: color-mix(in srgb, var(--af-bg-elevated) 96%, var(--af-bg-main));
   border-bottom: 1px solid var(--af-border);
-  padding: var(--af-space-2);
+  padding: var(--af-space-2_5);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.af-select-desktop__overlay :is(.p-select-filter, [data-pc-section='filter']) {
+.af-select-desktop__overlay :is(.p-iconfield, [data-pc-name='pcfiltercontainer']) {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.af-select-desktop__overlay :is(.p-select-filter, [data-pc-name='pcfilter'], [role='searchbox']) {
+  appearance: none;
   background: var(--af-bg-surface);
   border: 1px solid var(--af-border);
-  border-radius: var(--af-radius-sm);
+  border-radius: var(--af-radius-md);
+  box-sizing: border-box;
   color: var(--af-text-main);
   font-family: var(--af-font-body);
   font-size: var(--af-text-sm);
+  line-height: var(--af-line-height-normal);
+  min-height: 40px;
   outline: none;
-  padding: var(--af-space-1_5) var(--af-space-2_5);
+  padding: 0 calc(var(--af-space-8) + var(--af-space-1)) 0 var(--af-space-3);
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    box-shadow var(--af-duration-fast) var(--af-ease-out);
   width: 100%;
+
+  &::placeholder {
+    color: var(--af-text-soft, var(--af-text-muted));
+    opacity: 1;
+  }
+
+  &:hover {
+    border-color: var(--af-border-strong, var(--af-border));
+  }
 
   &:focus {
     border-color: var(--af-primary);
@@ -287,9 +310,20 @@ html[data-theme='light'] .af-select-desktop__overlay {
   }
 }
 
-.af-select-desktop__overlay :is(.p-select-filter-icon, [data-pc-section='filtericon']) {
+.af-select-desktop__overlay :is(.p-inputicon, [data-pc-name='pcfiltericoncontainer']) {
+  align-items: center;
   color: var(--af-text-soft, var(--af-text-muted));
+  display: flex;
+  inset-block: 0;
   inset-inline-end: var(--af-space-3);
+  pointer-events: none;
+  position: absolute;
+}
+
+.af-select-desktop__overlay :is(.p-select-filter-icon, [data-pc-section='filtericon']) {
+  color: inherit;
+  height: 16px;
+  width: 16px;
 }
 
 .af-select-desktop__loading-more {

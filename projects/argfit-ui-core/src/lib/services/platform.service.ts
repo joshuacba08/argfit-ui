@@ -27,10 +27,12 @@ export class AfPlatformService {
 
   constructor() {
     this.bindMediaQuery();
+    this.syncDocumentPlatform();
   }
 
   setPreference(preference: AfPlatformPreference): void {
     this.preferenceSignal.set(preference);
+    this.syncDocumentPlatform();
   }
 
   useAutoDetection(): void {
@@ -52,6 +54,7 @@ export class AfPlatformService {
 
     const updateDetectedPlatform = (): void => {
       this.detectedPlatformSignal.set(mediaQuery.matches ? 'mobile' : 'desktop');
+      this.syncDocumentPlatform();
     };
 
     updateDetectedPlatform();
@@ -60,5 +63,13 @@ export class AfPlatformService {
     this.destroyRef.onDestroy(() => {
       mediaQuery.removeEventListener('change', updateDetectedPlatform);
     });
+  }
+
+  private syncDocumentPlatform(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    this.document.documentElement.dataset['afPlatform'] = this.platform();
   }
 }

@@ -2,6 +2,38 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.4.0
+
+Minor release that makes Storybook the canonical development surface and adds
+an official MCP server for AI-assisted consumption of ArgFit UI.
+
+### Added
+
+- `AfAuthShell` across desktop, mobile and adaptive packages, with split and
+  centered layouts plus vendor-neutral projection slots.
+- `@argfit-ui/mcp`, a public read-only MCP server with STDIO and Streamable HTTP
+  transports, component search, recommendations, usage generation, validation
+  and design-token discovery.
+- Canonical Storybook stories for all 59 adaptive components, including typed
+  controls, relevant states and metadata shared with the generated MCP catalog.
+- Infinite-scroll loading for searchable `AfSelect` instances.
+
+### Changed
+
+- Storybook is now the single source of truth for public component behavior,
+  examples and component-development guidance.
+- DatePicker layouts, component documentation pages, ImageCropper controls and
+  several shared surfaces were refined for a more compact, consistent UI.
+- The MCP catalog now indexes 57 documented and 2 experimental components with
+  no historical undocumented exceptions.
+
+### Release
+
+- All six publishable packages move to `1.4.0`, with internal peer versions
+  aligned exactly.
+- Validated through `pnpm release:production:check` and published with the
+  `latest` dist-tag.
+
 ## 1.3.4
 
 Patch release focused on searchable, paginated selects and calendar correctness.

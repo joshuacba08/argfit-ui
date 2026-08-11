@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "argfit-ui": {
+      "command": "pnpm",
+      "args": ["mcp"],
+      "env": {
+        "ARGFIT_STORYBOOK_ORIGIN": "http://localhost:6006"
+      }
+    }
+  }
+}

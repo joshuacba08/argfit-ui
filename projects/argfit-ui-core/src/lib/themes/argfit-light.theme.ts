@@ -28,7 +28,7 @@ export const ARGFIT_LIGHT_THEME: AfThemeDefinition = {
     // ── Foreground ────────────────────────────────────────────────────
     '--af-text-main': '#102A43',
     '--af-text-muted': '#334E68',
-    '--af-text-soft': '#627D98',
+    '--af-text-soft': '#486581',
     '--af-text-disabled': '#829AB1',
     '--af-text-inverse': '#F0F4F8',
 

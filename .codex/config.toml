@@ -1,0 +1,7 @@
+[mcp_servers.argfit_ui]
+command = "pnpm"
+args = ["mcp"]
+startup_timeout_sec = 60
+
+[mcp_servers.argfit_ui.env]
+ARGFIT_STORYBOOK_ORIGIN = "http://localhost:6006"

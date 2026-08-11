@@ -59,7 +59,10 @@ export class AfSelectComponent implements ControlValueAccessor {
   readonly searchMode = input<AfSelectSearchMode>('client');
   readonly loading = input(false, { transform: booleanAttribute });
   readonly loadingMore = input(false, { transform: booleanAttribute });
+  /** Habilita la solicitud de la siguiente página al acercarse al final de la lista. */
   readonly scrollLoad = input(false, { transform: booleanAttribute });
+  /** Indica si el origen todavía tiene páginas disponibles. */
+  readonly hasMore = input(true, { transform: booleanAttribute });
   readonly scrollThreshold = input(50);
   readonly debounceTime = input(300);
   readonly selectedOption = input<AfFormOption | null>(null);

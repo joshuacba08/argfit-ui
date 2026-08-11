@@ -2,9 +2,23 @@ import type { Meta, StoryObj } from '@storybook/angular-vite';
 import { AfFileUploadComponent } from './af-file-upload.component';
 
 const meta: Meta<AfFileUploadComponent> = {
-  title: 'Adaptive/FileUpload',
+  title: 'Experimental/FileUpload',
   component: AfFileUploadComponent,
   tags: ['autodocs'],
+  parameters: {
+    argfit: {
+      category: 'Upload',
+      importName: 'AfFileUpload',
+      useWhen: ['selecting or dropping files', 'showing upload validation and progress'],
+      avoidWhen: ['media cropping without file selection', 'background synchronization'],
+      platforms: ['desktop', 'mobile'],
+      tokens: ['--af-border', '--af-primary', '--af-bg-surface'],
+      related: ['AfProgress', 'AfInlineMessage'],
+    },
+    docs: {
+      description: { component: 'Adaptive file selection and drop zone with validation.' },
+    },
+  },
   argTypes: {
     label: { control: 'text' },
     accept: { control: 'text' },

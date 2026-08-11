@@ -282,10 +282,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.3.4.md',
-    summary: 'The shipped 1.3.4 patch for searchable selects and adjacent-month dates.',
+    sourcePath: 'docs/productive/release-notes-1.4.0.md',
+    summary: 'The Storybook-first 1.4.0 release with the official ArgFit UI MCP server.',
     badge: 'ship',
-    bullets: ['Paginated select UX', 'Adjacent-month date selection', '1.3.4 package metadata aligned'],
+    bullets: ['59 documented components', 'Official @argfit-ui/mcp package', 'AfAuthShell and infinite-scroll Select'],
   },
 ];
 
@@ -316,7 +316,7 @@ export const PRODUCTIVE_COMPONENT_FAMILIES: readonly ProductiveFamilyGuide[] = [
     summary: 'Productive data entry and choice surfaces for desktop-density and touch-first flows.',
     usage: 'Prefer clear labels, local validation and mobile presentations that use sheets, drawers or fullscreen disclosure for dense editing.',
     a11y: 'Keep label-hint-error relationships synchronized and preserve native-button affordances for reveal, clear and dismiss actions.',
-    components: ['AfCheckbox', 'AfDatePicker', 'AfField', 'AfFieldset', 'AfFileUpload', 'AfIconField', 'AfInputCount', 'AfInputGroup', 'AfListbox', 'AfMultiSelect', 'AfPassword', 'AfRadioGroup', 'AfSegmentedControl', 'AfSelect', 'AfSlider', 'AfTextarea', 'AfTimePicker', 'AfToggle'],
+    components: ['AfCheckbox', 'AfDatePicker', 'AfField', 'AfFieldset', 'AfFileUpload', 'AfIconField', 'AfImageCropper', 'AfInputCount', 'AfInputGroup', 'AfListbox', 'AfMultiSelect', 'AfPassword', 'AfRadioGroup', 'AfSegmentedControl', 'AfSelect', 'AfSlider', 'AfTextarea', 'AfTimePicker', 'AfToggle'],
   },
   {
     family: 'Data, hierarchy and workflow',
@@ -508,8 +508,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.3.4.md',
-    summary: 'The canonical 1.3.4 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.4.0.md',
+    summary: 'The canonical 1.4.0 release notes and production publish posture.',
   }),
 ];
 

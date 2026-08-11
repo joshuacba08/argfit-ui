@@ -1,0 +1,111 @@
+<div class="af-image-cropper-desktop__workspace">
+  @if (loadedImage(); as img) {
+    <div class="af-image-cropper-desktop__stage">
+      <div #containerRef class="af-image-cropper-desktop__media">
+        <img [src]="img.src" alt="Previsualización para recortar" class="af-image-cropper-desktop__image" />
+
+        <div
+          class="af-image-cropper-desktop__crop-box"
+          [class.af-image-cropper-desktop__crop-box--circular]="circularCrop() || aspectRatio() === 'circle'"
+          [style.left]="getOverlayStyles()['left']"
+          [style.top]="getOverlayStyles()['top']"
+          [style.width]="getOverlayStyles()['width']"
+          [style.height]="getOverlayStyles()['height']"
+          role="group"
+          tabindex="0"
+          aria-label="Área de recorte. Arrastra para moverla o usa las flechas."
+          (pointerdown)="onPointerDown($event, 'move')"
+          (keydown)="onCropKeydown($event, 'move')"
+        >
+          <div class="af-image-cropper-desktop__grid" aria-hidden="true">
+            <span class="af-image-cropper-desktop__grid-line af-image-cropper-desktop__grid-line--h1"></span>
+            <span class="af-image-cropper-desktop__grid-line af-image-cropper-desktop__grid-line--h2"></span>
+            <span class="af-image-cropper-desktop__grid-line af-image-cropper-desktop__grid-line--v1"></span>
+            <span class="af-image-cropper-desktop__grid-line af-image-cropper-desktop__grid-line--v2"></span>
+          </div>
+
+          @if (!disabled()) {
+            <button type="button" class="af-image-cropper-desktop__handle af-image-cropper-desktop__handle--nw" aria-label="Redimensionar desde la esquina superior izquierda" (pointerdown)="onPointerDown($event, 'nw')" (keydown)="onCropKeydown($event, 'nw')"></button>
+            <button type="button" class="af-image-cropper-desktop__handle af-image-cropper-desktop__handle--ne" aria-label="Redimensionar desde la esquina superior derecha" (pointerdown)="onPointerDown($event, 'ne')" (keydown)="onCropKeydown($event, 'ne')"></button>
+            <button type="button" class="af-image-cropper-desktop__handle af-image-cropper-desktop__handle--sw" aria-label="Redimensionar desde la esquina inferior izquierda" (pointerdown)="onPointerDown($event, 'sw')" (keydown)="onCropKeydown($event, 'sw')"></button>
+            <button type="button" class="af-image-cropper-desktop__handle af-image-cropper-desktop__handle--se" aria-label="Redimensionar desde la esquina inferior derecha" (pointerdown)="onPointerDown($event, 'se')" (keydown)="onCropKeydown($event, 'se')"></button>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="af-image-cropper-desktop__empty">
+      <af-icon name="image" size="lg" aria-hidden="true"></af-icon>
+      <span>Carga una imagen para previsualizar y recortar</span>
+    </div>
+  }
+
+  @if (showControls() && loadedImage()) {
+    <div class="af-image-cropper-desktop__panel">
+      <div class="af-image-cropper-desktop__toolbar">
+        <div class="af-image-cropper-desktop__toolbar-heading">
+          <span class="af-image-cropper-desktop__label">Encuadre</span>
+          <strong>{{ (zoom() * 100).toFixed(0) }}%</strong>
+        </div>
+        <div class="af-image-cropper-desktop__row">
+          <button type="button" class="af-image-cropper-desktop__btn-icon" (click)="rotateLeft()" aria-label="Rotar a la izquierda">
+            <af-icon name="undo-2" size="sm"></af-icon>
+          </button>
+          <input type="range" min="1" max="3" step="0.05" [value]="zoom()" (input)="onZoomChange($event)" class="af-image-cropper-desktop__slider" aria-label="Zoom del recorte" />
+          <button type="button" class="af-image-cropper-desktop__btn-icon" (click)="rotateRight()" aria-label="Rotar a la derecha">
+            <af-icon name="refresh-cw" size="sm"></af-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="af-image-cropper-desktop__settings">
+        <fieldset class="af-image-cropper-desktop__group">
+          <legend class="af-image-cropper-desktop__label">Salida</legend>
+          <div class="af-image-cropper-desktop__dimensions">
+            <label class="af-image-cropper-desktop__input-field">
+              <span>Ancho</span>
+              <input type="number" min="1" [value]="customWidth()" (input)="onWidthInput($event)" class="af-image-cropper-desktop__input" />
+            </label>
+            <button type="button" class="af-image-cropper-desktop__btn-icon af-image-cropper-desktop__ratio-lock" [class.af-image-cropper-desktop__btn-icon--active]="keepAspect()" (click)="toggleKeepAspect()" [attr.aria-pressed]="keepAspect()" aria-label="Mantener proporción de salida">
+              <af-icon [name]="keepAspect() ? 'target' : 'grid-2x2'" size="sm"></af-icon>
+            </button>
+            <label class="af-image-cropper-desktop__input-field">
+              <span>Alto</span>
+              <input type="number" min="1" [value]="customHeight()" (input)="onHeightInput($event)" class="af-image-cropper-desktop__input" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="af-image-cropper-desktop__group">
+          <legend class="af-image-cropper-desktop__label">Archivo</legend>
+          <div class="af-image-cropper-desktop__file-settings">
+            <label>
+              <span class="af-image-cropper-desktop__sr-only">Formato</span>
+              <select [value]="currentFormat()" (change)="onFormatChange($event)" class="af-image-cropper-desktop__select">
+                <option value="image/png">PNG</option>
+                <option value="image/jpeg">JPEG</option>
+                <option value="image/webp">WebP</option>
+              </select>
+            </label>
+            @if (currentFormat() !== 'image/png') {
+              <label class="af-image-cropper-desktop__quality">
+                <span>Calidad {{ qualityPercent() }}%</span>
+                <input type="range" min="0.1" max="1" step="0.05" [value]="currentQuality()" (input)="onQualityChange($event)" class="af-image-cropper-desktop__slider" />
+              </label>
+            }
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="af-image-cropper-desktop__actions">
+        <button type="button" class="af-image-cropper-desktop__btn af-image-cropper-desktop__btn--ghost" (click)="resetCropArea()">Restablecer</button>
+        <div class="af-image-cropper-desktop__actions-right">
+          <button type="button" class="af-image-cropper-desktop__btn af-image-cropper-desktop__btn--secondary" (click)="onCancel()">Cancelar</button>
+          <button type="button" class="af-image-cropper-desktop__btn af-image-cropper-desktop__btn--primary" [disabled]="isProcessing()" (click)="applyCrop()">
+            @if (isProcessing()) { <span class="af-image-cropper-desktop__spinner"></span> } @else { Aplicar recorte }
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

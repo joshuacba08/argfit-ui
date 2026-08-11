@@ -1,10 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/angular-vite';
+import { expect, fn, userEvent } from 'storybook/test';
 import { AfButtonComponent } from './af-button.component';
 
 const meta: Meta<AfButtonComponent> = {
-  title: 'Adaptive/Button',
+  title: 'Components/Actions/Button',
   component: AfButtonComponent,
   tags: ['autodocs'],
+  parameters: {
+    argfit: {
+      category: 'Actions',
+      importName: 'AfButton',
+      useWhen: ['triggering a user action', 'submitting or cancelling a flow'],
+      avoidWhen: ['navigation that should remain a link', 'non-interactive labels'],
+      platforms: ['desktop', 'mobile'],
+      tokens: ['--af-primary', '--af-primary-hover', '--af-button-height-md'],
+      related: ['AfProgress', 'AfDialog'],
+    },
+    docs: {
+      description: {
+        component: 'Primary action control with adaptive desktop and mobile renderers.',
+      },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',
@@ -57,6 +74,13 @@ export const Primary: Story = {
     fullWidth: false,
     icon: null,
     iconPosition: 'start',
+    pressed: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const button = canvasElement.querySelector<HTMLElement>('button, ion-button');
+    await expect(button).not.toBeNull();
+    await userEvent.click(button!);
+    await expect(args.pressed).toHaveBeenCalledOnce();
   },
 };
 

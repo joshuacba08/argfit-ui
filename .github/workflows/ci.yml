@@ -10,6 +10,108 @@ permissions:
   contents: read
 
 jobs:
+  storybook:
+    name: Storybook quality gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.2
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Enforce Storybook coverage
+        run: pnpm guard:storybook
+
+      - name: Build Storybook
+        run: pnpm build-storybook
+
+      - name: Validate MCP links against Storybook
+        run: node tools/generate-mcp-catalog.mjs --check --validate-storybook-index
+
+      - name: Run Storybook smoke tests
+        run: node tools/storybook-visual.mjs --smoke
+
+      - name: Run critical accessibility tests
+        run: node tools/storybook-visual.mjs --a11y
+
+      - name: Capture platform and theme matrix
+        run: node tools/storybook-visual.mjs --visual
+
+      - name: Upload Storybook build and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook
+          path: |
+            dist/storybook/showcase
+            .tmp/storybook-visual/*.png
+          if-no-files-found: warn
+
+  mcp:
+    name: MCP quality gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.2
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify generated catalog
+        run: pnpm guard:mcp-catalog
+
+      - name: Run MCP tests
+        run: pnpm --dir tools/mcp test
+
+      - name: Build MCP package
+        run: pnpm --dir tools/mcp build
+
+      - name: Run STDIO smoke
+        run: pnpm --dir tools/mcp smoke
+
+      - name: Validate npm package through npx
+        run: node tools/mcp-package-smoke.mjs
+
+      - name: Upload MCP catalog and package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: argfit-ui-mcp
+          path: |
+            tools/mcp/argfit-catalog.json
+            dist/argfit-ui-mcp
+          if-no-files-found: error
+
   release-production-check:
     name: Production release gate
     runs-on: ubuntu-latest

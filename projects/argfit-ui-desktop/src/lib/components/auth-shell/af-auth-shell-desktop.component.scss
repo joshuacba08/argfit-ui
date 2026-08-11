@@ -1,0 +1,92 @@
+:host {
+  background: var(--af-bg-main, #0a1628);
+  color: var(--af-text-main, #f0f4f8);
+  display: block;
+  min-height: 100dvh;
+  overflow: hidden;
+  position: relative;
+}
+
+.af-auth-shell-desktop__background {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.af-auth-shell-desktop__background > * {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.af-auth-shell-desktop__background::after {
+  background: linear-gradient(90deg, rgba(4, 12, 24, 0.35), rgba(4, 12, 24, 0.84));
+  content: '';
+  inset: 0;
+  position: absolute;
+}
+
+.af-auth-shell-desktop__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(25rem, 34rem);
+  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
+}
+
+.af-auth-shell-desktop[data-variant='centered'] .af-auth-shell-desktop__layout {
+  grid-template-columns: minmax(20rem, 34rem);
+  justify-content: center;
+  place-items: center;
+  padding: var(--af-space-8, 2rem);
+}
+
+.af-auth-shell-desktop__aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2rem, 6vw, 6rem);
+}
+
+.af-auth-shell-desktop__aside-content {
+  max-width: 42rem;
+}
+
+.af-auth-shell-desktop__panel {
+  backdrop-filter: blur(24px);
+  background: color-mix(in srgb, var(--af-bg-surface, #0f1d32) 94%, transparent);
+  border-left: 1px solid var(--af-border-strong, rgba(37, 153, 213, 0.22));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+
+.af-auth-shell-desktop[data-variant='centered'] .af-auth-shell-desktop__panel {
+  border: 1px solid var(--af-border-strong, rgba(37, 153, 213, 0.22));
+  border-radius: var(--af-radius-xl, 1rem);
+  box-shadow: var(--af-shadow-lg, 0 16px 48px rgba(0, 0, 0, 0.28));
+  min-height: auto;
+  width: 100%;
+}
+
+.af-auth-shell-desktop__panel-brand {
+  margin-bottom: var(--af-space-8, 2rem);
+}
+
+.af-auth-shell-desktop[data-variant='split'] .af-auth-shell-desktop__panel-brand {
+  display: none;
+}
+
+.af-auth-shell-desktop__content {
+  display: grid;
+  gap: var(--af-space-6, 1.5rem);
+}
+
+.af-auth-shell-desktop__footer {
+  color: var(--af-text-soft, #829ab1);
+  font-size: var(--af-text-xs, 0.75rem);
+  margin-top: var(--af-space-8, 2rem);
+}

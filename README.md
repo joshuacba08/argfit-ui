@@ -40,13 +40,13 @@ argfit-ui-pwa-starter
 showcase
 ```
 
-| Package | Public import | Responsibility |
-| --- | --- | --- |
-| Core | `@argfit-ui/core` | Tokens, themes, shared types, platform services, configuration |
-| Primitives | `@argfit-ui/primitives` | Vendor-agnostic accessibility and low-level composition utilities |
-| Desktop | `@argfit-ui/desktop` | PrimeNG-backed desktop implementations kept behind ArgFit APIs |
-| Mobile | `@argfit-ui/mobile` | Ionic-backed mobile implementations kept behind ArgFit APIs |
-| Adaptive | `@argfit-ui/adaptive` | Public adaptive components that select desktop or mobile rendering |
+| Package    | Public import           | Responsibility                                                     |
+| ---------- | ----------------------- | ------------------------------------------------------------------ |
+| Core       | `@argfit-ui/core`       | Tokens, themes, shared types, platform services, configuration     |
+| Primitives | `@argfit-ui/primitives` | Vendor-agnostic accessibility and low-level composition utilities  |
+| Desktop    | `@argfit-ui/desktop`    | PrimeNG-backed desktop implementations kept behind ArgFit APIs     |
+| Mobile     | `@argfit-ui/mobile`     | Ionic-backed mobile implementations kept behind ArgFit APIs        |
+| Adaptive   | `@argfit-ui/adaptive`   | Public adaptive components that select desktop or mobile rendering |
 
 The `argfit-ui-pwa-starter` workspace app demonstrates installable app behavior, service worker updates, offline shell state and app-level device capability detection.
 
@@ -138,6 +138,48 @@ Run the PWA starter:
 
 ```bash
 pnpm start:pwa
+```
+
+Run Storybook directly from source (library prebuilds are not required):
+
+```bash
+pnpm storybook
+```
+
+Run the read-only ArgFit UI MCP server for Claude, Cursor, Codex and other MCP clients:
+
+```bash
+pnpm mcp
+```
+
+The MCP catalog is generated from Storybook, Compodoc, public exports and design tokens.
+Its canonical setup and tool reference are rendered as **Getting Started / AI & MCP** in
+Storybook. Build and validate it with `pnpm mcp:build` and `pnpm mcp:test`.
+
+Storybook is the canonical source for component documentation. New component APIs,
+examples and usage guidance belong beside the adaptive component as stories or MDX;
+do not add new component pages to the legacy Angular docs application. The complete,
+normative workflow lives in
+[`projects/showcase/src/stories/component-workflow.docs.mdx`](projects/showcase/src/stories/component-workflow.docs.mdx)
+and is rendered as **Getting Started / New Component Workflow** in Storybook.
+
+Build and validate the component catalog:
+
+```bash
+pnpm build-storybook
+pnpm guard:storybook
+pnpm test-storybook
+pnpm test-storybook:a11y
+pnpm test-storybook:visual
+pnpm guard:mcp-catalog
+pnpm mcp:test
+```
+
+The Vercel portal build keeps Angular documentation at `/` and embeds the
+static component catalog at `/storybook/`:
+
+```bash
+pnpm build:portal
 ```
 
 Build all libraries, the showcase and the docs platform:
@@ -288,18 +330,22 @@ Consumers should depend on semantic ArgFit APIs, not on PrimeNG or Ionic compone
 
 ## Development Commands
 
-| Command | Description |
-| --- | --- |
-| `pnpm start` | Builds libraries and serves the showcase app |
-| `pnpm build:libs` | Builds all library packages |
-| `pnpm build:all` | Builds libraries and the showcase app |
-| `pnpm test` | Runs Angular tests |
-| `pnpm test:all` | Builds, validates architecture, and runs project test suites |
-| `pnpm release:beta:check` | Runs the beta release gate: architecture, build, tests, beta pack validation, consumer smoke, visual smoke, performance measurement and beta smoke |
-| `pnpm publish:beta:dry-run` | Runs beta package metadata checks and `npm pack --dry-run` for every built package |
-| `pnpm pack:beta` | Generates beta tarballs under `dist/beta-tarballs/` |
-| `pnpm guard:architecture` | Checks package boundaries and vendor isolation |
-| `pnpm guard:regression` | Checks restored showcase and component regression contracts |
+| Command                     | Description                                                                                                                                        |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm start`                | Builds libraries and serves the showcase app                                                                                                       |
+| `pnpm build:libs`           | Builds all library packages                                                                                                                        |
+| `pnpm mcp`                  | Starts the read-only ArgFit UI MCP over STDIO                                                                                                      |
+| `pnpm mcp:build`            | Regenerates the catalog and builds the publishable MCP package                                                                                     |
+| `pnpm mcp:test`             | Regenerates the catalog and runs MCP engine, protocol and HTTP tests                                                                                |
+| `pnpm mcp:smoke:package`    | Packs, installs and handshakes with the package through `npx`                                                                                      |
+| `pnpm build:all`            | Builds libraries and the showcase app                                                                                                              |
+| `pnpm test`                 | Runs Angular tests                                                                                                                                 |
+| `pnpm test:all`             | Builds, validates architecture, and runs project test suites                                                                                       |
+| `pnpm release:beta:check`   | Runs the beta release gate: architecture, build, tests, beta pack validation, consumer smoke, visual smoke, performance measurement and beta smoke |
+| `pnpm publish:beta:dry-run` | Runs beta package metadata checks and `npm pack --dry-run` for every built package                                                                 |
+| `pnpm pack:beta`            | Generates beta tarballs under `dist/beta-tarballs/`                                                                                                |
+| `pnpm guard:architecture`   | Checks package boundaries and vendor isolation                                                                                                     |
+| `pnpm guard:regression`     | Checks restored showcase and component regression contracts                                                                                        |
 
 ## Architecture Guard
 
@@ -313,44 +359,16 @@ The guard prevents accidental coupling such as importing PrimeNG or Ionic from `
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
-- [Component philosophy](docs/component-philosophy.md)
-- [Design system](docs/design-system.md)
-- [Conventions](docs/conventions.md)
-- [Roadmap](docs/roadmap.md)
-- [Alpha scope](docs/alpha/alpha-scope.md)
-- [Alpha public API](docs/alpha/public-api.md)
-- [Alpha compatibility](docs/alpha/compatibility.md)
-- [Alpha quickstart](docs/alpha/quickstart.md)
-- [Alpha theming and adaptive rendering](docs/alpha/theming.md)
-- [Alpha components](docs/alpha/components.md)
-- [Alpha known limitations](docs/alpha/known-limitations.md)
-- [Alpha release notes](docs/alpha/release-notes-alpha.md)
-- [Alpha release checklist](docs/alpha/release-checklist.md)
-- [Alpha package metadata](docs/alpha/package-metadata.md)
-- [Publish alpha procedure](docs/alpha/publish-alpha.md)
-- [Beta scope](docs/beta/beta-scope.md)
-- [Beta quickstart](docs/beta/quickstart.md)
-- [Beta theming and adaptive rendering](docs/beta/theming.md)
-- [Beta components](docs/beta/components.md)
-- [Beta known limitations](docs/beta/known-limitations.md)
-- [Beta public API](docs/beta/public-api.md)
-- [Beta component engine map](docs/beta/component-engine-map.md)
-- [Beta accessibility audit](docs/beta/accessibility.md)
-- [Beta visual QA](docs/beta/visual-qa.md)
-- [Beta consumer compatibility](docs/beta/compatibility.md)
-- [Beta package matrix](docs/beta/package-matrix.md)
-- [Beta performance and budgets](docs/beta/performance.md)
-- [Beta release notes](docs/beta/release-notes-beta.md)
-- [Beta release checklist](docs/beta/release-checklist.md)
-- [Migration alpha to beta](docs/beta/migration-alpha-to-beta.md)
-- [Beta readiness evaluation](docs/beta/readiness.md)
-- [Beta+ readiness plan](docs/beta-plus/readiness.md)
-- [Productive version projection](docs/productive/projection.md)
-- [Productive release operations](docs/productive/release-operations.md)
-- [Productive support policy](docs/productive/support-policy.md)
-- [Changelog](CHANGELOG.md)
-- [Human units](docs/hus/README.md)
+Storybook is the only editable source of truth for component documentation, examples and the
+component creation workflow. Run `pnpm storybook`, then open:
+
+- **Getting Started / Component Workflow** for creating, documenting, testing and releasing a component.
+- **Getting Started / AI & MCP** for Claude, Cursor, Codex, ChatGPT and generic MCP clients.
+- The component's **Docs** page for its current contract and canonical usage.
+
+The generated `tools/mcp/argfit-catalog.json` mirrors Storybook and the public API. Do not edit it
+manually. The legacy `docs/` tree is historical/release material and must not receive new component
+documentation.
 
 ## Repository Layout
 
@@ -364,8 +382,7 @@ projects/
   showcase/              Local showcase and integration playground
 tools/
   architecture-guard.mjs Package boundary validation
-docs/
-  Architecture, component philosophy, design system, roadmap, and HUs
+  mcp/                   Public read-only MCP server and generated catalog
 ```
 
 ## Standards
@@ -382,4 +399,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `1.0.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.
+The workspace and publishable packages are aligned on `1.4.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.

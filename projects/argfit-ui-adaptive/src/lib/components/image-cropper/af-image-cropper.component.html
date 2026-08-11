@@ -1,0 +1,37 @@
+@if (isMobile()) {
+  <af-image-cropper-mobile
+    [src]="src()"
+    [aspectRatio]="aspectRatio()"
+    [maintainAspectRatio]="maintainAspectRatio()"
+    [resizeWidth]="resizeWidth()"
+    [resizeHeight]="resizeHeight()"
+    [format]="format()"
+    [quality]="quality()"
+    [circularCrop]="circularCrop()"
+    [disabled]="disabled()"
+    [showControls]="showControls()"
+    [fileName]="fileName()"
+    (cropped)="cropped.emit($event)"
+    (cancel)="cancel.emit()"
+    (imageLoaded)="imageLoaded.emit($event)"
+    (imageError)="imageError.emit($event)"
+  />
+} @else {
+  <af-image-cropper-desktop
+    [src]="src()"
+    [aspectRatio]="aspectRatio()"
+    [maintainAspectRatio]="maintainAspectRatio()"
+    [resizeWidth]="resizeWidth()"
+    [resizeHeight]="resizeHeight()"
+    [format]="format()"
+    [quality]="quality()"
+    [circularCrop]="circularCrop()"
+    [disabled]="disabled()"
+    [showControls]="showControls()"
+    [fileName]="fileName()"
+    (cropped)="cropped.emit($event)"
+    (cancel)="cancel.emit()"
+    (imageLoaded)="imageLoaded.emit($event)"
+    (imageError)="imageError.emit($event)"
+  />
+}

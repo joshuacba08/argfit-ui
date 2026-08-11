@@ -168,6 +168,7 @@
   margin-top: var(--af-space-2);
   overflow: hidden;
   padding: var(--af-space-2);
+  width: min(20rem, calc(100vw - 2rem)) !important;
 }
 
 html[data-theme='light'] .af-date-picker-desktop__overlay {
@@ -283,6 +284,166 @@ html[data-theme='light'] .af-date-picker-desktop__overlay {
 
 .af-date-picker-desktop__overlay :is(.p-datepicker-today-button:hover, .p-datepicker-clear-button:hover, [data-pc-section='pctodaybutton']:hover, [data-pc-section='pcclearbutton']:hover) {
   background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+}
+
+/* PrimeNG 21 unstyled DOM. These selectors intentionally target its public
+   data-pc hooks so month/year views do not depend on theme package CSS. */
+.af-date-picker-desktop__overlay .p-hidden-accessible {
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='header'] {
+  min-height: 2.75rem;
+  padding: var(--af-space-1) var(--af-space-1) var(--af-space-2);
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='header'] > [data-pc-section='host'] {
+  display: contents;
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-name='pcprevbutton'], [data-pc-name='pcnextbutton']) {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-soft, var(--af-text-muted));
+  cursor: pointer;
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  padding: 0;
+  width: 2rem;
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-name='pcprevbutton'], [data-pc-name='pcnextbutton']):is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+  color: var(--af-text-main);
+  outline: none;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='title'] {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-section='selectmonth'], [data-pc-section='selectyear']) {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-sm, 6px);
+  color: var(--af-text-main);
+  cursor: pointer;
+  font: inherit;
+  font-weight: var(--af-font-weight-semibold);
+  min-height: 2rem;
+  padding: 0 var(--af-space-1_5, 6px);
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-section='selectmonth'], [data-pc-section='selectyear']):is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+  color: var(--af-primary-hover);
+  outline: none;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='table'] {
+  table-layout: fixed;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='weekdaycell'],
+.af-date-picker-desktop__overlay [data-pc-section='daycell'] {
+  padding: 0;
+  text-align: center;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='day'] {
+  cursor: pointer;
+  font-size: var(--af-text-sm);
+  height: 2rem;
+  width: 2rem;
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-section='monthview'], [data-pc-section='yearview']) {
+  display: grid;
+  gap: var(--af-space-2);
+  padding: var(--af-space-2) var(--af-space-1) var(--af-space-3);
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='monthview'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='yearview'] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-section='month'], [data-pc-section='year']) {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--af-radius-md);
+  cursor: pointer;
+  display: flex;
+  font-size: var(--af-text-sm);
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0 var(--af-space-1);
+  transition:
+    background-color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-section='month'], [data-pc-section='year']):is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--af-primary) 11%, transparent);
+  border-color: color-mix(in srgb, var(--af-primary) 20%, transparent);
+  outline: none;
+}
+
+.af-date-picker-desktop__overlay :is([data-pc-section='month'], [data-pc-section='year'])[data-p-selected='true'] {
+  background: color-mix(in srgb, var(--af-primary) 76%, var(--af-bg-elevated));
+  color: var(--af-primary-contrast, #f7fbff);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='buttonbar'] {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='buttonbar'] > [data-pc-section='host'] {
+  display: contents;
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='buttonbar'] button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-md);
+  color: var(--af-primary-hover, var(--af-primary));
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  min-height: 2rem;
+  padding: 0 var(--af-space-2);
+}
+
+.af-date-picker-desktop__overlay [data-pc-section='buttonbar'] button:is(:hover, :focus-visible) {
+  background: color-mix(in srgb, var(--af-primary) 12%, transparent);
+  outline: none;
+}
+
+@media (max-width: 360px) {
+  .af-date-picker-desktop__overlay [data-pc-section='yearview'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .af-date-picker-desktop__message {

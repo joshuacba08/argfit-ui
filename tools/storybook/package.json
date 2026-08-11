@@ -2,8 +2,11 @@
   "name": "@argfit-ui/storybook-tooling",
   "private": true,
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "build": "storybook build -o ../../dist/storybook/showcase"
+    "compodoc": "compodoc -p ../../projects/showcase/.storybook/tsconfig.doc.json -e json -d ../../projects/showcase",
+    "predev": "pnpm compodoc",
+    "dev": "storybook dev -p 6006 --config-dir ../../projects/showcase/.storybook",
+    "prebuild": "pnpm compodoc",
+    "build": "storybook build --config-dir ../../projects/showcase/.storybook -o ../../dist/storybook/showcase"
   },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "^2.6.4",
@@ -21,12 +24,16 @@
     "@compodoc/compodoc": "^2.0.0",
     "@storybook/addon-a11y": "^10.5.7",
     "@storybook/addon-docs": "^10.5.7",
+    "@storybook/addon-vitest": "^10.5.7",
     "@storybook/angular-vite": "^10.5.7",
+    "@vitest/browser-playwright": "4.0.18",
     "@types/node": "^20",
     "rxjs": "~7.8.0",
+    "playwright": "^1.60.0",
     "storybook": "^10.5.7",
     "typescript": "~5.9.2",
     "vite": "8.2.1",
+    "vitest": "4.0.18",
     "zone.js": "^0.16.0"
   }
 }

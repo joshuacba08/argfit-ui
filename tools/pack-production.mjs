@@ -12,7 +12,7 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const PRODUCTION_VERSION = '1.3.4';
+const PRODUCTION_VERSION = '1.4.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
 const tarballDestination = resolve(repoRoot, 'dist', 'production-tarballs');
@@ -49,6 +49,12 @@ const packageDefinitions = [
     internalPeers: ['@argfit-ui/core', '@argfit-ui/primitives', '@argfit-ui/desktop', '@argfit-ui/mobile'],
     requiredPeers: ['@angular/common', '@angular/core', '@angular/forms'],
   },
+  {
+    name: '@argfit-ui/mcp',
+    distDirectory: 'dist/argfit-ui-mcp',
+    internalPeers: [],
+    requiredPeers: [],
+  },
 ];
 
 const forbiddenPackFilePatterns = [
@@ -81,7 +87,7 @@ for (const packageDefinition of packageDefinitions) {
   const manifestPath = resolve(packageDirectory, 'package.json');
 
   if (!existsSync(manifestPath)) {
-    fail(`Missing built package manifest for ${packageDefinition.name}. Run pnpm build:libs first.`);
+    fail(`Missing built package manifest for ${packageDefinition.name}. Run pnpm build:packages first.`);
   }
 
   ensureLicenseFile(packageDirectory);

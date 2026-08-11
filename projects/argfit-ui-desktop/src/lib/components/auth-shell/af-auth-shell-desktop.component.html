@@ -1,0 +1,40 @@
+@if (backgroundTemplate(); as background) {
+  <div class="af-auth-shell-desktop__background" aria-hidden="true">
+    <ng-container *ngTemplateOutlet="background" />
+  </div>
+}
+
+<main class="af-auth-shell-desktop__layout" [attr.aria-label]="ariaLabel()">
+  @if (variant() === 'split' && asideTemplate(); as aside) {
+    <aside class="af-auth-shell-desktop__aside">
+      @if (brandTemplate(); as brand) {
+        <div class="af-auth-shell-desktop__aside-brand">
+          <ng-container *ngTemplateOutlet="brand" />
+        </div>
+      }
+      <div class="af-auth-shell-desktop__aside-content">
+        <ng-container *ngTemplateOutlet="aside" />
+      </div>
+    </aside>
+  }
+
+  <section class="af-auth-shell-desktop__panel">
+    @if (brandTemplate(); as brand) {
+      <div class="af-auth-shell-desktop__panel-brand">
+        <ng-container *ngTemplateOutlet="brand" />
+      </div>
+    }
+
+    <div class="af-auth-shell-desktop__content">
+      @if (contentTemplate(); as content) {
+        <ng-container *ngTemplateOutlet="content" />
+      }
+    </div>
+
+    @if (footerTemplate(); as footer) {
+      <footer class="af-auth-shell-desktop__footer">
+        <ng-container *ngTemplateOutlet="footer" />
+      </footer>
+    }
+  </section>
+</main>

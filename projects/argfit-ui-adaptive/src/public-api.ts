@@ -22,6 +22,16 @@ export {
     AfAvatarComponent as AfAvatar, AfAvatarComponent
 } from './lib/components/avatar/af-avatar.component';
 export {
+    AF_AUTH_SHELL_SLOT_DIRECTIVES,
+    AfAuthShellAsideDirective,
+    AfAuthShellBackgroundDirective,
+    AfAuthShellBrandDirective,
+    AfAuthShellFooterDirective
+} from './lib/components/auth-shell/af-auth-shell-slots.directive';
+export {
+    AfAuthShellComponent as AfAuthShell, AfAuthShellComponent
+} from './lib/components/auth-shell/af-auth-shell.component';
+export {
     AfBadgeComponent as AfBadge, AfBadgeComponent
 } from './lib/components/badge/af-badge.component';
 export {
@@ -116,6 +126,9 @@ export {
 export {
     AfFileUploadComponent as AfFileUpload, AfFileUploadComponent
 } from './lib/components/file-upload/af-file-upload.component';
+export {
+    AfImageCropperComponent as AfImageCropper, AfImageCropperComponent
+} from './lib/components/image-cropper/af-image-cropper.component';
 export {
     AF_ICON_FIELD_SLOT_DIRECTIVES,
     AfIconFieldControlDirective,
@@ -332,4 +345,3 @@ export {
 export {
     AfVirtualScrollerComponent as AfVirtualScroller, AfVirtualScrollerComponent
 } from './lib/components/virtual-scroller/af-virtual-scroller.component';
-

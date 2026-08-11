@@ -2,13 +2,14 @@
 
 # Compiled output
 /dist
+/tools/mcp/dist
 /tmp
 /.tmp
 /out-tsc
 /bazel-out
 
 # Node
-/node_modules
+node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -60,6 +61,9 @@ Thumbs.db
 
 # Storybook
 storybook-static
+/documentation.json
+/projects/showcase/documentation.json
+/tools/storybook/documentation.json
 
 # Testing
 /playwright-report

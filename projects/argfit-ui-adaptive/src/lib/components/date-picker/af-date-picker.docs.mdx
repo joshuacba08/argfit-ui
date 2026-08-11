@@ -1,0 +1,84 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as DatePickerStories from './af-date-picker.stories';
+
+<Meta of={DatePickerStories} />
+
+# DatePicker
+
+Entrada de fecha civil adaptativa. Usa un calendario compacto en desktop y el selector nativo de Ionic en mobile, manteniendo el mismo contrato de valor ISO `YYYY-MM-DD`.
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="datepicker-doc-tabs" id="datepicker-tab-features" value="features" aria-label="Características" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="datepicker-doc-tabs" id="datepicker-tab-api" value="api" aria-label="API" />
+  <input className="af-doc-tabs__input" type="radio" name="datepicker-doc-tabs" id="datepicker-tab-theming" value="theming" aria-label="Tematización" />
+  <input className="af-doc-tabs__input" type="radio" name="datepicker-doc-tabs" id="datepicker-tab-playground" value="playground" aria-label="Playground" />
+
+  <div className="af-doc-tabs__list" aria-label="Secciones de DatePicker">
+    <label className="af-doc-tabs__tab" data-tab="features" htmlFor="datepicker-tab-features">Características</label>
+    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="datepicker-tab-api">API</label>
+    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="datepicker-tab-theming">Theming</label>
+    <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="datepicker-tab-playground">Playground</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="features">
+
+## Características
+
+```ts
+import { AfDatePickerComponent } from '@argfit-ui/adaptive';
+```
+
+- Navegación diaria, mensual y anual con un layout consistente.
+- Valor público ISO sin conversiones de zona horaria.
+- Estados de ayuda, error, requerido, sólo lectura y deshabilitado.
+- Renderer mobile con controles táctiles nativos.
+
+<Canvas of={DatePickerStories.Default} sourceState="shown" />
+
+### Estados de validación
+
+<Canvas of={DatePickerStories.Error} sourceState="hidden" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## API
+
+<ArgTypes
+  of={DatePickerStories}
+  include={['value', 'label', 'placeholder', 'helperText', 'errorText', 'min', 'max', 'required', 'disabled', 'readonly', 'size', 'density', 'name', 'inputId', 'valueChange', 'focusChange']}
+  sort="requiredFirst"
+/>
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="theming">
+
+## Theming
+
+El componente consume los tokens públicos de ArgFit. Los más relevantes son:
+
+<table className="af-doc-table">
+  <thead><tr><th>Token</th><th>Uso</th></tr></thead>
+  <tbody>
+    <tr><td><code>--af-bg-elevated</code></td><td>Campo y panel del calendario.</td></tr>
+    <tr><td><code>--af-primary</code></td><td>Fecha seleccionada, foco y acciones.</td></tr>
+    <tr><td><code>--af-border</code></td><td>Bordes y separadores.</td></tr>
+    <tr><td><code>--af-text-main</code></td><td>Texto de fechas y controles.</td></tr>
+  </tbody>
+</table>
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="playground">
+
+## Playground
+
+Prueba tamaño, densidad, límites y estados desde los controles.
+
+<Canvas of={DatePickerStories.Default} sourceState="shown" />
+<Controls of={DatePickerStories.Default} />
+
+  </section>
+</div>

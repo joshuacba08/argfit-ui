@@ -7,7 +7,7 @@ import ts from 'typescript';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'production-smoke');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
-const PRODUCTION_VERSION = '1.3.4';
+const PRODUCTION_VERSION = '1.4.0';
 const failures = [];
 
 const packageDefinitions = [
@@ -45,6 +45,13 @@ const packageDefinitions = [
     distDirectory: 'dist/argfit-ui-adaptive',
     tarballPrefix: 'argfit-ui-adaptive-',
     internalPeers: ['@argfit-ui/core', '@argfit-ui/desktop', '@argfit-ui/mobile', '@argfit-ui/primitives'],
+  },
+  {
+    name: '@argfit-ui/mcp',
+    projectManifest: 'tools/mcp/package.json',
+    distDirectory: 'dist/argfit-ui-mcp',
+    tarballPrefix: 'argfit-ui-mcp-',
+    internalPeers: [],
   },
 ];
 
@@ -121,7 +128,7 @@ function validateDistPackage(packageDefinition) {
 
   const rootExport = manifest.exports?.['.'];
   const typeEntry = rootExport?.types ?? manifest.typings ?? manifest.types;
-  const runtimeEntry = rootExport?.default ?? manifest.module ?? manifest.fesm2022;
+  const runtimeEntry = rootExport?.default ?? rootExport?.import ?? manifest.module ?? manifest.fesm2022 ?? manifest.main;
 
   if (!typeEntry || !existsSync(resolve(packageDirectory, typeEntry))) {
     failures.push(`${packageDefinition.name}: missing exported type entrypoint`);
@@ -241,7 +248,7 @@ function validateProductionPublishWorkflowShape() {
     'NPM_TOKEN',
     'NODE_AUTH_TOKEN',
     'pnpm release:production:check',
-    'pnpm build:libs',
+    'pnpm build:packages',
     "manifest.publishConfig?.tag !== 'latest'",
     'npm publish "./$package_dir" --tag latest --access public',
   ]) {
@@ -253,16 +260,16 @@ function validateProductionPublishWorkflowShape() {
 
 function validateDocsShape() {
   for (const [filePath, snippets] of [
-    ['package.json', ['"version": "1.3.4"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
-    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '650 kB', 'Production tarball total']],
-    ['docs/productive/scope.md', ['ArgFit UI 1.3.4 Scope', '`1.0-adaptive`']],
+    ['package.json', ['"version": "1.4.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
+    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '815 kB', 'Production tarball total']],
+    ['docs/productive/scope.md', ['ArgFit UI 1.4.0 Scope', '`1.0-adaptive`']],
     ['docs/productive/public-api.md', ['Productive Public API Inventory', '1.0-renderer-specific']],
     ['docs/productive/semver-policy.md', ['Productive Semver Policy', 'Deprecation Policy']],
     ['docs/productive/release-operations.md', ['Productive Release Operations', 'Branch And Tag Strategy', 'npm Publish Process', 'Patch Release Procedure', 'Changelog Policy', 'publish-production.yml', 'NPM_TOKEN', 'latest']],
     ['docs/productive/support-policy.md', ['Productive Support Policy', 'Support Window', 'Security And Dependency Update Policy', 'Deprecation Process', '1.x']],
-    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.3.4', 'pnpm release:production:check', 'v1.3.4', 'latest']],
-    ['docs/productive/release-notes-1.3.4.md', ['Release Notes: 1.3.4', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
-    ['CHANGELOG.md', ['## 1.3.4', 'latest', 'pnpm release:production:check']],
+    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.4.0', 'pnpm release:production:check', 'v1.4.0', 'latest']],
+    ['docs/productive/release-notes-1.4.0.md', ['Release Notes: 1.4.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
+    ['CHANGELOG.md', ['## 1.4.0', 'latest', 'pnpm release:production:check']],
   ]) {
     const absolutePath = resolve(repoRoot, filePath);
 

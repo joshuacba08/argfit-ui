@@ -1,0 +1,27 @@
+<ng-template #backgroundContent><ng-content select="[afAuthShellBackground]" /></ng-template>
+<ng-template #brandContent><ng-content select="[afAuthShellBrand]" /></ng-template>
+<ng-template #asideContent><ng-content select="[afAuthShellAside]" /></ng-template>
+<ng-template #footerContent><ng-content select="[afAuthShellFooter]" /></ng-template>
+<ng-template #mainContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-auth-shell-mobile
+    [variant]="variant()"
+    [ariaLabel]="ariaLabel()"
+    [backgroundTemplate]="backgroundContent"
+    [brandTemplate]="brandContent"
+    [asideTemplate]="asideContent"
+    [contentTemplate]="mainContent"
+    [footerTemplate]="footerContent"
+  />
+} @else {
+  <af-auth-shell-desktop
+    [variant]="variant()"
+    [ariaLabel]="ariaLabel()"
+    [backgroundTemplate]="backgroundContent"
+    [brandTemplate]="brandContent"
+    [asideTemplate]="asideContent"
+    [contentTemplate]="mainContent"
+    [footerTemplate]="footerContent"
+  />
+}

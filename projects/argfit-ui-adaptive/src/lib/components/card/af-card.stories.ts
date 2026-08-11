@@ -2,9 +2,23 @@ import type { Meta, StoryObj } from '@storybook/angular-vite';
 import { AfCardComponent } from './af-card.component';
 
 const meta: Meta<AfCardComponent> = {
-  title: 'Adaptive/Card',
+  title: 'Components/Surfaces/Card',
   component: AfCardComponent,
   tags: ['autodocs'],
+  parameters: {
+    argfit: {
+      category: 'Surfaces',
+      importName: 'AfCard',
+      useWhen: ['grouping related content and actions', 'creating a reusable semantic surface'],
+      avoidWhen: ['page-level layout without a meaningful group', 'data tables'],
+      platforms: ['desktop', 'mobile'],
+      tokens: ['--af-card-bg', '--af-card-border', '--af-card-shadow'],
+      related: ['AfMetricCard', 'AfAuthShell'],
+    },
+    docs: {
+      description: { component: 'Token-driven surface for grouping related content and actions.' },
+    },
+  },
   argTypes: {
     variant: {
       control: 'select',

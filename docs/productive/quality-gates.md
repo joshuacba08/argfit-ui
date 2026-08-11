@@ -32,12 +32,13 @@ These budgets are enforced by `pnpm measure:production-performance:dist`.
 | Showcase initial asset total | `2.90 MB` raw |
 | Showcase main bundle | `2.75 MB` raw |
 | Showcase styles bundle | `60 kB` raw |
-| Production tarball total | `650 kB` |
-| `@argfit-ui/core` tarball | `35 kB` |
+| Production tarball total | `815 kB` |
+| `@argfit-ui/core` tarball | `47 kB` |
 | `@argfit-ui/primitives` tarball | `15 kB` |
-| `@argfit-ui/adaptive` tarball | `130 kB` |
-| `@argfit-ui/desktop` tarball | `250 kB` |
-| `@argfit-ui/mobile` tarball | `230 kB` |
+| `@argfit-ui/adaptive` tarball | `141 kB` |
+| `@argfit-ui/desktop` tarball | `294 kB` |
+| `@argfit-ui/mobile` tarball | `267 kB` |
+| `@argfit-ui/mcp` tarball | `60 kB` |
 
 ## Exceptions
 

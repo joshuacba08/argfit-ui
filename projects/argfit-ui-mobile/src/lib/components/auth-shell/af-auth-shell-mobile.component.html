@@ -1,0 +1,33 @@
+@if (backgroundTemplate(); as background) {
+  <div class="af-auth-shell-mobile__background" aria-hidden="true">
+    <ng-container *ngTemplateOutlet="background" />
+  </div>
+}
+
+<main class="af-auth-shell-mobile__layout" [attr.aria-label]="ariaLabel()">
+  <section class="af-auth-shell-mobile__panel">
+    @if (brandTemplate(); as brand) {
+      <div class="af-auth-shell-mobile__brand">
+        <ng-container *ngTemplateOutlet="brand" />
+      </div>
+    }
+
+    @if (variant() === 'split' && asideTemplate(); as aside) {
+      <div class="af-auth-shell-mobile__intro">
+        <ng-container *ngTemplateOutlet="aside" />
+      </div>
+    }
+
+    <div class="af-auth-shell-mobile__content">
+      @if (contentTemplate(); as content) {
+        <ng-container *ngTemplateOutlet="content" />
+      }
+    </div>
+
+    @if (footerTemplate(); as footer) {
+      <footer class="af-auth-shell-mobile__footer">
+        <ng-container *ngTemplateOutlet="footer" />
+      </footer>
+    }
+  </section>
+</main>

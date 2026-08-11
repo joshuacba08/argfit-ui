@@ -77,3 +77,8 @@ jobs:
         run: npm publish dist/beta-tarballs/argfit-ui-adaptive-0.1.0-beta.0.tgz --tag beta --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/mcp
+        run: npm publish dist/beta-tarballs/argfit-ui-mcp-0.1.0-beta.0.tgz --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

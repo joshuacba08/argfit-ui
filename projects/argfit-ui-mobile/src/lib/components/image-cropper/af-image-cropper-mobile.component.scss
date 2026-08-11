@@ -1,0 +1,191 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.af-image-cropper-mobile {
+  background: var(--af-bg-surface, #102a43);
+  border-radius: var(--af-radius-lg, 12px);
+  color: var(--af-text-main, #f0f4f8);
+  font-family: var(--af-font-family);
+  overflow: hidden;
+
+  &__workspace {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__stage {
+    align-items: center;
+    background: #060e17;
+    display: flex;
+    justify-content: center;
+    min-height: 260px;
+    padding: var(--af-space-3, 12px);
+    user-select: none;
+    touch-action: none;
+  }
+
+  &__media {
+    border-radius: var(--af-radius-lg, 12px);
+    display: inline-block;
+    line-height: 0;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    touch-action: none;
+  }
+
+  &__image {
+    display: block;
+    height: auto;
+    max-height: 320px;
+    max-width: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  &__crop-box {
+    border: 1.5px solid var(--af-accent, #00d4ff);
+    box-shadow: 0 0 0 9999px rgba(6, 14, 23, 0.65);
+    box-sizing: border-box;
+    cursor: move;
+    position: absolute;
+
+    &--circular {
+      border-radius: 50%;
+    }
+  }
+
+  &__grid {
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+  }
+
+  &__grid-line {
+    background: rgba(255, 255, 255, 0.3);
+    position: absolute;
+
+    &--h1 { top: 33.33%; width: 100%; height: 1px; }
+    &--h2 { top: 66.66%; width: 100%; height: 1px; }
+    &--v1 { left: 33.33%; height: 100%; width: 1px; }
+    &--v2 { left: 66.66%; height: 100%; width: 1px; }
+  }
+
+  &__handle {
+    appearance: none;
+    background: var(--af-bg-elevated, #102a43);
+    border: 2px solid var(--af-accent, #00d4ff);
+    border-radius: 5px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    touch-action: none;
+    width: 18px;
+    z-index: 2;
+
+    &--nw { cursor: nwse-resize; left: -9px; top: -9px; }
+    &--ne { cursor: nesw-resize; right: -9px; top: -9px; }
+    &--sw { bottom: -9px; cursor: nesw-resize; left: -9px; }
+    &--se { bottom: -9px; cursor: nwse-resize; right: -9px; }
+  }
+
+  &__empty {
+    align-items: center;
+    color: var(--af-text-muted, #829ab1);
+    display: flex;
+    flex-direction: column;
+    gap: var(--af-space-2, 8px);
+    justify-content: center;
+    min-height: 200px;
+    padding: var(--af-space-4, 16px);
+    text-align: center;
+  }
+
+  &__toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--af-space-3, 12px);
+    padding: var(--af-space-4, 16px);
+  }
+
+  &__toolbar-controls {
+    align-items: center;
+    display: flex;
+    gap: var(--af-space-3, 12px);
+    justify-content: space-between;
+  }
+
+  &__icon-btn {
+    align-items: center;
+    background: var(--af-bg-interactive, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--af-border, rgba(255, 255, 255, 0.12));
+    border-radius: var(--af-radius-pill, 999px);
+    color: var(--af-text-main, #f0f4f8);
+    cursor: pointer;
+    display: inline-flex;
+    height: 44px;
+    justify-content: center;
+    width: 44px;
+  }
+
+  &__zoom-bar {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    gap: var(--af-space-2, 8px);
+  }
+
+  &__slider {
+    accent-color: var(--af-primary, #2599d5);
+    flex: 1;
+    height: 8px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--af-space-2, 8px);
+    width: 100%;
+  }
+
+  &__btn {
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: var(--af-radius-md, 8px);
+    flex: 1;
+    font-family: inherit;
+    font-size: var(--af-text-base, 1rem);
+    font-weight: var(--af-font-weight-semibold, 600);
+    height: 44px;
+    justify-content: center;
+    display: inline-flex;
+
+    &--secondary {
+      background: var(--af-bg-interactive, rgba(255, 255, 255, 0.08));
+      border-color: var(--af-border, rgba(255, 255, 255, 0.12));
+      color: var(--af-text-main, #f0f4f8);
+    }
+
+    &--primary {
+      background: var(--af-primary, #2599d5);
+      color: var(--af-primary-contrast, #0a1628);
+    }
+  }
+
+  &__spinner {
+    animation: af-cropper-mobile-spin 1s linear infinite;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    height: 18px;
+    width: 18px;
+  }
+}
+
+@keyframes af-cropper-mobile-spin {
+  to { transform: rotate(360deg); }
+}

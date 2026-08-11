@@ -43,6 +43,7 @@ let nextAfMobileSelectId = 0;
 export class AfSelectMobileComponent implements OnDestroy {
   private readonly defaultSelectId = `af-select-mobile-${++nextAfMobileSelectId}`;
   private searchDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+  private lastLoadRequestKey: string | null = null;
 
   readonly value = input<string>('');
   readonly options = input<readonly AfFormOption[]>([]);
@@ -70,6 +71,7 @@ export class AfSelectMobileComponent implements OnDestroy {
   readonly loading = input(false, { transform: booleanAttribute });
   readonly loadingMore = input(false, { transform: booleanAttribute });
   readonly scrollLoad = input(false, { transform: booleanAttribute });
+  readonly hasMore = input(true, { transform: booleanAttribute });
   readonly scrollThreshold = input(50);
   readonly debounceTime = input(300);
   readonly selectedOption = input<AfFormOption | null>(null);
@@ -124,6 +126,7 @@ export class AfSelectMobileComponent implements OnDestroy {
       return;
     }
     this.query.set('');
+    this.lastLoadRequestKey = null;
     this.sheetOpen.set(true);
     this.focusChange.emit(true);
   }
@@ -163,12 +166,19 @@ export class AfSelectMobileComponent implements OnDestroy {
   }
 
   protected onListScroll(event: Event): void {
-    if (!this.scrollLoad() || this.loading() || this.loadingMore()) {
+    if (!this.scrollLoad() || !this.hasMore() || this.loading() || this.loadingMore()) {
       return;
     }
     const target = event.target as HTMLElement;
     if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - this.scrollThreshold()) {
-      this.loadMore.emit({ query: this.query(), offset: this.options().length });
+      const query = this.query();
+      const offset = this.options().length;
+      const requestKey = `${query}\u0000${offset}`;
+      if (requestKey === this.lastLoadRequestKey) {
+        return;
+      }
+      this.lastLoadRequestKey = requestKey;
+      this.loadMore.emit({ query, offset });
     }
   }
 

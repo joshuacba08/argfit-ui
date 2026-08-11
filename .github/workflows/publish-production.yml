@@ -6,9 +6,9 @@ on:
       release_tag:
         description: Production tag to publish
         required: true
-        default: v1.3.0
+        default: v1.4.0
       publish_confirmation:
-        description: Type publish-production-v1.3.0 to continue
+        description: Type publish-production-v1.4.0 to continue
         required: true
   push:
     tags:
@@ -91,7 +91,7 @@ jobs:
         run: pnpm release:production:check
 
       - name: Rebuild production packages
-        run: pnpm build:libs
+        run: pnpm build:packages
 
       - name: Validate production package metadata
         shell: bash
@@ -109,6 +109,7 @@ jobs:
             'dist/argfit-ui-desktop',
             'dist/argfit-ui-mobile',
             'dist/argfit-ui-adaptive',
+            'dist/argfit-ui-mcp',
           ];
 
           for (const packageDirectory of packageDirectories) {
@@ -158,6 +159,7 @@ jobs:
             dist/argfit-ui-desktop
             dist/argfit-ui-mobile
             dist/argfit-ui-adaptive
+            dist/argfit-ui-mcp
           )
 
           echo "Publishing ${#package_dirs[@]} production packages from ${{ steps.release.outputs.release_tag }}"

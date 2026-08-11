@@ -1,0 +1,90 @@
+<div class="af-image-cropper-mobile__workspace">
+  @if (loadedImage(); as img) {
+    <div class="af-image-cropper-mobile__stage">
+      <div #containerRef class="af-image-cropper-mobile__media">
+        <img
+          [src]="img.src"
+          alt="Previsualización móvil"
+          class="af-image-cropper-mobile__image"
+        />
+
+        <div
+          class="af-image-cropper-mobile__crop-box"
+          [class.af-image-cropper-mobile__crop-box--circular]="circularCrop() || aspectRatio() === 'circle'"
+          [style.left]="getOverlayStyles()['left']"
+          [style.top]="getOverlayStyles()['top']"
+          [style.width]="getOverlayStyles()['width']"
+          [style.height]="getOverlayStyles()['height']"
+          aria-label="Área de recorte móvil"
+          (pointerdown)="onPointerDown($event, 'move')"
+        >
+          <div class="af-image-cropper-mobile__grid" aria-hidden="true">
+            <div class="af-image-cropper-mobile__grid-line af-image-cropper-mobile__grid-line--h1"></div>
+            <div class="af-image-cropper-mobile__grid-line af-image-cropper-mobile__grid-line--h2"></div>
+            <div class="af-image-cropper-mobile__grid-line af-image-cropper-mobile__grid-line--v1"></div>
+            <div class="af-image-cropper-mobile__grid-line af-image-cropper-mobile__grid-line--v2"></div>
+          </div>
+
+          @if (!disabled()) {
+            <button type="button" aria-label="Redimensionar desde la esquina superior izquierda" class="af-image-cropper-mobile__handle af-image-cropper-mobile__handle--nw" (pointerdown)="onPointerDown($event, 'nw')"></button>
+            <button type="button" aria-label="Redimensionar desde la esquina superior derecha" class="af-image-cropper-mobile__handle af-image-cropper-mobile__handle--ne" (pointerdown)="onPointerDown($event, 'ne')"></button>
+            <button type="button" aria-label="Redimensionar desde la esquina inferior izquierda" class="af-image-cropper-mobile__handle af-image-cropper-mobile__handle--sw" (pointerdown)="onPointerDown($event, 'sw')"></button>
+            <button type="button" aria-label="Redimensionar desde la esquina inferior derecha" class="af-image-cropper-mobile__handle af-image-cropper-mobile__handle--se" (pointerdown)="onPointerDown($event, 'se')"></button>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="af-image-cropper-mobile__empty">
+      <af-icon name="image" size="lg" aria-hidden="true"></af-icon>
+      <span>Selecciona una imagen para recortar</span>
+    </div>
+  }
+
+  @if (showControls() && loadedImage()) {
+    <div class="af-image-cropper-mobile__toolbar">
+      <div class="af-image-cropper-mobile__toolbar-controls">
+        <button type="button" class="af-image-cropper-mobile__icon-btn" (click)="rotateRight()" title="Rotar 90°">
+          <af-icon name="refresh-cw" size="md"></af-icon>
+        </button>
+
+        <div class="af-image-cropper-mobile__zoom-bar">
+          <span class="af-image-cropper-mobile__zoom-label">-</span>
+          <input
+            type="range"
+            min="1"
+            max="3"
+            step="0.05"
+            [value]="zoom()"
+            (input)="onZoomChange($event)"
+            class="af-image-cropper-mobile__slider"
+            aria-label="Zoom del recorte"
+          />
+          <af-icon name="plus" size="sm"></af-icon>
+        </div>
+
+        <button type="button" class="af-image-cropper-mobile__icon-btn" (click)="resetCropArea()" title="Restablecer">
+          <af-icon name="refresh-cw" size="md"></af-icon>
+        </button>
+      </div>
+
+      <div class="af-image-cropper-mobile__actions">
+        <button type="button" class="af-image-cropper-mobile__btn af-image-cropper-mobile__btn--secondary" (click)="onCancel()">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="af-image-cropper-mobile__btn af-image-cropper-mobile__btn--primary"
+          [disabled]="isProcessing()"
+          (click)="applyCrop()"
+        >
+          @if (isProcessing()) {
+            <span class="af-image-cropper-mobile__spinner"></span>
+          } @else {
+            Recortar
+          }
+        </button>
+      </div>
+    </div>
+  }
+</div>

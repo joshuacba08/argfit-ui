@@ -74,3 +74,8 @@ jobs:
         run: npm publish dist/alpha-tarballs/argfit-ui-adaptive-0.1.0-alpha.0.tgz --tag alpha --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @argfit-ui/mcp
+        run: npm publish dist/alpha-tarballs/argfit-ui-mcp-0.1.0-alpha.0.tgz --tag alpha --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

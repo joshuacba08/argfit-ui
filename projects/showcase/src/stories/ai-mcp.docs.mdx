@@ -1,0 +1,125 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/AI & MCP" />
+
+# ArgFit UI para agentes de IA
+
+El MCP oficial convierte este Storybook y la API pública en contexto estructurado para Claude,
+Cursor, Codex, ChatGPT y cualquier cliente compatible. Es de sólo lectura: descubre, recomienda,
+genera ejemplos verificables y valida snippets, pero nunca modifica el proyecto consumidor.
+
+<div className="af-doc-callout">
+  <strong>Una sola fuente de verdad</strong>
+
+  El catálogo MCP se genera desde las historias, Compodoc, los <code>public-api.ts</code> y los
+  tokens. Si una respuesta contradice Storybook o el código público, la fuente debe corregirse
+  y el catálogo regenerarse; el JSON generado no se edita manualmente.
+</div>
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="mcp-doc-tabs" id="mcp-tab-connect" value="connect" aria-label="Conectar" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="mcp-doc-tabs" id="mcp-tab-tools" value="tools" aria-label="Herramientas" />
+  <input className="af-doc-tabs__input" type="radio" name="mcp-doc-tabs" id="mcp-tab-workflow" value="workflow" aria-label="Flujo" />
+  <input className="af-doc-tabs__input" type="radio" name="mcp-doc-tabs" id="mcp-tab-security" value="security" aria-label="Seguridad" />
+
+  <div className="af-doc-tabs__list" aria-label="Documentación del MCP">
+    <label className="af-doc-tabs__tab" data-tab="connect" htmlFor="mcp-tab-connect">Conectar</label>
+    <label className="af-doc-tabs__tab" data-tab="tools" htmlFor="mcp-tab-tools">Herramientas</label>
+    <label className="af-doc-tabs__tab" data-tab="workflow" htmlFor="mcp-tab-workflow">Flujo recomendado</label>
+    <label className="af-doc-tabs__tab" data-tab="security" htmlFor="mcp-tab-security">Seguridad</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="connect">
+
+## Conectar
+
+### Desarrollo local
+
+```bash
+pnpm mcp
+```
+
+El repositorio incluye configuraciones portables en `.mcp.json`, `.cursor/mcp.json` y
+`.codex/config.toml`. Todas ejecutan el mismo comando desde la raíz, sin rutas personales.
+
+Para instalar el servidor publicado en otro repositorio:
+
+```json
+{
+  "mcpServers": {
+    "argfit-ui": {
+      "command": "npx",
+      "args": ["-y", "@argfit-ui/mcp"]
+    }
+  }
+}
+```
+
+### Clientes remotos
+
+Usa el endpoint Streamable HTTP del portal desplegado:
+
+```text
+https://<dominio-de-argfit-ui>/mcp
+```
+
+No requiere token en la primera versión y sólo expone conocimiento público de la librería.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="tools">
+
+## Herramientas
+
+<table className="af-doc-table">
+  <thead><tr><th>Tool</th><th>Uso</th></tr></thead>
+  <tbody>
+    <tr><td><code>search_components</code></td><td>Busca por intención, nombre, API, categoría o plataforma.</td></tr>
+    <tr><td><code>get_component</code></td><td>Devuelve API exacta, ejemplo, tokens y evidencia en Storybook.</td></tr>
+    <tr><td><code>recommend_components</code></td><td>Propone una composición sin absorber lógica de negocio.</td></tr>
+    <tr><td><code>generate_usage</code></td><td>Genera imports y markup canónico; no escribe archivos.</td></tr>
+    <tr><td><code>validate_usage</code></td><td>Detecta APIs inválidas, vendors directos, colores propios y tokens desconocidos.</td></tr>
+    <tr><td><code>get_design_tokens</code></td><td>Consulta los tokens públicos por tema y familia.</td></tr>
+  </tbody>
+</table>
+
+Los componentes históricos sin historia aparecen como `legacy-undocumented`. El MCP permite
+descubrirlos explícitamente, pero no los recomienda ni inventa ejemplos para ellos.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="workflow">
+
+## Flujo recomendado
+
+1. Describe la necesidad con `recommend_components` o `search_components`.
+2. Confirma el contrato de cada resultado con `get_component`.
+3. Obtén una base verificable con `generate_usage`.
+4. Aplica los cambios desde el agente anfitrión; el MCP no toca archivos.
+5. Ejecuta `validate_usage` sobre el resultado y abre los enlaces de Storybook.
+6. Prueba desktop/mobile y dark/light antes de integrar.
+
+Ejemplos útiles para comprobar la conexión:
+
+```text
+Busca un selector con búsqueda y carga por scroll.
+Compón una pantalla de login y onboarding.
+Valida este template y reemplaza cualquier PrimeNG directo.
+```
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="security">
+
+## Seguridad y privacidad
+
+<ul>
+  <li>Todas las tools se anuncian como read-only, no destructivas e idempotentes.</li>
+  <li>No existe acceso a filesystem, shell, red arbitraria, OAuth ni datos de aplicaciones.</li>
+  <li>El endpoint público limita cada request a 64 KiB y no guarda consultas ni snippets.</li>
+  <li>Los logs contienen únicamente método, estado, duración y versión del catálogo.</li>
+  <li>Cada respuesta identifica la versión; una versión incompatible produce un error explícito.</li>
+</ul>
+
+  </section>
+</div>
