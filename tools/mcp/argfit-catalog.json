@@ -3,9 +3,9 @@
   "library": {
     "name": "ArgFit UI",
     "version": "1.4.0",
-    "gitSha": "38b3e6e2ad6b",
-    "generatedAt": "2026-08-11T00:30:53+09:00",
-    "sourceDigest": "29e37747b4e8be835eb36f06c5eebe6a9bd8b877fc57ba2ddeaab41ab30265c6",
+    "gitSha": "a7cf919709d4",
+    "generatedAt": "2026-08-12T04:24:26+09:00",
+    "sourceDigest": "0b15e689ffc8d775f0241ad4cf21d09ea48e68bccd228ab1153487b111e94d11",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -1385,27 +1385,33 @@
       "title": "Data/DataTable",
       "category": "Data",
       "status": "documented",
-      "description": "Adaptive data table that becomes a readable record list on mobile.",
+      "description": "Tabla adaptativa para comparar registros: tabla densa en desktop y lista jerarquizada en mobile, con una sola API pública.",
       "platforms": [
         "desktop",
         "mobile"
       ],
       "useWhen": [
-        "structured tabular data",
-        "sortable or selectable desktop and mobile datasets"
+        "comparar registros con las mismas columnas",
+        "ordenar, paginar, seleccionar o expandir filas en desktop y mobile"
       ],
       "avoidWhen": [
-        "small key-value summaries",
-        "free-form card collections"
+        "mostrar un resumen pequeño de clave y valor",
+        "representar contenido libre que funciona mejor como colección de tarjetas",
+        "delegar fetching o reglas de negocio a la capa de UI"
       ],
       "related": [
-        "AfMetricCard",
-        "AfSelect"
+        "AfDataView",
+        "AfPaginator",
+        "AfEmptyState",
+        "AfBadge"
       ],
       "tokens": [
         "--af-bg-surface",
+        "--af-bg-elevated",
         "--af-border",
-        "--af-text-muted"
+        "--af-text-main",
+        "--af-text-muted",
+        "--af-primary"
       ],
       "api": {
         "inputs": [
@@ -1572,6 +1578,16 @@
           "url": "/storybook/?path=/story/data-datatable--default"
         },
         {
+          "id": "data-datatable--sorting-and-pagination",
+          "name": "SortingAndPagination",
+          "url": "/storybook/?path=/story/data-datatable--sorting-and-pagination"
+        },
+        {
+          "id": "data-datatable--custom-content",
+          "name": "CustomContent",
+          "url": "/storybook/?path=/story/data-datatable--custom-content"
+        },
+        {
           "id": "data-datatable--loading",
           "name": "Loading",
           "url": "/storybook/?path=/story/data-datatable--loading"
@@ -1580,13 +1596,23 @@
           "id": "data-datatable--empty",
           "name": "Empty",
           "url": "/storybook/?path=/story/data-datatable--empty"
+        },
+        {
+          "id": "data-datatable--custom-empty",
+          "name": "CustomEmpty",
+          "url": "/storybook/?path=/story/data-datatable--custom-empty"
+        },
+        {
+          "id": "data-datatable--error",
+          "name": "Error",
+          "url": "/storybook/?path=/story/data-datatable--error"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/data-datatable--docs",
       "example": {
         "story": "Default",
         "typescript": "import { AfDataTable } from '@argfit-ui/adaptive';",
-        "template": "<div class=\"af-story-surface\"><af-data-table [columns]=\"columns\" [rows]=\"rows\" [density]=\"density\" [selectionMode]=\"selectionMode\" [selectedRowIds]=\"selectedRowIds\" [loading]=\"loading\" [error]=\"error\" [emptyTitle]=\"emptyTitle\" [emptyDescription]=\"emptyDescription\" ariaLabel=\"Disponibilidad del plantel\" /></div>"
+        "template": "<div class=\"af-story-surface\">\n      <af-data-table\n        [columns]=\"columns\"\n        [rows]=\"rows\"\n        [rowIdKey]=\"rowIdKey\"\n        [density]=\"density\"\n        [selectionMode]=\"selectionMode\"\n        [selectedRowIds]=\"selectedRowIds\"\n        [expandedRowIds]=\"expandedRowIds\"\n        [sort]=\"sort\"\n        [pagination]=\"pagination\"\n        [loading]=\"loading\"\n        [error]=\"error\"\n        [emptyTitle]=\"emptyTitle\"\n        [emptyDescription]=\"emptyDescription\"\n        [ariaLabel]=\"ariaLabel\"\n        (sortChange)=\"sortChange($event)\"\n        (pageChange)=\"pageChange($event)\"\n        (rowPressed)=\"rowPressed($event)\"\n        (selectionChange)=\"selectionChange($event)\"\n        (rowExpandedChange)=\"rowExpandedChange($event)\"\n      />\n    </div>"
       }
     },
     {

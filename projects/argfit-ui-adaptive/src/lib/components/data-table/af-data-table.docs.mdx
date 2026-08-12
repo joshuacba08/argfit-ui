@@ -1,0 +1,321 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as DataTableStories from './af-data-table.stories';
+
+<Meta of={DataTableStories} />
+
+# DataTable
+
+Compara colecciones de registros con una tabla productiva en desktop y una lista jerarquizada en mobile. Orden, paginación, selección y expansión comparten el mismo contrato público.
+
+<div className="af-doc-callout">
+  <strong>La aplicación conserva el estado</strong>
+
+  <code>sort</code>, <code>pagination</code>, <code>selectedRowIds</code> y <code>expandedRowIds</code> son valores controlados. DataTable emite la intención del usuario y el consumidor actualiza el input correspondiente.
+</div>
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="datatable-doc-tabs" id="datatable-tab-features" value="features" aria-label="Características" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="datatable-doc-tabs" id="datatable-tab-api" value="api" aria-label="API" />
+  <input className="af-doc-tabs__input" type="radio" name="datatable-doc-tabs" id="datatable-tab-theming" value="theming" aria-label="Tematización" />
+  <input className="af-doc-tabs__input" type="radio" name="datatable-doc-tabs" id="datatable-tab-playground" value="playground" aria-label="Playground" />
+
+<div className="af-doc-tabs__list" aria-label="Secciones de DataTable">
+  <label className="af-doc-tabs__tab" data-tab="features" htmlFor="datatable-tab-features">
+    Uso y responsive
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="api" htmlFor="datatable-tab-api">
+    API y slots
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="datatable-tab-theming">
+    Theming
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="datatable-tab-playground">
+    Playground
+  </label>
+</div>
+
+  <section className="af-doc-tabs__panel" data-tab="features">
+
+## Uso recomendado
+
+```ts
+import { AfDataTableComponent } from '@argfit-ui/adaptive';
+import type { AfDataTableColumn, AfDataTableSort } from '@argfit-ui/core';
+```
+
+Úsala cuando una persona necesite comparar muchos registros con la misma estructura. Para un resumen corto usa `AfDataView`; para contenido libre con acciones independientes, usa una colección de tarjetas.
+
+<Canvas of={DataTableStories.Default} sourceState="shown" />
+
+### Diseño responsive por intención
+
+DataTable no comprime una tabla de desktop. En mobile transforma cada fila en un registro legible y usa `mobilePriority` para decidir la jerarquía:
+
+<table className="af-doc-table">
+  <thead>
+    <tr>
+      <th>Prioridad</th>
+      <th>Desktop</th>
+      <th>Mobile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>primary</code>
+      </td>
+      <td>Columna normal.</td>
+      <td>Título principal del registro. Define una sola columna primaria.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>secondary</code>
+      </td>
+      <td>Columna normal.</td>
+      <td>Dato visible debajo del título.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>tertiary</code>
+      </td>
+      <td>Columna normal.</td>
+      <td>Dato secundario dentro del detalle expandible.</td>
+    </tr>
+  </tbody>
+</table>
+
+`valueLabel(row)` permite formatear el valor visible sin transformar el dataset, por ejemplo para añadir una unidad. Se aplica en ambas plataformas. Cambia la toolbar **Desktop/Mobile** de Storybook para verificar la jerarquía real.
+
+### Orden y paginación
+
+<Canvas of={DataTableStories.SortingAndPagination} sourceState="shown" />
+
+El componente ordena y pagina el array recibido en `rows`. `sortChange` y `pageChange` notifican la intención, pero no mutan los inputs. Si los datos proceden de una API, la aplicación sigue siendo responsable del fetching, caché, filtros y errores; no ocultes esa lógica dentro de la tabla.
+
+### Celdas y detalle de dominio
+
+<Canvas of={DataTableStories.CustomContent} sourceState="shown" />
+
+Proyecta componentes ArgFit en celdas cuando el valor necesite semántica visual. El contexto de `afDataTableCell` expone `value`, `row`, `column`, `rowId` y `rowIndex`; el detalle expone `row`, `rowId` y `rowIndex`.
+
+### Estados operativos
+
+<Canvas of={DataTableStories.Loading} sourceState="hidden" />
+<Canvas of={DataTableStories.Empty} sourceState="hidden" />
+<Canvas of={DataTableStories.CustomEmpty} sourceState="hidden" />
+<Canvas of={DataTableStories.Error} sourceState="hidden" />
+
+No combines `loading`, `error` y datos como mensajes externos desconectados: entrega un estado coherente a DataTable para mantener estructura y accesibilidad.
+
+### Accesibilidad
+
+<ul>
+  <li>
+    Proporciona un <code>ariaLabel</code> que identifique el dataset, no uno genérico como “tabla”.
+  </li>
+  <li>
+    Las filas pueden activarse con <code>Enter</code> o <code>Espacio</code>; no implementes una
+    segunda interacción sólo para ratón.
+  </li>
+  <li>
+    La selección y la expansión tienen controles independientes de <code>rowPressed</code>.
+  </li>
+  <li>
+    El estado de error usa <code>role="alert"</code> y la selección usa una región de estado.
+  </li>
+  <li>
+    No uses color como único significado: compón texto con <code>AfBadge</code> para estados
+    semánticos.
+  </li>
+</ul>
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## API pública
+
+<ArgTypes
+  of={DataTableStories}
+  include={[
+    'columns',
+    'rows',
+    'rowIdKey',
+    'density',
+    'selectionMode',
+    'selectedRowIds',
+    'expandedRowIds',
+    'sort',
+    'pagination',
+    'loading',
+    'error',
+    'emptyTitle',
+    'emptyDescription',
+    'ariaLabel',
+    'sortChange',
+    'pageChange',
+    'rowPressed',
+    'selectionChange',
+    'rowExpandedChange',
+  ]}
+  sort="requiredFirst"
+/>
+
+### Modelo controlado
+
+```ts
+sort: AfDataTableSort = { key: 'name', direction: 'asc' };
+selectedRowIds: readonly string[] = [];
+
+onSortChange(sort: AfDataTableSort): void {
+  this.sort = sort;
+}
+
+onSelectionChange(ids: readonly string[]): void {
+  this.selectedRowIds = ids;
+}
+```
+
+```html
+<af-data-table
+  [columns]="columns"
+  [rows]="athletes"
+  [sort]="sort"
+  selectionMode="multiple"
+  [selectedRowIds]="selectedRowIds"
+  ariaLabel="Disponibilidad del plantel"
+  (sortChange)="onSortChange($event)"
+  (selectionChange)="onSelectionChange($event)"
+/>
+```
+
+### Slots públicos
+
+Importa únicamente los slots que uses desde `@argfit-ui/adaptive`.
+
+<table className="af-doc-table">
+  <thead>
+    <tr>
+      <th>Directiva</th>
+      <th>Elemento</th>
+      <th>Propósito</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>afDataTableCell="key"</code>
+      </td>
+      <td>
+        <code>ng-template</code>
+      </td>
+      <td>Render personalizado para una columna concreta.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>afDataTableExpandedRow</code>
+      </td>
+      <td>
+        <code>ng-template</code>
+      </td>
+      <td>Detalle expandible compartido por desktop y mobile.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>afDataTableToolbar</code>
+      </td>
+      <td>Cualquier elemento</td>
+      <td>Acciones o contexto antes del dataset.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>afDataTableEmpty</code>
+      </td>
+      <td>Cualquier elemento</td>
+      <td>Empty state de producto cuando los textos no son suficientes.</td>
+    </tr>
+  </tbody>
+</table>
+
+```html
+<af-data-table [columns]="columns" [rows]="athletes">
+  <ng-template afDataTableCell="availability" let-value="value">
+    <af-badge tone="success">&#123;&#123; value &#125;&#125;</af-badge>
+  </ng-template>
+
+  <ng-template afDataTableExpandedRow let-row="row">
+    <strong>&#123;&#123; row.note &#125;&#125;</strong>
+  </ng-template>
+</af-data-table>
+```
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="theming">
+
+## Theming
+
+DataTable consume tokens semánticos de ArgFit y no expone estilos de PrimeNG o Ionic.
+
+<table className="af-doc-table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Uso</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>--af-bg-surface</code>
+      </td>
+      <td>Superficie principal del dataset.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>--af-bg-elevated</code>
+      </td>
+      <td>Filas, cards mobile y superficies destacadas.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>--af-border</code>
+      </td>
+      <td>Divisiones, contorno y separación estructural.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>--af-text-main</code>
+      </td>
+      <td>Encabezados y valores principales.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>--af-text-muted</code>
+      </td>
+      <td>Metadatos, etiquetas y paginación.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>--af-primary</code>
+      </td>
+      <td>Selección, foco, orden activo y página actual.</td>
+    </tr>
+  </tbody>
+</table>
+
+Usa `density="compact"` para superficies operativas con mucho volumen, `normal` como valor general y `comfortable` cuando la lectura sea más importante que la densidad. La densidad no sustituye la matriz Desktop/Mobile.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="playground">
+
+## Playground
+
+Prueba densidad, selección, filas expandidas, orden, paginación y estados desde los controles. Después cambia plataforma y tema en la toolbar superior.
+
+<Canvas of={DataTableStories.Default} sourceState="shown" />
+<Controls of={DataTableStories.Default} />
+
+  </section>
+</div>
