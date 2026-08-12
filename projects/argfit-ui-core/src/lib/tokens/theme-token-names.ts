@@ -111,6 +111,38 @@ export const AF_THEME_TOKEN_NAMES = [
   '--af-chart-tooltip-bg',
   '--af-chart-tooltip-text',
 
+  // ── Calendar (time grid surfaces) ───────────────────────────────────
+  '--af-calendar-surface',
+  '--af-calendar-surface-elevated',
+  '--af-calendar-grid-line',
+  '--af-calendar-today-bg',
+  '--af-calendar-selection-bg',
+  '--af-calendar-now',
+  '--af-calendar-slot-height-compact',
+  '--af-calendar-slot-height-comfortable',
+  '--af-calendar-slot-height-touch',
+  '--af-calendar-time-axis-width',
+
+  // ── Calendar event colours ──────────────────────────────────────────
+  '--af-event-training-accent',
+  '--af-event-training-bg',
+  '--af-event-training-border',
+  '--af-event-match-accent',
+  '--af-event-match-bg',
+  '--af-event-match-border',
+  '--af-event-gym-accent',
+  '--af-event-gym-bg',
+  '--af-event-gym-border',
+  '--af-event-video-accent',
+  '--af-event-video-bg',
+  '--af-event-video-border',
+  '--af-event-medical-accent',
+  '--af-event-medical-bg',
+  '--af-event-medical-border',
+  '--af-event-neutral-accent',
+  '--af-event-neutral-bg',
+  '--af-event-neutral-border',
+
   // ── Scrollbar ───────────────────────────────────────────────────────
   '--af-scrollbar-thumb',
 

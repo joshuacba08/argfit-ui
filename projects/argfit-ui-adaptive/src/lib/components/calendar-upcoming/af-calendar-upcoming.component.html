@@ -1,0 +1,56 @@
+<header class="af-calendar-upcoming__head">
+  <af-icon name="calendar-days" size="sm" tone="primary" />
+  <h3 class="af-calendar-upcoming__heading">{{ heading() }}</h3>
+  @if (showLink()) {
+    <button type="button" class="af-calendar-upcoming__link" (click)="linkPressed.emit()">
+      {{ linkLabel() }}
+      <af-icon name="arrow-right" size="xs" />
+    </button>
+  }
+</header>
+
+@if (loading()) {
+  <div class="af-calendar-upcoming__list" role="status" [attr.aria-label]="labels().loading">
+    @for (row of skeletons(); track row) {
+      <span class="af-calendar-upcoming__skeleton" aria-hidden="true"></span>
+    }
+  </div>
+} @else if (items().length === 0) {
+  <p class="af-calendar-upcoming__empty">{{ emptyTitle() }}</p>
+} @else {
+  <ul class="af-calendar-upcoming__list" [attr.aria-label]="heading()">
+    @for (item of items(); track item.event.id) {
+      <li>
+        <button
+          type="button"
+          class="af-calendar-upcoming__item"
+          [attr.data-color]="item.event.colorToken"
+          [attr.aria-label]="item.ariaLabel"
+          (click)="eventActivate.emit(item.event)"
+        >
+          <span class="af-calendar-upcoming__when">
+            <span
+              class="af-calendar-upcoming__day"
+              [class.af-calendar-upcoming__day--today]="item.isToday"
+            >
+              {{ item.dayLabel }}
+            </span>
+            <span class="af-calendar-upcoming__time">{{ item.event.start }}</span>
+          </span>
+
+          <span class="af-calendar-upcoming__body">
+            <af-icon [name]="item.icon" size="sm" />
+            <span class="af-calendar-upcoming__text">
+              <span class="af-calendar-upcoming__title">{{ item.event.title }}</span>
+              @if (item.event.subtitle) {
+                <span class="af-calendar-upcoming__subtitle">{{ item.event.subtitle }}</span>
+              }
+            </span>
+          </span>
+
+          <span class="af-calendar-upcoming__duration">{{ item.durationLabel }}</span>
+        </button>
+      </li>
+    }
+  </ul>
+}

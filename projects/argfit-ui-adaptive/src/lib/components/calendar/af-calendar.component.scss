@@ -1,0 +1,58 @@
+.af-calendar {
+  display: block;
+  min-width: 0;
+  position: relative;
+}
+
+// ── Modales de detalle y editor ───────────────────────────────────────
+// El scrim cubre el calendario, no la página: el componente es un organismo
+// dentro de una pantalla, no una aplicación. Quien necesite un overlay a
+// pantalla completa apaga `overlays` y hospeda el detalle en su propio diálogo.
+.af-calendar__scrim {
+  align-items: center;
+  background: var(--af-bg-overlay);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: var(--af-space-4);
+  position: absolute;
+  z-index: 60;
+}
+
+.af-calendar__modal {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: hidden;
+  width: min(460px, 100%);
+}
+
+.af-calendar__modal--wide {
+  width: min(640px, 100%);
+}
+
+.af-calendar__modal > * {
+  max-height: 100%;
+  min-height: 0;
+}
+
+// En móvil el modal se apoya abajo, como hoja: la zona alcanzable con el pulgar
+// está en la mitad inferior de la pantalla.
+.af-calendar[data-platform='mobile'] .af-calendar__scrim {
+  align-items: flex-end;
+  padding: 0;
+}
+
+.af-calendar[data-platform='mobile'] .af-calendar__modal {
+  max-height: 92%;
+  width: 100%;
+}
+
+.af-calendar[data-platform='mobile'] .af-calendar__modal > * {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-inline: 0;
+  border-bottom: 0;
+  border-top-left-radius: var(--af-radius-2xl);
+  border-top-right-radius: var(--af-radius-2xl);
+}

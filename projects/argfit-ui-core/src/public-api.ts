@@ -3,6 +3,17 @@
  */
 
 export * from './lib/config/argfit-ui.config';
+export * from './lib/calendar/af-calendar-date';
+export * from './lib/calendar/af-calendar-geometry';
+export * from './lib/calendar/af-calendar-interaction';
+export * from './lib/calendar/af-calendar-labels';
+export * from './lib/calendar/af-calendar-layout';
+export * from './lib/calendar/af-calendar-mutation';
+export * from './lib/calendar/af-calendar-range';
+export * from './lib/calendar/af-calendar-time';
+export * from './lib/calendar/af-calendar-widgets';
+export * from './lib/providers/provide-af-calendar-event-types';
+export * from './lib/providers/provide-af-calendar-request-id';
 export * from './lib/providers/provide-argfit-ui';
 export * from './lib/services/platform.service';
 export * from './lib/services/toast.service';
@@ -19,6 +30,10 @@ export * from './lib/types/avatar.types';
 export * from './lib/types/auth-shell.types';
 export * from './lib/types/badge.types';
 export * from './lib/types/button.types';
+export * from './lib/types/calendar.types';
+export * from './lib/types/calendar-event-type.types';
+export * from './lib/types/calendar-mutation.types';
+export * from './lib/types/calendar-widget.types';
 export * from './lib/types/card.types';
 export * from './lib/types/chart.types';
 export * from './lib/types/chip.types';

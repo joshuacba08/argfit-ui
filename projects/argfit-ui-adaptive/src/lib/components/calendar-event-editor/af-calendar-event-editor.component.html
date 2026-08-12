@@ -1,0 +1,260 @@
+<form class="af-calendar-event-editor__form" (submit)="$event.preventDefault(); onSubmit()">
+  <header class="af-calendar-event-editor__head">
+    <span class="af-calendar-event-editor__icon">
+      <af-icon [name]="activeType()?.icon ?? 'calendar'" size="md" />
+    </span>
+    <h2 class="af-calendar-event-editor__heading">{{ heading() }}</h2>
+    <button
+      type="button"
+      class="af-calendar-event-editor__icon-button"
+      aria-label="Cerrar"
+      (click)="cancelled.emit()"
+    >
+      <af-icon name="x" size="sm" />
+    </button>
+  </header>
+
+  <div class="af-calendar-event-editor__body">
+    @if (error(); as message) {
+      <p class="af-calendar-event-editor__error" role="alert">
+        <af-icon name="alert-triangle" size="sm" />
+        {{ message }}
+      </p>
+    }
+
+    @if (registry().length > 1) {
+      <div class="af-calendar-event-editor__types" role="radiogroup" aria-label="Tipo de actividad">
+        @for (type of registry(); track type.id) {
+          <button
+            type="button"
+            role="radio"
+            class="af-calendar-event-editor__type"
+            [attr.data-color]="type.colorToken"
+            [attr.aria-checked]="type.id === typeId()"
+            (click)="onTypeChange(type.id)"
+          >
+            <af-icon [name]="type.icon" size="xs" />
+            {{ type.label }}
+          </button>
+        }
+      </div>
+    }
+
+    <label class="af-calendar-event-editor__field af-calendar-event-editor__field--wide">
+      <span class="af-calendar-event-editor__label">Título</span>
+      <input
+        class="af-calendar-event-editor__title-input"
+        type="text"
+        [value]="title()"
+        [attr.placeholder]="'Título · ' + (activeType()?.label ?? 'Actividad')"
+        (input)="title.set($any($event.target).value); emitDraft()"
+      />
+    </label>
+
+    <div class="af-calendar-event-editor__grid">
+      <label class="af-calendar-event-editor__field">
+        <span class="af-calendar-event-editor__label">Fecha</span>
+        <input
+          type="date"
+          [value]="date()"
+          (change)="date.set($any($event.target).value); emitDraft()"
+        />
+      </label>
+
+      @if (!allDay()) {
+        <label class="af-calendar-event-editor__field">
+          <span class="af-calendar-event-editor__label">Inicio</span>
+          <select
+            [value]="startTime()"
+            (change)="startTime.set($any($event.target).value); emitDraft()"
+          >
+            @for (time of startTimes; track time) {
+              <option [value]="time" [selected]="time === startTime()">{{ time }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="af-calendar-event-editor__field">
+          <span class="af-calendar-event-editor__label">Duración</span>
+          <select [value]="duration()" (change)="onDurationChange($any($event.target).value)">
+            @for (minutes of durations; track minutes) {
+              <option [value]="minutes" [selected]="minutes === duration()">
+                {{ durationLabel(minutes) }}
+              </option>
+            }
+          </select>
+        </label>
+      }
+
+      <div class="af-calendar-event-editor__field af-calendar-event-editor__field--switch">
+        <span class="af-calendar-event-editor__label" id="af-calendar-all-day">
+          {{ labels().allDay }}
+        </span>
+        <button
+          type="button"
+          role="switch"
+          class="af-calendar-event-editor__switch"
+          aria-labelledby="af-calendar-all-day"
+          [attr.aria-checked]="allDay()"
+          [class.af-calendar-event-editor__switch--on]="allDay()"
+          (click)="allDay.set(!allDay()); emitDraft()"
+        >
+          <span></span>
+        </button>
+      </div>
+
+      @if (resources().length > 0) {
+        <label class="af-calendar-event-editor__field">
+          <span class="af-calendar-event-editor__label">Recurso</span>
+          <select
+            [value]="resourceId()"
+            (change)="resourceId.set($any($event.target).value); emitDraft()"
+          >
+            <option value="">Sin asignar</option>
+            @for (resource of resources(); track resource.id) {
+              <option [value]="resource.id" [selected]="resource.id === resourceId()">
+                {{ resource.title }}
+              </option>
+            }
+          </select>
+        </label>
+      }
+
+      @if (recurrenceScopes().length > 0) {
+        <label class="af-calendar-event-editor__field">
+          <span class="af-calendar-event-editor__label">Alcance del cambio</span>
+          <select [value]="scope()" (change)="scope.set($any($event.target).value)">
+            @for (option of recurrenceScopes(); track option) {
+              <option [value]="option" [selected]="option === scope()">
+                {{ scopeLabels[option] }}
+              </option>
+            }
+          </select>
+        </label>
+      }
+    </div>
+
+    @if (fields().length > 0) {
+      <p class="af-calendar-event-editor__separator">
+        <span>Campos de {{ activeType()?.label?.toLowerCase() }}</span>
+      </p>
+
+      <div class="af-calendar-event-editor__grid">
+        @for (field of fields(); track field.key) {
+          @switch (field.kind) {
+            @case ('switch') {
+              <div class="af-calendar-event-editor__field af-calendar-event-editor__field--switch">
+                <span class="af-calendar-event-editor__label" [id]="'af-cal-' + field.key">
+                  {{ field.label }}
+                </span>
+                <button
+                  type="button"
+                  role="switch"
+                  class="af-calendar-event-editor__switch"
+                  [attr.aria-labelledby]="'af-cal-' + field.key"
+                  [attr.aria-checked]="isSwitchOn(field.key)"
+                  [class.af-calendar-event-editor__switch--on]="isSwitchOn(field.key)"
+                  (click)="onFieldChange(field.key, !isSwitchOn(field.key))"
+                >
+                  <span></span>
+                </button>
+              </div>
+            }
+
+            @case ('chips') {
+              <div
+                class="af-calendar-event-editor__field af-calendar-event-editor__field--wide"
+                role="group"
+                [attr.aria-label]="field.label"
+              >
+                <span class="af-calendar-event-editor__label">{{ field.label }}</span>
+                <div class="af-calendar-event-editor__chips">
+                  @for (option of field.options ?? []; track option.value) {
+                    <button
+                      type="button"
+                      class="af-calendar-event-editor__chip"
+                      [attr.aria-pressed]="isChipOn(field.key, option.value)"
+                      (click)="onChipToggle(field.key, option.value)"
+                    >
+                      {{ option.label }}
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+
+            @case ('textarea') {
+              <label class="af-calendar-event-editor__field af-calendar-event-editor__field--wide">
+                <span class="af-calendar-event-editor__label">{{ field.label }}</span>
+                <textarea
+                  rows="3"
+                  [attr.placeholder]="field.placeholder ?? null"
+                  [value]="fieldValue(field.key)"
+                  (input)="onFieldChange(field.key, $any($event.target).value)"
+                ></textarea>
+              </label>
+            }
+
+            @case ('select') {
+              <label class="af-calendar-event-editor__field">
+                <span class="af-calendar-event-editor__label">{{ field.label }}</span>
+                <select
+                  [value]="fieldValue(field.key)"
+                  (change)="onFieldChange(field.key, $any($event.target).value)"
+                >
+                  <option value="">Sin definir</option>
+                  @for (option of field.options ?? []; track option.value) {
+                    <option [value]="option.value" [selected]="option.value === fieldValue(field.key)">
+                      {{ option.label }}
+                    </option>
+                  }
+                </select>
+              </label>
+            }
+
+            @default {
+              <label class="af-calendar-event-editor__field">
+                <span class="af-calendar-event-editor__label">{{ field.label }}</span>
+                <input
+                  [attr.type]="field.kind === 'number' ? 'number' : 'text'"
+                  [attr.placeholder]="field.placeholder ?? null"
+                  [attr.min]="field.min ?? null"
+                  [attr.max]="field.max ?? null"
+                  [value]="fieldValue(field.key)"
+                  (input)="onFieldChange(field.key, $any($event.target).value)"
+                />
+              </label>
+            }
+          }
+        }
+      </div>
+    }
+  </div>
+
+  <footer class="af-calendar-event-editor__foot">
+    <p class="af-calendar-event-editor__summary">
+      <af-icon name="clock" size="xs" />
+      {{ summary() }}
+    </p>
+
+    @if (allowDelete() && eventId()) {
+      <button type="button" class="af-calendar-event-editor__button" (click)="onDelete()">
+        <af-icon name="trash" size="xs" />
+        Eliminar
+      </button>
+    }
+
+    <button type="button" class="af-calendar-event-editor__button" (click)="cancelled.emit()">
+      Cancelar
+    </button>
+
+    <button
+      type="submit"
+      class="af-calendar-event-editor__button af-calendar-event-editor__button--primary"
+      [disabled]="busy()"
+    >
+      <af-icon [name]="busy() ? 'refresh-cw' : 'check'" size="xs" />
+      {{ submitLabel() }}
+    </button>
+  </footer>
+</form>

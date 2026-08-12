@@ -1,0 +1,55 @@
+@if (loading()) {
+  <div class="af-calendar-next-session__loading" role="status" [attr.aria-label]="labels().loading">
+    <span class="af-calendar-next-session__skeleton" aria-hidden="true"></span>
+    <span class="af-calendar-next-session__skeleton" aria-hidden="true"></span>
+  </div>
+} @else if (event(); as event) {
+  <p class="af-calendar-next-session__kicker">
+    <af-icon name="zap" size="xs" />
+    {{ heading() }}
+    @if (countdown(); as countdown) {
+      · {{ countdown }}
+    }
+  </p>
+
+  <h3 class="af-calendar-next-session__title">{{ event.title }}</h3>
+
+  <p class="af-calendar-next-session__when">
+    <af-icon name="clock" size="xs" />
+    {{ whenLabel() }}
+  </p>
+
+  <p class="af-calendar-next-session__meta">
+    @if (event.subtitle) {
+      <span><af-icon name="map-pin" size="xs" />{{ event.subtitle }}</span>
+    }
+    <span><af-icon [name]="icon()" size="xs" />{{ durationLabel() }}</span>
+  </p>
+
+  <div class="af-calendar-next-session__actions">
+    <button
+      type="button"
+      class="af-calendar-next-session__button af-calendar-next-session__button--primary"
+      (click)="eventActivate.emit(event)"
+    >
+      <af-icon name="external-link" size="xs" />
+      {{ actionLabel() }}
+    </button>
+
+    @if (secondaryActionLabel(); as label) {
+      <button
+        type="button"
+        class="af-calendar-next-session__button"
+        (click)="secondaryActionPressed.emit(event)"
+      >
+        <af-icon name="bell" size="xs" />
+        {{ label }}
+      </button>
+    }
+  </div>
+} @else {
+  <p class="af-calendar-next-session__empty">
+    <af-icon name="calendar" size="lg" tone="muted" />
+    {{ emptyTitle() }}
+  </p>
+}

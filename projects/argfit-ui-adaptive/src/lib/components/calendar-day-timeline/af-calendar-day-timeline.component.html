@@ -1,0 +1,48 @@
+<header class="af-calendar-day-timeline__head">
+  <af-icon name="activity" size="sm" tone="primary" />
+  <h3 class="af-calendar-day-timeline__heading">{{ heading() }}</h3>
+  <span class="af-calendar-day-timeline__date">{{ dateLabel() }}</span>
+</header>
+
+<div class="af-calendar-day-timeline__band" [attr.aria-label]="heading()" role="group">
+  @for (tick of ticks(); track tick.minutes) {
+    <span
+      class="af-calendar-day-timeline__tick"
+      aria-hidden="true"
+      [style.left.%]="tick.leftPercent"
+    >
+      <span>{{ tick.label }}</span>
+    </span>
+  }
+
+  @for (block of blocks(); track block.event.id) {
+    <button
+      type="button"
+      class="af-calendar-day-timeline__block"
+      [attr.data-color]="block.event.colorToken"
+      [attr.data-state]="block.event.state ?? 'normal'"
+      [attr.aria-label]="block.ariaLabel"
+      [attr.title]="block.ariaLabel"
+      [style.left.%]="block.leftPercent"
+      [style.width.%]="block.widthPercent"
+      (click)="eventActivate.emit(block.event)"
+    >
+      <af-icon [name]="block.icon" size="xs" />
+      <span class="af-calendar-day-timeline__label">{{ block.event.title }}</span>
+    </button>
+  }
+
+  @if (nowPercent() !== null) {
+    <span
+      class="af-calendar-day-timeline__now"
+      role="separator"
+      [attr.aria-label]="labels().nowIndicator"
+      [style.left.%]="nowPercent()"
+    ></span>
+  }
+</div>
+
+<p class="af-calendar-day-timeline__summary">
+  <span><af-icon name="list" size="xs" />{{ summary().count }} actividades</span>
+  <span><af-icon name="clock" size="xs" />{{ summary().planned }} planificadas</span>
+</p>

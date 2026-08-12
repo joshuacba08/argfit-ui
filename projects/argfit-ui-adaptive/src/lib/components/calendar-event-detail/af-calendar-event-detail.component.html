@@ -1,0 +1,115 @@
+<header class="af-calendar-event-detail__head">
+  <span class="af-calendar-event-detail__icon">
+    <af-icon [name]="icon()" size="md" />
+  </span>
+
+  <div class="af-calendar-event-detail__heading">
+    <p class="af-calendar-event-detail__type">
+      {{ typeLabel() }}
+      @if (event().seriesId) {
+        · serie
+      }
+    </p>
+    <h2 class="af-calendar-event-detail__title">{{ event().title }}</h2>
+  </div>
+
+  @if (showClose()) {
+    <button
+      type="button"
+      class="af-calendar-event-detail__icon-button"
+      aria-label="Cerrar"
+      (click)="closed.emit()"
+    >
+      <af-icon name="x" size="sm" />
+    </button>
+  }
+</header>
+
+<div class="af-calendar-event-detail__body">
+  <p class="af-calendar-event-detail__line">
+    <af-icon name="calendar" size="sm" />
+    <span>
+      <strong>{{ dateLabel() }}</strong>
+      <span>{{ timeLabel() }}</span>
+    </span>
+  </p>
+
+  @if (event().subtitle; as subtitle) {
+    <p class="af-calendar-event-detail__line">
+      <af-icon name="map-pin" size="sm" />
+      <span><strong>{{ subtitle }}</strong></span>
+    </p>
+  }
+
+  @if (event().seriesId; as seriesId) {
+    <p class="af-calendar-event-detail__line">
+      <af-icon name="repeat" size="sm" />
+      <span>
+        <strong>Serie recurrente</strong>
+        <span>{{ seriesId }}</span>
+      </span>
+    </p>
+  }
+
+  @if (stateLabel(); as label) {
+    <p class="af-calendar-event-detail__line af-calendar-event-detail__line--state">
+      <af-icon name="alert-triangle" size="sm" />
+      <span>
+        <strong>Estado</strong>
+        <span>{{ label }}</span>
+      </span>
+    </p>
+  }
+
+  @if (fields().length > 0) {
+    <dl class="af-calendar-event-detail__fields">
+      @for (field of fields(); track field.key) {
+        <div class="af-calendar-event-detail__field">
+          <dt>{{ field.label }}</dt>
+          <dd>{{ field.value }}</dd>
+        </div>
+      }
+    </dl>
+  }
+</div>
+
+<footer class="af-calendar-event-detail__foot">
+  @if (canEdit()) {
+    <button
+      type="button"
+      class="af-calendar-event-detail__button af-calendar-event-detail__button--primary"
+      (click)="editRequest.emit(event())"
+    >
+      <af-icon name="edit" size="xs" />
+      Editar
+    </button>
+  }
+
+  @if (canDuplicate()) {
+    <button
+      type="button"
+      class="af-calendar-event-detail__button"
+      (click)="duplicateRequest.emit(event())"
+    >
+      <af-icon name="copy" size="xs" />
+      Duplicar
+    </button>
+  }
+
+  @if (canDelete()) {
+    <button type="button" class="af-calendar-event-detail__button" (click)="onDelete()">
+      <af-icon name="trash" size="xs" />
+      Eliminar
+    </button>
+  }
+
+  @if (showClose()) {
+    <button
+      type="button"
+      class="af-calendar-event-detail__button af-calendar-event-detail__button--end"
+      (click)="closed.emit()"
+    >
+      Cerrar
+    </button>
+  }
+</footer>

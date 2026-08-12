@@ -1,0 +1,119 @@
+.af-calendar-week-load {
+  background: var(--af-card-bg);
+  border: 1px solid var(--af-card-border);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-3);
+  padding: var(--af-space-4);
+}
+
+.af-calendar-week-load__head {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+}
+
+.af-calendar-week-load__heading {
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-wide);
+  margin: 0 auto 0 0;
+  text-transform: uppercase;
+}
+
+.af-calendar-week-load__total {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.af-calendar-week-load__chart {
+  align-items: end;
+  display: grid;
+  gap: var(--af-space-2);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  height: 132px;
+}
+
+.af-calendar-week-load__column {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: var(--af-radius-sm);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-1_5);
+  height: 100%;
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.af-calendar-week-load__column:hover {
+  background: var(--af-surface-2);
+}
+
+.af-calendar-week-load__value {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.af-calendar-week-load__track {
+  align-items: flex-end;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.af-calendar-week-load__bar {
+  background: linear-gradient(180deg, var(--af-primary-hover), var(--af-primary-active));
+  border-radius: var(--af-radius-xs) var(--af-radius-xs) 2px 2px;
+  flex: none;
+  width: 100%;
+}
+
+.af-calendar-week-load__bar--peak {
+  background: linear-gradient(180deg, var(--af-accent), var(--af-primary));
+}
+
+.af-calendar-week-load__bar--empty {
+  background: var(--af-surface-4);
+}
+
+.af-calendar-week-load__label {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  text-transform: uppercase;
+}
+
+.af-calendar-week-load__label--today {
+  color: var(--af-primary);
+  font-weight: var(--af-font-weight-bold);
+}
+
+.af-calendar-week-load__summary {
+  color: var(--af-text-soft);
+  display: flex;
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-4);
+  margin: 0;
+}
+
+.af-calendar-week-load__summary span {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-1_5);
+}
+
+.af-calendar-week-load button:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 1px;
+}

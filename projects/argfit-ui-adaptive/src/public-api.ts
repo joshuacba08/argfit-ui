@@ -38,6 +38,45 @@ export {
     AfButtonComponent as AfButton, AfButtonComponent
 } from './lib/components/button/af-button.component';
 export {
+    AF_CALENDAR_TEMPLATE_DIRECTIVES,
+    AfCalendarDayHeaderDirective,
+    AfCalendarEventDirective
+} from './lib/components/calendar/af-calendar-event.directive';
+export {
+    AF_CALENDAR_SLOT_DIRECTIVES,
+    AfCalendarEmptyDirective,
+    AfCalendarErrorDirective,
+    AfCalendarFooterDirective,
+    AfCalendarToolbarDirective
+} from './lib/components/calendar/af-calendar-slots.directive';
+export {
+    AfCalendarComponent as AfCalendar, AfCalendarComponent
+} from './lib/components/calendar/af-calendar.component';
+export {
+    AfCalendarDayTimelineComponent as AfCalendarDayTimeline, AfCalendarDayTimelineComponent
+} from './lib/components/calendar-day-timeline/af-calendar-day-timeline.component';
+export {
+    AfCalendarEventDetailComponent as AfCalendarEventDetail, AfCalendarEventDetailComponent
+} from './lib/components/calendar-event-detail/af-calendar-event-detail.component';
+export {
+    AfCalendarEventEditorComponent as AfCalendarEventEditor, AfCalendarEventEditorComponent
+} from './lib/components/calendar-event-editor/af-calendar-event-editor.component';
+export {
+    AfCalendarMiniMonthComponent as AfCalendarMiniMonth, AfCalendarMiniMonthComponent
+} from './lib/components/calendar-mini-month/af-calendar-mini-month.component';
+export {
+    AfCalendarNextSessionComponent as AfCalendarNextSession, AfCalendarNextSessionComponent
+} from './lib/components/calendar-next-session/af-calendar-next-session.component';
+export {
+    AfCalendarStripAgendaComponent as AfCalendarStripAgenda, AfCalendarStripAgendaComponent
+} from './lib/components/calendar-strip-agenda/af-calendar-strip-agenda.component';
+export {
+    AfCalendarUpcomingComponent as AfCalendarUpcoming, AfCalendarUpcomingComponent
+} from './lib/components/calendar-upcoming/af-calendar-upcoming.component';
+export {
+    AfCalendarWeekLoadComponent as AfCalendarWeekLoad, AfCalendarWeekLoadComponent
+} from './lib/components/calendar-week-load/af-calendar-week-load.component';
+export {
     AF_CARD_SLOT_DIRECTIVES,
     AfCardContentDirective,
     AfCardEyebrowDirective,

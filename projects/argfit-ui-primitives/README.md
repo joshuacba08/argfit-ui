@@ -10,17 +10,18 @@ This package participates in the current `1.4.0` production contract.
 
 ```bash
 pnpm add @argfit-ui/core@1.4.0 @argfit-ui/primitives@1.4.0
-pnpm add @angular/cdk@^21.2.0 @lucide/angular@^1.16.0
+pnpm add @angular/cdk@^21.2.0 @lucide/angular@^1.16.0 @ng-icons/core@^33.0.0
 ```
 
 ## Available primitives
 
-| Symbol | Selector | Purpose |
-| --- | --- | --- |
-| `AfVisuallyHiddenComponent` | `af-visually-hidden` | Renders projected content visible only to assistive technology. |
-| `AfFocusTrapDirective` | `[afFocusTrap]` | Contains keyboard focus within the host while enabled. |
-| `AfFocusInitialDirective` | `[afFocusInitial]` | Marks the element that should receive focus first inside a trap. |
-| `AfEscapeKeyDirective` | `[afEscapeKey]` | Emits `afEscape` when the user presses Escape on the host or a descendant. |
+| Symbol                      | Selector             | Purpose                                                                    |
+| --------------------------- | -------------------- | -------------------------------------------------------------------------- |
+| `AfVisuallyHiddenComponent` | `af-visually-hidden` | Renders projected content visible only to assistive technology.            |
+| `AfFocusTrapDirective`      | `[afFocusTrap]`      | Contains keyboard focus within the host while enabled.                     |
+| `AfFocusInitialDirective`   | `[afFocusInitial]`   | Marks the element that should receive focus first inside a trap.           |
+| `AfEscapeKeyDirective`      | `[afEscapeKey]`      | Emits `afEscape` when the user presses Escape on the host or a descendant. |
+| `AfIconComponent`           | `af-icon`            | Renders built-in or explicitly registered Lucide and ng-icons definitions. |
 
 ## Usage
 
@@ -34,17 +35,33 @@ import {
 ```
 
 ```html
-<section
-  afFocusTrap
-  [afFocusTrapEnabled]="isOpen()"
-  afEscapeKey
-  (afEscape)="close()"
->
+<section afFocusTrap [afFocusTrapEnabled]="isOpen()" afEscapeKey (afEscape)="close()">
   <button type="button" afFocusInitial>Confirm</button>
   <button type="button">Cancel</button>
   <af-visually-hidden>Modal opened</af-visually-hidden>
 </section>
 ```
+
+For icons outside the built-in catalog, import only the definitions the app uses and
+register them at application, route or component scope:
+
+```ts
+import { LucideAlarmClock } from '@lucide/angular';
+import { heroUser } from '@ng-icons/heroicons/outline';
+import { provideAfLucideIcons, provideAfNgIcons } from '@argfit-ui/primitives';
+
+const providers = [
+  provideAfLucideIcons(LucideAlarmClock),
+  provideAfNgIcons('hero', { user: heroUser }),
+];
+```
+
+```html
+<af-icon name="lucide:alarm-clock" ariaLabel="Alarm" /> <af-icon name="hero:user" decorative />
+```
+
+Concrete `@ng-icons/*` packs stay optional consumer dependencies. The Storybook Icon
+page is the canonical catalog and integration guide.
 
 ## Productive Docs
 

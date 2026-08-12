@@ -65,11 +65,17 @@
 }
 
 .af-button-mobile--secondary {
-  --background: var(--af-bg-interactive);
-  --background-activated: var(--af-secondary);
-  --background-hover: var(--af-secondary-hover);
-  --border-color: var(--af-border);
-  --color: var(--af-text-main);
+  --background: var(--af-color-neutral-900);
+  --background-activated: var(--af-color-neutral-700);
+  --background-hover: var(--af-color-neutral-800);
+  --border-color: var(--af-color-neutral-700);
+  --color: var(--af-color-neutral-50);
+}
+
+.af-button-mobile af-icon,
+.af-button-mobile af-icon svg,
+.af-button-mobile af-icon ng-icon {
+  color: inherit !important;
 }
 
 .af-button-mobile--ghost {

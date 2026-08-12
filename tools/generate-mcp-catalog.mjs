@@ -328,6 +328,8 @@ function readTokens() {
 }
 
 function tokenFamily(name) {
+  if (name.startsWith('--af-calendar-')) return 'calendar';
+  if (name.startsWith('--af-event-')) return 'event';
   if (name.includes('space')) return 'spacing';
   if (name.includes('radius')) return 'radius';
   if (name.includes('shadow')) return 'elevation';

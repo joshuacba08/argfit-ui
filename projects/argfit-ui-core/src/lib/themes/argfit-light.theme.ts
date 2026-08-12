@@ -55,6 +55,24 @@ export const ARGFIT_LIGHT_THEME: AfThemeDefinition = {
     '--af-chart-tooltip-bg': 'rgba(255, 255, 255, 0.98)',
     '--af-chart-tooltip-text': '#102A43',
 
+    // ── Calendar (time grid surfaces) ─────────────────────────────────
+    '--af-calendar-surface': '#FFFFFF',
+    '--af-calendar-surface-elevated': '#F0F4F8',
+    '--af-calendar-grid-line': 'rgba(16, 42, 67, 0.12)',
+    '--af-calendar-today-bg': 'rgba(37, 153, 213, 0.10)',
+    '--af-calendar-selection-bg': 'rgba(37, 153, 213, 0.16)',
+    '--af-calendar-now': '#D01F4E',
+
+    // ── Calendar event colours ────────────────────────────────────────
+    // Accents are darkened for AA contrast on white; the dark palette
+    // values (#00D4FF, #FFB300) sit around 1.5:1 on a light surface.
+    '--af-event-training-accent': '#1E7DB1',
+    '--af-event-match-accent': '#00809B',
+    '--af-event-gym-accent': '#00893A',
+    '--af-event-video-accent': '#A66A00',
+    '--af-event-medical-accent': '#D01F4E',
+    '--af-event-neutral-accent': '#486581',
+
     // ── Scrollbar ─────────────────────────────────────────────────────
     '--af-scrollbar-thumb': '#9FB3C8',
   },

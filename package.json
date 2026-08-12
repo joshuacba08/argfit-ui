@@ -38,6 +38,7 @@
     "smoke:beta": "node tools/beta-smoke.mjs",
     "smoke:production:dist": "node tools/production-smoke.mjs",
     "smoke:production": "pnpm build:libs && pnpm pack:production:dist && pnpm smoke:production:dist",
+    "smoke:icons": "node tools/icon-bundle-smoke.mjs",
     "pwa:smoke": "node tools/pwa-smoke.mjs",
     "release:alpha:check": "pnpm guard:architecture && pnpm build:all && pnpm test:all && pnpm pack:alpha:dry-run:dist && pnpm pack:alpha:dist && pnpm smoke:alpha",
     "release:beta:check": "pnpm guard:architecture && pnpm build:all && pnpm test:all && pnpm pack:beta:dry-run:dist && pnpm pack:beta:dist && pnpm beta:consumer-smoke:dist && pnpm visual:beta:dist && pnpm measure:beta-performance && pnpm smoke:beta",
@@ -61,7 +62,7 @@
     "audit:accessibility": "ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
     "audit:accessibility:beta-plus:dist": "node tools/beta-plus-accessibility.mjs",
     "audit:accessibility:beta-plus": "pnpm build:libs && pnpm pack:beta-plus:dist && pnpm guard:beta-plus:api:dist && pnpm beta-plus:consumer-smoke:dist && pnpm audit:accessibility:beta-plus:dist",
-    "test:all": "pnpm build:libs && pnpm guard:architecture && pnpm guard:regression && pnpm guard:storybook && pnpm guard:mcp-catalog && pnpm --dir tools/mcp test && ng test argfit-ui-core --watch=false && ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
+    "test:all": "pnpm build:libs && pnpm smoke:icons && pnpm guard:architecture && pnpm guard:regression && pnpm guard:storybook && pnpm guard:mcp-catalog && pnpm --dir tools/mcp test && ng test argfit-ui-core --watch=false && ng test argfit-ui-primitives --watch=false && ng test argfit-ui-desktop --watch=false && ng test argfit-ui-mobile --watch=false && ng test argfit-ui-adaptive --watch=false && ng test showcase --watch=false",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "release:current": "node scripts/release.mjs current",
@@ -109,11 +110,14 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@compodoc/compodoc": "^1.1.35",
-    "@axe-core/playwright": "^4.11.0",
     "@angular/build": "^21.2.11",
     "@angular/cli": "^21.2.2",
     "@angular/compiler-cli": "^21.2.0",
+    "@axe-core/playwright": "^4.11.0",
+    "@compodoc/compodoc": "^1.1.35",
+    "@ng-icons/core": "^33.4.0",
+    "@ng-icons/heroicons": "^33.4.0",
+    "@ng-icons/tabler-icons": "^33.4.0",
     "@storybook/addon-a11y": "^10.5.7",
     "@storybook/addon-docs": "^10.5.7",
     "@storybook/addon-vitest": "^10.5.7",
@@ -124,8 +128,8 @@
     "ng-packagr": "^21.2.0",
     "playwright": "^1.60.0",
     "prettier": "^3.8.1",
-    "typescript": "~5.9.2",
     "storybook": "^10.5.7",
+    "typescript": "~5.9.2",
     "vite": "^8.2.1",
     "vitest": "4.0.18"
   }

@@ -1,0 +1,72 @@
+<header class="af-calendar-mini-month__head">
+  <h3 class="af-calendar-mini-month__heading">{{ heading() }}</h3>
+  <button
+    type="button"
+    class="af-calendar-mini-month__nav"
+    [attr.aria-label]="labels().previous"
+    (click)="onMonthStep(-1)"
+  >
+    <af-icon name="chevron-left" size="xs" />
+  </button>
+  <button
+    type="button"
+    class="af-calendar-mini-month__nav"
+    [attr.aria-label]="labels().next"
+    (click)="onMonthStep(1)"
+  >
+    <af-icon name="chevron-right" size="xs" />
+  </button>
+</header>
+
+<p class="af-calendar-mini-month__month">{{ monthTitle() }}</p>
+
+<div class="af-calendar-mini-month__grid" role="group" [attr.aria-label]="monthTitle()">
+  @for (weekday of weekdays(); track weekday.key) {
+    <span class="af-calendar-mini-month__weekday" aria-hidden="true">{{ weekday.initial }}</span>
+  }
+
+  @for (day of days(); track day.date) {
+    <button
+      type="button"
+      class="af-calendar-mini-month__day"
+      [class.af-calendar-mini-month__day--outside]="day.isOutside"
+      [class.af-calendar-mini-month__day--range]="day.isInRange"
+      [class.af-calendar-mini-month__day--today]="day.isToday"
+      [attr.aria-pressed]="day.isSelected"
+      [attr.aria-label]="day.ariaLabel"
+      (click)="dateSelect.emit(day.date)"
+    >
+      {{ day.dayNumber }}
+      @if (day.hasEvents) {
+        <span class="af-calendar-mini-month__mark" aria-hidden="true"></span>
+      }
+    </button>
+  }
+</div>
+
+@if (showAgenda()) {
+  <div class="af-calendar-mini-month__agenda">
+    <p class="af-calendar-mini-month__agenda-title">{{ selectedLabel() }}</p>
+
+    @if (items().length === 0) {
+      <p class="af-calendar-mini-month__empty">{{ labels().noEvents }}</p>
+    } @else {
+      <ul class="af-calendar-mini-month__list">
+        @for (item of items(); track item.event.id) {
+          <li>
+            <button
+              type="button"
+              class="af-calendar-mini-month__item"
+              [attr.data-color]="item.event.colorToken"
+              (click)="eventActivate.emit(item.event)"
+            >
+              <span class="af-calendar-mini-month__time">{{ item.timeLabel }}</span>
+              <af-icon [name]="item.icon" size="xs" />
+              <span class="af-calendar-mini-month__title">{{ item.event.title }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+}

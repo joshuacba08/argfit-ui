@@ -1,0 +1,154 @@
+.af-calendar-day-timeline {
+  background: var(--af-card-bg);
+  border: 1px solid var(--af-card-border);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-3);
+  padding: var(--af-space-4);
+}
+
+.af-calendar-day-timeline [data-color='training'] {
+  --af-event-accent: var(--af-event-training-accent);
+  --af-event-bg: var(--af-event-training-bg);
+}
+.af-calendar-day-timeline [data-color='match'] {
+  --af-event-accent: var(--af-event-match-accent);
+  --af-event-bg: var(--af-event-match-bg);
+}
+.af-calendar-day-timeline [data-color='gym'] {
+  --af-event-accent: var(--af-event-gym-accent);
+  --af-event-bg: var(--af-event-gym-bg);
+}
+.af-calendar-day-timeline [data-color='video'] {
+  --af-event-accent: var(--af-event-video-accent);
+  --af-event-bg: var(--af-event-video-bg);
+}
+.af-calendar-day-timeline [data-color='medical'] {
+  --af-event-accent: var(--af-event-medical-accent);
+  --af-event-bg: var(--af-event-medical-bg);
+}
+.af-calendar-day-timeline [data-color='neutral'] {
+  --af-event-accent: var(--af-event-neutral-accent);
+  --af-event-bg: var(--af-event-neutral-bg);
+}
+
+.af-calendar-day-timeline__head {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+}
+
+.af-calendar-day-timeline__heading {
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-wide);
+  margin: 0 auto 0 0;
+  text-transform: uppercase;
+}
+
+.af-calendar-day-timeline__date {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.af-calendar-day-timeline__band {
+  background: var(--af-surface-2);
+  border-radius: var(--af-radius-md);
+  height: 74px;
+  overflow: hidden;
+  position: relative;
+}
+
+.af-calendar-day-timeline__tick {
+  border-left: 1px solid var(--af-calendar-grid-line);
+  bottom: 22px;
+  position: absolute;
+  top: 0;
+}
+
+.af-calendar-day-timeline__tick span {
+  bottom: -19px;
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  left: 3px;
+  position: absolute;
+}
+
+.af-calendar-day-timeline__block {
+  align-items: center;
+  background: var(--af-event-bg);
+  border: 0;
+  border-left: 3px solid var(--af-event-accent);
+  border-radius: var(--af-radius-xs);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  gap: var(--af-space-1);
+  height: 30px;
+  overflow: hidden;
+  padding: 0 var(--af-space-1_5);
+  position: absolute;
+  top: var(--af-space-2);
+  white-space: nowrap;
+}
+
+.af-calendar-day-timeline__block af-icon {
+  color: var(--af-event-accent);
+}
+
+.af-calendar-day-timeline__label {
+  font-size: var(--af-text-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.af-calendar-day-timeline__now {
+  background: var(--af-calendar-now);
+  bottom: 22px;
+  position: absolute;
+  top: 0;
+  width: 2px;
+}
+
+.af-calendar-day-timeline__summary {
+  color: var(--af-text-soft);
+  display: flex;
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-4);
+  margin: 0;
+}
+
+.af-calendar-day-timeline__summary span {
+  align-items: center;
+  display: inline-flex;
+  gap: var(--af-space-1_5);
+}
+
+.af-calendar-day-timeline [data-state='pending'] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--af-event-bg),
+    var(--af-event-bg) 6px,
+    color-mix(in srgb, var(--af-text-main) 8%, transparent) 6px,
+    color-mix(in srgb, var(--af-text-main) 8%, transparent) 12px
+  );
+}
+
+.af-calendar-day-timeline [data-state='cancelled'] {
+  opacity: 0.6;
+}
+
+.af-calendar-day-timeline [data-state='cancelled'] .af-calendar-day-timeline__label {
+  text-decoration: line-through;
+}
+
+.af-calendar-day-timeline button:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 1px;
+}

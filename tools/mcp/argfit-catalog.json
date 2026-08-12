@@ -3,9 +3,9 @@
   "library": {
     "name": "ArgFit UI",
     "version": "1.4.0",
-    "gitSha": "a7cf919709d4",
-    "generatedAt": "2026-08-12T04:24:26+09:00",
-    "sourceDigest": "0b15e689ffc8d775f0241ad4cf21d09ea48e68bccd228ab1153487b111e94d11",
+    "gitSha": "e58494e6865f",
+    "generatedAt": "2026-08-12T18:54:57+09:00",
+    "sourceDigest": "7f43c52f88114f4c877823a59aede391268a9791d451b2896190f5d8647117cc",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -637,6 +637,9 @@
       "tokens": [
         "--af-primary",
         "--af-primary-hover",
+        "--af-primary-contrast",
+        "--af-color-neutral-50",
+        "--af-color-neutral-900",
         "--af-button-height-md"
       ],
       "api": {
@@ -752,6 +755,1804 @@
         "story": "Primary",
         "typescript": "import { AfButton } from '@argfit-ui/adaptive';",
         "template": "<af-button\n      [variant]=\"variant\"\n      [size]=\"size\"\n      [type]=\"type\"\n      [disabled]=\"disabled\"\n      [loading]=\"loading\"\n      [fullWidth]=\"fullWidth\"\n      [icon]=\"icon\"\n      [iconPosition]=\"iconPosition\"\n      [ariaLabel]=\"ariaLabel\"\n      (pressed)=\"pressed($event)\"\n    >Click Me</af-button>"
+      }
+    },
+    {
+      "id": "calendar",
+      "name": "AfCalendar",
+      "className": "AfCalendarComponent",
+      "selector": "af-calendar",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendar } from '@argfit-ui/adaptive';",
+      "title": "Data/Calendar",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Calendario adaptativo de ArgFit UI.</p>\n<p>Recibe las ocurrencias visibles y emite intenciones tipadas: no hace HTTP, no\npersiste, no expande series y no convierte zonas horarias. La aplicación es\nla fuente de verdad; el componente decide cómo se ve, no qué pasa.</p>\n<p>La vista y la fecha ancla son estado de trabajo: arrancan del input y se\nmueven con la toolbar, pero cada movimiento se anuncia con <code>viewChange</code>,\n<code>anchorDateChange</code> y <code>visibleRangeChange</code> para que el consumidor recargue su\nventana de datos.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "mostrar sesiones planificadas sobre una grilla temporal",
+        "alternar entre día, semana, mes y agenda sobre el mismo conjunto de datos"
+      ],
+      "avoidWhen": [
+        "elegir una única fecha civil: usar AfDatePicker",
+        "expandir reglas de recurrencia o persistir cambios: eso es de la aplicación"
+      ],
+      "related": [
+        "AfDatePicker",
+        "AfTimePicker",
+        "AfTimeline",
+        "AfDataTable"
+      ],
+      "tokens": [
+        "--af-calendar-surface",
+        "--af-calendar-grid-line",
+        "--af-calendar-today-bg",
+        "--af-calendar-now",
+        "--af-calendar-slot-height-comfortable",
+        "--af-calendar-time-axis-width",
+        "--af-event-training-accent",
+        "--af-event-match-accent"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "anchorDate",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p><code>YYYY-MM-DD</code>. Sin valor, hoy en la zona del dispositivo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "ariaLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Calendario'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "createButton",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "density",
+            "type": "AfCalendarDensity",
+            "required": false,
+            "defaultValue": "'comfortable'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "editable",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>Habilita mover y redimensionar. La creación se habilita con <code>selectable</code>.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "empty",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "error",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventTypes",
+            "type": "readonly AfCalendarEventTypeDefinition[] | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "firstDay",
+            "type": "AfCalendarWeekday",
+            "required": false,
+            "defaultValue": "1",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "height",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'640px'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "hiddenDays",
+            "type": "readonly AfCalendarWeekday[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "loading",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "maxTime",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'22:00'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "minTime",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'07:00'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "nowIndicator",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "offline",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "overlays",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "<p>Hospeda el detalle y el editor en un modal propio.</p>\n<p>Con <code>false</code> el calendario solo emite <code>eventActivate</code> y <code>createPressed</code>, y\nla aplicación decide dónde y cómo presentarlos — en un drawer, en una ruta\ncompleta o en su propio diálogo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "partial",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "resources",
+            "type": "readonly AfCalendarResource[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "selectable",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>Habilita dibujar un rango sobre una franja vacía para crear.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "showToolbar",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timeZone",
+            "type": "string",
+            "required": true,
+            "defaultValue": null,
+            "description": "<p>Zona IANA de la organización. Obligatoria: inferirla del navegador es la\nforma más rápida de mostrarle a un cuerpo técnico un entrenamiento a la\nhora equivocada.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "view",
+            "type": "AfCalendarView",
+            "required": false,
+            "defaultValue": "'week'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "views",
+            "type": "readonly AfCalendarView[]",
+            "required": false,
+            "defaultValue": "['day', 'week', 'month', 'agenda']",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "anchorDateChange",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "createPressed",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventActivate",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventDelete",
+            "type": "AfCalendarEventDeleteIntent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventMoveRequest",
+            "type": "AfCalendarMutationRequest",
+            "required": false,
+            "defaultValue": null,
+            "description": "<p>Emitida en <code>pointerup</code>, nunca en <code>pointerdown</code>.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "eventResizeRequest",
+            "type": "AfCalendarMutationRequest",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventSave",
+            "type": "AfCalendarEventSaveIntent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "interactionCancel",
+            "type": "AfCalendarInteractionCancel",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "rangeCreateRequest",
+            "type": "AfCalendarMutationRequest",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "recurrenceScopeRequest",
+            "type": "AfCalendarRecurrenceScopeRequest",
+            "required": false,
+            "defaultValue": null,
+            "description": "<p>El alcance de una serie lo decide la aplicación, no el componente.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "resourceAssignRequest",
+            "type": "AfCalendarMutationRequest",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "retry",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "viewChange",
+            "type": "AfCalendarView",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "visibleRangeChange",
+            "type": "AfCalendarVisibleRange",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendar--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendar--default"
+        },
+        {
+          "id": "data-calendar--day",
+          "name": "Day",
+          "url": "/storybook/?path=/story/data-calendar--day"
+        },
+        {
+          "id": "data-calendar--three-day",
+          "name": "ThreeDay",
+          "url": "/storybook/?path=/story/data-calendar--three-day"
+        },
+        {
+          "id": "data-calendar--work-week",
+          "name": "WorkWeek",
+          "url": "/storybook/?path=/story/data-calendar--work-week"
+        },
+        {
+          "id": "data-calendar--month",
+          "name": "Month",
+          "url": "/storybook/?path=/story/data-calendar--month"
+        },
+        {
+          "id": "data-calendar--agenda",
+          "name": "Agenda",
+          "url": "/storybook/?path=/story/data-calendar--agenda"
+        },
+        {
+          "id": "data-calendar--densities",
+          "name": "Densities",
+          "url": "/storybook/?path=/story/data-calendar--densities"
+        },
+        {
+          "id": "data-calendar--event-states",
+          "name": "EventStates",
+          "url": "/storybook/?path=/story/data-calendar--event-states"
+        },
+        {
+          "id": "data-calendar--loading",
+          "name": "Loading",
+          "url": "/storybook/?path=/story/data-calendar--loading"
+        },
+        {
+          "id": "data-calendar--empty",
+          "name": "Empty",
+          "url": "/storybook/?path=/story/data-calendar--empty"
+        },
+        {
+          "id": "data-calendar--error-state",
+          "name": "ErrorState",
+          "url": "/storybook/?path=/story/data-calendar--error-state"
+        },
+        {
+          "id": "data-calendar--offline",
+          "name": "Offline",
+          "url": "/storybook/?path=/story/data-calendar--offline"
+        },
+        {
+          "id": "data-calendar--custom-templates",
+          "name": "CustomTemplates",
+          "url": "/storybook/?path=/story/data-calendar--custom-templates"
+        },
+        {
+          "id": "data-calendar--editable",
+          "name": "Editable",
+          "url": "/storybook/?path=/story/data-calendar--editable"
+        },
+        {
+          "id": "data-calendar--resources",
+          "name": "Resources",
+          "url": "/storybook/?path=/story/data-calendar--resources"
+        },
+        {
+          "id": "data-calendar--event-detail",
+          "name": "EventDetail",
+          "url": "/storybook/?path=/story/data-calendar--event-detail"
+        },
+        {
+          "id": "data-calendar--event-editor",
+          "name": "EventEditor",
+          "url": "/storybook/?path=/story/data-calendar--event-editor"
+        },
+        {
+          "id": "data-calendar--create-from-toolbar",
+          "name": "CreateFromToolbar",
+          "url": "/storybook/?path=/story/data-calendar--create-from-toolbar"
+        },
+        {
+          "id": "data-calendar--keyboard-move",
+          "name": "KeyboardMove",
+          "url": "/storybook/?path=/story/data-calendar--keyboard-move"
+        },
+        {
+          "id": "data-calendar--keyboard-move-cancelled",
+          "name": "KeyboardMoveCancelled",
+          "url": "/storybook/?path=/story/data-calendar--keyboard-move-cancelled"
+        },
+        {
+          "id": "data-calendar--recurrence-scope",
+          "name": "RecurrenceScope",
+          "url": "/storybook/?path=/story/data-calendar--recurrence-scope"
+        },
+        {
+          "id": "data-calendar--keyboard-navigation",
+          "name": "KeyboardNavigation",
+          "url": "/storybook/?path=/story/data-calendar--keyboard-navigation"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendar--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendar } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\">\n      <af-calendar\n        [events]=\"events\"\n        [view]=\"view\"\n        [views]=\"views\"\n        [anchorDate]=\"anchorDate\"\n        [timeZone]=\"timeZone\"\n        [density]=\"density\"\n        [firstDay]=\"firstDay\"\n        [hiddenDays]=\"hiddenDays\"\n        [minTime]=\"minTime\"\n        [maxTime]=\"maxTime\"\n        [nowIndicator]=\"nowIndicator\"\n        [showToolbar]=\"showToolbar\"\n        [editable]=\"editable\"\n        [selectable]=\"selectable\"\n        [createButton]=\"createButton\"\n        [overlays]=\"overlays\"\n        [height]=\"height\"\n        [loading]=\"loading\"\n        [partial]=\"partial\"\n        [offline]=\"offline\"\n        [empty]=\"empty\"\n        [error]=\"error\"\n        [ariaLabel]=\"ariaLabel\"\n        (visibleRangeChange)=\"visibleRangeChange($event)\"\n        (viewChange)=\"viewChange($event)\"\n        (anchorDateChange)=\"anchorDateChange($event)\"\n        (eventActivate)=\"eventActivate($event)\"\n        (eventMoveRequest)=\"eventMoveRequest($event)\"\n        (eventResizeRequest)=\"eventResizeRequest($event)\"\n        (rangeCreateRequest)=\"rangeCreateRequest($event)\"\n        (recurrenceScopeRequest)=\"recurrenceScopeRequest($event)\"\n        (interactionCancel)=\"interactionCancel($event)\"\n        (eventSave)=\"eventSave($event)\"\n        (eventDelete)=\"eventDelete($event)\"\n        (retry)=\"retry()\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-day-timeline",
+      "name": "AfCalendarDayTimeline",
+      "className": "AfCalendarDayTimelineComponent",
+      "selector": "af-calendar-day-timeline",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarDayTimeline } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarDayTimeline",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Franja horizontal con las actividades del día.</p>\n<p>Útil como barra de contexto sobre un dashboard: de un vistazo se ve dónde se\nacumula la carga y en qué punto del día está el equipo.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "dar contexto del día como barra sobre un dashboard",
+        "mostrar dónde se acumula la carga sin ocupar una grilla completa"
+      ],
+      "avoidWhen": [
+        "trabajar sobre la agenda o mover actividades: usar AfCalendar",
+        "mostrar hitos sin duración: usar AfTimeline"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfTimeline",
+        "AfCalendarWeekLoad"
+      ],
+      "tokens": [
+        "--af-card-bg",
+        "--af-surface-2",
+        "--af-calendar-now",
+        "--af-calendar-grid-line"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "date",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Línea de tiempo'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "maxTime",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'21:00'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "minTime",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'07:00'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "now",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Instante de referencia <code>YYYY-MM-DDTHH:mm</code>. Sin valor, el reloj del dispositivo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "nowIndicator",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "eventActivate",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendardaytimeline--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendardaytimeline--default"
+        },
+        {
+          "id": "data-calendardaytimeline--without-now",
+          "name": "WithoutNow",
+          "url": "/storybook/?path=/story/data-calendardaytimeline--without-now"
+        },
+        {
+          "id": "data-calendardaytimeline--empty",
+          "name": "Empty",
+          "url": "/storybook/?path=/story/data-calendardaytimeline--empty"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendardaytimeline--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarDayTimeline } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:620px\">\n      <af-calendar-day-timeline\n        [events]=\"events\"\n        [date]=\"date\"\n        [minTime]=\"minTime\"\n        [maxTime]=\"maxTime\"\n        [nowIndicator]=\"nowIndicator\"\n        [now]=\"now\"\n        (eventActivate)=\"eventActivate($event)\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-event-detail",
+      "name": "AfCalendarEventDetail",
+      "className": "AfCalendarEventDetailComponent",
+      "selector": "af-calendar-event-detail",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarEventDetail } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarEventDetail",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Detalle de una ocurrencia del calendario.</p>\n<p>Muestra lo común a todo evento — tipo, fecha, hora, lugar, serie, estado — y\ndebajo los campos propios de su tipo, resueltos desde el esquema del registro.\nNingún campo está codificado acá: agregar un tipo de evento no toca este\ncomponente.</p>\n<p>Es una <strong>superficie plana, no un overlay</strong>. La aplicación (o el propio\n<code>AfCalendar</code>) lo hospeda en un popover, un drawer o una ruta completa; así el\nmismo detalle sirve en los tres lugares sin duplicarse.</p>\n<p>No lleva renderers separados: entre escritorio y móvil solo cambian densidad\ny ancho de los campos, y eso se resuelve con <code>isMobile()</code> y CSS. Es el mismo\ncriterio de <code>AfField</code>, <code>AfIconField</code> y <code>AfInputGroup</code>, y el que el flujo de\ntrabajo llama «decisión explícita de renderer compartido».</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "mostrar una ocurrencia del calendario con los campos propios de su tipo",
+        "hospedar el detalle en un popover, un drawer o una ruta completa"
+      ],
+      "avoidWhen": [
+        "editar el evento: para eso está AfCalendarEventEditor",
+        "mostrar un registro que no proviene de un calendario"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfCalendarEventEditor",
+        "AfDialog"
+      ],
+      "tokens": [
+        "--af-bg-elevated",
+        "--af-border",
+        "--af-event-training-accent",
+        "--af-surface-1"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "canDelete",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "canDuplicate",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "canEdit",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "event",
+            "type": "AfCalendarEvent",
+            "required": true,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventTypes",
+            "type": "readonly AfCalendarEventTypeDefinition[] | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Pisa el registro inyectado cuando una pantalla usa un subconjunto.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "showClose",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "closed",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "deleteRequest",
+            "type": "AfCalendarEventDeleteIntent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "duplicateRequest",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "editRequest",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendareventdetail--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendareventdetail--default"
+        },
+        {
+          "id": "data-calendareventdetail--recurring",
+          "name": "Recurring",
+          "url": "/storybook/?path=/story/data-calendareventdetail--recurring"
+        },
+        {
+          "id": "data-calendareventdetail--conflict",
+          "name": "Conflict",
+          "url": "/storybook/?path=/story/data-calendareventdetail--conflict"
+        },
+        {
+          "id": "data-calendareventdetail--readonly",
+          "name": "Readonly",
+          "url": "/storybook/?path=/story/data-calendareventdetail--readonly"
+        },
+        {
+          "id": "data-calendareventdetail--other-type",
+          "name": "OtherType",
+          "url": "/storybook/?path=/story/data-calendareventdetail--other-type"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendareventdetail--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarEventDetail } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:480px\">\n      <af-calendar-event-detail\n        [event]=\"event\"\n        [canEdit]=\"canEdit\"\n        [canDelete]=\"canDelete\"\n        [canDuplicate]=\"canDuplicate\"\n        [showClose]=\"showClose\"\n        (editRequest)=\"editRequest($event)\"\n        (deleteRequest)=\"deleteRequest($event)\"\n        (duplicateRequest)=\"duplicateRequest($event)\"\n        (closed)=\"closed()\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-event-editor",
+      "name": "AfCalendarEventEditor",
+      "className": "AfCalendarEventEditorComponent",
+      "selector": "af-calendar-event-editor",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarEventEditor } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarEventEditor",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Editor genérico de eventos de calendario.</p>\n<p>Un único editor sirve a cualquier tipo: al elegir el tipo, el formulario se\nrecompone con sus campos, su duración por defecto y su color. Lo que hace\ngenérico al componente es que no conoce ningún dominio — recibe el esquema y\nlo renderiza.</p>\n<p><strong>No valida reglas de negocio.</strong> Emite el evento propuesto y el consumidor\ndecide: solapamientos, permisos, capacidad y disponibilidad son del producto.</p>\n<p>Igual que el detalle, es una superficie plana sin renderers separados: entre\nplataformas cambian densidad y ancho de campo, no la estructura.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "crear o editar una actividad de calendario de cualquier tipo registrado",
+        "ofrecer un formulario que se recompone según el esquema del tipo elegido"
+      ],
+      "avoidWhen": [
+        "validar reglas de negocio: el editor propone y la aplicación decide",
+        "editar entidades que no son ocurrencias de calendario"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfCalendarEventDetail",
+        "AfDatePicker"
+      ],
+      "tokens": [
+        "--af-bg-elevated",
+        "--af-input-bg",
+        "--af-input-border",
+        "--af-primary"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "allowDelete",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "busy",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "draft",
+            "type": "AfCalendarEventDraft | null",
+            "required": false,
+            "defaultValue": "null",
+            "description": "<p>Borrador inicial. <code>null</code> arranca un evento nuevo con los valores por defecto.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "error",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventId",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventTypes",
+            "type": "readonly AfCalendarEventTypeDefinition[] | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "mode",
+            "type": "\"create\" | \"edit\"",
+            "required": false,
+            "defaultValue": "'create'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "occurrenceId",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "recurrenceScopes",
+            "type": "readonly AfCalendarRecurrenceScope[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Alcances ofrecidos al guardar una ocurrencia de serie. Vacío: no es serie.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "resources",
+            "type": "readonly AfCalendarResource[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "seriesId",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "sourceVersion",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timeZone",
+            "type": "string",
+            "required": true,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "cancelled",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "deleteRequest",
+            "type": "AfCalendarEventDeleteIntent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "draftChange",
+            "type": "AfCalendarEventDraft",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "save",
+            "type": "AfCalendarEventSaveIntent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendareventeditor--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendareventeditor--default"
+        },
+        {
+          "id": "data-calendareventeditor--edit",
+          "name": "Edit",
+          "url": "/storybook/?path=/story/data-calendareventeditor--edit"
+        },
+        {
+          "id": "data-calendareventeditor--recurring-scopes",
+          "name": "RecurringScopes",
+          "url": "/storybook/?path=/story/data-calendareventeditor--recurring-scopes"
+        },
+        {
+          "id": "data-calendareventeditor--busy",
+          "name": "Busy",
+          "url": "/storybook/?path=/story/data-calendareventeditor--busy"
+        },
+        {
+          "id": "data-calendareventeditor--error-state",
+          "name": "ErrorState",
+          "url": "/storybook/?path=/story/data-calendareventeditor--error-state"
+        },
+        {
+          "id": "data-calendareventeditor--generic-registry",
+          "name": "GenericRegistry",
+          "url": "/storybook/?path=/story/data-calendareventeditor--generic-registry"
+        },
+        {
+          "id": "data-calendareventeditor--type-driven-form",
+          "name": "TypeDrivenForm",
+          "url": "/storybook/?path=/story/data-calendareventeditor--type-driven-form"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendareventeditor--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarEventEditor } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:640px\">\n      <af-calendar-event-editor\n        [draft]=\"draft\"\n        [mode]=\"mode\"\n        [eventTypes]=\"eventTypes\"\n        [resources]=\"resources\"\n        [timeZone]=\"timeZone\"\n        [recurrenceScopes]=\"recurrenceScopes\"\n        [eventId]=\"eventId\"\n        [seriesId]=\"seriesId\"\n        [busy]=\"busy\"\n        [allowDelete]=\"allowDelete\"\n        [error]=\"error\"\n        (save)=\"save($event)\"\n        (deleteRequest)=\"deleteRequest($event)\"\n        (draftChange)=\"draftChange($event)\"\n        (cancelled)=\"cancelled()\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-mini-month",
+      "name": "AfCalendarMiniMonth",
+      "className": "AfCalendarMiniMonthComponent",
+      "selector": "af-calendar-mini-month",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarMiniMonth } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarMiniMonth",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Mini calendario de mes con marcas de actividad y agenda del día elegido.</p>\n<p>Pensado para la columna lateral de un dashboard. No duplica la fuente de\nverdad del calendario principal: emite la fecha y quien lo usa sincroniza.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "navegar el mes desde la columna lateral de un dashboard",
+        "dar una vista de mes en pantallas donde la grilla completa no entra"
+      ],
+      "avoidWhen": [
+        "elegir una fecha en un formulario: usar AfDatePicker",
+        "trabajar sobre la agenda: usar AfCalendar"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfDatePicker",
+        "AfCalendarStripAgenda"
+      ],
+      "tokens": [
+        "--af-card-bg",
+        "--af-primary",
+        "--af-primary-soft",
+        "--af-accent"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "anchorDate",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "firstDay",
+            "type": "AfCalendarWeekday",
+            "required": false,
+            "defaultValue": "1",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Planificación'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "now",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Instante de referencia <code>YYYY-MM-DDTHH:mm</code>. Sin valor, el reloj del dispositivo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "rangeEnd",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "rangeStart",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Rango resaltado, normalmente la ventana visible del calendario principal.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "selectedDate",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "showAgenda",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "dateSelect",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventActivate",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "monthChange",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendarminimonth--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendarminimonth--default"
+        },
+        {
+          "id": "data-calendarminimonth--without-agenda",
+          "name": "WithoutAgenda",
+          "url": "/storybook/?path=/story/data-calendarminimonth--without-agenda"
+        },
+        {
+          "id": "data-calendarminimonth--month-navigation",
+          "name": "MonthNavigation",
+          "url": "/storybook/?path=/story/data-calendarminimonth--month-navigation"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendarminimonth--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarMiniMonth } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:320px\">\n      <af-calendar-mini-month\n        [events]=\"events\"\n        [selectedDate]=\"selectedDate\"\n        [rangeStart]=\"rangeStart\"\n        [rangeEnd]=\"rangeEnd\"\n        [showAgenda]=\"showAgenda\"\n        [heading]=\"heading\"\n        [now]=\"now\"\n        (dateSelect)=\"dateSelect($event)\"\n        (monthChange)=\"monthChange($event)\"\n        (eventActivate)=\"eventActivate($event)\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-next-session",
+      "name": "AfCalendarNextSession",
+      "className": "AfCalendarNextSessionComponent",
+      "selector": "af-calendar-next-session",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarNextSession } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarNextSession",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Card destacada con lo que sigue.</p>\n<p>Pensada para la home móvil: qué actividad viene, cuándo y en cuánto tiempo.\nUna actividad ya empezada sigue siendo «la próxima» hasta que termina — es\njusto el momento en que el usuario más la está mirando.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "destacar la próxima actividad en la home de una app",
+        "dar una acción primaria sobre lo que viene"
+      ],
+      "avoidWhen": [
+        "listar varias actividades: usar AfCalendarUpcoming",
+        "mostrar una métrica sin componente temporal: usar AfMetricCard"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfCalendarUpcoming",
+        "AfMetricCard"
+      ],
+      "tokens": [
+        "--af-border-strong",
+        "--af-primary",
+        "--af-event-match-accent",
+        "--af-event-match-bg"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "actionLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Ver detalle'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "emptyTitle",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Sin próxima sesión'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Próxima sesión'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "loading",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "now",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Instante de referencia <code>YYYY-MM-DDTHH:mm</code>. Sin valor, el reloj del dispositivo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "secondaryActionLabel",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timeZone",
+            "type": "string",
+            "required": true,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "eventActivate",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "secondaryActionPressed",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendarnextsession--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendarnextsession--default"
+        },
+        {
+          "id": "data-calendarnextsession--countdown",
+          "name": "Countdown",
+          "url": "/storybook/?path=/story/data-calendarnextsession--countdown"
+        },
+        {
+          "id": "data-calendarnextsession--loading",
+          "name": "Loading",
+          "url": "/storybook/?path=/story/data-calendarnextsession--loading"
+        },
+        {
+          "id": "data-calendarnextsession--empty",
+          "name": "Empty",
+          "url": "/storybook/?path=/story/data-calendarnextsession--empty"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendarnextsession--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarNextSession } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:380px\">\n      <af-calendar-next-session\n        [events]=\"events\"\n        [timeZone]=\"timeZone\"\n        [heading]=\"heading\"\n        [actionLabel]=\"actionLabel\"\n        [secondaryActionLabel]=\"secondaryActionLabel\"\n        [loading]=\"loading\"\n        [now]=\"now\"\n        (eventActivate)=\"eventActivate($event)\"\n        (secondaryActionPressed)=\"secondaryActionPressed($event)\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-strip-agenda",
+      "name": "AfCalendarStripAgenda",
+      "className": "AfCalendarStripAgendaComponent",
+      "selector": "af-calendar-strip-agenda",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarStripAgenda } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarStripAgenda",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Strip semanal de días con la agenda del día elegido.</p>\n<p>Es el patrón de calendario que funciona en una tarjeta angosta: siete\nobjetivos de toque para navegar y una lista debajo, sin la grilla temporal\nque a 360 px no se puede leer.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "navegar la semana y ver el día en una tarjeta angosta",
+        "dar agenda en una home móvil sin la grilla temporal completa"
+      ],
+      "avoidWhen": [
+        "necesitar arrastre o resize: usar AfCalendar",
+        "mostrar un mes: usar AfCalendarMiniMonth"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfCalendarMiniMonth",
+        "AfCalendarUpcoming"
+      ],
+      "tokens": [
+        "--af-card-bg",
+        "--af-primary",
+        "--af-surface-2",
+        "--af-calendar-grid-line"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "createButton",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "firstDay",
+            "type": "AfCalendarWeekday",
+            "required": false,
+            "defaultValue": "1",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Agenda'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "now",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Instante de referencia <code>YYYY-MM-DDTHH:mm</code>. Sin valor, el reloj del dispositivo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "selectedDate",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timeZone",
+            "type": "string",
+            "required": true,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "createPressed",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "dateSelect",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "eventActivate",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "todayPressed",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendarstripagenda--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendarstripagenda--default"
+        },
+        {
+          "id": "data-calendarstripagenda--with-create",
+          "name": "WithCreate",
+          "url": "/storybook/?path=/story/data-calendarstripagenda--with-create"
+        },
+        {
+          "id": "data-calendarstripagenda--empty-day",
+          "name": "EmptyDay",
+          "url": "/storybook/?path=/story/data-calendarstripagenda--empty-day"
+        },
+        {
+          "id": "data-calendarstripagenda--day-navigation",
+          "name": "DayNavigation",
+          "url": "/storybook/?path=/story/data-calendarstripagenda--day-navigation"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendarstripagenda--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarStripAgenda } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:400px\">\n      <af-calendar-strip-agenda\n        [events]=\"events\"\n        [timeZone]=\"timeZone\"\n        [selectedDate]=\"selectedDate\"\n        [heading]=\"heading\"\n        [createButton]=\"createButton\"\n        [now]=\"now\"\n        (dateSelect)=\"dateSelect($event)\"\n        (todayPressed)=\"todayPressed()\"\n        (eventActivate)=\"eventActivate($event)\"\n        (createPressed)=\"createPressed($event)\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-upcoming",
+      "name": "AfCalendarUpcoming",
+      "className": "AfCalendarUpcomingComponent",
+      "selector": "af-calendar-upcoming",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarUpcoming } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarUpcoming",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Lista compacta de las próximas actividades.</p>\n<p>Widget de solo lectura para dashboards: no carga el motor de interacción del\ncalendario completo, que en una tarjeta de 360 px sería puro peso muerto.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "listar las próximas actividades en un dashboard",
+        "dar contexto de agenda sin cargar el calendario completo"
+      ],
+      "avoidWhen": [
+        "navegar o editar la agenda: para eso está AfCalendar",
+        "mostrar una lista que no proviene de un calendario: usar AfDataView"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfCalendarNextSession",
+        "AfCalendarStripAgenda"
+      ],
+      "tokens": [
+        "--af-card-bg",
+        "--af-card-border",
+        "--af-calendar-grid-line",
+        "--af-event-training-accent"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "emptyTitle",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Sin actividades próximas'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Próximas actividades'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "limit",
+            "type": "number",
+            "required": false,
+            "defaultValue": "5",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "linkLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Ver calendario'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "loading",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "now",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Instante de referencia <code>YYYY-MM-DDTHH:mm</code>.</p>\n<p>Sin valor usa el reloj del dispositivo. Se expone para poder congelarlo en\ntests y en capturas: «lo que sigue» cambia con la hora, y una historia que\ncambia sola no es comparable.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "showLink",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timeZone",
+            "type": "string",
+            "required": true,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "eventActivate",
+            "type": "AfCalendarEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "linkPressed",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendarupcoming--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendarupcoming--default"
+        },
+        {
+          "id": "data-calendarupcoming--loading",
+          "name": "Loading",
+          "url": "/storybook/?path=/story/data-calendarupcoming--loading"
+        },
+        {
+          "id": "data-calendarupcoming--empty",
+          "name": "Empty",
+          "url": "/storybook/?path=/story/data-calendarupcoming--empty"
+        },
+        {
+          "id": "data-calendarupcoming--activation",
+          "name": "Activation",
+          "url": "/storybook/?path=/story/data-calendarupcoming--activation"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendarupcoming--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarUpcoming } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:400px\">\n      <af-calendar-upcoming\n        [events]=\"events\"\n        [timeZone]=\"timeZone\"\n        [limit]=\"limit\"\n        [heading]=\"heading\"\n        [loading]=\"loading\"\n        [showLink]=\"showLink\"\n        [now]=\"now\"\n        (eventActivate)=\"eventActivate($event)\"\n        (linkPressed)=\"linkPressed()\"\n      />\n    </div>"
+      }
+    },
+    {
+      "id": "calendar-week-load",
+      "name": "AfCalendarWeekLoad",
+      "className": "AfCalendarWeekLoadComponent",
+      "selector": "af-calendar-week-load",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCalendarWeekLoad } from '@argfit-ui/adaptive';",
+      "title": "Data/CalendarWeekLoad",
+      "category": "Data",
+      "status": "documented",
+      "description": "<p>Minutos planificados por día de la semana.</p>\n<p>Los picos se destacan por color e intensidad, pero el valor numérico\nacompaña cada barra: un gráfico donde la única lectura es la altura relativa\nno sirve para planificar una semana de trabajo.</p>\n",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "comparar la carga planificada de los días de una semana",
+        "detectar picos de trabajo antes de sumar actividades"
+      ],
+      "avoidWhen": [
+        "graficar una serie que no son minutos por día: usar AfChart",
+        "mostrar una sola métrica: usar AfMetricCard"
+      ],
+      "related": [
+        "AfCalendar",
+        "AfChart",
+        "AfCalendarDayTimeline"
+      ],
+      "tokens": [
+        "--af-card-bg",
+        "--af-primary-hover",
+        "--af-primary-active",
+        "--af-accent"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "anchorDate",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "events",
+            "type": "readonly AfCalendarEvent[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "firstDay",
+            "type": "AfCalendarWeekday",
+            "required": false,
+            "defaultValue": "1",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "goalMinutes",
+            "type": "number | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Minutos objetivo por semana. Con valor, se dibuja la línea de referencia.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Carga semanal'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "AfCalendarLabels",
+            "required": false,
+            "defaultValue": "AF_CALENDAR_DEFAULT_LABELS",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "now",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Instante de referencia <code>YYYY-MM-DDTHH:mm</code>. Sin valor, el reloj del dispositivo.</p>\n",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "daySelect",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-calendarweekload--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-calendarweekload--default"
+        },
+        {
+          "id": "data-calendarweekload--with-goal",
+          "name": "WithGoal",
+          "url": "/storybook/?path=/story/data-calendarweekload--with-goal"
+        },
+        {
+          "id": "data-calendarweekload--empty",
+          "name": "Empty",
+          "url": "/storybook/?path=/story/data-calendarweekload--empty"
+        },
+        {
+          "id": "data-calendarweekload--day-selection",
+          "name": "DaySelection",
+          "url": "/storybook/?path=/story/data-calendarweekload--day-selection"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-calendarweekload--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCalendarWeekLoad } from '@argfit-ui/adaptive';",
+        "template": "<div class=\"af-story-surface\" style=\"max-width:400px\">\n      <af-calendar-week-load\n        [events]=\"events\"\n        [anchorDate]=\"anchorDate\"\n        [goalMinutes]=\"goalMinutes\"\n        [heading]=\"heading\"\n        [now]=\"now\"\n        (daySelect)=\"daySelect($event)\"\n      />\n    </div>"
       }
     },
     {
@@ -9933,6 +11734,230 @@
       }
     },
     {
+      "name": "--af-calendar-surface",
+      "family": "calendar",
+      "values": {
+        "dark": "#0F1D32",
+        "light": "#FFFFFF"
+      }
+    },
+    {
+      "name": "--af-calendar-surface-elevated",
+      "family": "calendar",
+      "values": {
+        "dark": "#152A42",
+        "light": "#F0F4F8"
+      }
+    },
+    {
+      "name": "--af-calendar-grid-line",
+      "family": "calendar",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.12)",
+        "light": "rgba(16, 42, 67, 0.12)"
+      }
+    },
+    {
+      "name": "--af-calendar-today-bg",
+      "family": "calendar",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.08)",
+        "light": "rgba(37, 153, 213, 0.10)"
+      }
+    },
+    {
+      "name": "--af-calendar-selection-bg",
+      "family": "calendar",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.18)",
+        "light": "rgba(37, 153, 213, 0.16)"
+      }
+    },
+    {
+      "name": "--af-calendar-now",
+      "family": "calendar",
+      "values": {
+        "dark": "#FF3D71",
+        "light": "#D01F4E"
+      }
+    },
+    {
+      "name": "--af-calendar-slot-height-compact",
+      "family": "calendar",
+      "values": {
+        "dark": "24px",
+        "light": "24px"
+      }
+    },
+    {
+      "name": "--af-calendar-slot-height-comfortable",
+      "family": "calendar",
+      "values": {
+        "dark": "32px",
+        "light": "32px"
+      }
+    },
+    {
+      "name": "--af-calendar-slot-height-touch",
+      "family": "calendar",
+      "values": {
+        "dark": "44px",
+        "light": "44px"
+      }
+    },
+    {
+      "name": "--af-calendar-time-axis-width",
+      "family": "calendar",
+      "values": {
+        "dark": "64px",
+        "light": "64px"
+      }
+    },
+    {
+      "name": "--af-event-training-accent",
+      "family": "event",
+      "values": {
+        "dark": "#2599D5",
+        "light": "#1E7DB1"
+      }
+    },
+    {
+      "name": "--af-event-training-bg",
+      "family": "event",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.16)",
+        "light": "rgba(37, 153, 213, 0.16)"
+      }
+    },
+    {
+      "name": "--af-event-training-border",
+      "family": "event",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.42)",
+        "light": "rgba(37, 153, 213, 0.42)"
+      }
+    },
+    {
+      "name": "--af-event-match-accent",
+      "family": "event",
+      "values": {
+        "dark": "#00D4FF",
+        "light": "#00809B"
+      }
+    },
+    {
+      "name": "--af-event-match-bg",
+      "family": "event",
+      "values": {
+        "dark": "rgba(0, 212, 255, 0.16)",
+        "light": "rgba(0, 212, 255, 0.16)"
+      }
+    },
+    {
+      "name": "--af-event-match-border",
+      "family": "event",
+      "values": {
+        "dark": "rgba(0, 212, 255, 0.42)",
+        "light": "rgba(0, 212, 255, 0.42)"
+      }
+    },
+    {
+      "name": "--af-event-gym-accent",
+      "family": "event",
+      "values": {
+        "dark": "#00C853",
+        "light": "#00893A"
+      }
+    },
+    {
+      "name": "--af-event-gym-bg",
+      "family": "event",
+      "values": {
+        "dark": "rgba(0, 200, 83, 0.16)",
+        "light": "rgba(0, 200, 83, 0.16)"
+      }
+    },
+    {
+      "name": "--af-event-gym-border",
+      "family": "event",
+      "values": {
+        "dark": "rgba(0, 200, 83, 0.42)",
+        "light": "rgba(0, 200, 83, 0.42)"
+      }
+    },
+    {
+      "name": "--af-event-video-accent",
+      "family": "event",
+      "values": {
+        "dark": "#FFB300",
+        "light": "#A66A00"
+      }
+    },
+    {
+      "name": "--af-event-video-bg",
+      "family": "event",
+      "values": {
+        "dark": "rgba(255, 179, 0, 0.15)",
+        "light": "rgba(255, 179, 0, 0.15)"
+      }
+    },
+    {
+      "name": "--af-event-video-border",
+      "family": "event",
+      "values": {
+        "dark": "rgba(255, 179, 0, 0.34)",
+        "light": "rgba(255, 179, 0, 0.34)"
+      }
+    },
+    {
+      "name": "--af-event-medical-accent",
+      "family": "event",
+      "values": {
+        "dark": "#FF3D71",
+        "light": "#D01F4E"
+      }
+    },
+    {
+      "name": "--af-event-medical-bg",
+      "family": "event",
+      "values": {
+        "dark": "rgba(255, 61, 113, 0.15)",
+        "light": "rgba(255, 61, 113, 0.15)"
+      }
+    },
+    {
+      "name": "--af-event-medical-border",
+      "family": "event",
+      "values": {
+        "dark": "rgba(255, 61, 113, 0.34)",
+        "light": "rgba(255, 61, 113, 0.34)"
+      }
+    },
+    {
+      "name": "--af-event-neutral-accent",
+      "family": "event",
+      "values": {
+        "dark": "#627D98",
+        "light": "#486581"
+      }
+    },
+    {
+      "name": "--af-event-neutral-bg",
+      "family": "event",
+      "values": {
+        "dark": "rgba(98, 125, 152, 0.18)",
+        "light": "rgba(98, 125, 152, 0.18)"
+      }
+    },
+    {
+      "name": "--af-event-neutral-border",
+      "family": "event",
+      "values": {
+        "dark": "rgba(98, 125, 152, 0.36)",
+        "light": "rgba(98, 125, 152, 0.36)"
+      }
+    },
+    {
       "name": "--af-scrollbar-thumb",
       "family": "color",
       "values": {
@@ -10643,7 +12668,7 @@
       "title": "Crear, documentar y desplegar un componente",
       "uri": "argfit://guides/component-workflow",
       "storybookUrl": "/storybook/?path=/docs/getting-started-new-component-workflow--docs",
-      "content": "import { Meta } from '@storybook/addon-docs/blocks';\n\n<Meta title=\"Getting Started/New Component Workflow\" />\n\n# Crear, documentar y desplegar un componente\n\nEsta es la guía oficial de ArgFit UI para personas y agentes de IA. **Storybook es la\núnica fuente de verdad para el contrato visual, los estados, la API y los ejemplos de\nuso de cada componente.** La aplicación Angular de documentación anterior queda como\ncontenido histórico y operativo; no recibe nuevas páginas de componentes.\n\n<div className=\"af-doc-callout\">\n  <strong>Regla de terminado</strong>\n\n  Un componente no está terminado cuando compila. Está terminado cuando su API adaptativa,\n  historias, documentación, accesibilidad y matriz desktop/mobile × dark/light son verificables\n  desde Storybook.\n</div>\n\n<div className=\"af-doc-tabs\">\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-overview\" value=\"overview\" aria-label=\"Principios\" defaultChecked />\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-create\" value=\"create\" aria-label=\"Crear\" />\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-document\" value=\"document\" aria-label=\"Documentar\" />\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-validate\" value=\"validate\" aria-label=\"Validar\" />\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-deploy\" value=\"deploy\" aria-label=\"Desplegar\" />\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-ai\" value=\"ai\" aria-label=\"Checklist IA\" />\n\n  <div className=\"af-doc-tabs__list\" aria-label=\"Proceso de desarrollo de componentes\">\n    <label className=\"af-doc-tabs__tab\" data-tab=\"overview\" htmlFor=\"workflow-tab-overview\">Principios</label>\n    <label className=\"af-doc-tabs__tab\" data-tab=\"create\" htmlFor=\"workflow-tab-create\">Crear</label>\n    <label className=\"af-doc-tabs__tab\" data-tab=\"document\" htmlFor=\"workflow-tab-document\">Documentar</label>\n    <label className=\"af-doc-tabs__tab\" data-tab=\"validate\" htmlFor=\"workflow-tab-validate\">Validar</label>\n    <label className=\"af-doc-tabs__tab\" data-tab=\"deploy\" htmlFor=\"workflow-tab-deploy\">Desplegar</label>\n    <label className=\"af-doc-tabs__tab\" data-tab=\"ai\" htmlFor=\"workflow-tab-ai\">Checklist IA</label>\n  </div>\n\n  <section className=\"af-doc-tabs__panel\" data-tab=\"overview\">\n\n## Principios y responsabilidades\n\nArgFit Football y las demás aplicaciones consumidoras deben componer interfaces con\n`@argfit-ui/adaptive`; no deben reconstruir controles, colores o layouts reutilizables con\nHTML y CSS propios. ArgFit UI resuelve presentación e interacción genérica. La aplicación\nconserva navegación, permisos, datos, OAuth, temporizadores y estados de negocio.\n\n<table className=\"af-doc-table\">\n  <thead><tr><th>Capa</th><th>Responsabilidad</th><th>No debe contener</th></tr></thead>\n  <tbody>\n    <tr><td><code>core</code></td><td>Tipos, tokens, tema y servicios compartidos.</td><td>PrimeNG, Ionic o renderers.</td></tr>\n    <tr><td><code>primitives</code></td><td>Piezas estructurales y accesibles sin vendor.</td><td>Componentes adaptativos o wrappers de vendor.</td></tr>\n    <tr><td><code>desktop</code></td><td>Renderer productivo y denso; PrimeNG es interno.</td><td>API pública acoplada a PrimeNG.</td></tr>\n    <tr><td><code>mobile</code></td><td>Renderer táctil, safe areas e Ionic interno.</td><td>API pública acoplada a Ionic.</td></tr>\n    <tr><td><code>adaptive</code></td><td>Contrato público y selección de renderer.</td><td>Lógica de producto o duplicación visual.</td></tr>\n    <tr><td><code>Storybook</code></td><td>Contrato ejecutable, estados, API y guía de uso.</td><td>Demos ficticias sin valor documental.</td></tr>\n  </tbody>\n</table>\n\n### Antes de escribir código\n\n1. Busca si el concepto ya existe y puede extenderse sin romper su API.\n2. Define el concepto semántico: `AfDatePicker`, no `AfPrimeCalendar`.\n3. Escribe primero el contrato público: inputs, outputs, slots y estados.\n4. Decide qué pertenece a UI y qué debe permanecer en la aplicación consumidora.\n5. Diseña los cuatro resultados: desktop/dark, desktop/light, mobile/dark y mobile/light.\n\n  </section>\n\n  <section className=\"af-doc-tabs__panel\" data-tab=\"create\">\n\n## Crear el componente\n\n### Estructura esperada\n\n```text\nprojects/\n  argfit-ui-core/src/lib/types/<name>.types.ts\n  argfit-ui-desktop/src/lib/components/<name>/\n    af-<name>-desktop.component.{ts,html,scss,spec.ts}\n  argfit-ui-mobile/src/lib/components/<name>/\n    af-<name>-mobile.component.{ts,html,scss,spec.ts}\n  argfit-ui-adaptive/src/lib/components/<name>/\n    af-<name>.component.{ts,html,scss,spec.ts}\n    af-<name>.stories.ts\n    af-<name>.docs.mdx        # cuando necesita guía editorial propia\n```\n\nNo todos los componentes necesitan archivos HTML o SCSS separados, pero las responsabilidades\nde las capas no cambian.\n\n### Orden de implementación\n\n1. **Contrato:** añade tipos vendor-neutral en `core` y expórtalos desde su `public-api.ts`.\n2. **Renderers:** implementa desktop y mobile con la misma semántica, estados y accesibilidad.\n3. **Fachada adaptativa:** usa `AfPlatformService`, delega el render y reexpone una sola API.\n4. **Exports:** exporta renderers en sus paquetes y el componente público en `adaptive/public-api.ts`.\n5. **Pruebas unitarias:** cubre inputs, outputs, slots, teclado, ARIA y cambio de plataforma.\n6. **Tokens:** usa `--af-*`; ningún color, radio o espaciado de producto debe quedar hardcoded.\n\n### Esqueleto de la fachada adaptativa\n\n```ts\n@Component({\n  selector: 'af-example',\n  imports: [AfExampleDesktopComponent, AfExampleMobileComponent],\n  templateUrl: './af-example.component.html',\n  styleUrl: './af-example.component.scss',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class AfExampleComponent {\n  private readonly platform = inject(AfPlatformService);\n\n  readonly value = input<string | null>(null);\n  readonly disabled = input(false, { transform: booleanAttribute });\n  readonly valueChange = output<string | null>();\n  protected readonly isMobile = this.platform.isMobile;\n}\n```\n\nLa fachada transforma sólo lo necesario para mantener un contrato estable. No consulta APIs,\nno navega y no conoce reglas de ArgFit Football.\n\n  </section>\n\n  <section className=\"af-doc-tabs__panel\" data-tab=\"document\">\n\n## Documentar en Storybook\n\nLa historia vive junto al componente adaptativo. Todo nuevo componente debe tener una página\nDocs: usa `tags: ['autodocs']` para el caso simple o un archivo `.docs.mdx` para componentes\ncon decisiones de uso, composición, theming o ejemplos extensos.\n\n### Historia mínima aceptable\n\n```ts\nimport type { Meta, StoryObj } from '@storybook/angular-vite';\nimport { expect, fn, userEvent } from 'storybook/test';\nimport { AfExampleComponent } from './af-example.component';\n\nconst meta: Meta<AfExampleComponent> = {\n  title: 'Components/Forms/Example',\n  component: AfExampleComponent,\n  tags: ['autodocs'],\n  parameters: {\n    argfit: {\n      category: 'Forms',\n      importName: 'AfExample',\n      useWhen: ['Describe the user intent this component solves.'],\n      avoidWhen: ['Describe the closest misuse or product responsibility.'],\n      platforms: ['desktop', 'mobile'],\n      tokens: ['--af-input-bg', '--af-border-focus'],\n      related: ['AfInput'],\n    },\n    docs: { description: { component: 'Qué resuelve y cuándo usarlo.' } },\n  },\n  argTypes: {\n    disabled: { control: 'boolean' },\n    size: { control: 'select', options: ['sm', 'md', 'lg'] },\n  },\n};\n\nexport default meta;\ntype Story = StoryObj<AfExampleComponent>;\n\nexport const Default: Story = {\n  args: { disabled: false, valueChange: fn() },\n  play: async ({ args, canvas }) => {\n    await userEvent.click(canvas.getByRole('button'));\n    await expect(args.valueChange).toHaveBeenCalledOnce();\n  },\n};\n```\n\n### Contenido obligatorio\n\n<div className=\"af-doc-checklist\">\n  <div><strong>Canónica</strong>Una historia `Default` o equivalente que explique el uso normal.</div>\n  <div><strong>Estados</strong>Loading, empty, error, disabled, readonly y variantes relevantes.</div>\n  <div><strong>Controles</strong><code>argTypes</code> tipados para la API que una persona debe explorar.</div>\n  <div><strong>Interacción</strong><code>play</code> para teclado, selección, eventos y flujos importantes.</div>\n  <div><strong>API</strong>Descripción, imports públicos y límites de responsabilidad.</div>\n  <div><strong>Theming</strong>Tokens públicos relevantes; nunca una lista de colores privados.</div>\n  <div><strong>MCP</strong><code>parameters.argfit</code> completo para búsqueda, recomendaciones y ejemplos verificables.</div>\n</div>\n\nUsa las categorías `Components`, `Data`, `Feedback`, `Patterns` o `Experimental`. Un componente\nestable no debe permanecer en `Experimental`. Para documentación editorial con tabs, toma\n`af-date-picker.docs.mdx` como referencia.\n\n  </section>\n\n  <section className=\"af-doc-tabs__panel\" data-tab=\"validate\">\n\n## Probar y validar\n\nDurante el desarrollo ejecuta Storybook directamente desde source; no hace falta precompilar\nlas librerías:\n\n```bash\npnpm storybook\n```\n\nAntes de abrir o actualizar un PR:\n\n```bash\npnpm guard:architecture\npnpm guard:storybook\npnpm build-storybook\npnpm test-storybook\npnpm test-storybook:a11y\npnpm test-storybook:visual\npnpm guard:mcp-catalog\npnpm mcp:test\n```\n\n`guard:storybook` impide introducir un componente adaptativo sin historia y también rechaza\nhistorias sin `autodocs` ni MDX. Las excepciones históricas viven en una allowlist explícita;\nno se añaden componentes nuevos a esa lista.\n\n`guard:mcp-catalog` comprueba que el catálogo derivado coincide con Storybook, Compodoc,\nexports y tokens. No edites `tools/mcp/argfit-catalog.json` manualmente: actualiza la historia\no el contrato público y ejecuta `pnpm generate:mcp-catalog`.\n\n### Matriz de aceptación\n\n<table className=\"af-doc-table\">\n  <thead><tr><th>Matriz</th><th>Qué revisar</th></tr></thead>\n  <tbody>\n    <tr><td>Desktop / Dark</td><td>Densidad, teclado, overlays, contraste y foco.</td></tr>\n    <tr><td>Desktop / Light</td><td>Tokens, bordes, elevación y ausencia de colores hardcoded.</td></tr>\n    <tr><td>Mobile / Dark</td><td>Touch targets, scroll, safe areas y renderer correcto.</td></tr>\n    <tr><td>Mobile / Light</td><td>Legibilidad, estados nativos y layout estrecho.</td></tr>\n  </tbody>\n</table>\n\nEl trabajo falla si hay canvas vacío, error de consola, request fallido, token requerido ausente,\nviolación axe seria/crítica o diferencia visual no revisada.\n\n  </section>\n\n  <section className=\"af-doc-tabs__panel\" data-tab=\"deploy\">\n\n## Desplegar cambios\n\n### Preview de documentación\n\n1. Sube una rama y abre un PR.\n2. El job **Storybook quality gate** ejecuta coverage, build, smoke, axe y capturas de la matriz.\n3. Revisa el artifact `storybook` de GitHub Actions cuando haya una diferencia visual.\n4. Vercel usa `pnpm build:portal`; el catálogo estático se publica bajo `/storybook/` y la\n   integración de Vercel genera la preview del PR.\n5. Prueba navegación directa a una página Docs y a una Story antes de aprobar.\n\n```bash\npnpm build:portal\n```\n\nLa documentación de componentes se edita sólo en Storybook aunque el portal Angular histórico\nsiga disponible en `/`. No copies el mismo contenido a ambos sitios.\n\n### Publicación de paquetes npm\n\nPublicar Storybook y publicar `@argfit-ui/*` son procesos distintos. Un cambio de componente\npuede desplegar su preview sin publicar una versión npm. Para una release estable, actualiza\nversiones y changelog, ejecuta el gate completo y usa el workflow protegido:\n\n```bash\npnpm release:production:check\n```\n\nDespués se crea el tag estable correspondiente y `.github/workflows/publish-production.yml`\npublica los cinco paquetes con `latest`. No ejecutes `npm publish` manualmente desde una rama.\n\n  </section>\n\n  <section className=\"af-doc-tabs__panel\" data-tab=\"ai\">\n\n## Protocolo para agentes de IA\n\nUn agente debe seguir este orden y reportar evidencia concreta:\n\n1. Leer esta guía, `docs/architecture.md` y los archivos del componente más cercano por función.\n2. Inspeccionar cambios sin confirmar y preservar trabajo ajeno.\n3. Diseñar la API pública antes de elegir PrimeNG, Ionic o markup interno.\n4. Implementar las capas mínimas necesarias sin mover lógica de negocio a la librería.\n5. Añadir exports, specs, historia, Docs y estados en el mismo cambio.\n6. Verificar visualmente la misma instancia de Storybook en las cuatro matrices.\n7. Ejecutar guards y pruebas proporcionales; no declarar éxito sólo porque TypeScript compila.\n8. Consultar `get_component` y ejecutar `validate_usage` mediante el MCP cuando esté disponible.\n9. Entregar archivos cambiados, comandos ejecutados y cualquier deuda restante.\n\n### Prohibido\n\n- Crear un componente público sin historia o sin Docs.\n- Crear una historia sin el bloque tipado <code>parameters.argfit</code>.\n- Añadir la nueva carpeta a la allowlist de Storybook.\n- Documentar el componente en `projects/argfit-ui-docs`.\n- Exponer tipos de PrimeNG/Ionic en la API adaptativa.\n- Introducir colores, spacing o tipografía de producto fuera de los tokens `--af-*`.\n- Incorporar OAuth, routing, permisos, fetching o máquinas de estado de una aplicación.\n- Abrir otro servidor de Storybook si el puerto `6006` ya está en uso.\n\n### Definición de terminado\n\n<div className=\"af-doc-checklist\">\n  <div><strong>01 · API</strong>Vendor-neutral, estable y exportada.</div>\n  <div><strong>02 · Renderers</strong>Desktop y mobile correctos, o decisión explícita de renderer compartido.</div>\n  <div><strong>03 · Unit tests</strong>Contrato, accesibilidad, eventos y proyección cubiertos.</div>\n  <div><strong>04 · Stories</strong>Historia canónica, estados y controles tipados.</div>\n  <div><strong>05 · Docs</strong><code>autodocs</code> o MDX con import, uso, API y theming.</div>\n  <div><strong>06 · Matriz</strong>Desktop/mobile × dark/light revisado.</div>\n  <div><strong>07 · Gates</strong>Guard, build, smoke, axe y visual sin fallos.</div>\n  <div><strong>08 · Preview</strong>Navegación directa bajo <code>/storybook/</code>.</div>\n</div>\n\n  </section>\n</div>\n"
+      "content": "import { Meta } from '@storybook/addon-docs/blocks';\r\n\r\n<Meta title=\"Getting Started/New Component Workflow\" />\r\n\r\n# Crear, documentar y desplegar un componente\r\n\r\nEsta es la guía oficial de ArgFit UI para personas y agentes de IA. **Storybook es la\r\núnica fuente de verdad para el contrato visual, los estados, la API y los ejemplos de\r\nuso de cada componente.** La aplicación Angular de documentación anterior queda como\r\ncontenido histórico y operativo; no recibe nuevas páginas de componentes.\r\n\r\n<div className=\"af-doc-callout\">\r\n  <strong>Regla de terminado</strong>\r\n\r\n  Un componente no está terminado cuando compila. Está terminado cuando su API adaptativa,\r\n  historias, documentación, accesibilidad y matriz desktop/mobile × dark/light son verificables\r\n  desde Storybook.\r\n</div>\r\n\r\n<div className=\"af-doc-tabs\">\r\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-overview\" value=\"overview\" aria-label=\"Principios\" defaultChecked />\r\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-create\" value=\"create\" aria-label=\"Crear\" />\r\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-document\" value=\"document\" aria-label=\"Documentar\" />\r\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-validate\" value=\"validate\" aria-label=\"Validar\" />\r\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-deploy\" value=\"deploy\" aria-label=\"Desplegar\" />\r\n  <input className=\"af-doc-tabs__input\" type=\"radio\" name=\"component-workflow-tabs\" id=\"workflow-tab-ai\" value=\"ai\" aria-label=\"Checklist IA\" />\r\n\r\n  <div className=\"af-doc-tabs__list\" aria-label=\"Proceso de desarrollo de componentes\">\r\n    <label className=\"af-doc-tabs__tab\" data-tab=\"overview\" htmlFor=\"workflow-tab-overview\">Principios</label>\r\n    <label className=\"af-doc-tabs__tab\" data-tab=\"create\" htmlFor=\"workflow-tab-create\">Crear</label>\r\n    <label className=\"af-doc-tabs__tab\" data-tab=\"document\" htmlFor=\"workflow-tab-document\">Documentar</label>\r\n    <label className=\"af-doc-tabs__tab\" data-tab=\"validate\" htmlFor=\"workflow-tab-validate\">Validar</label>\r\n    <label className=\"af-doc-tabs__tab\" data-tab=\"deploy\" htmlFor=\"workflow-tab-deploy\">Desplegar</label>\r\n    <label className=\"af-doc-tabs__tab\" data-tab=\"ai\" htmlFor=\"workflow-tab-ai\">Checklist IA</label>\r\n  </div>\r\n\r\n  <section className=\"af-doc-tabs__panel\" data-tab=\"overview\">\r\n\r\n## Principios y responsabilidades\r\n\r\nArgFit Football y las demás aplicaciones consumidoras deben componer interfaces con\r\n`@argfit-ui/adaptive`; no deben reconstruir controles, colores o layouts reutilizables con\r\nHTML y CSS propios. ArgFit UI resuelve presentación e interacción genérica. La aplicación\r\nconserva navegación, permisos, datos, OAuth, temporizadores y estados de negocio.\r\n\r\n<table className=\"af-doc-table\">\r\n  <thead><tr><th>Capa</th><th>Responsabilidad</th><th>No debe contener</th></tr></thead>\r\n  <tbody>\r\n    <tr><td><code>core</code></td><td>Tipos, tokens, tema y servicios compartidos.</td><td>PrimeNG, Ionic o renderers.</td></tr>\r\n    <tr><td><code>primitives</code></td><td>Piezas estructurales y accesibles sin vendor.</td><td>Componentes adaptativos o wrappers de vendor.</td></tr>\r\n    <tr><td><code>desktop</code></td><td>Renderer productivo y denso; PrimeNG es interno.</td><td>API pública acoplada a PrimeNG.</td></tr>\r\n    <tr><td><code>mobile</code></td><td>Renderer táctil, safe areas e Ionic interno.</td><td>API pública acoplada a Ionic.</td></tr>\r\n    <tr><td><code>adaptive</code></td><td>Contrato público y selección de renderer.</td><td>Lógica de producto o duplicación visual.</td></tr>\r\n    <tr><td><code>Storybook</code></td><td>Contrato ejecutable, estados, API y guía de uso.</td><td>Demos ficticias sin valor documental.</td></tr>\r\n  </tbody>\r\n</table>\r\n\r\n### Antes de escribir código\r\n\r\n1. Busca si el concepto ya existe y puede extenderse sin romper su API.\r\n2. Define el concepto semántico: `AfDatePicker`, no `AfPrimeCalendar`.\r\n3. Escribe primero el contrato público: inputs, outputs, slots y estados.\r\n4. Decide qué pertenece a UI y qué debe permanecer en la aplicación consumidora.\r\n5. Diseña los cuatro resultados: desktop/dark, desktop/light, mobile/dark y mobile/light.\r\n\r\n  </section>\r\n\r\n  <section className=\"af-doc-tabs__panel\" data-tab=\"create\">\r\n\r\n## Crear el componente\r\n\r\n### Estructura esperada\r\n\r\n```text\r\nprojects/\r\n  argfit-ui-core/src/lib/types/<name>.types.ts\r\n  argfit-ui-desktop/src/lib/components/<name>/\r\n    af-<name>-desktop.component.{ts,html,scss,spec.ts}\r\n  argfit-ui-mobile/src/lib/components/<name>/\r\n    af-<name>-mobile.component.{ts,html,scss,spec.ts}\r\n  argfit-ui-adaptive/src/lib/components/<name>/\r\n    af-<name>.component.{ts,html,scss,spec.ts}\r\n    af-<name>.stories.ts\r\n    af-<name>.docs.mdx        # cuando necesita guía editorial propia\r\n```\r\n\r\nNo todos los componentes necesitan archivos HTML o SCSS separados, pero las responsabilidades\r\nde las capas no cambian.\r\n\r\n### Orden de implementación\r\n\r\n1. **Contrato:** añade tipos vendor-neutral en `core` y expórtalos desde su `public-api.ts`.\r\n2. **Renderers:** implementa desktop y mobile con la misma semántica, estados y accesibilidad.\r\n3. **Fachada adaptativa:** usa `AfPlatformService`, delega el render y reexpone una sola API.\r\n4. **Exports:** exporta renderers en sus paquetes y el componente público en `adaptive/public-api.ts`.\r\n5. **Pruebas unitarias:** cubre inputs, outputs, slots, teclado, ARIA y cambio de plataforma.\r\n6. **Tokens:** usa `--af-*`; ningún color, radio o espaciado de producto debe quedar hardcoded.\r\n\r\n### Esqueleto de la fachada adaptativa\r\n\r\n```ts\r\n@Component({\r\n  selector: 'af-example',\r\n  imports: [AfExampleDesktopComponent, AfExampleMobileComponent],\r\n  templateUrl: './af-example.component.html',\r\n  styleUrl: './af-example.component.scss',\r\n  changeDetection: ChangeDetectionStrategy.OnPush,\r\n})\r\nexport class AfExampleComponent {\r\n  private readonly platform = inject(AfPlatformService);\r\n\r\n  readonly value = input<string | null>(null);\r\n  readonly disabled = input(false, { transform: booleanAttribute });\r\n  readonly valueChange = output<string | null>();\r\n  protected readonly isMobile = this.platform.isMobile;\r\n}\r\n```\r\n\r\nLa fachada transforma sólo lo necesario para mantener un contrato estable. No consulta APIs,\r\nno navega y no conoce reglas de ArgFit Football.\r\n\r\n  </section>\r\n\r\n  <section className=\"af-doc-tabs__panel\" data-tab=\"document\">\r\n\r\n## Documentar en Storybook\r\n\r\nLa historia vive junto al componente adaptativo. Todo nuevo componente debe tener una página\r\nDocs: usa `tags: ['autodocs']` para el caso simple o un archivo `.docs.mdx` para componentes\r\ncon decisiones de uso, composición, theming o ejemplos extensos.\r\n\r\n### Historia mínima aceptable\r\n\r\n```ts\r\nimport type { Meta, StoryObj } from '@storybook/angular-vite';\r\nimport { expect, fn, userEvent } from 'storybook/test';\r\nimport { AfExampleComponent } from './af-example.component';\r\n\r\nconst meta: Meta<AfExampleComponent> = {\r\n  title: 'Components/Forms/Example',\r\n  component: AfExampleComponent,\r\n  tags: ['autodocs'],\r\n  parameters: {\r\n    argfit: {\r\n      category: 'Forms',\r\n      importName: 'AfExample',\r\n      useWhen: ['Describe the user intent this component solves.'],\r\n      avoidWhen: ['Describe the closest misuse or product responsibility.'],\r\n      platforms: ['desktop', 'mobile'],\r\n      tokens: ['--af-input-bg', '--af-border-focus'],\r\n      related: ['AfInput'],\r\n    },\r\n    docs: { description: { component: 'Qué resuelve y cuándo usarlo.' } },\r\n  },\r\n  argTypes: {\r\n    disabled: { control: 'boolean' },\r\n    size: { control: 'select', options: ['sm', 'md', 'lg'] },\r\n  },\r\n};\r\n\r\nexport default meta;\r\ntype Story = StoryObj<AfExampleComponent>;\r\n\r\nexport const Default: Story = {\r\n  args: { disabled: false, valueChange: fn() },\r\n  play: async ({ args, canvas }) => {\r\n    await userEvent.click(canvas.getByRole('button'));\r\n    await expect(args.valueChange).toHaveBeenCalledOnce();\r\n  },\r\n};\r\n```\r\n\r\n### Contenido obligatorio\r\n\r\n<div className=\"af-doc-checklist\">\r\n  <div><strong>Canónica</strong>Una historia `Default` o equivalente que explique el uso normal.</div>\r\n  <div><strong>Estados</strong>Loading, empty, error, disabled, readonly y variantes relevantes.</div>\r\n  <div><strong>Controles</strong><code>argTypes</code> tipados para la API que una persona debe explorar.</div>\r\n  <div><strong>Interacción</strong><code>play</code> para teclado, selección, eventos y flujos importantes.</div>\r\n  <div><strong>API</strong>Descripción, imports públicos y límites de responsabilidad.</div>\r\n  <div><strong>Theming</strong>Tokens públicos relevantes; nunca una lista de colores privados.</div>\r\n  <div><strong>MCP</strong><code>parameters.argfit</code> completo para búsqueda, recomendaciones y ejemplos verificables.</div>\r\n</div>\r\n\r\nUsa las categorías `Components`, `Data`, `Feedback`, `Patterns` o `Experimental`. Un componente\r\nestable no debe permanecer en `Experimental`. Para documentación editorial con tabs, toma\r\n`af-date-picker.docs.mdx` como referencia.\r\n\r\n  </section>\r\n\r\n  <section className=\"af-doc-tabs__panel\" data-tab=\"validate\">\r\n\r\n## Probar y validar\r\n\r\nDurante el desarrollo ejecuta Storybook directamente desde source; no hace falta precompilar\r\nlas librerías:\r\n\r\n```bash\r\npnpm storybook\r\n```\r\n\r\nAntes de abrir o actualizar un PR:\r\n\r\n```bash\r\npnpm guard:architecture\r\npnpm guard:storybook\r\npnpm build-storybook\r\npnpm test-storybook\r\npnpm test-storybook:a11y\r\npnpm test-storybook:visual\r\npnpm guard:mcp-catalog\r\npnpm mcp:test\r\n```\r\n\r\n`guard:storybook` impide introducir un componente adaptativo sin historia y también rechaza\r\nhistorias sin `autodocs` ni MDX. Las excepciones históricas viven en una allowlist explícita;\r\nno se añaden componentes nuevos a esa lista.\r\n\r\n`guard:mcp-catalog` comprueba que el catálogo derivado coincide con Storybook, Compodoc,\r\nexports y tokens. No edites `tools/mcp/argfit-catalog.json` manualmente: actualiza la historia\r\no el contrato público y ejecuta `pnpm generate:mcp-catalog`.\r\n\r\n### Matriz de aceptación\r\n\r\n<table className=\"af-doc-table\">\r\n  <thead><tr><th>Matriz</th><th>Qué revisar</th></tr></thead>\r\n  <tbody>\r\n    <tr><td>Desktop / Dark</td><td>Densidad, teclado, overlays, contraste y foco.</td></tr>\r\n    <tr><td>Desktop / Light</td><td>Tokens, bordes, elevación y ausencia de colores hardcoded.</td></tr>\r\n    <tr><td>Mobile / Dark</td><td>Touch targets, scroll, safe areas y renderer correcto.</td></tr>\r\n    <tr><td>Mobile / Light</td><td>Legibilidad, estados nativos y layout estrecho.</td></tr>\r\n  </tbody>\r\n</table>\r\n\r\nEl trabajo falla si hay canvas vacío, error de consola, request fallido, token requerido ausente,\r\nviolación axe seria/crítica o diferencia visual no revisada.\r\n\r\n  </section>\r\n\r\n  <section className=\"af-doc-tabs__panel\" data-tab=\"deploy\">\r\n\r\n## Desplegar cambios\r\n\r\n### Preview de documentación\r\n\r\n1. Sube una rama y abre un PR.\r\n2. El job **Storybook quality gate** ejecuta coverage, build, smoke, axe y capturas de la matriz.\r\n3. Revisa el artifact `storybook` de GitHub Actions cuando haya una diferencia visual.\r\n4. Vercel usa `pnpm build:portal`; el catálogo estático se publica bajo `/storybook/` y la\r\n   integración de Vercel genera la preview del PR.\r\n5. Prueba navegación directa a una página Docs y a una Story antes de aprobar.\r\n\r\n```bash\r\npnpm build:portal\r\n```\r\n\r\nLa documentación de componentes se edita sólo en Storybook aunque el portal Angular histórico\r\nsiga disponible en `/`. No copies el mismo contenido a ambos sitios.\r\n\r\n### Publicación de paquetes npm\r\n\r\nPublicar Storybook y publicar `@argfit-ui/*` son procesos distintos. Un cambio de componente\r\npuede desplegar su preview sin publicar una versión npm. Para una release estable, actualiza\r\nversiones y changelog, ejecuta el gate completo y usa el workflow protegido:\r\n\r\n```bash\r\npnpm release:production:check\r\n```\r\n\r\nDespués se crea el tag estable correspondiente y `.github/workflows/publish-production.yml`\r\npublica los cinco paquetes con `latest`. No ejecutes `npm publish` manualmente desde una rama.\r\n\r\n  </section>\r\n\r\n  <section className=\"af-doc-tabs__panel\" data-tab=\"ai\">\r\n\r\n## Protocolo para agentes de IA\r\n\r\nUn agente debe seguir este orden y reportar evidencia concreta:\r\n\r\n1. Leer esta guía, `docs/architecture.md` y los archivos del componente más cercano por función.\r\n2. Inspeccionar cambios sin confirmar y preservar trabajo ajeno.\r\n3. Diseñar la API pública antes de elegir PrimeNG, Ionic o markup interno.\r\n4. Implementar las capas mínimas necesarias sin mover lógica de negocio a la librería.\r\n5. Añadir exports, specs, historia, Docs y estados en el mismo cambio.\r\n6. Verificar visualmente la misma instancia de Storybook en las cuatro matrices.\r\n7. Ejecutar guards y pruebas proporcionales; no declarar éxito sólo porque TypeScript compila.\r\n8. Consultar `get_component` y ejecutar `validate_usage` mediante el MCP cuando esté disponible.\r\n9. Entregar archivos cambiados, comandos ejecutados y cualquier deuda restante.\r\n\r\n### Prohibido\r\n\r\n- Crear un componente público sin historia o sin Docs.\r\n- Crear una historia sin el bloque tipado <code>parameters.argfit</code>.\r\n- Añadir la nueva carpeta a la allowlist de Storybook.\r\n- Documentar el componente en `projects/argfit-ui-docs`.\r\n- Exponer tipos de PrimeNG/Ionic en la API adaptativa.\r\n- Introducir colores, spacing o tipografía de producto fuera de los tokens `--af-*`.\r\n- Incorporar OAuth, routing, permisos, fetching o máquinas de estado de una aplicación.\r\n- Abrir otro servidor de Storybook si el puerto `6006` ya está en uso.\r\n\r\n### Definición de terminado\r\n\r\n<div className=\"af-doc-checklist\">\r\n  <div><strong>01 · API</strong>Vendor-neutral, estable y exportada.</div>\r\n  <div><strong>02 · Renderers</strong>Desktop y mobile correctos, o decisión explícita de renderer compartido.</div>\r\n  <div><strong>03 · Unit tests</strong>Contrato, accesibilidad, eventos y proyección cubiertos.</div>\r\n  <div><strong>04 · Stories</strong>Historia canónica, estados y controles tipados.</div>\r\n  <div><strong>05 · Docs</strong><code>autodocs</code> o MDX con import, uso, API y theming.</div>\r\n  <div><strong>06 · Matriz</strong>Desktop/mobile × dark/light revisado.</div>\r\n  <div><strong>07 · Gates</strong>Guard, build, smoke, axe y visual sin fallos.</div>\r\n  <div><strong>08 · Preview</strong>Navegación directa bajo <code>/storybook/</code>.</div>\r\n</div>\r\n\r\n  </section>\r\n</div>\r\n"
     }
   ]
 }

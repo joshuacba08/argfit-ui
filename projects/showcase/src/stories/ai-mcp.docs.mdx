@@ -39,6 +39,18 @@ genera ejemplos verificables y valida snippets, pero nunca modifica el proyecto 
 pnpm mcp
 ```
 
+### Conectar ArgFit UI a Codex
+
+Desde otro repositorio, registra el paquete publicado como servidor STDIO:
+
+```bash
+codex mcp add argfit-ui -- npx -y @argfit-ui/mcp
+```
+
+Comprueba la conexión con `codex mcp list`. En Codex CLI o en la app de escritorio también
+puedes escribir `/mcp` para ver el servidor y sus herramientas activas. Codex CLI, la extensión
+IDE y la app de escritorio comparten la configuración del mismo host.
+
 El repositorio incluye configuraciones portables en `.mcp.json`, `.cursor/mcp.json` y
 `.codex/config.toml`. Todas ejecutan el mismo comando desde la raíz, sin rutas personales.
 

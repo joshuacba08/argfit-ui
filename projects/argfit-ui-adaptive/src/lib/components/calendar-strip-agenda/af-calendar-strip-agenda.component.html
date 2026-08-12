@@ -1,0 +1,79 @@
+<header class="af-calendar-strip-agenda__head">
+  <af-icon name="list" size="sm" tone="primary" />
+  <h3 class="af-calendar-strip-agenda__heading">{{ heading() }}</h3>
+  <button type="button" class="af-calendar-strip-agenda__link" (click)="todayPressed.emit()">
+    <af-icon name="calendar-days" size="xs" />
+    {{ labels().today }}
+  </button>
+</header>
+
+<div class="af-calendar-strip-agenda__strip" role="group" aria-label="Días de la semana">
+  @for (day of days(); track day.date) {
+    <button
+      type="button"
+      class="af-calendar-strip-agenda__day"
+      [class.af-calendar-strip-agenda__day--today]="day.isToday"
+      [attr.aria-pressed]="day.isSelected"
+      [attr.aria-label]="day.ariaLabel"
+      (click)="dateSelect.emit(day.date)"
+    >
+      <span class="af-calendar-strip-agenda__dow">{{ day.weekdayLabel }}</span>
+      <span class="af-calendar-strip-agenda__dnum">{{ day.dayNumber }}</span>
+      <span
+        class="af-calendar-strip-agenda__mark"
+        [class.af-calendar-strip-agenda__mark--on]="day.hasEvents"
+        aria-hidden="true"
+      ></span>
+    </button>
+  }
+</div>
+
+<div class="af-calendar-strip-agenda__body">
+  <p class="af-calendar-strip-agenda__date">{{ selectedLabel() }}</p>
+
+  @if (items().length === 0) {
+    <p class="af-calendar-strip-agenda__empty">{{ labels().noEvents }}</p>
+  } @else {
+    <ul class="af-calendar-strip-agenda__list" [attr.aria-label]="selectedLabel()">
+      @for (item of items(); track item.event.id) {
+        <li>
+          <button
+            type="button"
+            class="af-calendar-strip-agenda__item"
+            [attr.data-color]="item.event.colorToken"
+            [attr.data-state]="item.event.state ?? 'normal'"
+            [attr.aria-label]="item.ariaLabel"
+            (click)="eventActivate.emit(item.event)"
+          >
+            <span class="af-calendar-strip-agenda__time">
+              {{ item.timeLabel }}
+              @if (item.endLabel) {
+                <span class="af-calendar-strip-agenda__end">{{ item.endLabel }}</span>
+              }
+            </span>
+            <span class="af-calendar-strip-agenda__icon">
+              <af-icon [name]="item.icon" size="sm" />
+            </span>
+            <span class="af-calendar-strip-agenda__text">
+              <span class="af-calendar-strip-agenda__title">{{ item.event.title }}</span>
+              @if (item.event.subtitle) {
+                <span class="af-calendar-strip-agenda__subtitle">{{ item.event.subtitle }}</span>
+              }
+            </span>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>
+
+@if (createButton()) {
+  <button
+    type="button"
+    class="af-calendar-strip-agenda__create"
+    (click)="createPressed.emit(selected())"
+  >
+    <af-icon name="plus" size="xs" />
+    {{ labels().create }}
+  </button>
+}

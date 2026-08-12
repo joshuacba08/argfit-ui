@@ -1,0 +1,237 @@
+// Detalle de evento. Superficie plana: quien la hospeda pone el overlay.
+
+.af-calendar-event-detail {
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+// La barra superior repite el color del tipo: identifica la actividad de un
+// vistazo sin depender del color para el contenido.
+.af-calendar-event-detail::before {
+  background: var(--af-event-accent, var(--af-primary));
+  content: '';
+  height: 4px;
+  inset-inline: 0;
+  position: absolute;
+  top: 0;
+}
+
+.af-calendar-event-detail[data-color='training'] {
+  --af-event-accent: var(--af-event-training-accent);
+  --af-event-bg: var(--af-event-training-bg);
+}
+.af-calendar-event-detail[data-color='match'] {
+  --af-event-accent: var(--af-event-match-accent);
+  --af-event-bg: var(--af-event-match-bg);
+}
+.af-calendar-event-detail[data-color='gym'] {
+  --af-event-accent: var(--af-event-gym-accent);
+  --af-event-bg: var(--af-event-gym-bg);
+}
+.af-calendar-event-detail[data-color='video'] {
+  --af-event-accent: var(--af-event-video-accent);
+  --af-event-bg: var(--af-event-video-bg);
+}
+.af-calendar-event-detail[data-color='medical'] {
+  --af-event-accent: var(--af-event-medical-accent);
+  --af-event-bg: var(--af-event-medical-bg);
+}
+.af-calendar-event-detail[data-color='neutral'] {
+  --af-event-accent: var(--af-event-neutral-accent);
+  --af-event-bg: var(--af-event-neutral-bg);
+}
+
+.af-calendar-event-detail__head {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--af-space-3);
+  padding: var(--af-space-5) var(--af-space-4) var(--af-space-2);
+}
+
+.af-calendar-event-detail__icon {
+  align-items: center;
+  background: var(--af-event-bg, var(--af-surface-2));
+  border-radius: 50%;
+  color: var(--af-event-accent, var(--af-primary));
+  display: inline-flex;
+  flex: none;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+.af-calendar-event-detail__heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.af-calendar-event-detail__type {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  letter-spacing: var(--af-tracking-wider);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.af-calendar-event-detail__title {
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xl);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  line-height: var(--af-leading-tight);
+  margin: var(--af-space-0_5) 0 0;
+  text-wrap: pretty;
+}
+
+.af-calendar-event-detail__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-3);
+  overflow: hidden auto;
+  padding: var(--af-space-2) var(--af-space-4) var(--af-space-4);
+}
+
+.af-calendar-event-detail__line {
+  align-items: flex-start;
+  color: var(--af-text-soft);
+  display: flex;
+  gap: var(--af-space-3);
+  margin: 0;
+}
+
+.af-calendar-event-detail__line > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.af-calendar-event-detail__line strong {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-medium);
+}
+
+.af-calendar-event-detail__line span span {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.af-calendar-event-detail__line--state {
+  color: var(--af-warning);
+}
+
+.af-calendar-event-detail__fields {
+  border-top: 1px solid var(--af-calendar-grid-line);
+  display: grid;
+  gap: var(--af-space-2);
+  margin: 0;
+  padding-top: var(--af-space-3);
+}
+
+.af-calendar-event-detail__field {
+  align-items: baseline;
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: 130px minmax(0, 1fr);
+}
+
+.af-calendar-event-detail__field dt {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  letter-spacing: var(--af-tracking-wide);
+  text-transform: uppercase;
+}
+
+.af-calendar-event-detail__field dd {
+  color: var(--af-text-main);
+  font-size: var(--af-text-sm);
+  margin: 0;
+}
+
+.af-calendar-event-detail__foot {
+  align-items: center;
+  background: var(--af-surface-1);
+  border-top: 1px solid var(--af-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-2);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-calendar-event-detail__button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--af-border-strong);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--af-space-1_5);
+  height: var(--af-button-height-sm);
+  padding: 0 var(--af-space-3);
+}
+
+.af-calendar-event-detail__button:hover {
+  border-color: var(--af-primary);
+  color: var(--af-text-main);
+}
+
+.af-calendar-event-detail__button--primary {
+  background: var(--af-primary);
+  border-color: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+.af-calendar-event-detail__button--primary:hover {
+  background: var(--af-primary-hover);
+  border-color: var(--af-primary-hover);
+  color: var(--af-primary-contrast);
+}
+
+.af-calendar-event-detail__button--end {
+  margin-left: auto;
+}
+
+.af-calendar-event-detail__icon-button {
+  background: transparent;
+  border: 1px solid var(--af-border-strong);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  flex: none;
+  height: var(--af-button-height-sm);
+  width: var(--af-button-height-sm);
+}
+
+// ── Móvil ─────────────────────────────────────────────────────────────
+// Solo cambian densidad y ancho: por eso no hay renderers separados.
+.af-calendar-event-detail[data-platform='mobile'] .af-calendar-event-detail__field {
+  gap: var(--af-space-1);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.af-calendar-event-detail[data-platform='mobile'] .af-calendar-event-detail__button,
+.af-calendar-event-detail[data-platform='mobile'] .af-calendar-event-detail__icon-button {
+  height: 44px;
+  min-width: 44px;
+}
+
+.af-calendar-event-detail[data-platform='mobile'] .af-calendar-event-detail__foot {
+  padding-bottom: max(var(--af-space-3), env(safe-area-inset-bottom));
+}
+
+.af-calendar-event-detail button:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 1px;
+}

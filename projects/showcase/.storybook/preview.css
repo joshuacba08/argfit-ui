@@ -302,7 +302,11 @@ body.sb-show-main,
 .af-doc-tabs:has(.af-doc-tabs__input[value='document']:checked) .af-doc-tabs__panel[data-tab='document'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='validate']:checked) .af-doc-tabs__panel[data-tab='validate'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='deploy']:checked) .af-doc-tabs__panel[data-tab='deploy'],
-.af-doc-tabs:has(.af-doc-tabs__input[value='ai']:checked) .af-doc-tabs__panel[data-tab='ai'] {
+.af-doc-tabs:has(.af-doc-tabs__input[value='ai']:checked) .af-doc-tabs__panel[data-tab='ai'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='connect']:checked) .af-doc-tabs__panel[data-tab='connect'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='tools']:checked) .af-doc-tabs__panel[data-tab='tools'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='workflow']:checked) .af-doc-tabs__panel[data-tab='workflow'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='security']:checked) .af-doc-tabs__panel[data-tab='security'] {
   display: block;
 }
 
@@ -315,7 +319,11 @@ body.sb-show-main,
 .af-doc-tabs:has(.af-doc-tabs__input[value='document']:checked) .af-doc-tabs__tab[data-tab='document'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='validate']:checked) .af-doc-tabs__tab[data-tab='validate'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='deploy']:checked) .af-doc-tabs__tab[data-tab='deploy'],
-.af-doc-tabs:has(.af-doc-tabs__input[value='ai']:checked) .af-doc-tabs__tab[data-tab='ai'] {
+.af-doc-tabs:has(.af-doc-tabs__input[value='ai']:checked) .af-doc-tabs__tab[data-tab='ai'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='connect']:checked) .af-doc-tabs__tab[data-tab='connect'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='tools']:checked) .af-doc-tabs__tab[data-tab='tools'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='workflow']:checked) .af-doc-tabs__tab[data-tab='workflow'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='security']:checked) .af-doc-tabs__tab[data-tab='security'] {
   background: var(--af-bg-elevated, #102a43);
   box-shadow: inset 0 -2px 0 var(--af-primary, #2599d5);
   color: var(--af-primary-hover, #57b0e7);
@@ -330,7 +338,11 @@ body.sb-show-main,
 .af-doc-tabs__input[value='document']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='document'],
 .af-doc-tabs__input[value='validate']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='validate'],
 .af-doc-tabs__input[value='deploy']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='deploy'],
-.af-doc-tabs__input[value='ai']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='ai'] {
+.af-doc-tabs__input[value='ai']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='ai'],
+.af-doc-tabs__input[value='connect']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='connect'],
+.af-doc-tabs__input[value='tools']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='tools'],
+.af-doc-tabs__input[value='workflow']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='workflow'],
+.af-doc-tabs__input[value='security']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='security'] {
   outline: 2px solid var(--af-primary, #2599d5);
   outline-offset: 2px;
 }

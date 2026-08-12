@@ -9,6 +9,7 @@ export * from './lib/components/auth-shell/af-auth-shell-mobile.component';
 export * from './lib/components/badge/af-badge-mobile.component';
 export * from './lib/components/bottom-tabs/af-bottom-tabs-mobile.component';
 export * from './lib/components/button/af-button-mobile.component';
+export * from './lib/components/calendar/af-calendar-mobile.component';
 export * from './lib/components/card/af-card-mobile.component';
 export * from './lib/components/chart/af-chart-mobile.component';
 export * from './lib/components/checkbox/af-checkbox-mobile.component';

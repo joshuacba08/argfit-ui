@@ -8,6 +8,7 @@ export * from './lib/components/avatar/af-avatar-desktop.component';
 export * from './lib/components/auth-shell/af-auth-shell-desktop.component';
 export * from './lib/components/badge/af-badge-desktop.component';
 export * from './lib/components/button/af-button-desktop.component';
+export * from './lib/components/calendar/af-calendar-desktop.component';
 export * from './lib/components/card/af-card-desktop.component';
 export * from './lib/components/chart/af-chart-desktop.component';
 export * from './lib/components/checkbox/af-checkbox-desktop.component';

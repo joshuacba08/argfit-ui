@@ -1,0 +1,78 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as EditorStories from './af-calendar-event-editor.stories';
+
+<Meta of={EditorStories} />
+
+# CalendarEventEditor
+
+Un único editor sirve a cualquier tipo de actividad: al elegir el tipo, el formulario se recompone con sus campos, su duración por defecto y su color. Lo que lo hace genérico es que no conoce ningún dominio — recibe un esquema y lo renderiza.
+
+<Canvas of={EditorStories.Default} sourceState="shown" />
+
+## No valida reglas de negocio
+
+El editor **propone**; la aplicación decide. Solapamientos, permisos, capacidad de la instalación y disponibilidad del recurso son del producto, no de la librería. El editor emite `save` con el borrador y espera:
+
+```ts
+onSave(intent: AfCalendarEventSaveIntent) {
+  this.busy.set(true);
+  this.api.save(intent).subscribe({
+    next: () => this.close(),
+    error: (problem) => { this.busy.set(false); this.error.set(problem.message); },
+  });
+}
+```
+
+<Canvas of={EditorStories.Busy} sourceState="hidden" />
+<Canvas of={EditorStories.ErrorState} sourceState="hidden" />
+
+## El tipo manda
+
+Cambiar de tipo trae los campos del tipo nuevo. Su duración por defecto se adopta **solo al crear**: en un evento existente el usuario ya eligió una duración y pisársela sería una sorpresa.
+
+<Canvas of={EditorStories.TypeDrivenForm} sourceState="hidden" />
+
+Los cinco tipos de control del esquema — `text`, `textarea`, `number`, `select`, `switch` y `chips` — cubren el formulario completo. Un tipo sin campos también es válido: da un evento simple estilo agenda.
+
+## Genérico de verdad
+
+El mismo componente en un producto que no es deportivo, solo cambiando el registro:
+
+<Canvas of={EditorStories.GenericRegistry} sourceState="hidden" />
+
+```ts
+provideAfCalendarEventTypes([
+  {
+    id: 'appointment',
+    label: 'Turno',
+    icon: 'stethoscope',
+    colorToken: 'medical',
+    defaultDurationMinutes: 30,
+    fields: [
+      { key: 'client', label: 'Cliente', kind: 'text' },
+      { key: 'service', label: 'Servicio', kind: 'select',
+        options: [{ value: 'consulta', label: 'Consulta' }] },
+    ],
+  },
+]);
+```
+
+## Series
+
+Cuando el evento pertenece a una serie, el consumidor pasa los alcances disponibles y el editor pregunta cuál aplicar. El componente no expande ni divide series: el alcance viaja en la intención y lo resuelve la aplicación.
+
+<Canvas of={EditorStories.RecurringScopes} sourceState="hidden" />
+
+## Editar
+
+<Canvas of={EditorStories.Edit} sourceState="hidden" />
+
+## Un solo renderer
+
+Igual que el detalle, no lleva versiones desktop y mobile: en móvil los campos pasan a una columna, los controles suben a 44 px y el pie respeta el safe area, todo desde `isMobile()` y CSS. La estructura es la misma.
+
+## API
+
+<ArgTypes of={EditorStories} sort="requiredFirst" />
+
+<Controls of={EditorStories.Default} />

@@ -13,7 +13,14 @@ const meta: Meta<AfButtonComponent> = {
       useWhen: ['triggering a user action', 'submitting or cancelling a flow'],
       avoidWhen: ['navigation that should remain a link', 'non-interactive labels'],
       platforms: ['desktop', 'mobile'],
-      tokens: ['--af-primary', '--af-primary-hover', '--af-button-height-md'],
+      tokens: [
+        '--af-primary',
+        '--af-primary-hover',
+        '--af-primary-contrast',
+        '--af-color-neutral-50',
+        '--af-color-neutral-900',
+        '--af-button-height-md',
+      ],
       related: ['AfProgress', 'AfDialog'],
     },
     docs: {
@@ -72,13 +79,19 @@ export const Primary: Story = {
     disabled: false,
     loading: false,
     fullWidth: false,
-    icon: null,
-    iconPosition: 'start',
+    icon: 'arrow-right',
+    iconPosition: 'end',
     pressed: fn(),
   },
   play: async ({ args, canvasElement }) => {
     const button = canvasElement.querySelector<HTMLElement>('button, ion-button');
     await expect(button).not.toBeNull();
+    const nativeButton =
+      button!.shadowRoot?.querySelector<HTMLElement>('[part="native"]') ?? button!;
+    await expect(getComputedStyle(nativeButton).color).toBe('rgb(10, 22, 40)');
+    const icon = button!.querySelector<HTMLElement>('af-icon');
+    await expect(icon).not.toBeNull();
+    await expect(getComputedStyle(icon!).color).toBe('rgb(10, 22, 40)');
     await userEvent.click(button!);
     await expect(args.pressed).toHaveBeenCalledOnce();
   },
@@ -88,6 +101,16 @@ export const Secondary: Story = {
   args: {
     ...Primary.args,
     variant: 'secondary',
+  },
+  play: async ({ canvasElement }) => {
+    const button = canvasElement.querySelector<HTMLElement>('button, ion-button');
+    await expect(button).not.toBeNull();
+    const nativeButton =
+      button!.shadowRoot?.querySelector<HTMLElement>('[part="native"]') ?? button!;
+    await expect(getComputedStyle(nativeButton).color).toBe('rgb(240, 244, 248)');
+    const icon = button!.querySelector<HTMLElement>('af-icon');
+    await expect(icon).not.toBeNull();
+    await expect(getComputedStyle(icon!).color).toBe('rgb(240, 244, 248)');
   },
 };
 

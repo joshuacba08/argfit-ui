@@ -11,7 +11,7 @@
  * the registry in `af-icon.component.ts`; the primitive's spec renders every
  * name and fails if one does not resolve.
  */
-export type AfIconName =
+export type AfBuiltInIconName =
   // ── Navegación y dirección ──────────────────────────────────────────
   | 'arrow-down'
   | 'arrow-left'
@@ -33,10 +33,12 @@ export type AfIconName =
   | 'download'
   | 'edit'
   | 'filter'
+  | 'move'
   | 'pause'
   | 'play'
   | 'plus'
   | 'refresh-cw'
+  | 'repeat'
   | 'save'
   | 'search'
   | 'share-2'
@@ -63,9 +65,11 @@ export type AfIconName =
   // ── Datos y visualización ───────────────────────────────────────────
   | 'activity'
   | 'bar-chart-3'
+  | 'columns-3'
   | 'grid-2x2'
   | 'kanban'
   | 'layout-dashboard'
+  | 'list'
   | 'panel-top'
   | 'pie-chart'
   | 'table'
@@ -73,9 +77,13 @@ export type AfIconName =
   | 'zap'
   // ── Contenido ───────────────────────────────────────────────────────
   | 'calendar'
+  | 'calendar-days'
+  | 'dumbbell'
   | 'file-text'
   | 'image'
   | 'map-pin'
+  | 'stethoscope'
+  | 'trophy'
   | 'video'
   // ── Identidad ───────────────────────────────────────────────────────
   | 'log-in'
@@ -85,13 +93,24 @@ export type AfIconName =
   | 'users';
 
 /**
+ * Namespaced icon registered by an ArgFit icon provider.
+ *
+ * The namespace keeps third-party collections from colliding with ArgFit's
+ * stable built-in names. Examples: `lucide:alarm-clock`, `hero:user`.
+ */
+export type AfExternalIconName = `${string}:${string}`;
+
+/** Any built-in or explicitly registered icon accepted by `<af-icon>`. */
+export type AfIconName = AfBuiltInIconName | AfExternalIconName;
+
+/**
  * Every `AfIconName` as a runtime array.
  *
  * Exists so the primitive can assert in tests that each declared name resolves
  * to a real Lucide icon: a type union alone cannot catch a kebab-case typo, and
  * an unresolved name renders an empty `<svg>` instead of failing loudly.
  */
-export const AF_ICON_NAMES: readonly AfIconName[] = [
+export const AF_ICON_NAMES: readonly AfBuiltInIconName[] = [
   'activity',
   'alert-triangle',
   'arrow-down',
@@ -103,6 +122,7 @@ export const AF_ICON_NAMES: readonly AfIconName[] = [
   'bell',
   'bluetooth',
   'calendar',
+  'calendar-days',
   'check',
   'check-square',
   'chevron-down',
@@ -112,9 +132,11 @@ export const AF_ICON_NAMES: readonly AfIconName[] = [
   'circle-alert',
   'circle-check',
   'clock',
+  'columns-3',
   'copy',
   'cpu',
   'download',
+  'dumbbell',
   'edit',
   'external-link',
   'eye',
@@ -127,6 +149,7 @@ export const AF_ICON_NAMES: readonly AfIconName[] = [
   'info',
   'kanban',
   'layout-dashboard',
+  'list',
   'log-in',
   'log-out',
   'map-pin',
@@ -134,19 +157,23 @@ export const AF_ICON_NAMES: readonly AfIconName[] = [
   'monitor',
   'more-horizontal',
   'more-vertical',
+  'move',
   'panel-top',
   'pause',
   'pie-chart',
   'play',
   'plus',
   'refresh-cw',
+  'repeat',
   'save',
   'search',
   'settings',
   'share-2',
+  'stethoscope',
   'table',
   'target',
   'trash',
+  'trophy',
   'undo-2',
   'upload',
   'user',
@@ -166,10 +193,4 @@ export type AfIconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 /**
  * Semantic colour tone for an icon. Maps to ArgFit `--af-*` tokens.
  */
-export type AfIconTone =
-  | 'default'
-  | 'muted'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'danger';
+export type AfIconTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'danger';

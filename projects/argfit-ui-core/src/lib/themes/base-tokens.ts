@@ -179,6 +179,38 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-chart-tooltip-bg': 'rgba(10, 22, 40, 0.95)',
   '--af-chart-tooltip-text': '#F0F4F8',
 
+  // ── Calendar (time grid surfaces) ───────────────────────────────────
+  '--af-calendar-surface': '#0F1D32',
+  '--af-calendar-surface-elevated': '#152A42',
+  '--af-calendar-grid-line': 'rgba(37, 153, 213, 0.12)',
+  '--af-calendar-today-bg': 'rgba(37, 153, 213, 0.08)',
+  '--af-calendar-selection-bg': 'rgba(37, 153, 213, 0.18)',
+  '--af-calendar-now': '#FF3D71',
+  '--af-calendar-slot-height-compact': '24px',
+  '--af-calendar-slot-height-comfortable': '32px',
+  '--af-calendar-slot-height-touch': '44px',
+  '--af-calendar-time-axis-width': '64px',
+
+  // ── Calendar event colours ──────────────────────────────────────────
+  '--af-event-training-accent': '#2599D5',
+  '--af-event-training-bg': 'rgba(37, 153, 213, 0.16)',
+  '--af-event-training-border': 'rgba(37, 153, 213, 0.42)',
+  '--af-event-match-accent': '#00D4FF',
+  '--af-event-match-bg': 'rgba(0, 212, 255, 0.16)',
+  '--af-event-match-border': 'rgba(0, 212, 255, 0.42)',
+  '--af-event-gym-accent': '#00C853',
+  '--af-event-gym-bg': 'rgba(0, 200, 83, 0.16)',
+  '--af-event-gym-border': 'rgba(0, 200, 83, 0.42)',
+  '--af-event-video-accent': '#FFB300',
+  '--af-event-video-bg': 'rgba(255, 179, 0, 0.15)',
+  '--af-event-video-border': 'rgba(255, 179, 0, 0.34)',
+  '--af-event-medical-accent': '#FF3D71',
+  '--af-event-medical-bg': 'rgba(255, 61, 113, 0.15)',
+  '--af-event-medical-border': 'rgba(255, 61, 113, 0.34)',
+  '--af-event-neutral-accent': '#627D98',
+  '--af-event-neutral-bg': 'rgba(98, 125, 152, 0.18)',
+  '--af-event-neutral-border': 'rgba(98, 125, 152, 0.36)',
+
   // ── Breakpoints ─────────────────────────────────────────────────────
   '--af-breakpoint-mobile': '767.98px',
   '--af-breakpoint-tablet': '1023.98px',

@@ -1,0 +1,907 @@
+// Renderer de escritorio de AfCalendar.
+// Todo color, radio y espaciado sale de tokens --af-*; no hay valores de producto acá.
+
+.af-calendar-desktop {
+  background: var(--af-calendar-surface);
+  border: 1px solid var(--af-border);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--af-text-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+// ── Tokens de color de evento ─────────────────────────────────────────
+// El consumidor pasa un token semántico; acá se resuelve a las tres variables
+// que consumen bloques, chips y filas.
+.af-calendar-desktop [data-color='training'] {
+  --af-event-accent: var(--af-event-training-accent);
+  --af-event-bg: var(--af-event-training-bg);
+  --af-event-border: var(--af-event-training-border);
+}
+.af-calendar-desktop [data-color='match'] {
+  --af-event-accent: var(--af-event-match-accent);
+  --af-event-bg: var(--af-event-match-bg);
+  --af-event-border: var(--af-event-match-border);
+}
+.af-calendar-desktop [data-color='gym'] {
+  --af-event-accent: var(--af-event-gym-accent);
+  --af-event-bg: var(--af-event-gym-bg);
+  --af-event-border: var(--af-event-gym-border);
+}
+.af-calendar-desktop [data-color='video'] {
+  --af-event-accent: var(--af-event-video-accent);
+  --af-event-bg: var(--af-event-video-bg);
+  --af-event-border: var(--af-event-video-border);
+}
+.af-calendar-desktop [data-color='medical'] {
+  --af-event-accent: var(--af-event-medical-accent);
+  --af-event-bg: var(--af-event-medical-bg);
+  --af-event-border: var(--af-event-medical-border);
+}
+.af-calendar-desktop [data-color='neutral'] {
+  --af-event-accent: var(--af-event-neutral-accent);
+  --af-event-bg: var(--af-event-neutral-bg);
+  --af-event-border: var(--af-event-neutral-border);
+}
+
+// ── Toolbar ───────────────────────────────────────────────────────────
+.af-calendar-desktop__toolbar {
+  align-items: center;
+  background: var(--af-calendar-surface);
+  border-bottom: 1px solid var(--af-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--af-space-3);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-calendar-desktop__title {
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-lg);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: var(--af-tracking-tight);
+  margin: 0 auto 0 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.af-calendar-desktop__title small {
+  color: var(--af-text-soft);
+  display: block;
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-regular);
+  margin-top: var(--af-space-0_5);
+  text-transform: none;
+}
+
+.af-calendar-desktop__nav {
+  display: flex;
+  gap: var(--af-space-1);
+}
+
+.af-calendar-desktop__button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--af-border-strong);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--af-space-1_5);
+  height: var(--af-button-height-sm);
+  justify-content: center;
+  min-width: var(--af-button-height-sm);
+  padding: 0 var(--af-space-3);
+  transition: color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    background var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-calendar-desktop__button:hover {
+  background: var(--af-primary-soft);
+  border-color: var(--af-primary);
+  color: var(--af-text-main);
+}
+
+.af-calendar-desktop__button--icon {
+  padding: 0;
+}
+
+.af-calendar-desktop__button--primary {
+  background: var(--af-primary);
+  border-color: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+.af-calendar-desktop__button--primary:hover {
+  background: var(--af-primary-hover);
+  border-color: var(--af-primary-hover);
+  color: var(--af-primary-contrast);
+}
+
+.af-calendar-desktop__views {
+  background: var(--af-surface-2);
+  border: 1px solid var(--af-border);
+  border-radius: var(--af-radius-pill);
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+}
+
+.af-calendar-desktop__views button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--af-space-1_5);
+  height: 26px;
+  padding: 0 var(--af-space-3);
+  white-space: nowrap;
+}
+
+.af-calendar-desktop__views button:hover {
+  color: var(--af-text-main);
+}
+
+.af-calendar-desktop__views button[aria-pressed='true'] {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+.af-calendar-desktop__link {
+  background: none;
+  border: 0;
+  color: var(--af-primary);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+// ── Banners de estado ─────────────────────────────────────────────────
+.af-calendar-desktop__banner {
+  align-items: center;
+  border-bottom: 1px solid var(--af-border);
+  display: flex;
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-2);
+  margin: 0;
+  padding: var(--af-space-2) var(--af-space-4);
+}
+
+.af-calendar-desktop__banner--offline {
+  background: color-mix(in srgb, var(--af-warning) 12%, transparent);
+  color: var(--af-warning-light);
+}
+
+.af-calendar-desktop__banner--partial {
+  background: var(--af-primary-soft);
+  color: var(--af-text-main);
+}
+
+.af-calendar-desktop__banner--error {
+  background: var(--af-danger-soft);
+  color: var(--af-danger-light);
+}
+
+// ── Estados vacíos y de carga ─────────────────────────────────────────
+.af-calendar-desktop__state {
+  align-items: center;
+  color: var(--af-text-soft);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--af-space-2);
+  justify-content: center;
+  padding: var(--af-space-8);
+  text-align: center;
+}
+
+.af-calendar-desktop__state strong {
+  color: var(--af-text-main);
+  font-size: var(--af-text-base);
+}
+
+.af-calendar-desktop__loading {
+  display: flex;
+  flex: 1;
+  gap: var(--af-space-2);
+  padding: var(--af-space-4);
+}
+
+.af-calendar-desktop__skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--af-surface-2),
+    var(--af-surface-3),
+    var(--af-surface-2)
+  );
+  background-size: 200% 100%;
+  border-radius: var(--af-radius-sm);
+  flex: 1;
+  min-height: 200px;
+}
+
+// ── Grilla de tiempo ──────────────────────────────────────────────────
+.af-calendar-desktop__columns {
+  display: grid;
+  grid-template-columns: var(--af-calendar-time-axis-width) repeat(
+      var(--af-calendar-days, 7),
+      minmax(0, 1fr)
+    );
+}
+
+.af-calendar-desktop__head {
+  background: var(--af-calendar-surface);
+  border-bottom: 1px solid var(--af-border);
+}
+
+.af-calendar-desktop__dayhead {
+  border-left: 1px solid var(--af-calendar-grid-line);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 48px;
+  padding: var(--af-space-2);
+  text-align: center;
+}
+
+.af-calendar-desktop__dayhead--weekend {
+  background: var(--af-surface-2);
+}
+
+.af-calendar-desktop__dow {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  letter-spacing: var(--af-tracking-wider);
+  text-transform: uppercase;
+}
+
+.af-calendar-desktop__dnum {
+  color: var(--af-text-muted);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xl);
+  font-weight: var(--af-font-weight-bold);
+  line-height: var(--af-leading-tight);
+}
+
+// «Hoy» se marca con forma, no con color: el acento primario sobre superficie
+// clara queda en 3.18:1 y no pasa AA para texto.
+.af-calendar-desktop__dayhead--today .af-calendar-desktop__dow {
+  color: var(--af-text-main);
+}
+
+.af-calendar-desktop__dayhead--today .af-calendar-desktop__dnum {
+  align-self: center;
+  background: var(--af-primary);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-primary-contrast);
+  padding: 0 var(--af-space-2);
+}
+
+// ── Cabecera de recurso ───────────────────────────────────────────────
+.af-calendar-desktop__dayhead--resource {
+  align-items: center;
+  flex-direction: row;
+  gap: var(--af-space-2);
+  text-align: left;
+}
+
+.af-calendar-desktop__resource-icon {
+  align-items: center;
+  background: var(--af-event-bg, var(--af-surface-2));
+  border-radius: 50%;
+  color: var(--af-event-accent, var(--af-text-muted));
+  display: inline-flex;
+  flex: none;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.af-calendar-desktop__resource-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.af-calendar-desktop__resource-title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-calendar-desktop__resource-subtitle {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-calendar-desktop__axis-label {
+  align-items: center;
+  color: var(--af-text-soft);
+  display: flex;
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  justify-content: flex-end;
+  // El eje mide 64 px: el texto envuelve en dos líneas en vez de desbordar
+  // sobre la primera columna del día.
+  line-height: var(--af-leading-tight);
+  overflow: hidden;
+  padding: var(--af-space-1) var(--af-space-2);
+  text-align: right;
+}
+
+.af-calendar-desktop__allday {
+  background: var(--af-surface-2);
+  border-bottom: 1px solid var(--af-border);
+}
+
+.af-calendar-desktop__allday-lane {
+  border-left: 1px solid var(--af-calendar-grid-line);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 28px;
+  padding: 3px;
+}
+
+.af-calendar-desktop__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  // El calendario no debe repintar la página entera al hacer scroll.
+  contain: layout paint;
+  touch-action: pan-y;
+}
+
+.af-calendar-desktop__body {
+  position: relative;
+}
+
+.af-calendar-desktop__axis {
+  border-right: 1px solid var(--af-calendar-grid-line);
+}
+
+.af-calendar-desktop__axis-cell {
+  height: calc(var(--af-calendar-slot, 32px) * 2);
+  position: relative;
+}
+
+.af-calendar-desktop__axis-cell span {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  position: absolute;
+  right: var(--af-space-2);
+  top: -7px;
+}
+
+// La primera hora se alinea al borde: montada sobre la línea quedaría recortada
+// por el contenedor de scroll.
+.af-calendar-desktop__axis-cell:first-child span {
+  top: 0;
+}
+
+.af-calendar-desktop__col {
+  border-left: 1px solid var(--af-calendar-grid-line);
+  position: relative;
+}
+
+.af-calendar-desktop__col--weekend {
+  background: var(--af-surface-2);
+}
+
+.af-calendar-desktop__col--today {
+  background: var(--af-calendar-today-bg);
+}
+
+.af-calendar-desktop__hour {
+  border-bottom: 1px solid var(--af-calendar-grid-line);
+  height: calc(var(--af-calendar-slot, 32px) * 2);
+}
+
+.af-calendar-desktop__now {
+  border-top: 2px solid var(--af-calendar-now);
+  inset-inline: 0;
+  height: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+}
+
+.af-calendar-desktop__now::before {
+  background: var(--af-calendar-now);
+  border-radius: 50%;
+  content: '';
+  height: 8px;
+  left: -4px;
+  position: absolute;
+  top: -5px;
+  width: 8px;
+}
+
+.af-calendar-desktop__now-label {
+  color: var(--af-calendar-now);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  position: absolute;
+  right: var(--af-space-1_5);
+  top: -16px;
+}
+
+// ── Bloque de evento ──────────────────────────────────────────────────
+.af-calendar-desktop__event {
+  background: var(--af-event-bg);
+  border: 1px solid var(--af-event-border);
+  border-left: 3px solid var(--af-event-accent);
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  padding: var(--af-space-1) var(--af-space-2);
+  position: absolute;
+  text-align: left;
+  transition: box-shadow var(--af-duration-fast) var(--af-ease-out);
+  z-index: 2;
+}
+
+.af-calendar-desktop__event:hover {
+  box-shadow: var(--af-shadow-md);
+  z-index: 3;
+}
+
+// ── Arrastre y resize ─────────────────────────────────────────────────
+.af-calendar-desktop__event--movable {
+  cursor: grab;
+  // El bloque captura el gesto: el scroll vertical se hace sobre la grilla.
+  touch-action: none;
+  user-select: none;
+}
+
+.af-calendar-desktop__event--dragging {
+  box-shadow: var(--af-shadow-xl);
+  cursor: grabbing;
+  opacity: 0.92;
+  z-index: 9;
+}
+
+.af-calendar-desktop__event--selected,
+.af-calendar-desktop__event--keyboard {
+  box-shadow: var(--af-focus-ring);
+}
+
+// El modo mover por teclado se marca con contorno además del anillo: el color
+// solo no distingue «enfocado» de «moviéndose».
+.af-calendar-desktop__event--keyboard {
+  outline: 2px dashed var(--af-accent);
+  outline-offset: 2px;
+}
+
+.af-calendar-desktop__handle {
+  align-items: center;
+  cursor: ns-resize;
+  display: flex;
+  height: 10px;
+  inset-inline: 0;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  touch-action: none;
+  transition: opacity var(--af-duration-fast) var(--af-ease-out);
+  z-index: 1;
+}
+
+.af-calendar-desktop__handle::after {
+  background: var(--af-event-accent);
+  border-radius: var(--af-radius-xs);
+  content: '';
+  height: 3px;
+  width: 26px;
+}
+
+.af-calendar-desktop__handle--start {
+  top: -4px;
+}
+
+.af-calendar-desktop__handle--end {
+  bottom: -4px;
+}
+
+.af-calendar-desktop__event:hover .af-calendar-desktop__handle,
+.af-calendar-desktop__event:focus-visible .af-calendar-desktop__handle,
+.af-calendar-desktop__event--dragging .af-calendar-desktop__handle {
+  opacity: 1;
+}
+
+// En densidad táctil los handles son permanentes y con área ampliada: no hay
+// hover que los revele.
+.af-calendar-desktop[data-density='touch'] .af-calendar-desktop__handle {
+  height: 16px;
+  opacity: 1;
+}
+
+.af-calendar-desktop__col--selectable {
+  cursor: cell;
+}
+
+.af-calendar-desktop__selection {
+  background: var(--af-calendar-selection-bg);
+  border: 1px solid var(--af-primary);
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-main);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  inset-inline: 2px;
+  padding: 3px var(--af-space-2);
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+}
+
+.af-calendar-desktop__bubble {
+  align-items: center;
+  background: var(--af-surface-3);
+  border: 1px solid var(--af-border-strong);
+  border-radius: var(--af-radius-sm);
+  box-shadow: var(--af-shadow-lg);
+  color: var(--af-text-main);
+  display: flex;
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-1_5);
+  left: 50%;
+  padding: var(--af-space-1) var(--af-space-2);
+  pointer-events: none;
+  position: absolute;
+  top: var(--af-space-2);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 30;
+}
+
+.af-calendar-desktop__event--tiny {
+  align-items: center;
+  flex-direction: row;
+  gap: var(--af-space-1_5);
+  padding: 1px var(--af-space-2);
+}
+
+// Dentro del bloque el fondo está teñido por el token de evento: `--af-text-soft`
+// cae por debajo de 4.5:1 sobre esos tintes, así que el texto secundario del
+// bloque usa `--af-text-muted`.
+.af-calendar-desktop__event-meta {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-1_5);
+}
+
+.af-calendar-desktop__event-meta af-icon {
+  color: var(--af-event-accent);
+}
+
+.af-calendar-desktop__event-title {
+  color: var(--af-text-main);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-semibold);
+  line-height: var(--af-leading-snug);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.af-calendar-desktop__event-subtitle,
+.af-calendar-desktop__event-time {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// La hora no se recorta: es el dato que ancla el bloque a la grilla.
+.af-calendar-desktop__event--tiny .af-calendar-desktop__event-time {
+  flex: none;
+}
+
+.af-calendar-desktop__state-icon {
+  color: var(--af-text-main);
+  margin-left: auto;
+}
+
+// ── Estados de evento ─────────────────────────────────────────────────
+// Cada estado suma forma, trama o texto además del color: el color solo nunca
+// alcanza para comunicar el estado.
+.af-calendar-desktop__flag {
+  border: 1px solid currentcolor;
+  border-radius: var(--af-radius-pill);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  letter-spacing: var(--af-tracking-wide);
+  margin-left: auto;
+  padding: 0 var(--af-space-1_5);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.af-calendar-desktop [data-state='tentative'] {
+  background: transparent;
+  border-style: dashed;
+}
+
+.af-calendar-desktop [data-state='pending'] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--af-event-bg),
+    var(--af-event-bg) 6px,
+    color-mix(in srgb, var(--af-text-main) 8%, transparent) 6px,
+    color-mix(in srgb, var(--af-text-main) 8%, transparent) 12px
+  );
+}
+
+.af-calendar-desktop [data-state='syncing'] {
+  border-style: dotted;
+}
+
+.af-calendar-desktop [data-state='conflict'] {
+  border-color: var(--af-warning);
+  box-shadow: inset 0 0 0 1px var(--af-warning);
+}
+
+.af-calendar-desktop [data-state='cancelled'] {
+  opacity: 0.6;
+}
+
+.af-calendar-desktop [data-state='cancelled'] .af-calendar-desktop__event-title,
+.af-calendar-desktop [data-state='cancelled'] .af-calendar-desktop__chip-title,
+.af-calendar-desktop [data-state='cancelled'] .af-calendar-desktop__row-title {
+  text-decoration: line-through;
+}
+
+.af-calendar-desktop [data-state='readonly'] {
+  cursor: default;
+}
+
+.af-calendar-desktop [data-state='error'] {
+  border-color: var(--af-danger);
+  box-shadow: inset 0 0 0 1px var(--af-danger);
+}
+
+// ── Mes ───────────────────────────────────────────────────────────────
+.af-calendar-desktop__month {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.af-calendar-desktop__month-weekday {
+  border-bottom: 1px solid var(--af-border);
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  letter-spacing: var(--af-tracking-wider);
+  padding: var(--af-space-2) var(--af-space-2);
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.af-calendar-desktop__month-cell {
+  border-left: 1px solid var(--af-calendar-grid-line);
+  border-top: 1px solid var(--af-calendar-grid-line);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 104px;
+  padding: var(--af-space-1);
+}
+
+.af-calendar-desktop__month-cell--outside {
+  background: var(--af-surface-2);
+}
+
+.af-calendar-desktop__month-cell--outside .af-calendar-desktop__month-number {
+  color: var(--af-text-disabled);
+}
+
+.af-calendar-desktop__month-cell--today {
+  background: var(--af-calendar-today-bg);
+}
+
+.af-calendar-desktop__month-number {
+  align-self: flex-end;
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-bold);
+  padding: 1px var(--af-space-1_5);
+}
+
+.af-calendar-desktop__month-cell--today .af-calendar-desktop__month-number {
+  background: var(--af-primary);
+  color: var(--af-primary-contrast);
+}
+
+.af-calendar-desktop__more {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+  padding: 1px var(--af-space-1_5);
+}
+
+// ── Chip (todo el día y celdas de mes) ────────────────────────────────
+.af-calendar-desktop__chip {
+  align-items: center;
+  background: var(--af-event-bg);
+  border: 0;
+  border-left: 3px solid var(--af-event-accent);
+  border-radius: var(--af-radius-xs);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  gap: var(--af-space-1_5);
+  min-width: 0;
+  overflow: hidden;
+  padding: 2px var(--af-space-1_5);
+  text-align: left;
+}
+
+.af-calendar-desktop__chip af-icon {
+  color: var(--af-event-accent);
+}
+
+.af-calendar-desktop__chip-time {
+  color: var(--af-text-soft);
+  flex: none;
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+}
+
+.af-calendar-desktop__chip-title {
+  font-size: var(--af-text-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── Agenda ────────────────────────────────────────────────────────────
+.af-calendar-desktop__agenda {
+  padding: var(--af-space-2) 0;
+}
+
+.af-calendar-desktop__agenda-day {
+  border-bottom: 1px solid var(--af-calendar-grid-line);
+  display: grid;
+  gap: var(--af-space-4);
+  grid-template-columns: 88px minmax(0, 1fr);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+.af-calendar-desktop__agenda-date {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  text-align: right;
+}
+
+.af-calendar-desktop__agenda-number {
+  font-family: var(--af-font-display);
+  font-size: var(--af-text-2xl);
+  font-weight: var(--af-font-weight-bold);
+  line-height: var(--af-leading-tight);
+}
+
+.af-calendar-desktop__agenda-day--today .af-calendar-desktop__agenda-number {
+  color: var(--af-primary);
+}
+
+.af-calendar-desktop__agenda-month {
+  color: var(--af-text-soft);
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-regular);
+  letter-spacing: var(--af-tracking-wide);
+  text-transform: uppercase;
+}
+
+.af-calendar-desktop__agenda-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--af-space-1_5);
+  list-style: none;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.af-calendar-desktop__row {
+  align-items: center;
+  background: var(--af-surface-2);
+  border: 0;
+  border-left: 3px solid var(--af-event-accent);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: grid;
+  gap: var(--af-space-3);
+  grid-template-columns: 96px auto minmax(0, 1fr) auto;
+  padding: var(--af-space-2) var(--af-space-2);
+  text-align: left;
+  width: 100%;
+}
+
+.af-calendar-desktop__row:hover {
+  background: var(--af-surface-3);
+}
+
+.af-calendar-desktop__row-time,
+.af-calendar-desktop__row-duration {
+  align-items: center;
+  color: var(--af-text-soft);
+  display: flex;
+  font-family: var(--af-font-mono);
+  font-size: var(--af-text-xs);
+  gap: var(--af-space-1_5);
+}
+
+.af-calendar-desktop__row-icon {
+  align-items: center;
+  background: var(--af-event-bg);
+  border-radius: 50%;
+  color: var(--af-event-accent);
+  display: inline-flex;
+  flex: none;
+  height: 28px;
+  justify-content: center;
+  width: 28px;
+}
+
+.af-calendar-desktop__row-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.af-calendar-desktop__row-title {
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-semibold);
+}
+
+.af-calendar-desktop__row-subtitle {
+  color: var(--af-text-soft);
+  font-size: var(--af-text-xs);
+}
+
+.af-calendar-desktop__footer {
+  border-top: 1px solid var(--af-border);
+  padding: var(--af-space-3) var(--af-space-4);
+}
+
+// ── Foco ──────────────────────────────────────────────────────────────
+.af-calendar-desktop button:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-calendar-desktop * {
+    transition-duration: 0.01ms !important;
+  }
+}

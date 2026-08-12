@@ -11,7 +11,13 @@ import {
 import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 
-import { AfThemeService, type AfDatePickerDensity, type AfDatePickerSize } from '@argfit-ui/core';
+import {
+    afCalendarCivilDate,
+    afCalendarParseCivilDate,
+    AfThemeService,
+    type AfDatePickerDensity,
+    type AfDatePickerSize,
+} from '@argfit-ui/core';
 
 let nextAfDesktopDatePickerId = 0;
 
@@ -71,9 +77,9 @@ export class AfDatePickerDesktopComponent {
     }
     return null;
   });
-  protected readonly valueAsDate = computed(() => this.parseIsoDate(this.value()));
-  protected readonly minDate = computed(() => this.parseIsoDate(this.min()));
-  protected readonly maxDate = computed(() => this.parseIsoDate(this.max()));
+  protected readonly valueAsDate = computed(() => afCalendarParseCivilDate(this.value()));
+  protected readonly minDate = computed(() => afCalendarParseCivilDate(this.min()));
+  protected readonly maxDate = computed(() => afCalendarParseCivilDate(this.max()));
   protected readonly pickerSize = computed<'small' | 'large' | undefined>(() => {
     if (this.size() === 'sm') {
       return 'small';
@@ -102,37 +108,15 @@ export class AfDatePickerDesktopComponent {
     this.focusChange.emit(false);
   }
 
-  private parseIsoDate(value: string | undefined): Date | null {
-    if (!value) {
-      return null;
-    }
-
-    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
-
-    if (!match) {
-      return null;
-    }
-
-    const year = Number(match[1]);
-    const month = Number(match[2]);
-    const day = Number(match[3]);
-    const parsedDate = new Date(year, month - 1, day);
-
-    if (
-      Number.isNaN(parsedDate.getTime()) ||
-      parsedDate.getFullYear() !== year ||
-      parsedDate.getMonth() !== month - 1 ||
-      parsedDate.getDate() !== day
-    ) {
-      return null;
-    }
-
-    return parsedDate;
-  }
-
+  /**
+   * Traduce el valor que devuelve PrimeNG al contrato público `YYYY-MM-DD`.
+   *
+   * La conversión civil ↔ `Date` la resuelve el core: es la misma aritmética que
+   * usa el calendario y no tiene por qué existir dos veces.
+   */
   private serializeDateValue(value: Date | string | null | undefined): string {
     if (value instanceof Date) {
-      return this.formatAsIsoDate(value);
+      return afCalendarCivilDate(value);
     }
 
     if (typeof value === 'string') {
@@ -145,18 +129,10 @@ export class AfDatePickerDesktopComponent {
       const parsedDate = new Date(value);
 
       if (!Number.isNaN(parsedDate.getTime())) {
-        return this.formatAsIsoDate(parsedDate);
+        return afCalendarCivilDate(parsedDate);
       }
     }
 
     return '';
-  }
-
-  private formatAsIsoDate(value: Date): string {
-    const year = value.getFullYear();
-    const month = String(value.getMonth() + 1).padStart(2, '0');
-    const day = String(value.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
   }
 }

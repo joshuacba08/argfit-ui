@@ -28,6 +28,13 @@ const canonicalStoryIds = [
   'experimental-imagecropper--default',
   'data-metriccard--default',
   'data-datatable--default',
+  'data-calendar--default',
+  'data-calendareventdetail--default',
+  'data-calendareventeditor--default',
+  'data-calendarupcoming--default',
+  'data-calendarminimonth--default',
+  'data-calendarweekload--default',
+  'patterns-calendar-dashboard--dashboard',
   'patterns-authentication-unifiedaccess--access',
 ];
 const storyIds = process.env['STORYBOOK_STORY']
@@ -41,6 +48,8 @@ const criticalA11yStories = new Set([
   'components-forms-datepicker--default',
   'experimental-imagecropper--default',
   'patterns-authentication-unifiedaccess--access',
+  'data-calendar--default',
+  'data-calendareventeditor--default',
 ]);
 const matrices = [
   { platform: 'desktop', theme: 'dark', width: 1280, height: 800 },

@@ -1,0 +1,72 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as DetailStories from './af-calendar-event-detail.stories';
+
+<Meta of={DetailStories} />
+
+# CalendarEventDetail
+
+Detalle de una ocurrencia del calendario. Muestra lo común a todo evento — tipo, fecha, hora, lugar, serie y estado — y debajo los campos propios de su tipo, resueltos desde el esquema del registro. Ningún campo está codificado en el componente: agregar un tipo de actividad no lo toca.
+
+<Canvas of={DetailStories.Default} sourceState="shown" />
+
+## Es una superficie, no un overlay
+
+El detalle no trae scrim ni posicionamiento. Lo hospeda quien lo usa:
+
+```html
+<!-- Dentro del propio calendario -->
+<af-calendar [events]="events()" [timeZone]="tz()" editable />
+
+<!-- O en un drawer, un popover o una ruta completa -->
+<af-drawer [open]="open()">
+  <af-calendar-event-detail [event]="selected()" canEdit (editRequest)="edit($event)" />
+</af-drawer>
+```
+
+Así el mismo detalle sirve en los tres lugares sin duplicarse — y `AfCalendar` puede montarlo en su modal sin que el componente sepa nada del modal.
+
+## Registro de tipos
+
+El tipo se resuelve por `event.type` contra el registro, que llega por inyección o por input:
+
+```ts
+provideAfCalendarEventTypes([
+  {
+    id: 'training',
+    label: 'Entrenamiento',
+    icon: 'activity',
+    colorToken: 'training',
+    defaultDurationMinutes: 90,
+    fields: [
+      { key: 'location', label: 'Lugar', kind: 'text' },
+      { key: 'load', label: 'Carga', kind: 'select', options: [{ value: 'high', label: 'Alta' }] },
+    ],
+  },
+]);
+```
+
+El input `eventTypes` pisa el registro inyectado cuando una pantalla usa un subconjunto distinto.
+
+Solo se listan los campos **con valor**: una ficha llena de guiones no informa nada y empuja hacia abajo lo que sí importa. Un `switch` en falso no se muestra; un `select` se resuelve a su etiqueta, y un `chips` se une con `·`.
+
+## Estados y permisos
+
+Las acciones dependen de lo que habilite el consumidor: sin `canEdit` ni `canDelete` el detalle es de solo lectura. El estado no normal se muestra con texto además del color.
+
+<Canvas of={DetailStories.Recurring} sourceState="hidden" />
+<Canvas of={DetailStories.Conflict} sourceState="hidden" />
+<Canvas of={DetailStories.Readonly} sourceState="hidden" />
+
+## Otro tipo, mismo componente
+
+<Canvas of={DetailStories.OtherType} sourceState="hidden" />
+
+## Un solo renderer
+
+No lleva versiones desktop y mobile: entre plataformas cambian densidad, ancho de campo y tamaño de target, y eso se resuelve con `isMobile()` y CSS. Es el mismo criterio de `AfField`, `AfIconField` y `AfInputGroup`, y lo que el flujo de trabajo llama «decisión explícita de renderer compartido».
+
+## API
+
+<ArgTypes of={DetailStories} sort="requiredFirst" />
+
+<Controls of={DetailStories.Default} />

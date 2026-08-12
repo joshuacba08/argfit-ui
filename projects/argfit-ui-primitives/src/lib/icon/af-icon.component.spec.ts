@@ -1,8 +1,12 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { LucideAlarmClock } from '@lucide/angular';
+import { heroUser } from '@ng-icons/heroicons/outline';
+import { tablerBallFootball } from '@ng-icons/tabler-icons';
 import { AF_ICON_NAMES, type AfIconName } from '@argfit-ui/core';
 
 import { AfIconComponent } from './af-icon.component';
+import { provideAfLucideIcons, provideAfNgIcons } from './af-icon.providers';
 
 @Component({
   standalone: true,
@@ -25,6 +29,36 @@ class SingleIconHostComponent {
   `,
 })
 class IconHostComponent {}
+
+@Component({
+  standalone: true,
+  imports: [AfIconComponent],
+  providers: [
+    provideAfLucideIcons(LucideAlarmClock),
+    provideAfNgIcons('hero', { user: heroUser }),
+    provideAfNgIcons('tabler', { 'ball-football': tablerBallFootball }),
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <af-icon
+      name="lucide:alarm-clock"
+      [decorative]="false"
+      ariaLabel="Alarma"
+      data-testid="lucide"
+    />
+    <af-icon name="hero:user" [decorative]="false" ariaLabel="Usuario" data-testid="hero" />
+    <af-icon name="tabler:ball-football" size="lg" data-testid="tabler" />
+  `,
+})
+class ExternalIconHostComponent {}
+
+@Component({
+  standalone: true,
+  imports: [AfIconComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<af-icon name="missing:icon" />`,
+})
+class MissingIconHostComponent {}
 
 describe('AfIconComponent', () => {
   it('renders a registered Lucide icon and exposes the accessible label', () => {
@@ -63,6 +97,61 @@ describe('AfIconComponent', () => {
     const check = host.querySelector('[data-testid="check"]') as HTMLElement;
     const checkSvg = check.querySelector('svg') as SVGElement;
     expect(checkSvg.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('renders registered Lucide and ng-icons definitions through the same API', () => {
+    const fixture = TestBed.createComponent(ExternalIconHostComponent);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const lucideSvg = host.querySelector('[data-testid="lucide"] svg') as SVGElement;
+    expect(lucideSvg.querySelectorAll('path,circle,line').length).toBeGreaterThan(0);
+    expect(lucideSvg.getAttribute('role')).toBe('img');
+    expect(lucideSvg.querySelector('title')?.textContent).toBe('Alarma');
+
+    const hero = host.querySelector('[data-testid="hero"] ng-icon') as HTMLElement;
+    expect(hero).not.toBeNull();
+    expect(hero.getAttribute('role')).toBe('img');
+    expect(hero.getAttribute('aria-label')).toBe('Usuario');
+    expect(hero.querySelector('svg path')).not.toBeNull();
+
+    const tabler = host.querySelector('[data-testid="tabler"] ng-icon') as HTMLElement;
+    expect(tabler.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      (host.querySelector('[data-testid="tabler"]') as HTMLElement).style.getPropertyValue(
+        '--af-icon-size',
+      ),
+    ).toBe('20px');
+  });
+
+  it('warns in development and renders nothing for an unregistered icon', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const fixture = TestBed.createComponent(MissingIconHostComponent);
+    fixture.detectChanges();
+
+    expect((fixture.nativeElement as HTMLElement).querySelector('svg')).toBeNull();
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('missing:icon'));
+    warn.mockRestore();
+  });
+
+  it('rejects invalid namespaces, invalid definitions and duplicate names', () => {
+    expect(() => provideAfNgIcons('Bad Namespace', { user: heroUser })).toThrow();
+    expect(() => provideAfNgIcons('hero', { user: 'not svg' })).toThrow();
+
+    @Component({
+      standalone: true,
+      imports: [AfIconComponent],
+      providers: [
+        provideAfNgIcons('hero', { user: heroUser }),
+        provideAfNgIcons('hero', { user: heroUser }),
+      ],
+      template: `<af-icon name="hero:user" />`,
+    })
+    class DuplicateIconHostComponent {}
+
+    expect(() => TestBed.createComponent(DuplicateIconHostComponent)).toThrowError(
+      /registered more than once/,
+    );
   });
 
   /**

@@ -1,0 +1,439 @@
+@if (showToolbar()) {
+  @if (toolbarTemplate(); as toolbarTemplateRef) {
+    <div class="af-calendar-desktop__toolbar">
+      <ng-container *ngTemplateOutlet="toolbarTemplateRef" />
+    </div>
+  } @else {
+    <div class="af-calendar-desktop__toolbar">
+      <h2 class="af-calendar-desktop__title">
+        {{ visibleRange().title }}
+        <small>{{ timeZone() }}</small>
+      </h2>
+
+      <button type="button" class="af-calendar-desktop__button" (click)="todayPressed.emit()">
+        <af-icon name="calendar-days" size="xs" />
+        {{ labels().today }}
+      </button>
+
+      <div class="af-calendar-desktop__nav">
+        <button
+          type="button"
+          class="af-calendar-desktop__button af-calendar-desktop__button--icon"
+          [attr.aria-label]="labels().previous"
+          (click)="navigate.emit(-1)"
+        >
+          <af-icon name="chevron-left" size="sm" />
+        </button>
+        <button
+          type="button"
+          class="af-calendar-desktop__button af-calendar-desktop__button--icon"
+          [attr.aria-label]="labels().next"
+          (click)="navigate.emit(1)"
+        >
+          <af-icon name="chevron-right" size="sm" />
+        </button>
+      </div>
+
+      <div class="af-calendar-desktop__views" role="group" aria-label="Vista">
+        @for (option of viewOptions(); track option.view) {
+          <button
+            type="button"
+            [attr.aria-pressed]="option.view === view()"
+            (click)="viewChange.emit(option.view)"
+          >
+            <af-icon [name]="option.icon" size="xs" />
+            {{ option.label }}
+          </button>
+        }
+      </div>
+
+      @if (createButton()) {
+        <button
+          type="button"
+          class="af-calendar-desktop__button af-calendar-desktop__button--primary"
+          (click)="createPressed.emit()"
+        >
+          <af-icon name="plus" size="xs" />
+          {{ labels().create }}
+        </button>
+      }
+    </div>
+  }
+}
+
+@if (offline()) {
+  <p class="af-calendar-desktop__banner af-calendar-desktop__banner--offline">
+    <af-icon name="wifi-off" size="sm" />
+    {{ labels().offline }}
+  </p>
+}
+
+@if (partial()) {
+  <p class="af-calendar-desktop__banner af-calendar-desktop__banner--partial">
+    <af-icon name="layout-dashboard" size="sm" />
+    {{ labels().partial }}
+    <button type="button" class="af-calendar-desktop__link" (click)="retry.emit()">
+      {{ labels().retry }}
+    </button>
+  </p>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    <div class="af-calendar-desktop__loading" role="status" [attr.aria-label]="labels().loading">
+      @for (column of skeletonColumns(); track column) {
+        <span class="af-calendar-desktop__skeleton" aria-hidden="true"></span>
+      }
+    </div>
+  }
+
+  @case ('error') {
+    @if (errorTemplate(); as errorTemplateRef) {
+      <ng-container *ngTemplateOutlet="errorTemplateRef" />
+    } @else {
+      <div class="af-calendar-desktop__banner af-calendar-desktop__banner--error" role="alert">
+        <af-icon name="alert-triangle" size="sm" />
+        {{ error() }}
+        <button type="button" class="af-calendar-desktop__link" (click)="retry.emit()">
+          {{ labels().retry }}
+        </button>
+      </div>
+    }
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-calendar-desktop__state">
+        <af-icon name="calendar" size="xl" tone="muted" />
+        <strong>{{ labels().noEvents }}</strong>
+        <span>{{ visibleRange().title }}</span>
+      </div>
+    }
+  }
+
+  @default {
+    @switch (view()) {
+      @case ('month') {
+        <div class="af-calendar-desktop__scroll">
+          <div class="af-calendar-desktop__month" [attr.aria-label]="ariaLabel()" role="group">
+            @for (weekday of monthWeekdays(); track $index) {
+              <span class="af-calendar-desktop__month-weekday" aria-hidden="true">{{ weekday }}</span>
+            }
+
+            @for (cell of monthCells(); track cell.date) {
+              <div
+                class="af-calendar-desktop__month-cell"
+                [class.af-calendar-desktop__month-cell--outside]="cell.isOutside"
+                [class.af-calendar-desktop__month-cell--today]="cell.isToday"
+                role="group"
+                [attr.aria-label]="cell.ariaLabel"
+              >
+                <span class="af-calendar-desktop__month-number">{{ cell.dayNumber }}</span>
+
+                @for (event of cell.visible; track event.id) {
+                  <button
+                    type="button"
+                    class="af-calendar-desktop__chip"
+                    [attr.data-color]="event.colorToken"
+                    [attr.data-state]="event.state ?? 'normal'"
+                    [attr.aria-label]="eventAriaLabel(event)"
+                    (click)="onEventActivate(event)"
+                  >
+                    @if (event.kind === 'all-day') {
+                      <af-icon [name]="eventIcon(event)" size="xs" />
+                    } @else {
+                      <time class="af-calendar-desktop__chip-time">{{ event.start }}</time>
+                    }
+                    <span class="af-calendar-desktop__chip-title">{{ event.title }}</span>
+                  </button>
+                }
+
+                @if (cell.overflowCount > 0) {
+                  <span class="af-calendar-desktop__more">{{ cell.overflowLabel }}</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      @case ('agenda') {
+        <div class="af-calendar-desktop__scroll">
+          <div class="af-calendar-desktop__agenda" [attr.aria-label]="ariaLabel()">
+            @for (row of agendaRows(); track row.date) {
+              <section
+                class="af-calendar-desktop__agenda-day"
+                [class.af-calendar-desktop__agenda-day--today]="row.isToday"
+              >
+                <h3 class="af-calendar-desktop__agenda-date">
+                  <span class="af-calendar-desktop__agenda-number">{{ row.dayNumber }}</span>
+                  <span class="af-calendar-desktop__agenda-month">
+                    {{ row.weekdayLabel }} · {{ row.monthLabel }}
+                  </span>
+                </h3>
+
+                <ul class="af-calendar-desktop__agenda-list">
+                  @for (event of row.events; track event.id) {
+                    <li>
+                      <button
+                        type="button"
+                        class="af-calendar-desktop__row"
+                        [attr.data-color]="event.colorToken"
+                        [attr.data-state]="event.state ?? 'normal'"
+                        [attr.aria-label]="eventAriaLabel(event)"
+                        (click)="onEventActivate(event)"
+                      >
+                        <span class="af-calendar-desktop__row-time">{{ eventTimeLabel(event) }}</span>
+                        <span class="af-calendar-desktop__row-icon">
+                          <af-icon [name]="eventIcon(event)" size="sm" />
+                        </span>
+                        <span class="af-calendar-desktop__row-body">
+                          @if (eventTemplate(); as eventTemplateRef) {
+                            <ng-container
+                              *ngTemplateOutlet="eventTemplateRef; context: eventContext(event)"
+                            />
+                          } @else {
+                            <span class="af-calendar-desktop__row-title">{{ event.title }}</span>
+                            @if (event.subtitle) {
+                              <span class="af-calendar-desktop__row-subtitle">{{ event.subtitle }}</span>
+                            }
+                          }
+                        </span>
+                        <span class="af-calendar-desktop__row-duration">
+                          {{ eventDurationLabel(event) }}
+                          @if (stateLabel(event); as label) {
+                            <span class="af-calendar-desktop__flag">{{ label }}</span>
+                          }
+                        </span>
+                      </button>
+                    </li>
+                  }
+                </ul>
+              </section>
+            }
+          </div>
+        </div>
+      }
+
+      @default {
+        <div
+          class="af-calendar-desktop__columns af-calendar-desktop__head"
+          [style.--af-calendar-days]="columns().length"
+        >
+          <!-- La zona horaria ya está en la toolbar: acá no entra sin recortarse. -->
+          <span class="af-calendar-desktop__axis-label" aria-hidden="true"></span>
+
+          @for (column of columns(); track column.key) {
+            <div
+              class="af-calendar-desktop__dayhead"
+              [class.af-calendar-desktop__dayhead--today]="column.isToday"
+              [class.af-calendar-desktop__dayhead--weekend]="column.isWeekend"
+              [class.af-calendar-desktop__dayhead--resource]="column.resource"
+            >
+              @if (column.resource; as resource) {
+                <span class="af-calendar-desktop__resource-icon" [attr.data-color]="resource.colorToken ?? 'neutral'">
+                  <af-icon [name]="resource.icon ?? 'map-pin'" size="sm" />
+                </span>
+                <span class="af-calendar-desktop__resource-text">
+                  <span class="af-calendar-desktop__resource-title">{{ resource.title }}</span>
+                  @if (resource.subtitle) {
+                    <span class="af-calendar-desktop__resource-subtitle">{{ resource.subtitle }}</span>
+                  }
+                </span>
+              } @else if (dayHeaderTemplate(); as dayHeaderTemplateRef) {
+                <ng-container
+                  *ngTemplateOutlet="dayHeaderTemplateRef; context: dayHeaderContext(column)"
+                />
+              } @else {
+                <span class="af-calendar-desktop__dow">{{ column.weekdayLabel }}</span>
+                <span class="af-calendar-desktop__dnum">{{ column.dayNumber }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        @if (!byResource()) {
+          <div
+            class="af-calendar-desktop__columns af-calendar-desktop__allday"
+            [style.--af-calendar-days]="columns().length"
+          >
+            <span class="af-calendar-desktop__axis-label">{{ labels().allDay }}</span>
+
+            @for (column of columns(); track column.key) {
+              <div class="af-calendar-desktop__allday-lane">
+                @for (event of column.allDay; track event.id) {
+                  <button
+                    type="button"
+                    class="af-calendar-desktop__chip"
+                    [attr.data-color]="event.colorToken"
+                    [attr.data-state]="event.state ?? 'normal'"
+                    [attr.aria-label]="eventAriaLabel(event)"
+                    (click)="onEventActivate(event)"
+                  >
+                    <af-icon [name]="eventIcon(event)" size="xs" />
+                    <span class="af-calendar-desktop__chip-title">{{ event.title }}</span>
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        <div class="af-calendar-desktop__scroll">
+          <div
+            #gridBody
+            class="af-calendar-desktop__columns af-calendar-desktop__body"
+            [style.--af-calendar-days]="columns().length"
+            [style.height.px]="gridHeightPx()"
+            afPointerDrag
+            [afPointerDragDisabled]="!editable() && !selectable()"
+            (dragStart)="onDragStart()"
+            (dragMove)="onDragMove($event)"
+            (dragEnd)="onDragEnd()"
+            (dragCancel)="onDragCancel()"
+          >
+            <div class="af-calendar-desktop__axis" aria-hidden="true">
+              @for (hour of hours(); track hour.minutes) {
+                <div class="af-calendar-desktop__axis-cell"><span>{{ hour.label }}</span></div>
+              }
+            </div>
+
+            @for (column of columns(); track column.key) {
+              <div
+                class="af-calendar-desktop__col"
+                [class.af-calendar-desktop__col--weekend]="column.isWeekend"
+                [class.af-calendar-desktop__col--today]="column.isToday"
+                [class.af-calendar-desktop__col--selectable]="selectable()"
+                role="group"
+                [attr.aria-label]="column.ariaLabel"
+                (pointerdown)="onColumnPointerDown($event, column)"
+              >
+                <div class="af-calendar-desktop__lines" aria-hidden="true">
+                  @for (hour of hours(); track hour.minutes) {
+                    <div class="af-calendar-desktop__hour"></div>
+                  }
+                </div>
+
+                @for (block of column.blocks; track block.event.id) {
+                  <button
+                    type="button"
+                    class="af-calendar-desktop__event"
+                    [class.af-calendar-desktop__event--tiny]="block.compact"
+                    [class.af-calendar-desktop__event--movable]="block.movable"
+                    [class.af-calendar-desktop__event--dragging]="block.dragging"
+                    [class.af-calendar-desktop__event--keyboard]="block.keyboardActive"
+                    [class.af-calendar-desktop__event--selected]="
+                      block.event.id === selectedEventId()
+                    "
+                    [attr.data-color]="block.event.colorToken"
+                    [attr.data-state]="block.event.state ?? 'normal'"
+                    [attr.aria-label]="block.ariaLabel"
+                    [attr.aria-grabbed]="block.keyboardActive ? 'true' : null"
+                    [style.top.px]="block.topPx"
+                    [style.height.px]="block.heightPx"
+                    [style.left]="'calc(' + block.leftPercent + '% + 2px)'"
+                    [style.width]="'calc(' + block.widthPercent + '% - 4px)'"
+                    (pointerdown)="onBlockPointerDown($event, block, 'move')"
+                    (keydown)="onBlockKeydown($event, block)"
+                    (click)="onEventActivate(block.event)"
+                  >
+                    @if (block.movable) {
+                      <span
+                        class="af-calendar-desktop__handle af-calendar-desktop__handle--start"
+                        aria-hidden="true"
+                        (pointerdown)="onBlockPointerDown($event, block, 'resize-start')"
+                      ></span>
+                      <span
+                        class="af-calendar-desktop__handle af-calendar-desktop__handle--end"
+                        aria-hidden="true"
+                        (pointerdown)="onBlockPointerDown($event, block, 'resize-end')"
+                      ></span>
+                    }
+                    @if (eventTemplate(); as eventTemplateRef) {
+                      <ng-container
+                        *ngTemplateOutlet="
+                          eventTemplateRef;
+                          context: eventContext(block.event, block.compact)
+                        "
+                      />
+                    } @else if (block.compact) {
+                      <af-icon [name]="block.icon" size="xs" />
+                      <span class="af-calendar-desktop__event-time">{{ block.event.start }}</span>
+                      <span class="af-calendar-desktop__event-title">{{ block.event.title }}</span>
+                      @if (block.stateIcon; as stateIcon) {
+                        <af-icon class="af-calendar-desktop__state-icon" [name]="stateIcon" size="xs" />
+                      }
+                    } @else {
+                      <span class="af-calendar-desktop__event-meta">
+                        <af-icon [name]="block.icon" size="xs" />
+                        @if (block.event.seriesId) {
+                          <af-icon name="repeat" size="xs" />
+                        }
+                        <span class="af-calendar-desktop__event-time">{{ block.timeLabel }}</span>
+                        @if (block.stateIcon; as stateIcon) {
+                          <af-icon class="af-calendar-desktop__state-icon" [name]="stateIcon" size="xs" />
+                        }
+                      </span>
+                      <span class="af-calendar-desktop__event-title">{{ block.event.title }}</span>
+                      @if (block.event.subtitle) {
+                        <span class="af-calendar-desktop__event-subtitle">
+                          {{ block.event.subtitle }}
+                        </span>
+                      }
+                    }
+                  </button>
+                }
+
+                @if (column.selection; as selection) {
+                  <div
+                    class="af-calendar-desktop__selection"
+                    aria-hidden="true"
+                    [style.top.px]="selection.topPx"
+                    [style.height.px]="selection.heightPx"
+                  >
+                    {{ selection.label }}
+                  </div>
+                }
+
+                @if (column.nowOffsetPx !== null) {
+                  <div
+                    class="af-calendar-desktop__now"
+                    [style.top.px]="column.nowOffsetPx"
+                    [attr.aria-label]="labels().nowIndicator + ' ' + nowLabel()"
+                    role="separator"
+                  >
+                    <span class="af-calendar-desktop__now-label">{{ nowLabel() }}</span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        @if (dragBubble(); as bubble) {
+          <div class="af-calendar-desktop__bubble" aria-hidden="true">
+            @if (bubble.keyboard) {
+              <af-icon name="move" size="xs" />
+            }
+            {{ bubble.label }}
+          </div>
+        }
+      }
+    }
+  }
+}
+
+@if (footerTemplate(); as footerTemplateRef) {
+  <div class="af-calendar-desktop__footer">
+    <ng-container *ngTemplateOutlet="footerTemplateRef" />
+  </div>
+}
+
+@if (overlayTemplate(); as overlayTemplateRef) {
+  <ng-container *ngTemplateOutlet="overlayTemplateRef" />
+}
+
+<af-live-region [message]="announcement()" />
+

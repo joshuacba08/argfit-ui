@@ -1,0 +1,275 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as CalendarStories from './af-calendar.stories';
+
+<Meta of={CalendarStories} />
+
+# Calendar
+
+Grilla temporal adaptativa. Recibe las ocurrencias visibles del rango y emite intenciones tipadas: no hace HTTP, no persiste, no expande series y nunca infiere la zona horaria del navegador. La aplicación es la fuente de verdad; el calendario decide cómo se ve, no qué pasa.
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-features" value="features" aria-label="Características" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-views" value="views" aria-label="Vistas" />
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-interaction" value="interaction" aria-label="Interacción" />
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-states" value="states" aria-label="Estados" />
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-api" value="api" aria-label="API" />
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-theming" value="theming" aria-label="Tematización" />
+  <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-playground" value="playground" aria-label="Playground" />
+
+  <div className="af-doc-tabs__list" aria-label="Secciones de Calendar">
+    <label className="af-doc-tabs__tab" data-tab="features" htmlFor="calendar-tab-features">Características</label>
+    <label className="af-doc-tabs__tab" data-tab="views" htmlFor="calendar-tab-views">Vistas</label>
+    <label className="af-doc-tabs__tab" data-tab="interaction" htmlFor="calendar-tab-interaction">Interacción</label>
+    <label className="af-doc-tabs__tab" data-tab="states" htmlFor="calendar-tab-states">Estados</label>
+    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="calendar-tab-api">API</label>
+    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="calendar-tab-theming">Theming</label>
+    <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="calendar-tab-playground">Playground</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="features">
+
+## Características
+
+```ts
+import { AfCalendar, AF_CALENDAR_SLOT_DIRECTIVES, AF_CALENDAR_TEMPLATE_DIRECTIVES } from '@argfit-ui/adaptive';
+```
+
+- Un solo componente adaptativo: la misma API alimenta escritorio y móvil.
+- Motor de layout determinista, sin medir el DOM y sin `ResizeObserver`.
+- Toolbar, franja de todo el día, eje temporal e indicador de hora actual.
+- Tres densidades con la misma información: 24, 32 y 44 px de slot.
+- Ocho estados de evento, siempre con icono o texto además del color.
+- Ranuras de composición y templates tipados para toolbar, evento y cabecera de día.
+
+<Canvas of={CalendarStories.Default} sourceState="shown" />
+
+### Modelo de datos
+
+El calendario trabaja con fechas civiles (`YYYY-MM-DD`) y horas de pared (`HH:mm`). **El fin de un intervalo es exclusivo**: una sesión de 09:00 a 10:00 y otra de 10:00 a 11:00 no se pisan y comparten columna.
+
+```ts
+const events: AfCalendarEvent[] = [
+  {
+    id: 'e1',
+    date: '2026-08-12',
+    start: '09:30',
+    end: '11:00',
+    kind: 'timed',
+    title: 'Entrenamiento de campo',
+    subtitle: 'Cancha 1 · Bloque técnico',
+    colorToken: 'training',
+  },
+];
+```
+
+### Zona horaria
+
+`timeZone` es obligatoria. El componente no convierte zonas: la usa para rotular y la propaga en el rango visible y en las intenciones, para que la resuelva el consumidor con sus propias reglas. Inferirla del navegador es la forma más rápida de mostrarle a un cuerpo técnico un entrenamiento a la hora equivocada.
+
+### Composición
+
+```html
+<af-calendar [events]="events()" [timeZone]="orgTimeZone()" (eventActivate)="openDetail($event)">
+  <div afCalendarToolbar>…</div>
+  <ng-template afCalendarEvent let-event let-compact="compact">…</ng-template>
+</af-calendar>
+```
+
+<Canvas of={CalendarStories.CustomTemplates} sourceState="hidden" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="views">
+
+## Vistas
+
+La semana laboral no es otro motor: es la vista `week` con `hiddenDays`. Cambia el rango visible, no el layout.
+
+<Canvas of={CalendarStories.Day} sourceState="hidden" />
+<Canvas of={CalendarStories.ThreeDay} sourceState="hidden" />
+<Canvas of={CalendarStories.WorkWeek} sourceState="hidden" />
+
+### Mes
+
+Seis filas fijas, días fuera de mes atenuados y overflow explícito. La celda nunca crece: cuando hay más actividades de las que entran, se indica con `+N más` en lugar de ocultarlas en silencio.
+
+<Canvas of={CalendarStories.Month} sourceState="hidden" />
+
+### Agenda
+
+Lista agrupada por día, pensada como vista principal en móvil y como alternativa accesible en escritorio.
+
+<Canvas of={CalendarStories.Agenda} sourceState="hidden" />
+
+### Móvil
+
+Móvil no es una semana de escritorio comprimida. El renderer móvil resuelve `week`, `work-week` y `resources` como rango de tres días, y `month` como agenda; para un mes en pantalla angosta está `AfCalendarMiniMonth`. Además fuerza densidad `touch`: 24 o 32 px de slot dejarían los bloques por debajo del target táctil mínimo de 44 px.
+
+### Densidad
+
+<Canvas of={CalendarStories.Densities} sourceState="hidden" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="interaction">
+
+## Interacción
+
+Con `editable` los bloques se arrastran entre horas y días, y los handles de inicio y fin cambian la duración. Con `selectable` se dibuja un rango sobre una franja vacía para crear.
+
+<Canvas of={CalendarStories.Editable} sourceState="hidden" />
+
+### El componente propone, la aplicación dispone
+
+Nada se aplica solo. El calendario muestra una vista previa optimista, emite una intención tipada y espera datos nuevos:
+
+```ts
+onEventMoveRequest(request: AfCalendarMutationRequest) {
+  this.api.move(request).subscribe({
+    next: (event) => this.events.update((list) => replace(list, event)),
+    error: () => this.toast.error('La cancha no está disponible en ese horario.'),
+  });
+}
+```
+
+Reglas que el componente garantiza:
+
+- **El commit ocurre en `pointerup`, nunca en `pointerdown`.** Presionar no es mover.
+- **Escape cancela y revierte**, y emite `interactionCancel`.
+- **La duración de pared se conserva al cambiar de día**: un entrenamiento de 90 minutos sigue durando 90 minutos el jueves.
+- Imantado de 15 minutos, duración mínima de 15 minutos y fin exclusivo.
+- Un evento en estado `readonly` o `cancelled` no se mueve ni se redimensiona.
+
+### Series recurrentes
+
+Si la ocurrencia tiene `seriesId`, el calendario **no** emite la mutación: emite `recurrenceScopeRequest` con los alcances posibles y espera que la aplicación resuelva cuál aplicar. El componente nunca expande ni divide series.
+
+<Canvas of={CalendarStories.RecurrenceScope} sourceState="hidden" />
+
+### Editar sin arrastrar
+
+Toda intención disponible con el mouse tiene un camino equivalente sin arrastre. Sobre un evento enfocado:
+
+| Tecla | Acción |
+| --- | --- |
+| `Enter` o `M` | entra en modo mover |
+| `↑` `↓` | ±15 minutos |
+| `⇧` + `↑` `↓` | ±1 hora |
+| `←` `→` | día anterior o siguiente |
+| `Enter` | confirma |
+| `Esc` | cancela y revierte |
+
+Cada paso se anuncia en una live region y el foco permanece en el evento después de confirmar.
+
+<Canvas of={CalendarStories.KeyboardMove} sourceState="hidden" />
+<Canvas of={CalendarStories.KeyboardMoveCancelled} sourceState="hidden" />
+
+### Táctil
+
+En móvil el arrastre se arma con long-press: hasta el lift el gesto sigue siendo del scroll, así la grilla se puede desplazar con el dedo sobre un evento. Los handles de resize sí apagan el gesto del navegador — son el único lugar donde el arrastre gana sin esperar.
+
+### Detalle y editor
+
+Al activar un evento, el calendario abre el detalle en un modal propio; desde ahí «Editar» lleva al editor. Crear por rango o desde el botón abre el editor con la franja ya cargada.
+
+<Canvas of={CalendarStories.EventDetail} sourceState="hidden" />
+<Canvas of={CalendarStories.EventEditor} sourceState="hidden" />
+<Canvas of={CalendarStories.CreateFromToolbar} sourceState="hidden" />
+
+Con `overlays="false"` el calendario deja de hospedarlos y solo emite `eventActivate`, `createPressed` y `rangeCreateRequest`: la aplicación decide dónde presentarlos — un drawer, una ruta completa o su propio diálogo. Los componentes están disponibles sueltos como `AfCalendarEventDetail` y `AfCalendarEventEditor`.
+
+El registro de tipos se declara una vez por aplicación:
+
+```ts
+provideAfCalendarEventTypes([
+  { id: 'training', label: 'Entrenamiento', icon: 'activity', colorToken: 'training',
+    defaultDurationMinutes: 90,
+    fields: [{ key: 'location', label: 'Lugar', kind: 'text' }] },
+]);
+```
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="states">
+
+## Estados
+
+Ningún estado se comunica solo con color: cada uno suma icono, trama, borde o etiqueta de texto, y el nombre accesible del bloque incluye hora, fecha y estado.
+
+<Canvas of={CalendarStories.EventStates} sourceState="hidden" />
+
+### Carga, vacío y error
+
+El error es recuperable: el calendario sigue navegable y ofrece reintento en lugar de reemplazar toda la superficie.
+
+<Canvas of={CalendarStories.Loading} sourceState="hidden" />
+<Canvas of={CalendarStories.Empty} sourceState="hidden" />
+<Canvas of={CalendarStories.ErrorState} sourceState="hidden" />
+<Canvas of={CalendarStories.Offline} sourceState="hidden" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## API
+
+<ArgTypes
+  of={CalendarStories}
+  include={['events', 'view', 'views', 'anchorDate', 'timeZone', 'density', 'firstDay', 'hiddenDays', 'minTime', 'maxTime', 'nowIndicator', 'showToolbar', 'editable', 'selectable', 'createButton', 'overlays', 'eventTypes', 'resources', 'labels', 'height', 'loading', 'partial', 'offline', 'empty', 'error', 'ariaLabel', 'visibleRangeChange', 'viewChange', 'anchorDateChange', 'eventActivate', 'eventMoveRequest', 'eventResizeRequest', 'rangeCreateRequest', 'resourceAssignRequest', 'recurrenceScopeRequest', 'interactionCancel', 'eventSave', 'eventDelete', 'createPressed', 'retry']}
+  sort="requiredFirst"
+/>
+
+### Límite de responsabilidad
+
+Es de la aplicación, no del componente:
+
+- Cargar el rango que anuncia `visibleRangeChange`.
+- Expandir series recurrentes: el calendario recibe ocurrencias ya resueltas, con `seriesId` y `occurrenceId`.
+- Resolver zonas horarias, permisos y reglas de disponibilidad.
+- Persistir cualquier cambio.
+
+### Ranuras y templates
+
+| Selector | Tipo | Reemplaza |
+| --- | --- | --- |
+| `afCalendarToolbar` | ranura | la toolbar interna completa |
+| `afCalendarEmpty` | ranura | el estado vacío |
+| `afCalendarError` | ranura | el banner de error |
+| `afCalendarFooter` | ranura | el pie del calendario |
+| `afCalendarEvent` | template tipado | el contenido del bloque de evento |
+| `afCalendarDayHeader` | template tipado | la cabecera de columna de día |
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="theming">
+
+## Theming
+
+El calendario consume únicamente tokens públicos `--af-*`. Los propios del componente son:
+
+| Token | Uso |
+| --- | --- |
+| `--af-calendar-surface` | fondo de la superficie |
+| `--af-calendar-surface-elevated` | franjas y cabeceras elevadas |
+| `--af-calendar-grid-line` | líneas de grilla y separadores |
+| `--af-calendar-today-bg` | realce de la columna o celda de hoy |
+| `--af-calendar-selection-bg` | selección de rango |
+| `--af-calendar-now` | indicador de hora actual |
+| `--af-calendar-slot-height-compact` | altura de slot en densidad compacta |
+| `--af-calendar-slot-height-comfortable` | altura de slot por defecto |
+| `--af-calendar-slot-height-touch` | altura de slot táctil |
+| `--af-calendar-time-axis-width` | ancho del eje horario |
+
+Los colores de evento son tokens semánticos: el consumidor pasa `colorToken`, nunca CSS. Cada token resuelve a un trío `--af-event-<token>-{accent,bg,border}` para `training`, `match`, `gym`, `video`, `medical` y `neutral`. En tema claro los acentos se oscurecen para mantener el contraste AA sobre blanco.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="playground">
+
+## Playground
+
+<Canvas of={CalendarStories.Default} sourceState="hidden" />
+<Controls of={CalendarStories.Default} />
+
+  </section>
+</div>

@@ -60,15 +60,21 @@
 }
 
 .af-button-desktop--secondary {
-  background: var(--af-bg-interactive);
-  border-color: var(--af-border);
-  color: var(--af-text-main);
+  background: var(--af-color-neutral-900);
+  border-color: var(--af-color-neutral-700);
+  color: var(--af-color-neutral-50);
 }
 
 .af-button-desktop--secondary:hover:not(:disabled) {
-  background: var(--af-secondary);
-  border-color: var(--af-secondary-hover);
-  color: var(--af-text-main);
+  background: var(--af-color-neutral-800);
+  border-color: var(--af-color-neutral-600);
+  color: var(--af-color-neutral-50);
+}
+
+.af-button-desktop af-icon,
+.af-button-desktop af-icon svg,
+.af-button-desktop af-icon ng-icon {
+  color: inherit !important;
 }
 
 .af-button-desktop--ghost {

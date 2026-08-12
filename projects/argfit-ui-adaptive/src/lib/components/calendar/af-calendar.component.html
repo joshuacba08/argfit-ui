@@ -1,0 +1,160 @@
+<ng-template #calendarToolbar>
+  <ng-content select="[afCalendarToolbar]" />
+</ng-template>
+
+<ng-template #calendarEmpty>
+  <ng-content select="[afCalendarEmpty]" />
+</ng-template>
+
+<ng-template #calendarError>
+  <ng-content select="[afCalendarError]" />
+</ng-template>
+
+<ng-template #calendarFooter>
+  <ng-content select="[afCalendarFooter]" />
+</ng-template>
+
+@if (isMobile()) {
+  <af-calendar-mobile
+    [events]="events()"
+    [view]="activeView()"
+    [views]="views()"
+    [anchorDate]="activeAnchor()"
+    [timeZone]="timeZone()"
+    [density]="density()"
+    [firstDay]="firstDay()"
+    [minTime]="minTime()"
+    [maxTime]="maxTime()"
+    [nowIndicator]="nowIndicator()"
+    [showToolbar]="showToolbar()"
+    [editable]="editable()"
+    [createButton]="createButton()"
+    [labels]="labels()"
+    [height]="height()"
+    [loading]="loading()"
+    [partial]="partial()"
+    [offline]="offline()"
+    [empty]="empty()"
+    [error]="error()"
+    [ariaLabel]="ariaLabel()"
+    [eventTemplate]="projectedEventTemplate()"
+    [toolbarTemplate]="projectedToolbarTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [errorTemplate]="projectedErrorTemplate()"
+    [footerTemplate]="projectedFooterTemplate()"
+    (viewChange)="onViewChange($event)"
+    (dateSelect)="onDateSelect($event)"
+    (todayPressed)="onToday()"
+    [selectedEventId]="selectedEventId()"
+    (eventActivate)="onEventActivate($event)"
+    (createPressed)="onCreatePressed()"
+    (eventMoveRequest)="eventMoveRequest.emit($event)"
+    (eventResizeRequest)="eventResizeRequest.emit($event)"
+    (recurrenceScopeRequest)="recurrenceScopeRequest.emit($event)"
+    (interactionCancel)="interactionCancel.emit($event)"
+    (retry)="retry.emit()"
+  />
+} @else {
+  <af-calendar-desktop
+    [events]="events()"
+    [view]="activeView()"
+    [views]="views()"
+    [anchorDate]="activeAnchor()"
+    [timeZone]="timeZone()"
+    [density]="density()"
+    [firstDay]="firstDay()"
+    [hiddenDays]="hiddenDays()"
+    [minTime]="minTime()"
+    [maxTime]="maxTime()"
+    [nowIndicator]="nowIndicator()"
+    [showToolbar]="showToolbar()"
+    [editable]="editable()"
+    [selectable]="selectable()"
+    [createButton]="createButton()"
+    [labels]="labels()"
+    [height]="height()"
+    [loading]="loading()"
+    [partial]="partial()"
+    [offline]="offline()"
+    [empty]="empty()"
+    [error]="error()"
+    [ariaLabel]="ariaLabel()"
+    [eventTemplate]="projectedEventTemplate()"
+    [dayHeaderTemplate]="projectedDayHeaderTemplate()"
+    [toolbarTemplate]="projectedToolbarTemplate()"
+    [emptyTemplate]="projectedEmptyTemplate()"
+    [errorTemplate]="projectedErrorTemplate()"
+    [footerTemplate]="projectedFooterTemplate()"
+    (viewChange)="onViewChange($event)"
+    (navigate)="onNavigate($event)"
+    (todayPressed)="onToday()"
+    [selectedEventId]="selectedEventId()"
+    [resources]="resources()"
+    (eventActivate)="onEventActivate($event)"
+    (createPressed)="onCreatePressed()"
+    (eventMoveRequest)="eventMoveRequest.emit($event)"
+    (eventResizeRequest)="eventResizeRequest.emit($event)"
+    (rangeCreateRequest)="onRangeCreateRequest($event)"
+    (resourceAssignRequest)="resourceAssignRequest.emit($event)"
+    (recurrenceScopeRequest)="recurrenceScopeRequest.emit($event)"
+    (interactionCancel)="interactionCancel.emit($event)"
+    (retry)="retry.emit()"
+  />
+}
+
+@if (detailEvent(); as event) {
+  <div
+    class="af-calendar__scrim"
+    afEscapeKey
+    (afEscape)="closeOverlays()"
+    (click)="closeOverlays()"
+  >
+    <div
+      class="af-calendar__modal"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="event.title"
+      afFocusTrap
+      (click)="$event.stopPropagation()"
+    >
+      <af-calendar-event-detail
+        [event]="event"
+        [eventTypes]="eventTypes()"
+        [labels]="labels()"
+        [canEdit]="editable()"
+        [canDelete]="editable()"
+        (editRequest)="onDetailEdit($event)"
+        (deleteRequest)="onEventDelete($event)"
+        (closed)="closeOverlays()"
+      />
+    </div>
+  </div>
+}
+
+@if (editorDraft(); as draft) {
+  <div class="af-calendar__scrim" afEscapeKey (afEscape)="closeOverlays()" (click)="closeOverlays()">
+    <div
+      class="af-calendar__modal af-calendar__modal--wide"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="editorMode() === 'create' ? 'Nueva actividad' : 'Editar actividad'"
+      afFocusTrap
+      (click)="$event.stopPropagation()"
+    >
+      <af-calendar-event-editor
+        [draft]="draft"
+        [mode]="editorMode()"
+        [eventTypes]="eventTypes()"
+        [resources]="resources()"
+        [timeZone]="timeZone()"
+        [labels]="labels()"
+        [recurrenceScopes]="editorScopes()"
+        [eventId]="editorMode() === 'edit' ? selectedEventId() : undefined"
+        [allowDelete]="editable()"
+        (save)="onEditorSave($event)"
+        (deleteRequest)="onEventDelete($event)"
+        (cancelled)="closeOverlays()"
+      />
+    </div>
+  </div>
+}

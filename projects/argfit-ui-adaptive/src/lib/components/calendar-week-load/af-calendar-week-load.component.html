@@ -1,0 +1,39 @@
+<header class="af-calendar-week-load__head">
+  <af-icon name="bar-chart-3" size="sm" tone="primary" />
+  <h3 class="af-calendar-week-load__heading">{{ heading() }}</h3>
+  <span class="af-calendar-week-load__total">{{ totalLabel() }}</span>
+</header>
+
+<div class="af-calendar-week-load__chart" role="group" [attr.aria-label]="heading()">
+  @for (bar of bars(); track bar.date) {
+    <button
+      type="button"
+      class="af-calendar-week-load__column"
+      [attr.aria-label]="bar.ariaLabel"
+      (click)="daySelect.emit(bar.date)"
+    >
+      <span class="af-calendar-week-load__value">{{ bar.valueLabel }}</span>
+      <span class="af-calendar-week-load__track">
+        <span
+          class="af-calendar-week-load__bar"
+          [class.af-calendar-week-load__bar--peak]="bar.isPeak"
+          [class.af-calendar-week-load__bar--empty]="bar.isEmpty"
+          [style.height.%]="bar.heightPercent"
+        ></span>
+      </span>
+      <span
+        class="af-calendar-week-load__label"
+        [class.af-calendar-week-load__label--today]="bar.isToday"
+      >
+        {{ bar.initial }}
+      </span>
+    </button>
+  }
+</div>
+
+<p class="af-calendar-week-load__summary">
+  <span><af-icon name="zap" size="xs" />Pico {{ peakLabel() }}</span>
+  @if (goalLabel(); as goal) {
+    <span><af-icon name="target" size="xs" />Objetivo {{ goal }}</span>
+  }
+</p>

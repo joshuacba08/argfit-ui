@@ -1,0 +1,292 @@
+@if (showToolbar()) {
+  @if (toolbarTemplate(); as toolbarTemplateRef) {
+    <div class="af-calendar-mobile__top">
+      <ng-container *ngTemplateOutlet="toolbarTemplateRef" />
+    </div>
+  } @else {
+    <div class="af-calendar-mobile__top">
+      <h2 class="af-calendar-mobile__month">{{ monthTitle() }}</h2>
+      <button type="button" class="af-calendar-mobile__button" (click)="todayPressed.emit()">
+        <af-icon name="calendar-days" size="xs" />
+        {{ labels().today }}
+      </button>
+    </div>
+  }
+}
+
+<div class="af-calendar-mobile__strip" role="group" aria-label="Días de la semana">
+  @for (day of stripDays(); track day.date) {
+    <button
+      type="button"
+      class="af-calendar-mobile__day"
+      [class.af-calendar-mobile__day--today]="day.isToday"
+      [attr.aria-pressed]="day.isSelected"
+      [attr.aria-label]="day.ariaLabel"
+      (click)="dateSelect.emit(day.date)"
+    >
+      <span class="af-calendar-mobile__dow">{{ day.weekdayLabel }}</span>
+      <span class="af-calendar-mobile__dnum">{{ day.dayNumber }}</span>
+      <span
+        class="af-calendar-mobile__mark"
+        [class.af-calendar-mobile__mark--on]="day.hasEvents"
+        aria-hidden="true"
+      ></span>
+    </button>
+  }
+</div>
+
+@if (viewOptions().length > 1) {
+  <div class="af-calendar-mobile__views" role="group" aria-label="Vista">
+    @for (option of viewOptions(); track option.view) {
+      <button
+        type="button"
+        [attr.aria-pressed]="option.view === resolvedView()"
+        (click)="viewChange.emit(option.view)"
+      >
+        <af-icon [name]="option.icon" size="xs" />
+        {{ option.label }}
+      </button>
+    }
+  </div>
+}
+
+@if (offline()) {
+  <p class="af-calendar-mobile__banner af-calendar-mobile__banner--offline">
+    <af-icon name="wifi-off" size="sm" />
+    {{ labels().offline }}
+  </p>
+}
+
+@if (partial()) {
+  <p class="af-calendar-mobile__banner af-calendar-mobile__banner--partial">
+    <af-icon name="layout-dashboard" size="sm" />
+    {{ labels().partial }}
+  </p>
+}
+
+@switch (state()) {
+  @case ('loading') {
+    <div class="af-calendar-mobile__body" role="status" [attr.aria-label]="labels().loading">
+      @for (row of skeletonRows(); track row) {
+        <span class="af-calendar-mobile__skeleton" aria-hidden="true"></span>
+      }
+    </div>
+  }
+
+  @case ('error') {
+    @if (errorTemplate(); as errorTemplateRef) {
+      <ng-container *ngTemplateOutlet="errorTemplateRef" />
+    } @else {
+      <div class="af-calendar-mobile__banner af-calendar-mobile__banner--error" role="alert">
+        <af-icon name="alert-triangle" size="sm" />
+        {{ error() }}
+        <button type="button" class="af-calendar-mobile__link" (click)="retry.emit()">
+          {{ labels().retry }}
+        </button>
+      </div>
+    }
+  }
+
+  @case ('empty') {
+    @if (emptyTemplate(); as emptyTemplateRef) {
+      <ng-container *ngTemplateOutlet="emptyTemplateRef" />
+    } @else {
+      <div class="af-calendar-mobile__state">
+        <af-icon name="calendar" size="xl" tone="muted" />
+        <strong>{{ labels().noEvents }}</strong>
+        <span>{{ agendaDateLabel() }}</span>
+      </div>
+    }
+  }
+
+  @default {
+    @if (resolvedView() === 'agenda') {
+      <div class="af-calendar-mobile__body">
+        <h3 class="af-calendar-mobile__agenda-title">{{ agendaDateLabel() }}</h3>
+
+        @if (agendaItems().length === 0) {
+          <div class="af-calendar-mobile__state">
+            <af-icon name="calendar" size="lg" tone="muted" />
+            <strong>{{ labels().noEvents }}</strong>
+          </div>
+        } @else {
+          <ul class="af-calendar-mobile__agenda" [attr.aria-label]="ariaLabel()">
+            @for (item of agendaItems(); track item.event.id) {
+              <li>
+                <button
+                  type="button"
+                  class="af-calendar-mobile__row"
+                  [attr.data-color]="item.event.colorToken"
+                  [attr.data-state]="item.event.state ?? 'normal'"
+                  [attr.aria-label]="item.ariaLabel"
+                  (click)="onEventActivate(item.event)"
+                >
+                  <span class="af-calendar-mobile__row-time">
+                    {{ item.timeLabel }}
+                    @if (item.endLabel) {
+                      <span class="af-calendar-mobile__row-end">{{ item.endLabel }}</span>
+                    }
+                  </span>
+                  <span class="af-calendar-mobile__row-icon">
+                    <af-icon [name]="item.icon" size="sm" />
+                  </span>
+                  <span class="af-calendar-mobile__row-body">
+                    @if (eventTemplate(); as eventTemplateRef) {
+                      <ng-container
+                        *ngTemplateOutlet="eventTemplateRef; context: eventContext(item.event)"
+                      />
+                    } @else {
+                      <span class="af-calendar-mobile__row-title">{{ item.event.title }}</span>
+                      @if (item.event.subtitle) {
+                        <span class="af-calendar-mobile__row-subtitle">
+                          {{ item.event.subtitle }}
+                        </span>
+                      }
+                      <span class="af-calendar-mobile__row-meta">
+                        {{ item.durationLabel }}
+                        @if (item.stateLabel; as label) {
+                          <span class="af-calendar-mobile__flag">{{ label }}</span>
+                        }
+                      </span>
+                    }
+                  </span>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    } @else {
+      <div class="af-calendar-mobile__grid-head" [style.--af-calendar-days]="columns().length">
+        <span class="af-calendar-mobile__axis-label" aria-hidden="true"></span>
+        @for (column of columns(); track column.date) {
+          <div
+            class="af-calendar-mobile__dayhead"
+            [class.af-calendar-mobile__dayhead--today]="column.isToday"
+          >
+            <span class="af-calendar-mobile__dow">{{ column.weekdayLabel }}</span>
+            <span class="af-calendar-mobile__dnum">{{ column.dayNumber }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="af-calendar-mobile__scroll">
+        <div
+          #grid
+          class="af-calendar-mobile__grid"
+          [style.--af-calendar-days]="columns().length"
+          [style.height.px]="gridHeightPx()"
+          afPointerDrag
+          [afPointerDragDisabled]="!editable()"
+          [afPointerDragLongPress]="longPressMs"
+          (dragStart)="onDragStart()"
+          (dragMove)="onDragMove($event)"
+          (dragEnd)="onDragEnd()"
+          (dragCancel)="onDragCancel()"
+        >
+          <div class="af-calendar-mobile__axis" aria-hidden="true">
+            @for (hour of hours(); track hour.minutes) {
+              <div class="af-calendar-mobile__axis-cell"><span>{{ hour.label }}</span></div>
+            }
+          </div>
+
+          @for (column of columns(); track column.date) {
+            <div
+              class="af-calendar-mobile__col"
+              [class.af-calendar-mobile__col--today]="column.isToday"
+              role="group"
+              [attr.aria-label]="column.ariaLabel"
+            >
+              <div class="af-calendar-mobile__lines" aria-hidden="true">
+                @for (hour of hours(); track hour.minutes) {
+                  <div class="af-calendar-mobile__hour"></div>
+                }
+              </div>
+
+              @for (block of column.blocks; track block.event.id) {
+                <button
+                  type="button"
+                  class="af-calendar-mobile__event"
+                  [class.af-calendar-mobile__event--tiny]="block.compact"
+                  [class.af-calendar-mobile__event--movable]="block.movable"
+                  [class.af-calendar-mobile__event--dragging]="block.dragging"
+                  [class.af-calendar-mobile__event--keyboard]="block.keyboardActive"
+                  [attr.data-color]="block.event.colorToken"
+                  [attr.data-state]="block.event.state ?? 'normal'"
+                  [attr.aria-label]="block.ariaLabel"
+                  [attr.aria-grabbed]="block.keyboardActive ? 'true' : null"
+                  [style.top.px]="block.topPx"
+                  [style.height.px]="block.heightPx"
+                  [style.left]="'calc(' + block.leftPercent + '% + 2px)'"
+                  [style.width]="'calc(' + block.widthPercent + '% - 4px)'"
+                  (pointerdown)="onBlockPointerDown($event, block, 'move')"
+                  (keydown)="onBlockKeydown($event, block)"
+                  (click)="onEventActivate(block.event)"
+                >
+                  @if (block.movable) {
+                    <span
+                      class="af-calendar-mobile__handle af-calendar-mobile__handle--start"
+                      aria-hidden="true"
+                      (pointerdown)="onBlockPointerDown($event, block, 'resize-start')"
+                    ></span>
+                    <span
+                      class="af-calendar-mobile__handle af-calendar-mobile__handle--end"
+                      aria-hidden="true"
+                      (pointerdown)="onBlockPointerDown($event, block, 'resize-end')"
+                    ></span>
+                  }
+                  @if (eventTemplate(); as eventTemplateRef) {
+                    <ng-container
+                      *ngTemplateOutlet="
+                        eventTemplateRef;
+                        context: eventContext(block.event, block.compact)
+                      "
+                    />
+                  } @else {
+                    <span class="af-calendar-mobile__event-meta">
+                      <af-icon [name]="block.icon" size="xs" />
+                      <span>{{ block.event.start }}</span>
+                    </span>
+                    <span class="af-calendar-mobile__event-title">{{ block.event.title }}</span>
+                  }
+                </button>
+              }
+
+              @if (column.nowOffsetPx !== null) {
+                <div
+                  class="af-calendar-mobile__now"
+                  [style.top.px]="column.nowOffsetPx"
+                  [attr.aria-label]="labels().nowIndicator + ' ' + nowLabel()"
+                  role="separator"
+                ></div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+}
+
+@if (createButton()) {
+  <button
+    type="button"
+    class="af-calendar-mobile__fab"
+    [attr.aria-label]="labels().create"
+    (click)="createPressed.emit()"
+  >
+    <af-icon name="plus" size="lg" />
+  </button>
+}
+
+@if (footerTemplate(); as footerTemplateRef) {
+  <div class="af-calendar-mobile__footer">
+    <ng-container *ngTemplateOutlet="footerTemplateRef" />
+  </div>
+}
+
+@if (overlayTemplate(); as overlayTemplateRef) {
+  <ng-container *ngTemplateOutlet="overlayTemplateRef" />
+}
+
+<af-live-region [message]="announcement()" />
