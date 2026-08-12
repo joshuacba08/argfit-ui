@@ -1,11 +1,17 @@
-import { applicationConfig, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular-vite';
+import {
+  applicationConfig,
+  moduleMetadata,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular-vite';
 import { expect, fn, userEvent } from 'storybook/test';
 
 import {
-    provideAfCalendarEventTypes,
-    provideAfCalendarRequestId,
-    type AfCalendarEvent,
-    type AfCalendarEventTypeDefinition,
+  provideAfCalendarEventTypes,
+  provideAfCalendarRequestId,
+  type AfCalendarEvent,
+  type AfCalendarEventTypeDefinition,
+  type AfCalendarMutationRequest,
 } from '@argfit-ui/core';
 
 import { AfCalendarComponent } from './af-calendar.component';
@@ -19,7 +25,15 @@ import { AF_CALENDAR_SLOT_DIRECTIVES } from './af-calendar-slots.directive';
  * distinta cada día. Con una semana fija, cualquier diferencia en el screenshot
  * es una regresión real.
  */
-const WEEK = ['2026-08-10', '2026-08-11', '2026-08-12', '2026-08-13', '2026-08-14', '2026-08-15', '2026-08-16'];
+const WEEK = [
+  '2026-08-10',
+  '2026-08-11',
+  '2026-08-12',
+  '2026-08-13',
+  '2026-08-14',
+  '2026-08-15',
+  '2026-08-16',
+];
 const ANCHOR = WEEK[2];
 const TIME_ZONE = 'America/Argentina/Buenos_Aires';
 
@@ -46,7 +60,15 @@ const event = (
 
 const EVENTS: readonly AfCalendarEvent[] = [
   event('e1', 0, '08:00', '09:00', 'Activación + movilidad', 'Gimnasio · Plantel completo', 'gym'),
-  event('e2', 0, '09:30', '11:00', 'Entrenamiento de campo', 'Cancha 1 · Bloque técnico', 'training'),
+  event(
+    'e2',
+    0,
+    '09:30',
+    '11:00',
+    'Entrenamiento de campo',
+    'Cancha 1 · Bloque técnico',
+    'training',
+  ),
   event('e3', 0, '11:15', '12:00', 'Video análisis rival', 'Sala 2 · Cuerpo técnico', 'video'),
   event('e4', 0, '16:00', '17:00', 'Kinesiología', 'Consultorio · 4 jugadores', 'medical'),
   event('e5', 1, '09:00', '10:30', 'Fuerza máxima', 'Gimnasio · Grupo A', 'gym'),
@@ -58,9 +80,18 @@ const EVENTS: readonly AfCalendarEvent[] = [
   event('e9', 2, '10:00', '12:00', 'Entrenamiento integrado', 'Cancha 1', 'training'),
   event('e10', 2, '13:00', '14:00', 'Reunión de rendimiento', 'Sala 1', 'video'),
   event('e11', 3, '09:00', '10:30', 'Velocidad y aceleración', 'Pista', 'training'),
-  event('e12', 3, '09:30', '11:00', 'Readaptación lesionados', 'Gimnasio · 3 jugadores', 'medical', {
-    state: 'conflict',
-  }),
+  event(
+    'e12',
+    3,
+    '09:30',
+    '11:00',
+    'Readaptación lesionados',
+    'Gimnasio · 3 jugadores',
+    'medical',
+    {
+      state: 'conflict',
+    },
+  ),
   event('e13', 3, '17:00', '18:30', 'Rutina de core', 'Gimnasio · Grupo B', 'gym'),
   event('e14', 4, '10:00', '11:00', 'Fútbol reducido', 'Cancha 2', 'training'),
   event('e15', 4, '11:30', '12:15', 'Charla pre-partido', 'Sala 1 · Plantel', 'video', {
@@ -231,6 +262,10 @@ const meta: Meta<AfCalendarComponent> = {
     empty: { control: 'boolean' },
     error: { control: 'text' },
     editable: { control: 'boolean', description: 'Habilita mover y redimensionar.' },
+    timedAllDayConversion: {
+      control: 'boolean',
+      description: 'Permite arrastrar entre la franja horaria y la franja de día completo.',
+    },
     selectable: { control: 'boolean', description: 'Habilita dibujar un rango para crear.' },
     createButton: { control: 'boolean' },
     overlays: {
@@ -245,15 +280,28 @@ const meta: Meta<AfCalendarComponent> = {
       action: 'eventMoveRequest',
       description: 'Intención de mover. Se emite en pointerup, nunca en pointerdown.',
     },
-    eventResizeRequest: { action: 'eventResizeRequest', description: 'Intención de redimensionar.' },
-    rangeCreateRequest: { action: 'rangeCreateRequest', description: 'Selección de rango confirmada.' },
+    eventResizeRequest: {
+      action: 'eventResizeRequest',
+      description: 'Intención de redimensionar.',
+    },
+    rangeCreateRequest: {
+      action: 'rangeCreateRequest',
+      description: 'Selección de rango confirmada.',
+    },
     recurrenceScopeRequest: {
       action: 'recurrenceScopeRequest',
       description: 'Alcance pedido antes de mutar una ocurrencia de serie.',
     },
     interactionCancel: { action: 'interactionCancel', description: 'Escape o pointercancel.' },
+    mutationUndoRequest: {
+      action: 'mutationUndoRequest',
+      description: 'Pedido de deshacer con el token opaco entregado por la aplicación.',
+    },
     eventSave: { action: 'eventSave', description: 'Guardado propuesto desde el editor.' },
-    eventDelete: { action: 'eventDelete', description: 'Borrado propuesto desde detalle o editor.' },
+    eventDelete: {
+      action: 'eventDelete',
+      description: 'Borrado propuesto desde detalle o editor.',
+    },
     viewChange: { action: 'viewChange', description: 'Nueva vista elegida en la toolbar.' },
     anchorDateChange: { action: 'anchorDateChange', description: 'Nueva fecha de navegación.' },
     eventActivate: { action: 'eventActivate', description: 'Ocurrencia activada por el usuario.' },
@@ -276,6 +324,7 @@ const meta: Meta<AfCalendarComponent> = {
         [nowIndicator]="nowIndicator"
         [showToolbar]="showToolbar"
         [editable]="editable"
+        [timedAllDayConversion]="timedAllDayConversion"
         [selectable]="selectable"
         [createButton]="createButton"
         [overlays]="overlays"
@@ -295,6 +344,7 @@ const meta: Meta<AfCalendarComponent> = {
         (rangeCreateRequest)="rangeCreateRequest($event)"
         (recurrenceScopeRequest)="recurrenceScopeRequest($event)"
         (interactionCancel)="interactionCancel($event)"
+        (mutationUndoRequest)="mutationUndoRequest($event)"
         (eventSave)="eventSave($event)"
         (eventDelete)="eventDelete($event)"
         (retry)="retry()"
@@ -320,6 +370,7 @@ const DEFAULT_ARGS = {
   nowIndicator: true,
   showToolbar: true,
   editable: false,
+  timedAllDayConversion: false,
   selectable: false,
   createButton: false,
   overlays: true,
@@ -339,10 +390,38 @@ const DEFAULT_ARGS = {
   rangeCreateRequest: fn(),
   recurrenceScopeRequest: fn(),
   interactionCancel: fn(),
+  mutationUndoRequest: fn(),
   eventSave: fn(),
   eventDelete: fn(),
   retry: fn(),
 };
+
+const acceptCalendarMutation = (
+  events: readonly AfCalendarEvent[],
+  request: AfCalendarMutationRequest,
+): readonly AfCalendarEvent[] =>
+  events.map((calendarEvent) => {
+    if (calendarEvent.id !== request.eventId) return calendarEvent;
+    const interval = request.proposedInterval;
+    if (interval.kind === 'all-day') {
+      return {
+        ...calendarEvent,
+        kind: 'all-day',
+        date: interval.startDate,
+        endDate: interval.endDate,
+        start: '00:00',
+        end: '24:00',
+      };
+    }
+    return {
+      ...calendarEvent,
+      kind: 'timed',
+      date: interval.start.slice(0, 10),
+      start: interval.start.slice(11, 16),
+      end: interval.end.slice(11, 16),
+      endDate: interval.end.slice(0, 10),
+    };
+  });
 
 /**
  * Historia canónica: es el id que corre en la puerta visual y en axe sobre las
@@ -469,21 +548,104 @@ export const CustomTemplates: Story = {
 
 export const Editable: Story = {
   name: 'Arrastre y resize',
-  args: { ...DEFAULT_ARGS, editable: true, selectable: true, createButton: true },
+  args: {
+    ...DEFAULT_ARGS,
+    editable: true,
+    selectable: true,
+    createButton: true,
+    timedAllDayConversion: true,
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+      acceptMutation(
+        this: { events: readonly AfCalendarEvent[] },
+        request: AfCalendarMutationRequest,
+      ) {
+        // Esta historia se comporta como una aplicación controlada: acepta la
+        // intención emitida y devuelve el nuevo input al calendario.
+        this.events = acceptCalendarMutation(this.events, request);
+      },
+    },
+    template: `<div class="af-story-surface">
+      <af-calendar
+        [events]="events"
+        [view]="view"
+        [views]="views"
+        [anchorDate]="anchorDate"
+        [timeZone]="timeZone"
+        [density]="density"
+        [firstDay]="firstDay"
+        [hiddenDays]="hiddenDays"
+        [minTime]="minTime"
+        [maxTime]="maxTime"
+        [nowIndicator]="nowIndicator"
+        [showToolbar]="showToolbar"
+        [editable]="editable"
+        [timedAllDayConversion]="timedAllDayConversion"
+        [selectable]="selectable"
+        [createButton]="createButton"
+        [overlays]="overlays"
+        [height]="height"
+        [ariaLabel]="ariaLabel"
+        (eventMoveRequest)="acceptMutation($event); eventMoveRequest($event)"
+        (eventResizeRequest)="acceptMutation($event); eventResizeRequest($event)"
+        (rangeCreateRequest)="rangeCreateRequest($event)"
+        (interactionCancel)="interactionCancel($event)"
+        (eventActivate)="eventActivate($event)"
+      />
+    </div>`,
+  }),
 };
 
 const RESOURCES = [
-  { id: 'r1', title: 'Cancha 1', subtitle: 'Césped natural', colorToken: 'training' as const, icon: 'map-pin' as const },
-  { id: 'r2', title: 'Cancha 2', subtitle: 'Sintético', colorToken: 'training' as const, icon: 'map-pin' as const },
-  { id: 'r3', title: 'Gimnasio', subtitle: 'Sala de fuerza', colorToken: 'gym' as const, icon: 'dumbbell' as const },
-  { id: 'r4', title: 'Sala de video', subtitle: 'Capacidad 30', colorToken: 'video' as const, icon: 'video' as const },
-  { id: 'r5', title: 'Consultorio', subtitle: 'Kinesiología', colorToken: 'medical' as const, icon: 'stethoscope' as const },
+  {
+    id: 'r1',
+    title: 'Cancha 1',
+    subtitle: 'Césped natural',
+    colorToken: 'training' as const,
+    icon: 'map-pin' as const,
+  },
+  {
+    id: 'r2',
+    title: 'Cancha 2',
+    subtitle: 'Sintético',
+    colorToken: 'training' as const,
+    icon: 'map-pin' as const,
+  },
+  {
+    id: 'r3',
+    title: 'Gimnasio',
+    subtitle: 'Sala de fuerza',
+    colorToken: 'gym' as const,
+    icon: 'dumbbell' as const,
+  },
+  {
+    id: 'r4',
+    title: 'Sala de video',
+    subtitle: 'Capacidad 30',
+    colorToken: 'video' as const,
+    icon: 'video' as const,
+  },
+  {
+    id: 'r5',
+    title: 'Consultorio',
+    subtitle: 'Kinesiología',
+    colorToken: 'medical' as const,
+    icon: 'stethoscope' as const,
+  },
 ];
 
 const RESOURCE_EVENTS: readonly AfCalendarEvent[] = [
-  event('rr1', 2, '08:00', '09:30', 'Grupo A · técnico', 'Plantel profesional', 'training', { resourceId: 'r1' }),
-  event('rr2', 2, '10:00', '11:30', 'Grupo B · táctico', 'Plantel profesional', 'training', { resourceId: 'r1' }),
-  event('rr3', 2, '09:00', '10:30', 'Reserva · juveniles', 'Sub-20', 'training', { resourceId: 'r2' }),
+  event('rr1', 2, '08:00', '09:30', 'Grupo A · técnico', 'Plantel profesional', 'training', {
+    resourceId: 'r1',
+  }),
+  event('rr2', 2, '10:00', '11:30', 'Grupo B · táctico', 'Plantel profesional', 'training', {
+    resourceId: 'r1',
+  }),
+  event('rr3', 2, '09:00', '10:30', 'Reserva · juveniles', 'Sub-20', 'training', {
+    resourceId: 'r2',
+  }),
   event('rr4', 2, '14:00', '15:30', 'Fútbol reducido', 'Sub-17', 'training', { resourceId: 'r2' }),
   event('rr5', 2, '08:30', '10:00', 'Fuerza máxima', 'Grupo A', 'gym', { resourceId: 'r3' }),
   event('rr6', 2, '10:15', '11:15', 'Core y estabilidad', 'Grupo B', 'gym', { resourceId: 'r3' }),
@@ -491,9 +653,13 @@ const RESOURCE_EVENTS: readonly AfCalendarEvent[] = [
     resourceId: 'r3',
     state: 'pending',
   }),
-  event('rr8', 2, '11:30', '12:30', 'Análisis de rival', 'Cuerpo técnico', 'video', { resourceId: 'r4' }),
+  event('rr8', 2, '11:30', '12:30', 'Análisis de rival', 'Cuerpo técnico', 'video', {
+    resourceId: 'r4',
+  }),
   event('rr9', 2, '15:00', '16:00', 'Charla de plantel', 'Fecha 14', 'video', { resourceId: 'r4' }),
-  event('rr10', 2, '09:00', '12:00', 'Turnos de kinesiología', '6 jugadores', 'medical', { resourceId: 'r5' }),
+  event('rr10', 2, '09:00', '12:00', 'Turnos de kinesiología', '6 jugadores', 'medical', {
+    resourceId: 'r5',
+  }),
 ];
 
 export const Resources: Story = {

@@ -119,7 +119,9 @@
         <div class="af-calendar-desktop__scroll">
           <div class="af-calendar-desktop__month" [attr.aria-label]="ariaLabel()" role="group">
             @for (weekday of monthWeekdays(); track $index) {
-              <span class="af-calendar-desktop__month-weekday" aria-hidden="true">{{ weekday }}</span>
+              <span class="af-calendar-desktop__month-weekday" aria-hidden="true">{{
+                weekday
+              }}</span>
             }
 
             @for (cell of monthCells(); track cell.date) {
@@ -185,7 +187,9 @@
                         [attr.aria-label]="eventAriaLabel(event)"
                         (click)="onEventActivate(event)"
                       >
-                        <span class="af-calendar-desktop__row-time">{{ eventTimeLabel(event) }}</span>
+                        <span class="af-calendar-desktop__row-time">{{
+                          eventTimeLabel(event)
+                        }}</span>
                         <span class="af-calendar-desktop__row-icon">
                           <af-icon [name]="eventIcon(event)" size="sm" />
                         </span>
@@ -197,7 +201,9 @@
                           } @else {
                             <span class="af-calendar-desktop__row-title">{{ event.title }}</span>
                             @if (event.subtitle) {
-                              <span class="af-calendar-desktop__row-subtitle">{{ event.subtitle }}</span>
+                              <span class="af-calendar-desktop__row-subtitle">{{
+                                event.subtitle
+                              }}</span>
                             }
                           }
                         </span>
@@ -233,13 +239,18 @@
               [class.af-calendar-desktop__dayhead--resource]="column.resource"
             >
               @if (column.resource; as resource) {
-                <span class="af-calendar-desktop__resource-icon" [attr.data-color]="resource.colorToken ?? 'neutral'">
+                <span
+                  class="af-calendar-desktop__resource-icon"
+                  [attr.data-color]="resource.colorToken ?? 'neutral'"
+                >
                   <af-icon [name]="resource.icon ?? 'map-pin'" size="sm" />
                 </span>
                 <span class="af-calendar-desktop__resource-text">
                   <span class="af-calendar-desktop__resource-title">{{ resource.title }}</span>
                   @if (resource.subtitle) {
-                    <span class="af-calendar-desktop__resource-subtitle">{{ resource.subtitle }}</span>
+                    <span class="af-calendar-desktop__resource-subtitle">{{
+                      resource.subtitle
+                    }}</span>
                   }
                 </span>
               } @else if (dayHeaderTemplate(); as dayHeaderTemplateRef) {
@@ -256,8 +267,15 @@
 
         @if (!byResource()) {
           <div
+            #allDayLane
             class="af-calendar-desktop__columns af-calendar-desktop__allday"
             [style.--af-calendar-days]="columns().length"
+            afPointerDrag
+            [afPointerDragDisabled]="!editable()"
+            (dragStart)="onDragStart($event)"
+            (dragMove)="onDragMove($event)"
+            (dragEnd)="onDragEnd()"
+            (dragCancel)="onDragCancel($event)"
           >
             <span class="af-calendar-desktop__axis-label">{{ labels().allDay }}</span>
 
@@ -270,6 +288,9 @@
                     [attr.data-color]="event.colorToken"
                     [attr.data-state]="event.state ?? 'normal'"
                     [attr.aria-label]="eventAriaLabel(event)"
+                    aria-keyshortcuts="F2 Space M R Shift+R Enter Escape ArrowLeft ArrowRight"
+                    (pointerdown)="onAllDayPointerDown($event, event)"
+                    (keydown)="onAllDayKeydown($event, event)"
                     (click)="onEventActivate(event)"
                   >
                     <af-icon [name]="eventIcon(event)" size="xs" />
@@ -289,14 +310,16 @@
             [style.height.px]="gridHeightPx()"
             afPointerDrag
             [afPointerDragDisabled]="!editable() && !selectable()"
-            (dragStart)="onDragStart()"
+            (dragStart)="onDragStart($event)"
             (dragMove)="onDragMove($event)"
             (dragEnd)="onDragEnd()"
-            (dragCancel)="onDragCancel()"
+            (dragCancel)="onDragCancel($event)"
           >
             <div class="af-calendar-desktop__axis" aria-hidden="true">
               @for (hour of hours(); track hour.minutes) {
-                <div class="af-calendar-desktop__axis-cell"><span>{{ hour.label }}</span></div>
+                <div class="af-calendar-desktop__axis-cell">
+                  <span>{{ hour.label }}</span>
+                </div>
               }
             </div>
 
@@ -331,6 +354,7 @@
                     [attr.data-state]="block.event.state ?? 'normal'"
                     [attr.aria-label]="block.ariaLabel"
                     [attr.aria-grabbed]="block.keyboardActive ? 'true' : null"
+                    aria-keyshortcuts="F2 Space M R Shift+R Enter Escape ArrowUp ArrowDown ArrowLeft ArrowRight"
                     [style.top.px]="block.topPx"
                     [style.height.px]="block.heightPx"
                     [style.left]="'calc(' + block.leftPercent + '% + 2px)'"
@@ -339,17 +363,21 @@
                     (keydown)="onBlockKeydown($event, block)"
                     (click)="onEventActivate(block.event)"
                   >
-                    @if (block.movable) {
-                      <span
-                        class="af-calendar-desktop__handle af-calendar-desktop__handle--start"
-                        aria-hidden="true"
-                        (pointerdown)="onBlockPointerDown($event, block, 'resize-start')"
-                      ></span>
-                      <span
-                        class="af-calendar-desktop__handle af-calendar-desktop__handle--end"
-                        aria-hidden="true"
-                        (pointerdown)="onBlockPointerDown($event, block, 'resize-end')"
-                      ></span>
+                    @if (block.movable && (resizeStartEnabled() || resizeEndEnabled())) {
+                      @if (resizeStartEnabled()) {
+                        <span
+                          class="af-calendar-desktop__handle af-calendar-desktop__handle--start"
+                          aria-hidden="true"
+                          (pointerdown)="onBlockPointerDown($event, block, 'resize-start')"
+                        ></span>
+                      }
+                      @if (resizeEndEnabled()) {
+                        <span
+                          class="af-calendar-desktop__handle af-calendar-desktop__handle--end"
+                          aria-hidden="true"
+                          (pointerdown)="onBlockPointerDown($event, block, 'resize-end')"
+                        ></span>
+                      }
                     }
                     @if (eventTemplate(); as eventTemplateRef) {
                       <ng-container
@@ -363,7 +391,11 @@
                       <span class="af-calendar-desktop__event-time">{{ block.event.start }}</span>
                       <span class="af-calendar-desktop__event-title">{{ block.event.title }}</span>
                       @if (block.stateIcon; as stateIcon) {
-                        <af-icon class="af-calendar-desktop__state-icon" [name]="stateIcon" size="xs" />
+                        <af-icon
+                          class="af-calendar-desktop__state-icon"
+                          [name]="stateIcon"
+                          size="xs"
+                        />
                       }
                     } @else {
                       <span class="af-calendar-desktop__event-meta">
@@ -373,7 +405,11 @@
                         }
                         <span class="af-calendar-desktop__event-time">{{ block.timeLabel }}</span>
                         @if (block.stateIcon; as stateIcon) {
-                          <af-icon class="af-calendar-desktop__state-icon" [name]="stateIcon" size="xs" />
+                          <af-icon
+                            class="af-calendar-desktop__state-icon"
+                            [name]="stateIcon"
+                            size="xs"
+                          />
                         }
                       </span>
                       <span class="af-calendar-desktop__event-title">{{ block.event.title }}</span>
@@ -436,4 +472,3 @@
 }
 
 <af-live-region [message]="announcement()" />
-

@@ -1,43 +1,50 @@
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    contentChild,
-    effect,
-    inject,
-    input,
-    linkedSignal,
-    output,
-    signal,
-    untracked,
-    viewChild,
-    type TemplateRef,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  contentChild,
+  effect,
+  inject,
+  input,
+  linkedSignal,
+  output,
+  signal,
+  untracked,
+  viewChild,
+  type TemplateRef,
 } from '@angular/core';
 
 import {
-    AF_CALENDAR_DEFAULT_LABELS,
-    afCalendarNavigate,
-    afCalendarToday,
-    afCalendarVisibleRange,
-    AfPlatformService,
-    afCalendarToHhMm,
-    afCalendarToMinutes,
-    type AfCalendarDensity,
-    type AfCalendarEvent,
-    type AfCalendarEventDeleteIntent,
-    type AfCalendarEventDraft,
-    type AfCalendarEventSaveIntent,
-    type AfCalendarEventTypeDefinition,
-    type AfCalendarInteractionCancel,
-    type AfCalendarLabels,
-    type AfCalendarMutationRequest,
-    type AfCalendarRecurrenceScope,
-    type AfCalendarRecurrenceScopeRequest,
-    type AfCalendarResource,
-    type AfCalendarView,
-    type AfCalendarVisibleRange,
-    type AfCalendarWeekday,
+  AF_CALENDAR_DEFAULT_LABELS,
+  AF_CALENDAR_REQUEST_ID,
+  afCalendarAddDays,
+  afCalendarMutationRequest,
+  afCalendarNavigate,
+  afCalendarToday,
+  afCalendarVisibleRange,
+  AfPlatformService,
+  afCalendarToHhMm,
+  afCalendarToMinutes,
+  afCalendarValidateMutation,
+  type AfCalendarAllowMutation,
+  type AfCalendarDensity,
+  type AfCalendarEvent,
+  type AfCalendarEventDeleteIntent,
+  type AfCalendarEventDraft,
+  type AfCalendarEventSaveIntent,
+  type AfCalendarEventTypeDefinition,
+  type AfCalendarInteractionCancel,
+  type AfCalendarLabels,
+  type AfCalendarMutationRequest,
+  type AfCalendarMutationDecision,
+  type AfCalendarMutationUndoRequest,
+  type AfCalendarRecurrenceScope,
+  type AfCalendarRecurrenceScopeRequest,
+  type AfCalendarResource,
+  type AfCalendarView,
+  type AfCalendarVisibleRange,
+  type AfCalendarWeekday,
 } from '@argfit-ui/core';
 import { AfCalendarDesktopComponent } from '@argfit-ui/desktop';
 import { AfCalendarMobileComponent } from '@argfit-ui/mobile';
@@ -47,14 +54,14 @@ import { AfCalendarEventDetailComponent } from '../calendar-event-detail/af-cale
 import { AfCalendarEventEditorComponent } from '../calendar-event-editor/af-calendar-event-editor.component';
 
 import {
-    AfCalendarDayHeaderDirective,
-    AfCalendarEventDirective,
+  AfCalendarDayHeaderDirective,
+  AfCalendarEventDirective,
 } from './af-calendar-event.directive';
 import {
-    AfCalendarEmptyDirective,
-    AfCalendarErrorDirective,
-    AfCalendarFooterDirective,
-    AfCalendarToolbarDirective,
+  AfCalendarEmptyDirective,
+  AfCalendarErrorDirective,
+  AfCalendarFooterDirective,
+  AfCalendarToolbarDirective,
 } from './af-calendar-slots.directive';
 
 /**
@@ -89,6 +96,7 @@ import {
 })
 export class AfCalendarComponent {
   private readonly platform = inject(AfPlatformService);
+  private readonly nextRequestId = inject(AF_CALENDAR_REQUEST_ID);
 
   readonly events = input<readonly AfCalendarEvent[]>([]);
   readonly view = input<AfCalendarView>('week');
@@ -110,6 +118,17 @@ export class AfCalendarComponent {
   readonly showToolbar = input(true, { transform: booleanAttribute });
   /** Habilita mover y redimensionar. La creación se habilita con `selectable`. */
   readonly editable = input(false, { transform: booleanAttribute });
+  /** Permisos independientes; `editable` continúa siendo el interruptor maestro. */
+  readonly moveEnabled = input(true, { transform: booleanAttribute });
+  readonly resizeStartEnabled = input(true, { transform: booleanAttribute });
+  readonly resizeEndEnabled = input(true, { transform: booleanAttribute });
+  readonly minDurationMinutes = input(15);
+  readonly maxDurationMinutes = input<number | undefined>(undefined);
+  readonly autoScroll = input(true, { transform: booleanAttribute });
+  readonly timedAllDayConversion = input(false, { transform: booleanAttribute });
+  /** Regla síncrona del producto aplicada antes de cualquier preview o output. */
+  readonly allowMutation = input<AfCalendarAllowMutation | undefined>(undefined);
+  readonly mutationTimeoutMs = input(8_000);
   /** Habilita dibujar un rango sobre una franja vacía para crear. */
   readonly selectable = input(false, { transform: booleanAttribute });
   readonly createButton = input(false, { transform: booleanAttribute });
@@ -146,6 +165,7 @@ export class AfCalendarComponent {
   /** El alcance de una serie lo decide la aplicación, no el componente. */
   readonly recurrenceScopeRequest = output<AfCalendarRecurrenceScopeRequest>();
   readonly interactionCancel = output<AfCalendarInteractionCancel>();
+  readonly mutationUndoRequest = output<AfCalendarMutationUndoRequest>();
   readonly createPressed = output<void>();
   readonly eventSave = output<AfCalendarEventSaveIntent>();
   readonly eventDelete = output<AfCalendarEventDeleteIntent>();
@@ -166,6 +186,8 @@ export class AfCalendarComponent {
   private readonly calendarEmpty = viewChild<TemplateRef<unknown>>('calendarEmpty');
   private readonly calendarError = viewChild<TemplateRef<unknown>>('calendarError');
   private readonly calendarFooter = viewChild<TemplateRef<unknown>>('calendarFooter');
+  private readonly desktopRenderer = viewChild<AfCalendarDesktopComponent>('desktopRenderer');
+  private readonly mobileRenderer = viewChild<AfCalendarMobileComponent>('mobileRenderer');
 
   protected readonly projectedEventTemplate = computed(() => this.eventSlot()?.templateRef);
   protected readonly projectedDayHeaderTemplate = computed(() => this.dayHeaderSlot()?.templateRef);
@@ -214,6 +236,7 @@ export class AfCalendarComponent {
   /** Borrador abierto en el modal de editor. */
   protected readonly editorDraft = signal<AfCalendarEventDraft | null>(null);
   protected readonly editorMode = signal<'create' | 'edit'>('create');
+  protected readonly editorPurpose = signal<'event' | 'interaction'>('event');
   private readonly editorEvent = signal<AfCalendarEvent | null>(null);
 
   protected readonly selectedEventId = computed(
@@ -248,12 +271,21 @@ export class AfCalendarComponent {
   protected onRangeCreateRequest(request: AfCalendarMutationRequest): void {
     this.rangeCreateRequest.emit(request);
     if (!this.overlays()) return;
+    if (request.proposedInterval.kind === 'all-day') {
+      this.openEditor(null, {
+        date: request.proposedInterval.startDate,
+        start: '09:00',
+        end: '10:00',
+      });
+      return;
+    }
     const [date, start] = request.proposedInterval.start.split('T');
     const end = request.proposedInterval.end.split('T')[1];
     this.openEditor(null, { date, start, end });
   }
 
   protected onDetailEdit(event: AfCalendarEvent): void {
+    this.editorPurpose.set('event');
     this.openEditor(event, {
       date: event.date,
       start: event.start,
@@ -262,6 +294,11 @@ export class AfCalendarComponent {
   }
 
   protected onEditorSave(intent: AfCalendarEventSaveIntent): void {
+    if (this.editorPurpose() === 'interaction') {
+      this.emitEditorMutation(intent);
+      this.closeOverlays();
+      return;
+    }
     this.eventSave.emit(intent);
     this.closeOverlays();
   }
@@ -275,6 +312,77 @@ export class AfCalendarComponent {
     this.detailEvent.set(null);
     this.editorDraft.set(null);
     this.editorEvent.set(null);
+    this.editorPurpose.set('event');
+  }
+
+  /** Abre la alternativa accesible de mover/resize; F2 la invoca desde cada evento. */
+  protected onInteractionEditRequest(event: AfCalendarEvent): void {
+    if (!this.overlays()) {
+      this.eventActivate.emit(event);
+      return;
+    }
+    this.editorPurpose.set('interaction');
+    this.openEditor(event, { date: event.date, start: event.start, end: event.end });
+  }
+
+  /** Respuesta controlada de la aplicación a una intención pendiente. */
+  resolveMutation(decision: AfCalendarMutationDecision): void {
+    this.desktopRenderer()?.resolveMutation(decision);
+    this.mobileRenderer()?.resolveMutation(decision);
+  }
+
+  /** Emite una solicitud de undo usando un token opaco entregado por la aplicación. */
+  requestMutationUndo(undoToken: string, request?: AfCalendarMutationRequest): void {
+    this.mutationUndoRequest.emit({ undoToken, request });
+  }
+
+  private emitEditorMutation(intent: AfCalendarEventSaveIntent): void {
+    const event = this.editorEvent();
+    if (!event) return;
+    const draft = intent.draft;
+    const converted = event.kind !== draft.kind;
+    const resized = event.start !== draft.start || event.end !== draft.end;
+    const kind = converted
+      ? draft.kind === 'all-day'
+        ? 'timed-to-all-day'
+        : 'all-day-to-timed'
+      : resized
+        ? 'resize'
+        : 'move';
+    const request = afCalendarMutationRequest({
+      kind,
+      requestId: this.nextRequestId(),
+      timeZone: this.timeZone(),
+      origin: 'keyboard',
+      event,
+      proposed: {
+        kind: draft.kind,
+        date: draft.date,
+        start: draft.start,
+        end: draft.end,
+        endDate: draft.kind === 'all-day' ? afCalendarAddDays(draft.date, 1) : undefined,
+        resourceId: draft.resourceId,
+      },
+      recurrenceScope: intent.recurrenceScope,
+    });
+    const validation = afCalendarValidateMutation(request, this.allowMutation());
+    if (!validation.allowed) {
+      this.interactionCancel.emit({
+        reason: 'invalid-target',
+        requestId: request.requestId,
+        eventId: request.eventId,
+      });
+      return;
+    }
+    if (event.seriesId && !intent.recurrenceScope) {
+      this.recurrenceScopeRequest.emit({
+        request,
+        scopes: ['this', 'this-and-following', 'all'],
+      });
+      return;
+    }
+    if (kind === 'resize') this.eventResizeRequest.emit(request);
+    else this.eventMoveRequest.emit(request);
   }
 
   private openEditor(

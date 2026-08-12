@@ -282,10 +282,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.4.0.md',
-    summary: 'The Storybook-first 1.4.0 release with the official ArgFit UI MCP server.',
+    sourcePath: 'docs/productive/release-notes-1.5.0.md',
+    summary: 'The extensible icon and advanced Calendar interaction release.',
     badge: 'ship',
-    bullets: ['59 documented components', 'Official @argfit-ui/mcp package', 'AfAuthShell and infinite-scroll Select'],
+    bullets: ['Extensible AfIcon registry', 'P0 Calendar interactions', 'Controlled mutation and undo contract'],
   },
 ];
 
@@ -508,8 +508,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.4.0.md',
-    summary: 'The canonical 1.4.0 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.5.0.md',
+    summary: 'The canonical 1.5.0 release notes and production publish posture.',
   }),
 ];
 

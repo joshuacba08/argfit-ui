@@ -1,12 +1,13 @@
 import {
-    booleanAttribute,
-    DestroyRef,
-    Directive,
-    ElementRef,
-    inject,
-    input,
-    output,
-    signal,
+  booleanAttribute,
+  DestroyRef,
+  Directive,
+  ElementRef,
+  inject,
+  input,
+  NgZone,
+  output,
+  signal,
 } from '@angular/core';
 
 /**
@@ -30,6 +31,7 @@ import {
  */
 
 export type AfPointerDragPhase = 'start' | 'move' | 'end' | 'cancel';
+export type AfPointerDragCancelReason = 'escape' | 'pointercancel' | 'destroy';
 
 export interface AfPointerDragEvent {
   readonly phase: AfPointerDragPhase;
@@ -39,13 +41,15 @@ export interface AfPointerDragEvent {
   readonly clientY: number;
   /** `'mouse' | 'touch' | 'pen'`, tal como lo informa el navegador. */
   readonly pointerType: string;
+  readonly cancelReason?: AfPointerDragCancelReason;
 }
 
 /** Distancia en píxeles antes de considerar que el gesto es un arrastre. */
 const DEFAULT_THRESHOLD_PX = 4;
+const DEFAULT_TOUCH_THRESHOLD_PX = 10;
 
 /** Espera antes de capturar en táctil. */
-const DEFAULT_LONG_PRESS_MS = 350;
+const DEFAULT_LONG_PRESS_MS = 400;
 
 interface Session {
   readonly pointerId: number;
@@ -55,27 +59,27 @@ interface Session {
   armed: boolean;
   started: boolean;
   longPressHandle: ReturnType<typeof setTimeout> | null;
+  latestMove: PointerEvent | null;
 }
 
 @Directive({
   selector: '[afPointerDrag]',
   host: {
-    '(pointerdown)': 'onPointerDown($event)',
-    '(pointermove)': 'onPointerMove($event)',
-    '(pointerup)': 'onPointerUp($event)',
-    '(pointercancel)': 'onPointerCancel($event)',
-    '(keydown.escape)': 'cancel()',
     '[class.af-pointer-drag--active]': 'dragging()',
   },
 })
 export class AfPointerDragDirective {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly zone = inject(NgZone);
 
   readonly disabled = input(false, {
     alias: 'afPointerDragDisabled',
     transform: booleanAttribute,
   });
   readonly thresholdPx = input(DEFAULT_THRESHOLD_PX, { alias: 'afPointerDragThreshold' });
+  readonly touchThresholdPx = input(DEFAULT_TOUCH_THRESHOLD_PX, {
+    alias: 'afPointerDragTouchThreshold',
+  });
   /** Milisegundos de long-press en táctil. `0` captura de inmediato. */
   readonly longPressMs = input(DEFAULT_LONG_PRESS_MS, { alias: 'afPointerDragLongPress' });
 
@@ -87,9 +91,39 @@ export class AfPointerDragDirective {
   readonly dragging = signal(false);
 
   private session: Session | null = null;
+  private animationFrame: number | null = null;
 
   constructor() {
-    inject(DestroyRef).onDestroy(() => this.clearLongPress());
+    const element = this.host.nativeElement;
+    const pointerDown = (event: PointerEvent) => this.onPointerDown(event);
+    const pointerMove = (event: PointerEvent) => this.onPointerMove(event);
+    const pointerUp = (event: PointerEvent) => this.onPointerUp(event);
+    const pointerCancel = (event: PointerEvent) => this.onPointerCancel(event);
+    const keyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') this.cancel(undefined, 'escape');
+    };
+
+    // Los listeners se instalan fuera de Angular. Sólo una actualización
+    // consolidada por frame vuelve a la zona, no cada pixel recibido.
+    this.zone.runOutsideAngular(() => {
+      // La sesión se arma en captura para que un handle hijo pueda detener la
+      // propagación y elegir `resize-*` sin impedir que el contenedor conserve
+      // el puntero durante todo el gesto.
+      element.addEventListener('pointerdown', pointerDown, { capture: true });
+      element.addEventListener('pointermove', pointerMove, { passive: false });
+      element.addEventListener('pointerup', pointerUp);
+      element.addEventListener('pointercancel', pointerCancel);
+      element.addEventListener('keydown', keyDown);
+    });
+
+    inject(DestroyRef).onDestroy(() => {
+      this.reset();
+      element.removeEventListener('pointerdown', pointerDown, { capture: true });
+      element.removeEventListener('pointermove', pointerMove);
+      element.removeEventListener('pointerup', pointerUp);
+      element.removeEventListener('pointercancel', pointerCancel);
+      element.removeEventListener('keydown', keyDown);
+    });
   }
 
   protected onPointerDown(event: PointerEvent): void {
@@ -104,6 +138,7 @@ export class AfPointerDragDirective {
       armed: !touch || this.longPressMs() === 0,
       started: false,
       longPressHandle: null,
+      latestMove: null,
     };
 
     if (this.session.armed) {
@@ -117,7 +152,6 @@ export class AfPointerDragDirective {
       if (!this.session) return;
       this.session.armed = true;
       this.capture(event);
-      this.emitStart(event);
     }, this.longPressMs());
   }
 
@@ -130,55 +164,54 @@ export class AfPointerDragDirective {
 
     if (!session.armed) {
       // El dedo se movió antes del long-press: es un scroll, no un arrastre.
-      if (Math.hypot(deltaX, deltaY) >= this.thresholdPx()) this.reset();
+      if (Math.hypot(deltaX, deltaY) >= this.touchThresholdPx()) this.reset();
       return;
     }
 
+    const threshold =
+      session.pointerType === 'touch' ? this.touchThresholdPx() : this.thresholdPx();
     if (!session.started) {
-      if (Math.hypot(deltaX, deltaY) < this.thresholdPx()) return;
+      if (Math.hypot(deltaX, deltaY) < threshold) return;
       this.emitStart(event);
     }
 
     event.preventDefault();
-    this.dragMove.emit(this.toEvent('move', event, deltaX, deltaY));
+    session.latestMove = event;
+    this.scheduleMove();
   }
 
   protected onPointerUp(event: PointerEvent): void {
     const session = this.session;
     if (!session || session.pointerId !== event.pointerId) return;
 
+    this.flushMove();
     const started = session.started;
     const deltaX = event.clientX - session.originX;
     const deltaY = event.clientY - session.originY;
     this.reset();
 
     // Sin arrastre no hay mutación: el click del elemento sigue su curso.
-    if (started) this.dragEnd.emit(this.toEvent('end', event, deltaX, deltaY));
+    if (started)
+      this.runInAngular(() => this.dragEnd.emit(this.toEvent('end', event, deltaX, deltaY)));
   }
 
   protected onPointerCancel(event: PointerEvent): void {
     const session = this.session;
     if (!session || session.pointerId !== event.pointerId) return;
-    this.cancel(event);
+    this.cancel(event, 'pointercancel');
   }
 
   /** Cancela la interacción en curso y pide reversión a quien escucha. */
-  cancel(event?: PointerEvent): void {
+  cancel(event?: PointerEvent, reason: AfPointerDragCancelReason = 'escape'): void {
     const session = this.session;
     if (!session) return;
 
     const started = session.started;
+    if (started) {
+      this.flushMove();
+      this.emitCancel(event, reason);
+    }
     this.reset();
-    if (!started) return;
-
-    this.dragCancel.emit({
-      phase: 'cancel',
-      deltaX: event ? event.clientX - session.originX : 0,
-      deltaY: event ? event.clientY - session.originY : 0,
-      clientX: event?.clientX ?? session.originX,
-      clientY: event?.clientY ?? session.originY,
-      pointerType: session.pointerType,
-    });
   }
 
   private capture(event: PointerEvent): void {
@@ -189,8 +222,52 @@ export class AfPointerDragDirective {
   private emitStart(event: PointerEvent): void {
     if (!this.session) return;
     this.session.started = true;
-    this.dragging.set(true);
-    this.dragStart.emit(this.toEvent('start', event, 0, 0));
+    this.runInAngular(() => {
+      this.dragging.set(true);
+      this.dragStart.emit(this.toEvent('start', event, 0, 0));
+    });
+  }
+
+  private scheduleMove(): void {
+    if (this.animationFrame !== null) return;
+    const schedule =
+      globalThis.requestAnimationFrame ??
+      ((callback: FrameRequestCallback) =>
+        globalThis.setTimeout(() => callback(performance.now()), 16) as unknown as number);
+    this.animationFrame = schedule(() => {
+      this.animationFrame = null;
+      this.flushMove();
+    });
+  }
+
+  private flushMove(): void {
+    const session = this.session;
+    const event = session?.latestMove;
+    if (!session || !event || !session.started) return;
+    session.latestMove = null;
+    const deltaX = event.clientX - session.originX;
+    const deltaY = event.clientY - session.originY;
+    this.runInAngular(() => this.dragMove.emit(this.toEvent('move', event, deltaX, deltaY)));
+  }
+
+  private emitCancel(event: PointerEvent | undefined, reason: AfPointerDragCancelReason): void {
+    const session = this.session;
+    if (!session) return;
+    this.runInAngular(() =>
+      this.dragCancel.emit({
+        phase: 'cancel',
+        deltaX: event ? event.clientX - session.originX : 0,
+        deltaY: event ? event.clientY - session.originY : 0,
+        clientX: event?.clientX ?? session.originX,
+        clientY: event?.clientY ?? session.originY,
+        pointerType: session.pointerType,
+        cancelReason: reason,
+      }),
+    );
+  }
+
+  private runInAngular(action: () => void): void {
+    this.zone.run(action);
   }
 
   private toEvent(
@@ -211,9 +288,14 @@ export class AfPointerDragDirective {
 
   private reset(): void {
     this.clearLongPress();
+    if (this.animationFrame !== null) {
+      const cancel = globalThis.cancelAnimationFrame ?? globalThis.clearTimeout;
+      cancel(this.animationFrame);
+      this.animationFrame = null;
+    }
     const pointerId = this.session?.pointerId;
     this.session = null;
-    this.dragging.set(false);
+    this.runInAngular(() => this.dragging.set(false));
     // Liberar una captura que no se tomó lanza: puede no haberse tomado nunca
     // si el long-press se descartó antes de armarse.
     const element = this.host.nativeElement;

@@ -2,13 +2,14 @@ import { describe, expect, it } from 'vitest';
 
 import { AF_CALENDAR_DEFAULT_LABELS } from './af-calendar-labels';
 import {
-    afCalendarActivateInteraction,
-    afCalendarApplyDelta,
-    afCalendarBeginInteraction,
-    afCalendarInteractionAnnouncement,
-    afCalendarKeyboardDelta,
-    afCalendarProposedInterval,
-    type AfCalendarInteractionSource,
+  afCalendarActivateInteraction,
+  afCalendarApplyDelta,
+  afCalendarBeginInteraction,
+  afCalendarConvertInteraction,
+  afCalendarInteractionAnnouncement,
+  afCalendarKeyboardDelta,
+  afCalendarProposedInterval,
+  type AfCalendarInteractionSource,
 } from './af-calendar-interaction';
 
 const bounds = { minMinutes: 420, maxMinutes: 1320 };
@@ -43,7 +44,11 @@ describe('afCalendarBeginInteraction', () => {
 
 describe('move', () => {
   it('snaps to the 15 minute step', () => {
-    const state = afCalendarApplyDelta(afCalendarBeginInteraction(source()), { minutes: 8 }, bounds);
+    const state = afCalendarApplyDelta(
+      afCalendarBeginInteraction(source()),
+      { minutes: 8 },
+      bounds,
+    );
 
     expect(state.startMinutes).toBe(585);
     expect(state.endMinutes).toBe(675);
@@ -147,7 +152,11 @@ describe('create', () => {
   });
 
   it('grows upwards when dragged backwards', () => {
-    const state = afCalendarApplyDelta(afCalendarBeginInteraction(create), { minutes: -60 }, bounds);
+    const state = afCalendarApplyDelta(
+      afCalendarBeginInteraction(create),
+      { minutes: -60 },
+      bounds,
+    );
 
     expect(state.startMinutes).toBe(510);
     expect(state.endMinutes).toBe(570);
@@ -181,21 +190,97 @@ describe('afCalendarKeyboardDelta', () => {
 
 describe('output helpers', () => {
   it('serialises the proposal as wall-clock strings', () => {
-    const state = afCalendarApplyDelta(afCalendarBeginInteraction(source()), { minutes: 15 }, bounds);
+    const state = afCalendarApplyDelta(
+      afCalendarBeginInteraction(source()),
+      { minutes: 15 },
+      bounds,
+    );
 
     expect(afCalendarProposedInterval(state)).toEqual({
       date: '2026-08-12',
       start: '09:45',
       end: '11:15',
       resourceId: undefined,
+      kind: 'timed',
+      endDate: undefined,
     });
   });
 
   it('announces the move with title, day and time', () => {
-    const state = afCalendarApplyDelta(afCalendarBeginInteraction(source()), { minutes: 15 }, bounds);
+    const state = afCalendarApplyDelta(
+      afCalendarBeginInteraction(source()),
+      { minutes: 15 },
+      bounds,
+    );
 
     expect(
       afCalendarInteractionAnnouncement('Entrenamiento', state, AF_CALENDAR_DEFAULT_LABELS),
     ).toBe('Entrenamiento movido a Mié 12 de agosto 09:45');
+  });
+});
+
+describe('all-day and configurable constraints', () => {
+  it('converts between lanes without losing civil dates or the timed duration', () => {
+    const timed = afCalendarActivateInteraction(afCalendarBeginInteraction(source()));
+    const allDay = afCalendarConvertInteraction(timed, {
+      kind: 'all-day',
+      date: '2026-08-14',
+    });
+    const backToTimed = afCalendarConvertInteraction(allDay, {
+      kind: 'timed',
+      date: '2026-08-15',
+      startMinutes: 600,
+      durationMinutes: timed.durationMinutes,
+    });
+
+    expect(allDay.kind).toBe('all-day');
+    expect(allDay.endDate).toBe('2026-08-15');
+    expect(backToTimed.kind).toBe('timed');
+    expect(backToTimed.date).toBe('2026-08-15');
+    expect(backToTimed.startMinutes).toBe(600);
+    expect(backToTimed.endMinutes).toBe(690);
+  });
+
+  it('moves a multi-day interval with an exclusive civil end', () => {
+    const state = afCalendarApplyDelta(
+      afCalendarBeginInteraction(
+        source({ kind: 'all-day', date: '2026-08-12', endDate: '2026-08-15' }),
+      ),
+      { minutes: 0, date: '2026-08-14', days: 2 },
+      bounds,
+    );
+
+    expect(state.date).toBe('2026-08-14');
+    expect(state.endDate).toBe('2026-08-17');
+  });
+
+  it('resizes both civil edges without allowing a zero-day event', () => {
+    const base = source({ kind: 'all-day', date: '2026-08-12', endDate: '2026-08-15' });
+    const start = afCalendarApplyDelta(
+      afCalendarBeginInteraction({ ...base, mode: 'resize-start' }),
+      { minutes: 0, days: 1 },
+      bounds,
+    );
+    const end = afCalendarApplyDelta(
+      afCalendarBeginInteraction({ ...base, mode: 'resize-end' }),
+      { minutes: 0, days: -20 },
+      bounds,
+    );
+
+    expect(start.date).toBe('2026-08-13');
+    expect(start.endDate).toBe('2026-08-15');
+    expect(end.endDate).toBe('2026-08-13');
+  });
+
+  it('honours custom minimum and maximum durations', () => {
+    const start = afCalendarBeginInteraction(source({ mode: 'resize-end' }));
+    expect(
+      afCalendarApplyDelta(start, { minutes: -500 }, bounds, { minDurationMinutes: 30 })
+        .durationMinutes,
+    ).toBe(30);
+    expect(
+      afCalendarApplyDelta(start, { minutes: 500 }, bounds, { maxDurationMinutes: 120 })
+        .durationMinutes,
+    ).toBe(120);
   });
 });

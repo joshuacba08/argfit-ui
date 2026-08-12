@@ -300,6 +300,30 @@ describe('AfCalendarComponent overlays', () => {
     expect(editor).not.toBeNull();
     expect(editor?.textContent).toContain('Nueva actividad');
   });
+
+  it('opens the accessible move/resize dialog with F2', async () => {
+    const { fixture, host } = await render({ editable: true, eventTypes: TYPES });
+    const block = host.querySelector('.af-calendar-desktop__event') as HTMLButtonElement;
+
+    block.dispatchEvent(new KeyboardEvent('keydown', { key: 'F2', bubbles: true }));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(host.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe(
+      'Mover o redimensionar actividad',
+    );
+    expect(host.querySelector('af-calendar-event-editor')).not.toBeNull();
+  });
+
+  it('emits undo requests with the opaque application token', async () => {
+    const { fixture } = await render();
+    const undos: unknown[] = [];
+    fixture.componentInstance.mutationUndoRequest.subscribe((value) => undos.push(value));
+
+    fixture.componentInstance.requestMutationUndo('undo_123');
+
+    expect(undos).toEqual([{ undoToken: 'undo_123', request: undefined }]);
+  });
 });
 
 @Component({

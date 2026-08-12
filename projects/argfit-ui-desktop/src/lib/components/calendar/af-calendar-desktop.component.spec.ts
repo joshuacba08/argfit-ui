@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import {
-    provideAfCalendarRequestId,
-    type AfCalendarEvent,
-    type AfCalendarMutationRequest,
+  provideAfCalendarRequestId,
+  type AfCalendarEvent,
+  type AfCalendarMutationRequest,
 } from '@argfit-ui/core';
 
 import { AfCalendarDesktopComponent } from './af-calendar-desktop.component';
@@ -111,8 +111,9 @@ describe('AfCalendarDesktopComponent', () => {
     const { host } = await render({ view: 'month', events });
 
     // Capacity 3 keeps 2 chips and spends the third line on the overflow label.
-    expect(host.querySelectorAll('.af-calendar-desktop__month-cell .af-calendar-desktop__chip'))
-      .toHaveLength(2);
+    expect(
+      host.querySelectorAll('.af-calendar-desktop__month-cell .af-calendar-desktop__chip'),
+    ).toHaveLength(2);
     expect(host.querySelector('.af-calendar-desktop__more')?.textContent?.trim()).toBe('+3 más');
   });
 
@@ -328,6 +329,10 @@ describe('AfCalendarDesktopComponent keyboard move', () => {
     key(block, { key: 'Enter' });
     await flush();
 
+    expect(requests[0].proposedInterval.kind).toBe('timed-zoned');
+    if (requests[0].proposedInterval.kind !== 'timed-zoned') {
+      throw new Error('Expected timed mutation');
+    }
     expect(requests[0].proposedInterval.start).toBe('2026-08-13T09:00');
     expect(requests[0].proposedInterval.end).toBe('2026-08-13T10:30');
   });
@@ -434,5 +439,41 @@ describe('AfCalendarDesktopComponent keyboard move', () => {
 
     expect(requests).toHaveLength(0);
     expect(host.querySelector('.af-calendar-desktop__event--keyboard')).toBeNull();
+  });
+
+  it('rejects a product-invalid destination before emitting or showing pending state', async () => {
+    const { fixture, host } = await render({
+      editable: true,
+      events: [event()],
+      allowMutation: () => ({ allowed: false, message: 'La cancha está ocupada' }),
+    });
+    const moves: unknown[] = [];
+    const cancels: unknown[] = [];
+    fixture.componentInstance.eventMoveRequest.subscribe((value) => moves.push(value));
+    fixture.componentInstance.interactionCancel.subscribe((value) => cancels.push(value));
+    const block = host.querySelector('.af-calendar-desktop__event') as HTMLButtonElement;
+
+    key(block, { key: 'Enter' });
+    key(block, { key: 'ArrowDown' });
+    key(block, { key: 'Enter' });
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(moves).toHaveLength(0);
+    expect(cancels).toEqual([
+      { reason: 'invalid-target', requestId: 'req_test', eventId: 'e1' },
+    ]);
+    expect(host.querySelector('af-live-region')?.textContent).toContain('La cancha está ocupada');
+    expect(host.querySelector('[data-state="pending"]')).toBeNull();
+  });
+
+  it('requests the non-drag dialog with F2', async () => {
+    const { fixture, host } = await render({ editable: true, events: [event()] });
+    const requests: AfCalendarEvent[] = [];
+    fixture.componentInstance.interactionEditRequest.subscribe((value) => requests.push(value));
+
+    key(host.querySelector('.af-calendar-desktop__event')!, { key: 'F2' });
+
+    expect(requests).toEqual([expect.objectContaining({ id: 'e1' })]);
   });
 });

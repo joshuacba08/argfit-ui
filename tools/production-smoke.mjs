@@ -7,7 +7,7 @@ import ts from 'typescript';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'production-smoke');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
-const PRODUCTION_VERSION = '1.4.0';
+const PRODUCTION_VERSION = '1.5.0';
 const failures = [];
 
 const packageDefinitions = [
@@ -260,16 +260,16 @@ function validateProductionPublishWorkflowShape() {
 
 function validateDocsShape() {
   for (const [filePath, snippets] of [
-    ['package.json', ['"version": "1.4.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
-    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '815 kB', 'Production tarball total']],
-    ['docs/productive/scope.md', ['ArgFit UI 1.4.0 Scope', '`1.0-adaptive`']],
+    ['package.json', ['"version": "1.5.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
+    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.90 MB', '1,034 kB', '88 kB', '27.5 kB', '210 kB', '343 kB', '301 kB', '65 kB', 'Production tarball total']],
+    ['docs/productive/scope.md', ['ArgFit UI 1.5.0 Scope', '`1.0-adaptive`']],
     ['docs/productive/public-api.md', ['Productive Public API Inventory', '1.0-renderer-specific']],
     ['docs/productive/semver-policy.md', ['Productive Semver Policy', 'Deprecation Policy']],
     ['docs/productive/release-operations.md', ['Productive Release Operations', 'Branch And Tag Strategy', 'npm Publish Process', 'Patch Release Procedure', 'Changelog Policy', 'publish-production.yml', 'NPM_TOKEN', 'latest']],
     ['docs/productive/support-policy.md', ['Productive Support Policy', 'Support Window', 'Security And Dependency Update Policy', 'Deprecation Process', '1.x']],
-    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.4.0', 'pnpm release:production:check', 'v1.4.0', 'latest']],
-    ['docs/productive/release-notes-1.4.0.md', ['Release Notes: 1.4.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
-    ['CHANGELOG.md', ['## 1.4.0', 'latest', 'pnpm release:production:check']],
+    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.5.0', 'pnpm release:production:check', 'v1.5.0', 'latest']],
+    ['docs/productive/release-notes-1.5.0.md', ['Release Notes: 1.5.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
+    ['CHANGELOG.md', ['## 1.5.0', 'latest', 'pnpm release:production:check']],
   ]) {
     const absolutePath = resolve(repoRoot, filePath);
 

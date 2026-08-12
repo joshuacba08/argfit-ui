@@ -1,14 +1,14 @@
 import type { AfCalendarInteractionOrigin } from '../types/calendar-mutation.types';
 import type { AfCalendarLabels } from '../types/calendar.types';
 
-import { afCalendarLongDate } from './af-calendar-date';
+import { afCalendarAddDays, afCalendarLongDate } from './af-calendar-date';
 import type { AfCalendarLayoutBounds } from './af-calendar-layout';
 import {
-    AF_CALENDAR_MIN_DURATION_MINUTES,
-    AF_CALENDAR_SNAP_MINUTES,
-    afCalendarClamp,
-    afCalendarSnap,
-    afCalendarToHhMm,
+  AF_CALENDAR_MIN_DURATION_MINUTES,
+  AF_CALENDAR_SNAP_MINUTES,
+  afCalendarClamp,
+  afCalendarSnap,
+  afCalendarToHhMm,
 } from './af-calendar-time';
 
 /**
@@ -30,6 +30,10 @@ export interface AfCalendarInteractionState {
   readonly startMinutes: number;
   readonly endMinutes: number;
   readonly resourceId?: string;
+  readonly kind: 'timed' | 'all-day';
+  readonly endDate?: string;
+  readonly anchorEndDate?: string;
+  readonly durationDays: number;
   /**
    * Duración de pared del evento al empezar.
    *
@@ -55,6 +59,8 @@ export interface AfCalendarInteractionSource {
   readonly startMinutes: number;
   readonly endMinutes: number;
   readonly resourceId?: string;
+  readonly kind?: 'timed' | 'all-day';
+  readonly endDate?: string;
 }
 
 /**
@@ -67,11 +73,22 @@ export interface AfCalendarInteractionDelta {
   readonly minutes: number;
   readonly date?: string;
   readonly resourceId?: string;
+  readonly days?: number;
+}
+
+/** Reglas públicas y vendor-neutral compartidas por puntero y teclado. */
+export interface AfCalendarInteractionConstraints {
+  readonly snapMinutes?: number;
+  readonly minDurationMinutes?: number;
+  readonly maxDurationMinutes?: number;
 }
 
 export function afCalendarBeginInteraction(
   source: AfCalendarInteractionSource,
 ): AfCalendarInteractionState {
+  const kind = source.kind ?? 'timed';
+  const endDate =
+    kind === 'all-day' ? (source.endDate ?? afCalendarAddDays(source.date, 1)) : undefined;
   return {
     mode: source.mode,
     origin: source.origin,
@@ -80,6 +97,10 @@ export function afCalendarBeginInteraction(
     startMinutes: source.startMinutes,
     endMinutes: source.endMinutes,
     resourceId: source.resourceId,
+    kind,
+    endDate,
+    anchorEndDate: endDate,
+    durationDays: endDate ? dayDistance(source.date, endDate) : 0,
     durationMinutes: source.endMinutes - source.startMinutes,
     anchorDate: source.date,
     anchorStartMinutes: source.startMinutes,
@@ -96,20 +117,100 @@ export function afCalendarActivateInteraction(
   return state.active ? state : { ...state, active: true };
 }
 
+export interface AfCalendarInteractionConversion {
+  readonly kind: 'timed' | 'all-day';
+  readonly date: string;
+  readonly startMinutes?: number;
+  readonly durationMinutes?: number;
+  readonly durationDays?: number;
+}
+
+/**
+ * Cambia de lane usando fecha civil y geometría absoluta.
+ *
+ * Se llama en cada frame mientras el puntero cruza el límite, por lo que no
+ * acumula deltas ni produce saltos al volver a la grilla horaria.
+ */
+export function afCalendarConvertInteraction(
+  state: AfCalendarInteractionState,
+  conversion: AfCalendarInteractionConversion,
+): AfCalendarInteractionState {
+  if (conversion.kind === 'all-day') {
+    const durationDays = Math.max(1, conversion.durationDays ?? (state.durationDays || 1));
+    return {
+      ...state,
+      kind: 'all-day',
+      date: conversion.date,
+      endDate: afCalendarAddDays(conversion.date, durationDays),
+      durationDays,
+      startMinutes: 0,
+      endMinutes: 24 * 60,
+    };
+  }
+
+  const durationMinutes = Math.max(
+    AF_CALENDAR_MIN_DURATION_MINUTES,
+    conversion.durationMinutes ?? (state.durationMinutes || 60),
+  );
+  const startMinutes = conversion.startMinutes ?? state.startMinutes;
+  return {
+    ...state,
+    kind: 'timed',
+    date: conversion.date,
+    startMinutes,
+    endMinutes: startMinutes + durationMinutes,
+    durationMinutes,
+    durationDays: 0,
+    endDate: undefined,
+  };
+}
+
 export function afCalendarApplyDelta(
   state: AfCalendarInteractionState,
   delta: AfCalendarInteractionDelta,
   bounds: AfCalendarLayoutBounds,
+  constraints: AfCalendarInteractionConstraints = {},
 ): AfCalendarInteractionState {
-  const minutes = afCalendarSnap(delta.minutes, AF_CALENDAR_SNAP_MINUTES);
+  const snapMinutes = Math.max(1, constraints.snapMinutes ?? AF_CALENDAR_SNAP_MINUTES);
+  const minDuration = Math.max(
+    1,
+    constraints.minDurationMinutes ?? AF_CALENDAR_MIN_DURATION_MINUTES,
+  );
+  const maxDuration = Math.max(
+    minDuration,
+    constraints.maxDurationMinutes ?? bounds.maxMinutes - bounds.minMinutes,
+  );
+  const minutes = afCalendarSnap(delta.minutes, snapMinutes);
   const min = bounds.minMinutes;
   const max = bounds.maxMinutes;
+
+  if (state.kind === 'all-day') {
+    const days = delta.days ?? 0;
+    if (state.mode === 'resize-start') {
+      const candidate = afCalendarAddDays(state.anchorDate, days);
+      const latest = afCalendarAddDays(state.anchorEndDate!, -1);
+      const date = candidate < latest ? candidate : latest;
+      return { ...state, date, durationDays: dayDistance(date, state.anchorEndDate!) };
+    }
+    if (state.mode === 'resize-end') {
+      const candidate = afCalendarAddDays(state.anchorEndDate!, days);
+      const earliest = afCalendarAddDays(state.anchorDate, 1);
+      const endDate = candidate > earliest ? candidate : earliest;
+      return { ...state, endDate, durationDays: dayDistance(state.anchorDate, endDate) };
+    }
+    const date = delta.date ?? afCalendarAddDays(state.anchorDate, days);
+    return {
+      ...state,
+      date,
+      endDate: afCalendarAddDays(date, state.durationDays),
+    };
+  }
 
   if (state.mode === 'resize-start') {
     const startMinutes = afCalendarClamp(
       state.anchorStartMinutes + minutes,
-      min,
-      state.anchorEndMinutes - AF_CALENDAR_MIN_DURATION_MINUTES,
+      Math.max(min, state.anchorEndMinutes - maxDuration),
+      state.anchorEndMinutes - minDuration,
     );
     return {
       ...state,
@@ -122,8 +223,8 @@ export function afCalendarApplyDelta(
   if (state.mode === 'resize-end') {
     const endMinutes = afCalendarClamp(
       state.anchorEndMinutes + minutes,
-      state.anchorStartMinutes + AF_CALENDAR_MIN_DURATION_MINUTES,
-      max,
+      state.anchorStartMinutes + minDuration,
+      Math.min(max, state.anchorStartMinutes + maxDuration),
     );
     return {
       ...state,
@@ -137,15 +238,14 @@ export function afCalendarApplyDelta(
     const edge = state.anchorStartMinutes + minutes;
     let startMinutes = Math.min(state.anchorStartMinutes, edge);
     let endMinutes = Math.max(state.anchorStartMinutes, edge);
-    if (endMinutes - startMinutes < AF_CALENDAR_MIN_DURATION_MINUTES) {
-      endMinutes = startMinutes + AF_CALENDAR_MIN_DURATION_MINUTES;
+    if (endMinutes - startMinutes < minDuration) {
+      endMinutes = startMinutes + minDuration;
     }
-    startMinutes = afCalendarClamp(startMinutes, min, max - AF_CALENDAR_MIN_DURATION_MINUTES);
-    endMinutes = afCalendarClamp(
-      endMinutes,
-      startMinutes + AF_CALENDAR_MIN_DURATION_MINUTES,
-      max,
-    );
+    if (endMinutes - startMinutes > maxDuration) {
+      endMinutes = startMinutes + maxDuration;
+    }
+    startMinutes = afCalendarClamp(startMinutes, min, max - minDuration);
+    endMinutes = afCalendarClamp(endMinutes, startMinutes + minDuration, max);
     return {
       ...state,
       date: delta.date ?? state.date,
@@ -208,13 +308,29 @@ export function afCalendarProposedInterval(state: AfCalendarInteractionState): {
   start: string;
   end: string;
   resourceId?: string;
+  kind?: 'timed' | 'all-day';
+  endDate?: string;
 } {
   return {
     date: state.date,
     start: afCalendarToHhMm(state.startMinutes),
     end: afCalendarToHhMm(state.endMinutes),
     resourceId: state.resourceId,
+    kind: state.kind,
+    endDate: state.endDate,
   };
+}
+
+function dayDistance(start: string, end: string): number {
+  const [startYear, startMonth, startDay] = start.split('-').map(Number);
+  const [endYear, endMonth, endDay] = end.split('-').map(Number);
+  return Math.max(
+    1,
+    Math.round(
+      (Date.UTC(endYear, endMonth - 1, endDay) - Date.UTC(startYear, startMonth - 1, startDay)) /
+        86_400_000,
+    ),
+  );
 }
 
 /**

@@ -170,6 +170,41 @@
         }
       </div>
 
+      <div
+        #allDayLane
+        class="af-calendar-mobile__allday"
+        [style.--af-calendar-days]="columns().length"
+        afPointerDrag
+        [afPointerDragDisabled]="!editable()"
+        [afPointerDragLongPress]="longPressMs"
+        (dragStart)="onDragStart($event)"
+        (dragMove)="onDragMove($event)"
+        (dragEnd)="onDragEnd()"
+        (dragCancel)="onDragCancel($event)"
+      >
+        <span class="af-calendar-mobile__axis-label">{{ labels().allDay }}</span>
+        @for (column of columns(); track column.date) {
+          <div class="af-calendar-mobile__allday-lane">
+            @for (event of column.allDay; track event.id) {
+              <button
+                type="button"
+                class="af-calendar-mobile__allday-event"
+                [attr.data-color]="event.colorToken"
+                [attr.data-state]="event.state ?? 'normal'"
+                [attr.aria-label]="eventAriaLabel(event)"
+                aria-keyshortcuts="F2 Space M R Shift+R Enter Escape ArrowLeft ArrowRight"
+                (pointerdown)="onAllDayPointerDown($event, event)"
+                (keydown)="onAllDayKeydown($event, event)"
+                (click)="onEventActivate(event)"
+              >
+                <af-icon [name]="eventIcon(event)" size="xs" />
+                <span>{{ event.title }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+
       <div class="af-calendar-mobile__scroll">
         <div
           #grid
@@ -179,14 +214,16 @@
           afPointerDrag
           [afPointerDragDisabled]="!editable()"
           [afPointerDragLongPress]="longPressMs"
-          (dragStart)="onDragStart()"
+          (dragStart)="onDragStart($event)"
           (dragMove)="onDragMove($event)"
           (dragEnd)="onDragEnd()"
-          (dragCancel)="onDragCancel()"
+          (dragCancel)="onDragCancel($event)"
         >
           <div class="af-calendar-mobile__axis" aria-hidden="true">
             @for (hour of hours(); track hour.minutes) {
-              <div class="af-calendar-mobile__axis-cell"><span>{{ hour.label }}</span></div>
+              <div class="af-calendar-mobile__axis-cell">
+                <span>{{ hour.label }}</span>
+              </div>
             }
           </div>
 
@@ -215,6 +252,7 @@
                   [attr.data-state]="block.event.state ?? 'normal'"
                   [attr.aria-label]="block.ariaLabel"
                   [attr.aria-grabbed]="block.keyboardActive ? 'true' : null"
+                  aria-keyshortcuts="F2 Space M R Shift+R Enter Escape ArrowUp ArrowDown ArrowLeft ArrowRight"
                   [style.top.px]="block.topPx"
                   [style.height.px]="block.heightPx"
                   [style.left]="'calc(' + block.leftPercent + '% + 2px)'"
@@ -223,17 +261,21 @@
                   (keydown)="onBlockKeydown($event, block)"
                   (click)="onEventActivate(block.event)"
                 >
-                  @if (block.movable) {
-                    <span
-                      class="af-calendar-mobile__handle af-calendar-mobile__handle--start"
-                      aria-hidden="true"
-                      (pointerdown)="onBlockPointerDown($event, block, 'resize-start')"
-                    ></span>
-                    <span
-                      class="af-calendar-mobile__handle af-calendar-mobile__handle--end"
-                      aria-hidden="true"
-                      (pointerdown)="onBlockPointerDown($event, block, 'resize-end')"
-                    ></span>
+                  @if (block.movable && (resizeStartEnabled() || resizeEndEnabled())) {
+                    @if (resizeStartEnabled()) {
+                      <span
+                        class="af-calendar-mobile__handle af-calendar-mobile__handle--start"
+                        aria-hidden="true"
+                        (pointerdown)="onBlockPointerDown($event, block, 'resize-start')"
+                      ></span>
+                    }
+                    @if (resizeEndEnabled()) {
+                      <span
+                        class="af-calendar-mobile__handle af-calendar-mobile__handle--end"
+                        aria-hidden="true"
+                        (pointerdown)="onBlockPointerDown($event, block, 'resize-end')"
+                      ></span>
+                    }
                   }
                   @if (eventTemplate(); as eventTemplateRef) {
                     <ng-container

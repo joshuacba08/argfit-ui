@@ -4,7 +4,6 @@
    Token sources live in @argfit-ui/core. This file only consumes them
    and loads brand fonts (libraries must not import remote fonts).
    ───────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Exo+2:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @import 'tailwindcss';
 @import '@ionic/angular/css/core.css';

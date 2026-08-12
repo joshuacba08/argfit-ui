@@ -16,22 +16,40 @@ Grilla temporal adaptativa. Recibe las ocurrencias visibles del rango y emite in
   <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-theming" value="theming" aria-label="Tematización" />
   <input className="af-doc-tabs__input" type="radio" name="calendar-doc-tabs" id="calendar-tab-playground" value="playground" aria-label="Playground" />
 
-  <div className="af-doc-tabs__list" aria-label="Secciones de Calendar">
-    <label className="af-doc-tabs__tab" data-tab="features" htmlFor="calendar-tab-features">Características</label>
-    <label className="af-doc-tabs__tab" data-tab="views" htmlFor="calendar-tab-views">Vistas</label>
-    <label className="af-doc-tabs__tab" data-tab="interaction" htmlFor="calendar-tab-interaction">Interacción</label>
-    <label className="af-doc-tabs__tab" data-tab="states" htmlFor="calendar-tab-states">Estados</label>
-    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="calendar-tab-api">API</label>
-    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="calendar-tab-theming">Theming</label>
-    <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="calendar-tab-playground">Playground</label>
-  </div>
+<div className="af-doc-tabs__list" aria-label="Secciones de Calendar">
+  <label className="af-doc-tabs__tab" data-tab="features" htmlFor="calendar-tab-features">
+    Características
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="views" htmlFor="calendar-tab-views">
+    Vistas
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="interaction" htmlFor="calendar-tab-interaction">
+    Interacción
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="states" htmlFor="calendar-tab-states">
+    Estados
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="api" htmlFor="calendar-tab-api">
+    API
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="calendar-tab-theming">
+    Theming
+  </label>
+  <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="calendar-tab-playground">
+    Playground
+  </label>
+</div>
 
   <section className="af-doc-tabs__panel" data-tab="features">
 
 ## Características
 
 ```ts
-import { AfCalendar, AF_CALENDAR_SLOT_DIRECTIVES, AF_CALENDAR_TEMPLATE_DIRECTIVES } from '@argfit-ui/adaptive';
+import {
+  AfCalendar,
+  AF_CALENDAR_SLOT_DIRECTIVES,
+  AF_CALENDAR_TEMPLATE_DIRECTIVES,
+} from '@argfit-ui/adaptive/calendar';
 ```
 
 - Un solo componente adaptativo: la misma API alimenta escritorio y móvil.
@@ -115,7 +133,7 @@ Móvil no es una semana de escritorio comprimida. El renderer móvil resuelve `w
 
 ## Interacción
 
-Con `editable` los bloques se arrastran entre horas y días, y los handles de inicio y fin cambian la duración. Con `selectable` se dibuja un rango sobre una franja vacía para crear.
+Con `editable` los bloques se arrastran entre horas y días, y los handles de inicio y fin cambian la duración. `timedAllDayConversion` habilita el cruce entre la grilla horaria y la franja de día completo. Con `selectable` se dibuja un rango sobre una franja vacía para crear.
 
 <Canvas of={CalendarStories.Editable} sourceState="hidden" />
 
@@ -150,14 +168,18 @@ Si la ocurrencia tiene `seriesId`, el calendario **no** emite la mutación: emit
 
 Toda intención disponible con el mouse tiene un camino equivalente sin arrastre. Sobre un evento enfocado:
 
-| Tecla | Acción |
-| --- | --- |
-| `Enter` o `M` | entra en modo mover |
-| `↑` `↓` | ±15 minutos |
-| `⇧` + `↑` `↓` | ±1 hora |
-| `←` `→` | día anterior o siguiente |
-| `Enter` | confirma |
-| `Esc` | cancela y revierte |
+| Tecla         | Acción                   |
+| ------------- | ------------------------ |
+| `Enter` o `M` | entra en modo mover      |
+| `↑` `↓`       | ±15 minutos              |
+| `⇧` + `↑` `↓` | ±1 hora                  |
+| `←` `→`       | día anterior o siguiente |
+| `Enter`       | confirma                 |
+| `Esc`         | cancela y revierte       |
+| `F2`          | abre el diálogo equivalente |
+
+`Space` también entra en modo mover. `R` entra en resize del final y `Shift+R`
+en resize del inicio; las flechas ajustan con el mismo snap que el puntero.
 
 Cada paso se anuncia en una live region y el foco permanece en el evento después de confirmar.
 
@@ -167,6 +189,36 @@ Cada paso se anuncia en una live region y el foco permanece en el evento despué
 ### Táctil
 
 En móvil el arrastre se arma con long-press: hasta el lift el gesto sigue siendo del scroll, así la grilla se puede desplazar con el dedo sobre un evento. Los handles de resize sí apagan el gesto del navegador — son el único lugar donde el arrastre gana sin esperar.
+
+### Matriz de cumplimiento P0
+
+La referencia es `ARGFIT-UI-CALENDAR-DOCUMENTO-FUNDACIONAL.md`. La matriz enlaza
+el requisito con la implementación pública y con la suite que impide que se
+degrade. P1/P2 permanecen fuera del alcance de esta release.
+
+| Requisito fundacional                                          | Implementación                                                           | Evidencia                    | Estado                                  |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ | ---------------------------- | --------------------------------------- |
+| 17.2 umbrales mouse/pen 4 px, touch 10 px + 400 ms             | `AfPointerDragDirective`                                                 | suite primitives de pointer  | Cumplido                                |
+| 16.7/41.11 Pointer Events fuera de Angular y agrupados por rAF | listeners manuales + un `dragMove` por frame                             | suite primitives y build SSR | Cumplido                                |
+| 17.3 captura, duración y punto de agarre                       | captura del pointer y delta contra origen                                | suites primitives/core       | Cumplido                                |
+| 17.5 snap visual/commit de 15 min                              | motor headless compartido                                                | suite core interaction       | Cumplido                                |
+| 17.6 mover entre días civiles                                  | hit-test geométrico por columna                                          | suites desktop/mobile        | Cumplido                                |
+| 17.9 auto-scroll proporcional                                  | borde de 48 px, velocidad cuadrática                                     | suites renderer              | Cumplido                                |
+| 17.10 commit sólo en `pointerup`                               | intención controlada, preview pending                                    | suites pointer/renderer      | Cumplido                                |
+| 18 resize start/end                                            | handles con hit area y constraints compartidos                           | suites core/renderer         | Cumplido                                |
+| 17.1 all-day y multi-day                                       | intervalo civil con `endDate` exclusivo                                  | suites core/desktop          | Cumplido                                |
+| 20 teclado equivalente                                         | Space/M, R/Shift+R, flechas, Enter, Escape                               | stories y suites renderer    | Cumplido                                |
+| 21.3 live region por snap                                      | anuncio al cambiar el estado temporal                                    | stories y suites renderer    | Cumplido                                |
+| 41.7 reduced motion/high contrast                              | media queries sin alterar reposo                                         | visual + a11y Storybook      | Cumplido                                |
+| 41.9 modelo controlado                                         | preview `pending`, aceptación, rechazo, conflicto y timeout              | suites renderer              | Cumplido                                |
+| 17.7/17.8 conversión timed/all-day                             | hit-test geométrico entre lanes y permiso `timedAllDayConversion`        | suites core/renderers        | Cumplido                                |
+| 20.8 diálogo alternativo de mover                              | F2 abre editor modal de fecha, hora, duración y tipo                     | story Editable + a11y        | Cumplido                                |
+| Validación previa y undo                                       | `allowMutation`, `resolveMutation` y `mutationUndoRequest`                | suites core/adaptive         | Cumplido                                |
+| Importación aislada                                            | entry point `@argfit-ui/adaptive/calendar`                               | build de paquete             | Cumplido                                |
+
+La conversión permanece desactivada por defecto y sólo se habilita cuando el
+producto puede aceptar ambos tipos de intervalo. El atajo F2 ofrece la misma
+operación sin arrastre y el modelo sigue siendo controlado por la aplicación.
 
 ### Detalle y editor
 
@@ -182,9 +234,14 @@ El registro de tipos se declara una vez por aplicación:
 
 ```ts
 provideAfCalendarEventTypes([
-  { id: 'training', label: 'Entrenamiento', icon: 'activity', colorToken: 'training',
+  {
+    id: 'training',
+    label: 'Entrenamiento',
+    icon: 'activity',
+    colorToken: 'training',
     defaultDurationMinutes: 90,
-    fields: [{ key: 'location', label: 'Lugar', kind: 'text' }] },
+    fields: [{ key: 'location', label: 'Lugar', kind: 'text' }],
+  },
 ]);
 ```
 
@@ -215,7 +272,58 @@ El error es recuperable: el calendario sigue navegable y ofrece reintento en lug
 
 <ArgTypes
   of={CalendarStories}
-  include={['events', 'view', 'views', 'anchorDate', 'timeZone', 'density', 'firstDay', 'hiddenDays', 'minTime', 'maxTime', 'nowIndicator', 'showToolbar', 'editable', 'selectable', 'createButton', 'overlays', 'eventTypes', 'resources', 'labels', 'height', 'loading', 'partial', 'offline', 'empty', 'error', 'ariaLabel', 'visibleRangeChange', 'viewChange', 'anchorDateChange', 'eventActivate', 'eventMoveRequest', 'eventResizeRequest', 'rangeCreateRequest', 'resourceAssignRequest', 'recurrenceScopeRequest', 'interactionCancel', 'eventSave', 'eventDelete', 'createPressed', 'retry']}
+  include={[
+    'events',
+    'view',
+    'views',
+    'anchorDate',
+    'timeZone',
+    'density',
+    'firstDay',
+    'hiddenDays',
+    'minTime',
+    'maxTime',
+    'nowIndicator',
+    'showToolbar',
+    'editable',
+    'moveEnabled',
+    'resizeStartEnabled',
+    'resizeEndEnabled',
+    'minDurationMinutes',
+    'maxDurationMinutes',
+    'autoScroll',
+    'timedAllDayConversion',
+    'allowMutation',
+    'mutationTimeoutMs',
+    'selectable',
+    'createButton',
+    'overlays',
+    'eventTypes',
+    'resources',
+    'labels',
+    'height',
+    'loading',
+    'partial',
+    'offline',
+    'empty',
+    'error',
+    'ariaLabel',
+    'visibleRangeChange',
+    'viewChange',
+    'anchorDateChange',
+    'eventActivate',
+    'eventMoveRequest',
+    'eventResizeRequest',
+    'rangeCreateRequest',
+    'resourceAssignRequest',
+    'recurrenceScopeRequest',
+    'interactionCancel',
+    'mutationUndoRequest',
+    'eventSave',
+    'eventDelete',
+    'createPressed',
+    'retry',
+  ]}
   sort="requiredFirst"
 />
 
@@ -230,14 +338,14 @@ Es de la aplicación, no del componente:
 
 ### Ranuras y templates
 
-| Selector | Tipo | Reemplaza |
-| --- | --- | --- |
-| `afCalendarToolbar` | ranura | la toolbar interna completa |
-| `afCalendarEmpty` | ranura | el estado vacío |
-| `afCalendarError` | ranura | el banner de error |
-| `afCalendarFooter` | ranura | el pie del calendario |
-| `afCalendarEvent` | template tipado | el contenido del bloque de evento |
-| `afCalendarDayHeader` | template tipado | la cabecera de columna de día |
+| Selector              | Tipo            | Reemplaza                         |
+| --------------------- | --------------- | --------------------------------- |
+| `afCalendarToolbar`   | ranura          | la toolbar interna completa       |
+| `afCalendarEmpty`     | ranura          | el estado vacío                   |
+| `afCalendarError`     | ranura          | el banner de error                |
+| `afCalendarFooter`    | ranura          | el pie del calendario             |
+| `afCalendarEvent`     | template tipado | el contenido del bloque de evento |
+| `afCalendarDayHeader` | template tipado | la cabecera de columna de día     |
 
   </section>
 
@@ -247,18 +355,18 @@ Es de la aplicación, no del componente:
 
 El calendario consume únicamente tokens públicos `--af-*`. Los propios del componente son:
 
-| Token | Uso |
-| --- | --- |
-| `--af-calendar-surface` | fondo de la superficie |
-| `--af-calendar-surface-elevated` | franjas y cabeceras elevadas |
-| `--af-calendar-grid-line` | líneas de grilla y separadores |
-| `--af-calendar-today-bg` | realce de la columna o celda de hoy |
-| `--af-calendar-selection-bg` | selección de rango |
-| `--af-calendar-now` | indicador de hora actual |
-| `--af-calendar-slot-height-compact` | altura de slot en densidad compacta |
-| `--af-calendar-slot-height-comfortable` | altura de slot por defecto |
-| `--af-calendar-slot-height-touch` | altura de slot táctil |
-| `--af-calendar-time-axis-width` | ancho del eje horario |
+| Token                                   | Uso                                 |
+| --------------------------------------- | ----------------------------------- |
+| `--af-calendar-surface`                 | fondo de la superficie              |
+| `--af-calendar-surface-elevated`        | franjas y cabeceras elevadas        |
+| `--af-calendar-grid-line`               | líneas de grilla y separadores      |
+| `--af-calendar-today-bg`                | realce de la columna o celda de hoy |
+| `--af-calendar-selection-bg`            | selección de rango                  |
+| `--af-calendar-now`                     | indicador de hora actual            |
+| `--af-calendar-slot-height-compact`     | altura de slot en densidad compacta |
+| `--af-calendar-slot-height-comfortable` | altura de slot por defecto          |
+| `--af-calendar-slot-height-touch`       | altura de slot táctil               |
+| `--af-calendar-time-axis-width`         | ancho del eje horario               |
 
 Los colores de evento son tokens semánticos: el consumidor pasa `colorToken`, nunca CSS. Cada token resuelve a un trío `--af-event-<token>-{accent,bg,border}` para `training`, `match`, `gym`, `video`, `medical` y `neutral`. En tema claro los acentos se oscurecen para mantener el contraste AA sobre blanco.
 

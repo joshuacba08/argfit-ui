@@ -2,6 +2,38 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.5.0
+
+Minor release focused on an extensible icon catalog and the P0 interaction
+contract of `AfCalendar`.
+
+### Added
+
+- Explicit, tree-shakeable registration of additional Lucide icons and any
+  `@ng-icons/*` pack through the stable `AfIcon` surface.
+- Pointer-based Calendar drag, cross-day movement, start/end resize, all-day
+  and timed conversion, auto-scroll and controlled optimistic resolution.
+- Synchronous product validation with `allowMutation`, explicit
+  `resolveMutation`, undo-token requests and an accessible F2 dialog path.
+- Secondary Calendar entry point at `@argfit-ui/adaptive/calendar`.
+
+### Changed
+
+- Calendar Storybook documentation now contains the P0 traceability matrix,
+  editable controlled example and keyboard/touch guidance.
+- Primary buttons consistently use black foreground and secondary buttons use
+  white foreground for both labels and icons.
+- Storybook no longer depends on remote font downloads, making smoke, visual
+  and accessibility gates deterministic offline.
+- The generated MCP catalog includes the new public Calendar and icon APIs.
+
+### Release
+
+- All six publishable packages move to `1.5.0`, with internal peer versions
+  aligned exactly.
+- Validated through `pnpm release:production:check` and published with the
+  `latest` dist-tag.
+
 ## 1.4.0
 
 Minor release that makes Storybook the canonical development surface and adds

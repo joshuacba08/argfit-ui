@@ -48,13 +48,7 @@ export type AfCalendarEventState =
  * Token semántico de color de evento. El consumidor pasa un token, nunca CSS
  * arbitrario: cada valor resuelve a `--af-event-<token>-{accent,bg,border}`.
  */
-export type AfCalendarColorToken =
-  | 'training'
-  | 'match'
-  | 'gym'
-  | 'video'
-  | 'medical'
-  | 'neutral';
+export type AfCalendarColorToken = 'training' | 'match' | 'gym' | 'video' | 'medical' | 'neutral';
 
 /** Día de la semana, 0 = domingo (misma convención que `Date#getDay`). */
 export type AfCalendarWeekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -68,6 +62,8 @@ export interface AfCalendarEvent {
   /** Hora de pared `HH:mm`, **exclusiva**. Ignorada cuando `kind` es `all-day`. */
   readonly end: string;
   readonly kind: AfCalendarEventKind;
+  /** Fin civil exclusivo de un evento all-day. Por defecto, `date + 1 día`. */
+  readonly endDate?: string;
   readonly title: string;
   readonly colorToken: AfCalendarColorToken;
   /** Identidad de la ocurrencia dentro de una serie. */

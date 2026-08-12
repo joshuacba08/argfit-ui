@@ -16,6 +16,7 @@
 
 @if (isMobile()) {
   <af-calendar-mobile
+    #mobileRenderer
     [events]="events()"
     [view]="activeView()"
     [views]="views()"
@@ -28,6 +29,15 @@
     [nowIndicator]="nowIndicator()"
     [showToolbar]="showToolbar()"
     [editable]="editable()"
+    [moveEnabled]="moveEnabled()"
+    [resizeStartEnabled]="resizeStartEnabled()"
+    [resizeEndEnabled]="resizeEndEnabled()"
+    [minDurationMinutes]="minDurationMinutes()"
+    [maxDurationMinutes]="maxDurationMinutes()"
+    [autoScroll]="autoScroll()"
+    [timedAllDayConversion]="timedAllDayConversion()"
+    [allowMutation]="allowMutation()"
+    [mutationTimeoutMs]="mutationTimeoutMs()"
     [createButton]="createButton()"
     [labels]="labels()"
     [height]="height()"
@@ -52,10 +62,12 @@
     (eventResizeRequest)="eventResizeRequest.emit($event)"
     (recurrenceScopeRequest)="recurrenceScopeRequest.emit($event)"
     (interactionCancel)="interactionCancel.emit($event)"
+    (interactionEditRequest)="onInteractionEditRequest($event)"
     (retry)="retry.emit()"
   />
 } @else {
   <af-calendar-desktop
+    #desktopRenderer
     [events]="events()"
     [view]="activeView()"
     [views]="views()"
@@ -69,6 +81,15 @@
     [nowIndicator]="nowIndicator()"
     [showToolbar]="showToolbar()"
     [editable]="editable()"
+    [moveEnabled]="moveEnabled()"
+    [resizeStartEnabled]="resizeStartEnabled()"
+    [resizeEndEnabled]="resizeEndEnabled()"
+    [minDurationMinutes]="minDurationMinutes()"
+    [maxDurationMinutes]="maxDurationMinutes()"
+    [autoScroll]="autoScroll()"
+    [timedAllDayConversion]="timedAllDayConversion()"
+    [allowMutation]="allowMutation()"
+    [mutationTimeoutMs]="mutationTimeoutMs()"
     [selectable]="selectable()"
     [createButton]="createButton()"
     [labels]="labels()"
@@ -98,6 +119,7 @@
     (resourceAssignRequest)="resourceAssignRequest.emit($event)"
     (recurrenceScopeRequest)="recurrenceScopeRequest.emit($event)"
     (interactionCancel)="interactionCancel.emit($event)"
+    (interactionEditRequest)="onInteractionEditRequest($event)"
     (retry)="retry.emit()"
   />
 }
@@ -132,12 +154,17 @@
 }
 
 @if (editorDraft(); as draft) {
-  <div class="af-calendar__scrim" afEscapeKey (afEscape)="closeOverlays()" (click)="closeOverlays()">
+  <div
+    class="af-calendar__scrim"
+    afEscapeKey
+    (afEscape)="closeOverlays()"
+    (click)="closeOverlays()"
+  >
     <div
       class="af-calendar__modal af-calendar__modal--wide"
       role="dialog"
       aria-modal="true"
-      [attr.aria-label]="editorMode() === 'create' ? 'Nueva actividad' : 'Editar actividad'"
+      [attr.aria-label]="editorPurpose() === 'interaction' ? 'Mover o redimensionar actividad' : editorMode() === 'create' ? 'Nueva actividad' : 'Editar actividad'"
       afFocusTrap
       (click)="$event.stopPropagation()"
     >

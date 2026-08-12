@@ -1,11 +1,14 @@
 import type {
-    AfCalendarInteractionOrigin,
-    AfCalendarInterval,
-    AfCalendarMutationKind,
-    AfCalendarMutationRequest,
-    AfCalendarRecurrenceScope,
+  AfCalendarInteractionOrigin,
+  AfCalendarInterval,
+  AfCalendarMutationKind,
+  AfCalendarMutationRequest,
+  AfCalendarAllowMutation,
+  AfCalendarMutationValidation,
+  AfCalendarRecurrenceScope,
 } from '../types/calendar-mutation.types';
 import type { AfCalendarEvent } from '../types/calendar.types';
+import { afCalendarAddDays } from './af-calendar-date';
 
 /**
  * Construcción de intenciones de mutación.
@@ -38,11 +41,17 @@ export function afCalendarInterval(
   return { kind: 'timed-zoned', start: `${date}T${start}`, end: `${date}T${end}`, timeZone };
 }
 
+export function afCalendarAllDayInterval(startDate: string, endDate: string): AfCalendarInterval {
+  return { kind: 'all-day', startDate, endDate };
+}
+
 export interface AfCalendarProposedSlot {
   readonly date: string;
   readonly start: string;
   readonly end: string;
   readonly resourceId?: string;
+  readonly kind?: 'timed' | 'all-day';
+  readonly endDate?: string;
 }
 
 export interface AfCalendarMutationInput {
@@ -70,14 +79,17 @@ export function afCalendarMutationRequest(
     occurrenceId: event?.occurrenceId,
     seriesId: event?.seriesId,
     previousInterval: event
-      ? afCalendarInterval(event.date, event.start, event.end, input.timeZone)
+      ? event.kind === 'all-day'
+        ? afCalendarAllDayInterval(event.date, event.endDate ?? afCalendarAddDays(event.date, 1))
+        : afCalendarInterval(event.date, event.start, event.end, input.timeZone)
       : null,
-    proposedInterval: afCalendarInterval(
-      proposed.date,
-      proposed.start,
-      proposed.end,
-      input.timeZone,
-    ),
+    proposedInterval:
+      proposed.kind === 'all-day' || (proposed.kind === undefined && event?.kind === 'all-day')
+        ? afCalendarAllDayInterval(
+            proposed.date,
+            proposed.endDate ?? afCalendarAddDays(proposed.date, 1),
+          )
+        : afCalendarInterval(proposed.date, proposed.start, proposed.end, input.timeZone),
     sourceVersion: event?.sourceVersion,
     origin: input.origin,
   };
@@ -93,9 +105,7 @@ export function afCalendarMutationRequest(
     };
   }
 
-  return input.recurrenceScope
-    ? { ...request, recurrenceScope: input.recurrenceScope }
-    : request;
+  return input.recurrenceScope ? { ...request, recurrenceScope: input.recurrenceScope } : request;
 }
 
 /**
@@ -110,4 +120,14 @@ export function afCalendarIsResourceChange(
 ): boolean {
   if (!event?.resourceId || !proposed.resourceId) return false;
   return event.resourceId !== proposed.resourceId;
+}
+
+/** Normaliza el callback público para que todos los renderers apliquen la misma regla. */
+export function afCalendarValidateMutation(
+  request: AfCalendarMutationRequest,
+  allowMutation?: AfCalendarAllowMutation,
+): AfCalendarMutationValidation {
+  if (!allowMutation) return { allowed: true };
+  const result = allowMutation(request);
+  return typeof result === 'boolean' ? { allowed: result } : result;
 }

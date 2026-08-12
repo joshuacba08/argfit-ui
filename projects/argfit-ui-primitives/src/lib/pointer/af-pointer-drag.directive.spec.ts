@@ -17,7 +17,7 @@ import { AfPointerDragDirective, type AfPointerDragEvent } from './af-pointer-dr
       (dragCancel)="log($event)"
       (click)="clicks.set(clicks() + 1)"
     >
-      Bloque
+      <span data-testid="handle" (pointerdown)="$event.stopPropagation()">Bloque</span>
     </button>
   `,
 })
@@ -44,6 +44,7 @@ function pointer(type: string, init: PointerEventInit = {}): PointerEvent {
 }
 
 describe('AfPointerDragDirective', () => {
+  const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
   const render = async () => {
     await TestBed.configureTestingModule({
       imports: [AfPointerDragHostComponent],
@@ -84,7 +85,19 @@ describe('AfPointerDragDirective', () => {
     expect(phases()).toEqual([]);
 
     element.dispatchEvent(pointer('pointermove', { clientX: 30, clientY: 40 }));
+    await nextFrame();
     expect(phases()).toEqual(['start', 'move']);
+  });
+
+  it('captures a gesture even when a child handle stops bubbling', async () => {
+    const { element, phases } = await render();
+    const handle = element.querySelector('[data-testid="handle"]') as HTMLElement;
+
+    handle.dispatchEvent(pointer('pointerdown', { clientX: 10, clientY: 10 }));
+    element.dispatchEvent(pointer('pointermove', { clientX: 10, clientY: 30 }));
+    element.dispatchEvent(pointer('pointerup', { clientX: 10, clientY: 30 }));
+
+    expect(phases()).toEqual(['start', 'move', 'end']);
   });
 
   it('commits on pointerup, never on pointerdown', async () => {
@@ -92,7 +105,8 @@ describe('AfPointerDragDirective', () => {
 
     element.dispatchEvent(pointer('pointerdown', { clientX: 0, clientY: 0 }));
     element.dispatchEvent(pointer('pointermove', { clientX: 0, clientY: 64 }));
-    expect(phases()).toEqual(['start', 'move']);
+    // El movimiento se agrupa al próximo frame; todavía no hay commit.
+    expect(phases()).toEqual(['start']);
 
     element.dispatchEvent(pointer('pointerup', { clientX: 0, clientY: 64 }));
 
@@ -107,6 +121,7 @@ describe('AfPointerDragDirective', () => {
     element.dispatchEvent(pointer('pointerdown', { clientX: 100, clientY: 100 }));
     element.dispatchEvent(pointer('pointermove', { clientX: 100, clientY: 130 }));
     element.dispatchEvent(pointer('pointermove', { clientX: 140, clientY: 160 }));
+    await nextFrame();
 
     const last = fixture.componentInstance.events().at(-1);
     expect(last?.deltaX).toBe(40);
@@ -124,13 +139,24 @@ describe('AfPointerDragDirective', () => {
   });
 
   it('cancels on pointercancel', async () => {
-    const { element, phases } = await render();
+    const { fixture, element, phases } = await render();
 
     element.dispatchEvent(pointer('pointerdown', { clientX: 0, clientY: 0 }));
     element.dispatchEvent(pointer('pointermove', { clientX: 0, clientY: 64 }));
     element.dispatchEvent(pointer('pointercancel', { clientX: 0, clientY: 64 }));
 
     expect(phases()).toEqual(['start', 'move', 'cancel']);
+    expect(fixture.componentInstance.events().at(-1)?.cancelReason).toBe('pointercancel');
+  });
+
+  it('uses the immediate 4px path for pen pointers', async () => {
+    const { fixture, element, phases } = await render();
+    element.dispatchEvent(pointer('pointerdown', { pointerType: 'pen', clientX: 0, clientY: 0 }));
+    element.dispatchEvent(pointer('pointermove', { pointerType: 'pen', clientX: 4, clientY: 0 }));
+    element.dispatchEvent(pointer('pointerup', { pointerType: 'pen', clientX: 4, clientY: 0 }));
+
+    expect(phases()).toEqual(['start', 'move', 'end']);
+    expect(fixture.componentInstance.events()[0].pointerType).toBe('pen');
   });
 
   it('does not emit an end after a cancel', async () => {
@@ -162,9 +188,7 @@ describe('AfPointerDragDirective', () => {
     fixture.componentInstance.longPress.set(350);
     fixture.detectChanges();
 
-    element.dispatchEvent(
-      pointer('pointerdown', { pointerType: 'touch', clientX: 0, clientY: 0 }),
-    );
+    element.dispatchEvent(pointer('pointerdown', { pointerType: 'touch', clientX: 0, clientY: 0 }));
     // El dedo se va antes del long-press: gana el scroll de la página.
     element.dispatchEvent(
       pointer('pointermove', { pointerType: 'touch', clientX: 0, clientY: 40 }),
@@ -181,9 +205,7 @@ describe('AfPointerDragDirective', () => {
     fixture.componentInstance.longPress.set(350);
     fixture.detectChanges();
 
-    element.dispatchEvent(
-      pointer('pointerdown', { pointerType: 'touch', clientX: 0, clientY: 0 }),
-    );
+    element.dispatchEvent(pointer('pointerdown', { pointerType: 'touch', clientX: 0, clientY: 0 }));
     vi.advanceTimersByTime(400);
     element.dispatchEvent(
       pointer('pointermove', { pointerType: 'touch', clientX: 0, clientY: 60 }),

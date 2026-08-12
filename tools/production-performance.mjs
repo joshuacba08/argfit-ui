@@ -10,24 +10,25 @@ const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
 
-// Recalibrated for 1.4.0, which adds AfAuthShell and the generated MCP catalog/package.
-// Measured 1.4.0: core 44.2 kB, primitives 10.2 kB, adaptive 133.7 kB, desktop
-// 279.7 kB, mobile 254.2 kB, MCP 53.7 kB, total 775.7 kB. Each budget sits roughly
-// 5 % above its measurement so the ratchet still catches unintended growth: these are
-// ceilings to justify raising, not targets to grow into. Raise them only alongside a
-// release that says in its notes what was added.
+// Recalibrated for 1.5.0, which adds the extensible icon registry, the complete Calendar
+// interaction contracts/renderers and the @argfit-ui/adaptive/calendar entrypoint.
+// Measured 1.5.0: main 2.76 MB, core 83.6 kB, primitives 26.1 kB, adaptive 199.3 kB,
+// desktop 326.5 kB, mobile 286.6 kB, MCP 61.6 kB and tarballs 983.8 kB. Each changed
+// budget sits roughly 5 % above its measurement so the ratchet still catches unintended
+// growth: these are ceilings to justify raising, not targets to grow into. Raise them
+// only alongside a release that says in its notes what was added.
 const budgets = {
   initialTotal: 2_900_000,
-  mainBundle: 2_750_000,
+  mainBundle: 2_900_000,
   stylesBundle: 60_000,
-  tarballTotal: 815_000,
+  tarballTotal: 1_034_000,
   tarballs: {
-    'argfit-ui-core': 47_000,
-    'argfit-ui-primitives': 15_000,
-    'argfit-ui-adaptive': 141_000,
-    'argfit-ui-desktop': 294_000,
-    'argfit-ui-mobile': 267_000,
-    'argfit-ui-mcp': 60_000,
+    'argfit-ui-core': 88_000,
+    'argfit-ui-primitives': 27_500,
+    'argfit-ui-adaptive': 210_000,
+    'argfit-ui-desktop': 343_000,
+    'argfit-ui-mobile': 301_000,
+    'argfit-ui-mcp': 65_000,
   },
 };
 

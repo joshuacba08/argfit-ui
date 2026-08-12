@@ -96,7 +96,8 @@
   justify-content: center;
   min-width: var(--af-button-height-sm);
   padding: 0 var(--af-space-3);
-  transition: color var(--af-duration-fast) var(--af-ease-out),
+  transition:
+    color var(--af-duration-fast) var(--af-ease-out),
     border-color var(--af-duration-fast) var(--af-ease-out),
     background var(--af-duration-fast) var(--af-ease-out);
 }
@@ -215,12 +216,7 @@
 }
 
 .af-calendar-desktop__skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--af-surface-2),
-    var(--af-surface-3),
-    var(--af-surface-2)
-  );
+  background: linear-gradient(90deg, var(--af-surface-2), var(--af-surface-3), var(--af-surface-2));
   background-size: 200% 100%;
   border-radius: var(--af-radius-sm);
   flex: 1;
@@ -478,7 +474,26 @@
   box-shadow: var(--af-shadow-xl);
   cursor: grabbing;
   opacity: 0.92;
+  transform: translate3d(0, 0, 0) scale(1.01);
+  transition:
+    top var(--af-duration-fast) var(--af-ease-standard),
+    height var(--af-duration-fast) var(--af-ease-standard),
+    transform var(--af-duration-fast) var(--af-ease-standard);
+  will-change: top, height, transform;
   z-index: 9;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .af-calendar-desktop__event--dragging {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .af-calendar-desktop__event--dragging,
+  .af-calendar-desktop__event--keyboard {
+    outline: 2px solid Highlight;
+  }
 }
 
 .af-calendar-desktop__event--selected,

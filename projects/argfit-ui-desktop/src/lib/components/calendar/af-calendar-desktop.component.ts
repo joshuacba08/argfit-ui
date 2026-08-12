@@ -1,69 +1,75 @@
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    DestroyRef,
-    ElementRef,
-    inject,
-    input,
-    output,
-    PLATFORM_ID,
-    signal,
-    viewChild,
-    type TemplateRef,
-    ViewEncapsulation,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  effect,
+  inject,
+  input,
+  output,
+  PLATFORM_ID,
+  signal,
+  untracked,
+  viewChild,
+  type TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 
 import {
-    AF_CALENDAR_DEFAULT_LABELS,
-    AF_CALENDAR_REQUEST_ID,
-    afCalendarActivateInteraction,
-    afCalendarApplyDelta,
-    afCalendarBeginInteraction,
-    afCalendarDayOfWeek,
-    afCalendarDurationLabel,
-    afCalendarEventsOn,
-    afCalendarInteractionAnnouncement,
-    afCalendarIsResourceChange,
-    afCalendarIsSameMonth,
-    afCalendarIsWeekend,
-    afCalendarKeyboardDelta,
-    afCalendarLayoutDay,
-    afCalendarLongDate,
-    afCalendarMinutesToPixels,
-    afCalendarMonthOverflow,
-    afCalendarMutationRequest,
-    afCalendarNowMinutes,
-    afCalendarPixelsToMinutes,
-    afCalendarProposedInterval,
-    afCalendarSlotHeight,
-    afCalendarToday,
-    afCalendarToHhMm,
-    afCalendarToMinutes,
-    afCalendarVisibleRange,
-    type AfCalendarDayHeaderTemplate,
-    type AfCalendarDensity,
-    type AfCalendarEvent,
-    type AfCalendarEventTemplate,
-    type AfCalendarInteractionCancel,
-    type AfCalendarInteractionMode,
-    type AfCalendarInteractionState,
-    type AfCalendarLabels,
-    type AfCalendarMutationRequest,
-    type AfCalendarRecurrenceScopeRequest,
-    type AfCalendarResource,
-    type AfCalendarView,
-    type AfCalendarVisibleRange,
-    type AfCalendarWeekday,
-    type AfIconName,
+  AF_CALENDAR_DEFAULT_LABELS,
+  AF_CALENDAR_REQUEST_ID,
+  afCalendarActivateInteraction,
+  afCalendarApplyDelta,
+  afCalendarBeginInteraction,
+  afCalendarConvertInteraction,
+  afCalendarDayOfWeek,
+  afCalendarDurationLabel,
+  afCalendarEventsOn,
+  afCalendarInteractionAnnouncement,
+  afCalendarIsResourceChange,
+  afCalendarIsSameMonth,
+  afCalendarIsWeekend,
+  afCalendarKeyboardDelta,
+  afCalendarLayoutDay,
+  afCalendarLongDate,
+  afCalendarMinutesToPixels,
+  afCalendarMonthOverflow,
+  afCalendarMutationRequest,
+  afCalendarNowMinutes,
+  afCalendarPixelsToMinutes,
+  afCalendarProposedInterval,
+  afCalendarSlotHeight,
+  afCalendarToday,
+  afCalendarToHhMm,
+  afCalendarToMinutes,
+  afCalendarValidateMutation,
+  afCalendarVisibleRange,
+  type AfCalendarDayHeaderTemplate,
+  type AfCalendarDensity,
+  type AfCalendarEvent,
+  type AfCalendarEventTemplate,
+  type AfCalendarInteractionCancel,
+  type AfCalendarInteractionMode,
+  type AfCalendarInteractionState,
+  type AfCalendarLabels,
+  type AfCalendarAllowMutation,
+  type AfCalendarMutationDecision,
+  type AfCalendarMutationRequest,
+  type AfCalendarRecurrenceScopeRequest,
+  type AfCalendarResource,
+  type AfCalendarView,
+  type AfCalendarVisibleRange,
+  type AfCalendarWeekday,
+  type AfIconName,
 } from '@argfit-ui/core';
 import {
-    AfIconComponent,
-    AfLiveRegionComponent,
-    AfPointerDragDirective,
-    type AfPointerDragEvent,
+  AfIconComponent,
+  AfLiveRegionComponent,
+  AfPointerDragDirective,
+  type AfPointerDragEvent,
 } from '@argfit-ui/primitives';
 
 /** Icono por token de color: la información nunca depende solo del color. */
@@ -197,6 +203,13 @@ interface PendingInteraction {
   readonly resourceId?: string;
 }
 
+interface OptimisticInteraction {
+  readonly state: AfCalendarInteractionState;
+  readonly event: AfCalendarEvent;
+  readonly requestId: string;
+  readonly sourceEvents: readonly AfCalendarEvent[];
+}
+
 /**
  * Renderer de escritorio de `AfCalendar`.
  *
@@ -244,6 +257,15 @@ export class AfCalendarDesktopComponent {
   readonly nowIndicator = input(true, { transform: booleanAttribute });
   readonly showToolbar = input(true, { transform: booleanAttribute });
   readonly editable = input(false, { transform: booleanAttribute });
+  readonly moveEnabled = input(true, { transform: booleanAttribute });
+  readonly resizeStartEnabled = input(true, { transform: booleanAttribute });
+  readonly resizeEndEnabled = input(true, { transform: booleanAttribute });
+  readonly minDurationMinutes = input(15);
+  readonly maxDurationMinutes = input<number | undefined>(undefined);
+  readonly autoScroll = input(true, { transform: booleanAttribute });
+  readonly timedAllDayConversion = input(false, { transform: booleanAttribute });
+  readonly allowMutation = input<AfCalendarAllowMutation | undefined>(undefined);
+  readonly mutationTimeoutMs = input(8_000);
   readonly selectable = input(false, { transform: booleanAttribute });
   readonly createButton = input(false, { transform: booleanAttribute });
   readonly labels = input<AfCalendarLabels>(AF_CALENDAR_DEFAULT_LABELS);
@@ -279,8 +301,10 @@ export class AfCalendarDesktopComponent {
   readonly resourceAssignRequest = output<AfCalendarMutationRequest>();
   readonly recurrenceScopeRequest = output<AfCalendarRecurrenceScopeRequest>();
   readonly interactionCancel = output<AfCalendarInteractionCancel>();
+  readonly interactionEditRequest = output<AfCalendarEvent>();
 
   private readonly gridBody = viewChild<ElementRef<HTMLElement>>('gridBody');
+  private readonly allDayLane = viewChild<ElementRef<HTMLElement>>('allDayLane');
 
   /**
    * Minuto actual, refrescado cada 30 s solo en navegador.
@@ -292,6 +316,7 @@ export class AfCalendarDesktopComponent {
 
   /** Vista previa optimista mientras dura el gesto. */
   private readonly interaction = signal<AfCalendarInteractionState | null>(null);
+  private readonly optimistic = signal<OptimisticInteraction | null>(null);
 
   /** Evento en modo mover por teclado. */
   private readonly keyboardEventId = signal<string | null>(null);
@@ -300,6 +325,8 @@ export class AfCalendarDesktopComponent {
 
   private pending: PendingInteraction | null = null;
   private columnWidthPx = 0;
+  private dragScrollStart = 0;
+  private optimisticTimer: ReturnType<typeof setTimeout> | null = null;
   /**
    * El navegador dispara `click` después de `pointerup`, también cuando hubo
    * arrastre: sin esto, soltar un evento abriría su detalle.
@@ -311,6 +338,40 @@ export class AfCalendarDesktopComponent {
       const handle = setInterval(() => this.now.set(afCalendarNowMinutes()), 30_000);
       this.destroyRef.onDestroy(() => clearInterval(handle));
     }
+    effect(() => {
+      const optimistic = this.optimistic();
+      const events = this.events();
+      if (!optimistic || events === optimistic.sourceEvents) return;
+      const current = events.find((event) => event.id === optimistic.event.id);
+      const proposed = afCalendarProposedInterval(optimistic.state);
+      const accepted =
+        current?.date === proposed.date &&
+        current.kind === proposed.kind &&
+        (current.kind === 'all-day'
+          ? (current.endDate ?? '') === (proposed.endDate ?? '')
+          : current.start === proposed.start && current.end === proposed.end);
+      if (accepted) this.clearOptimistic();
+      else if (current?.state === 'conflict') this.rejectOptimistic('conflict');
+      else this.rejectOptimistic('rejected');
+    });
+    this.destroyRef.onDestroy(() => this.clearOptimistic());
+    let context = `${this.view()}|${this.anchorDate()}`;
+    let sourceEvents = this.events();
+    effect(() => {
+      const nextContext = `${this.view()}|${this.anchorDate()}`;
+      const nextEvents = this.events();
+      const active = untracked(this.interaction);
+      if (active && (nextContext !== context || nextEvents !== sourceEvents)) {
+        this.pending = null;
+        this.interaction.set(null);
+        this.interactionCancel.emit({
+          reason: 'context-change',
+          eventId: active.eventId ?? undefined,
+        });
+      }
+      context = nextContext;
+      sourceEvents = nextEvents;
+    });
   }
 
   protected readonly state = computed<AfCalendarDesktopState>(() => {
@@ -361,15 +422,19 @@ export class AfCalendarDesktopComponent {
 
   /** Eventos con la vista previa aplicada sobre el que se está manipulando. */
   private readonly previewedEvents = computed<readonly AfCalendarEvent[]>(() => {
-    const state = this.interaction();
+    const state = this.interaction() ?? this.optimistic()?.state ?? null;
+    const optimistic = this.optimistic();
     if (!state?.eventId) return this.events();
     return this.events().map((event) =>
       event.id === state.eventId
         ? {
             ...event,
+            kind: state.kind,
             date: state.date,
             start: afCalendarToHhMm(state.startMinutes),
             end: afCalendarToHhMm(state.endMinutes),
+            endDate: state.kind === 'all-day' ? state.endDate : undefined,
+            ...(optimistic ? { state: 'pending' as const } : {}),
           }
         : event,
     );
@@ -380,8 +445,10 @@ export class AfCalendarDesktopComponent {
     if (!state?.active) return null;
     return {
       label:
-        `${afCalendarToHhMm(state.startMinutes)} – ${afCalendarToHhMm(state.endMinutes)} · ` +
-        afCalendarLongDate(state.date, this.labels()),
+        state.kind === 'all-day'
+          ? `${afCalendarLongDate(state.date, this.labels())} – ${state.endDate}`
+          : `${afCalendarToHhMm(state.startMinutes)} – ${afCalendarToHhMm(state.endMinutes)} · ` +
+            afCalendarLongDate(state.date, this.labels()),
       keyboard: state.origin === 'keyboard',
     };
   });
@@ -616,8 +683,17 @@ export class AfCalendarDesktopComponent {
     block: AfCalendarDesktopBlock,
     mode: AfCalendarInteractionMode,
   ): void {
-    if (mode !== 'move') event.stopPropagation();
-    if (!block.movable) {
+    // El contenedor de drag ya vio el evento en fase de captura. Evitamos que
+    // la columna lo interprete después como una creación de rango y sobrescriba
+    // la intención move/resize que corresponde al bloque.
+    event.stopPropagation();
+    const modeEnabled =
+      mode === 'move'
+        ? this.moveEnabled()
+        : mode === 'resize-start'
+          ? this.resizeStartEnabled()
+          : this.resizeEndEnabled();
+    if (!block.movable || !modeEnabled) {
       this.pending = null;
       return;
     }
@@ -648,20 +724,54 @@ export class AfCalendarDesktopComponent {
     };
   }
 
-  protected onDragStart(): void {
+  protected onAllDayPointerDown(event: PointerEvent, calendarEvent: AfCalendarEvent): void {
+    if (!this.editable() || LOCKED_STATES.has(calendarEvent.state ?? 'normal')) {
+      this.pending = null;
+      return;
+    }
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const edge = 14;
+    const mode: AfCalendarInteractionMode =
+      event.clientX - rect.left <= edge && this.resizeStartEnabled()
+        ? 'resize-start'
+        : rect.right - event.clientX <= edge && this.resizeEndEnabled()
+          ? 'resize-end'
+          : 'move';
+    if (mode === 'move' && !this.moveEnabled()) return;
+    this.pending = {
+      mode,
+      event: calendarEvent,
+      date: calendarEvent.date,
+      startMinutes: 0,
+      endMinutes: 24 * 60,
+      resourceId: calendarEvent.resourceId,
+    };
+  }
+
+  protected onAllDayKeydown(event: KeyboardEvent, calendarEvent: AfCalendarEvent): void {
+    this.onBlockKeydown(event, {
+      event: calendarEvent,
+      movable: this.editable() && !LOCKED_STATES.has(calendarEvent.state ?? 'normal'),
+    } as AfCalendarDesktopBlock);
+  }
+
+  protected onDragStart(drag: AfPointerDragEvent): void {
     if (!this.pending) return;
     const source = this.pending;
     this.columnWidthPx = this.measureColumnWidth();
+    this.dragScrollStart = this.scrollSurface()?.scrollTop ?? 0;
     this.interaction.set(
       afCalendarActivateInteraction(
         afCalendarBeginInteraction({
           mode: source.mode,
-          origin: 'mouse',
+          origin: this.pointerOrigin(drag.pointerType),
           eventId: source.event?.id,
           date: source.date,
           startMinutes: source.startMinutes,
           endMinutes: source.endMinutes,
           resourceId: source.resourceId,
+          kind: source.event?.kind,
+          endDate: source.event?.endDate,
         }),
       ),
     );
@@ -671,14 +781,31 @@ export class AfCalendarDesktopComponent {
     const state = this.interaction();
     if (!state) return;
 
-    const minutes = afCalendarPixelsToMinutes(drag.deltaY, this.slotHeightPx());
+    const sourceEvent = this.pending?.event;
+    if (
+      this.timedAllDayConversion() &&
+      state.mode === 'move' &&
+      sourceEvent &&
+      this.applyLaneConversion(state, sourceEvent, drag)
+    ) {
+      return;
+    }
+
+    this.autoScrollAt(drag.clientY);
+    const scrollDelta = (this.scrollSurface()?.scrollTop ?? 0) - this.dragScrollStart;
+    const minutes = afCalendarPixelsToMinutes(drag.deltaY + scrollDelta, this.slotHeightPx());
     const steps = this.columnWidthPx > 0 ? Math.round(drag.deltaX / this.columnWidthPx) : 0;
     const target =
       state.mode === 'move'
         ? this.columnStep(state.anchorResourceId ?? state.anchorDate, steps)
         : undefined;
 
-    this.interaction.set(afCalendarApplyDelta(state, { minutes, ...target }, this.bounds()));
+    this.interaction.set(
+      afCalendarApplyDelta(state, { minutes, days: steps, ...target }, this.bounds(), {
+        minDurationMinutes: this.minDurationMinutes(),
+        maxDurationMinutes: this.maxDurationMinutes(),
+      }),
+    );
   }
 
   protected onDragEnd(): void {
@@ -692,14 +819,14 @@ export class AfCalendarDesktopComponent {
     this.commit(state, source.event ?? undefined);
   }
 
-  protected onDragCancel(): void {
+  protected onDragCancel(drag: AfPointerDragEvent): void {
     const state = this.interaction();
     this.pending = null;
     this.interaction.set(null);
     if (!state) return;
     this.suppressNextClick = true;
     this.interactionCancel.emit({
-      reason: 'escape',
+      reason: drag.cancelReason === 'pointercancel' ? 'pointer-cancel' : 'escape',
       eventId: state.eventId ?? undefined,
     });
   }
@@ -716,22 +843,42 @@ export class AfCalendarDesktopComponent {
   protected onBlockKeydown(event: KeyboardEvent, block: AfCalendarDesktopBlock): void {
     if (!block.movable) return;
 
+    if (event.key === 'F2') {
+      event.preventDefault();
+      this.interactionEditRequest.emit(block.event);
+      return;
+    }
+
     const active = this.keyboardEventId();
 
     if (active !== block.event.id) {
-      if (event.key !== 'Enter' && event.key !== 'm' && event.key !== 'M') return;
+      if (!['Enter', ' ', 'm', 'M', 'r', 'R'].includes(event.key)) return;
       event.preventDefault();
+      const mode: AfCalendarInteractionMode =
+        event.key === 'r' || event.key === 'R'
+          ? event.shiftKey
+            ? 'resize-start'
+            : 'resize-end'
+          : 'move';
+      if (
+        (mode === 'move' && !this.moveEnabled()) ||
+        (mode === 'resize-start' && !this.resizeStartEnabled()) ||
+        (mode === 'resize-end' && !this.resizeEndEnabled())
+      )
+        return;
       this.keyboardEventId.set(block.event.id);
       this.interaction.set(
         afCalendarActivateInteraction(
           afCalendarBeginInteraction({
-            mode: 'move',
+            mode,
             origin: 'keyboard',
             eventId: block.event.id,
             date: block.event.date,
             startMinutes: afCalendarToMinutes(block.event.start),
             endMinutes: afCalendarToMinutes(block.event.end),
             resourceId: block.event.resourceId,
+            kind: block.event.kind,
+            endDate: block.event.endDate,
           }),
         ),
       );
@@ -771,8 +918,13 @@ export class AfCalendarDesktopComponent {
               this.byResource() ? (state.resourceId ?? '') : state.date,
               delta.columns,
             )),
+        days: delta.columns,
       },
       this.bounds(),
+      {
+        minDurationMinutes: this.minDurationMinutes(),
+        maxDurationMinutes: this.maxDurationMinutes(),
+      },
     );
     this.interaction.set(next);
     this.announcement.set(
@@ -792,6 +944,10 @@ export class AfCalendarDesktopComponent {
     const kind =
       state.mode === 'create'
         ? 'create'
+        : event && event.kind !== state.kind
+          ? state.kind === 'all-day'
+            ? 'timed-to-all-day'
+            : 'all-day-to-timed'
         : afCalendarIsResourceChange(event, proposed)
           ? 'reassign'
           : state.mode === 'move'
@@ -807,6 +963,17 @@ export class AfCalendarDesktopComponent {
       proposed,
     });
 
+    const validation = afCalendarValidateMutation(request, this.allowMutation());
+    if (!validation.allowed) {
+      this.interactionCancel.emit({
+        reason: 'invalid-target',
+        requestId: request.requestId,
+        eventId: request.eventId,
+      });
+      this.announcement.set(validation.message ?? 'Destino no permitido');
+      return;
+    }
+
     // Una ocurrencia de serie no se mueve sin saber el alcance: el componente
     // pregunta y espera, en vez de decidir por la aplicación.
     if (event?.seriesId && kind !== 'create') {
@@ -818,15 +985,15 @@ export class AfCalendarDesktopComponent {
       return;
     }
 
+    if (event) this.beginOptimistic(state, event, request.requestId);
+
     if (kind === 'create') this.rangeCreateRequest.emit(request);
     else if (kind === 'resize') this.eventResizeRequest.emit(request);
     else if (kind === 'reassign') this.resourceAssignRequest.emit(request);
     else this.eventMoveRequest.emit(request);
 
     if (event) {
-      this.announcement.set(
-        afCalendarInteractionAnnouncement(event.title, state, this.labels()),
-      );
+      this.announcement.set(afCalendarInteractionAnnouncement(event.title, state, this.labels()));
     }
   }
 
@@ -847,14 +1014,128 @@ export class AfCalendarDesktopComponent {
     return (body.clientWidth - axis) / count;
   }
 
+  private applyLaneConversion(
+    state: AfCalendarInteractionState,
+    event: AfCalendarEvent,
+    drag: AfPointerDragEvent,
+  ): boolean {
+    const allDay = this.allDayLane()?.nativeElement.getBoundingClientRect();
+    const grid = this.gridBody()?.nativeElement.getBoundingClientRect();
+    if (allDay && drag.clientY >= allDay.top && drag.clientY <= allDay.bottom) {
+      const date = this.dateAtClientX(drag.clientX, allDay);
+      this.interaction.set(
+        afCalendarConvertInteraction(state, {
+          kind: 'all-day',
+          date,
+          durationDays: event.kind === 'all-day' ? state.durationDays : 1,
+        }),
+      );
+      return true;
+    }
+    if (
+      grid &&
+      drag.clientY >= grid.top &&
+      drag.clientY <= grid.bottom &&
+      (event.kind === 'all-day' || state.kind === 'all-day')
+    ) {
+      this.interaction.set(
+        afCalendarConvertInteraction(state, {
+          kind: 'timed',
+          date: this.dateAtClientX(drag.clientX, grid),
+          startMinutes: this.minuteAtClientY(drag.clientY),
+          durationMinutes:
+            event.kind === 'timed'
+              ? afCalendarToMinutes(event.end) - afCalendarToMinutes(event.start)
+              : 60,
+        }),
+      );
+      return true;
+    }
+    return false;
+  }
+
+  private dateAtClientX(clientX: number, rect: DOMRect): string {
+    const columns = this.columns();
+    if (columns.length === 0) return this.anchorDate();
+    const axisWidth = Math.max(0, rect.width - this.columnWidthPx * columns.length);
+    const index = Math.min(
+      columns.length - 1,
+      Math.max(0, Math.floor((clientX - rect.left - axisWidth) / Math.max(1, this.columnWidthPx))),
+    );
+    return columns[index].date;
+  }
+
+  private scrollSurface(): HTMLElement | null {
+    return this.gridBody()?.nativeElement.parentElement ?? null;
+  }
+
+  private autoScrollAt(clientY: number): void {
+    if (!this.autoScroll()) return;
+    const surface = this.scrollSurface();
+    if (!surface) return;
+    const rect = surface.getBoundingClientRect();
+    const edge = 48;
+    const topRatio = Math.max(0, Math.min(1, (edge - (clientY - rect.top)) / edge));
+    const bottomRatio = Math.max(0, Math.min(1, (edge - (rect.bottom - clientY)) / edge));
+    const velocity = (bottomRatio * bottomRatio - topRatio * topRatio) * 18;
+    if (velocity) surface.scrollTop += velocity;
+  }
+
+  private pointerOrigin(pointerType: string): 'mouse' | 'touch' | 'pen' {
+    return pointerType === 'touch' || pointerType === 'pen' ? pointerType : 'mouse';
+  }
+
+  private beginOptimistic(
+    state: AfCalendarInteractionState,
+    event: AfCalendarEvent,
+    requestId: string,
+  ): void {
+    this.clearOptimistic();
+    this.optimistic.set({ state, event, requestId, sourceEvents: this.events() });
+    this.optimisticTimer = setTimeout(
+      () => this.rejectOptimistic('timeout'),
+      Math.max(0, this.mutationTimeoutMs()),
+    );
+  }
+
+  private rejectOptimistic(reason: 'rejected' | 'conflict' | 'timeout'): void {
+    const optimistic = this.optimistic();
+    if (!optimistic) return;
+    this.clearOptimistic();
+    this.interactionCancel.emit({
+      reason,
+      requestId: optimistic.requestId,
+      eventId: optimistic.event.id,
+    });
+    this.announcement.set(
+      reason === 'conflict' ? 'El evento tiene un conflicto' : 'Cambio revertido',
+    );
+  }
+
+  private clearOptimistic(): void {
+    if (this.optimisticTimer) clearTimeout(this.optimisticTimer);
+    this.optimisticTimer = null;
+    this.optimistic.set(null);
+  }
+
+  /** Resuelve explícitamente una intención sin obligar a reemplazar el array de eventos. */
+  resolveMutation(decision: AfCalendarMutationDecision): void {
+    const optimistic = this.optimistic();
+    if (!optimistic || optimistic.requestId !== decision.requestId) return;
+    if (decision.status === 'accepted' || decision.status === 'queued') {
+      if (decision.status === 'accepted') this.clearOptimistic();
+      this.announcement.set(decision.message ?? 'Cambio aceptado');
+      return;
+    }
+    this.rejectOptimistic(decision.status);
+    if (decision.message) this.announcement.set(decision.message);
+  }
+
   private minuteAtClientY(clientY: number): number {
     const body = this.gridBody()?.nativeElement;
     if (!body) return this.bounds().minMinutes;
     const top = body.getBoundingClientRect().top;
-    return (
-      this.bounds().minMinutes +
-      afCalendarPixelsToMinutes(clientY - top, this.slotHeightPx())
-    );
+    return this.bounds().minMinutes + afCalendarPixelsToMinutes(clientY - top, this.slotHeightPx());
   }
 
   /**

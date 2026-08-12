@@ -1,20 +1,18 @@
+import type { AfCalendarDayLoad } from '../types/calendar-widget.types';
 import type {
-    AfCalendarDayLoad,
-} from '../types/calendar-widget.types';
-import type {
-    AfCalendarEvent,
-    AfCalendarLabels,
-    AfCalendarView,
-    AfCalendarVisibleRange,
-    AfCalendarWeekday,
+  AfCalendarEvent,
+  AfCalendarLabels,
+  AfCalendarView,
+  AfCalendarVisibleRange,
+  AfCalendarWeekday,
 } from '../types/calendar.types';
 
 import {
-    afCalendarAddDays,
-    afCalendarAddMonths,
-    afCalendarDayOfWeek,
-    afCalendarStartOfMonth,
-    afCalendarStartOfWeek,
+  afCalendarAddDays,
+  afCalendarAddMonths,
+  afCalendarDayOfWeek,
+  afCalendarStartOfMonth,
+  afCalendarStartOfWeek,
 } from './af-calendar-date';
 import { afCalendarToMinutes } from './af-calendar-time';
 
@@ -151,9 +149,13 @@ export function afCalendarEventsOn(
   date: string,
   resourceId?: string,
 ): readonly AfCalendarEvent[] {
-  return events.filter(
-    (event) => event.date === date && (resourceId === undefined || event.resourceId === resourceId),
-  );
+  return events.filter((event) => {
+    const occurs =
+      event.kind === 'all-day'
+        ? event.date <= date && date < (event.endDate ?? afCalendarAddDays(event.date, 1))
+        : event.date === date;
+    return occurs && (resourceId === undefined || event.resourceId === resourceId);
+  });
 }
 
 export function afCalendarEventDuration(event: AfCalendarEvent): number {

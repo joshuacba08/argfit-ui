@@ -2,10 +2,10 @@
   "schemaVersion": "1.0.0",
   "library": {
     "name": "ArgFit UI",
-    "version": "1.4.0",
-    "gitSha": "479f78862fad",
-    "generatedAt": "2026-08-13T01:58:15+09:00",
-    "sourceDigest": "4dfcc28ca9cebc05bcbc6c3aa3028848c8622a483d563e051c4f134c244a75ad",
+    "version": "1.5.0",
+    "gitSha": "7395cb5f9606",
+    "generatedAt": "2026-08-13T02:06:01+09:00",
+    "sourceDigest": "d412e834227c9c160f06499b7242fb22a90ed61d6561ac247cd26e6ee93aad6e",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -799,6 +799,14 @@
       "api": {
         "inputs": [
           {
+            "name": "allowMutation",
+            "type": "AfCalendarAllowMutation | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Regla síncrona del producto aplicada antes de cualquier preview o output.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "anchorDate",
             "type": "string | undefined",
             "required": false,
@@ -811,6 +819,14 @@
             "type": "string",
             "required": false,
             "defaultValue": "'Calendario'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "autoScroll",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
             "description": "",
             "deprecated": false
           },
@@ -911,6 +927,14 @@
             "deprecated": false
           },
           {
+            "name": "maxDurationMinutes",
+            "type": "number | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
             "name": "maxTime",
             "type": "string",
             "required": false,
@@ -919,10 +943,34 @@
             "deprecated": false
           },
           {
+            "name": "minDurationMinutes",
+            "type": "number",
+            "required": false,
+            "defaultValue": "15",
+            "description": "",
+            "deprecated": false
+          },
+          {
             "name": "minTime",
             "type": "string",
             "required": false,
             "defaultValue": "'07:00'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "moveEnabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "<p>Permisos independientes; <code>editable</code> continúa siendo el interruptor maestro.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "mutationTimeoutMs",
+            "type": "unknown",
+            "required": false,
+            "defaultValue": "8_000",
             "description": "",
             "deprecated": false
           },
@@ -959,6 +1007,22 @@
             "deprecated": false
           },
           {
+            "name": "resizeEndEnabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "resizeStartEnabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          },
+          {
             "name": "resources",
             "type": "readonly AfCalendarResource[]",
             "required": false,
@@ -979,6 +1043,14 @@
             "type": "boolean",
             "required": false,
             "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timedAllDayConversion",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
             "description": "",
             "deprecated": false
           },
@@ -1067,6 +1139,14 @@
           {
             "name": "interactionCancel",
             "type": "AfCalendarInteractionCancel",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "mutationUndoRequest",
+            "type": "AfCalendarMutationUndoRequest",
             "required": false,
             "defaultValue": null,
             "description": "",
@@ -1238,7 +1318,7 @@
       "example": {
         "story": "Default",
         "typescript": "import { AfCalendar } from '@argfit-ui/adaptive';",
-        "template": "<div class=\"af-story-surface\">\n      <af-calendar\n        [events]=\"events\"\n        [view]=\"view\"\n        [views]=\"views\"\n        [anchorDate]=\"anchorDate\"\n        [timeZone]=\"timeZone\"\n        [density]=\"density\"\n        [firstDay]=\"firstDay\"\n        [hiddenDays]=\"hiddenDays\"\n        [minTime]=\"minTime\"\n        [maxTime]=\"maxTime\"\n        [nowIndicator]=\"nowIndicator\"\n        [showToolbar]=\"showToolbar\"\n        [editable]=\"editable\"\n        [selectable]=\"selectable\"\n        [createButton]=\"createButton\"\n        [overlays]=\"overlays\"\n        [height]=\"height\"\n        [loading]=\"loading\"\n        [partial]=\"partial\"\n        [offline]=\"offline\"\n        [empty]=\"empty\"\n        [error]=\"error\"\n        [ariaLabel]=\"ariaLabel\"\n        (visibleRangeChange)=\"visibleRangeChange($event)\"\n        (viewChange)=\"viewChange($event)\"\n        (anchorDateChange)=\"anchorDateChange($event)\"\n        (eventActivate)=\"eventActivate($event)\"\n        (eventMoveRequest)=\"eventMoveRequest($event)\"\n        (eventResizeRequest)=\"eventResizeRequest($event)\"\n        (rangeCreateRequest)=\"rangeCreateRequest($event)\"\n        (recurrenceScopeRequest)=\"recurrenceScopeRequest($event)\"\n        (interactionCancel)=\"interactionCancel($event)\"\n        (eventSave)=\"eventSave($event)\"\n        (eventDelete)=\"eventDelete($event)\"\n        (retry)=\"retry()\"\n      />\n    </div>"
+        "template": "<div class=\"af-story-surface\">\n      <af-calendar\n        [events]=\"events\"\n        [view]=\"view\"\n        [views]=\"views\"\n        [anchorDate]=\"anchorDate\"\n        [timeZone]=\"timeZone\"\n        [density]=\"density\"\n        [firstDay]=\"firstDay\"\n        [hiddenDays]=\"hiddenDays\"\n        [minTime]=\"minTime\"\n        [maxTime]=\"maxTime\"\n        [nowIndicator]=\"nowIndicator\"\n        [showToolbar]=\"showToolbar\"\n        [editable]=\"editable\"\n        [timedAllDayConversion]=\"timedAllDayConversion\"\n        [selectable]=\"selectable\"\n        [createButton]=\"createButton\"\n        [overlays]=\"overlays\"\n        [height]=\"height\"\n        [loading]=\"loading\"\n        [partial]=\"partial\"\n        [offline]=\"offline\"\n        [empty]=\"empty\"\n        [error]=\"error\"\n        [ariaLabel]=\"ariaLabel\"\n        (visibleRangeChange)=\"visibleRangeChange($event)\"\n        (viewChange)=\"viewChange($event)\"\n        (anchorDateChange)=\"anchorDateChange($event)\"\n        (eventActivate)=\"eventActivate($event)\"\n        (eventMoveRequest)=\"eventMoveRequest($event)\"\n        (eventResizeRequest)=\"eventResizeRequest($event)\"\n        (rangeCreateRequest)=\"rangeCreateRequest($event)\"\n        (recurrenceScopeRequest)=\"recurrenceScopeRequest($event)\"\n        (interactionCancel)=\"interactionCancel($event)\"\n        (mutationUndoRequest)=\"mutationUndoRequest($event)\"\n        (eventSave)=\"eventSave($event)\"\n        (eventDelete)=\"eventDelete($event)\"\n        (retry)=\"retry()\"\n      />\n    </div>"
       }
     },
     {

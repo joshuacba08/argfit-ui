@@ -4,13 +4,13 @@ import type { AfCalendarEvent } from '../types/calendar.types';
 
 import { AF_CALENDAR_DEFAULT_LABELS } from './af-calendar-labels';
 import {
-    afCalendarEventDuration,
-    afCalendarEventsOn,
-    afCalendarMonthCells,
-    afCalendarNavigate,
-    afCalendarVisibleRange,
-    afCalendarWeekLoad,
-    type AfCalendarRangeOptions,
+  afCalendarEventDuration,
+  afCalendarEventsOn,
+  afCalendarMonthCells,
+  afCalendarNavigate,
+  afCalendarVisibleRange,
+  afCalendarWeekLoad,
+  type AfCalendarRangeOptions,
 } from './af-calendar-range';
 
 const options: AfCalendarRangeOptions = {
@@ -86,9 +86,7 @@ describe('afCalendarVisibleRange', () => {
     expect(afCalendarVisibleRange('day', '2026-08-12', options).title).toBe('Mié 12 Agosto 2026');
     expect(afCalendarVisibleRange('week', '2026-08-12', options).title).toBe('10–16 Agosto 2026');
     expect(afCalendarVisibleRange('month', '2026-08-12', options).title).toBe('Agosto 2026');
-    expect(afCalendarVisibleRange('week', '2026-08-31', options).title).toBe(
-      '31 Ago – 6 Sep 2026',
-    );
+    expect(afCalendarVisibleRange('week', '2026-08-31', options).title).toBe('31 Ago – 6 Sep 2026');
   });
 });
 
@@ -120,6 +118,13 @@ describe('event helpers', () => {
     ];
     expect(afCalendarEventsOn(events, '2026-08-12').map((e) => e.id)).toEqual(['a', 'b']);
     expect(afCalendarEventsOn(events, '2026-08-12', 'r2').map((e) => e.id)).toEqual(['b']);
+  });
+
+  it('includes a multi-day all-day event until its exclusive end date', () => {
+    const multi = event({ kind: 'all-day', date: '2026-08-12', endDate: '2026-08-15' });
+    expect(afCalendarEventsOn([multi], '2026-08-12')).toHaveLength(1);
+    expect(afCalendarEventsOn([multi], '2026-08-14')).toHaveLength(1);
+    expect(afCalendarEventsOn([multi], '2026-08-15')).toHaveLength(0);
   });
 
   it('measures duration and treats all-day as zero', () => {

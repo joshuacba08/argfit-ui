@@ -30,19 +30,21 @@ These budgets are enforced by `pnpm measure:production-performance:dist`.
 | Artifact | Budget |
 | --- | --- |
 | Showcase initial asset total | `2.90 MB` raw |
-| Showcase main bundle | `2.75 MB` raw |
+| Showcase main bundle | `2.90 MB` raw |
 | Showcase styles bundle | `60 kB` raw |
-| Production tarball total | `815 kB` |
-| `@argfit-ui/core` tarball | `47 kB` |
-| `@argfit-ui/primitives` tarball | `15 kB` |
-| `@argfit-ui/adaptive` tarball | `141 kB` |
-| `@argfit-ui/desktop` tarball | `294 kB` |
-| `@argfit-ui/mobile` tarball | `267 kB` |
-| `@argfit-ui/mcp` tarball | `60 kB` |
+| Production tarball total | `1,034 kB` |
+| `@argfit-ui/core` tarball | `88 kB` |
+| `@argfit-ui/primitives` tarball | `27.5 kB` |
+| `@argfit-ui/adaptive` tarball | `210 kB` |
+| `@argfit-ui/desktop` tarball | `343 kB` |
+| `@argfit-ui/mobile` tarball | `301 kB` |
+| `@argfit-ui/mcp` tarball | `65 kB` |
 
 ## Exceptions
 
-No active budget exceptions.
+No active budget exceptions. The 1.5.0 thresholds were recalibrated at roughly
+5% above the measured artifacts for the extensible icon registry, Calendar
+interaction surface and secondary Calendar entry point.
 
 If a budget ever needs to move, the exception must be documented in this file in the same change that updates the threshold and the rationale must explain why the increase is unavoidable.
 
