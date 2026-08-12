@@ -95,6 +95,7 @@ describe('AfIconComponent', () => {
     expect(trashSvg.querySelector('title')).toBeNull();
 
     const check = host.querySelector('[data-testid="check"]') as HTMLElement;
+    expect(check.style.color).toBe('currentcolor');
     const checkSvg = check.querySelector('svg') as SVGElement;
     expect(checkSvg.getAttribute('aria-hidden')).toBe('true');
   });

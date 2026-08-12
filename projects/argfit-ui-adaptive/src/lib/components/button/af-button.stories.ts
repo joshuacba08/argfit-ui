@@ -92,6 +92,9 @@ export const Primary: Story = {
     const icon = button!.querySelector<HTMLElement>('af-icon');
     await expect(icon).not.toBeNull();
     await expect(getComputedStyle(icon!).color).toBe('rgb(10, 22, 40)');
+    const iconSvg = icon!.querySelector<SVGElement>('svg');
+    await expect(iconSvg).not.toBeNull();
+    await expect(getComputedStyle(iconSvg!).color).toBe('rgb(10, 22, 40)');
     await userEvent.click(button!);
     await expect(args.pressed).toHaveBeenCalledOnce();
   },
@@ -111,6 +114,9 @@ export const Secondary: Story = {
     const icon = button!.querySelector<HTMLElement>('af-icon');
     await expect(icon).not.toBeNull();
     await expect(getComputedStyle(icon!).color).toBe('rgb(240, 244, 248)');
+    const iconSvg = icon!.querySelector<SVGElement>('svg');
+    await expect(iconSvg).not.toBeNull();
+    await expect(getComputedStyle(iconSvg!).color).toBe('rgb(240, 244, 248)');
   },
 };
 

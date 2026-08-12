@@ -212,7 +212,7 @@ const AF_ICON_SIZE_PX: Record<AfIconSize, number> = {
 };
 
 const AF_ICON_TONE_VAR: Record<AfIconTone, string> = {
-  default: 'var(--af-text-main)',
+  default: 'currentColor',
   muted: 'var(--af-text-muted)',
   primary: 'var(--af-primary)',
   success: 'var(--af-success)',
