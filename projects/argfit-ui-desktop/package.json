@@ -28,7 +28,8 @@
     "@angular/core": "^21.2.0",
     "@angular/forms": "^21.2.0",
     "primeng": "^21.1.8",
-    "echarts": "^6.1.0"
+    "echarts": "^6.1.0",
+    "echarts-gl": "^2.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
@@ -37,5 +38,10 @@
   "publishConfig": {
     "access": "public",
     "tag": "latest"
+  },
+  "peerDependenciesMeta": {
+    "echarts-gl": {
+      "optional": true
+    }
   }
 }

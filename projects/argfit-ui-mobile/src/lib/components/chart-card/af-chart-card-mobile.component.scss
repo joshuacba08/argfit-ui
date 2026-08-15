@@ -1,0 +1,147 @@
+.af-chart-card-mobile {
+  background: var(--af-card-bg);
+  border: 1px solid var(--af-card-border);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  padding: var(--af-space-3);
+  position: relative;
+}
+
+.af-chart-card-mobile__header {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+  min-height: 44px;
+}
+
+.af-chart-card-mobile__heading {
+  color: var(--af-text-main);
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-bold);
+  margin: 0;
+  margin-inline-end: auto;
+}
+
+.af-chart-card-mobile__tag {
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  letter-spacing: 0.04em;
+  padding: 2px var(--af-space-2);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.af-chart-card-mobile__tag:first-child {
+  margin-inline-end: auto;
+}
+
+.af-chart-card-mobile__note {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  line-height: 1.45;
+  margin: var(--af-space-1) 0 0;
+}
+
+.af-chart-card-mobile__body {
+  display: block;
+  margin-top: var(--af-space-2);
+  min-width: 0;
+}
+
+/* Objetivo táctil completo: 44 px es el mínimo utilizable con el pulgar. */
+.af-chart-card-mobile__menu-trigger {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: flex;
+  flex: none;
+  height: 44px;
+  justify-content: center;
+  padding: 0;
+  width: 44px;
+}
+
+.af-chart-card-mobile__menu-trigger:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 2px;
+}
+
+/* ── Hoja de acciones ─────────────────────────────────────────────── */
+
+.af-chart-card-mobile__backdrop {
+  background: var(--af-bg-overlay);
+  inset: 0;
+  position: fixed;
+  z-index: 50;
+}
+
+.af-chart-card-mobile__sheet {
+  background: var(--af-bg-elevated);
+  border-start-end-radius: var(--af-radius-lg);
+  border-start-start-radius: var(--af-radius-lg);
+  border-top: 1px solid var(--af-border-strong);
+  bottom: 0;
+  box-shadow: var(--af-shadow-lg);
+  display: flex;
+  flex-direction: column;
+  inset-inline: 0;
+  /* Respeta el área segura inferior para no quedar bajo el indicador de inicio. */
+  padding: var(--af-space-2) var(--af-space-2) calc(var(--af-space-4) + env(safe-area-inset-bottom));
+  position: fixed;
+  z-index: 51;
+}
+
+.af-chart-card-mobile__sheet-heading {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  letter-spacing: 0.06em;
+  margin: 0;
+  padding: var(--af-space-2);
+  text-transform: uppercase;
+}
+
+.af-chart-card-mobile__sheet-item {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  font-size: var(--af-text-base);
+  gap: var(--af-space-3);
+  min-height: 48px;
+  padding: var(--af-space-2) var(--af-space-3);
+  text-align: start;
+  width: 100%;
+}
+
+.af-chart-card-mobile__sheet-item:active {
+  background: var(--af-bg-interactive);
+}
+
+.af-chart-card-mobile__sheet-item:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: -2px;
+}
+
+.af-chart-card-mobile:fullscreen,
+.af-chart-card-mobile[data-fullscreen] {
+  background: var(--af-bg-main);
+  border-radius: 0;
+  border-width: 0;
+  padding: var(--af-space-4) var(--af-space-3);
+}
+
+.af-chart-card-mobile:fullscreen .af-chart-card-mobile__body,
+.af-chart-card-mobile[data-fullscreen] .af-chart-card-mobile__body {
+  flex: 1;
+  min-height: 0;
+}

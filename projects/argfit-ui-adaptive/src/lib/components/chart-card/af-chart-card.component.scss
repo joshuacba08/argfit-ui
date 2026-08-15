@@ -1,0 +1,21 @@
+.af-chart-card {
+  display: block;
+  min-width: 0;
+}
+
+/*
+ * Respaldo cuando la API de pantalla completa no está disponible —un documento embebido
+ * sin permiso, por ejemplo—. Cubre el documento propio, que es lo máximo alcanzable, y
+ * conserva la misma silueta que el modo nativo.
+ */
+.af-chart-card:has([data-fullscreen]):not(:fullscreen) {
+  background: var(--af-bg-main);
+  inset: 0;
+  overflow: auto;
+  position: fixed;
+  z-index: 60;
+}
+
+.af-chart-card:has([data-fullscreen]) > * {
+  block-size: 100%;
+}

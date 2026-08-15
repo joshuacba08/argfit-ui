@@ -52,8 +52,21 @@ export const ARGFIT_LIGHT_THEME: AfThemeDefinition = {
     '--af-chart-grid': 'rgba(16, 42, 67, 0.08)',
     '--af-chart-axis': 'rgba(16, 42, 67, 0.18)',
     '--af-chart-label': '#486581',
+    '--af-chart-accent': '#0E7FA8',
     '--af-chart-tooltip-bg': 'rgba(255, 255, 255, 0.98)',
+    '--af-chart-tooltip-border': 'rgba(16, 42, 67, 0.14)',
     '--af-chart-tooltip-text': '#102A43',
+    '--af-chart-track': 'rgba(16, 42, 67, 0.10)',
+    '--af-chart-fill-soft': 'rgba(37, 153, 213, 0.14)',
+    // La rampa se invierte respecto del tema oscuro: sobre fondo claro, más magnitud es
+    // más tinta, no más brillo. Un cian luminoso sobre blanco desaparecería justo en el
+    // extremo que debe destacar.
+    '--af-chart-scale-0': '#F0F4F8',
+    '--af-chart-scale-1': '#C7E2F2',
+    '--af-chart-scale-2': '#8DC7E8',
+    '--af-chart-scale-3': '#2599D5',
+    '--af-chart-scale-4': '#17618D',
+    '--af-chart-scale-5': '#0B3E5E',
 
     // ── Calendar (time grid surfaces) ─────────────────────────────────
     '--af-calendar-surface': '#FFFFFF',

@@ -1,3 +1,10 @@
+@if (webglMissing()) {
+  <!-- Un lienzo en blanco se lee como «no hay datos»; esto dice que falta el paquete. -->
+  <div class="af-chart-desktop__empty" role="status">
+    {{ webglMessage() }}
+  </div>
+}
+
 @if (state() === 'empty') {
   <div class="af-chart-desktop__empty" role="status">
     {{ emptyMessage() }}

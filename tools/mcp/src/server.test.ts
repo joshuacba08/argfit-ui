@@ -44,6 +44,31 @@ describe('ArgFit MCP protocol', () => {
     const text = result.content.find((content) => content.type === 'text');
     expect(text?.type === 'text' ? text.text : '').toContain('AfSelect');
 
+    const commandPalette = await client.callTool({
+      name: 'get_component',
+      arguments: { component: 'AfCommandPalette' },
+    });
+    const commandPaletteText = commandPalette.content.find((content) => content.type === 'text');
+    expect(commandPaletteText?.type === 'text' ? commandPaletteText.text : '')
+      .toContain('itemSelected');
+
+    const usage = await client.callTool({
+      name: 'validate_usage',
+      arguments: {
+        snippet: `import { AfCommandPalette } from '@argfit-ui/adaptive';
+          <af-command-palette
+            [items]="commands"
+            [open]="paletteOpen"
+            [query]="query"
+            (openChange)="paletteOpen = $event"
+            (queryChange)="query = $event"
+            (itemSelected)="runCommand($event)"
+          />`,
+      },
+    });
+    const usageText = usage.content.find((content) => content.type === 'text');
+    expect(usageText?.type === 'text' ? usageText.text : '').toContain('"valid": true');
+
     const component = await client.readResource({ uri: 'argfit://components/select' });
     expect(component.contents[0]?.text).toContain('https://ui.argfit.example/storybook/');
 

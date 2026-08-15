@@ -14,6 +14,10 @@ import type {
 
 const semanticAliases: ReadonlyArray<{ readonly triggers: readonly string[]; readonly expansion: string }> = [
   {
+    triggers: ['command palette', 'paleta', 'ctrl k', 'cmd k', 'spotlight'],
+    expansion: 'command palette actions navigation results keyboard shortcut overlay',
+  },
+  {
     triggers: ['dropdown', 'selector', 'select', 'opciones', 'busqueda', 'buscar', 'infinite scroll', 'carga por scroll'],
     expansion: 'select searchable options scroll load more remote',
   },

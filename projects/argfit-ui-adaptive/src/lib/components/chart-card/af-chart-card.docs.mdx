@@ -1,0 +1,141 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as ChartCardStories from './af-chart-card.stories';
+
+<Meta of={ChartCardStories} />
+
+# ChartCard
+
+Contenedor de un gráfico: encabezado, etiqueta de tipo, nota metodológica y menú de opciones sobre el lienzo. Envuelve un `<af-chart>` proyectado y resuelve lo que de otro modo se reescribe en cada tablero —exportar el lienzo, descargar la serie, restablecer la vista y ocupar la pantalla completa—.
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="chart-card-doc-tabs" id="chart-card-tab-use" value="use" aria-label="Uso" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="chart-card-doc-tabs" id="chart-card-tab-playground" value="playground" aria-label="Playground" />
+  <input className="af-doc-tabs__input" type="radio" name="chart-card-doc-tabs" id="chart-card-tab-api" value="api" aria-label="API" />
+  <input className="af-doc-tabs__input" type="radio" name="chart-card-doc-tabs" id="chart-card-tab-actions" value="actions" aria-label="Acciones" />
+  <input className="af-doc-tabs__input" type="radio" name="chart-card-doc-tabs" id="chart-card-tab-theming" value="theming" aria-label="Theming" />
+
+  <div className="af-doc-tabs__list" aria-label="Secciones de ChartCard">
+    <label className="af-doc-tabs__tab" data-tab="use" htmlFor="chart-card-tab-use">Uso</label>
+    <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="chart-card-tab-playground">Playground</label>
+    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="chart-card-tab-api">API</label>
+    <label className="af-doc-tabs__tab" data-tab="actions" htmlFor="chart-card-tab-actions">Acciones</label>
+    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="chart-card-tab-theming">Theming</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="use">
+
+## Uso
+
+```ts
+import { AfChart, AfChartCard } from '@argfit-ui/adaptive';
+import type { AfChartCardActionEvent } from '@argfit-ui/core';
+```
+
+```html
+<af-chart-card
+  heading="Carga aguda y ratio A:C"
+  tag="Combo · barras + línea"
+  note="Carga externa semanal contra el ratio agudo:crónico."
+  exportName="carga-acwr"
+  [(tableVisible)]="showTable"
+>
+  <af-chart
+    type="combo"
+    [categories]="weeks"
+    [series]="series"
+    [secondaryAxis]="{ name: 'ACWR', min: 0.4, max: 1.8 }"
+    [dataTable]="showTable"
+  />
+</af-chart-card>
+```
+
+La card no consulta datos ni decide qué gráfico corresponde: recibe uno ya construido y lo enmarca.
+
+### La nota no es decorativa
+
+Un gráfico sin unidades ni criterio de lectura se interpreta mal con confianza, que es peor que no interpretarlo. `note` es el lugar donde va qué se midió, en qué unidades y qué marca cada umbral.
+
+<Canvas of={ChartCardStories.Default} sourceState="shown" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="playground">
+
+## Playground
+
+Cambia el encabezado, las acciones del menú y la tabla de datos desde los controles. La barra superior de Storybook alterna desktop/mobile y dark/light.
+
+<Canvas of={ChartCardStories.MenuDeOpciones} sourceState="hidden" />
+<Controls of={ChartCardStories.MenuDeOpciones} />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## API
+
+<ArgTypes of={ChartCardStories.Default} />
+
+La card expone acciones, no un renderer alternativo: el gráfico llega siempre proyectado, de modo que cualquier tipo, eje o adorno de `AfChart` funciona dentro sin que la card los conozca.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="actions">
+
+## Acciones del menú
+
+`menu` acepta la lista de acciones y su orden. Por defecto ofrece `fullscreen`, `download-image`, `download-csv` y `reset`.
+
+<table className="af-doc-table">
+  <thead><tr><th>Acción</th><th>Qué hace</th><th>Quién la resuelve</th></tr></thead>
+  <tbody>
+    <tr><td><code>fullscreen</code></td><td>Ocupa la pantalla completa y vuelve.</td><td>La card</td></tr>
+    <tr><td><code>download-image</code></td><td>Descarga el lienzo como PNG a 2×.</td><td>La card</td></tr>
+    <tr><td><code>download-csv</code></td><td>Descarga la serie en formato largo.</td><td>La card</td></tr>
+    <tr><td><code>reset</code></td><td>Deshace zoom y filtros de leyenda.</td><td>La card</td></tr>
+    <tr><td><code>toggle-table</code></td><td>Conmuta <code>tableVisible</code>.</td><td>La card, con enlace bidireccional</td></tr>
+    <tr><td><code>pop-out</code></td><td>Emite la intención de desanclar el gráfico.</td><td>La aplicación</td></tr>
+  </tbody>
+</table>
+
+### Por qué `pop-out` no hace nada por sí sola
+
+Abrir una ventana, una ruta o un diálogo es navegación, y la navegación es responsabilidad de la aplicación. La card emite `(popOut)` y `action` con `handled: false`; qué significa «desanclar» lo decide quien conoce el enrutado.
+
+### Por qué `tableVisible` es bidireccional
+
+La tabla accesible la dibuja el `<af-chart>` proyectado, y un componente no puede escribir en los inputs de otro que no le pertenece. La card conmuta el estado y el consumidor lo enlaza con `[dataTable]`.
+
+<Canvas of={ChartCardStories.TablaDeDatos} sourceState="shown" />
+
+### Teclado
+
+- El disparador abre el menú con `Enter`, `Espacio`, `↓` o `↑`.
+- `↓`, `↑`, `Home` y `End` recorren las entradas.
+- `Escape` cierra y devuelve el foco al disparador; también lo hace elegir una acción.
+
+El foco vuelve siempre al disparador: si quedara en una entrada ya eliminada, el recorrido con `Tab` reiniciaría desde el principio del documento.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="theming">
+
+## Theming
+
+La card usa las superficies de tarjeta del tema y no define color propio.
+
+<table className="af-doc-table">
+  <thead><tr><th>Token</th><th>Aplicación</th></tr></thead>
+  <tbody>
+    <tr><td><code>--af-card-bg</code></td><td>Fondo de la card.</td></tr>
+    <tr><td><code>--af-card-border</code></td><td>Borde en reposo.</td></tr>
+    <tr><td><code>--af-border-strong</code></td><td>Borde al pasar el puntero y del menú.</td></tr>
+    <tr><td><code>--af-bg-elevated</code></td><td>Superficie del menú y de la hoja táctil.</td></tr>
+    <tr><td><code>--af-border-focus</code></td><td>Anillo de foco del disparador y de las entradas.</td></tr>
+  </tbody>
+</table>
+
+Los colores del gráfico son del propio `AfChart` y salen de la familia `--af-chart-*`.
+
+  </section>
+</div>

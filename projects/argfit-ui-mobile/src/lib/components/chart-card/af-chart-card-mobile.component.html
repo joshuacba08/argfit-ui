@@ -1,0 +1,61 @@
+@if (hasHeader()) {
+  <div class="af-chart-card-mobile__header">
+    @if (heading()) {
+      <h3 class="af-chart-card-mobile__heading" [id]="headingId">{{ heading() }}</h3>
+    }
+
+    @if (tag()) {
+      <span class="af-chart-card-mobile__tag">{{ tag() }}</span>
+    }
+
+    @if (menuItems().length > 0) {
+      <button
+        #trigger
+        type="button"
+        class="af-chart-card-mobile__menu-trigger"
+        [attr.aria-label]="menuLabel()"
+        [attr.aria-expanded]="menuOpen()"
+        [attr.aria-controls]="menuOpen() ? menuId : null"
+        aria-haspopup="menu"
+        (click)="toggleMenu()"
+      >
+        <af-icon name="more-vertical" size="md" />
+      </button>
+    }
+  </div>
+}
+
+@if (note()) {
+  <p class="af-chart-card-mobile__note" [id]="noteId">{{ note() }}</p>
+}
+
+<div class="af-chart-card-mobile__body">
+  <ng-content />
+</div>
+
+@if (menuOpen()) {
+  <div class="af-chart-card-mobile__backdrop" (click)="onBackdropClick()"></div>
+
+  <div
+    #menu
+    class="af-chart-card-mobile__sheet"
+    role="menu"
+    [id]="menuId"
+    [attr.aria-label]="menuHeading()"
+    (keydown)="onMenuKeydown($event)"
+  >
+    <p class="af-chart-card-mobile__sheet-heading" aria-hidden="true">{{ menuHeading() }}</p>
+
+    @for (item of menuItems(); track item.action) {
+      <button
+        type="button"
+        role="menuitem"
+        class="af-chart-card-mobile__sheet-item"
+        (click)="select(item.action)"
+      >
+        <af-icon [name]="iconFor(item.action)" size="md" tone="muted" />
+        <span>{{ item.label }}</span>
+      </button>
+    }
+  </div>
+}
