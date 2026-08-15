@@ -10,25 +10,26 @@ const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
 
-// Recalibrated for 1.5.0, which adds the extensible icon registry, the complete Calendar
-// interaction contracts/renderers and the @argfit-ui/adaptive/calendar entrypoint.
-// Measured 1.5.0: main 2.76 MB, core 83.6 kB, primitives 26.1 kB, adaptive 199.3 kB,
-// desktop 326.5 kB, mobile 286.6 kB, MCP 61.6 kB and tarballs 983.8 kB. Each changed
-// budget sits roughly 5 % above its measurement so the ratchet still catches unintended
-// growth: these are ceilings to justify raising, not targets to grow into. Raise them
-// only alongside a release that says in its notes what was added.
+// Recalibrated for the release after 1.5.0, which adds the public ChartCard and
+// CommandPalette families plus the expanded 2D/3D chart contracts and renderers.
+// Measured: initial 3,163,171 B, main 3,097,678 B, core 98,012 B,
+// primitives 26,153 B, adaptive 223,459 B, desktop 400,753 B, mobile 360,262 B,
+// MCP 66,230 B and tarballs 1,174,869 B. Each changed budget sits roughly 5 %
+// above its measurement so the ratchet still catches unintended growth: these are
+// ceilings to justify raising, not targets to grow into. Raise them only alongside
+// a release that says in its notes what was added.
 const budgets = {
-  initialTotal: 2_900_000,
-  mainBundle: 2_900_000,
+  initialTotal: 3_322_000,
+  mainBundle: 3_253_000,
   stylesBundle: 60_000,
-  tarballTotal: 1_034_000,
+  tarballTotal: 1_234_000,
   tarballs: {
-    'argfit-ui-core': 88_000,
+    'argfit-ui-core': 103_000,
     'argfit-ui-primitives': 27_500,
-    'argfit-ui-adaptive': 210_000,
-    'argfit-ui-desktop': 343_000,
-    'argfit-ui-mobile': 301_000,
-    'argfit-ui-mcp': 65_000,
+    'argfit-ui-adaptive': 235_000,
+    'argfit-ui-desktop': 421_000,
+    'argfit-ui-mobile': 379_000,
+    'argfit-ui-mcp': 70_000,
   },
 };
 

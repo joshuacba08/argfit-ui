@@ -23,10 +23,13 @@ const canonicalStoryIds = [
   'feedback-inlinemessage--default',
   'feedback-progress--default',
   'components-overlays-dialog--default',
+  'components-overlays-commandpalette--default',
   'components-forms-segmentedcontrol--default',
   'components-forms-datepicker--default',
   'experimental-imagecropper--default',
   'data-metriccard--default',
+  'data-chart--combo-ejes-duales',
+  'data-chart-card--menu-de-opciones',
   'data-datatable--default',
   'data-calendar--default',
   'data-calendareventdetail--default',
@@ -37,16 +40,23 @@ const canonicalStoryIds = [
   'patterns-calendar-dashboard--dashboard',
   'patterns-authentication-unifiedaccess--access',
 ];
-const storyIds = process.env['STORYBOOK_STORY']
-  ? [process.env['STORYBOOK_STORY']]
+const tabbedDocsIds = ['components-overlays-commandpalette--docs'];
+const requestedStory = process.env['STORYBOOK_STORY'];
+const storyIds = requestedStory
+  ? tabbedDocsIds.includes(requestedStory) ? [] : [requestedStory]
   : canonicalStoryIds;
+const docsIds = requestedStory
+  ? tabbedDocsIds.includes(requestedStory) ? [requestedStory] : []
+  : tabbedDocsIds;
 const criticalA11yStories = new Set([
   'components-actions-button--primary',
   'components-forms-input--primary',
   'components-forms-select--searchable',
   'components-overlays-dialog--default',
+  'components-overlays-commandpalette--default',
   'components-forms-datepicker--default',
   'experimental-imagecropper--default',
+  'data-chart-card--menu-de-opciones',
   'patterns-authentication-unifiedaccess--access',
   'data-calendar--default',
   'data-calendareventeditor--default',
@@ -84,6 +94,11 @@ try {
       await validateStory(browser, server.url, storyId, matrix);
     }
   }
+  if (mode === '--smoke') {
+    for (const docsId of docsIds) {
+      await validateTabbedDocs(browser, server.url, docsId);
+    }
+  }
 } finally {
   await browser.close();
   await server.close();
@@ -103,7 +118,8 @@ console.log(
     validatedStories +
     ' stories across ' +
     matrices.length +
-    ' platform/theme matrices.',
+    ' platform/theme matrices' +
+    (mode === '--smoke' ? '; ' + docsIds.length + ' tabbed docs pages.' : '.'),
 );
 
 async function validateStory(browserInstance, baseUrl, storyId, matrix) {
@@ -143,10 +159,10 @@ async function validateStory(browserInstance, baseUrl, storyId, matrix) {
       return;
     }
 
-    await page.locator('#storybook-root').waitFor({ state: 'attached', timeout: 15_000 });
+    await page.locator('#storybook-root, #docs-root').first().waitFor({ state: 'attached', timeout: 15_000 });
     await page.waitForFunction(
       () => {
-        const root = document.querySelector('#storybook-root');
+        const root = document.querySelector('#docs-root') ?? document.querySelector('#storybook-root');
         const token = getComputedStyle(document.documentElement)
           .getPropertyValue('--af-bg-main')
           .trim();
@@ -157,7 +173,7 @@ async function validateStory(browserInstance, baseUrl, storyId, matrix) {
     );
 
     const state = await page.evaluate(() => {
-      const root = document.querySelector('#storybook-root');
+      const root = document.querySelector('#docs-root') ?? document.querySelector('#storybook-root');
       const visibleSurface =
         document.querySelector('[role="dialog"]') ?? root?.firstElementChild ?? root;
       const bounds = visibleSurface?.getBoundingClientRect();
@@ -203,7 +219,7 @@ async function validateStory(browserInstance, baseUrl, storyId, matrix) {
     if (mode === '--a11y') {
       const axeTarget = (await page.locator('[role="dialog"]').count())
         ? '[role="dialog"]'
-        : '#storybook-root';
+        : (await page.locator('#docs-root').count()) ? '#docs-root' : '#storybook-root';
       const results = await new AxeBuilder({ page }).include(axeTarget).analyze();
       const blocking = results.violations.filter((violation) =>
         ['serious', 'critical'].includes(violation.impact ?? ''),
@@ -237,6 +253,45 @@ async function validateStory(browserInstance, baseUrl, storyId, matrix) {
 
     consoleErrors.forEach((error) => failures.push(label + ': console error — ' + error));
     failedResponses.forEach((error) => failures.push(label + ': failed response — ' + error));
+  } catch (error) {
+    failures.push(label + ': ' + (error instanceof Error ? error.message : String(error)));
+  } finally {
+    await context.close();
+  }
+}
+
+async function validateTabbedDocs(browserInstance, baseUrl, docsId) {
+  const label = docsId + ' [docs tabs]';
+  const context = await browserInstance.newContext({ viewport: { width: 1280, height: 800 } });
+  const page = await context.newPage();
+
+  try {
+    await page.goto(baseUrl + '/?path=/docs/' + docsId, {
+      waitUntil: 'networkidle',
+      timeout: 30_000,
+    });
+    const preview = page.frameLocator('iframe');
+    const tabs = preview.locator('.af-doc-tabs');
+    await tabs.waitFor({ state: 'visible', timeout: 15_000 });
+    const values = await tabs.locator('.af-doc-tabs__input').evaluateAll((inputs) =>
+      inputs.map((input) => input.getAttribute('value')).filter(Boolean),
+    );
+
+    for (const value of values) {
+      await tabs.locator(`.af-doc-tabs__tab[data-tab="${value}"]`).click();
+      const checked = await tabs.locator(`.af-doc-tabs__input[value="${value}"]`).isChecked();
+      const visiblePanels = await tabs.locator('.af-doc-tabs__panel').evaluateAll((panels) =>
+        panels
+          .filter((panel) => getComputedStyle(panel).display !== 'none')
+          .map((panel) => panel.getAttribute('data-tab')),
+      );
+      if (!checked || visiblePanels.length !== 1 || visiblePanels[0] !== value) {
+        failures.push(
+          label + ': tab ' + value + ' did not expose its matching panel; received ' +
+            JSON.stringify({ checked, visiblePanels }) + '.',
+        );
+      }
+    }
   } catch (error) {
     failures.push(label + ': ' + (error instanceof Error ? error.message : String(error)));
   } finally {

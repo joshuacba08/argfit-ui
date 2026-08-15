@@ -5,16 +5,27 @@ import {
   inject,
   input,
   output,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 
 import {
   AfPlatformService,
+  type AfChartAnnotation,
+  type AfChartAxis,
+  type AfChartBand,
+  type AfChartDateRange,
   type AfChartDensity,
+  type AfChartGraph,
+  type AfChartTreeNode,
   type AfChartIndicator,
   type AfChartPointEvent,
+  type AfChartRegion,
   type AfChartSeries,
+  type AfChartSpan,
+  type AfChartThreshold,
   type AfChartTone,
+  type AfChartToolboxFeature,
   type AfChartType,
 } from '@argfit-ui/core';
 import { AfChartDesktopComponent } from '@argfit-ui/desktop';
@@ -34,12 +45,26 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
   template: `
     @if (isMobile()) {
       <af-chart-mobile
+        #mobileChart
         [type]="type()"
         [tone]="tone()"
         [density]="density()"
         [categories]="categories()"
         [series]="series()"
         [indicators]="indicators()"
+        [bands]="bands()"
+        [regions]="regions()"
+        [thresholds]="thresholds()"
+        [xAxis]="xAxis()"
+        [yAxis]="yAxis()"
+        [secondaryAxis]="secondaryAxis()"
+        [toolbox]="toolbox()"
+        [showPoints]="showPoints()"
+        [annotations]="annotations()"
+        [graph]="graph()"
+        [tree]="tree()"
+        [dateRange]="dateRange()"
+        [spans]="spans()"
         [title]="title()"
         [description]="description()"
         [height]="height()"
@@ -48,6 +73,7 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [interactive]="interactive()"
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
+        [webglMessage]="webglMessage()"
         [dataTable]="dataTable()"
         [dataTableLabel]="dataTableLabel()"
         [dataTableSeriesHeader]="dataTableSeriesHeader()"
@@ -56,12 +82,26 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
       />
     } @else {
       <af-chart-desktop
+        #desktopChart
         [type]="type()"
         [tone]="tone()"
         [density]="density()"
         [categories]="categories()"
         [series]="series()"
         [indicators]="indicators()"
+        [bands]="bands()"
+        [regions]="regions()"
+        [thresholds]="thresholds()"
+        [xAxis]="xAxis()"
+        [yAxis]="yAxis()"
+        [secondaryAxis]="secondaryAxis()"
+        [toolbox]="toolbox()"
+        [showPoints]="showPoints()"
+        [annotations]="annotations()"
+        [graph]="graph()"
+        [tree]="tree()"
+        [dateRange]="dateRange()"
+        [spans]="spans()"
         [title]="title()"
         [description]="description()"
         [height]="height()"
@@ -70,6 +110,7 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [interactive]="interactive()"
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
+        [webglMessage]="webglMessage()"
         [dataTable]="dataTable()"
         [dataTableLabel]="dataTableLabel()"
         [dataTableSeriesHeader]="dataTableSeriesHeader()"
@@ -91,6 +132,56 @@ export class AfChartComponent {
   readonly categories = input<readonly string[]>([]);
   readonly series = input<readonly AfChartSeries[]>([]);
   readonly indicators = input<readonly AfChartIndicator[]>([]);
+  /**
+   * Bandas de dispersión asociadas a una serie: ±1 DE, intervalo de confianza o rango
+   * mínimo–máximo.
+   *
+   * Se declaran aparte de `series` porque no son mediciones independientes sino la
+   * incertidumbre de otra, y no deben contarse como series en la leyenda ni en la tabla.
+   */
+  readonly bands = input<readonly AfChartBand[]>([]);
+  /** Franjas de referencia sombreadas, p. ej. la zona óptima de un ratio. */
+  readonly regions = input<readonly AfChartRegion[]>([]);
+  /** Líneas de umbral de decisión o de corte clínico. */
+  readonly thresholds = input<readonly AfChartThreshold[]>([]);
+  readonly xAxis = input<AfChartAxis | undefined>(undefined);
+  readonly yAxis = input<AfChartAxis | undefined>(undefined);
+  /** Eje derecho con su propia escala, para las series con `axis: 'secondary'`. */
+  readonly secondaryAxis = input<AfChartAxis | undefined>(undefined);
+  /**
+   * Herramientas de exploración sobre el lienzo (zoom por área, tabla de datos, PNG).
+   *
+   * Vacío por defecto: un gráfico embebido en una tarjeta de resumen no debería
+   * ofrecer controles que compiten con la lectura.
+   */
+  readonly toolbox = input<readonly AfChartToolboxFeature[]>([]);
+  /** Superpone las observaciones crudas sobre las cajas de un boxplot. */
+  readonly showPoints = input(false, { transform: booleanAttribute });
+  /**
+   * Marcadores sobre coordenadas concretas: el umbral estimado, el récord, la ruptura.
+   *
+   * Es distinto de `thresholds`: un umbral es un criterio fijo; una anotación señala un
+   * valor observado que el lector debería llevarse aunque no interrogue el gráfico.
+   */
+  readonly annotations = input<readonly AfChartAnnotation[]>([]);
+  /** Nodos y vínculos de los tipos `sankey` y `network`. */
+  readonly graph = input<AfChartGraph | undefined>(undefined);
+  /** Jerarquía de proporciones del tipo `treemap`. */
+  readonly tree = input<readonly AfChartTreeNode[]>([]);
+  /**
+   * Rango de la cuadrícula del tipo `calendar`.
+   *
+   * Se declara aparte de los datos para que las celdas sin registro existan igualmente:
+   * el hueco —un descanso, una baja— es parte de lo que el calendario muestra.
+   */
+  readonly dateRange = input<AfChartDateRange | undefined>(undefined);
+  /**
+   * Bloques con inicio y fin del tipo `gantt`.
+   *
+   * Se expresan en la unidad del eje —semana de temporada— y no en fechas: la
+   * periodización se planifica contra el calendario de competición, que cambia cada año.
+   */
+  readonly spans = input<readonly AfChartSpan[]>([]);
   readonly title = input<string | undefined>(undefined);
   readonly description = input<string | undefined>(undefined);
   readonly height = input<number | undefined>(undefined);
@@ -99,6 +190,13 @@ export class AfChartComponent {
   readonly interactive = input(true, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly emptyMessage = input<string>('Sin datos disponibles');
+  /**
+   * Aviso cuando un tipo volumétrico no encuentra `echarts-gl`.
+   *
+   * El paquete es una dependencia opcional: sin él el lienzo queda vacío, y un gráfico
+   * vacío se lee como «no hay datos» en lugar de «falta instalar algo».
+   */
+  readonly webglMessage = input<string>('Este gráfico necesita el paquete opcional echarts-gl.');
   readonly ariaLabel = input<string | undefined>(undefined);
   /**
    * Publica la serie como tabla accesible junto al gráfico.
@@ -113,4 +211,32 @@ export class AfChartComponent {
   readonly pointSelect = output<AfChartPointEvent>();
 
   protected readonly isMobile = this.platform.isMobile;
+
+  private readonly desktopChart = viewChild<AfChartDesktopComponent>('desktopChart');
+  private readonly mobileChart = viewChild<AfChartMobileComponent>('mobileChart');
+
+  /** Renderer activo según la plataforma. Sólo uno existe en cada momento. */
+  private get renderer(): AfChartDesktopComponent | AfChartMobileComponent | undefined {
+    return this.desktopChart() ?? this.mobileChart();
+  }
+
+  /**
+   * Exporta el gráfico como PNG y devuelve una data URL, o `null` si aún no se dibujó.
+   *
+   * Es imperativo a propósito: la exportación responde a una acción del usuario en un
+   * instante concreto, no a un estado que pueda vivir en un input.
+   */
+  toDataUrl(pixelRatio = 2): string | null {
+    return this.renderer?.toDataUrl(pixelRatio) ?? null;
+  }
+
+  /** Deshace zoom, filtros de leyenda y cambios de tipo hechos desde el toolbox. */
+  resetView(): void {
+    this.renderer?.resetView();
+  }
+
+  /** Recalcula el tamaño del lienzo tras un cambio de layout del contenedor. */
+  refreshSize(): void {
+    this.renderer?.refreshSize();
+  }
 }

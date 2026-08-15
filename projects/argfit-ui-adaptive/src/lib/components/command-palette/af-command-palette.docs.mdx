@@ -1,0 +1,193 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as CommandPaletteStories from './af-command-palette.stories';
+
+<Meta of={CommandPaletteStories} />
+
+# CommandPalette
+
+Paleta adaptativa para buscar rutas, resultados y acciones desde un único disparador. En desktop abre un overlay productivo mediante `Ctrl+K` o `Cmd+K`; en mobile ocupa la pantalla completa para conservar espacio y objetivos táctiles.
+
+<div className="af-doc-tabs">
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-use" value="use" aria-label="Uso" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-playground" value="playground" aria-label="Playground" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-api" value="api" aria-label="API" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-composition" value="composition" aria-label="Composición" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-states" value="states" aria-label="Estados" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-theming" value="theming" aria-label="Theming" />
+
+  <div className="af-doc-tabs__list" aria-label="Secciones de CommandPalette">
+    <label className="af-doc-tabs__tab" data-tab="use" htmlFor="command-palette-tab-use">Uso</label>
+    <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="command-palette-tab-playground">Playground</label>
+    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="command-palette-tab-api">API</label>
+    <label className="af-doc-tabs__tab" data-tab="composition" htmlFor="command-palette-tab-composition">Composición</label>
+    <label className="af-doc-tabs__tab" data-tab="states" htmlFor="command-palette-tab-states">Estados</label>
+    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="command-palette-tab-theming">Theming</label>
+  </div>
+
+  <section className="af-doc-tabs__panel" data-tab="use">
+
+## Uso
+
+```ts
+import { AfCommandPalette } from '@argfit-ui/adaptive';
+import type { AfCommandPaletteItem } from '@argfit-ui/core';
+```
+
+```html
+<af-command-palette
+  [items]="commands"
+  (itemSelected)="runCommand($event)"
+/>
+```
+
+La aplicación interpreta `kind`, `href` y `data`; la librería nunca navega, consulta APIs ni ejecuta lógica de negocio. Al seleccionar un item, la paleta emite el objeto, se cierra y limpia la consulta.
+
+<Canvas of={CommandPaletteStories.Default} sourceState="shown" />
+
+### Teclado
+
+- `Ctrl+K` o `Cmd+K`: abre y enfoca la búsqueda desde cualquier lugar.
+- Flechas, `Home` y `End`: cambian el resultado activo omitiendo elementos deshabilitados.
+- `Enter`: selecciona; `Escape`: cierra y devuelve el foco.
+
+Debe existir una sola instancia con `shortcutEnabled` activo por documento. Desactívalo en paletas secundarias.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="playground">
+
+## Playground
+
+Abre la paleta desde el disparador o con `Ctrl+K` / `Cmd+K`. Después prueba la búsqueda, los estados y el resto del contrato desde los controles. La barra superior de Storybook permite cambiar entre desktop/mobile y dark/light.
+
+<div className="af-doc-callout">
+  El ejemplo vive en un viewport aislado y amplio para que el overlay no quede recortado por la página de documentación.
+</div>
+
+<Canvas
+  of={CommandPaletteStories.Default}
+  sourceState="hidden"
+  story={{ inline: false, height: '38rem' }}
+/>
+<Controls of={CommandPaletteStories.Default} />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## API
+
+<ArgTypes
+  of={CommandPaletteStories}
+  include={['open', 'query', 'items', 'searchMode', 'placeholder', 'emptyText', 'loading', 'loadingText', 'errorText', 'showTrigger', 'shortcutEnabled', 'shortcutLabel', 'disabled', 'ariaLabel', 'closeLabel', 'openChange', 'queryChange', 'itemSelected']}
+  sort="requiredFirst"
+/>
+
+En modo `client`, la consulta se compara sin distinguir mayúsculas ni diacríticos contra etiqueta, descripción, grupo y palabras clave. En modo `server`, `queryChange` informa la consulta y los `items` se muestran sin filtrado adicional.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="composition">
+
+## Composición
+
+### Dentro de PageShell
+
+Usa el slot de acciones existente y desactiva el buscador simple del shell:
+
+```html
+<af-page-shell [showSearch]="false" ...>
+  <af-command-palette
+    afPageShellActions
+    [items]="commands"
+    (itemSelected)="runCommand($event)"
+  />
+</af-page-shell>
+```
+
+### Fila personalizada
+
+`afCommandPaletteItem` sustituye la presentación interior, pero la paleta conserva `role="option"`, estado activo, puntero y teclado.
+
+```html
+<af-command-palette [items]="commands">
+  <ng-template afCommandPaletteItem let-item let-active="active" let-query="query">
+    <app-command-result [item]="item" [active]="active" [query]="query" />
+  </ng-template>
+</af-command-palette>
+```
+
+No proyectes botones, enlaces ni otros controles interactivos dentro de la fila.
+
+<Canvas of={CommandPaletteStories.CustomItem} sourceState="hidden" />
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="states">
+
+## Estados
+
+Cada estado se muestra en su propio viewport de `38rem`: el overlay conserva su escala real y no compite con las demás variantes de la página.
+
+### Abierta con grupos
+
+Los grupos conservan el orden de su primera aparición y los elementos deshabilitados siguen visibles, pero se omiten durante la navegación por teclado.
+
+<Canvas
+  of={CommandPaletteStories.OpenWithGroups}
+  sourceState="hidden"
+  story={{ inline: false, height: '38rem' }}
+/>
+
+### Cargando sin resultados
+
+Cuando todavía no hay elementos, el estado de carga reemplaza la lista.
+
+<Canvas
+  of={CommandPaletteStories.Loading}
+  sourceState="hidden"
+  story={{ inline: false, height: '38rem' }}
+/>
+
+### Error
+
+El error tiene prioridad sobre resultados, carga y estado vacío.
+
+<Canvas
+  of={CommandPaletteStories.Error}
+  sourceState="hidden"
+  story={{ inline: false, height: '38rem' }}
+/>
+
+### Sin resultados
+
+El mensaje vacío aparece únicamente cuando no existen elementos, carga ni error.
+
+<Canvas
+  of={CommandPaletteStories.Empty}
+  sourceState="hidden"
+  story={{ inline: false, height: '38rem' }}
+/>
+
+### Resultados gestionados por servidor
+
+La aplicación recibe `queryChange` y mantiene los resultados anteriores visibles mientras solicita los nuevos.
+
+<Canvas
+  of={CommandPaletteStories.ServerResults}
+  sourceState="hidden"
+  story={{ inline: false, height: '38rem' }}
+/>
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="theming">
+
+## Theming
+
+El componente usa los tokens públicos existentes. Los más relevantes son `--af-input-bg`, `--af-input-border`, `--af-border-focus`, `--af-bg-elevated`, `--af-bg-interactive`, `--af-text-main`, `--af-text-muted`, `--af-radius-xl` y `--af-shadow-xl`.
+
+<Canvas of={CommandPaletteStories.Default} sourceState="hidden" />
+
+  </section>
+</div>

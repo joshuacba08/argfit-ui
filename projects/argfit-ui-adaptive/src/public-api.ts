@@ -92,11 +92,20 @@ export {
     AfChartComponent as AfChart, AfChartComponent
 } from './lib/components/chart/af-chart.component';
 export {
+    AfChartCardComponent as AfChartCard, AfChartCardComponent
+} from './lib/components/chart-card/af-chart-card.component';
+export {
     AfCheckboxComponent as AfCheckbox, AfCheckboxComponent
 } from './lib/components/checkbox/af-checkbox.component';
 export {
     AfChipComponent as AfChip, AfChipComponent
 } from './lib/components/chip/af-chip.component';
+export {
+    AfCommandPaletteItemDirective
+} from './lib/components/command-palette/af-command-palette-item.directive';
+export {
+    AfCommandPaletteComponent as AfCommandPalette, AfCommandPaletteComponent
+} from './lib/components/command-palette/af-command-palette.component';
 export {
     AfKanbanCardDirective
 } from './lib/components/kanban/af-kanban-card.directive';

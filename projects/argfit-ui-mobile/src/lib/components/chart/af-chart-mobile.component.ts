@@ -16,21 +16,38 @@ import {
   inject,
   input,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 
+import { AF_CHART_3D_TYPES } from '@argfit-ui/core';
 import type {
+  AfChartAnnotation,
+  AfChartAxis,
+  AfChartBand,
+  AfChartDateRange,
   AfChartDensity,
+  AfChartGraph,
+  AfChartTreeNode,
   AfChartIndicator,
   AfChartPoint,
   AfChartPointEvent,
+  AfChartRegion,
   AfChartSeries,
+  AfChartSpan,
+  AfChartThreshold,
   AfChartTone,
+  AfChartToolboxFeature,
   AfChartType,
   AfChartValue,
 } from '@argfit-ui/core';
 
-import { buildEchartsOption, echarts, ensureEchartsRegistered } from './af-chart-echarts';
+import {
+  buildEchartsOption,
+  echarts,
+  ensureEchartsGlRegistered,
+  ensureEchartsRegistered,
+} from './af-chart-echarts';
 
 interface EchartsClickParams {
   readonly data?: number | AfChartPoint;
@@ -45,6 +62,19 @@ interface EchartsInstance {
   resize(): void;
   dispose(): void;
   on(event: 'click', handler: (params: EchartsClickParams) => void): void;
+  getDataURL(opts: {
+    type: 'png';
+    pixelRatio: number;
+    backgroundColor: string;
+    excludeComponents: readonly string[];
+  }): string;
+  dispatchAction(payload: { type: string }): void;
+}
+
+/** Lee un token de color del documento; ECharts no interpreta variables CSS. */
+function readCssColor(doc: Document, token: string, fallback: string): string {
+  const computed = doc.defaultView?.getComputedStyle(doc.documentElement);
+  return computed?.getPropertyValue(token).trim() || fallback;
 }
 
 @Component({
@@ -81,7 +111,39 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   readonly interactive = input(true, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly emptyMessage = input<string>('Sin datos disponibles');
+  /**
+   * Aviso cuando falta `echarts-gl`.
+   *
+   * Los tipos volumétricos dependen de un paquete opcional. Sin él el lienzo queda en
+   * blanco sin explicación, y un gráfico vacío se lee como «no hay datos» en vez de
+   * «falta una dependencia».
+   */
+  readonly webglMessage = input<string>('Este gráfico necesita el paquete opcional echarts-gl.');
   readonly ariaLabel = input<string | undefined>(undefined);
+  /** Bandas de dispersión asociadas a las series (±1 DE, intervalos de confianza). */
+  readonly bands = input<readonly AfChartBand[]>([]);
+  /** Franjas de referencia sombreadas sobre el área de trazado. */
+  readonly regions = input<readonly AfChartRegion[]>([]);
+  /** Líneas de umbral de decisión o de corte clínico. */
+  readonly thresholds = input<readonly AfChartThreshold[]>([]);
+  readonly xAxis = input<AfChartAxis | undefined>(undefined);
+  readonly yAxis = input<AfChartAxis | undefined>(undefined);
+  /** Eje derecho, para series con `axis: 'secondary'`. */
+  readonly secondaryAxis = input<AfChartAxis | undefined>(undefined);
+  /** Herramientas de exploración sobre el lienzo. Vacío por defecto. */
+  readonly toolbox = input<readonly AfChartToolboxFeature[]>([]);
+  /** Superpone las observaciones crudas sobre las cajas de un boxplot. */
+  readonly showPoints = input(false, { transform: booleanAttribute });
+  /** Marcadores puntuales sobre coordenadas concretas del gráfico. */
+  readonly annotations = input<readonly AfChartAnnotation[]>([]);
+  /** Nodos y vínculos de los tipos `sankey` y `network`. */
+  readonly graph = input<AfChartGraph | undefined>(undefined);
+  /** Jerarquía de proporciones del tipo `treemap`. */
+  readonly tree = input<readonly AfChartTreeNode[]>([]);
+  /** Bloques con inicio y fin del tipo `gantt`. */
+  readonly spans = input<readonly AfChartSpan[]>([]);
+  /** Rango de la cuadrícula del tipo `calendar`. */
+  readonly dateRange = input<AfChartDateRange | undefined>(undefined);
   /**
    * Publica la serie como tabla accesible junto al gráfico.
    *
@@ -106,7 +168,9 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
 
   protected tableCell(seriesIndex: number, columnIndex: number): string {
     const point = this.series()[seriesIndex]?.data[columnIndex];
-    if (point === undefined) {
+    // El guion cubre tanto la columna que no existe como el hueco declarado: en la
+    // tabla accesible ambos significan que no hay medición que leer.
+    if (point === undefined || point === null) {
       return '—';
     }
     if (typeof point === 'number') {
@@ -124,9 +188,22 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   protected readonly canvasRef = viewChild<ElementRef<HTMLDivElement>>('canvas');
 
   private chart: EchartsInstance | null = null;
+  /** `true` sólo cuando se pidió un tipo volumétrico y el paquete no está instalado. */
+  protected readonly webglMissing = signal(false);
   private resizeObserver: ResizeObserver | null = null;
 
   protected readonly isEmpty = computed<boolean>(() => {
+    // Sankey, red y treemap no publican series: sus datos viven en `graph` y `tree`, así
+    // que juzgarlos por `series` los declararía vacíos siempre.
+    if (this.type() === 'sankey' || this.type() === 'network' || this.type() === 'chord') {
+      return (this.graph()?.nodes.length ?? 0) === 0;
+    }
+    if (this.type() === 'gantt') {
+      return this.spans().length === 0;
+    }
+    if (this.type() === 'treemap' || this.type() === 'sunburst') {
+      return this.tree().length === 0;
+    }
     const series = this.series();
     if (series.length === 0) {
       return true;
@@ -152,6 +229,19 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     if (this.type() === 'gauge') {
       return 260;
     }
+    // Estos tipos reparten el espacio en dos dimensiones: comprimidos a la altura de una
+    // serie temporal, sus etiquetas se solapan y el gráfico deja de leerse.
+    if (
+      this.type() === 'sankey' ||
+      this.type() === 'network' ||
+      this.type() === 'treemap' ||
+      this.type() === 'calendar' ||
+      this.type() === 'small-multiples' ||
+      this.type() === 'scatter-marginal' ||
+      this.type() === 'gantt'
+    ) {
+      return 360;
+    }
     if (this.type() === 'donut' || this.type() === 'radar') {
       return 240;
     }
@@ -172,8 +262,21 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
       this.legend();
       this.showGrid();
       this.interactive();
+      this.bands();
+      this.regions();
+      this.thresholds();
+      this.xAxis();
+      this.yAxis();
+      this.secondaryAxis();
+      this.toolbox();
+      this.showPoints();
+      this.annotations();
+      this.graph();
+      this.tree();
+      this.dateRange();
+      this.spans();
       this.state();
-      this.render();
+      void this.render();
     });
   }
 
@@ -181,7 +284,7 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
-    this.render();
+    void this.render();
     this.observeResize();
     this.destroyRef.onDestroy(() => this.disposeChart());
   }
@@ -195,7 +298,7 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     this.chart?.resize();
   }
 
-  private render(): void {
+  private async render(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
@@ -210,6 +313,19 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
 
     if (!this.canRenderCanvas()) {
       return;
+    }
+
+    // Los volumétricos esperan a su módulo antes de dibujar: `setOption` con una serie
+    // 3D sin registrar deja el lienzo en blanco y sin ningún error.
+    if ((AF_CHART_3D_TYPES as readonly string[]).includes(this.type())) {
+      const available = await ensureEchartsGlRegistered();
+      this.webglMissing.set(!available);
+      if (!available) {
+        this.disposeChart();
+        return;
+      }
+    } else if (this.webglMissing()) {
+      this.webglMissing.set(false);
     }
 
     if (!this.chart) {
@@ -242,11 +358,54 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
         showGrid: this.showGrid(),
         interactive: this.interactive(),
         mobile: true,
+        bands: this.bands(),
+        regions: this.regions(),
+        thresholds: this.thresholds(),
+        xAxis: this.xAxis(),
+        yAxis: this.yAxis(),
+        secondaryAxis: this.secondaryAxis(),
+        toolbox: this.toolbox(),
+        showPoints: this.showPoints(),
+        annotations: this.annotations(),
+        graph: this.graph(),
+        tree: this.tree(),
+        dateRange: this.dateRange(),
+        spans: this.spans(),
       },
       this.document,
     );
     this.chart.setOption(option, true);
     queueMicrotask(() => this.chart?.resize());
+  }
+
+  /**
+   * Exporta el lienzo como PNG y devuelve una data URL, o `null` si el gráfico todavía
+   * no se ha dibujado.
+   *
+   * El fondo se rellena de forma explícita porque el lienzo es transparente: sin esto,
+   * el PNG llegaría con texto claro sobre nada al visor de imágenes del sistema.
+   */
+  toDataUrl(pixelRatio = 2): string | null {
+    if (!this.chart) {
+      return null;
+    }
+    return this.chart.getDataURL({
+      type: 'png',
+      pixelRatio,
+      backgroundColor: readCssColor(this.document, '--af-bg-surface', '#0F1D32'),
+      excludeComponents: ['toolbox'],
+    });
+  }
+
+  /** Deshace zoom, filtros de leyenda y cambios de tipo hechos desde el toolbox. */
+  resetView(): void {
+    this.chart?.dispatchAction({ type: 'restore' });
+    this.chart?.resize();
+  }
+
+  /** Recalcula el tamaño del lienzo tras un cambio de layout del contenedor. */
+  refreshSize(): void {
+    this.chart?.resize();
   }
 
   private disposeChart(): void {

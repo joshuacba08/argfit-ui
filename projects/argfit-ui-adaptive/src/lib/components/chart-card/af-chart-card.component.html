@@ -1,0 +1,35 @@
+<ng-template #chartContent><ng-content /></ng-template>
+
+@if (isMobile()) {
+  <af-chart-card-mobile
+    #mobileCard
+    [heading]="heading()"
+    [tag]="tag()"
+    [note]="note()"
+    [menuItems]="menuItems()"
+    [menuLabel]="resolvedLabels().menu"
+    [menuHeading]="resolvedLabels().menuHeading"
+    [menuOpen]="menuOpen()"
+    [fullscreen]="fullscreen()"
+    (menuOpenChange)="onMenuOpenChange($event)"
+    (actionSelect)="onActionSelect($event)"
+  >
+    <ng-container *ngTemplateOutlet="chartContent" />
+  </af-chart-card-mobile>
+} @else {
+  <af-chart-card-desktop
+    #desktopCard
+    [heading]="heading()"
+    [tag]="tag()"
+    [note]="note()"
+    [menuItems]="menuItems()"
+    [menuLabel]="resolvedLabels().menu"
+    [menuHeading]="resolvedLabels().menuHeading"
+    [menuOpen]="menuOpen()"
+    [fullscreen]="fullscreen()"
+    (menuOpenChange)="onMenuOpenChange($event)"
+    (actionSelect)="onActionSelect($event)"
+  >
+    <ng-container *ngTemplateOutlet="chartContent" />
+  </af-chart-card-desktop>
+}

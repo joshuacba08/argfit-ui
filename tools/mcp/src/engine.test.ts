@@ -8,9 +8,9 @@ const catalog = loadCatalog();
 
 describe('ArgFit catalog engine', () => {
   it('indexes the complete documented adaptive API', () => {
-    expect(catalog.components).toHaveLength(68);
+    expect(catalog.components).toHaveLength(70);
     expect(catalog.components.filter((component) => component.status === 'legacy-undocumented')).toHaveLength(0);
-    expect(catalog.components.filter((component) => component.status === 'documented')).toHaveLength(66);
+    expect(catalog.components.filter((component) => component.status === 'documented')).toHaveLength(68);
     expect(catalog.components.filter((component) => component.status === 'experimental')).toHaveLength(2);
     expect(searchComponents(catalog, { query: 'accordion' })[0]?.component.name).toBe('AfAccordion');
   });
@@ -21,6 +21,14 @@ describe('ArgFit catalog engine', () => {
     });
     expect(results[0]?.component.name).toBe('AfSelect');
     expect(results[0]?.component.api.outputs.some((output) => output.name === 'loadMore')).toBe(true);
+  });
+
+  it('finds CommandPalette for global Ctrl+K navigation intent', () => {
+    const result = searchComponents(catalog, {
+      query: 'paleta Ctrl K para rutas y acciones',
+    })[0];
+    expect(result?.component.name).toBe('AfCommandPalette');
+    expect(result?.component.api.outputs.some((output) => output.name === 'itemSelected')).toBe(true);
   });
 
   it('recommends the authentication shell composition for onboarding', () => {

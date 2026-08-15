@@ -1,0 +1,138 @@
+@if (showTrigger()) {
+  <button
+    type="button"
+    class="af-command-palette-mobile__trigger"
+    [disabled]="disabled()"
+    [attr.aria-haspopup]="'dialog'"
+    [attr.aria-expanded]="open()"
+    (click)="requestOpen()"
+  >
+    <af-icon name="search" size="sm" tone="muted" decorative />
+    <span>{{ placeholder() }}</span>
+  </button>
+}
+
+@if (open()) {
+  <section
+    class="af-command-palette-mobile__panel"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="ariaLabel()"
+    afFocusTrap
+    [afFocusTrapEnabled]="open()"
+    afEscapeKey
+    (afEscape)="requestClose()"
+  >
+    <div class="af-command-palette-mobile__search">
+      <af-icon name="search" size="md" tone="muted" decorative />
+      <input
+        #searchInput
+        type="search"
+        role="combobox"
+        autocomplete="off"
+        autocapitalize="none"
+        spellcheck="false"
+        aria-autocomplete="list"
+        aria-expanded="true"
+        afFocusInitial
+        [attr.aria-label]="placeholder()"
+        [attr.aria-controls]="listboxId"
+        [attr.aria-activedescendant]="activeOptionId()"
+        [attr.aria-describedby]="!hasItems() ? statusId : null"
+        [attr.placeholder]="placeholder()"
+        [value]="query()"
+        (input)="onQueryInput($event)"
+        (keydown)="onInputKeydown($event)"
+      />
+      <button
+        type="button"
+        class="af-command-palette-mobile__close"
+        [attr.aria-label]="closeLabel()"
+        (click)="requestClose()"
+      >
+        <af-icon name="x" size="md" tone="muted" decorative />
+      </button>
+    </div>
+
+    <div class="af-command-palette-mobile__results" [attr.aria-busy]="loading()">
+      @if (errorText(); as error) {
+        <div class="af-command-palette-mobile__state af-command-palette-mobile__state--error" role="alert">
+          <af-icon name="circle-alert" size="lg" tone="danger" decorative />
+          <span>{{ error }}</span>
+        </div>
+      } @else if (loading() && !hasItems()) {
+        <div class="af-command-palette-mobile__state" role="status" [id]="statusId">
+          <span class="af-command-palette-mobile__spinner" aria-hidden="true"></span>
+          <span>{{ loadingText() }}</span>
+        </div>
+      } @else if (!hasItems()) {
+        <div class="af-command-palette-mobile__state" role="status" [id]="statusId">
+          <af-icon name="search" size="lg" tone="muted" decorative />
+          <span>{{ emptyText() }}</span>
+        </div>
+      } @else {
+        <div class="af-command-palette-mobile__list" role="listbox" [id]="listboxId" [attr.aria-label]="ariaLabel()">
+          @for (group of groups(); track group.id; let groupIndex = $index) {
+            <div
+              class="af-command-palette-mobile__group"
+              [attr.role]="group.label ? 'group' : null"
+              [attr.aria-labelledby]="group.label ? groupLabelId(group) : null"
+            >
+              @if (group.label; as groupLabel) {
+                <div class="af-command-palette-mobile__group-label" [id]="groupLabelId(group)">
+                  {{ groupLabel }}
+                </div>
+              }
+
+              @for (item of group.items; track item.id; let index = $index) {
+                @let resolvedIndex = itemIndex(groupIndex, index);
+                <div
+                  class="af-command-palette-mobile__option"
+                  role="option"
+                  [id]="optionId(resolvedIndex)"
+                  [attr.aria-selected]="item.id === activeId()"
+                  [attr.aria-disabled]="item.disabled ? 'true' : null"
+                  [attr.data-active]="item.id === activeId() ? '' : null"
+                  [attr.data-disabled]="item.disabled ? '' : null"
+                  [attr.title]="item.disabledReason ?? null"
+                  (pointerdown)="onOptionPointerDown($event)"
+                  (pointermove)="onOptionPointerMove(item)"
+                  (click)="onOptionClick(item)"
+                >
+                  @if (itemTemplate(); as template) {
+                    <ng-container *ngTemplateOutlet="template; context: itemContext(item, resolvedIndex)" />
+                  } @else {
+                    @if (item.icon; as iconName) {
+                      <span class="af-command-palette-mobile__option-icon">
+                        <af-icon [name]="iconName" size="sm" tone="muted" decorative />
+                      </span>
+                    }
+                    <span class="af-command-palette-mobile__option-copy">
+                      <span class="af-command-palette-mobile__option-label">{{ item.label }}</span>
+                      @if (item.description; as description) {
+                        <span class="af-command-palette-mobile__option-description">{{ description }}</span>
+                      }
+                      @if (item.disabledReason && item.disabled) {
+                        <span class="af-command-palette-mobile__option-description">{{ item.disabledReason }}</span>
+                      }
+                    </span>
+                    @if (item.shortcut; as shortcut) {
+                      <kbd>{{ shortcut }}</kbd>
+                    }
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        @if (loading()) {
+          <div class="af-command-palette-mobile__loading-more" role="status">
+            <span class="af-command-palette-mobile__spinner" aria-hidden="true"></span>
+            <span>{{ loadingText() }}</span>
+          </div>
+        }
+      }
+    </div>
+  </section>
+}

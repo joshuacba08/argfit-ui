@@ -131,6 +131,7 @@
             "browser": "projects/showcase/src/main.ts",
             "tsConfig": "projects/showcase/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": ["echarts", "echarts-gl"],
             "assets": [
               {
                 "glob": "**/*",
@@ -144,8 +145,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3.0MB",
-                  "maximumError": "3.2MB"
+                  "maximumWarning": "3.25MB",
+                  "maximumError": "3.3MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -201,6 +202,7 @@
             "browser": "projects/argfit-ui-docs/src/main.ts",
             "tsConfig": "projects/argfit-ui-docs/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": ["echarts", "echarts-gl"],
             "assets": [
               {
                 "glob": "**/*",
@@ -270,6 +272,7 @@
             "browser": "projects/argfit-ui-pwa-starter/src/main.ts",
             "tsConfig": "projects/argfit-ui-pwa-starter/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": ["echarts", "echarts-gl"],
             "assets": [
               {
                 "glob": "**/*",

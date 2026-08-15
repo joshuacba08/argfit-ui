@@ -3,9 +3,9 @@
   "library": {
     "name": "ArgFit UI",
     "version": "1.5.0",
-    "gitSha": "7395cb5f9606",
-    "generatedAt": "2026-08-13T02:06:01+09:00",
-    "sourceDigest": "d412e834227c9c160f06499b7242fb22a90ed61d6561ac247cd26e6ee93aad6e",
+    "gitSha": "3074a93690bb",
+    "generatedAt": "2026-08-13T04:02:04+09:00",
+    "sourceDigest": "0beb13f77ad13efb3efc39a1951cabefab6d4519f58be6759f6316c919009226",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -2760,33 +2760,55 @@
       "title": "Data/Chart",
       "category": "Data",
       "status": "documented",
-      "description": "Visualización adaptativa con series vendor-neutral, leyenda y tabla accesible.",
+      "description": "Visualización adaptativa con series vendor-neutral, leyenda y tabla accesible. Cubre series cartesianas, distribuciones, matrices y perfiles multivariable con los tokens `--af-chart-*`.",
       "platforms": [
         "desktop",
         "mobile"
       ],
       "useWhen": [
-        "Para comparar tendencias o distribuciones de datos cuantitativos."
+        "Para comparar tendencias o distribuciones de datos cuantitativos.",
+        "Para relacionar magnitudes con unidades distintas en un mismo eje temporal."
       ],
       "avoidWhen": [
-        "Para un único valor destacado; usa AfMetricCard."
+        "Para un único valor destacado; usa AfMetricCard.",
+        "Para el encabezado, el menú y la exportación de un gráfico; usa AfChartCard."
       ],
       "related": [
+        "AfChartCard",
         "AfAnalyticsCard",
         "AfMetricCard"
       ],
       "tokens": [
+        "--af-chart-primary",
+        "--af-chart-accent",
+        "--af-chart-scale-3",
         "--af-chart-tooltip-text",
         "--af-bg-surface"
       ],
       "api": {
         "inputs": [
           {
+            "name": "annotations",
+            "type": "readonly AfChartAnnotation[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Marcadores sobre coordenadas concretas: el umbral estimado, el récord, la ruptura.</p>\n<p>Es distinto de <code>thresholds</code>: un umbral es un criterio fijo; una anotación señala un\nvalor observado que el lector debería llevarse aunque no interrogue el gráfico.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "ariaLabel",
             "type": "string | undefined",
             "required": false,
             "defaultValue": "undefined",
             "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "bands",
+            "type": "readonly AfChartBand[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Bandas de dispersión asociadas a una serie: ±1 DE, intervalo de confianza o rango\nmínimo–máximo.</p>\n<p>Se declaran aparte de <code>series</code> porque no son mediciones independientes sino la\nincertidumbre de otra, y no deben contarse como series en la leyenda ni en la tabla.</p>\n",
             "deprecated": false
           },
           {
@@ -2822,6 +2844,14 @@
             "deprecated": false
           },
           {
+            "name": "dateRange",
+            "type": "AfChartDateRange | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Rango de la cuadrícula del tipo <code>calendar</code>.</p>\n<p>Se declara aparte de los datos para que las celdas sin registro existan igualmente:\nel hueco —un descanso, una baja— es parte de lo que el calendario muestra.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "density",
             "type": "AfChartDensity",
             "required": false,
@@ -2843,6 +2873,14 @@
             "required": false,
             "defaultValue": "'Sin datos disponibles'",
             "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "graph",
+            "type": "AfChartGraph | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Nodos y vínculos de los tipos <code>sankey</code> y <code>network</code>.</p>\n",
             "deprecated": false
           },
           {
@@ -2886,6 +2924,22 @@
             "deprecated": false
           },
           {
+            "name": "regions",
+            "type": "readonly AfChartRegion[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Franjas de referencia sombreadas, p. ej. la zona óptima de un ratio.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "secondaryAxis",
+            "type": "AfChartAxis | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Eje derecho con su propia escala, para las series con <code>axis: &#39;secondary&#39;</code>.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "series",
             "type": "readonly AfChartSeries[]",
             "required": false,
@@ -2899,6 +2953,30 @@
             "required": false,
             "defaultValue": "true",
             "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "showPoints",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>Superpone las observaciones crudas sobre las cajas de un boxplot.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "spans",
+            "type": "readonly AfChartSpan[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Bloques con inicio y fin del tipo <code>gantt</code>.</p>\n<p>Se expresan en la unidad del eje —semana de temporada— y no en fechas: la\nperiodización se planifica contra el calendario de competición, que cambia cada año.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "thresholds",
+            "type": "readonly AfChartThreshold[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Líneas de umbral de decisión o de corte clínico.</p>\n",
             "deprecated": false
           },
           {
@@ -2918,10 +2996,50 @@
             "deprecated": false
           },
           {
+            "name": "toolbox",
+            "type": "readonly AfChartToolboxFeature[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Herramientas de exploración sobre el lienzo (zoom por área, tabla de datos, PNG).</p>\n<p>Vacío por defecto: un gráfico embebido en una tarjeta de resumen no debería\nofrecer controles que compiten con la lectura.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "tree",
+            "type": "readonly AfChartTreeNode[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Jerarquía de proporciones del tipo <code>treemap</code>.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "type",
             "type": "AfChartType",
             "required": false,
             "defaultValue": "'line'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "webglMessage",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Este gráfico necesita el paquete opcional echarts-gl.'",
+            "description": "<p>Aviso cuando un tipo volumétrico no encuentra <code>echarts-gl</code>.</p>\n<p>El paquete es una dependencia opcional: sin él el lienzo queda vacío, y un gráfico\nvacío se lee como «no hay datos» en lugar de «falta instalar algo».</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "xAxis",
+            "type": "AfChartAxis | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "yAxis",
+            "type": "AfChartAxis | undefined",
+            "required": false,
+            "defaultValue": "undefined",
             "description": "",
             "deprecated": false
           }
@@ -2947,13 +3065,433 @@
           "id": "data-chart--loading",
           "name": "Loading",
           "url": "/storybook/?path=/story/data-chart--loading"
+        },
+        {
+          "id": "data-chart--combo-ejes-duales",
+          "name": "ComboEjesDuales",
+          "url": "/storybook/?path=/story/data-chart--combo-ejes-duales"
+        },
+        {
+          "id": "data-chart--banda-de-dispersion",
+          "name": "BandaDeDispersion",
+          "url": "/storybook/?path=/story/data-chart--banda-de-dispersion"
+        },
+        {
+          "id": "data-chart--dispersion-con-ajuste",
+          "name": "DispersionConAjuste",
+          "url": "/storybook/?path=/story/data-chart--dispersion-con-ajuste"
+        },
+        {
+          "id": "data-chart--escala-logaritmica",
+          "name": "EscalaLogaritmica",
+          "url": "/storybook/?path=/story/data-chart--escala-logaritmica"
+        },
+        {
+          "id": "data-chart--area-apilada",
+          "name": "AreaApilada",
+          "url": "/storybook/?path=/story/data-chart--area-apilada"
+        },
+        {
+          "id": "data-chart--polar-apilado",
+          "name": "PolarApilado",
+          "url": "/storybook/?path=/story/data-chart--polar-apilado"
+        },
+        {
+          "id": "data-chart--matriz-de-correlacion",
+          "name": "MatrizDeCorrelacion",
+          "url": "/storybook/?path=/story/data-chart--matriz-de-correlacion"
+        },
+        {
+          "id": "data-chart--boxplot-con-puntos",
+          "name": "BoxplotConPuntos",
+          "url": "/storybook/?path=/story/data-chart--boxplot-con-puntos"
+        },
+        {
+          "id": "data-chart--heatmap",
+          "name": "Heatmap",
+          "url": "/storybook/?path=/story/data-chart--heatmap"
+        },
+        {
+          "id": "data-chart--barras-horizontales",
+          "name": "BarrasHorizontales",
+          "url": "/storybook/?path=/story/data-chart--barras-horizontales"
+        },
+        {
+          "id": "data-chart--splits-de-sprint",
+          "name": "SplitsDeSprint",
+          "url": "/storybook/?path=/story/data-chart--splits-de-sprint"
+        },
+        {
+          "id": "data-chart--radar",
+          "name": "Radar",
+          "url": "/storybook/?path=/story/data-chart--radar"
+        },
+        {
+          "id": "data-chart--coordenadas-paralelas",
+          "name": "CoordenadasParalelas",
+          "url": "/storybook/?path=/story/data-chart--coordenadas-paralelas"
+        },
+        {
+          "id": "data-chart--gauge",
+          "name": "Gauge",
+          "url": "/storybook/?path=/story/data-chart--gauge"
+        },
+        {
+          "id": "data-chart--con-toolbox",
+          "name": "ConToolbox",
+          "url": "/storybook/?path=/story/data-chart--con-toolbox"
+        },
+        {
+          "id": "data-chart--test-de-lactato",
+          "name": "TestDeLactato",
+          "url": "/storybook/?path=/story/data-chart--test-de-lactato"
+        },
+        {
+          "id": "data-chart--test-de-rampa",
+          "name": "TestDeRampa",
+          "url": "/storybook/?path=/story/data-chart--test-de-rampa"
+        },
+        {
+          "id": "data-chart--curva-fuerza-tiempo",
+          "name": "CurvaFuerzaTiempo",
+          "url": "/storybook/?path=/story/data-chart--curva-fuerza-tiempo"
+        },
+        {
+          "id": "data-chart--sprints-repetidos",
+          "name": "SprintsRepetidos",
+          "url": "/storybook/?path=/story/data-chart--sprints-repetidos"
+        },
+        {
+          "id": "data-chart--bland-altman",
+          "name": "BlandAltman",
+          "url": "/storybook/?path=/story/data-chart--bland-altman"
+        },
+        {
+          "id": "data-chart--curva-roc",
+          "name": "CurvaRoc",
+          "url": "/storybook/?path=/story/data-chart--curva-roc"
+        },
+        {
+          "id": "data-chart--burbujas",
+          "name": "Burbujas",
+          "url": "/storybook/?path=/story/data-chart--burbujas"
+        },
+        {
+          "id": "data-chart--rango-de-peso",
+          "name": "RangoDePeso",
+          "url": "/storybook/?path=/story/data-chart--rango-de-peso"
+        },
+        {
+          "id": "data-chart--calendario-de-carga",
+          "name": "CalendarioDeCarga",
+          "url": "/storybook/?path=/story/data-chart--calendario-de-carga"
+        },
+        {
+          "id": "data-chart--flujo-del-plantel",
+          "name": "FlujoDelPlantel",
+          "url": "/storybook/?path=/story/data-chart--flujo-del-plantel"
+        },
+        {
+          "id": "data-chart--carga-por-grupo-muscular",
+          "name": "CargaPorGrupoMuscular",
+          "url": "/storybook/?path=/story/data-chart--carga-por-grupo-muscular"
+        },
+        {
+          "id": "data-chart--red-de-pases",
+          "name": "RedDePases",
+          "url": "/storybook/?path=/story/data-chart--red-de-pases"
+        },
+        {
+          "id": "data-chart--proyeccion-de-carga",
+          "name": "ProyeccionDeCarga",
+          "url": "/storybook/?path=/story/data-chart--proyeccion-de-carga"
+        },
+        {
+          "id": "data-chart--histograma",
+          "name": "Histograma",
+          "url": "/storybook/?path=/story/data-chart--histograma"
+        },
+        {
+          "id": "data-chart--cumplimiento-de-objetivos",
+          "name": "CumplimientoDeObjetivos",
+          "url": "/storybook/?path=/story/data-chart--cumplimiento-de-objetivos"
+        },
+        {
+          "id": "data-chart--cascada",
+          "name": "Cascada",
+          "url": "/storybook/?path=/story/data-chart--cascada"
+        },
+        {
+          "id": "data-chart--desvio-individual",
+          "name": "DesvioIndividual",
+          "url": "/storybook/?path=/story/data-chart--desvio-individual"
+        },
+        {
+          "id": "data-chart--dumbbell",
+          "name": "Dumbbell",
+          "url": "/storybook/?path=/story/data-chart--dumbbell"
+        },
+        {
+          "id": "data-chart--pequenos-multiplos",
+          "name": "PequenosMultiplos",
+          "url": "/storybook/?path=/story/data-chart--pequenos-multiplos"
+        },
+        {
+          "id": "data-chart--dispersion-con-marginales",
+          "name": "DispersionConMarginales",
+          "url": "/storybook/?path=/story/data-chart--dispersion-con-marginales"
+        },
+        {
+          "id": "data-chart--periodizacion",
+          "name": "Periodizacion",
+          "url": "/storybook/?path=/story/data-chart--periodizacion"
+        },
+        {
+          "id": "data-chart--pareto",
+          "name": "Pareto",
+          "url": "/storybook/?path=/story/data-chart--pareto"
+        },
+        {
+          "id": "data-chart--barras-cien-por-ciento",
+          "name": "BarrasCienPorCiento",
+          "url": "/storybook/?path=/story/data-chart--barras-cien-por-ciento"
+        },
+        {
+          "id": "data-chart--nube-volumetrica",
+          "name": "NubeVolumetrica",
+          "url": "/storybook/?path=/story/data-chart--nube-volumetrica"
+        },
+        {
+          "id": "data-chart--superficie-de-respuesta",
+          "name": "SuperficieDeRespuesta",
+          "url": "/storybook/?path=/story/data-chart--superficie-de-respuesta"
+        },
+        {
+          "id": "data-chart--barras-volumetricas",
+          "name": "BarrasVolumetricas",
+          "url": "/storybook/?path=/story/data-chart--barras-volumetricas"
+        },
+        {
+          "id": "data-chart--trayectoria-volumetrica",
+          "name": "TrayectoriaVolumetrica",
+          "url": "/storybook/?path=/story/data-chart--trayectoria-volumetrica"
+        },
+        {
+          "id": "data-chart--sunburst",
+          "name": "Sunburst",
+          "url": "/storybook/?path=/story/data-chart--sunburst"
+        },
+        {
+          "id": "data-chart--theme-river",
+          "name": "ThemeRiver",
+          "url": "/storybook/?path=/story/data-chart--theme-river"
+        },
+        {
+          "id": "data-chart--diagrama-de-cuerdas",
+          "name": "DiagramaDeCuerdas",
+          "url": "/storybook/?path=/story/data-chart--diagrama-de-cuerdas"
+        },
+        {
+          "id": "data-chart--embudo",
+          "name": "Embudo",
+          "url": "/storybook/?path=/story/data-chart--embudo"
+        },
+        {
+          "id": "data-chart--ridgeline",
+          "name": "Ridgeline",
+          "url": "/storybook/?path=/story/data-chart--ridgeline"
+        },
+        {
+          "id": "data-chart--beeswarm",
+          "name": "Beeswarm",
+          "url": "/storybook/?path=/story/data-chart--beeswarm"
+        },
+        {
+          "id": "data-chart--pictograma",
+          "name": "Pictograma",
+          "url": "/storybook/?path=/story/data-chart--pictograma"
+        },
+        {
+          "id": "data-chart--rosa-de-nightingale",
+          "name": "RosaDeNightingale",
+          "url": "/storybook/?path=/story/data-chart--rosa-de-nightingale"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/data-chart--docs",
       "example": {
         "story": "Default",
         "typescript": "import { AfChart } from '@argfit-ui/adaptive';",
-        "template": "<af-chart [title]=\"title\" [description]=\"description\" [type]=\"type\" [categories]=\"categories\" [series]=\"series\" [legend]=\"legend\" [dataTable]=\"dataTable\" [loading]=\"loading\" (pointSelect)=\"pointSelect($event)\" />"
+        "template": "<af-chart\n      [title]=\"title\"\n      [description]=\"description\"\n      [type]=\"type\"\n      [tone]=\"tone\"\n      [density]=\"density\"\n      [categories]=\"categories\"\n      [series]=\"series\"\n      [indicators]=\"indicators\"\n      [bands]=\"bands\"\n      [regions]=\"regions\"\n      [thresholds]=\"thresholds\"\n      [xAxis]=\"xAxis\"\n      [yAxis]=\"yAxis\"\n      [secondaryAxis]=\"secondaryAxis\"\n      [toolbox]=\"toolbox\"\n      [showPoints]=\"showPoints\"\n      [annotations]=\"annotations\"\n      [graph]=\"graph\"\n      [tree]=\"tree\"\n      [dateRange]=\"dateRange\"\n      [spans]=\"spans\"\n      [webglMessage]=\"webglMessage\"\n      [height]=\"height\"\n      [legend]=\"legend\"\n      [showGrid]=\"showGrid\"\n      [dataTable]=\"dataTable\"\n      [loading]=\"loading\"\n      [ariaLabel]=\"ariaLabel\"\n      (pointSelect)=\"pointSelect($event)\"\n    />"
+      }
+    },
+    {
+      "id": "chart-card",
+      "name": "AfChartCard",
+      "className": "AfChartCardComponent",
+      "selector": "af-chart-card",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfChartCard } from '@argfit-ui/adaptive';",
+      "title": "Data/Chart Card",
+      "category": "Data",
+      "status": "documented",
+      "description": "Contenedor de un `<af-chart>` proyectado: encabezado, nota, menú de opciones, exportación a PNG y CSV, restablecer la vista y pantalla completa.",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "Para presentar un gráfico con título, nota metodológica y acciones sobre el lienzo.",
+        "Para exportar el gráfico o su serie sin reescribir la descarga en cada tablero."
+      ],
+      "avoidWhen": [
+        "Para un gráfico incrustado sin encabezado ni acciones; usa AfChart directamente.",
+        "Para una tarjeta de contenido genérico; usa AfCard."
+      ],
+      "related": [
+        "AfChart",
+        "AfCard",
+        "AfAnalyticsCard"
+      ],
+      "tokens": [
+        "--af-card-bg",
+        "--af-card-border",
+        "--af-border-focus",
+        "--af-bg-elevated"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "exportName",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Nombre base de los archivos exportados, sin extensión.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "heading",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "labels",
+            "type": "Partial<AfChartCardLabels>",
+            "required": false,
+            "defaultValue": null,
+            "description": "<p>Sobrescribe los textos visibles; útil para traducir la card.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "menu",
+            "type": "readonly AfChartCardAction[]",
+            "required": false,
+            "defaultValue": "DEFAULT_MENU",
+            "description": "<p>Acciones ofrecidas en el menú, en orden. Lista vacía oculta el menú.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "note",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Nota metodológica: qué se está midiendo y cómo se lee.</p>\n<p>Un gráfico sin unidades ni criterio de lectura se interpreta mal con confianza, que\nes peor que no interpretarlo.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "tableVisible",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>Visibilidad de la tabla accesible del gráfico.</p>\n<p>Es bidireccional porque la tabla la dibuja el <code>&lt;af-chart&gt;</code> proyectado: la card no\npuede escribir en los inputs de un componente que no le pertenece, así que el\nconsumidor enlaza este estado con <code>[dataTable]</code>.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "tag",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "<p>Etiqueta breve del tipo de visualización, p. ej. «Combo · barras + línea».</p>\n",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "action",
+            "type": "AfChartCardActionEvent",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "fullscreenChange",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "popOut",
+            "type": "void",
+            "required": false,
+            "defaultValue": null,
+            "description": "<p>Intención de abrir el gráfico en una ventana o vista propia.</p>\n",
+            "deprecated": false
+          },
+          {
+            "name": "tableVisible",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>Visibilidad de la tabla accesible del gráfico.</p>\n<p>Es bidireccional porque la tabla la dibuja el <code>&lt;af-chart&gt;</code> proyectado: la card no\npuede escribir en los inputs de un componente que no le pertenece, así que el\nconsumidor enlaza este estado con <code>[dataTable]</code>.</p>\n",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "data-chart-card--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/data-chart-card--default"
+        },
+        {
+          "id": "data-chart-card--menu-de-opciones",
+          "name": "MenuDeOpciones",
+          "url": "/storybook/?path=/story/data-chart-card--menu-de-opciones"
+        },
+        {
+          "id": "data-chart-card--tabla-de-datos",
+          "name": "TablaDeDatos",
+          "url": "/storybook/?path=/story/data-chart-card--tabla-de-datos"
+        },
+        {
+          "id": "data-chart-card--sin-menu",
+          "name": "SinMenu",
+          "url": "/storybook/?path=/story/data-chart-card--sin-menu"
+        },
+        {
+          "id": "data-chart-card--banda-de-dispersion",
+          "name": "BandaDeDispersion",
+          "url": "/storybook/?path=/story/data-chart-card--banda-de-dispersion"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/data-chart-card--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfChartCard } from '@argfit-ui/adaptive';",
+        "template": "<af-chart-card\n  exportName=\"carga-acwr\"\n/>"
       }
     },
     {
@@ -3254,6 +3792,239 @@
         "story": "Default",
         "typescript": "import { AfChip } from '@argfit-ui/adaptive';",
         "template": "<af-chip [tone]=\"tone\" [variant]=\"variant\" [size]=\"size\" [removable]=\"removable\" [interactive]=\"interactive\" [selected]=\"selected\" [ariaLabel]=\"ariaLabel\">Porteros</af-chip>"
+      }
+    },
+    {
+      "id": "command-palette",
+      "name": "AfCommandPalette",
+      "className": "AfCommandPaletteComponent",
+      "selector": "af-command-palette",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfCommandPalette } from '@argfit-ui/adaptive';",
+      "title": "Components/Overlays/CommandPalette",
+      "category": "Overlays",
+      "status": "documented",
+      "description": "Paleta adaptativa de comandos y búsqueda con disparador, atajo global y navegación completa por teclado.",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "Para acceder rápidamente a rutas, resultados y acciones mediante búsqueda o teclado.",
+        "Para ofrecer un lanzador global Ctrl/Cmd+K con comportamiento accesible."
+      ],
+      "avoidWhen": [
+        "Para ejecutar routing, permisos o fetching dentro de la librería.",
+        "Para una lista siempre visible; usa AfListbox."
+      ],
+      "related": [
+        "AfDialog",
+        "AfPageShell",
+        "AfListbox"
+      ],
+      "tokens": [
+        "--af-input-bg",
+        "--af-border-focus",
+        "--af-bg-elevated",
+        "--af-shadow-xl"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "ariaLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Paleta de comandos'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "closeLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Cerrar paleta'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "emptyText",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'No se encontraron resultados'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "errorText",
+            "type": "string | undefined",
+            "required": false,
+            "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "items",
+            "type": "readonly AfCommandPaletteItem[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "loading",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "loadingText",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Buscando...'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "open",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Buscar aplicaciones, acciones...'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "query",
+            "type": "string",
+            "required": false,
+            "defaultValue": "''",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "searchMode",
+            "type": "AfCommandPaletteSearchMode",
+            "required": false,
+            "defaultValue": "'client'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "shortcutEnabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "shortcutLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Ctrl+K'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "showTrigger",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "true",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "itemSelected",
+            "type": "AfCommandPaletteItem",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "openChange",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "queryChange",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "components-overlays-commandpalette--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--default"
+        },
+        {
+          "id": "components-overlays-commandpalette--open-with-groups",
+          "name": "OpenWithGroups",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--open-with-groups"
+        },
+        {
+          "id": "components-overlays-commandpalette--loading",
+          "name": "Loading",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--loading"
+        },
+        {
+          "id": "components-overlays-commandpalette--error",
+          "name": "Error",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--error"
+        },
+        {
+          "id": "components-overlays-commandpalette--empty",
+          "name": "Empty",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--empty"
+        },
+        {
+          "id": "components-overlays-commandpalette--server-results",
+          "name": "ServerResults",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--server-results"
+        },
+        {
+          "id": "components-overlays-commandpalette--custom-item",
+          "name": "CustomItem",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--custom-item"
+        },
+        {
+          "id": "components-overlays-commandpalette--keyboard-selection",
+          "name": "KeyboardSelection",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--keyboard-selection"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/components-overlays-commandpalette--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfCommandPalette } from '@argfit-ui/adaptive';",
+        "template": "<div style=\"width: min(42rem, 90vw)\">\n        <af-command-palette\n          [items]=\"items\"\n          [open]=\"open\"\n          [query]=\"query\"\n          [searchMode]=\"searchMode\"\n          [placeholder]=\"placeholder\"\n          [emptyText]=\"emptyText\"\n          [loading]=\"loading\"\n          [loadingText]=\"loadingText\"\n          [errorText]=\"errorText\"\n          [showTrigger]=\"showTrigger\"\n          [shortcutEnabled]=\"shortcutEnabled\"\n          [shortcutLabel]=\"shortcutLabel\"\n          [disabled]=\"disabled\"\n          [ariaLabel]=\"ariaLabel\"\n          [closeLabel]=\"closeLabel\"\n          (openChange)=\"openChange($event)\"\n          (queryChange)=\"queryChange($event)\"\n          (itemSelected)=\"itemSelected($event)\"\n        />\n      </div>"
       }
     },
     {
@@ -11774,6 +12545,14 @@
       }
     },
     {
+      "name": "--af-chart-accent",
+      "family": "color",
+      "values": {
+        "dark": "#00D4FF",
+        "light": "#0E7FA8"
+      }
+    },
+    {
       "name": "--af-chart-success",
       "family": "color",
       "values": {
@@ -11806,11 +12585,83 @@
       }
     },
     {
+      "name": "--af-chart-tooltip-border",
+      "family": "color",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.18)",
+        "light": "rgba(16, 42, 67, 0.14)"
+      }
+    },
+    {
       "name": "--af-chart-tooltip-text",
       "family": "color",
       "values": {
         "dark": "#F0F4F8",
         "light": "#102A43"
+      }
+    },
+    {
+      "name": "--af-chart-track",
+      "family": "color",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.12)",
+        "light": "rgba(16, 42, 67, 0.10)"
+      }
+    },
+    {
+      "name": "--af-chart-fill-soft",
+      "family": "color",
+      "values": {
+        "dark": "rgba(37, 153, 213, 0.16)",
+        "light": "rgba(37, 153, 213, 0.14)"
+      }
+    },
+    {
+      "name": "--af-chart-scale-0",
+      "family": "color",
+      "values": {
+        "dark": "#0F1D32",
+        "light": "#F0F4F8"
+      }
+    },
+    {
+      "name": "--af-chart-scale-1",
+      "family": "color",
+      "values": {
+        "dark": "#114569",
+        "light": "#C7E2F2"
+      }
+    },
+    {
+      "name": "--af-chart-scale-2",
+      "family": "color",
+      "values": {
+        "dark": "#17618D",
+        "light": "#8DC7E8"
+      }
+    },
+    {
+      "name": "--af-chart-scale-3",
+      "family": "color",
+      "values": {
+        "dark": "#2599D5",
+        "light": "#2599D5"
+      }
+    },
+    {
+      "name": "--af-chart-scale-4",
+      "family": "color",
+      "values": {
+        "dark": "#4DD4FF",
+        "light": "#17618D"
+      }
+    },
+    {
+      "name": "--af-chart-scale-5",
+      "family": "color",
+      "values": {
+        "dark": "#00D4FF",
+        "light": "#0B3E5E"
       }
     },
     {

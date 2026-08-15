@@ -294,7 +294,10 @@ body.sb-show-main,
 }
 
 .af-doc-tabs:has(.af-doc-tabs__input[value='features']:checked) .af-doc-tabs__panel[data-tab='features'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='use']:checked) .af-doc-tabs__panel[data-tab='use'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='api']:checked) .af-doc-tabs__panel[data-tab='api'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='composition']:checked) .af-doc-tabs__panel[data-tab='composition'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='states']:checked) .af-doc-tabs__panel[data-tab='states'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='theming']:checked) .af-doc-tabs__panel[data-tab='theming'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='playground']:checked) .af-doc-tabs__panel[data-tab='playground'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='overview']:checked) .af-doc-tabs__panel[data-tab='overview'],
@@ -311,7 +314,10 @@ body.sb-show-main,
 }
 
 .af-doc-tabs:has(.af-doc-tabs__input[value='features']:checked) .af-doc-tabs__tab[data-tab='features'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='use']:checked) .af-doc-tabs__tab[data-tab='use'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='api']:checked) .af-doc-tabs__tab[data-tab='api'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='composition']:checked) .af-doc-tabs__tab[data-tab='composition'],
+.af-doc-tabs:has(.af-doc-tabs__input[value='states']:checked) .af-doc-tabs__tab[data-tab='states'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='theming']:checked) .af-doc-tabs__tab[data-tab='theming'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='playground']:checked) .af-doc-tabs__tab[data-tab='playground'],
 .af-doc-tabs:has(.af-doc-tabs__input[value='overview']:checked) .af-doc-tabs__tab[data-tab='overview'],
@@ -330,7 +336,10 @@ body.sb-show-main,
 }
 
 .af-doc-tabs__input[value='features']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='features'],
+.af-doc-tabs__input[value='use']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='use'],
 .af-doc-tabs__input[value='api']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='api'],
+.af-doc-tabs__input[value='composition']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='composition'],
+.af-doc-tabs__input[value='states']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='states'],
 .af-doc-tabs__input[value='theming']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='theming'],
 .af-doc-tabs__input[value='playground']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='playground'],
 .af-doc-tabs__input[value='overview']:focus-visible ~ .af-doc-tabs__list .af-doc-tabs__tab[data-tab='overview'],

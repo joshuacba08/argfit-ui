@@ -1,0 +1,185 @@
+.af-chart-card-desktop {
+  background: var(--af-card-bg);
+  border: 1px solid var(--af-card-border);
+  border-radius: var(--af-radius-lg);
+  color: var(--af-text-main);
+  display: flex;
+  flex-direction: column;
+  padding: var(--af-space-4) var(--af-space-4) var(--af-space-3);
+  position: relative;
+  transition:
+    border-color var(--af-duration-normal) var(--af-ease-out),
+    box-shadow var(--af-duration-normal) var(--af-ease-out);
+}
+
+.af-chart-card-desktop:hover {
+  border-color: var(--af-border-strong);
+}
+
+.af-chart-card-desktop__header {
+  align-items: center;
+  display: flex;
+  gap: var(--af-space-2);
+  min-height: 28px;
+}
+
+.af-chart-card-desktop__heading {
+  color: var(--af-text-main);
+  font-size: var(--af-text-base);
+  font-weight: var(--af-font-weight-bold);
+  letter-spacing: -0.01em;
+  margin: 0;
+  margin-inline-end: auto;
+}
+
+.af-chart-card-desktop__tag {
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  letter-spacing: 0.04em;
+  padding: 2px var(--af-space-2);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Sin título, la etiqueta ocupa su lugar y el menú se mantiene al final. */
+.af-chart-card-desktop__heading + .af-chart-card-desktop__tag,
+.af-chart-card-desktop__tag:first-child {
+  margin-inline-start: 0;
+}
+
+.af-chart-card-desktop__tag:first-child {
+  margin-inline-end: auto;
+}
+
+.af-chart-card-desktop__note {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  line-height: 1.45;
+  margin: var(--af-space-2) 0 0;
+  max-width: 60ch;
+}
+
+.af-chart-card-desktop__body {
+  display: block;
+  margin-top: var(--af-space-3);
+  min-width: 0;
+}
+
+/* ── Menú de opciones ─────────────────────────────────────────────── */
+
+.af-chart-card-desktop__menu-wrap {
+  flex: none;
+  position: relative;
+}
+
+.af-chart-card-desktop__menu-trigger {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: flex;
+  height: 28px;
+  justify-content: center;
+  padding: 0;
+  transition:
+    color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    background var(--af-duration-fast) var(--af-ease-out);
+  width: 28px;
+}
+
+.af-chart-card-desktop__menu-trigger:hover,
+.af-chart-card-desktop__menu-trigger[aria-expanded='true'] {
+  background: var(--af-bg-interactive);
+  border-color: var(--af-border-strong);
+  color: var(--af-text-main);
+}
+
+.af-chart-card-desktop__menu-trigger:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 2px;
+}
+
+.af-chart-card-desktop__menu {
+  background: var(--af-bg-elevated);
+  border: 1px solid var(--af-border-strong);
+  border-radius: var(--af-radius-md);
+  box-shadow: var(--af-shadow-lg);
+  display: flex;
+  flex-direction: column;
+  inset-inline-end: 0;
+  min-width: 224px;
+  padding: var(--af-space-1);
+  position: absolute;
+  top: calc(100% + var(--af-space-1));
+  z-index: 40;
+}
+
+.af-chart-card-desktop__menu-heading {
+  color: var(--af-text-muted);
+  font-size: var(--af-text-xs);
+  letter-spacing: 0.06em;
+  margin: 0;
+  padding: var(--af-space-2) var(--af-space-2) var(--af-space-1);
+  text-transform: uppercase;
+}
+
+.af-chart-card-desktop__menu-divider {
+  border: 0;
+  border-top: 1px solid var(--af-border-soft);
+  margin: var(--af-space-1) var(--af-space-1);
+  width: auto;
+}
+
+.af-chart-card-desktop__menu-item {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--af-radius-sm);
+  color: var(--af-text-main);
+  cursor: pointer;
+  display: flex;
+  font-size: var(--af-text-sm);
+  gap: var(--af-space-2);
+  padding: var(--af-space-2);
+  text-align: start;
+  width: 100%;
+}
+
+.af-chart-card-desktop__menu-item:hover {
+  background: var(--af-bg-interactive);
+}
+
+.af-chart-card-desktop__menu-item:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: -2px;
+}
+
+/* ── Pantalla completa ────────────────────────────────────────────── */
+
+/*
+ * En pantalla completa la card es la ventana entera: el borde y el radio dejan de
+ * significar «bloque dentro de una grilla» y sólo restarían área al gráfico.
+ */
+.af-chart-card-desktop:fullscreen,
+.af-chart-card-desktop[data-fullscreen] {
+  background: var(--af-bg-main);
+  border-radius: 0;
+  border-width: 0;
+  padding: var(--af-space-6) var(--af-space-8) var(--af-space-4);
+}
+
+.af-chart-card-desktop:fullscreen .af-chart-card-desktop__body,
+.af-chart-card-desktop[data-fullscreen] .af-chart-card-desktop__body {
+  flex: 1;
+  min-height: 0;
+}
+
+.af-chart-card-desktop:fullscreen .af-chart-card-desktop__heading,
+.af-chart-card-desktop[data-fullscreen] .af-chart-card-desktop__heading {
+  font-size: var(--af-text-xl);
+}

@@ -173,11 +173,26 @@ export const AF_BASE_THEME_TOKENS = {
   '--af-chart-axis': 'rgba(37, 153, 213, 0.22)',
   '--af-chart-label': '#BCCCDC',
   '--af-chart-primary': '#2599D5',
+  '--af-chart-accent': '#00D4FF',
   '--af-chart-success': '#00C853',
   '--af-chart-warning': '#FFB300',
   '--af-chart-danger': '#FF3D71',
   '--af-chart-tooltip-bg': 'rgba(10, 22, 40, 0.95)',
+  '--af-chart-tooltip-border': 'rgba(37, 153, 213, 0.18)',
   '--af-chart-tooltip-text': '#F0F4F8',
+  /** Canal vacío de medidores y barras de progreso. */
+  '--af-chart-track': 'rgba(37, 153, 213, 0.12)',
+  /** Relleno de bandas de dispersión y áreas de referencia. */
+  '--af-chart-fill-soft': 'rgba(37, 153, 213, 0.16)',
+  // Rampa secuencial ordenada de menor a mayor magnitud. La usan heatmap, barras
+  // polares y áreas apiladas, donde el color codifica cantidad y no identidad, de modo
+  // que la paleta categórica no sirve: sus saltos de tono se leerían como categorías.
+  '--af-chart-scale-0': '#0F1D32',
+  '--af-chart-scale-1': '#114569',
+  '--af-chart-scale-2': '#17618D',
+  '--af-chart-scale-3': '#2599D5',
+  '--af-chart-scale-4': '#4DD4FF',
+  '--af-chart-scale-5': '#00D4FF',
 
   // ── Calendar (time grid surfaces) ───────────────────────────────────
   '--af-calendar-surface': '#0F1D32',

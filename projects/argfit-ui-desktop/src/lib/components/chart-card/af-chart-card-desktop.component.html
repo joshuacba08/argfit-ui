@@ -1,0 +1,67 @@
+@if (hasHeader()) {
+  <div class="af-chart-card-desktop__header">
+    @if (heading()) {
+      <h3 class="af-chart-card-desktop__heading" [id]="headingId">{{ heading() }}</h3>
+    }
+
+    @if (tag()) {
+      <span class="af-chart-card-desktop__tag">{{ tag() }}</span>
+    }
+
+    @if (menuItems().length > 0) {
+      <div class="af-chart-card-desktop__menu-wrap">
+        <button
+          #trigger
+          type="button"
+          class="af-chart-card-desktop__menu-trigger"
+          [attr.aria-label]="menuLabel()"
+          [attr.aria-expanded]="menuOpen()"
+          [attr.aria-controls]="menuOpen() ? menuId : null"
+          aria-haspopup="menu"
+          (click)="toggleMenu()"
+          (keydown)="onTriggerKeydown($event)"
+        >
+          <af-icon name="more-vertical" size="sm" />
+        </button>
+
+        @if (menuOpen()) {
+          <div
+            #menu
+            class="af-chart-card-desktop__menu"
+            role="menu"
+            [id]="menuId"
+            [attr.aria-label]="menuHeading()"
+            (keydown)="onMenuKeydown($event)"
+          >
+            <p class="af-chart-card-desktop__menu-heading" aria-hidden="true">
+              {{ menuHeading() }}
+            </p>
+
+            @for (item of menuItems(); track item.action) {
+              @if (item.startsGroup) {
+                <hr class="af-chart-card-desktop__menu-divider" aria-hidden="true" />
+              }
+              <button
+                type="button"
+                role="menuitem"
+                class="af-chart-card-desktop__menu-item"
+                (click)="select(item.action)"
+              >
+                <af-icon [name]="iconFor(item.action)" size="sm" tone="muted" />
+                <span>{{ item.label }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
+
+@if (note()) {
+  <p class="af-chart-card-desktop__note" [id]="noteId">{{ note() }}</p>
+}
+
+<div class="af-chart-card-desktop__body">
+  <ng-content />
+</div>

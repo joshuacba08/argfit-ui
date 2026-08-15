@@ -33,6 +33,8 @@ export type AfBuiltInIconName =
   | 'download'
   | 'edit'
   | 'filter'
+  | 'maximize'
+  | 'minimize'
   | 'move'
   | 'pause'
   | 'play'
@@ -153,7 +155,9 @@ export const AF_ICON_NAMES: readonly AfBuiltInIconName[] = [
   'log-in',
   'log-out',
   'map-pin',
+  'maximize',
   'menu',
+  'minimize',
   'monitor',
   'more-horizontal',
   'more-vertical',
