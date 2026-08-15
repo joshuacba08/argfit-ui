@@ -1,15 +1,15 @@
 # @argfit-ui/mobile
 
-Mobile renderer package for ArgFit UI `1.5.0`.
+Mobile renderer package for ArgFit UI `1.6.0`.
 
 This package contains touch-oriented implementations that render Ionic elements internally while keeping ArgFit public APIs vendor-independent. Application consumers should normally import components from `@argfit-ui/adaptive` instead of this renderer package.
 
-This package participates in the current `1.5.0` production contract.
+This package participates in the current `1.6.0` production contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@1.5.0 @argfit-ui/primitives@1.5.0 @argfit-ui/mobile@1.5.0
+pnpm add @argfit-ui/core@1.6.0 @argfit-ui/primitives@1.6.0 @argfit-ui/mobile@1.6.0
 pnpm add @angular/cdk@^21.2.0 @ionic/angular@^8.8.7 echarts@^6.1.0
 ```
 
@@ -32,7 +32,7 @@ import { AfButton, AfCard, AfInput } from '@argfit-ui/adaptive';
 - [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/quickstart.md)
 - [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/theming.md)
 - [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/public-api.md)
-- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.5.0.md)
+- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-1.6.0.md)
 - [Migration beta/Beta+ to 1.0](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/migration-beta-to-1-0.md)
 
 ## Build

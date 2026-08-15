@@ -282,10 +282,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.5.0.md',
-    summary: 'The extensible icon and advanced Calendar interaction release.',
+    sourcePath: 'docs/productive/release-notes-1.6.0.md',
+    summary: 'Adaptive data exploration, command discovery and expanded charts.',
     badge: 'ship',
-    bullets: ['Extensible AfIcon registry', 'P0 Calendar interactions', 'Controlled mutation and undo contract'],
+    bullets: ['AfChartCard', 'AfCommandPalette', 'Expanded 2D and optional 3D charts'],
   },
 ];
 
@@ -508,8 +508,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.5.0.md',
-    summary: 'The canonical 1.5.0 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.6.0.md',
+    summary: 'The canonical 1.6.0 release notes and production publish posture.',
   }),
 ];
 

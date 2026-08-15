@@ -399,4 +399,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `1.5.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.
+The workspace and publishable packages are aligned on `1.6.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.

@@ -1,20 +1,20 @@
 # Production Release Checklist
 
-Use this checklist before tagging or publishing ArgFit UI `1.5.0` production packages.
+Use this checklist before tagging or publishing ArgFit UI `1.6.0` production packages.
 
 ## Version And Metadata
 
-- Confirm the root `package.json` version is `1.5.0`.
-- Confirm every publishable `projects/argfit-ui-*/package.json` version is `1.5.0`.
-- Confirm every internal `@argfit-ui/*` peer dependency is pinned to `1.5.0`.
+- Confirm the root `package.json` version is `1.6.0`.
+- Confirm every publishable `projects/argfit-ui-*/package.json` version is `1.6.0`.
+- Confirm every internal `@argfit-ui/*` peer dependency is pinned to `1.6.0`.
 - Confirm every publishable package has `publishConfig.access = public`.
 - Confirm every publishable package has `publishConfig.tag = latest`.
 - Confirm no production package version contains a prerelease identifier.
 
 ## Documentation
 
-- Confirm `CHANGELOG.md` contains the `1.5.0` production entry.
-- Confirm `docs/productive/release-notes-1.5.0.md` describes the shipped release.
+- Confirm `CHANGELOG.md` contains the `1.6.0` production entry.
+- Confirm `docs/productive/release-notes-1.6.0.md` describes the shipped release.
 - Confirm `docs/productive/release-operations.md` and `docs/productive/support-policy.md` match the current production process.
 - Confirm the docs app exposes release notes, release operations, support policy and this checklist.
 
@@ -34,8 +34,8 @@ The gate must complete the Beta+ regression substrate, rebuild the stable packag
 Only tag after the local gate and CI are green:
 
 ```bash
-git tag -a v1.5.0 -m "ArgFit UI 1.5.0"
-git push origin v1.5.0
+git tag -a v1.6.0 -m "ArgFit UI 1.6.0"
+git push origin v1.6.0
 ```
 
 Production tags must be stable semver tags without prerelease identifiers.
@@ -51,7 +51,7 @@ The `publish-production.yml` workflow must publish with npm `latest`:
 - workflow rejects `publishConfig.tag` values other than `latest`
 - workflow publishes all six dist packages with `npm publish --tag latest --access public`
 
-After publish, verify npm shows `@argfit-ui/core`, `@argfit-ui/primitives`, `@argfit-ui/desktop`, `@argfit-ui/mobile`, `@argfit-ui/adaptive` and `@argfit-ui/mcp` on version `1.5.0` under the `latest` dist-tag.
+After publish, verify npm shows `@argfit-ui/core`, `@argfit-ui/primitives`, `@argfit-ui/desktop`, `@argfit-ui/mobile`, `@argfit-ui/adaptive` and `@argfit-ui/mcp` on version `1.6.0` under the `latest` dist-tag.
 
 ## Rollback And Recovery
 

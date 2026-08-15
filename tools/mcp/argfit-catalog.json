@@ -2,10 +2,10 @@
   "schemaVersion": "1.0.0",
   "library": {
     "name": "ArgFit UI",
-    "version": "1.5.0",
-    "gitSha": "3074a93690bb",
-    "generatedAt": "2026-08-13T04:02:04+09:00",
-    "sourceDigest": "0beb13f77ad13efb3efc39a1951cabefab6d4519f58be6759f6316c919009226",
+    "version": "1.6.0",
+    "gitSha": "a0753093b0f1",
+    "generatedAt": "2026-08-16T00:52:14+09:00",
+    "sourceDigest": "72210e99ab63e46d19516de36f1987bea12710f73a97b94d03e44592ec9412d3",
     "storybookBaseUrl": "/storybook"
   },
   "components": [

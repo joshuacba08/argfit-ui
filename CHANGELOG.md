@@ -2,6 +2,38 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.6.0
+
+Minor release focused on adaptive data exploration, command discovery and a
+substantially broader chart contract.
+
+### Added
+
+- Public `AfChartCard` family across adaptive, desktop and mobile packages,
+  including actions, loading/empty/error states and responsive composition.
+- Public `AfCommandPalette` family with grouped commands, keyboard navigation,
+  filtering, accessible focus management and mobile fullscreen behavior.
+- New vendor-neutral chart contracts and ECharts renderers for advanced 2D,
+  statistical, relationship, geographic and optional WebGL-backed 3D views.
+- Storybook pattern stories for analytics panels and chart windows, plus
+  canonical MDX documentation for the two new component families.
+
+### Changed
+
+- The generated MCP catalog now exposes 70 documented adaptive components and
+  validates consumer snippets for the new command palette API.
+- `echarts-gl` loads lazily from its browser-ready distribution only when a 3D
+  chart requires it, keeping the WebGL payload out of the initial bundle.
+- Production size budgets were remeasured and retained as ratcheted ceilings
+  roughly 5% above the new artifacts.
+
+### Release
+
+- All six publishable packages move to `1.6.0`, with internal peer versions
+  aligned exactly.
+- Validated through `pnpm release:production:check` and published with the
+  `latest` dist-tag.
+
 ## 1.5.0
 
 Minor release focused on an extensible icon catalog and the P0 interaction

@@ -29,22 +29,22 @@ These budgets are enforced by `pnpm measure:production-performance:dist`.
 
 | Artifact | Budget |
 | --- | --- |
-| Showcase initial asset total | `2.90 MB` raw |
-| Showcase main bundle | `2.90 MB` raw |
+| Showcase initial asset total | `3.322 MB` raw |
+| Showcase main bundle | `3.253 MB` raw |
 | Showcase styles bundle | `60 kB` raw |
-| Production tarball total | `1,034 kB` |
-| `@argfit-ui/core` tarball | `88 kB` |
+| Production tarball total | `1,234 kB` |
+| `@argfit-ui/core` tarball | `103 kB` |
 | `@argfit-ui/primitives` tarball | `27.5 kB` |
-| `@argfit-ui/adaptive` tarball | `210 kB` |
-| `@argfit-ui/desktop` tarball | `343 kB` |
-| `@argfit-ui/mobile` tarball | `301 kB` |
-| `@argfit-ui/mcp` tarball | `65 kB` |
+| `@argfit-ui/adaptive` tarball | `235 kB` |
+| `@argfit-ui/desktop` tarball | `421 kB` |
+| `@argfit-ui/mobile` tarball | `379 kB` |
+| `@argfit-ui/mcp` tarball | `70 kB` |
 
 ## Exceptions
 
-No active budget exceptions. The 1.5.0 thresholds were recalibrated at roughly
-5% above the measured artifacts for the extensible icon registry, Calendar
-interaction surface and secondary Calendar entry point.
+No active budget exceptions. The 1.6.0 thresholds were recalibrated at roughly
+5% above the measured artifacts for `AfChartCard`, `AfCommandPalette` and the
+expanded 2D/3D chart contracts and renderers.
 
 If a budget ever needs to move, the exception must be documented in this file in the same change that updates the threshold and the rationale must explain why the increase is unavoidable.
 
