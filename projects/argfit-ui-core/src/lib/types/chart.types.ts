@@ -479,6 +479,32 @@ export interface AfChartSeries {
 }
 
 /**
+ * Disposición de la tabla accesible que acompaña al gráfico.
+ *
+ * `series` da una fila por serie y una columna por categoría: es lo natural en una serie
+ * temporal. `points` da una fila por observación con una columna por dimensión, que es
+ * lo único legible cuando cada punto lleva varias magnitudes —una dispersión de burbujas
+ * pierde dos de sus tres variables en la disposición por series—.
+ *
+ * `auto` elige según la forma de los datos.
+ */
+export type AfChartTableLayout = 'auto' | 'series' | 'points';
+
+/**
+ * Encabezados de la tabla en disposición por puntos.
+ *
+ * Sin ellos las columnas se rotulan con el nombre de los ejes, que describe la escala
+ * («distancia total (m)») y no siempre la magnitud que el lector busca en una tabla.
+ */
+export interface AfChartTableHeaders {
+  /** Columna que identifica cada observación. */
+  readonly label?: string;
+  readonly x?: string;
+  readonly y?: string;
+  readonly z?: string;
+}
+
+/**
  * Payload emitted when the consumer selects a point/bar/segment on a chart.
  */
 export interface AfChartPointEvent {

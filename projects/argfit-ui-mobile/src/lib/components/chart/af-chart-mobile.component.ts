@@ -35,6 +35,8 @@ import type {
   AfChartRegion,
   AfChartSeries,
   AfChartSpan,
+  AfChartTableHeaders,
+  AfChartTableLayout,
   AfChartThreshold,
   AfChartTone,
   AfChartToolboxFeature,
@@ -154,8 +156,92 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   readonly dataTable = input(false, { transform: booleanAttribute });
   readonly dataTableLabel = input('Datos del gráfico');
   readonly dataTableSeriesHeader = input('Serie');
+  /**
+   * Disposición de la tabla accesible.
+   *
+   * Por defecto se decide por la forma de los datos: una serie de puntos con varias
+   * magnitudes por observación es ilegible en filas por serie, porque cada celda sólo
+   * puede mostrar una de ellas.
+   */
+  readonly dataTableLayout = input<AfChartTableLayout>('auto');
+  /** Encabezados de las columnas en la disposición por puntos. */
+  readonly dataTableHeaders = input<AfChartTableHeaders>({});
 
   readonly pointSelect = output<AfChartPointEvent>();
+
+  /** Disposición efectiva de la tabla. */
+  protected readonly tableLayout = computed<'series' | 'points'>(() => {
+    const declared = this.dataTableLayout();
+    if (declared !== 'auto') {
+      return declared;
+    }
+    // Se opta por puntos en cuanto alguna observación trae coordenada propia: eso
+    // significa que la fila tiene más de un número que contar.
+    const carriesCoordinates = this.series().some((serie) =>
+      serie.data.some(
+        (point) => point !== null && typeof point === 'object' && point.x !== undefined,
+      ),
+    );
+    return carriesCoordinates ? 'points' : 'series';
+  });
+
+  /** `true` cuando alguna observación trae la tercera magnitud. */
+  private readonly hasMagnitude = computed<boolean>(() =>
+    this.series().some((serie) =>
+      serie.data.some(
+        (point) => point !== null && typeof point === 'object' && point.z !== undefined,
+      ),
+    ),
+  );
+
+  /** Encabezados de la tabla en disposición por puntos. */
+  protected readonly pointColumns = computed<readonly string[]>(() => {
+    const headers = this.dataTableHeaders();
+    const columns = this.series().length > 1 ? [this.dataTableSeriesHeader()] : [];
+    columns.push(headers.label ?? 'Observación');
+    columns.push(headers.x ?? this.xAxis()?.name ?? 'X');
+    columns.push(headers.y ?? this.yAxis()?.name ?? 'Valor');
+    if (this.hasMagnitude()) {
+      columns.push(headers.z ?? 'Magnitud');
+    }
+    return columns;
+  });
+
+  /** Una fila por observación, en el mismo orden en que se declararon. */
+  protected readonly pointRows = computed<readonly (readonly string[])[]>(() => {
+    const withSeries = this.series().length > 1;
+    const withMagnitude = this.hasMagnitude();
+    const categories = this.categories();
+
+    return this.series().flatMap((serie) =>
+      serie.data.map((point, index) => {
+        const cells = withSeries ? [serie.name] : [];
+        if (point === null) {
+          cells.push(categories[index] ?? String(index + 1), '—', '—');
+          if (withMagnitude) {
+            cells.push('—');
+          }
+          return cells;
+        }
+        if (typeof point === 'number') {
+          cells.push(categories[index] ?? String(index + 1), '—', String(point));
+          if (withMagnitude) {
+            cells.push('—');
+          }
+          return cells;
+        }
+        cells.push(
+          String(point.label ?? categories[index] ?? index + 1),
+          point.x === undefined ? '—' : String(point.x),
+          String(point.y ?? (Array.isArray(point.value) ? point.value.join(' / ') : point.value)),
+        );
+        if (withMagnitude) {
+          cells.push(point.z === undefined ? '—' : String(point.z));
+        }
+        return cells;
+      }),
+    );
+  });
 
   /** Etiquetas de las columnas: categorías declaradas o índice de punto. */
   protected readonly tableColumns = computed<readonly string[]>(() => {

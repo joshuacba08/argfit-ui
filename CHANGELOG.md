@@ -2,6 +2,38 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 1.7.0
+
+Minor release focused on making multidimensional chart data easier to inspect
+and frequent chart actions easier to reach.
+
+### Added
+
+- Public `AfChartTableLayout` and `AfChartTableHeaders` contracts, exposed
+  through `AfChart` as `dataTableLayout` and `dataTableHeaders`.
+- Point-oriented accessible chart tables with one row per observation and
+  explicit label, X, Y and Z dimension headers.
+- `inlineActions` on `AfChartCard` for promoting frequent actions into the
+  header on both desktop and mobile renderers.
+- A canonical Storybook example for a bubble chart with a visible
+  observation table and inline data/image controls.
+
+### Changed
+
+- Accessible chart tables now select their layout automatically from the
+  shape of the data while retaining the existing series-oriented layout for
+  categorical and temporal charts.
+- Actions promoted to the `AfChartCard` header are removed from the overflow
+  menu to avoid duplicate controls.
+- The generated MCP catalog includes the new chart and chart-card inputs.
+
+### Release
+
+- All six publishable packages move to `1.7.0`, with internal peer versions
+  aligned exactly.
+- Validated through `pnpm release:production:check` and published with the
+  `latest` dist-tag.
+
 ## 1.6.0
 
 Minor release focused on adaptive data exploration, command discovery and a

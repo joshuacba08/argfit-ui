@@ -23,6 +23,8 @@ import {
   type AfChartRegion,
   type AfChartSeries,
   type AfChartSpan,
+  type AfChartTableHeaders,
+  type AfChartTableLayout,
   type AfChartThreshold,
   type AfChartTone,
   type AfChartToolboxFeature,
@@ -77,6 +79,8 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [dataTable]="dataTable()"
         [dataTableLabel]="dataTableLabel()"
         [dataTableSeriesHeader]="dataTableSeriesHeader()"
+        [dataTableLayout]="dataTableLayout()"
+        [dataTableHeaders]="dataTableHeaders()"
         [ariaLabel]="ariaLabel()"
         (pointSelect)="pointSelect.emit($event)"
       />
@@ -114,6 +118,8 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [dataTable]="dataTable()"
         [dataTableLabel]="dataTableLabel()"
         [dataTableSeriesHeader]="dataTableSeriesHeader()"
+        [dataTableLayout]="dataTableLayout()"
+        [dataTableHeaders]="dataTableHeaders()"
         [ariaLabel]="ariaLabel()"
         (pointSelect)="pointSelect.emit($event)"
       />
@@ -207,6 +213,21 @@ export class AfChartComponent {
   readonly dataTable = input(false, { transform: booleanAttribute });
   readonly dataTableLabel = input('Datos del gráfico');
   readonly dataTableSeriesHeader = input('Serie');
+  /**
+   * Disposición de la tabla accesible.
+   *
+   * Por defecto se decide por la forma de los datos. Una dispersión de burbujas lleva
+   * tres magnitudes por observación: en filas por serie, dos de ellas no tendrían dónde
+   * aparecer.
+   */
+  readonly dataTableLayout = input<AfChartTableLayout>('auto');
+  /**
+   * Encabezados de las columnas en la disposición por puntos.
+   *
+   * Sin ellos se usan los nombres de los ejes, que describen la escala y no siempre la
+   * magnitud que el lector busca en una tabla.
+   */
+  readonly dataTableHeaders = input<AfChartTableHeaders>({});
 
   readonly pointSelect = output<AfChartPointEvent>();
 

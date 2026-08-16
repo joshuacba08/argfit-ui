@@ -1,7 +1,11 @@
 .af-chart-desktop {
   background: transparent;
   display: block;
-  height: var(--af-chart-height, auto);
+  /*
+   * La altura declarada la lleva el lienzo, no el anfitrión: fijarla aquí recorta la
+   * tabla accesible, que se dibuja debajo y acabaría desbordando la tarjeta.
+   */
+  height: auto;
   min-height: var(--af-chart-min-height, 220px);
   position: relative;
   width: 100%;

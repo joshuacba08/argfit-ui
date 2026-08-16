@@ -8,6 +8,17 @@
       <span class="af-chart-card-mobile__tag">{{ tag() }}</span>
     }
 
+    @for (item of inlineItems(); track item.action) {
+      <button
+        type="button"
+        class="af-chart-card-mobile__inline-action"
+        (click)="select(item.action)"
+      >
+        <af-icon [name]="iconFor(item.action)" size="md" />
+        <span>{{ item.label }}</span>
+      </button>
+    }
+
     @if (menuItems().length > 0) {
       <button
         #trigger

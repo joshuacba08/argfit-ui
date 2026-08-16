@@ -28,24 +28,49 @@
   <div class="af-chart-desktop-table-wrapper">
     <table class="af-chart-desktop-table">
       <caption>{{ dataTableLabel() }}</caption>
-      <thead>
-        <tr>
-          <th scope="col">{{ dataTableSeriesHeader() }}</th>
-          @for (column of tableColumns(); track column) {
-            <th scope="col">{{ column }}</th>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        @for (serie of series(); track serie.name; let seriesIndex = $index) {
+      @if (tableLayout() === 'points') {
+        <!-- Una fila por observación: con varias magnitudes por punto, la disposición
+             por series sólo podría mostrar una de ellas en cada celda. -->
+        <thead>
           <tr>
-            <th scope="row">{{ serie.name }}</th>
-            @for (column of tableColumns(); track column; let columnIndex = $index) {
-              <td>{{ tableCell(seriesIndex, columnIndex) }}</td>
+            @for (column of pointColumns(); track $index) {
+              <th scope="col">{{ column }}</th>
             }
           </tr>
-        }
-      </tbody>
+        </thead>
+        <tbody>
+          @for (row of pointRows(); track $index) {
+            <tr>
+              @for (cell of row; track $index; let cellIndex = $index) {
+                @if (cellIndex === 0) {
+                  <th scope="row">{{ cell }}</th>
+                } @else {
+                  <td>{{ cell }}</td>
+                }
+              }
+            </tr>
+          }
+        </tbody>
+      } @else {
+        <thead>
+          <tr>
+            <th scope="col">{{ dataTableSeriesHeader() }}</th>
+            @for (column of tableColumns(); track column) {
+              <th scope="col">{{ column }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (serie of series(); track serie.name; let seriesIndex = $index) {
+            <tr>
+              <th scope="row">{{ serie.name }}</th>
+              @for (column of tableColumns(); track column; let columnIndex = $index) {
+                <td>{{ tableCell(seriesIndex, columnIndex) }}</td>
+              }
+            </tr>
+          }
+        </tbody>
+      }
     </table>
   </div>
 }

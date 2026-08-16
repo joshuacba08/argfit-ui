@@ -10,6 +10,7 @@ import {
   AF_CHART_LOAD_SERIES,
   AF_CHART_LOAD_WEEKS,
 } from '../chart/af-chart.fixtures';
+import { AF_CHART_HSR_SERIES } from '../chart/af-chart-volume.fixtures';
 import { AfChartCardComponent } from './af-chart-card.component';
 
 /** Envoltura común: la card recibe los args y el gráfico proyectado, datos fijos. */
@@ -21,6 +22,7 @@ function renderCard(chartProps: Record<string, unknown>, chartTemplate: string) 
       [tag]="tag"
       [note]="note"
       [menu]="menu"
+      [inlineActions]="inlineActions"
       [labels]="labels"
       [exportName]="exportName"
       [disabled]="disabled"
@@ -95,6 +97,7 @@ const meta: Meta<AfChartCardComponent> = {
   // llega como `undefined` y sustituiría el valor por defecto del componente.
   args: {
     menu: ['fullscreen', 'download-image', 'download-csv', 'reset'],
+    inlineActions: [],
     tableVisible: false,
     disabled: false,
   },
@@ -180,6 +183,46 @@ export const BandaDeDispersion: Story = {
       [secondaryAxis]="secondaryAxis"
       [height]="280"
       [dataTable]="tableVisible"
+    />`,
+  ),
+};
+
+/**
+ * Ver los datos con los que se construyó el gráfico.
+ *
+ * Dos decisiones se juntan aquí. La tabla se dispone **por observación** —una fila por
+ * jugador, una columna por magnitud— porque cada punto lleva tres números y la
+ * disposición por series sólo podría mostrar uno. Y el conmutador vive en el
+ * encabezado, no en el menú: es lo que se usa en cada lectura.
+ */
+export const TablaPorObservacion: Story = {
+  args: {
+    ...CARD_ARGS,
+    heading: 'Dispersión distancia–HSR',
+    tag: 'Burbujas',
+    note: '14 jugadores; el diámetro representa el sprint acumulado.',
+    inlineActions: ['toggle-table', 'download-image'],
+    menu: ['toggle-table', 'download-image', 'download-csv', 'reset'],
+    tableVisible: true,
+  },
+  render: renderCard(
+    {
+      series: AF_CHART_HSR_SERIES,
+      headers: {
+        label: 'Jugador',
+        x: 'Distancia',
+        y: 'HSR',
+        z: 'Sprint',
+      },
+    },
+    `<af-chart
+      type="bubble"
+      [series]="series"
+      [xAxis]="{ name: 'Distancia total (m)' }"
+      [yAxis]="{ name: 'HSR +20 km/h (m)' }"
+      [dataTableHeaders]="headers"
+      [dataTable]="tableVisible"
+      [height]="300"
     />`,
   ),
 };

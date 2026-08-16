@@ -82,6 +82,14 @@ export class AfChartCardComponent implements OnDestroy {
   readonly note = input<string | undefined>(undefined);
   /** Acciones ofrecidas en el menú, en orden. Lista vacía oculta el menú. */
   readonly menu = input<readonly AfChartCardAction[]>(DEFAULT_MENU);
+  /**
+   * Acciones que se muestran como botones en el encabezado en vez de dentro del menú.
+   *
+   * Se reserva para lo que se usa en cada lectura —conmutar la tabla, exportar la
+   * imagen—: esconderlo tras el menú añade un clic de descubrimiento a un gesto
+   * frecuente. Lo que aparece aquí se retira del menú para no ofrecerlo dos veces.
+   */
+  readonly inlineActions = input<readonly AfChartCardAction[]>([]);
   /** Sobrescribe los textos visibles; útil para traducir la card. */
   readonly labels = input<Partial<AfChartCardLabels>>({});
   /** Nombre base de los archivos exportados, sin extensión. */
@@ -119,11 +127,21 @@ export class AfChartCardComponent implements OnDestroy {
     if (this.disabled()) {
       return [];
     }
-    return this.menu().map((action) => ({
-      action,
-      label: this.labelFor(action),
-      startsGroup: GROUP_STARTERS.has(action),
-    }));
+    const inline = new Set(this.inlineActions());
+    return this.menu()
+      .filter((action) => !inline.has(action))
+      .map((action) => ({
+        action,
+        label: this.labelFor(action),
+        startsGroup: GROUP_STARTERS.has(action),
+      }));
+  });
+
+  protected readonly inlineItems = computed<readonly AfChartCardMenuItem[]>(() => {
+    if (this.disabled()) {
+      return [];
+    }
+    return this.inlineActions().map((action) => ({ action, label: this.labelFor(action) }));
   });
 
   private readonly onDocumentClick = (event: MouseEvent): void => {

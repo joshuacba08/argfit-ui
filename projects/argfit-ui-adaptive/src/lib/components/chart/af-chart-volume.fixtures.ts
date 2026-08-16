@@ -263,3 +263,41 @@ export const AF_CHART_FIELD_SECTORS = Array.from({ length: 8 }, (_, index) => `Z
 export const AF_CHART_FIELD_SERIES: readonly AfChartSeries[] = [
   { name: 'Acciones con balón', data: [42, 68, 96, 124, 148, 112, 74, 38] },
 ];
+
+// ── Dispersión distancia–HSR con tabla por observación ───────────────
+/**
+ * Un punto por jugador con tres magnitudes: distancia, alta velocidad y sprint.
+ *
+ * Es el caso que hace ilegible la tabla por series: en filas por serie sólo cabría una
+ * de las tres, y las otras dos desaparecerían del resumen textual.
+ */
+export const AF_CHART_HSR_SERIES: readonly AfChartSeries[] = (() => {
+  const random = seeded(5501);
+  const players = [
+    'Adri Vega',
+    'Franco Bellini',
+    'Kelechi Okoro',
+    'Mateo Ferreyra',
+    'Nicolás Roldán',
+    'Oliver Redmond',
+    'Iván Duarte',
+    'Tomás Aguirre',
+    'Luca Moretti',
+    'Diego Sandoval',
+    'Samuel Ortega',
+    'Bruno Salazar',
+    'Emiliano Ruiz',
+    'Joaquín Herrera',
+  ];
+  return [
+    {
+      name: 'Distancia / HSR / Sprint (m)',
+      data: players.map((label): AfChartPoint => {
+        const distance = Math.round(17_500 + random() * 12_000);
+        const highSpeed = Math.round(500 + (distance - 17_000) * 0.06 + random() * 500);
+        const sprint = Math.round(40 + highSpeed * 0.14 + random() * 60);
+        return { label, x: distance, y: highSpeed, z: sprint, value: highSpeed };
+      }),
+    },
+  ];
+})();

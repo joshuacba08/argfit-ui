@@ -282,10 +282,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.6.0.md',
-    summary: 'Adaptive data exploration, command discovery and expanded charts.',
+    sourcePath: 'docs/productive/release-notes-1.7.0.md',
+    summary: 'Accessible multidimensional chart tables and direct chart-card actions.',
     badge: 'ship',
-    bullets: ['AfChartCard', 'AfCommandPalette', 'Expanded 2D and optional 3D charts'],
+    bullets: ['Observation tables', 'Inline chart actions', 'Vendor-neutral table contracts'],
   },
 ];
 
@@ -508,8 +508,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.6.0.md',
-    summary: 'The canonical 1.6.0 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-1.7.0.md',
+    summary: 'The canonical 1.7.0 release notes and production publish posture.',
   }),
 ];
 

@@ -56,6 +56,14 @@ export class AfChartCardMobileComponent {
   /** Nota metodológica bajo el título: qué se mide y cómo leerlo. */
   readonly note = input<string | undefined>(undefined);
   readonly menuItems = input<readonly AfChartCardMenuItem[]>([]);
+  /**
+   * Acciones que se dibujan como botones en el encabezado.
+   *
+   * Lo que se usa en cada lectura no debería esconderse tras un menú: conmutar la tabla
+   * de datos o exportar la imagen son gestos frecuentes, y un clic previo para
+   * descubrirlos es un clic de más.
+   */
+  readonly inlineItems = input<readonly AfChartCardMenuItem[]>([]);
   readonly menuLabel = input('Opciones del gráfico');
   readonly menuHeading = input('Opciones del gráfico');
   readonly menuOpen = input(false, { transform: booleanAttribute });
@@ -72,7 +80,10 @@ export class AfChartCardMobileComponent {
   private readonly menuRef = viewChild<ElementRef<HTMLElement>>('menu');
 
   protected readonly hasHeader = computed(
-    () => Boolean(this.heading() ?? this.tag()) || this.menuItems().length > 0,
+    () =>
+      Boolean(this.heading() ?? this.tag()) ||
+      this.menuItems().length > 0 ||
+      this.inlineItems().length > 0,
   );
 
   protected iconFor(action: AfChartCardAction): AfIconName {

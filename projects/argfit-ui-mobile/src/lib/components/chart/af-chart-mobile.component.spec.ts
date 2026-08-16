@@ -24,6 +24,31 @@ class ChartHostComponent {
   ]);
 }
 
+@Component({
+  standalone: true,
+  imports: [AfChartMobileComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <af-chart-mobile
+      type="bubble"
+      dataTable
+      [series]="series()"
+      [dataTableHeaders]="{ label: 'Jugador', x: 'Distancia', y: 'HSR', z: 'Sprint' }"
+    />
+  `,
+})
+class PointTableHostComponent {
+  readonly series = signal([
+    {
+      name: 'Distancia / HSR / Sprint',
+      data: [
+        { label: 'Adri Vega', x: 25007, y: 1193, z: 255, value: 1193 },
+        { label: 'Kelechi Okoro', x: 17615, y: 616, z: 44, value: 616 },
+      ],
+    },
+  ]);
+}
+
 describe('AfChartMobileComponent', () => {
   it('renders with compact density by default', async () => {
     const fixture = TestBed.createComponent(ChartHostComponent);
@@ -47,6 +72,24 @@ describe('AfChartMobileComponent', () => {
       '[data-testid="chart"]',
     ) as HTMLElement;
     expect(host.getAttribute('data-state')).toBe('empty');
+  });
+
+  it('preserves every point magnitude in the mobile observation table', async () => {
+    const fixture = TestBed.createComponent(PointTableHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const table = (fixture.nativeElement as HTMLElement).querySelector('table') as HTMLElement;
+    const headers = Array.from(table.querySelectorAll('thead th')).map((cell) =>
+      cell.textContent?.trim(),
+    );
+    const firstRow = Array.from(table.querySelectorAll('tbody tr:first-child > *')).map((cell) =>
+      cell.textContent?.trim(),
+    );
+
+    expect(headers).toEqual(['Jugador', 'Distancia', 'HSR', 'Sprint']);
+    expect(firstRow).toEqual(['Adri Vega', '25007', '1193', '255']);
+    expect(table.querySelectorAll('tbody tr')).toHaveLength(2);
   });
 
   it('builds the required mobile chart presets', () => {

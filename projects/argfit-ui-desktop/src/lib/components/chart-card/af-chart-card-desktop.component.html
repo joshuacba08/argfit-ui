@@ -8,6 +8,17 @@
       <span class="af-chart-card-desktop__tag">{{ tag() }}</span>
     }
 
+    @for (item of inlineItems(); track item.action) {
+      <button
+        type="button"
+        class="af-chart-card-desktop__inline-action"
+        (click)="select(item.action)"
+      >
+        <af-icon [name]="iconFor(item.action)" size="sm" />
+        <span>{{ item.label }}</span>
+      </button>
+    }
+
     @if (menuItems().length > 0) {
       <div class="af-chart-card-desktop__menu-wrap">
         <button

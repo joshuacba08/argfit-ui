@@ -1,6 +1,6 @@
 {
   "name": "@argfit-ui/mobile",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Ionic-backed mobile renderer package for ArgFit UI.",
   "keywords": [
     "angular",
@@ -21,8 +21,8 @@
     "url": "https://github.com/joshuacba08/argfit-ui/issues"
   },
   "peerDependencies": {
-    "@argfit-ui/core": "1.6.0",
-    "@argfit-ui/primitives": "1.6.0",
+    "@argfit-ui/core": "1.7.0",
+    "@argfit-ui/primitives": "1.7.0",
     "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",

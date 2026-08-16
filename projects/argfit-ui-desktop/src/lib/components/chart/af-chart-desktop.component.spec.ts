@@ -36,6 +36,32 @@ class ChartHostComponent {
   imports: [AfChartDesktopComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
+    <af-chart-desktop
+      data-testid="chart"
+      type="bubble"
+      dataTable
+      [series]="series()"
+      [dataTableHeaders]="{ label: 'Jugador', x: 'Distancia', y: 'HSR', z: 'Sprint' }"
+    />
+  `,
+})
+class PointTableHostComponent {
+  readonly series = signal([
+    {
+      name: 'Distancia / HSR / Sprint',
+      data: [
+        { label: 'Adri Vega', x: 25007, y: 1193, z: 255, value: 1193 },
+        { label: 'Kelechi Okoro', x: 17615, y: 616, z: 44, value: 616 },
+      ],
+    },
+  ]);
+}
+
+@Component({
+  standalone: true,
+  imports: [AfChartDesktopComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <af-chart-desktop data-testid="chart" type="sankey" [graph]="graph()" [series]="[]" />
   `,
 })
@@ -108,6 +134,26 @@ describe('AfChartDesktopComponent', () => {
     await fixture.whenStable();
 
     expect(host.getAttribute('data-state')).toBe('ready');
+  });
+
+  it('tabulates points by observation when each one carries several magnitudes', async () => {
+    const fixture = TestBed.createComponent(PointTableHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const table = (fixture.nativeElement as HTMLElement).querySelector('table') as HTMLElement;
+    const headers = Array.from(table.querySelectorAll('thead th')).map((cell) =>
+      cell.textContent?.trim(),
+    );
+    const firstRow = Array.from(table.querySelectorAll('tbody tr:first-child > *')).map((cell) =>
+      cell.textContent?.trim(),
+    );
+
+    // En filas por serie sólo cabría una de las tres magnitudes; las otras dos
+    // desaparecerían del resumen textual que exige la accesibilidad.
+    expect(headers).toEqual(['Jugador', 'Distancia', 'HSR', 'Sprint']);
+    expect(firstRow).toEqual(['Adri Vega', '25007', '1193', '255']);
+    expect(table.querySelectorAll('tbody tr')).toHaveLength(2);
   });
 
   it('builds the required desktop chart presets', () => {

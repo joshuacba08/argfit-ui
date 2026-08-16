@@ -145,3 +145,40 @@
   flex: 1;
   min-height: 0;
 }
+
+/* ── Acciones visibles ────────────────────────────────────────────── */
+
+/*
+ * Botón con etiqueta, no sólo icono: estas acciones son las que se usan en cada
+ * lectura, y un icono suelto obliga a descubrir su significado pasando el puntero.
+ */
+.af-chart-card-mobile__inline-action {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--af-border-soft);
+  border-radius: var(--af-radius-pill);
+  color: var(--af-text-muted);
+  cursor: pointer;
+  display: flex;
+  flex: none;
+  font-size: var(--af-text-sm);
+  font-weight: var(--af-font-weight-medium);
+  gap: var(--af-space-1);
+  height: 40px;
+  padding: 0 var(--af-space-3);
+  transition:
+    color var(--af-duration-fast) var(--af-ease-out),
+    border-color var(--af-duration-fast) var(--af-ease-out),
+    background var(--af-duration-fast) var(--af-ease-out);
+}
+
+.af-chart-card-mobile__inline-action:hover {
+  background: var(--af-bg-interactive);
+  border-color: var(--af-border-strong);
+  color: var(--af-text-main);
+}
+
+.af-chart-card-mobile__inline-action:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 2px;
+}

@@ -16,6 +16,7 @@ import { AfChartCardComponent } from './af-chart-card.component';
       heading="Carga aguda"
       exportName="carga-acwr"
       [menu]="menu()"
+      [inlineActions]="inlineActions()"
       [(tableVisible)]="tableVisible"
       (action)="events.push($event)"
       (popOut)="popOuts.set(popOuts() + 1)"
@@ -38,6 +39,7 @@ class HostComponent {
     'toggle-table',
     'reset',
   ]);
+  readonly inlineActions = signal<readonly AfChartCardAction[]>([]);
   readonly tableVisible = signal(false);
   readonly popOuts = signal(0);
   readonly events: AfChartCardActionEvent[] = [];
@@ -163,6 +165,25 @@ describe('AfChartCardComponent', () => {
       handled: true,
     });
     expect(blobText === '' || blobText.startsWith('"serie","x","valor"')).toBe(true);
+  });
+
+  it('promotes inline actions to the header and drops them from the menu', () => {
+    const { fixture, card } = setup();
+    fixture.componentInstance.inlineActions.set(['toggle-table']);
+    fixture.detectChanges();
+
+    const inline = card.querySelector<HTMLButtonElement>(
+      '.af-chart-card-desktop__inline-action',
+    );
+    expect(inline?.textContent?.trim()).toBe('Ver tabla de datos');
+
+    openMenu(fixture, card);
+    // No se ofrece dos veces: la acción que ya está a la vista sale del menú.
+    expect(itemByLabel(card, 'Ver tabla de datos')).toBeUndefined();
+
+    inline?.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.tableVisible()).toBe(true);
   });
 
   it('hides the menu entirely when no actions are offered', () => {

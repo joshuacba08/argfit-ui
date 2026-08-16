@@ -2,10 +2,10 @@
   "schemaVersion": "1.0.0",
   "library": {
     "name": "ArgFit UI",
-    "version": "1.6.0",
-    "gitSha": "a0753093b0f1",
-    "generatedAt": "2026-08-16T00:52:14+09:00",
-    "sourceDigest": "72210e99ab63e46d19516de36f1987bea12710f73a97b94d03e44592ec9412d3",
+    "version": "1.7.0",
+    "gitSha": "a567923414e0",
+    "generatedAt": "2026-08-16T01:04:11+09:00",
+    "sourceDigest": "3a228a518d8e823912159db58ee8088618e100bb55821cfd2e8ca7be8421c211",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -2828,11 +2828,27 @@
             "deprecated": false
           },
           {
+            "name": "dataTableHeaders",
+            "type": "AfChartTableHeaders",
+            "required": false,
+            "defaultValue": null,
+            "description": "<p>Encabezados de las columnas en la disposición por puntos.</p>\n<p>Sin ellos se usan los nombres de los ejes, que describen la escala y no siempre la\nmagnitud que el lector busca en una tabla.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "dataTableLabel",
             "type": "string",
             "required": false,
             "defaultValue": "'Datos del gráfico'",
             "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "dataTableLayout",
+            "type": "AfChartTableLayout",
+            "required": false,
+            "defaultValue": "'auto'",
+            "description": "<p>Disposición de la tabla accesible.</p>\n<p>Por defecto se decide por la forma de los datos. Una dispersión de burbujas lleva\ntres magnitudes por observación: en filas por serie, dos de ellas no tendrían dónde\naparecer.</p>\n",
             "deprecated": false
           },
           {
@@ -3385,6 +3401,14 @@
             "deprecated": false
           },
           {
+            "name": "inlineActions",
+            "type": "readonly AfChartCardAction[]",
+            "required": false,
+            "defaultValue": "[]",
+            "description": "<p>Acciones que se muestran como botones en el encabezado en vez de dentro del menú.</p>\n<p>Se reserva para lo que se usa en cada lectura —conmutar la tabla, exportar la\nimagen—: esconderlo tras el menú añade un clic de descubrimiento a un gesto\nfrecuente. Lo que aparece aquí se retira del menú para no ofrecerlo dos veces.</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "labels",
             "type": "Partial<AfChartCardLabels>",
             "required": false,
@@ -3485,6 +3509,11 @@
           "id": "data-chart-card--banda-de-dispersion",
           "name": "BandaDeDispersion",
           "url": "/storybook/?path=/story/data-chart-card--banda-de-dispersion"
+        },
+        {
+          "id": "data-chart-card--tabla-por-observacion",
+          "name": "TablaPorObservacion",
+          "url": "/storybook/?path=/story/data-chart-card--tabla-por-observacion"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/data-chart-card--docs",
