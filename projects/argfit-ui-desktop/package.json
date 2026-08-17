@@ -1,6 +1,6 @@
 {
   "name": "@argfit-ui/desktop",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "PrimeNG-backed desktop renderer package for ArgFit UI.",
   "keywords": [
     "angular",
@@ -21,15 +21,14 @@
     "url": "https://github.com/joshuacba08/argfit-ui/issues"
   },
   "peerDependencies": {
-    "@argfit-ui/core": "1.7.0",
-    "@argfit-ui/primitives": "1.7.0",
+    "@argfit-ui/core": "2.0.0",
+    "@argfit-ui/chart-runtime": "2.0.0",
+    "@argfit-ui/primitives": "2.0.0",
     "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@angular/forms": "^21.2.0",
-    "primeng": "^21.1.8",
-    "echarts": "^6.1.0",
-    "echarts-gl": "^2.1.0"
+    "primeng": "^21.1.8"
   },
   "dependencies": {
     "tslib": "^2.3.0"
@@ -38,10 +37,5 @@
   "publishConfig": {
     "access": "public",
     "tag": "latest"
-  },
-  "peerDependenciesMeta": {
-    "echarts-gl": {
-      "optional": true
-    }
   }
 }

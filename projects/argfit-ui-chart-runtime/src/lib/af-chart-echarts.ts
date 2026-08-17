@@ -1,4 +1,4 @@
-/// <reference path="../../../echarts-gl.d.ts" />
+/// <reference path="../echarts-gl.d.ts" />
 // La referencia explícita es necesaria: ng-packagr compila desde el punto de entrada y
 // sigue sólo lo importado, así que una declaración ambiente suelta en `src` nunca
 // entraría al programa y la importación diferida quedaría sin tipos.

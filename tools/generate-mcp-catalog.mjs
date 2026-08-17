@@ -16,6 +16,7 @@ const adaptiveRoot = resolve(workspaceRoot, 'projects/argfit-ui-adaptive/src');
 const storiesRoot = resolve(adaptiveRoot, 'lib/components');
 const compodocPath = resolve(workspaceRoot, 'projects/showcase/documentation.json');
 const publicApiPath = resolve(adaptiveRoot, 'public-api.ts');
+const chartPublicApiPath = resolve(workspaceRoot, 'projects/argfit-ui-adaptive/chart/src/public-api.ts');
 const tokenFiles = [
   resolve(workspaceRoot, 'projects/argfit-ui-core/src/lib/themes/base-tokens.ts'),
   resolve(workspaceRoot, 'projects/argfit-ui-core/src/lib/themes/argfit-dark.theme.ts'),
@@ -41,6 +42,11 @@ if (!existsSync(compodocPath)) {
 const packageManifest = JSON.parse(readFileSync(resolve(workspaceRoot, 'package.json'), 'utf8'));
 const compodoc = JSON.parse(readFileSync(compodocPath, 'utf8'));
 const publicExports = readPublicExports(publicApiPath);
+for (const [className, publicName] of readPublicExports(chartPublicApiPath)) {
+  if (!publicExports.has(className)) {
+    publicExports.set(className, publicName);
+  }
+}
 const storyFiles = walk(storiesRoot).filter((path) => path.endsWith('.stories.ts')).sort();
 const storyRecords = storyFiles.map(readStory);
 const storyByClass = new Map(storyRecords.map((story) => [story.componentClass, story]));
@@ -88,6 +94,7 @@ if (errors.length > 0) {
 
 const canonicalSources = [
   publicApiPath,
+  chartPublicApiPath,
   tokenNamesPath,
   ...tokenFiles,
   workflowPath,
@@ -135,6 +142,7 @@ if (checkOnly) {
 
 function createComponentRecord(component, story) {
   const exportName = publicExports.get(component.name);
+  const componentPackage = story?.argfit.package ?? '@argfit-ui/adaptive';
   const id = kebab(exportName.replace(/^Af/, ''));
   const inputs = (component.inputsClass ?? []).map(cleanApiMember).sort(byName);
   const outputs = (component.outputsClass ?? []).map(cleanApiMember).sort(byName);
@@ -151,8 +159,8 @@ function createComponentRecord(component, story) {
     name: exportName,
     className: component.name,
     selector: component.selector,
-    package: '@argfit-ui/adaptive',
-    importStatement: `import { ${exportName} } from '@argfit-ui/adaptive';`,
+    package: componentPackage,
+    importStatement: `import { ${exportName} } from '${componentPackage}';`,
     title: story?.title ?? exportName,
     category: story?.argfit.category ?? 'Historical',
     status,
@@ -174,7 +182,7 @@ function createComponentRecord(component, story) {
     example: story
       ? {
           story: canonicalStory ?? null,
-          typescript: `import { ${exportName} } from '@argfit-ui/adaptive';`,
+          typescript: `import { ${exportName} } from '${componentPackage}';`,
           template: story.template || buildTemplate(component.selector, story.defaultArgs, inputs),
         }
       : null,
@@ -258,6 +266,13 @@ function validateStory(story, tokenNames, validationErrors) {
   }
   if (story.argfit.importName && publicExports.get(story.componentClass) !== story.argfit.importName) {
     validationErrors.push(`${label} importName does not match the adaptive public export`);
+  }
+  if (
+    story.argfit.package !== undefined &&
+    story.argfit.package !== '@argfit-ui/adaptive' &&
+    story.argfit.package !== '@argfit-ui/adaptive/chart'
+  ) {
+    validationErrors.push(`${label} references unsupported parameters.argfit.package`);
   }
   for (const token of story.argfit.tokens ?? []) {
     if (!tokenNames.has(token)) {

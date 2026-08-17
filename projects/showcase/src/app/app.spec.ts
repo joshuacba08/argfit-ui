@@ -459,6 +459,11 @@ describe('App', () => {
     const charts = compiled.querySelectorAll('af-chart-desktop');
     expect(charts.length).toBeGreaterThanOrEqual(8);
 
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(Array.from(charts).map((c) => c.getAttribute('data-state'))).toContain('ready');
+    });
+
     const states = Array.from(charts).map((c) => c.getAttribute('data-state'));
     expect(states).toContain('ready');
     expect(states).toContain('empty');

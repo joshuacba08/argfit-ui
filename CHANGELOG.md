@@ -2,6 +2,31 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 2.0.0
+
+Major release that moves the advanced chart engine out of initial application assets.
+
+### Added
+
+- `@argfit-ui/adaptive/chart` as the supported application entry point for `AfChart` and `AfChartComponent`.
+- `@argfit-ui/chart-runtime` as a technical, lazy-loaded package shared by both renderers.
+- Accessible runtime error/retry UI and bundle guards built from production tarballs.
+
+### Changed
+
+- ECharts and ZRender load only when a browser chart is first rendered; `echarts-gl` remains a second lazy level for 3D charts.
+- Storybook and MCP snippets understand component-specific entry points.
+- Production publishing uses stable `v2.*.*` tags and the `latest` dist-tag.
+
+### Removed
+
+- `AfChart` and `AfChartComponent` from the root `@argfit-ui/adaptive` barrel. Consumers must import them from `@argfit-ui/adaptive/chart`.
+
+### Release
+
+- All seven publishable packages move to `2.0.0`, with internal peer versions aligned exactly.
+- Validated through `pnpm release:production:check`.
+
 ## 1.7.0
 
 Minor release focused on making multidimensional chart data easier to inspect

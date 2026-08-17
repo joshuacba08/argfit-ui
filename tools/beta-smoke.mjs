@@ -10,6 +10,7 @@ const smokeDirectory = resolve(repoRoot, '.tmp', 'beta-smoke');
 
 const packageDefinitions = [
   { name: '@argfit-ui/core', distDirectory: 'dist/argfit-ui-core', tarballName: `argfit-ui-core-${packageVersion}.tgz` },
+  { name: '@argfit-ui/chart-runtime', distDirectory: 'dist/argfit-ui-chart-runtime', tarballName: `argfit-ui-chart-runtime-${packageVersion}.tgz` },
   {
     name: '@argfit-ui/primitives',
     distDirectory: 'dist/argfit-ui-primitives',
@@ -115,9 +116,12 @@ function validateTypeScriptConsumerSmoke() {
 
   const compilerOptions = {
     baseUrl: repoRoot,
-    paths: Object.fromEntries(
-      packageDefinitions.map((packageDefinition) => [packageDefinition.name, [`./${packageDefinition.distDirectory}`]]),
-    ),
+    paths: {
+      ...Object.fromEntries(
+        packageDefinitions.map((packageDefinition) => [packageDefinition.name, [`./${packageDefinition.distDirectory}`]]),
+      ),
+      '@argfit-ui/adaptive/chart': ['./dist/argfit-ui-adaptive/chart'],
+    },
     strict: true,
     noEmit: true,
     skipLibCheck: true,
@@ -225,7 +229,6 @@ import {
   AfBadge,
   AfButton,
   AfCard,
-  AfChart,
   AfDialog,
   AfInput,
   AfMetricCard,
@@ -240,6 +243,7 @@ import {
   AfVirtualScrollerActionsDirective,
   AfVirtualScrollerItemDirective,
 } from '@argfit-ui/adaptive';
+import { AfChart } from '@argfit-ui/adaptive/chart';
 
 const providers = provideArgfitUi({ theme: ARGFIT_DARK_THEME, platform: 'auto' });
 const variant: AfButtonVariant = 'primary';

@@ -36,16 +36,32 @@ const config: StorybookConfig = {
         replacement: fromWorkspace('projects/argfit-ui-primitives/src/public-api.ts'),
       },
       {
+        find: /^@argfit-ui\/chart-runtime$/,
+        replacement: fromWorkspace('projects/argfit-ui-chart-runtime/src/public-api.ts'),
+      },
+      {
         find: /^@argfit-ui\/desktop$/,
         replacement: fromWorkspace('projects/argfit-ui-desktop/src/public-api.ts'),
+      },
+      {
+        find: /^@argfit-ui\/desktop\/chart$/,
+        replacement: fromWorkspace('projects/argfit-ui-desktop/chart/src/public-api.ts'),
       },
       {
         find: /^@argfit-ui\/mobile$/,
         replacement: fromWorkspace('projects/argfit-ui-mobile/src/public-api.ts'),
       },
       {
+        find: /^@argfit-ui\/mobile\/chart$/,
+        replacement: fromWorkspace('projects/argfit-ui-mobile/chart/src/public-api.ts'),
+      },
+      {
         find: /^@argfit-ui\/adaptive$/,
         replacement: fromWorkspace('projects/argfit-ui-adaptive/src/public-api.ts'),
+      },
+      {
+        find: /^@argfit-ui\/adaptive\/chart$/,
+        replacement: fromWorkspace('projects/argfit-ui-adaptive/chart/src/public-api.ts'),
       },
       ...(Array.isArray(viteConfig.resolve.alias) ? viteConfig.resolve.alias : []),
     ];

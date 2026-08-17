@@ -39,7 +39,7 @@ const initialAssets = initialAssetNames.map((assetName) => {
   };
 });
 
-const tarballAssets = ['argfit-ui-core', 'argfit-ui-primitives', 'argfit-ui-desktop', 'argfit-ui-mobile', 'argfit-ui-adaptive']
+const tarballAssets = ['argfit-ui-core', 'argfit-ui-chart-runtime', 'argfit-ui-primitives', 'argfit-ui-desktop', 'argfit-ui-mobile', 'argfit-ui-adaptive']
   .map((prefix) => {
     const assetName = `${prefix}-${betaVersion}.tgz`;
     const assetPath = resolve(tarballDirectory, assetName);

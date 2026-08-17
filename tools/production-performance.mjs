@@ -10,25 +10,27 @@ const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
 
-// Recalibrated for the release after 1.5.0, which adds the public ChartCard and
-// CommandPalette families plus the expanded 2D/3D chart contracts and renderers.
-// Measured: initial 3,163,171 B, main 3,097,678 B, core 98,012 B,
-// primitives 26,153 B, adaptive 223,459 B, desktop 400,753 B, mobile 360,262 B,
-// MCP 66,230 B and tarballs 1,174,869 B. Each changed budget sits roughly 5 %
-// above its measurement so the ratchet still catches unintended growth: these are
+// Recalibrated for 2.0.0 after moving the chart engine to a lazy technical runtime.
+// Measured: initial 2,146,111 B, main 2,080,618 B, core 99,901 B,
+// chart-runtime 71,384 B, primitives 26,249 B, adaptive 227,478 B,
+// desktop 340,327 B, mobile 299,490 B, MCP 67,053 B and
+// tarballs 1,131,882 B.
+// Each changed budget sits roughly 5 % above its measurement so the ratchet still
+// catches unintended growth: these are
 // ceilings to justify raising, not targets to grow into. Raise them only alongside
 // a release that says in its notes what was added.
 const budgets = {
-  initialTotal: 3_322_000,
-  mainBundle: 3_253_000,
-  stylesBundle: 60_000,
-  tarballTotal: 1_234_000,
+  initialTotal: 2_254_000,
+  mainBundle: 2_185_000,
+  stylesBundle: 41_000,
+  tarballTotal: 1_183_000,
   tarballs: {
-    'argfit-ui-core': 103_000,
-    'argfit-ui-primitives': 27_500,
-    'argfit-ui-adaptive': 235_000,
-    'argfit-ui-desktop': 421_000,
-    'argfit-ui-mobile': 379_000,
+    'argfit-ui-core': 104_000,
+    'argfit-ui-chart-runtime': 75_000,
+    'argfit-ui-primitives': 27_600,
+    'argfit-ui-adaptive': 238_000,
+    'argfit-ui-desktop': 357_000,
+    'argfit-ui-mobile': 313_000,
     'argfit-ui-mcp': 70_000,
   },
 };

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { provideArgfitUi, type AfChartSeries, type AfChartType } from '@argfit-ui/core';
 
-import { AfChartComponent } from './af-chart.component';
+import { AfChartComponent } from '../../../../chart/src/lib/af-chart.component';
 
 const LOAD_SERIES: readonly AfChartSeries[] = [
   {

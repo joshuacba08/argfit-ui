@@ -1,7 +1,8 @@
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular-vite';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 
-import { AfChartCardComponent, AfChartComponent, AfEmptyStateComponent } from '@argfit-ui/adaptive';
+import { AfChartCardComponent, AfEmptyStateComponent } from '@argfit-ui/adaptive';
+import { AfChartComponent } from '@argfit-ui/adaptive/chart';
 
 import {
   AF_CHART_FORECAST_BANDS,

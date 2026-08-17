@@ -12,7 +12,6 @@ import {
     AfCardHeaderDirective,
     AfCardSubtitleDirective,
     AfCardTitleDirective,
-    AfChart,
     AfDataTable,
     AfDataTableCellDirective,
     AfDataTableExpandedRowDirective,
@@ -68,6 +67,7 @@ import {
     AfToolbarStartDirective,
     AfTooltip,
 } from '@argfit-ui/adaptive';
+import { AfChart } from '@argfit-ui/adaptive/chart';
 import type {
     AfBreadcrumbItem,
     AfCardDensity,

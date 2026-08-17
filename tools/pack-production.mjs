@@ -12,7 +12,7 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const PRODUCTION_VERSION = '1.7.0';
+const PRODUCTION_VERSION = '2.0.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
 const tarballDestination = resolve(repoRoot, 'dist', 'production-tarballs');
@@ -26,6 +26,12 @@ const packageDefinitions = [
     requiredPeers: ['@angular/common', '@angular/core'],
   },
   {
+    name: '@argfit-ui/chart-runtime',
+    distDirectory: 'dist/argfit-ui-chart-runtime',
+    internalPeers: ['@argfit-ui/core'],
+    requiredPeers: ['echarts'],
+  },
+  {
     name: '@argfit-ui/primitives',
     distDirectory: 'dist/argfit-ui-primitives',
     internalPeers: ['@argfit-ui/core'],
@@ -34,14 +40,14 @@ const packageDefinitions = [
   {
     name: '@argfit-ui/desktop',
     distDirectory: 'dist/argfit-ui-desktop',
-    internalPeers: ['@argfit-ui/core', '@argfit-ui/primitives'],
-    requiredPeers: ['@angular/cdk', '@angular/common', '@angular/core', '@angular/forms', 'primeng', 'echarts'],
+    internalPeers: ['@argfit-ui/chart-runtime', '@argfit-ui/core', '@argfit-ui/primitives'],
+    requiredPeers: ['@angular/cdk', '@angular/common', '@angular/core', '@angular/forms', 'primeng'],
   },
   {
     name: '@argfit-ui/mobile',
     distDirectory: 'dist/argfit-ui-mobile',
-    internalPeers: ['@argfit-ui/core', '@argfit-ui/primitives'],
-    requiredPeers: ['@angular/cdk', '@angular/common', '@angular/core', '@ionic/angular', 'echarts'],
+    internalPeers: ['@argfit-ui/chart-runtime', '@argfit-ui/core', '@argfit-ui/primitives'],
+    requiredPeers: ['@angular/cdk', '@angular/common', '@angular/core', '@ionic/angular'],
   },
   {
     name: '@argfit-ui/adaptive',

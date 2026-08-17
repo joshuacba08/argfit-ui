@@ -1,28 +1,29 @@
 # Productive Public API Inventory
 
-This document records the public API surface for `1.3.3`.
+This document records the public API surface for `2.0.0`.
 
 The source of truth is the set of symbols re-exported from these package barrels:
 
 - `projects/argfit-ui-core/src/public-api.ts`
 - `projects/argfit-ui-primitives/src/public-api.ts`
 - `projects/argfit-ui-adaptive/src/public-api.ts`
+- `projects/argfit-ui-adaptive/chart/src/public-api.ts`
 - `projects/argfit-ui-desktop/src/public-api.ts`
 - `projects/argfit-ui-mobile/src/public-api.ts`
 
-Any export reachable through those barrels inherits the `1.0` category assigned below. There is no public `experimental` category in the `1.0.0` contract.
+Any export reachable through those barrels inherits the `2.0` category assigned below. There is no public `experimental` category in the `2.0.0` contract.
 
-## 1.0 Categories
+## 2.0 Categories
 
 | Category | Meaning |
 | --- | --- |
-| `1.0-foundation` | Stable shared runtime, token, primitive and type contracts. |
-| `1.0-adaptive` | Stable semantic Angular component APIs recommended for application code. |
-| `1.0-renderer-specific` | Stable renderer APIs supported for intentional desktop/mobile targeting. |
+| `2.0-foundation` | Stable shared runtime, token, primitive and type contracts. |
+| `2.0-adaptive` | Stable semantic Angular component APIs recommended for application code. |
+| `2.0-renderer-specific` | Stable renderer APIs supported for intentional desktop/mobile targeting. |
 
 ## `@argfit-ui/core`
 
-All exports re-exported from `projects/argfit-ui-core/src/public-api.ts` are category `1.0-foundation`.
+All exports re-exported from `projects/argfit-ui-core/src/public-api.ts` are category `2.0-foundation`.
 
 ### Bootstrap, Runtime And Theme Paths
 
@@ -82,7 +83,7 @@ All exports re-exported from `projects/argfit-ui-core/src/public-api.ts` are cat
 
 ## `@argfit-ui/primitives`
 
-All exports re-exported from `projects/argfit-ui-primitives/src/public-api.ts` are category `1.0-foundation`.
+All exports re-exported from `projects/argfit-ui-primitives/src/public-api.ts` are category `2.0-foundation`.
 
 - `./lib/a11y/af-visually-hidden.component`
 - `./lib/dismiss/af-escape-key.directive`
@@ -92,7 +93,7 @@ All exports re-exported from `projects/argfit-ui-primitives/src/public-api.ts` a
 
 ## `@argfit-ui/adaptive`
 
-All exports re-exported from `projects/argfit-ui-adaptive/src/public-api.ts` are category `1.0-adaptive`.
+All exports re-exported from `projects/argfit-ui-adaptive/src/public-api.ts` are category `2.0-adaptive`.
 
 ### Foundation And Base Composition
 
@@ -152,7 +153,6 @@ All exports re-exported from `projects/argfit-ui-adaptive/src/public-api.ts` are
 
 ### Data, Hierarchy And Workflow
 
-- `AfChart`, `AfChartComponent`
 - `AfDataTable`, `AfDataTableComponent`
 - `AfDataTableCellDirective`, `AfDataTableExpandedRowDirective`, `AfDataTableToolbarDirective`, `AfDataTableEmptyDirective`, `AF_DATA_TABLE_SLOT_DIRECTIVES`
 - `AfDataView`, `AfDataViewComponent`
@@ -191,9 +191,24 @@ All exports re-exported from `projects/argfit-ui-adaptive/src/public-api.ts` are
 - `AfToolbar`, `AfToolbarComponent`
 - `AfToolbarStartDirective`, `AfToolbarCenterDirective`, `AfToolbarEndDirective`, `AF_TOOLBAR_SLOT_DIRECTIVES`
 
+## `@argfit-ui/adaptive/chart`
+
+The Chart family is category `2.0-adaptive`, but is intentionally isolated in a secondary entry point so application barrels do not retain its advanced rendering runtime.
+
+- `AfChart`, `AfChartComponent`
+- `AfChartCard`, `AfChartCardComponent` (convenience re-export; both remain available from the adaptive root)
+
+`AfChart` adds `renderErrorMessage` (default `No se pudo cargar el gráfico.`) and `retryLabel` (default `Reintentar`). `AfChart` and `AfChartComponent` are not exported from the root adaptive barrel in 2.0.
+
+## `@argfit-ui/chart-runtime`
+
+This is a technical package used by the renderer packages. It owns ECharts registration, option construction and the optional 3D loader. Applications install it as an aligned peer but must not import it directly.
+
 ## `@argfit-ui/desktop`
 
-All exports re-exported from `projects/argfit-ui-desktop/src/public-api.ts` are category `1.0-renderer-specific`.
+All exports re-exported from `projects/argfit-ui-desktop/src/public-api.ts` are category `2.0-renderer-specific`.
+
+`AfChartDesktopComponent` is isolated at `@argfit-ui/desktop/chart` so the renderer root does not emit the lazy chart runtime for applications without charts.
 
 - `./lib/components/accordion/af-accordion-desktop.component`
 - `./lib/components/analytics-card/af-analytics-card-desktop.component`
@@ -249,7 +264,9 @@ All exports re-exported from `projects/argfit-ui-desktop/src/public-api.ts` are 
 
 ## `@argfit-ui/mobile`
 
-All exports re-exported from `projects/argfit-ui-mobile/src/public-api.ts` are category `1.0-renderer-specific`.
+All exports re-exported from `projects/argfit-ui-mobile/src/public-api.ts` are category `2.0-renderer-specific`.
+
+`AfChartMobileComponent` is isolated at `@argfit-ui/mobile/chart` for the same bundle boundary.
 
 - `./lib/components/accordion/af-accordion-mobile.component`
 - `./lib/components/analytics-card/af-analytics-card-mobile.component`

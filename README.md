@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-10.28-F69220?logo=pnpm&logoColor=white)
-![Status](https://img.shields.io/badge/status-1.0.0-2599D5)
+![Status](https://img.shields.io/badge/status-2.0.0-2599D5)
 
 ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile-first workflows.
 
@@ -21,7 +21,7 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI is aligned on the stable `1.0.0` production contract. Publishable packages use exact `1.0.0` internal peers, public npm metadata and the `latest` dist-tag.
+ArgFit UI is aligned on the stable `2.0.0` production contract. Publishable packages use exact `2.0.0` internal peers, public npm metadata and the `latest` dist-tag.
 
 The production release gate keeps the broad Beta+ validation substrate for regression confidence, then rebuilds and validates stable production packages under `dist/production-tarballs/`.
 
@@ -32,6 +32,7 @@ Alpha, beta and Beta+ docs remain in the repository as historical baselines and 
 ```txt
 argfit-ui-core
 argfit-ui-primitives
+argfit-ui-chart-runtime
 argfit-ui-desktop
 argfit-ui-mobile
 argfit-ui-adaptive
@@ -44,6 +45,7 @@ showcase
 | ---------- | ----------------------- | ------------------------------------------------------------------ |
 | Core       | `@argfit-ui/core`       | Tokens, themes, shared types, platform services, configuration     |
 | Primitives | `@argfit-ui/primitives` | Vendor-agnostic accessibility and low-level composition utilities  |
+| Chart runtime | technical peer | Lazy ECharts option builder shared by both renderers |
 | Desktop    | `@argfit-ui/desktop`    | PrimeNG-backed desktop implementations kept behind ArgFit APIs     |
 | Mobile     | `@argfit-ui/mobile`     | Ionic-backed mobile implementations kept behind ArgFit APIs        |
 | Adaptive   | `@argfit-ui/adaptive`   | Public adaptive components that select desktop or mobile rendering |
@@ -399,4 +401,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `1.7.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.
+The workspace and publishable packages are aligned on `2.0.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/chart-runtime` and `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.

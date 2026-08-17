@@ -7,7 +7,7 @@ import ts from 'typescript';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'production-smoke');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
-const PRODUCTION_VERSION = '1.7.0';
+const PRODUCTION_VERSION = '2.0.0';
 const failures = [];
 
 const packageDefinitions = [
@@ -17,6 +17,13 @@ const packageDefinitions = [
     distDirectory: 'dist/argfit-ui-core',
     tarballPrefix: 'argfit-ui-core-',
     internalPeers: [],
+  },
+  {
+    name: '@argfit-ui/chart-runtime',
+    projectManifest: 'projects/argfit-ui-chart-runtime/package.json',
+    distDirectory: 'dist/argfit-ui-chart-runtime',
+    tarballPrefix: 'argfit-ui-chart-runtime-',
+    internalPeers: ['@argfit-ui/core'],
   },
   {
     name: '@argfit-ui/primitives',
@@ -190,7 +197,10 @@ function validateTypeScriptConsumerSmoke() {
 
   const compilerOptions = {
     baseUrl: repoRoot,
-    paths: Object.fromEntries(packageDefinitions.map((packageDefinition) => [packageDefinition.name, [`./${packageDefinition.distDirectory}`]])),
+    paths: {
+      ...Object.fromEntries(packageDefinitions.map((packageDefinition) => [packageDefinition.name, [`./${packageDefinition.distDirectory}`]])),
+      '@argfit-ui/adaptive/chart': ['./dist/argfit-ui-adaptive/chart'],
+    },
     strict: true,
     noEmit: true,
     skipLibCheck: true,
@@ -244,7 +254,7 @@ function validateProductionPublishWorkflowShape() {
   for (const snippet of [
     'name: Publish Production',
     'workflow_dispatch:',
-    "- 'v1.*.*'",
+    "- 'v2.*.*'",
     'NPM_TOKEN',
     'NODE_AUTH_TOKEN',
     'pnpm release:production:check',
@@ -260,16 +270,17 @@ function validateProductionPublishWorkflowShape() {
 
 function validateDocsShape() {
   for (const [filePath, snippets] of [
-    ['package.json', ['"version": "1.7.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
-    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '3.322 MB', '1,234 kB', '103 kB', '27.5 kB', '235 kB', '421 kB', '379 kB', '70 kB', 'Production tarball total']],
-    ['docs/productive/scope.md', ['ArgFit UI 1.7.0 Scope', '`1.0-adaptive`']],
-    ['docs/productive/public-api.md', ['Productive Public API Inventory', '1.0-renderer-specific']],
+    ['package.json', ['"version": "2.0.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
+    ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.254 MB', '1,183 kB', '104 kB', '75 kB', '27.6 kB', '238 kB', '357 kB', '313 kB', '70 kB', 'Production tarball total']],
+    ['docs/productive/scope.md', ['ArgFit UI 2.0.0 Scope', '`2.0-adaptive`']],
+    ['docs/productive/public-api.md', ['Productive Public API Inventory', '2.0-renderer-specific']],
     ['docs/productive/semver-policy.md', ['Productive Semver Policy', 'Deprecation Policy']],
     ['docs/productive/release-operations.md', ['Productive Release Operations', 'Branch And Tag Strategy', 'npm Publish Process', 'Patch Release Procedure', 'Changelog Policy', 'publish-production.yml', 'NPM_TOKEN', 'latest']],
     ['docs/productive/support-policy.md', ['Productive Support Policy', 'Support Window', 'Security And Dependency Update Policy', 'Deprecation Process', '1.x']],
-    ['docs/productive/release-checklist.md', ['Production Release Checklist', '1.7.0', 'pnpm release:production:check', 'v1.7.0', 'latest']],
-    ['docs/productive/release-notes-1.7.0.md', ['Release Notes: 1.7.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
-    ['CHANGELOG.md', ['## 1.7.0', 'latest', 'pnpm release:production:check']],
+    ['docs/productive/release-checklist.md', ['Production Release Checklist', '2.0.0', 'pnpm release:production:check', 'v2.0.0', 'latest']],
+    ['docs/productive/release-notes-2.0.0.md', ['Release Notes: 2.0.0', 'latest', 'pnpm release:production:check', 'dist/production-tarballs/']],
+    ['docs/productive/migration-1-to-2.md', ['@argfit-ui/adaptive/chart', '@argfit-ui/chart-runtime']],
+    ['CHANGELOG.md', ['## 2.0.0', 'latest', 'pnpm release:production:check']],
   ]) {
     const absolutePath = resolve(repoRoot, filePath);
 
@@ -295,6 +306,7 @@ import { AfIconComponent, AfVisuallyHiddenComponent } from '@argfit-ui/primitive
 import { AfButtonDesktopComponent } from '@argfit-ui/desktop';
 import { AfButtonMobileComponent } from '@argfit-ui/mobile';
 import { AfButton, AfCard, AfDialog, AfInput, AfKanban, AfPageShell, AfTabs, AfTooltip } from '@argfit-ui/adaptive';
+import { AfChart } from '@argfit-ui/adaptive/chart';
 
 const providers = provideArgfitUi({ theme: ARGFIT_DARK_THEME, platform: 'auto' });
 const variant: AfButtonVariant = 'primary';
@@ -314,6 +326,7 @@ void AfVisuallyHiddenComponent;
 void AfButtonDesktopComponent;
 void AfButtonMobileComponent;
 void AfButton;
+void AfChart;
 void AfCard;
 void AfDialog;
 void AfInput;

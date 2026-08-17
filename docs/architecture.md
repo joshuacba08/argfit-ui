@@ -37,6 +37,7 @@ The architecture aims to provide:
 graph TD
 
 CORE[argfit-ui-core]
+CHART_RUNTIME[argfit-ui-chart-runtime]
 PRIMITIVES[argfit-ui-primitives]
 
 DESKTOP[argfit-ui-desktop]
@@ -47,10 +48,13 @@ ADAPTIVE[argfit-ui-adaptive]
 SHOWCASE[showcase]
 
 CORE --> PRIMITIVES
+CORE --> CHART_RUNTIME
 
 PRIMITIVES --> DESKTOP
 PRIMITIVES --> MOBILE
 PRIMITIVES --> ADAPTIVE
+CHART_RUNTIME --> DESKTOP
+CHART_RUNTIME --> MOBILE
 
 DESKTOP --> ADAPTIVE
 MOBILE --> ADAPTIVE
@@ -139,6 +143,13 @@ It MUST NOT depend on:
 - Adaptive implementations
 
 Primitives are not vendor wrappers. They are the smallest reusable ArgFit UI pieces that higher-level components can compose.
+
+## argfit-ui-chart-runtime
+
+The chart runtime owns the ECharts-specific option builder and registrations shared by
+desktop and mobile. Renderers load it dynamically when the first ready chart needs a
+canvas. It may depend on core and ECharts, but not on Angular UI renderers, PrimeNG,
+Ionic, primitives or adaptive components. Applications do not import it directly.
 
 ---
 

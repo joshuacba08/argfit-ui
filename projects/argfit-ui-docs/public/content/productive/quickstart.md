@@ -1,8 +1,8 @@
 # Productive Quickstart
 
-This guide describes the consumer posture for the stable `1.7.0` ArgFit UI contract.
+This guide describes the consumer posture for the stable `2.0.0` ArgFit UI contract.
 
-The repository now validates stable `1.7.0` package metadata and production tarballs through the production release gate.
+The repository validates stable `2.0.0` package metadata, production tarballs and chart chunk boundaries through the production release gate.
 
 ## Requirements
 
@@ -21,10 +21,10 @@ The recommended application-facing path remains `@argfit-ui/adaptive`.
 Keep every ArgFit package aligned to the exact same release:
 
 ```bash
-pnpm add @argfit-ui/core@1.7.0
-pnpm add @argfit-ui/primitives@1.7.0
-pnpm add @argfit-ui/desktop@1.7.0 @argfit-ui/mobile@1.7.0
-pnpm add @argfit-ui/adaptive@1.7.0
+pnpm add @argfit-ui/core@2.0.0
+pnpm add @argfit-ui/primitives@2.0.0
+pnpm add @argfit-ui/desktop@2.0.0 @argfit-ui/mobile@2.0.0
+pnpm add @argfit-ui/adaptive@2.0.0 @argfit-ui/chart-runtime@2.0.0
 ```
 
 For local validation, run the productive contract directly from this repository:
@@ -74,6 +74,7 @@ import {
   AfDialog,
   AfInlineMessage,
 } from '@argfit-ui/adaptive';
+import { AfChart } from '@argfit-ui/adaptive/chart';
 
 @Component({
   selector: 'app-productive-overview',
@@ -94,7 +95,7 @@ import {
       </header>
 
       <div afCardContent>
-        <af-inline-message severity="info" title="1.7.0 stable">
+        <af-inline-message severity="info" title="2.0.0 stable">
           Adaptive components remain the preferred app-facing path.
         </af-inline-message>
 
@@ -108,6 +109,8 @@ export class ProductiveOverviewComponent {}
 ```
 
 Renderer-specific packages remain public, but they are an explicit opt-in path for intentional desktop/mobile integration work rather than the default application contract.
+
+Charts are the one deliberate secondary entry point. Import `AfChart` eagerly from `@argfit-ui/adaptive/chart`; its ECharts runtime still loads only when the first chart is drawn. Treat `@argfit-ui/chart-runtime` as an installed technical peer, never as an application import.
 
 ## Local Validation Before Shipping
 
@@ -128,5 +131,6 @@ Use the broader gate before tagging or opening a final release workflow. `pnpm b
 - [Productive accessibility](./accessibility.md)
 - [Productive theming](./theming.md)
 - [Migration beta/Beta+ to 1.0](./migration-beta-to-1-0.md)
-- [Productive release notes](./release-notes-1.7.0.md)
+- [Migration 1.x to 2.0](./migration-1-to-2.md)
+- [Productive release notes](./release-notes-2.0.0.md)
 - [Productive quality gates](./quality-gates.md)

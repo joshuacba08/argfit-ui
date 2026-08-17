@@ -12,6 +12,7 @@ const rootManifest = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 
 
 const argfitPackages = [
   { name: '@argfit-ui/core', tarball: createTarballName('@argfit-ui/core') },
+  { name: '@argfit-ui/chart-runtime', tarball: createTarballName('@argfit-ui/chart-runtime') },
   { name: '@argfit-ui/primitives', tarball: createTarballName('@argfit-ui/primitives') },
   { name: '@argfit-ui/desktop', tarball: createTarballName('@argfit-ui/desktop') },
   { name: '@argfit-ui/mobile', tarball: createTarballName('@argfit-ui/mobile') },

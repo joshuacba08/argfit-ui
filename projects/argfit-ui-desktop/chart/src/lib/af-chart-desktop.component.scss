@@ -36,8 +36,38 @@
 }
 
 .af-chart-desktop[data-state='empty'] .af-chart-desktop__canvas,
-.af-chart-desktop[data-state='loading'] .af-chart-desktop__canvas {
+.af-chart-desktop[data-state='loading'] .af-chart-desktop__canvas,
+.af-chart-desktop[data-state='error'] .af-chart-desktop__canvas {
   visibility: hidden;
+}
+
+.af-chart-desktop__error {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--af-font-size-sm);
+  gap: var(--af-space-3);
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.af-chart-desktop__retry {
+  background: var(--af-bg-interactive);
+  border: 1px solid var(--af-border-focus);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  cursor: pointer;
+  font: inherit;
+  min-height: 36px;
+  padding: var(--af-space-2) var(--af-space-3);
+}
+
+.af-chart-desktop__retry:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 2px;
 }
 
 .af-chart-desktop__empty {

@@ -282,8 +282,8 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-1.7.0.md',
-    summary: 'Accessible multidimensional chart tables and direct chart-card actions.',
+    sourcePath: 'docs/productive/release-notes-2.0.0.md',
+    summary: 'Lazy chart runtime, a dedicated chart entry point and smaller initial assets.',
     badge: 'ship',
     bullets: ['Observation tables', 'Inline chart actions', 'Vendor-neutral table contracts'],
   },
@@ -445,6 +445,12 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
     bullets: ['No vendor pivot', 'Experimental public category disappears', 'Version alignment remains mandatory'],
   }),
   guideCard({
+    title: 'Migration 1.x to 2.0',
+    sourcePath: 'docs/productive/migration-1-to-2.md',
+    summary: 'Move AfChart imports to the lazy-friendly secondary entry point.',
+    bullets: ['@argfit-ui/adaptive/chart', 'Core chart contracts unchanged', 'Runtime stays technical'],
+  }),
+  guideCard({
     title: 'Quality gates',
     sourcePath: 'docs/productive/quality-gates.md',
     summary: 'The operational contract that keeps the productive line honest.',
@@ -460,21 +466,21 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
     title: 'Production release checklist',
     sourcePath: 'docs/productive/release-checklist.md',
     summary: 'Final pre-tag checks for version alignment, docs, workflow publish and recovery.',
-    bullets: ['1.0.0 metadata', 'release:production:check', 'latest dist-tag verification'],
+    bullets: ['2.0.0 metadata', 'release:production:check', 'latest dist-tag verification'],
   }),
   guideCard({
     title: 'Support policy',
     sourcePath: 'docs/productive/support-policy.md',
     summary: 'Support window, security, dependency update and deprecation rules for the productive line.',
-    bullets: ['1.x support window', 'Security and dependency updates', 'Deprecation process'],
+    bullets: ['2.x support window', 'Security and dependency updates', 'Deprecation process'],
   }),
 ];
 
 export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   releaseAsset({
-    title: '1.0 scope',
+    title: '2.0 scope',
     sourcePath: 'docs/productive/scope.md',
-    summary: 'What enters 1.0, what stays out and what remains frozen in 1.0.x.',
+    summary: 'What enters 2.0, what stays out and which entry points are stable.',
   }),
   releaseAsset({
     title: 'Public API inventory',
@@ -499,23 +505,23 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   releaseAsset({
     title: 'Production release checklist',
     sourcePath: 'docs/productive/release-checklist.md',
-    summary: 'The final checklist for 1.0.0 metadata, docs, tagging, npm latest and recovery posture.',
+    summary: 'The final checklist for 2.0.0 metadata, docs, tagging, npm latest and recovery posture.',
   }),
   releaseAsset({
     title: 'Support policy',
     sourcePath: 'docs/productive/support-policy.md',
-    summary: 'Support window, security maintenance, dependency update and deprecation process for 1.x.',
+    summary: 'Support window, security maintenance, dependency update and deprecation process for 2.x.',
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-1.7.0.md',
-    summary: 'The canonical 1.7.0 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-2.0.0.md',
+    summary: 'The canonical 2.0.0 release notes and production publish posture.',
   }),
 ];
 
 export const PRODUCTIVE_QUICKSTART_STEPS: readonly string[] = [
   'Bootstrap the runtime with provideArgfitUi from @argfit-ui/core.',
-  'Keep application imports adaptive-first through @argfit-ui/adaptive.',
+  'Keep application imports adaptive-first and use @argfit-ui/adaptive/chart for AfChart.',
   'Validate the contract locally with pnpm build:docs and pnpm release:production:check.',
 ];
 

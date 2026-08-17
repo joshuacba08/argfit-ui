@@ -2,6 +2,7 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  forwardRef,
   inject,
   input,
   output,
@@ -11,6 +12,7 @@ import {
 
 import {
   AfPlatformService,
+  ɵAF_CHART_HOST,
   type AfChartAnnotation,
   type AfChartAxis,
   type AfChartBand,
@@ -30,8 +32,8 @@ import {
   type AfChartToolboxFeature,
   type AfChartType,
 } from '@argfit-ui/core';
-import { AfChartDesktopComponent } from '@argfit-ui/desktop';
-import { AfChartMobileComponent } from '@argfit-ui/mobile';
+import { AfChartDesktopComponent } from '@argfit-ui/desktop/chart';
+import { AfChartMobileComponent } from '@argfit-ui/mobile/chart';
 
 /**
  * Adaptive chart facade that swaps the desktop or mobile implementation
@@ -40,6 +42,7 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
  */
 @Component({
   selector: 'af-chart',
+  providers: [{ provide: ɵAF_CHART_HOST, useExisting: forwardRef(() => AfChartComponent) }],
   standalone: true,
   imports: [AfChartDesktopComponent, AfChartMobileComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -76,6 +79,8 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
         [webglMessage]="webglMessage()"
+        [renderErrorMessage]="renderErrorMessage()"
+        [retryLabel]="retryLabel()"
         [dataTable]="dataTable()"
         [dataTableLabel]="dataTableLabel()"
         [dataTableSeriesHeader]="dataTableSeriesHeader()"
@@ -115,6 +120,8 @@ import { AfChartMobileComponent } from '@argfit-ui/mobile';
         [loading]="loading()"
         [emptyMessage]="emptyMessage()"
         [webglMessage]="webglMessage()"
+        [renderErrorMessage]="renderErrorMessage()"
+        [retryLabel]="retryLabel()"
         [dataTable]="dataTable()"
         [dataTableLabel]="dataTableLabel()"
         [dataTableSeriesHeader]="dataTableSeriesHeader()"
@@ -203,6 +210,10 @@ export class AfChartComponent {
    * vacío se lee como «no hay datos» en lugar de «falta instalar algo».
    */
   readonly webglMessage = input<string>('Este gráfico necesita el paquete opcional echarts-gl.');
+  /** Mensaje accesible cuando el runtime diferido no puede descargarse. */
+  readonly renderErrorMessage = input<string>('No se pudo cargar el gráfico.');
+  /** Etiqueta de la acción que vuelve a solicitar el runtime tras un fallo. */
+  readonly retryLabel = input<string>('Reintentar');
   readonly ariaLabel = input<string | undefined>(undefined);
   /**
    * Publica la serie como tabla accesible junto al gráfico.

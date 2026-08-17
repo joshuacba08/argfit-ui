@@ -15,6 +15,20 @@ describe('ArgFit catalog engine', () => {
     expect(searchComponents(catalog, { query: 'accordion' })[0]?.component.name).toBe('AfAccordion');
   });
 
+  it('groups generated imports by documented entry point', () => {
+    const chart = findComponent(catalog, 'AfChart');
+    expect(chart?.package).toBe('@argfit-ui/adaptive/chart');
+    expect(chart?.importStatement).toBe(
+      "import { AfChart } from '@argfit-ui/adaptive/chart';",
+    );
+
+    const usage = generateUsage(catalog, ['AfChart', 'AfButton']);
+    expect(usage.imports).toBe(
+      "import { AfButton } from '@argfit-ui/adaptive';\n" +
+        "import { AfChart } from '@argfit-ui/adaptive/chart';",
+    );
+  });
+
   it('finds Select for searchable infinite-scroll intent in Spanish', () => {
     const results = searchComponents(catalog, {
       query: 'selector con búsqueda y carga por scroll',

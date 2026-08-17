@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { AfPlatformService, type AfChartCardAction, type AfChartCardActionEvent } from '@argfit-ui/core';
 
-import { AfChartComponent } from '../chart/af-chart.component';
+import { AfChartComponent } from '../../../../chart/src/lib/af-chart.component';
 import { AfChartCardComponent } from './af-chart-card.component';
 
 @Component({

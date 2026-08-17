@@ -29,22 +29,23 @@ These budgets are enforced by `pnpm measure:production-performance:dist`.
 
 | Artifact | Budget |
 | --- | --- |
-| Showcase initial asset total | `3.322 MB` raw |
-| Showcase main bundle | `3.253 MB` raw |
-| Showcase styles bundle | `60 kB` raw |
-| Production tarball total | `1,234 kB` |
-| `@argfit-ui/core` tarball | `103 kB` |
-| `@argfit-ui/primitives` tarball | `27.5 kB` |
-| `@argfit-ui/adaptive` tarball | `235 kB` |
-| `@argfit-ui/desktop` tarball | `421 kB` |
-| `@argfit-ui/mobile` tarball | `379 kB` |
+| Showcase initial asset total | `2.254 MB` raw |
+| Showcase main bundle | `2.185 MB` raw |
+| Showcase styles bundle | `41 kB` raw |
+| Production tarball total | `1,183 kB` |
+| `@argfit-ui/core` tarball | `104 kB` |
+| `@argfit-ui/chart-runtime` tarball | `75 kB` |
+| `@argfit-ui/primitives` tarball | `27.6 kB` |
+| `@argfit-ui/adaptive` tarball | `238 kB` |
+| `@argfit-ui/desktop` tarball | `357 kB` |
+| `@argfit-ui/mobile` tarball | `313 kB` |
 | `@argfit-ui/mcp` tarball | `70 kB` |
 
 ## Exceptions
 
-No active budget exceptions. The 1.6.0 thresholds were recalibrated at roughly
-5% above the measured artifacts for `AfChartCard`, `AfCommandPalette` and the
-expanded 2D/3D chart contracts and renderers.
+No active budget exceptions. The 2.0.0 thresholds were recalibrated at roughly
+5% above the measured initial assets and seven production tarballs after the
+advanced chart runtime became lazy.
 
 If a budget ever needs to move, the exception must be documented in this file in the same change that updates the threshold and the rationale must explain why the increase is unavoidable.
 

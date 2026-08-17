@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import type { AfChartType } from '@argfit-ui/core';
 
-import { AfChartDesktopComponent } from './af-chart-desktop.component';
-import { buildEchartsOption } from './af-chart-echarts';
+import { AfChartDesktopComponent } from '../../../../chart/src/lib/af-chart-desktop.component';
+import type { AfChartRuntime } from '../../../../chart/src/lib/af-chart-runtime-loader';
+import { buildEchartsOption } from '@argfit-ui/chart-runtime';
 
 @Component({
   standalone: true,
@@ -72,6 +73,29 @@ class GraphChartHostComponent {
 }
 
 describe('AfChartDesktopComponent', () => {
+  it('keeps the imperative API safe before the runtime is ready', () => {
+    const fixture = TestBed.createComponent(AfChartDesktopComponent);
+
+    expect(fixture.componentInstance.toDataUrl()).toBeNull();
+    expect(() => fixture.componentInstance.resetView()).not.toThrow();
+    expect(() => fixture.componentInstance.refreshSize()).not.toThrow();
+  });
+
+  it('does not request the runtime during server-side rendering', async () => {
+    TestBed.configureTestingModule({ providers: [{ provide: PLATFORM_ID, useValue: 'server' }] });
+    const load = vi.fn<() => Promise<AfChartRuntime>>();
+    const fixture = TestBed.createComponent(AfChartDesktopComponent);
+    Object.defineProperty(fixture.componentInstance, 'runtimeLoader', {
+      value: { load, reset: vi.fn() },
+    });
+    fixture.componentRef.setInput('series', [{ name: 'SSR', data: [1] }]);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(load).not.toHaveBeenCalled();
+  });
+
   it('renders the ready state with a canvas and accessible label', async () => {
     const fixture = TestBed.createComponent(ChartHostComponent);
     fixture.detectChanges();
@@ -81,7 +105,7 @@ describe('AfChartDesktopComponent', () => {
       '[data-testid="chart"]',
     ) as HTMLElement;
     expect(host).not.toBeNull();
-    expect(host.getAttribute('data-state')).toBe('ready');
+    await vi.waitFor(() => expect(host.getAttribute('data-state')).toBe('ready'));
     expect(host.getAttribute('aria-label')).toBe('Saltos por sesion');
     expect(host.querySelector('.af-chart-desktop__canvas')).not.toBeNull();
   });
@@ -114,6 +138,39 @@ describe('AfChartDesktopComponent', () => {
     expect(host.querySelector('.af-chart-desktop__skeleton')).not.toBeNull();
   });
 
+  it('shows an accessible runtime error, keeps the data table and retries', async () => {
+    const load = vi
+      .fn<() => Promise<AfChartRuntime>>()
+      .mockResolvedValue({} as AfChartRuntime);
+    const reset = vi.fn();
+    const fixture = TestBed.createComponent(AfChartDesktopComponent);
+    Object.defineProperty(fixture.componentInstance, 'runtimeLoader', {
+      value: { load, reset },
+    });
+    fixture.componentRef.setInput('dataTable', true);
+    fixture.componentRef.setInput('series', [{ name: 'Carga', data: [1, 2, 3] }]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const internal = fixture.componentInstance as unknown as {
+      runtimeError: { set(value: boolean): void };
+    };
+    internal.runtimeError.set(true);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.getAttribute('data-state')).toBe('error');
+    expect(host.querySelector('[role="alert"]')?.textContent).toContain('No se pudo cargar');
+    expect(host.querySelector('table')).not.toBeNull();
+
+    (host.querySelector('.af-chart-desktop__retry') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(reset).toHaveBeenCalledOnce();
+    expect(load).toHaveBeenCalled();
+    await vi.waitFor(() => expect(host.getAttribute('data-state')).toBe('ready'));
+  });
+
   it('judges graph charts by their nodes, not by their series', async () => {
     const fixture = TestBed.createComponent(GraphChartHostComponent);
     fixture.detectChanges();
@@ -133,7 +190,7 @@ describe('AfChartDesktopComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(host.getAttribute('data-state')).toBe('ready');
+    await vi.waitFor(() => expect(host.getAttribute('data-state')).toBe('ready'));
   });
 
   it('tabulates points by observation when each one carries several magnitudes', async () => {

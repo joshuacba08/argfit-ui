@@ -3,7 +3,6 @@ import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular-vit
 import {
   AfBadgeComponent,
   AfChartCardComponent,
-  AfChartComponent,
   AfChipComponent,
   AfDataTableCellDirective,
   AfDataTableComponent,
@@ -11,6 +10,7 @@ import {
   AfMetricCardComponent,
   AfProgressComponent,
 } from '@argfit-ui/adaptive';
+import { AfChartComponent } from '@argfit-ui/adaptive/chart';
 import type { AfDataTableColumn } from '@argfit-ui/core';
 
 import {

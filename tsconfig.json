@@ -5,9 +5,13 @@
   "compilerOptions": {
     "paths": {
       "@argfit-ui/adaptive": ["./dist/argfit-ui-adaptive"],
+      "@argfit-ui/adaptive/chart": ["./dist/argfit-ui-adaptive/chart"],
+      "@argfit-ui/chart-runtime": ["./dist/argfit-ui-chart-runtime"],
       "@argfit-ui/core": ["./dist/argfit-ui-core"],
       "@argfit-ui/desktop": ["./dist/argfit-ui-desktop"],
+      "@argfit-ui/desktop/chart": ["./dist/argfit-ui-desktop/chart"],
       "@argfit-ui/mobile": ["./dist/argfit-ui-mobile"],
+      "@argfit-ui/mobile/chart": ["./dist/argfit-ui-mobile/chart"],
       "@argfit-ui/primitives": ["./dist/argfit-ui-primitives"]
     },
     "strict": true,
@@ -35,6 +39,12 @@
     },
     {
       "path": "./projects/argfit-ui-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/argfit-ui-chart-runtime/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/argfit-ui-chart-runtime/tsconfig.spec.json"
     },
     {
       "path": "./projects/argfit-ui-primitives/tsconfig.lib.json"

@@ -21,6 +21,8 @@ import {
 import {
   AF_CHART_CARD_DEFAULT_LABELS,
   AfPlatformService,
+  ɵAF_CHART_HOST,
+  type ɵAfChartHost,
   type AfChartCardAction,
   type AfChartCardActionEvent,
   type AfChartCardLabels,
@@ -29,8 +31,6 @@ import {
 } from '@argfit-ui/core';
 import { AfChartCardDesktopComponent } from '@argfit-ui/desktop';
 import { AfChartCardMobileComponent } from '@argfit-ui/mobile';
-
-import { AfChartComponent } from '../chart/af-chart.component';
 
 /** Acciones ofrecidas cuando el consumidor no declara un menú propio. */
 const DEFAULT_MENU: readonly AfChartCardAction[] = [
@@ -114,7 +114,7 @@ export class AfChartCardComponent implements OnDestroy {
   protected readonly menuOpen = signal(false);
   protected readonly fullscreen = signal(false);
 
-  private readonly chart = contentChild(AfChartComponent);
+  private readonly chart = contentChild(ɵAF_CHART_HOST);
   private readonly desktopCard = viewChild<AfChartCardDesktopComponent>('desktopCard');
   private readonly mobileCard = viewChild<AfChartCardMobileComponent>('mobileCard');
 
@@ -326,7 +326,7 @@ export class AfChartCardComponent implements OnDestroy {
    * Es el formato que aceptan las herramientas de análisis sin transformaciones previas,
    * a diferencia de una tabla ancha, que obliga a despivotar antes de graficar nada.
    */
-  private buildCsv(chart: AfChartComponent): string | null {
+  private buildCsv(chart: ɵAfChartHost): string | null {
     const series = chart.series();
     if (series.length === 0) {
       return null;

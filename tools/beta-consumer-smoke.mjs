@@ -4,13 +4,15 @@ import { relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
-const smokeDirectory = resolve(repoRoot, '.tmp', 'beta-consumer');
+const consumerChannel = process.argv.includes('--production') ? 'production' : 'beta';
+const smokeDirectory = resolve(repoRoot, '.tmp', `${consumerChannel}-consumer`);
 const rootManifest = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8'));
 const betaVersion = rootManifest.version;
-const tarballDirectory = resolve(repoRoot, 'dist', 'beta-tarballs');
+const tarballDirectory = resolve(repoRoot, 'dist', `${consumerChannel}-tarballs`);
 
 const argfitPackages = [
   { name: '@argfit-ui/core', tarball: createTarballName('@argfit-ui/core') },
+  { name: '@argfit-ui/chart-runtime', tarball: createTarballName('@argfit-ui/chart-runtime') },
   { name: '@argfit-ui/primitives', tarball: createTarballName('@argfit-ui/primitives') },
   { name: '@argfit-ui/desktop', tarball: createTarballName('@argfit-ui/desktop') },
   { name: '@argfit-ui/mobile', tarball: createTarballName('@argfit-ui/mobile') },
@@ -53,16 +55,22 @@ writeWorkspaceFiles();
 assertPublicImportsOnly();
 
 runCommand('pnpm', ['install', '--no-frozen-lockfile'], smokeDirectory);
-runCommand('pnpm', ['exec', 'ng', 'build', '--configuration', 'production'], smokeDirectory);
+runCommand('pnpm', ['exec', 'ng', 'build', '--configuration', 'production', '--stats-json'], smokeDirectory);
+assertChartRuntimeIsLazy();
+assertRootChartImportFails();
+writeFileSync(resolve(smokeDirectory, 'src', 'app', 'app.ts'), createNoChartAppSource(), 'utf8');
+writeFileSync(resolve(smokeDirectory, 'src', 'app', 'app.html'), '<af-button>Ready</af-button>\n', 'utf8');
+runCommand('pnpm', ['exec', 'ng', 'build', '--configuration', 'production', '--stats-json'], smokeDirectory);
+assertNoChartRuntime();
 
-console.log(`Beta consumer smoke passed. Consumer app available at ${smokeDirectory}.`);
+console.log(`${consumerChannel} consumer chart bundle smoke passed. Consumer app available at ${smokeDirectory}.`);
 
 function assertTarballsExist() {
   for (const argfitPackage of argfitPackages) {
     const tarballPath = resolve(tarballDirectory, argfitPackage.tarball);
 
     if (!existsSync(tarballPath)) {
-      throw new Error(`Missing required tarball ${argfitPackage.tarball}. Run pnpm pack:beta:dist first.`);
+      throw new Error(`Missing required tarball ${argfitPackage.tarball}. Run pnpm pack:${consumerChannel}:dist first.`);
     }
   }
 }
@@ -304,6 +312,7 @@ import {
   AfVirtualScrollerActionsDirective,
   AfVirtualScrollerItemDirective,
 } from '@argfit-ui/adaptive';
+import { AfChart } from '@argfit-ui/adaptive/chart';
 import type {
   AfDataTableColumn,
   AfDataTablePagination,
@@ -345,6 +354,7 @@ interface ConsumerOrgUnit {
     AfCardContentDirective,
     AfCardHeaderDirective,
     AfCardTitleDirective,
+    AfChart,
     AfDataTable,
     AfInlineMessage,
     AfInput,
@@ -461,6 +471,12 @@ export class App {
 function createAppTemplateSource() {
   return `<af-toast-viewport />
 
+<af-chart
+  ariaLabel="Carga semanal"
+  [categories]="['L', 'M', 'X']"
+  [series]="[{ name: 'Carga', data: [520, 610, 570] }]"
+/>
+
 <main class="consumer-shell">
   <af-card variant="panel" tone="primary">
     <header afCardHeader>
@@ -553,6 +569,113 @@ function createAppTemplateSource() {
     </ng-template>
   </af-virtual-scroller>
 </main>
+`;
+}
+
+function assertChartRuntimeIsLazy() {
+  const statsPath = resolve(smokeDirectory, 'dist', 'beta-consumer', 'stats.json');
+  const stats = JSON.parse(readFileSync(statsPath, 'utf8'));
+  const mainOutput = Object.entries(stats.outputs).find(([, output]) =>
+    output.entryPoint?.endsWith('src/main.ts'),
+  );
+  if (!mainOutput) {
+    throw new Error('Consumer stats are missing the main entry point.');
+  }
+
+  const initialOutputs = new Set([mainOutput[0]]);
+  const pending = [mainOutput[0]];
+  while (pending.length > 0) {
+    const outputName = pending.pop();
+    for (const imported of stats.outputs[outputName]?.imports ?? []) {
+      if (imported.kind === 'dynamic-import' || initialOutputs.has(imported.path)) continue;
+      initialOutputs.add(imported.path);
+      pending.push(imported.path);
+    }
+  }
+
+  const forbiddenInitialInputs = [...initialOutputs].flatMap((outputName) =>
+    Object.keys(stats.outputs[outputName]?.inputs ?? {}).filter((input) =>
+      /(?:argfit-ui-chart-runtime|node_modules[\\/].*?(?:echarts|zrender))/.test(input),
+    ),
+  );
+  if (forbiddenInitialInputs.length > 0) {
+    throw new Error(`Chart runtime leaked into initial assets:\n${forbiddenInitialInputs.join('\n')}`);
+  }
+
+  const lazyRuntime = Object.entries(stats.outputs).find(([outputName, output]) =>
+    !initialOutputs.has(outputName) &&
+    Object.keys(output.inputs ?? {}).some((input) => input.includes('argfit-ui-chart-runtime')),
+  );
+  if (!lazyRuntime) {
+    throw new Error('Consumer build did not emit @argfit-ui/chart-runtime as a lazy chunk.');
+  }
+
+  const adaptiveTypes = readFileSync(
+    resolve(smokeDirectory, 'node_modules', '@argfit-ui', 'adaptive', 'types', 'argfit-ui-adaptive.d.ts'),
+    'utf8',
+  );
+  if (/\bAfChartComponent\s+as\s+AfChart\b/.test(adaptiveTypes)) {
+    throw new Error('AfChart must not be exported by the @argfit-ui/adaptive root entry point.');
+  }
+}
+
+function assertNoChartRuntime() {
+  const statsPath = resolve(smokeDirectory, 'dist', 'beta-consumer', 'stats.json');
+  const stats = JSON.parse(readFileSync(statsPath, 'utf8'));
+  const runtimeInputs = Object.values(stats.outputs).flatMap((output) =>
+    Object.keys(output.inputs ?? {}).filter((input) =>
+      /(?:argfit-ui-chart-runtime|node_modules[\\/].*?(?:echarts|zrender))/.test(input),
+    ),
+  );
+  if (runtimeInputs.length > 0) {
+    throw new Error(`An application without charts contains chart runtime code:\n${runtimeInputs.join('\n')}`);
+  }
+}
+
+function assertRootChartImportFails() {
+  writeFileSync(
+    resolve(smokeDirectory, 'src', 'app', 'app.ts'),
+    `import { Component } from '@angular/core';
+import { AfChart } from '@argfit-ui/adaptive';
+
+@Component({ selector: 'app-root', imports: [AfChart], template: '' })
+export class App {}
+`,
+    'utf8',
+  );
+
+  const command = 'pnpm';
+  const args = ['exec', 'ng', 'build', '--configuration', 'production'];
+  const result = spawnSync(spawnExecutable(command), spawnArguments(command, args), {
+    cwd: smokeDirectory,
+    encoding: 'utf8',
+    stdio: 'pipe',
+    shell: false,
+    maxBuffer: 1024 * 1024 * 50,
+  });
+  if (result.error) throw result.error;
+
+  const output = [result.stdout, result.stderr].filter(Boolean).join('\n');
+  if (result.status === 0) {
+    throw new Error('Importing AfChart from @argfit-ui/adaptive unexpectedly compiled.');
+  }
+  if (!/has no exported member ['"]AfChart['"]/.test(output)) {
+    throw new Error(`Root AfChart import failed for an unexpected reason:\n${output}`);
+  }
+}
+
+function createNoChartAppSource() {
+  return `import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfButton } from '@argfit-ui/adaptive';
+
+@Component({
+  selector: 'app-root',
+  imports: [AfButton],
+  templateUrl: './app.html',
+  styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class App {}
 `;
 }
 

@@ -11,6 +11,8 @@ The canonical export inventory remains [productive public API](./public-api.md).
 | `@argfit-ui/core` | Bootstrap, themes, platform runtime, toast service and shared types | Remains vendor-agnostic. |
 | `@argfit-ui/primitives` | Focus management, escape handling, visually hidden content and shared icon primitive | Remains vendor-agnostic. |
 | `@argfit-ui/adaptive` | Recommended application-facing semantic components | Primary path for product code. |
+| `@argfit-ui/adaptive/chart` | Lazy-friendly `AfChart` entry point | Required path for chart components. |
+| `@argfit-ui/chart-runtime` | Technical ECharts runtime | Installed peer; never import from application code. |
 | `@argfit-ui/desktop` | Renderer-specific desktop components | Public, but secondary to adaptive imports. |
 | `@argfit-ui/mobile` | Renderer-specific mobile components | Public, but secondary to adaptive imports. |
 

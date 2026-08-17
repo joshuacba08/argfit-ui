@@ -39,8 +39,37 @@
 }
 
 .af-chart-mobile[data-state='empty'] .af-chart-mobile__canvas,
-.af-chart-mobile[data-state='loading'] .af-chart-mobile__canvas {
+.af-chart-mobile[data-state='loading'] .af-chart-mobile__canvas,
+.af-chart-mobile[data-state='error'] .af-chart-mobile__canvas {
   visibility: hidden;
+}
+
+.af-chart-mobile__error {
+  align-items: center;
+  color: var(--af-text-muted);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--af-font-size-sm);
+  gap: var(--af-space-3);
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.af-chart-mobile__retry {
+  background: var(--af-bg-interactive);
+  border: 1px solid var(--af-border-focus);
+  border-radius: var(--af-radius-md);
+  color: var(--af-text-main);
+  font: inherit;
+  min-height: 44px;
+  padding: var(--af-space-2) var(--af-space-4);
+}
+
+.af-chart-mobile__retry:focus-visible {
+  outline: 2px solid var(--af-border-focus);
+  outline-offset: 2px;
 }
 
 .af-chart-mobile__empty {

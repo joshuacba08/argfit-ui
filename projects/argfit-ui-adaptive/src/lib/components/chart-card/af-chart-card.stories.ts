@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular-vite';
 import { moduleMetadata } from '@storybook/angular-vite';
 import { expect, fn, userEvent, waitFor } from 'storybook/test';
 
-import { AfChartComponent } from '../chart/af-chart.component';
+import { AfChartComponent } from '../../../../chart/src/lib/af-chart.component';
 import {
   AF_CHART_HRV_BANDS,
   AF_CHART_HRV_DAYS,

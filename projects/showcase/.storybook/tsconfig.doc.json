@@ -6,14 +6,18 @@
       "@argfit-ui/core": ["../../argfit-ui-core/src/public-api.ts"],
       "@argfit-ui/primitives": ["../../argfit-ui-primitives/src/public-api.ts"],
       "@argfit-ui/desktop": ["../../argfit-ui-desktop/src/public-api.ts"],
+      "@argfit-ui/desktop/chart": ["../../argfit-ui-desktop/chart/src/public-api.ts"],
       "@argfit-ui/mobile": ["../../argfit-ui-mobile/src/public-api.ts"],
-      "@argfit-ui/adaptive": ["../../argfit-ui-adaptive/src/public-api.ts"]
+      "@argfit-ui/mobile/chart": ["../../argfit-ui-mobile/chart/src/public-api.ts"],
+      "@argfit-ui/adaptive": ["../../argfit-ui-adaptive/src/public-api.ts"],
+      "@argfit-ui/adaptive/chart": ["../../argfit-ui-adaptive/chart/src/public-api.ts"]
     }
   },
   "include": [
     "../../argfit-ui-core/src/public-api.ts",
     "../../argfit-ui-core/src/lib/types/**/*.ts",
     "../../argfit-ui-adaptive/src/public-api.ts",
+    "../../argfit-ui-adaptive/chart/src/**/*.ts",
     "../../argfit-ui-adaptive/src/lib/components/**/*.component.ts",
     "../../argfit-ui-adaptive/src/lib/components/**/*directive.ts"
   ],

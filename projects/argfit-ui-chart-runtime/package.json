@@ -1,0 +1,35 @@
+{
+  "name": "@argfit-ui/chart-runtime",
+  "version": "2.0.0",
+  "description": "Implementation-only lazy ECharts runtime shared by ArgFit UI chart renderers.",
+  "keywords": ["angular", "argfit-ui", "charts", "echarts"],
+  "author": "ArgFit UI maintainers",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuacba08/argfit-ui.git",
+    "directory": "projects/argfit-ui-chart-runtime"
+  },
+  "homepage": "https://github.com/joshuacba08/argfit-ui#readme",
+  "bugs": {
+    "url": "https://github.com/joshuacba08/argfit-ui/issues"
+  },
+  "peerDependencies": {
+    "@argfit-ui/core": "2.0.0",
+    "echarts": "^6.1.0",
+    "echarts-gl": "^2.1.0"
+  },
+  "peerDependenciesMeta": {
+    "echarts-gl": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "tag": "latest"
+  }
+}

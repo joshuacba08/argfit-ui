@@ -33,6 +33,33 @@
         }
       }
     },
+    "argfit-ui-chart-runtime": {
+      "projectType": "library",
+      "root": "projects/argfit-ui-chart-runtime",
+      "sourceRoot": "projects/argfit-ui-chart-runtime/src",
+      "prefix": "af",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/argfit-ui-chart-runtime/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/argfit-ui-chart-runtime/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "runnerConfig": "vitest.config.ts",
+            "tsConfig": "projects/argfit-ui-chart-runtime/tsconfig.spec.json"
+          }
+        }
+      }
+    },
     "argfit-ui-desktop": {
       "projectType": "library",
       "root": "projects/argfit-ui-desktop",

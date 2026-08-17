@@ -45,11 +45,9 @@ import type {
 } from '@argfit-ui/core';
 
 import {
-  buildEchartsOption,
-  echarts,
-  ensureEchartsGlRegistered,
-  ensureEchartsRegistered,
-} from './af-chart-echarts';
+  AF_CHART_RUNTIME_LOADER,
+  type AfChartRuntime,
+} from './af-chart-runtime-loader';
 
 interface EchartsClickParams {
   readonly data?: number | AfChartPoint;
@@ -121,6 +119,8 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
    * «falta una dependencia».
    */
   readonly webglMessage = input<string>('Este gráfico necesita el paquete opcional echarts-gl.');
+  readonly renderErrorMessage = input<string>('No se pudo cargar el gráfico.');
+  readonly retryLabel = input<string>('Reintentar');
   readonly ariaLabel = input<string | undefined>(undefined);
   /** Bandas de dispersión asociadas a las series (±1 DE, intervalos de confianza). */
   readonly bands = input<readonly AfChartBand[]>([]);
@@ -270,10 +270,15 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   private readonly hostRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly runtimeLoader = inject(AF_CHART_RUNTIME_LOADER);
 
   protected readonly canvasRef = viewChild<ElementRef<HTMLDivElement>>('canvas');
 
   private chart: EchartsInstance | null = null;
+  private runtime: AfChartRuntime | null = null;
+  private renderRevision = 0;
+  protected readonly runtimeLoading = signal(false);
+  protected readonly runtimeError = signal(false);
   /** `true` sólo cuando se pidió un tipo volumétrico y el paquete no está instalado. */
   protected readonly webglMissing = signal(false);
   private resizeObserver: ResizeObserver | null = null;
@@ -297,12 +302,19 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     return series.every((s) => s.data.length === 0);
   });
 
-  protected readonly state = computed<'loading' | 'empty' | 'ready'>(() => {
-    if (this.loading()) {
+  protected readonly state = computed<'loading' | 'empty' | 'error' | 'ready'>(() => {
+    if (this.loading() || this.runtimeLoading()) {
       return 'loading';
     }
-    return this.isEmpty() ? 'empty' : 'ready';
+    if (this.isEmpty()) {
+      return 'empty';
+    }
+    return this.runtimeError() ? 'error' : 'ready';
   });
+
+  protected readonly showDataTable = computed(
+    () => this.dataTable() && !this.loading() && !this.isEmpty(),
+  );
 
   protected readonly resolvedHeight = computed<number>(() => {
     const explicitHeight = this.height();
@@ -361,7 +373,8 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
       this.tree();
       this.dateRange();
       this.spans();
-      this.state();
+      this.loading();
+      this.isEmpty();
       void this.render();
     });
   }
@@ -385,6 +398,7 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   }
 
   private async render(): Promise<void> {
+    const revision = ++this.renderRevision;
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
@@ -392,9 +406,30 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     if (!canvas) {
       return;
     }
-    if (this.state() !== 'ready') {
+    if (this.loading() || this.isEmpty()) {
       this.disposeChart();
       return;
+    }
+
+    let runtime = this.runtime;
+    if (!runtime) {
+      this.runtimeLoading.set(true);
+      this.runtimeError.set(false);
+      try {
+        runtime = await this.runtimeLoader.load();
+        this.runtime = runtime;
+      } catch {
+        if (revision === this.renderRevision) {
+          this.runtimeError.set(true);
+          this.runtimeLoading.set(false);
+          this.disposeChart();
+        }
+        return;
+      }
+      if (revision !== this.renderRevision) {
+        return;
+      }
+      this.runtimeLoading.set(false);
     }
 
     if (!this.canRenderCanvas()) {
@@ -404,7 +439,7 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     // Los volumétricos esperan a su módulo antes de dibujar: `setOption` con una serie
     // 3D sin registrar deja el lienzo en blanco y sin ningún error.
     if ((AF_CHART_3D_TYPES as readonly string[]).includes(this.type())) {
-      const available = await ensureEchartsGlRegistered();
+      const available = await runtime.ensureEchartsGlRegistered();
       this.webglMissing.set(!available);
       if (!available) {
         this.disposeChart();
@@ -415,8 +450,8 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
     }
 
     if (!this.chart) {
-      ensureEchartsRegistered();
-      this.chart = echarts.init(canvas, undefined, {
+      runtime.ensureEchartsRegistered();
+      this.chart = runtime.echarts.init(canvas, undefined, {
         renderer: 'canvas',
       }) as unknown as EchartsInstance;
       this.chart.on('click', (params) => {
@@ -430,7 +465,7 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
       });
     }
 
-    const option = buildEchartsOption(
+    const option = runtime.buildEchartsOption(
       {
         type: this.type(),
         tone: this.tone(),
@@ -492,6 +527,13 @@ export class AfChartMobileComponent implements AfterViewInit, OnDestroy {
   /** Recalcula el tamaño del lienzo tras un cambio de layout del contenedor. */
   refreshSize(): void {
     this.chart?.resize();
+  }
+
+  protected retryRuntime(): void {
+    this.runtimeLoader.reset();
+    this.runtime = null;
+    this.runtimeError.set(false);
+    void this.render();
   }
 
   private disposeChart(): void {

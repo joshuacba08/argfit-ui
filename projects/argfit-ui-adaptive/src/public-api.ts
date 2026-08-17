@@ -89,9 +89,6 @@ export {
     AfCardComponent as AfCard, AfCardComponent
 } from './lib/components/card/af-card.component';
 export {
-    AfChartComponent as AfChart, AfChartComponent
-} from './lib/components/chart/af-chart.component';
-export {
     AfChartCardComponent as AfChartCard, AfChartCardComponent
 } from './lib/components/chart-card/af-chart-card.component';
 export {

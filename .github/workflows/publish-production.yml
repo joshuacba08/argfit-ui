@@ -6,13 +6,13 @@ on:
       release_tag:
         description: Production tag to publish
         required: true
-        default: v1.7.0
+        default: v2.0.0
       publish_confirmation:
-        description: Type publish-production-v1.7.0 to continue
+        description: Type publish-production-v2.0.0 to continue
         required: true
   push:
     tags:
-      - 'v1.*.*'
+      - 'v2.*.*'
 
 permissions:
   contents: read
@@ -48,8 +48,8 @@ jobs:
             release_tag="$GITHUB_REF_NAME"
           fi
 
-          if [[ ! "$release_tag" =~ ^v1\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Production publishes require a stable v1.x.y tag. Received: $release_tag"
+          if [[ ! "$release_tag" =~ ^v2\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Production publishes require a stable v2.x.y tag. Received: $release_tag"
             exit 1
           fi
 
@@ -105,6 +105,7 @@ jobs:
           const expectedVersion = process.env.PACKAGE_VERSION;
           const packageDirectories = [
             'dist/argfit-ui-core',
+            'dist/argfit-ui-chart-runtime',
             'dist/argfit-ui-primitives',
             'dist/argfit-ui-desktop',
             'dist/argfit-ui-mobile',
@@ -155,6 +156,7 @@ jobs:
         run: |
           package_dirs=(
             dist/argfit-ui-core
+            dist/argfit-ui-chart-runtime
             dist/argfit-ui-primitives
             dist/argfit-ui-desktop
             dist/argfit-ui-mobile

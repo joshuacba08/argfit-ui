@@ -17,7 +17,6 @@ import {
     AfCardHeaderDirective,
     AfCardSubtitleDirective,
     AfCardTitleDirective,
-    AfChart,
     AfCheckbox,
     AfChip,
     AfDataTable,
@@ -66,6 +65,7 @@ import {
     AfToggle,
     AfTooltip,
 } from '@argfit-ui/adaptive';
+import { AfChart } from '@argfit-ui/adaptive/chart';
 import {
     AfPlatformService,
     AfThemeService,

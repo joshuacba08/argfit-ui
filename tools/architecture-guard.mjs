@@ -27,6 +27,17 @@ const boundaries = [
     ],
   },
   {
+    project: 'argfit-ui-chart-runtime',
+    forbidden: [
+      /^primeng(\/|$)/,
+      /^@ionic\/angular(\/|$)/,
+      /^@argfit-ui\/primitives$/,
+      /^@argfit-ui\/desktop$/,
+      /^@argfit-ui\/mobile$/,
+      /^@argfit-ui\/adaptive$/,
+    ],
+  },
+  {
     project: 'argfit-ui-desktop',
     forbidden: [/^@ionic\/angular(\/|$)/, /^@argfit-ui\/mobile$/, /^@argfit-ui\/adaptive$/],
   },

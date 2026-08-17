@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { AfChartMobileComponent } from './af-chart-mobile.component';
-import { buildEchartsOption } from './af-chart-echarts';
+import { AfChartMobileComponent } from '../../../../chart/src/lib/af-chart-mobile.component';
+import type { AfChartRuntime } from '../../../../chart/src/lib/af-chart-runtime-loader';
+import { buildEchartsOption } from '@argfit-ui/chart-runtime';
 
 @Component({
   standalone: true,
@@ -59,7 +60,7 @@ describe('AfChartMobileComponent', () => {
       '[data-testid="chart"]',
     ) as HTMLElement;
     expect(host.getAttribute('data-density')).toBe('compact');
-    expect(host.getAttribute('data-state')).toBe('ready');
+    await vi.waitFor(() => expect(host.getAttribute('data-state')).toBe('ready'));
   });
 
   it('reports empty state when series are absent', async () => {
@@ -72,6 +73,36 @@ describe('AfChartMobileComponent', () => {
       '[data-testid="chart"]',
     ) as HTMLElement;
     expect(host.getAttribute('data-state')).toBe('empty');
+  });
+
+  it('recovers from a lazy runtime load error', async () => {
+    const load = vi
+      .fn<() => Promise<AfChartRuntime>>()
+      .mockResolvedValue({} as AfChartRuntime);
+    const reset = vi.fn();
+    const fixture = TestBed.createComponent(AfChartMobileComponent);
+    Object.defineProperty(fixture.componentInstance, 'runtimeLoader', {
+      value: { load, reset },
+    });
+    fixture.componentRef.setInput('series', [{ name: 'Carga', data: [1, 2, 3] }]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const internal = fixture.componentInstance as unknown as {
+      runtimeError: { set(value: boolean): void };
+    };
+    internal.runtimeError.set(true);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.getAttribute('data-state')).toBe('error');
+
+    (host.querySelector('.af-chart-mobile__retry') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(reset).toHaveBeenCalledOnce();
+    expect(load).toHaveBeenCalled();
+    await vi.waitFor(() => expect(host.getAttribute('data-state')).toBe('ready'));
   });
 
   it('preserves every point magnitude in the mobile observation table', async () => {

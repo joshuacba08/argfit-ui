@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/angular-vite';
+import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular-vite';
+import { ɵAF_CHART_RUNTIME_LOADER_DESKTOP as DESKTOP_RUNTIME_LOADER } from '@argfit-ui/desktop/chart';
+import { ɵAF_CHART_RUNTIME_LOADER_MOBILE as MOBILE_RUNTIME_LOADER } from '@argfit-ui/mobile/chart';
 import { fn } from 'storybook/test';
 
-import { AfChartComponent } from './af-chart.component';
+import { AfChartComponent } from '../../../../chart/src/lib/af-chart.component';
 import {
   AF_CHART_ATTENDANCE_PLANNED,
   AF_CHART_ATTENDANCE_PLAYERS,
@@ -112,6 +114,7 @@ const meta: Meta<AfChartComponent> = {
     argfit: {
       category: 'Data',
       importName: 'AfChart',
+      package: '@argfit-ui/adaptive/chart',
       useWhen: [
         'Para comparar tendencias o distribuciones de datos cuantitativos.',
         'Para relacionar magnitudes con unidades distintas en un mismo eje temporal.',
@@ -194,6 +197,8 @@ const meta: Meta<AfChartComponent> = {
     dataTable: { control: 'boolean' },
     showPoints: { control: 'boolean' },
     loading: { control: 'boolean' },
+    renderErrorMessage: { control: 'text' },
+    retryLabel: { control: 'text' },
   },
   // Los booleanos se declaran aquí porque el template los enlaza siempre: un arg sin
   // valor llega como `undefined` y `booleanAttribute` lo convierte en `false`, que
@@ -244,6 +249,8 @@ const meta: Meta<AfChartComponent> = {
       [dateRange]="dateRange"
       [spans]="spans"
       [webglMessage]="webglMessage"
+      [renderErrorMessage]="renderErrorMessage"
+      [retryLabel]="retryLabel"
       [height]="height"
       [legend]="legend"
       [showGrid]="showGrid"
@@ -273,6 +280,29 @@ export const Default: Story = {
 
 export const Loading: Story = {
   args: { loading: true },
+};
+
+export const RuntimeLoadError: Story = {
+  decorators: [
+    moduleMetadata({
+      providers: [
+        {
+          provide: DESKTOP_RUNTIME_LOADER,
+          useValue: { load: () => Promise.reject(new Error('offline')), reset: fn() },
+        },
+        {
+          provide: MOBILE_RUNTIME_LOADER,
+          useValue: { load: () => Promise.reject(new Error('offline')), reset: fn() },
+        },
+      ],
+    }),
+  ],
+  args: {
+    categories: ['L', 'M', 'X'],
+    series: [{ name: 'Carga', data: [520, 610, 570] }],
+    renderErrorMessage: 'No se pudo cargar el gráfico.',
+    retryLabel: 'Reintentar',
+  },
 };
 
 /**

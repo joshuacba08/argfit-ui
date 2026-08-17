@@ -2,7 +2,7 @@
 
 This page documents the stable adaptive component surface for the `1.3.3` contract.
 
-Every component listed below is already public through `@argfit-ui/adaptive`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
+Every component listed below is public through `@argfit-ui/adaptive`, except `AfChart`, which is public through `@argfit-ui/adaptive/chart`. The tables focus on the practical production question: when to use a component, and what accessibility rule must remain true in app-level implementations.
 
 ## Foundation And Base Composition
 
@@ -208,7 +208,7 @@ state.
 
 ## Recommended Production Posture
 
-- Prefer `@argfit-ui/adaptive` in application code.
+- Prefer `@argfit-ui/adaptive` in application code and `@argfit-ui/adaptive/chart` for `AfChart`.
 - Use renderer-specific packages only when you are intentionally targeting a renderer integration path.
 - Keep app-level wrappers small and semantic instead of reproducing vendor APIs.
 - Reuse the enterprise constraints documented in [enterprise readiness](./enterprise-readiness.md) when a component operates in a dense data or feedback-heavy flow.

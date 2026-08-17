@@ -137,11 +137,21 @@ export function generateUsage(
     }
     return true;
   });
-  const uniqueImports = [...new Set(usable.map((component) => component.name))].sort();
+  const importsByPackage = new Map<string, Set<string>>();
+  for (const component of usable) {
+    const names = importsByPackage.get(component.package) ?? new Set<string>();
+    names.add(component.name);
+    importsByPackage.set(component.package, names);
+  }
+  const imports = [...importsByPackage.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(
+      ([packageName, names]) =>
+        `import { ${[...names].sort().join(', ')} } from '${packageName}';`,
+    )
+    .join('\n');
   return {
-    imports: uniqueImports.length > 0
-      ? `import { ${uniqueImports.join(', ')} } from '@argfit-ui/adaptive';`
-      : '',
+    imports,
     template: usable.map((component) => `<!-- ${component.name}: ${component.docsUrl ?? 'documentation pending'} -->\n${component.example?.template}`).join('\n\n'),
     components,
     warnings,
@@ -164,11 +174,11 @@ export function validateUsage(catalog: ArgfitCatalog, snippet: string): UsageDia
   addPatternDiagnostics(
     diagnostics,
     snippet,
-    /from\s+['"]@argfit-ui\/(?:desktop|mobile)['"]/gi,
+    /from\s+['"]@argfit-ui\/(?:desktop|mobile)(?:\/[^'"]*)?['"]/gi,
     'AF002',
     'error',
     'Applications should use the adaptive package instead of a renderer package.',
-    "Import from '@argfit-ui/adaptive'.",
+    "Import from '@argfit-ui/adaptive' or a documented adaptive secondary entry point.",
   );
   addPatternDiagnostics(
     diagnostics,

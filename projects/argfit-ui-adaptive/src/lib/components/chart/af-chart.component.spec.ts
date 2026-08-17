@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { AfPlatformService, provideArgfitUi } from '@argfit-ui/core';
 
-import { AfChartComponent } from './af-chart.component';
+import { AfChartComponent } from '../../../../chart/src/lib/af-chart.component';
 
 @Component({
   standalone: true,
@@ -41,12 +41,17 @@ describe('AfChartComponent (adaptive)', () => {
 
   it('switches to the mobile chart when the platform changes', async () => {
     TestBed.configureTestingModule({
-      providers: [provideArgfitUi({ platform: 'mobile' })],
+      providers: [provideArgfitUi({ platform: 'desktop' })],
     });
     const platform = TestBed.inject(AfPlatformService);
-    platform.setPreference('mobile');
 
     const fixture = TestBed.createComponent(ChartHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect((fixture.nativeElement as HTMLElement).querySelector('af-chart-desktop')).not.toBeNull();
+
+    platform.setPreference('mobile');
     fixture.detectChanges();
     await fixture.whenStable();
 
