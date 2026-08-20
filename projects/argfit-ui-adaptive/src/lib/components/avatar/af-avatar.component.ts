@@ -24,6 +24,8 @@ export class AfAvatarComponent {
   readonly initials = input<string | undefined>(undefined);
   readonly imageSrc = input<string | undefined>(undefined);
   readonly imageAlt = input<string | undefined>(undefined);
+  readonly loading = input<'eager' | 'lazy'>('lazy');
+  readonly decoding = input<'async' | 'auto' | 'sync'>('async');
   readonly icon = input<AfIconName | undefined>(undefined);
   readonly size = input<AfAvatarSize>('md');
   readonly tone = input<AfAvatarTone>('neutral');

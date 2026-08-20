@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
+  signal,
   ViewEncapsulation,
 } from '@angular/core';
 
@@ -46,16 +48,23 @@ export class AfAvatarDesktopComponent {
   readonly initials = input<string | undefined>(undefined);
   readonly imageSrc = input<string | undefined>(undefined);
   readonly imageAlt = input<string | undefined>(undefined);
+  readonly loading = input<'eager' | 'lazy'>('lazy');
+  readonly decoding = input<'async' | 'auto' | 'sync'>('async');
   readonly icon = input<AfIconName | undefined>(undefined);
   readonly size = input<AfAvatarSize>('md');
   readonly tone = input<AfAvatarTone>('neutral');
   readonly shape = input<AfAvatarShape>('circle');
   readonly ariaLabel = input<string | undefined>(undefined);
 
-  protected readonly accessibleLabel = computed(() => this.ariaLabel() ?? this.label() ?? this.imageAlt());
-  protected readonly resolvedInitials = computed(() => resolveAvatarInitials(this.initials(), this.label()));
+  protected readonly accessibleLabel = computed(
+    () => this.ariaLabel() ?? this.label() ?? this.imageAlt(),
+  );
+  protected readonly resolvedInitials = computed(() =>
+    resolveAvatarInitials(this.initials(), this.label()),
+  );
   protected readonly fallbackIcon = computed<AfIconName>(() => this.icon() ?? 'users');
   protected readonly iconSize = computed<AfIconSize>(() => AF_AVATAR_ICON_SIZE_MAP[this.size()]);
+  protected readonly imageLoaded = signal(false);
   protected readonly hostClasses = computed(() =>
     [
       'af-avatar-desktop',
@@ -67,10 +76,25 @@ export class AfAvatarDesktopComponent {
 
   constructor() {
     inject(AfThemeService);
+    effect(() => {
+      this.imageSrc();
+      this.imageLoaded.set(false);
+    });
+  }
+
+  protected markImageLoaded(): void {
+    this.imageLoaded.set(true);
+  }
+
+  protected markImageFailed(): void {
+    this.imageLoaded.set(false);
   }
 }
 
-function resolveAvatarInitials(initials: string | undefined, label: string | undefined): string | null {
+function resolveAvatarInitials(
+  initials: string | undefined,
+  label: string | undefined,
+): string | null {
   const explicitInitials = initials?.trim();
 
   if (explicitInitials) {

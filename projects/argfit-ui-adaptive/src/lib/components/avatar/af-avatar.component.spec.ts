@@ -12,6 +12,8 @@ import { AfAvatarComponent } from './af-avatar.component';
       [initials]="initials"
       [imageSrc]="imageSrc"
       [imageAlt]="imageAlt"
+      loading="lazy"
+      decoding="async"
       [icon]="icon"
       tone="accent"
       size="lg"
@@ -76,5 +78,35 @@ describe('AfAvatarComponent', () => {
     expect(mobile!.getAttribute('data-tone')).toBe('accent');
     expect(mobile!.querySelector('af-icon')).not.toBeNull();
     expect(mobile!.querySelector('img')).toBeNull();
+  });
+
+  it('keeps initials visible until a lazy image loads and restores them on error', async () => {
+    await TestBed.configureTestingModule({
+      imports: [AfAvatarHostComponent],
+      providers: [provideArgfitUi({ platform: 'desktop' })],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(AfAvatarHostComponent);
+    fixture.componentInstance.initials = 'MG';
+    fixture.componentInstance.imageSrc = '/maria.webp';
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const image = fixture.nativeElement.querySelector('img') as HTMLImageElement;
+    const initials = fixture.nativeElement.querySelector(
+      '.af-avatar-desktop__initials',
+    ) as HTMLElement;
+    expect(initials.textContent?.trim()).toBe('MG');
+    expect(image.getAttribute('loading')).toBe('lazy');
+    expect(image.getAttribute('decoding')).toBe('async');
+    expect(image.classList.contains('af-avatar-desktop__image--loaded')).toBe(false);
+
+    image.dispatchEvent(new Event('load'));
+    fixture.detectChanges();
+    expect(image.classList.contains('af-avatar-desktop__image--loaded')).toBe(true);
+
+    image.dispatchEvent(new Event('error'));
+    fixture.detectChanges();
+    expect(image.classList.contains('af-avatar-desktop__image--loaded')).toBe(false);
   });
 });

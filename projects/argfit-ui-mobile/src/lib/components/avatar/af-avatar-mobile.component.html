@@ -1,9 +1,24 @@
 <ion-avatar class="af-avatar-mobile__shell" aria-hidden="true">
-  @if (imageSrc(); as imageSrcValue) {
-    <img class="af-avatar-mobile__image" [src]="imageSrcValue" [alt]="imageAlt() ?? accessibleLabel() ?? ''" />
-  } @else if (resolvedInitials(); as initialsValue) {
+  @if (resolvedInitials(); as initialsValue) {
     <span class="af-avatar-mobile__initials">{{ initialsValue }}</span>
   } @else {
-    <af-icon class="af-avatar-mobile__icon" [name]="fallbackIcon()" [size]="iconSize()" decorative />
+    <af-icon
+      class="af-avatar-mobile__icon"
+      [name]="fallbackIcon()"
+      [size]="iconSize()"
+      decorative
+    />
+  }
+  @if (imageSrc(); as imageSrcValue) {
+    <img
+      class="af-avatar-mobile__image"
+      [class.af-avatar-mobile__image--loaded]="imageLoaded()"
+      [src]="imageSrcValue"
+      [alt]="imageAlt() ?? accessibleLabel() ?? ''"
+      [attr.loading]="loading()"
+      [attr.decoding]="decoding()"
+      (load)="markImageLoaded()"
+      (error)="markImageFailed()"
+    />
   }
 </ion-avatar>

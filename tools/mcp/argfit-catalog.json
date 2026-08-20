@@ -3,9 +3,9 @@
   "library": {
     "name": "ArgFit UI",
     "version": "2.0.0",
-    "gitSha": "fa2c6779b1ce",
-    "generatedAt": "2026-08-17T05:42:19+09:00",
-    "sourceDigest": "27eda4e128a01ab799b0ee148f868ebc730732fcd148863f15b290cfade70aec",
+    "gitSha": "2abf5cea6685",
+    "generatedAt": "2026-08-17T16:21:57+09:00",
+    "sourceDigest": "16ab086f7c40cbf880363d047a3dc1fa015e53141664fdd219d6815442cc6503",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -396,7 +396,8 @@
       "tokens": [
         "--af-primary",
         "--af-text-main",
-        "--af-radius-pill"
+        "--af-radius-pill",
+        "--af-duration-fast"
       ],
       "api": {
         "inputs": [
@@ -405,6 +406,14 @@
             "type": "string | undefined",
             "required": false,
             "defaultValue": "undefined",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "decoding",
+            "type": "\"async\" | \"auto\" | \"sync\"",
+            "required": false,
+            "defaultValue": "'async'",
             "description": "",
             "deprecated": false
           },
@@ -449,6 +458,14 @@
             "deprecated": false
           },
           {
+            "name": "loading",
+            "type": "\"eager\" | \"lazy\"",
+            "required": false,
+            "defaultValue": "'lazy'",
+            "description": "",
+            "deprecated": false
+          },
+          {
             "name": "shape",
             "type": "AfAvatarShape",
             "required": false,
@@ -485,6 +502,16 @@
           "id": "components-identity-avatar--sizes",
           "name": "Sizes",
           "url": "/storybook/?path=/story/components-identity-avatar--sizes"
+        },
+        {
+          "id": "components-identity-avatar--image-with-fallback",
+          "name": "ImageWithFallback",
+          "url": "/storybook/?path=/story/components-identity-avatar--image-with-fallback"
+        },
+        {
+          "id": "components-identity-avatar--broken-image-fallback",
+          "name": "BrokenImageFallback",
+          "url": "/storybook/?path=/story/components-identity-avatar--broken-image-fallback"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/components-identity-avatar--docs",

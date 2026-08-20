@@ -1,7 +1,17 @@
-@if (imageSrc(); as imageSrcValue) {
-  <img class="af-avatar-desktop__image" [src]="imageSrcValue" [alt]="imageAlt() ?? accessibleLabel() ?? ''" />
-} @else if (resolvedInitials(); as initialsValue) {
+@if (resolvedInitials(); as initialsValue) {
   <span class="af-avatar-desktop__initials" aria-hidden="true">{{ initialsValue }}</span>
 } @else {
   <af-icon class="af-avatar-desktop__icon" [name]="fallbackIcon()" [size]="iconSize()" decorative />
+}
+@if (imageSrc(); as imageSrcValue) {
+  <img
+    class="af-avatar-desktop__image"
+    [class.af-avatar-desktop__image--loaded]="imageLoaded()"
+    [src]="imageSrcValue"
+    [alt]="imageAlt() ?? accessibleLabel() ?? ''"
+    [attr.loading]="loading()"
+    [attr.decoding]="decoding()"
+    (load)="markImageLoaded()"
+    (error)="markImageFailed()"
+  />
 }
