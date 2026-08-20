@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+    booleanAttribute,
     ChangeDetectionStrategy,
     Component,
     computed,
@@ -33,6 +34,7 @@ import { AfIconComponent } from '@argfit-ui/primitives';
     '[attr.role]': '"region"',
     '[attr.aria-label]': 'resolvedAriaLabel()',
     '[attr.aria-busy]': 'state() === "loading" ? "true" : null',
+    '[attr.data-fill]': 'fill() ? "" : null',
     '[style.--af-analytics-card-content-height]': 'height() ?? null',
   },
 })
@@ -49,6 +51,14 @@ export class AfAnalyticsCardMobileComponent {
   readonly errorTitle = input('No se pudo cargar');
   readonly errorDescription = input<string | undefined>(undefined);
   readonly ariaLabel = input<string | undefined>(undefined);
+
+  /**
+   * La tarjeta reclama la altura de su contenedor en lugar de su altura intrínseca.
+   * Es un eje distinto de `height`, que fija el alto del área de contenido del gráfico:
+   * con `fill` activo ese alto sigue siendo el piso y el contenedor fija el techo.
+   */
+  readonly fill = input(false, { transform: booleanAttribute });
+
   readonly contentTemplate = input<TemplateRef<unknown> | undefined>(undefined);
   readonly actionsTemplate = input<TemplateRef<unknown> | undefined>(undefined);
   readonly metricsTemplate = input<TemplateRef<unknown> | undefined>(undefined);
@@ -62,7 +72,10 @@ export class AfAnalyticsCardMobileComponent {
       `af-analytics-card-mobile--tone-${this.tone()}`,
       `af-analytics-card-mobile--density-${this.density()}`,
       `af-analytics-card-mobile--state-${this.state()}`,
-    ].join(' '),
+      this.fill() ? 'af-analytics-card-mobile--fill' : '',
+    ]
+      .filter(Boolean)
+      .join(' '),
   );
 
   protected readonly resolvedAriaLabel = computed(() => this.ariaLabel() ?? this.title());

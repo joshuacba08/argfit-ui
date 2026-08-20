@@ -29,6 +29,9 @@ import { AfMetricCardMobileComponent } from '@argfit-ui/mobile';
   templateUrl: './af-metric-card.component.html',
   styleUrl: './af-metric-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[attr.data-fill]': 'fill() ? "" : null',
+  },
 })
 export class AfMetricCardComponent {
   private readonly platform = inject(AfPlatformService);
@@ -47,6 +50,14 @@ export class AfMetricCardComponent {
   readonly trendLabel = input<string | undefined>(undefined);
   readonly loading = input(false, { transform: booleanAttribute });
   readonly interactive = input(false, { transform: booleanAttribute });
+
+  /**
+   * La tarjeta reclama la altura de su contenedor en lugar de su altura intrínseca.
+   * El renderer interno ya rellena siempre el host; `fill` cubre el caso en que es el
+   * propio host el que no recibe altura (flex sin `stretch`, padre con altura fija).
+   */
+  readonly fill = input(false, { transform: booleanAttribute });
+
   readonly ariaLabel = input<string | undefined>(undefined);
 
   /**

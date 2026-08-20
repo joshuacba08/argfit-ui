@@ -1,15 +1,15 @@
 # @argfit-ui/mobile
 
-Mobile renderer package for ArgFit UI `2.0.0`.
+Mobile renderer package for ArgFit UI `2.1.0`.
 
 This package contains touch-oriented implementations that render Ionic elements internally while keeping ArgFit public APIs vendor-independent. Application consumers should normally import components from `@argfit-ui/adaptive` instead of this renderer package.
 
-This package participates in the current `2.0.0` production contract.
+This package participates in the current `2.1.0` production contract.
 
 ## Install
 
 ```bash
-pnpm add @argfit-ui/core@2.0.0 @argfit-ui/primitives@2.0.0 @argfit-ui/chart-runtime@2.0.0 @argfit-ui/mobile@2.0.0
+pnpm add @argfit-ui/core@2.1.0 @argfit-ui/primitives@2.1.0 @argfit-ui/chart-runtime@2.1.0 @argfit-ui/mobile@2.1.0
 pnpm add @angular/cdk@^21.2.0 @ionic/angular@^8.8.7 echarts@^6.1.0
 ```
 
@@ -32,7 +32,7 @@ import { AfButton, AfCard, AfInput } from '@argfit-ui/adaptive';
 - [Quickstart](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/quickstart.md)
 - [Theming and adaptive rendering](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/theming.md)
 - [Public API](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/public-api.md)
-- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-2.0.0.md)
+- [Release notes](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/release-notes-2.1.0.md)
 - [Migration beta/Beta+ to 1.0](https://github.com/joshuacba08/argfit-ui/blob/main/docs/productive/migration-beta-to-1-0.md)
 
 ## Build

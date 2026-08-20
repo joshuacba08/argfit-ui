@@ -255,6 +255,7 @@ trendDirection = input<AfMetricTrendDirection | undefined>();
 trendLabel = input<string | undefined>();
 loading = input(false, { transform: booleanAttribute });
 interactive = input(false, { transform: booleanAttribute });
+fill = input(false, { transform: booleanAttribute });
 ariaLabel = input<string | undefined>();
 ```
 
@@ -276,6 +277,20 @@ Requisitos:
 - Debe usar solo tokens `--af-*`.
 - Debe soportar `content projection` para footer simple o helper extendido si el patron existente lo permite.
 - Si `interactive=true`, debe ser accesible con teclado y emitir `pressed`.
+
+### Contrato de altura
+
+La altura de la tarjeta la decide el layout que la contiene, no el largo de su contenido.
+Es una decision de contrato, no una variante estetica:
+
+- La superficie (`af-metric-card-desktop` / `-mobile`) rellena **siempre** el host. Sin esto,
+  una fila de grilla estira el host y deja tarjetas de alturas distintas segun cuanto texto
+  arrastre cada una — un defecto del componente, no algo que el consumidor deba parchear.
+- `min-height` (por `size` y `density`) sigue siendo el piso: `fill` sube el techo, no baja
+  el suelo, y una tarjeta suelta fuera de grilla sigue midiendo su contenido.
+- `fill` cubre el caso restante: cuando es el propio host el que no recibe altura (flex con
+  `align-items` distinto de `stretch`, padre con altura fija), `fill` hace que la reclame.
+  Emite `data-fill` en el host y en el renderer.
 
 ## Tokens
 

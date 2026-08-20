@@ -222,6 +222,7 @@ emptyDescription = input<string | undefined>();
 errorTitle = input('No se pudo cargar');
 errorDescription = input<string | undefined>();
 ariaLabel = input<string | undefined>();
+fill = input(false, { transform: booleanAttribute });
 ```
 
 Slots sugeridos:
@@ -242,6 +243,15 @@ Requisitos:
 - Debe ser standalone y OnPush.
 - Debe usar solo tokens `--af-*`.
 - No debe exponer ECharts, PrimeNG ni Ionic en la API.
+
+### Contrato de altura
+
+Mismo contrato que `AfMetricCard` (ver HU-010): la superficie rellena siempre el host, de
+modo que la altura la decida el layout que la contiene y no el largo del contenido.
+
+`fill` y `height` son ejes distintos y conviven: `height` fija el alto del area de contenido
+del grafico (`--af-analytics-card-content-height`) y sigue siendo el piso; `fill` hace que el
+host reclame la altura de su contenedor cuando este no lo estira por si mismo.
 
 ## Implementacion Desktop
 

@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![pnpm](https://img.shields.io/badge/pnpm-10.28-F69220?logo=pnpm&logoColor=white)
-![Status](https://img.shields.io/badge/status-2.0.0-2599D5)
+![Status](https://img.shields.io/badge/status-2.1.0-2599D5)
 
 ArgFit UI is an adaptive Angular UI platform for enterprise applications, dashboards, SaaS products, and mobile-first workflows.
 
@@ -21,7 +21,7 @@ Modern product teams often need one design system that works across dense deskto
 
 ## Project Status
 
-ArgFit UI is aligned on the stable `2.0.0` production contract. Publishable packages use exact `2.0.0` internal peers, public npm metadata and the `latest` dist-tag.
+ArgFit UI is aligned on the stable `2.1.0` production contract. Publishable packages use exact `2.1.0` internal peers, public npm metadata and the `latest` dist-tag.
 
 The production release gate keeps the broad Beta+ validation substrate for regression confidence, then rebuilds and validates stable production packages under `dist/production-tarballs/`.
 
@@ -401,4 +401,4 @@ ArgFit UI code is expected to follow these constraints:
 
 ## Versioning And Distribution
 
-The workspace and publishable packages are aligned on `2.0.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/chart-runtime` and `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.
+The workspace and publishable packages are aligned on `2.1.0`. The root workspace remains private. Publishable `@argfit-ui/*` packages, including `@argfit-ui/chart-runtime` and `@argfit-ui/mcp`, are MIT licensed and prepared for public npm distribution with the `latest` dist-tag, while production tarballs remain available for manual verification under `dist/production-tarballs/`.

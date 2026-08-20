@@ -33,6 +33,21 @@ class AfMetricCardDesktopHostComponent {
   pressed: MouseEvent | KeyboardEvent | undefined;
 }
 
+/**
+ * La superficie de la tarjeta es este mismo host, así que `fill` no tiene un elemento
+ * interno donde esconderse: se lee en el host o no se aplica.
+ */
+@Component({
+  imports: [AfMetricCardDesktopComponent],
+  template: `
+    <af-metric-card-desktop label="Con contenido largo" value="88" unit="%" helper="Detalle extenso de la medición." [fill]="fill" />
+    <af-metric-card-desktop label="Escueta" value="3" />
+  `,
+})
+class AfMetricCardDesktopFillHostComponent {
+  fill = false;
+}
+
 describe('AfMetricCardDesktopComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [AfMetricCardDesktopHostComponent] }).compileComponents();
@@ -89,5 +104,38 @@ describe('AfMetricCardDesktopComponent', () => {
     card.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
 
     expect(fixture.componentInstance.pressed).toBeTruthy();
+  });
+});
+
+describe('AfMetricCardDesktopComponent — contrato de altura', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [AfMetricCardDesktopFillHostComponent] }).compileComponents();
+  });
+
+  it('no marca `fill` cuando nadie lo pidió', () => {
+    const fixture = TestBed.createComponent(AfMetricCardDesktopFillHostComponent);
+    fixture.detectChanges();
+
+    const cards = fixture.nativeElement.querySelectorAll('af-metric-card-desktop') as NodeListOf<HTMLElement>;
+    for (const card of cards) {
+      expect(card.getAttribute('data-fill')).toBeNull();
+      expect(card.className).not.toContain('af-metric-card-desktop--fill');
+      // Sin `fill`, la tarjeta sigue midiendo su contenido por encima del `min-height`.
+      expect(getComputedStyle(card).blockSize).not.toBe('100%');
+    }
+  });
+
+  it('reclama la altura del contenedor con `fill`', () => {
+    const fixture = TestBed.createComponent(AfMetricCardDesktopFillHostComponent);
+    fixture.componentInstance.fill = true;
+    fixture.detectChanges();
+
+    const card = fixture.nativeElement.querySelector('af-metric-card-desktop') as HTMLElement;
+    const styles = getComputedStyle(card);
+
+    expect(card.getAttribute('data-fill')).toBe('');
+    expect(card.className).toContain('af-metric-card-desktop--fill');
+    expect(styles.blockSize).toBe('100%');
+    expect(styles.alignSelf).toBe('stretch');
   });
 });

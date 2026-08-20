@@ -4,8 +4,15 @@
   --af-analytics-card-content-min-height: var(--af-analytics-card-content-height, 200px);
 
   color: var(--af-text-main);
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+}
+
+/* Cuando el contenedor no estira al host por si mismo, `fill` hace que lo reclame. */
+.af-analytics-card-mobile[data-fill] {
+  align-self: stretch;
+  block-size: 100%;
 }
 
 .af-analytics-card-mobile[data-tone='accent'] {
@@ -22,11 +29,13 @@
   border-color: color-mix(in srgb, var(--af-analytics-card-tone) 26%, var(--af-border));
 }
 
+/* La superficie es lo que se ve: debe medir lo que mide el host, no su contenido. */
 .af-analytics-card-mobile__surface {
   background: var(--af-bg-surface);
   border: 1px solid var(--af-border-soft);
   border-radius: var(--af-radius-lg);
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   font-family: var(--af-font-body);
   gap: var(--af-space-3);

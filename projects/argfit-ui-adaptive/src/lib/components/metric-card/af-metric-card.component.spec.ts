@@ -47,6 +47,34 @@ class AfMetricCardHostComponent {
   pressed: MouseEvent | KeyboardEvent | undefined;
 }
 
+
+/**
+ * Dos tarjetas de contenido deliberadamente desigual dentro de una grilla: la primera
+ * arrastra helper, muestra, período y procedencia; la segunda solo etiqueta y valor.
+ * Es el caso que rompía el layout, con el renderer quedándose en su altura intrínseca.
+ */
+@Component({
+  imports: [AfMetricCardComponent],
+  template: `
+    <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr">
+      <af-metric-card
+        label="Cobertura de wellness del plantel profesional"
+        [value]="88"
+        unit="%"
+        helper="Cuestionarios respondidos antes de la sesión de la mañana."
+        [sample]="{ numerator: 22, denominator: 25 }"
+        period="Julio 2026"
+        provenance="calculated"
+        [fill]="fill()"
+      />
+      <af-metric-card label="Requieren revisión" [value]="3" [fill]="fill()" />
+    </div>
+  `,
+})
+class AfMetricCardFillHostComponent {
+  readonly fill = signal(false);
+}
+
 describe('AfMetricCardComponent', () => {
   afterEach(() => {
     TestBed.resetTestingModule();
@@ -183,6 +211,81 @@ describe('AfMetricCardComponent', () => {
       const card = fixture.nativeElement.querySelector('af-metric-card-mobile') as HTMLElement;
       expect(card.getAttribute('data-state')).toBe('empty');
       expect(card.textContent).toContain('Sin muestra');
+    });
+  });
+
+  /**
+   * La altura de la tarjeta es una decisión del layout que la contiene, no del largo de su
+   * contenido. jsdom no calcula layout — `offsetHeight` siempre es 0 — así que acá se
+   * verifica el contrato que produce esa altura; la medición real está en la verificación
+   * manual descrita en el plan de la HU.
+   */
+  describe('contrato de altura', () => {
+    async function setupFill(platform: 'desktop' | 'mobile' = 'desktop') {
+      await TestBed.configureTestingModule({
+        imports: [AfMetricCardFillHostComponent],
+        providers: [provideArgfitUi({ platform })],
+      }).compileComponents();
+
+      const fixture = TestBed.createComponent(AfMetricCardFillHostComponent);
+      fixture.detectChanges();
+      return fixture;
+    }
+
+    it('deja que el renderer mida lo que mide el host, no su contenido', async () => {
+      const fixture = await setupFill();
+      const hosts = fixture.nativeElement.querySelectorAll('af-metric-card') as NodeListOf<HTMLElement>;
+
+      expect(hosts).toHaveLength(2);
+
+      for (const host of hosts) {
+        const styles = getComputedStyle(host);
+        expect(styles.display).toBe('flex');
+        expect(styles.flexDirection).toBe('column');
+
+        const renderer = host.querySelector('af-metric-card-desktop') as HTMLElement;
+        expect(renderer).not.toBeNull();
+        // El renderer es hijo directo del host: es la regla `flex: 1 1 auto` la que aplica.
+        expect(renderer.parentElement).toBe(host);
+      }
+    });
+
+    it('no marca `fill` cuando nadie lo pidió', async () => {
+      const fixture = await setupFill();
+      const host = fixture.nativeElement.querySelector('af-metric-card') as HTMLElement;
+      const renderer = host.querySelector('af-metric-card-desktop') as HTMLElement;
+
+      expect(host.getAttribute('data-fill')).toBeNull();
+      expect(renderer.getAttribute('data-fill')).toBeNull();
+      expect(renderer.className).not.toContain('af-metric-card-desktop--fill');
+    });
+
+    it('propaga `fill` al host y al renderer', async () => {
+      const fixture = await setupFill();
+      fixture.componentInstance.fill.set(true);
+      fixture.detectChanges();
+
+      const hosts = fixture.nativeElement.querySelectorAll('af-metric-card') as NodeListOf<HTMLElement>;
+
+      for (const host of hosts) {
+        const renderer = host.querySelector('af-metric-card-desktop') as HTMLElement;
+        expect(host.getAttribute('data-fill')).toBe('');
+        expect(renderer.getAttribute('data-fill')).toBe('');
+        expect(renderer.className).toContain('af-metric-card-desktop--fill');
+      }
+    });
+
+    it('aplica el mismo contrato en móvil', async () => {
+      const fixture = await setupFill('mobile');
+      fixture.componentInstance.fill.set(true);
+      fixture.detectChanges();
+
+      const host = fixture.nativeElement.querySelector('af-metric-card') as HTMLElement;
+      const renderer = host.querySelector('af-metric-card-mobile') as HTMLElement;
+
+      expect(renderer.parentElement).toBe(host);
+      expect(renderer.getAttribute('data-fill')).toBe('');
+      expect(renderer.className).toContain('af-metric-card-mobile--fill');
     });
   });
 });

@@ -67,3 +67,45 @@ export const Error: Story = {
     errorDescription: 'No pudimos calcular la métrica.',
   },
 };
+
+/**
+ * La altura de la tarjeta la decide el contenedor, no el largo de su contenido. Las dos
+ * tarjetas de abajo tienen contenidos muy distintos y deben terminar exactamente igual de
+ * altas: si una queda corta, volvió la regresión del contrato de layout.
+ */
+export const FillsContainer: Story = {
+  args: { ...Default.args },
+  render: () => ({
+    template: `
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+        <af-metric-card
+          label="Cobertura de wellness del plantel profesional"
+          [value]="88"
+          unit="%"
+          helper="Cuestionarios respondidos antes de la sesión de la mañana."
+          [sample]="{ numerator: 22, denominator: 25 }"
+          period="Julio 2026"
+          provenance="calculated"
+        />
+        <af-metric-card label="Requieren revisión" [value]="3" tone="warning" />
+      </div>
+    `,
+  }),
+};
+
+/**
+ * `fill` es para el caso en que es el propio host el que no recibe altura: acá el
+ * contenedor tiene altura fija y `align-items: flex-start`, así que sin `fill` la tarjeta
+ * se quedaría en su altura intrínseca.
+ */
+export const FillFixedHeightContainer: Story = {
+  args: { ...Default.args },
+  render: () => ({
+    template: `
+      <div style="display: flex; align-items: flex-start; gap: 16px; height: 320px">
+        <af-metric-card label="Sin fill" [value]="12" style="flex: 1" />
+        <af-metric-card label="Con fill" [value]="12" tone="accent" fill style="flex: 1" />
+      </div>
+    `,
+  }),
+};

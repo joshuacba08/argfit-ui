@@ -43,6 +43,7 @@ import { AfBadgeDesktopComponent } from '../badge/af-badge-desktop.component';
     '[attr.data-state]': 'effectiveState()',
     '[attr.data-loading]': 'effectiveState() === "loading" ? "" : null',
     '[attr.data-interactive]': 'interactive() ? "" : null',
+    '[attr.data-fill]': 'fill() ? "" : null',
     '[attr.aria-label]': 'resolvedAriaLabel()',
     '[attr.aria-busy]': 'effectiveState() === "loading" ? "true" : null',
     '[attr.role]': 'interactive() ? "button" : null',
@@ -66,6 +67,14 @@ export class AfMetricCardDesktopComponent {
   readonly trendLabel = input<string | undefined>(undefined);
   readonly loading = input(false, { transform: booleanAttribute });
   readonly interactive = input(false, { transform: booleanAttribute });
+
+  /**
+   * La tarjeta ocupa la altura que le da su contenedor en lugar de su altura intrínseca.
+   * Es una afirmación sobre el layout, no sobre el dato: se usa cuando el contenedor no
+   * estira al host por sí mismo (flex sin `stretch`, padre con altura fija, panel scrollable).
+   */
+  readonly fill = input(false, { transform: booleanAttribute });
+
   readonly ariaLabel = input<string | undefined>(undefined);
 
   readonly state = input<AfMetricCardState>('ready');
@@ -97,6 +106,7 @@ export class AfMetricCardDesktopComponent {
       `af-metric-card-desktop--density-${this.density()}`,
       `af-metric-card-desktop--state-${this.effectiveState()}`,
       this.interactive() ? 'af-metric-card-desktop--interactive' : '',
+      this.fill() ? 'af-metric-card-desktop--fill' : '',
       this.effectiveState() === 'loading' ? 'af-metric-card-desktop--loading' : '',
     ]
       .filter(Boolean)

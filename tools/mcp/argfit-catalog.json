@@ -2,10 +2,10 @@
   "schemaVersion": "1.0.0",
   "library": {
     "name": "ArgFit UI",
-    "version": "2.0.0",
-    "gitSha": "2abf5cea6685",
-    "generatedAt": "2026-08-17T16:21:57+09:00",
-    "sourceDigest": "16ab086f7c40cbf880363d047a3dc1fa015e53141664fdd219d6815442cc6503",
+    "version": "2.1.0",
+    "gitSha": "9ef4e9059c0f",
+    "generatedAt": "2026-08-20T19:15:21+09:00",
+    "sourceDigest": "5d1a9e6371e3f50e57ec65c121fd91d8a46e9401c815dd9737c50784e007f868",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -204,6 +204,14 @@
             "required": false,
             "defaultValue": "'No se pudo cargar'",
             "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "fill",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>La tarjeta reclama la altura de su contenedor en lugar de su altura intrínseca.\nEs un eje distinto de <code>height</code>, que fija el alto del área de contenido del gráfico:\ncon <code>fill</code> activo ese alto sigue siendo el piso y el contenedor fija el techo.</p>\n",
             "deprecated": false
           },
           {
@@ -7145,6 +7153,14 @@
             "deprecated": false
           },
           {
+            "name": "fill",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "<p>La tarjeta reclama la altura de su contenedor en lugar de su altura intrínseca.\nEl renderer interno ya rellena siempre el host; <code>fill</code> cubre el caso en que es el\npropio host el que no recibe altura (flex sin <code>stretch</code>, padre con altura fija).</p>\n",
+            "deprecated": false
+          },
+          {
             "name": "helper",
             "type": "string | undefined",
             "required": false,
@@ -7315,6 +7331,16 @@
           "id": "data-metriccard--error",
           "name": "Error",
           "url": "/storybook/?path=/story/data-metriccard--error"
+        },
+        {
+          "id": "data-metriccard--fills-container",
+          "name": "FillsContainer",
+          "url": "/storybook/?path=/story/data-metriccard--fills-container"
+        },
+        {
+          "id": "data-metriccard--fill-fixed-height-container",
+          "name": "FillFixedHeightContainer",
+          "url": "/storybook/?path=/story/data-metriccard--fill-fixed-height-container"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/data-metriccard--docs",

@@ -1,4 +1,5 @@
 import {
+    booleanAttribute,
     ChangeDetectionStrategy,
     Component,
     computed,
@@ -32,6 +33,9 @@ import {
   templateUrl: './af-analytics-card.component.html',
   styleUrl: './af-analytics-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[attr.data-fill]': 'fill() ? "" : null',
+  },
 })
 export class AfAnalyticsCardComponent {
   private readonly platform = inject(AfPlatformService);
@@ -48,6 +52,13 @@ export class AfAnalyticsCardComponent {
   readonly errorTitle = input('No se pudo cargar');
   readonly errorDescription = input<string | undefined>(undefined);
   readonly ariaLabel = input<string | undefined>(undefined);
+
+  /**
+   * La tarjeta reclama la altura de su contenedor en lugar de su altura intrínseca.
+   * Es un eje distinto de `height`, que fija el alto del área de contenido del gráfico:
+   * con `fill` activo ese alto sigue siendo el piso y el contenedor fija el techo.
+   */
+  readonly fill = input(false, { transform: booleanAttribute });
 
   private readonly actionsSlot = contentChild(AfAnalyticsCardActionsDirective);
   private readonly metricsSlot = contentChild(AfAnalyticsCardMetricsDirective);

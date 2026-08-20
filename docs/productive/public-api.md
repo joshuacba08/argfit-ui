@@ -1,6 +1,6 @@
 # Productive Public API Inventory
 
-This document records the public API surface for `2.0.0`.
+This document records the public API surface for `2.1.0`.
 
 The source of truth is the set of symbols re-exported from these package barrels:
 
@@ -11,7 +11,7 @@ The source of truth is the set of symbols re-exported from these package barrels
 - `projects/argfit-ui-desktop/src/public-api.ts`
 - `projects/argfit-ui-mobile/src/public-api.ts`
 
-Any export reachable through those barrels inherits the `2.0` category assigned below. There is no public `experimental` category in the `2.0.0` contract.
+Any export reachable through those barrels inherits the `2.0` category assigned below. There is no public `experimental` category in the `2.1.0` contract.
 
 ## 2.0 Categories
 

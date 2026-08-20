@@ -2,7 +2,7 @@
 
 This document defines the release operations policy for the productive `2.x` line.
 
-The source manifests, publishable package manifests and production packaging flow are aligned to stable `2.0.0` metadata. Production packages publish only through the `latest` npm dist-tag.
+The source manifests, publishable package manifests and production packaging flow are aligned to stable `2.1.0` metadata. Production packages publish only through the `latest` npm dist-tag.
 
 ## Branch And Tag Strategy
 
@@ -10,7 +10,7 @@ The source manifests, publishable package manifests and production packaging flo
 - Use short-lived `release/<version>` branches only when a production release needs final stabilization after feature work has stopped.
 - Use short-lived `hotfix/<version>` branches for urgent production patches that start from the latest supported production tag.
 - Merge release and hotfix branches back to `main` after the release is tagged.
-- Production tags use annotated semver tags without prerelease identifiers, such as `v2.0.0` or `v2.0.1`.
+- Production tags use annotated semver tags without prerelease identifiers, such as `v2.1.0` or `v2.1.1`.
 - Alpha, beta and Beta+ tags stay on their dedicated prerelease workflows and must not use the production publish workflow.
 
 ## Required Release Gate
@@ -58,7 +58,7 @@ Use this procedure for a production patch:
 5. Update `CHANGELOG.md` with the patch entry before tagging.
 6. Run `pnpm release:production:check` locally.
 7. Open and merge the release pull request after CI is green.
-8. Create the annotated tag, for example `git tag -a v2.0.1 -m "ArgFit UI 2.0.1"`.
+8. Create the annotated tag, for example `git tag -a v2.1.1 -m "ArgFit UI 2.1.1"`.
 9. Push the tag and let `.github/workflows/publish-production.yml` publish the packages.
 10. Verify npm shows all seven `@argfit-ui/*` packages on the `latest` dist-tag for the patch version.
 

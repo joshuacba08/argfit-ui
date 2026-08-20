@@ -1,4 +1,19 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+}
+
+/* El renderer es la superficie visible de la tarjeta: debe medir lo que mide el host,
+   no lo que mide su contenido. Sin esto, una fila de grilla estira el host y la
+   superficie se queda corta, con tarjetas de alturas distintas. */
+:host > af-metric-card-desktop,
+:host > af-metric-card-mobile {
+  flex: 1 1 auto;
+}
+
+/* Cuando el contenedor no estira al host por si mismo, `fill` hace que lo reclame. */
+:host([data-fill]) {
+  align-self: stretch;
+  block-size: 100%;
 }

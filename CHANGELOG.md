@@ -2,6 +2,23 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 2.1.0
+
+Minor release that makes metric and analytics cards fill their container instead of their content.
+
+### Fixed
+
+- `AfMetricCard` and `AfAnalyticsCard` renderers now fill their host, so cards in the same grid row end up the same height regardless of how much text each one carries. `min-height` per `size` and `density` stays the floor.
+
+### Added
+
+- `fill` input on `AfMetricCard` and `AfAnalyticsCard` for containers that do not stretch the host on their own, such as a flex parent with `align-items: flex-start` or a parent with a fixed height.
+
+### Release
+
+- All seven publishable packages move to `2.1.0`, with internal peer versions aligned exactly.
+- Published under the `latest dist-tag` and validated through `pnpm release:production:check`.
+
 ## 2.0.0
 
 Major release that moves the advanced chart engine out of initial application assets.

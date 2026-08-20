@@ -32,6 +32,21 @@ export type AfMetricCardIconName = AfIconName;
 export type AfMetricCardState = 'ready' | 'loading' | 'empty' | 'error';
 
 /**
+ * Contrato de altura de una `AfMetricCard`.
+ *
+ * La superficie de la tarjeta rellena siempre su host: la altura la decide el layout que
+ * la contiene, no el largo de su contenido. Sin eso, una fila de grilla estira el host y
+ * deja tarjetas de alturas distintas, que es un defecto del componente y no algo que el
+ * consumidor deba parchear.
+ *
+ * El input `fill` cubre el caso restante: cuando es el propio host el que no recibe altura
+ * (un flex con `align-items` distinto de `stretch`, un padre con altura fija), `fill` hace
+ * que la reclame. Es una afirmación sobre el layout, no sobre el dato, y por eso es un
+ * booleano y no una variante de `AfMetricCardSize`: no cambia la escala tipográfica ni el
+ * `min-height` que sigue siendo el piso de la tarjeta.
+ */
+
+/**
  * Sample behind an aggregate metric.
  *
  * Publishing the numerator and denominator lets a reader judge how much the number is

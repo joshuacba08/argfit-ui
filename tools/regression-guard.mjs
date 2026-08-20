@@ -52,6 +52,7 @@ const expectedFiles = [
   'docs/productive/release-notes-1.7.0.md',
   'docs/productive/migration-1-to-2.md',
   'docs/productive/release-notes-2.0.0.md',
+  'docs/productive/release-notes-2.1.0.md',
   'projects/argfit-ui-chart-runtime/src/public-api.ts',
   'projects/argfit-ui-docs/src/main.ts',
   'projects/argfit-ui-docs/src/index.html',
@@ -324,7 +325,7 @@ expectIncludes('docs/productive/projection.md', [
 ]);
 
 expectIncludes('docs/productive/scope.md', [
-  'ArgFit UI 2.0.0 Scope',
+  'ArgFit UI 2.1.0 Scope',
   '`2.0-foundation`',
   '`2.0-adaptive`',
   '`2.0-renderer-specific`',
@@ -378,9 +379,9 @@ expectIncludes('docs/productive/release-operations.md', [
 
 expectIncludes('docs/productive/release-checklist.md', [
   'Production Release Checklist',
-  '2.0.0',
+  '2.1.0',
   'pnpm release:production:check',
-  'v2.0.0',
+  'v2.1.0',
   'latest',
   'dist/production-tarballs/',
 ]);
@@ -407,8 +408,8 @@ expectIncludes('docs/productive/quickstart.md', [
   'Productive Quickstart',
   'pnpm release:production:check',
   '@argfit-ui/adaptive',
-  '2.0.0',
-  './release-notes-2.0.0.md',
+  '2.1.0',
+  './release-notes-2.1.0.md',
 ]);
 
 expectIncludes('docs/productive/components.md', [
@@ -542,7 +543,7 @@ expectIncludes('projects/argfit-ui-docs/src/app/docs-data.ts', [
   '@argfit-ui/adaptive',
   'PRODUCTIVE_COMPONENT_DOCS',
   'docs/productive/release-checklist.md',
-  'docs/productive/release-notes-2.0.0.md',
+  'docs/productive/release-notes-2.1.0.md',
   'docs/productive/release-operations.md',
   'docs/productive/support-policy.md',
   'searchDocs',
@@ -562,7 +563,7 @@ expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-release.page.ts', [
 ]);
 
 expectIncludes('package.json', [
-  '"version": "2.0.0"',
+  '"version": "2.1.0"',
   '"start:docs"',
   '"build:docs"',
   'ng serve argfit-ui-docs --port 4300',
@@ -585,7 +586,7 @@ for (const packageManifest of [
   'projects/argfit-ui-adaptive/package.json',
 ]) {
   expectIncludes(packageManifest, [
-    '"version": "2.0.0"',
+    '"version": "2.1.0"',
     '"access": "public"',
     '"tag": "latest"',
   ]);
@@ -598,7 +599,7 @@ for (const packageManifest of [
   'projects/argfit-ui-mobile/package.json',
   'projects/argfit-ui-adaptive/package.json',
 ]) {
-  expectIncludes(packageManifest, ['"@argfit-ui/core": "2.0.0"']);
+  expectIncludes(packageManifest, ['"@argfit-ui/core": "2.1.0"']);
 }
 
 expectIncludes('.github/workflows/ci.yml', [
@@ -674,7 +675,7 @@ expectIncludes('tools/pack-beta-plus.mjs', [
 ]);
 
 expectIncludes('tools/pack-production.mjs', [
-  "const PRODUCTION_VERSION = '2.0.0';",
+  "const PRODUCTION_VERSION = '2.1.0';",
   'dist',
   'production-tarballs',
   "tag: 'latest'",
@@ -688,11 +689,11 @@ expectIncludes('tools/production-performance.mjs', [
 ]);
 
 expectIncludes('tools/production-smoke.mjs', [
-  "const PRODUCTION_VERSION = '2.0.0';",
+  "const PRODUCTION_VERSION = '2.1.0';",
   'dist',
   'production-tarballs',
   'publishConfig.tag must be latest',
-  'release-notes-2.0.0.md',
+  'release-notes-2.1.0.md',
 ]);
 
 expectIncludes('docs/alpha/release-checklist.md', [
@@ -712,7 +713,7 @@ expectIncludes('docs/beta/release-checklist.md', [
 ]);
 
 expectIncludes('CHANGELOG.md', [
-  '2.0.0',
+  '2.1.0',
   'latest dist-tag',
   'pnpm release:production:check',
   '0.1.0-beta.0',
@@ -754,10 +755,10 @@ for (const packageReadme of [
   'projects/argfit-ui-adaptive/README.md',
 ]) {
   expectIncludes(packageReadme, [
-    '2.0.0',
+    '2.1.0',
     '## Install',
     '## Productive Docs',
-    'docs/productive/release-notes-2.0.0.md',
+    'docs/productive/release-notes-2.1.0.md',
   ]);
 }
 

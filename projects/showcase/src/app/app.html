@@ -1394,6 +1394,9 @@
             trendLabel="vs mes anterior"
           />
 
+          <!-- Contenido deliberadamente mas largo que el de sus vecinas: la fila debe
+               seguir midiendo lo mismo. Si esta tarjeta sobresale, volvio la regresion
+               del contrato de altura de AfMetricCard. -->
           <af-metric-card
             label="Dispositivos online"
             value="4"
@@ -1403,6 +1406,9 @@
             trendValue="0%"
             trendDirection="flat"
             trendLabel="estable"
+            [sample]="{ numerator: 4, denominator: 6 }"
+            period="Ultimas 24 h"
+            provenance="observed"
           />
 
           <af-metric-card

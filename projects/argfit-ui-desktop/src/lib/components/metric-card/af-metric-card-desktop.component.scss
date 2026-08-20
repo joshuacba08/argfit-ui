@@ -25,6 +25,14 @@
     transform var(--af-duration-fast) var(--af-ease-out);
 }
 
+/* `min-height` fija el piso de la tarjeta; el contenedor fija el techo.
+   La superficie es este mismo host, asi que si no rellena, la tarjeta se queda
+   en su altura intrinseca y rompe la alineacion de una fila de grilla. */
+.af-metric-card-desktop[data-fill] {
+  align-self: stretch;
+  block-size: 100%;
+}
+
 .af-metric-card-desktop[data-tone='accent'] {
   --af-metric-card-tone: var(--af-accent);
   --af-metric-card-value-color: var(--af-accent);
