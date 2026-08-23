@@ -359,7 +359,9 @@ export const EntityActivator: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole('button', { name: /Buscar aplicaciones/ }));
-    await userEvent.type(canvas.getByRole('combobox'), '@jugadores mart');
+    await userEvent.type(canvas.getByRole('combobox'), '@jugadores');
+    await expect(canvas.getByLabelText('Ruta del comando')).toHaveTextContent('Jugadores');
+    await userEvent.type(canvas.getByRole('combobox', { name: 'Buscar jugadores...' }), 'mart');
     await waitFor(async () => {
       await expect(canvas.getByRole('option', { name: /Martín Ruiz/ })).toBeVisible();
       await expect(canvas.getAllByRole('option')).toHaveLength(1);
