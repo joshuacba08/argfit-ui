@@ -166,6 +166,11 @@
   overscroll-behavior: contain;
 }
 
+.af-command-palette-mobile__results:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
 .af-command-palette-mobile__list {
   padding: var(--af-space-2) var(--af-space-3) var(--af-space-5);
 }

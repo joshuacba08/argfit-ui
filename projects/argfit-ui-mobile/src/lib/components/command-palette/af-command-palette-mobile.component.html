@@ -76,7 +76,7 @@
       </button>
     </div>
 
-    <div class="af-command-palette-mobile__results" [attr.aria-busy]="loading()">
+    <div class="af-command-palette-mobile__results" tabindex="0" [attr.aria-busy]="loading()">
       @if (errorText(); as error) {
         <div class="af-command-palette-mobile__state af-command-palette-mobile__state--error" role="alert">
           <af-icon name="circle-alert" size="lg" tone="danger" decorative />

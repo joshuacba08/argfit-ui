@@ -58,6 +58,7 @@ describe('AfCommandPaletteMobileComponent', () => {
       '.af-command-palette-mobile__close',
     ) as HTMLButtonElement;
     expect(close.getAttribute('aria-label')).toBe('Cerrar paleta');
+    expect((fixture.nativeElement.querySelector('.af-command-palette-mobile__results') as HTMLElement).tabIndex).toBe(0);
     expect(document.body.style.overflow).toBe('hidden');
     close.click();
     fixture.detectChanges();

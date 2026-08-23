@@ -70,9 +70,11 @@ describe('AfCommandPaletteDesktopComponent', () => {
     fixture.detectChanges();
 
     const input = fixture.nativeElement.querySelector('[role="combobox"]') as HTMLInputElement;
+    const results = fixture.nativeElement.querySelector('.af-command-palette-desktop__results') as HTMLElement;
     const options = fixture.nativeElement.querySelectorAll('[role="option"]');
     expect(input.getAttribute('aria-controls')).toBeTruthy();
     expect(input.getAttribute('aria-activedescendant')).toContain('option-0');
+    expect(results.tabIndex).toBe(0);
     expect(options.length).toBe(3);
     expect(options[1].getAttribute('aria-disabled')).toBe('true');
     expect(options[1].getAttribute('title')).toBe('No disponible');

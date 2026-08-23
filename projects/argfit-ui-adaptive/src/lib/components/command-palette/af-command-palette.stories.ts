@@ -375,6 +375,7 @@ export const EntityActions: Story = {
     await userEvent.click(canvas.getByRole('option', { name: /Jugadores/ }));
     await waitFor(async () => await expect(canvas.getByRole('option', { name: /Martín Ruiz/ })).toBeVisible());
     await userEvent.type(canvas.getByRole('combobox'), 'mart');
+    await waitFor(async () => await expect(canvas.getByRole('option', { name: /Martín Ruiz/ })).toBeVisible());
     await userEvent.keyboard('{Enter}');
     await waitFor(async () => {
       await expect(canvas.getByLabelText('Ruta del comando')).toHaveTextContent('Jugadores');
@@ -392,6 +393,7 @@ export const EntityActionContextAndBack: Story = {
     await userEvent.click(canvas.getByRole('option', { name: /Jugadores/ }));
     await waitFor(async () => await expect(canvas.getByRole('option', { name: /Noah Silva/ })).toBeVisible());
     await userEvent.type(canvas.getByRole('combobox'), 'noah');
+    await waitFor(async () => await expect(canvas.getByRole('option', { name: /Noah Silva/ })).toBeVisible());
     await userEvent.keyboard('{Enter}');
     const injuries = canvas.getByRole('option', { name: /Ver lesiones/ });
     await expect(injuries).toHaveAttribute('aria-disabled', 'true');

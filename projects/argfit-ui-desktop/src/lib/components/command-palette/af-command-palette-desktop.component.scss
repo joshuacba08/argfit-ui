@@ -210,6 +210,11 @@
   overscroll-behavior: contain;
 }
 
+.af-command-palette-desktop__results:focus-visible {
+  box-shadow: var(--af-focus-ring);
+  outline: none;
+}
+
 .af-command-palette-desktop__list {
   padding: var(--af-space-2);
 }
