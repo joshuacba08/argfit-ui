@@ -10,11 +10,12 @@ const showcaseDirectory = resolve(repoRoot, 'dist', 'showcase', 'browser');
 const showcaseIndex = resolve(showcaseDirectory, 'index.html');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
 
-// Recalibrated for 2.0.0 after moving the chart engine to a lazy technical runtime.
-// Measured: initial 2,146,111 B, main 2,080,618 B, core 99,901 B,
-// chart-runtime 71,384 B, primitives 26,249 B, adaptive 227,478 B,
-// desktop 340,327 B, mobile 299,490 B, MCP 67,053 B and
-// tarballs 1,131,882 B.
+// Recalibrated for 2.2.0 after adding the global command engine, its JSON Schema
+// and entity-collection contracts to core. Measured: core 149,337 B,
+// chart-runtime 71,385 B, primitives 26,249 B, adaptive 226,146 B,
+// desktop 345,991 B, mobile 305,313 B, MCP 67,593 B and
+// tarballs 1,192,014 B. Initial application budgets remain on the 2.0.0 ratchet
+// because the command palette did not increase the eager showcase boundary.
 // Each changed budget sits roughly 5 % above its measurement so the ratchet still
 // catches unintended growth: these are
 // ceilings to justify raising, not targets to grow into. Raise them only alongside
@@ -23,9 +24,9 @@ const budgets = {
   initialTotal: 2_254_000,
   mainBundle: 2_185_000,
   stylesBundle: 41_000,
-  tarballTotal: 1_183_000,
+  tarballTotal: 1_252_000,
   tarballs: {
-    'argfit-ui-core': 104_000,
+    'argfit-ui-core': 157_000,
     'argfit-ui-chart-runtime': 75_000,
     'argfit-ui-primitives': 27_600,
     'argfit-ui-adaptive': 238_000,

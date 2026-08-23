@@ -12,7 +12,7 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const PRODUCTION_VERSION = '2.1.0';
+const PRODUCTION_VERSION = '2.2.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const isDryRun = process.argv.includes('--dry-run');
 const tarballDestination = resolve(repoRoot, 'dist', 'production-tarballs');

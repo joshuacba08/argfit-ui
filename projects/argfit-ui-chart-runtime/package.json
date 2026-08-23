@@ -1,6 +1,6 @@
 {
   "name": "@argfit-ui/chart-runtime",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Implementation-only lazy ECharts runtime shared by ArgFit UI chart renderers.",
   "keywords": ["angular", "argfit-ui", "charts", "echarts"],
   "author": "ArgFit UI maintainers",
@@ -15,7 +15,7 @@
     "url": "https://github.com/joshuacba08/argfit-ui/issues"
   },
   "peerDependencies": {
-    "@argfit-ui/core": "2.1.0",
+    "@argfit-ui/core": "2.2.0",
     "echarts": "^6.1.0",
     "echarts-gl": "^2.1.0"
   },

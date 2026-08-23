@@ -2,6 +2,31 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 2.2.0
+
+Minor release that evolves `AfCommandPalette` into a global command system with generic entity collections.
+
+### Added
+
+- Declarative, JSON-compatible command configuration with modes, fuzzy ranking, context expressions, recent commands, providers, nested commands and sequential parameters.
+- Generic entity collections such as players, teams or documents, including direct `@alias` activation, accessible media cards and static or dynamic entity sources.
+- Contextual entity actions that combine JSON definitions with provider results and pass immutable collection/entity snapshots to application executors.
+- Public validation helpers, schema, registration providers, templates and service APIs for application-owned routing, exports and business actions.
+
+### Changed
+
+- `af-command-palette` is now the single global visual host backed by `AfCommandPaletteService`.
+- Storybook documentation and examples now cover the full architecture, playground, entity workflows and desktop/mobile states.
+
+### Fixed
+
+- Active-result focus and accessible listbox state remain synchronized across root commands, collections, entity results, actions and parameter steps.
+
+### Release
+
+- All seven publishable packages move to `2.2.0`, with internal peer versions aligned exactly.
+- Published under the `latest` dist-tag after `pnpm release:production:check` succeeds.
+
 ## 2.1.0
 
 Minor release that makes metric and analytics cards fill their container instead of their content.

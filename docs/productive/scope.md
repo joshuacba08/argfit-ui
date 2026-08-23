@@ -1,10 +1,10 @@
-# ArgFit UI 2.1.0 Scope
+# ArgFit UI 2.2.0 Scope
 
 ## Status
 
-This document defines the stable public scope for `2.1.0`.
+This document defines the stable public scope for `2.2.0`.
 
-ArgFit UI `2.1.0` introduces one deliberate breaking import change for charts while keeping public barrels, the recommended usage path and support expectations explicit.
+ArgFit UI `2.2.0` keeps the stable V2 package structure and adds the global command palette system, including declarative entity collections, providers and contextual execution.
 
 ## 2.0 Categories
 
@@ -13,9 +13,9 @@ ArgFit UI `2.1.0` introduces one deliberate breaking import change for charts wh
 | `2.0-foundation` | Stable bootstrap, token, runtime and shared type contracts that application code may depend on directly. |
 | `2.0-adaptive` | Stable semantic component APIs exported from `@argfit-ui/adaptive` and its documented secondary entry points. This is the recommended application-facing path. |
 | `2.0-renderer-specific` | Stable renderer package APIs exported from `@argfit-ui/desktop` and `@argfit-ui/mobile`. Supported, but secondary to the adaptive path. |
-| `out-of-2.0` | Planned or historical surfaces that are not part of the `2.1.0` contract because they are not publicly exported or are intentionally outside the recommended path. |
+| `out-of-2.0` | Planned or historical surfaces that are not part of the `2.2.0` contract because they are not publicly exported or are intentionally outside the recommended path. |
 
-Every public export included in the current package barrels must belong to one of the `2.0-*` categories above. There is no `experimental` public category in the `2.1.0` contract.
+Every public export included in the current package barrels must belong to one of the `2.0-*` categories above. There is no `experimental` public category in the `2.2.0` contract.
 
 ## Product Decision
 
@@ -27,7 +27,7 @@ import { AfButton, AfDialog, AfInput, AfPageShell } from '@argfit-ui/adaptive';
 import { AfIconComponent } from '@argfit-ui/primitives';
 ```
 
-The `2.1.0` product rules are:
+The `2.2.0` product rules are:
 
 - application code should prefer `@argfit-ui/adaptive` over renderer packages
 - application code imports `AfChart` from `@argfit-ui/adaptive/chart`
@@ -38,9 +38,9 @@ The `2.1.0` product rules are:
 - mobile remains Ionic-first internally
 - renderer packages stay public, but they are an intentional opt-in path rather than the recommended default
 
-This is how the former beta and Beta+ experimental surface remains resolved for `2.1.0`: promoted exports stay public, renderer-specific exports stay isolated in renderer packages, and backlog ideas that never shipped stay outside the stable contract.
+This is how the former beta and Beta+ experimental surface remains resolved for `2.2.0`: promoted exports stay public, renderer-specific exports stay isolated in renderer packages, and backlog ideas that never shipped stay outside the stable contract.
 
-## Included In 2.1.0
+## Included In 2.2.0
 
 ### `@argfit-ui/core` as `2.0-foundation`
 
@@ -78,7 +78,7 @@ Included and frozen for `1.0.x`:
 - accessible chart tables with automatic, series-oriented or point-oriented layouts and consumer-defined dimension headers
 - inline `AfChartCard` header actions for frequent operations without duplicating them in the overflow menu
 
-The adaptive root plus its documented `calendar` and `chart` secondary entry points are the canonical application contract for `2.1.0`.
+The adaptive root plus its documented `calendar` and `chart` secondary entry points are the canonical application contract for `2.2.0`.
 
 ### `@argfit-ui/desktop` and `@argfit-ui/mobile` as `2.0-renderer-specific`
 
@@ -89,7 +89,7 @@ Included and frozen for `1.0.x`:
 
 These exports are supported, but they are not the preferred application-facing path. New application examples, migration guides and docs should continue to point teams toward adaptive imports unless a renderer-specific integration is intentional.
 
-## Out Of 2.1.0
+## Out Of 2.2.0
 
 The following surfaces are `out-of-1.0` because they are not part of the current public barrels or were intentionally deferred:
 
@@ -126,10 +126,10 @@ For `1.0.x`:
 
 ## Recommended Migration Posture
 
-Teams moving from 1.x to `2.1.0` should:
+Teams moving from 1.x to `2.2.0` should:
 
 - prefer `@argfit-ui/adaptive` imports for application code
 - treat renderer-package imports as advanced or infrastructure-level integration points
 - remove reliance on planned-but-unshipped Beta+ backlog surfaces
 - migrate `AfChart` imports to `@argfit-ui/adaptive/chart`
-- align their internal wrappers with the stable `2.1.0` names and semantics documented in the productive API inventory
+- align their internal wrappers with the stable `2.2.0` names and semantics documented in the productive API inventory

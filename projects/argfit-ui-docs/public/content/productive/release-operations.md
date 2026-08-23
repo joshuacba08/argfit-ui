@@ -2,7 +2,7 @@
 
 This document defines the release operations policy for the productive `2.x` line.
 
-The source manifests, publishable package manifests and production packaging flow are aligned to stable `2.1.0` metadata. Production packages publish only through the `latest` npm dist-tag.
+The source manifests, publishable package manifests and production packaging flow are aligned to stable `2.2.0` metadata. Production packages publish only through the `latest` npm dist-tag.
 
 ## Branch And Tag Strategy
 
@@ -10,7 +10,7 @@ The source manifests, publishable package manifests and production packaging flo
 - Use short-lived `release/<version>` branches only when a production release needs final stabilization after feature work has stopped.
 - Use short-lived `hotfix/<version>` branches for urgent production patches that start from the latest supported production tag.
 - Merge release and hotfix branches back to `main` after the release is tagged.
-- Production tags use annotated semver tags without prerelease identifiers, such as `v2.1.0` or `v2.1.1`.
+- Production tags use annotated semver tags without prerelease identifiers, such as `v2.2.0` or `v2.2.1`.
 - Alpha, beta and Beta+ tags stay on their dedicated prerelease workflows and must not use the production publish workflow.
 
 ## Required Release Gate

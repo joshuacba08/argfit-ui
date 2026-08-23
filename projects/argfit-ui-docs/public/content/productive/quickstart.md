@@ -1,8 +1,8 @@
 # Productive Quickstart
 
-This guide describes the consumer posture for the stable `2.1.0` ArgFit UI contract.
+This guide describes the consumer posture for the stable `2.2.0` ArgFit UI contract.
 
-The repository validates stable `2.1.0` package metadata, production tarballs and chart chunk boundaries through the production release gate.
+The repository validates stable `2.2.0` package metadata, production tarballs and chart chunk boundaries through the production release gate.
 
 ## Requirements
 
@@ -21,10 +21,10 @@ The recommended application-facing path remains `@argfit-ui/adaptive`.
 Keep every ArgFit package aligned to the exact same release:
 
 ```bash
-pnpm add @argfit-ui/core@2.1.0
-pnpm add @argfit-ui/primitives@2.1.0
-pnpm add @argfit-ui/desktop@2.1.0 @argfit-ui/mobile@2.1.0
-pnpm add @argfit-ui/adaptive@2.1.0 @argfit-ui/chart-runtime@2.1.0
+pnpm add @argfit-ui/core@2.2.0
+pnpm add @argfit-ui/primitives@2.2.0
+pnpm add @argfit-ui/desktop@2.2.0 @argfit-ui/mobile@2.2.0
+pnpm add @argfit-ui/adaptive@2.2.0 @argfit-ui/chart-runtime@2.2.0
 ```
 
 For local validation, run the productive contract directly from this repository:
@@ -95,7 +95,7 @@ import { AfChart } from '@argfit-ui/adaptive/chart';
       </header>
 
       <div afCardContent>
-        <af-inline-message severity="info" title="2.1.0 stable">
+        <af-inline-message severity="info" title="2.2.0 stable">
           Adaptive components remain the preferred app-facing path.
         </af-inline-message>
 
@@ -132,5 +132,5 @@ Use the broader gate before tagging or opening a final release workflow. `pnpm b
 - [Productive theming](./theming.md)
 - [Migration beta/Beta+ to 1.0](./migration-beta-to-1-0.md)
 - [Migration 1.x to 2.0](./migration-1-to-2.md)
-- [Productive release notes](./release-notes-2.1.0.md)
+- [Productive release notes](./release-notes-2.2.0.md)
 - [Productive quality gates](./quality-gates.md)

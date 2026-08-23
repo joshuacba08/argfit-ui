@@ -282,10 +282,10 @@ export const PRODUCTIVE_ENTRY_POINTS: readonly ProductiveEntryPoint[] = [
   {
     title: 'Release',
     route: '/release',
-    sourcePath: 'docs/productive/release-notes-2.1.0.md',
-    summary: 'Metric and analytics cards fill their container instead of their content.',
+    sourcePath: 'docs/productive/release-notes-2.2.0.md',
+    summary: 'Global commands and generic entity collections arrive in AfCommandPalette.',
     badge: 'ship',
-    bullets: ['Card height contract', 'New fill input', 'Equal-height metric grids'],
+    bullets: ['Declarative command configuration', 'Entity collections and providers', 'Contextual action flows'],
   },
 ];
 
@@ -466,7 +466,7 @@ export const PRODUCTIVE_GUIDE_CARDS: readonly ProductiveGuideCard[] = [
     title: 'Production release checklist',
     sourcePath: 'docs/productive/release-checklist.md',
     summary: 'Final pre-tag checks for version alignment, docs, workflow publish and recovery.',
-    bullets: ['2.1.0 metadata', 'release:production:check', 'latest dist-tag verification'],
+    bullets: ['2.2.0 metadata', 'release:production:check', 'latest dist-tag verification'],
   }),
   guideCard({
     title: 'Support policy',
@@ -505,7 +505,7 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   releaseAsset({
     title: 'Production release checklist',
     sourcePath: 'docs/productive/release-checklist.md',
-    summary: 'The final checklist for 2.1.0 metadata, docs, tagging, npm latest and recovery posture.',
+    summary: 'The final checklist for 2.2.0 metadata, docs, tagging, npm latest and recovery posture.',
   }),
   releaseAsset({
     title: 'Support policy',
@@ -514,8 +514,8 @@ export const PRODUCTIVE_RELEASE_ASSETS: readonly ProductiveReleaseAsset[] = [
   }),
   releaseAsset({
     title: 'Release notes',
-    sourcePath: 'docs/productive/release-notes-2.1.0.md',
-    summary: 'The canonical 2.1.0 release notes and production publish posture.',
+    sourcePath: 'docs/productive/release-notes-2.2.0.md',
+    summary: 'The canonical 2.2.0 release notes and production publish posture.',
   }),
 ];
 
