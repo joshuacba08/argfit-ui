@@ -56,10 +56,27 @@ describe('ArgFit MCP protocol', () => {
       name: 'validate_usage',
       arguments: {
         snippet: `import { AfCommandPalette } from '@argfit-ui/adaptive';
-          import { provideAfCommandPalette, provideAfCommandExecutor } from '@argfit-ui/core';
+          import { provideAfCommandPalette, provideAfCommandExecutor, provideAfCommandSearchProvider } from '@argfit-ui/core';
           const providers = [
-            provideAfCommandPalette({ version: 1, id: 'main', commands: [] }),
-            provideAfCommandExecutor('navigate', () => ({ payload }) => navigate(payload)),
+            provideAfCommandPalette({
+              version: 1,
+              id: 'main',
+              commands: [],
+              providers: [{ id: 'players-search', minQueryLength: 0 }],
+              collections: [{
+                id: 'players',
+                label: 'Jugadores',
+                activator: '@jugadores',
+                providerId: 'players-search',
+                actions: [{ id: 'players.edit', label: 'Editar', executorId: 'edit-player' }],
+              }],
+            }),
+            provideAfCommandSearchProvider('players-search', () => ({
+              search: ({ purpose }) => purpose === 'collection'
+                ? [{ kind: 'entity', id: 'martin', label: 'Martín Ruiz' }]
+                : [],
+            })),
+            provideAfCommandExecutor('edit-player', () => ({ entity }) => editPlayer(entity?.id)),
           ];
           <af-command-palette (commandExecution)="trackCommand($event)" />`,
       },
