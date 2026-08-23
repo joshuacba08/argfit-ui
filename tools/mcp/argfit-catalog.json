@@ -3,8 +3,8 @@
   "library": {
     "name": "ArgFit UI",
     "version": "2.1.0",
-    "gitSha": "d2893f44d830",
-    "generatedAt": "2026-08-21T04:18:54+09:00",
+    "gitSha": "e9b505cb0512",
+    "generatedAt": "2026-08-23T12:25:33+09:00",
     "sourceDigest": "446546a08cbff84132fd088c90b69120b6f13dfc6efbb3d59cfd0625ce518638",
     "storybookBaseUrl": "/storybook"
   },
