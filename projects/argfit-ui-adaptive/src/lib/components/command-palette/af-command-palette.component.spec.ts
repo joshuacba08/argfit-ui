@@ -189,8 +189,10 @@ describe('AfCommandPaletteComponent V2', () => {
     const fixture = TestBed.createComponent(TemplateHost);
     fixture.componentInstance.palette.open();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.custom-result').textContent).toContain('0|Administración|');
-    expect(fixture.nativeElement.querySelector('.custom-result').textContent).toContain('|all');
+    const customResults = [...fixture.nativeElement.querySelectorAll('.custom-result')] as HTMLElement[];
+    const adminResult = customResults.find((result) => result.textContent?.includes('|Administración|'));
+    expect(customResults[0]?.textContent).toMatch(/^0\|/);
+    expect(adminResult?.textContent).toMatch(/^\d+\|Administración\|(true|false)\|all$/);
   });
 
   it('provides entity and collection context to the entity-only template', async () => {

@@ -99,12 +99,12 @@ const canonicalSources = [
   ...tokenFiles,
   workflowPath,
   ...storyFiles,
-].map((path) => `${relative(workspaceRoot, path).replaceAll('\\', '/')}\n${readFileSync(path, 'utf8')}`);
+].map((path) => `${relative(workspaceRoot, path).replaceAll('\\', '/')}\n${normalizeText(readFileSync(path, 'utf8'))}`);
 
 const gitSha = git(['rev-parse', '--short=12', 'HEAD'], 'unknown');
 const generatedAt = git(['show', '-s', '--format=%cI', 'HEAD'], new Date(0).toISOString());
 const sourceDigest = createHash('sha256').update(canonicalSources.join('\n---\n')).digest('hex');
-const workflowContent = readFileSync(workflowPath, 'utf8');
+const workflowContent = normalizeText(readFileSync(workflowPath, 'utf8'));
 
 const catalog = {
   schemaVersion: '1.0.0',
@@ -131,13 +131,38 @@ const catalog = {
 
 const serialized = `${JSON.stringify(catalog, null, 2)}\n`;
 if (checkOnly) {
-  if (!existsSync(outputPath) || readFileSync(outputPath, 'utf8') !== serialized) {
+  if (!existsSync(outputPath) || !isCurrentCatalog(outputPath, catalog)) {
     fail('tools/mcp/argfit-catalog.json is stale. Run pnpm generate:mcp-catalog.');
   }
   console.log(`MCP catalog is current (${components.length} components, ${tokens.length} tokens).`);
 } else {
   writeFileSync(outputPath, serialized, 'utf8');
   console.log(`Generated ${relative(workspaceRoot, outputPath)} (${components.length} components, ${tokens.length} tokens).`);
+}
+
+function normalizeText(value) {
+  return value.replace(/\r\n?/g, '\n');
+}
+
+function isCurrentCatalog(path, expected) {
+  try {
+    const actual = JSON.parse(readFileSync(path, 'utf8'));
+    if (typeof actual?.library?.gitSha !== 'string' || typeof actual?.library?.generatedAt !== 'string') {
+      return false;
+    }
+    // Provenance identifies the commit used to generate the file. The commit that stores
+    // that file necessarily has a different SHA, so freshness is based on sourceDigest
+    // and the remaining source-derived catalog instead.
+    const comparableActual = structuredClone(actual);
+    const comparableExpected = structuredClone(expected);
+    delete comparableActual.library.gitSha;
+    delete comparableActual.library.generatedAt;
+    delete comparableExpected.library.gitSha;
+    delete comparableExpected.library.generatedAt;
+    return JSON.stringify(comparableActual) === JSON.stringify(comparableExpected);
+  } catch {
+    return false;
+  }
 }
 
 function createComponentRecord(component, story) {
