@@ -1,14 +1,25 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import type { AfCommandPaletteItem } from '@argfit-ui/core';
+import type { AfCommandPaletteResult } from '@argfit-ui/core';
 
 import {
   AfCommandPaletteMobileComponent,
   type AfCommandPaletteMobileRenderGroup,
 } from './af-command-palette-mobile.component';
 
-const ITEM: AfCommandPaletteItem = { id: 'profile', label: 'Abrir perfil', icon: 'user' };
+const ITEM: AfCommandPaletteResult = { id: 'profile', label: 'Abrir perfil', icon: 'user', score: 1 };
+const ENTITY: AfCommandPaletteResult = {
+  id: 'entity:players:martin', label: 'Martín Ruiz', score: 2,
+  collection: {
+    id: 'players', label: 'Jugadores', presentation: 'entity-card',
+    entities: [], actions: [{ id: 'edit', label: 'Editar', executorId: 'edit' }],
+  },
+  entity: {
+    kind: 'entity', id: 'martin', label: 'Martín Ruiz', metadata: ['Extremo'],
+    media: { initials: 'MR' },
+  },
+};
 
 @Component({
   imports: [AfCommandPaletteMobileComponent],
@@ -18,14 +29,14 @@ const ITEM: AfCommandPaletteItem = { id: 'profile', label: 'Abrir perfil', icon:
       [groups]="groups"
       activeId="profile"
       (openChange)="open.set($event)"
-      (itemActivated)="activated = $event"
+      (resultActivated)="activated = $event"
     />
   `,
 })
 class HostComponent {
   readonly open = signal(false);
   readonly groups: readonly AfCommandPaletteMobileRenderGroup[] = [
-    { id: 'main', items: [ITEM] },
+    { id: 'main', items: [ITEM, ENTITY] },
   ];
   activated: string | null = null;
 }
@@ -63,5 +74,15 @@ describe('AfCommandPaletteMobileComponent', () => {
     (fixture.nativeElement.querySelector('[role="option"]') as HTMLElement).click();
     fixture.detectChanges();
     expect(fixture.componentInstance.activated).toBe('profile');
+  });
+
+  it('uses an xl avatar for touch-friendly entity mini-cards', async () => {
+    await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(HostComponent);
+    fixture.componentInstance.open.set(true);
+    fixture.detectChanges();
+    const entity = fixture.nativeElement.querySelector('[data-entity]') as HTMLElement;
+    expect(entity.getAttribute('role')).toBe('option');
+    expect((entity.querySelector('af-avatar-mobile') as HTMLElement).getAttribute('data-size')).toBe('xl');
   });
 });

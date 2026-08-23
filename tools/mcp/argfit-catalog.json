@@ -3,9 +3,9 @@
   "library": {
     "name": "ArgFit UI",
     "version": "2.1.0",
-    "gitSha": "9ef4e9059c0f",
-    "generatedAt": "2026-08-20T19:15:21+09:00",
-    "sourceDigest": "5d1a9e6371e3f50e57ec65c121fd91d8a46e9401c815dd9737c50784e007f868",
+    "gitSha": "d2893f44d830",
+    "generatedAt": "2026-08-21T04:18:54+09:00",
+    "sourceDigest": "446546a08cbff84132fd088c90b69120b6f13dfc6efbb3d59cfd0625ce518638",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -3889,17 +3889,17 @@
       "title": "Components/Overlays/CommandPalette",
       "category": "Overlays",
       "status": "documented",
-      "description": "Paleta adaptativa de comandos y búsqueda con disparador, atajo global y navegación completa por teclado.",
+      "description": "Sistema global de comandos configurable mediante JSON, con ranking fuzzy, modos, contexto, providers y quick inputs.",
       "platforms": [
         "desktop",
         "mobile"
       ],
       "useWhen": [
-        "Para acceder rápidamente a rutas, resultados y acciones mediante búsqueda o teclado.",
-        "Para ofrecer un lanzador global Ctrl/Cmd+K con comportamiento accesible."
+        "Para registrar navegación, acciones y búsquedas globales con una experiencia tipo VS Code.",
+        "Para ofrecer comandos estáticos y proveedores dinámicos desde una configuración JSON."
       ],
       "avoidWhen": [
-        "Para ejecutar routing, permisos o fetching dentro de la librería.",
+        "Para ejecutar routing, permisos, fetching o exportaciones dentro de la librería.",
         "Para una lista siempre visible; usa AfListbox."
       ],
       "related": [
@@ -3914,148 +3914,11 @@
         "--af-shadow-xl"
       ],
       "api": {
-        "inputs": [
-          {
-            "name": "ariaLabel",
-            "type": "string",
-            "required": false,
-            "defaultValue": "'Paleta de comandos'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "closeLabel",
-            "type": "string",
-            "required": false,
-            "defaultValue": "'Cerrar paleta'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "disabled",
-            "type": "boolean",
-            "required": false,
-            "defaultValue": "false",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "emptyText",
-            "type": "string",
-            "required": false,
-            "defaultValue": "'No se encontraron resultados'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "errorText",
-            "type": "string | undefined",
-            "required": false,
-            "defaultValue": "undefined",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "items",
-            "type": "readonly AfCommandPaletteItem[]",
-            "required": false,
-            "defaultValue": "[]",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "loading",
-            "type": "boolean",
-            "required": false,
-            "defaultValue": "false",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "loadingText",
-            "type": "string",
-            "required": false,
-            "defaultValue": "'Buscando...'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "open",
-            "type": "boolean",
-            "required": false,
-            "defaultValue": "false",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "placeholder",
-            "type": "string",
-            "required": false,
-            "defaultValue": "'Buscar aplicaciones, acciones...'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "query",
-            "type": "string",
-            "required": false,
-            "defaultValue": "''",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "searchMode",
-            "type": "AfCommandPaletteSearchMode",
-            "required": false,
-            "defaultValue": "'client'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "shortcutEnabled",
-            "type": "boolean",
-            "required": false,
-            "defaultValue": "true",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "shortcutLabel",
-            "type": "string",
-            "required": false,
-            "defaultValue": "'Ctrl+K'",
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "showTrigger",
-            "type": "boolean",
-            "required": false,
-            "defaultValue": "true",
-            "description": "",
-            "deprecated": false
-          }
-        ],
+        "inputs": [],
         "outputs": [
           {
-            "name": "itemSelected",
-            "type": "AfCommandPaletteItem",
-            "required": false,
-            "defaultValue": null,
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "openChange",
-            "type": "boolean",
-            "required": false,
-            "defaultValue": null,
-            "description": "",
-            "deprecated": false
-          },
-          {
-            "name": "queryChange",
-            "type": "string",
+            "name": "commandExecution",
+            "type": "AfCommandExecutionEvent",
             "required": false,
             "defaultValue": null,
             "description": "",
@@ -4070,46 +3933,111 @@
           "url": "/storybook/?path=/story/components-overlays-commandpalette--default"
         },
         {
-          "id": "components-overlays-commandpalette--open-with-groups",
-          "name": "OpenWithGroups",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--open-with-groups"
+          "id": "components-overlays-commandpalette--open-with-modes",
+          "name": "OpenWithModes",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--open-with-modes"
         },
         {
-          "id": "components-overlays-commandpalette--loading",
-          "name": "Loading",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--loading"
+          "id": "components-overlays-commandpalette--shortcut-and-mode-prefix",
+          "name": "ShortcutAndModePrefix",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--shortcut-and-mode-prefix"
         },
         {
-          "id": "components-overlays-commandpalette--error",
-          "name": "Error",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--error"
+          "id": "components-overlays-commandpalette--fuzzy-ranking",
+          "name": "FuzzyRanking",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--fuzzy-ranking"
         },
         {
-          "id": "components-overlays-commandpalette--empty",
-          "name": "Empty",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--empty"
+          "id": "components-overlays-commandpalette--context-and-unavailable",
+          "name": "ContextAndUnavailable",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--context-and-unavailable"
         },
         {
-          "id": "components-overlays-commandpalette--server-results",
-          "name": "ServerResults",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--server-results"
+          "id": "components-overlays-commandpalette--dynamic-provider",
+          "name": "DynamicProvider",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--dynamic-provider"
         },
         {
-          "id": "components-overlays-commandpalette--custom-item",
-          "name": "CustomItem",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--custom-item"
+          "id": "components-overlays-commandpalette--entity-collection-players",
+          "name": "EntityCollectionPlayers",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--entity-collection-players"
         },
         {
-          "id": "components-overlays-commandpalette--keyboard-selection",
-          "name": "KeyboardSelection",
-          "url": "/storybook/?path=/story/components-overlays-commandpalette--keyboard-selection"
+          "id": "components-overlays-commandpalette--entity-activator",
+          "name": "EntityActivator",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--entity-activator"
+        },
+        {
+          "id": "components-overlays-commandpalette--entity-actions",
+          "name": "EntityActions",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--entity-actions"
+        },
+        {
+          "id": "components-overlays-commandpalette--entity-action-context-and-back",
+          "name": "EntityActionContextAndBack",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--entity-action-context-and-back"
+        },
+        {
+          "id": "components-overlays-commandpalette--entity-fallback",
+          "name": "EntityFallback",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--entity-fallback"
+        },
+        {
+          "id": "components-overlays-commandpalette--entity-empty",
+          "name": "EntityEmpty",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--entity-empty"
+        },
+        {
+          "id": "components-overlays-commandpalette--multiple-entity-collections",
+          "name": "MultipleEntityCollections",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--multiple-entity-collections"
+        },
+        {
+          "id": "components-overlays-commandpalette--custom-entity",
+          "name": "CustomEntity",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--custom-entity"
+        },
+        {
+          "id": "components-overlays-commandpalette--recent-commands",
+          "name": "RecentCommands",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--recent-commands"
+        },
+        {
+          "id": "components-overlays-commandpalette--provider-error",
+          "name": "ProviderError",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--provider-error"
+        },
+        {
+          "id": "components-overlays-commandpalette--nested-commands",
+          "name": "NestedCommands",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--nested-commands"
+        },
+        {
+          "id": "components-overlays-commandpalette--export-parameters",
+          "name": "ExportParameters",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--export-parameters"
+        },
+        {
+          "id": "components-overlays-commandpalette--parameter-back-with-escape",
+          "name": "ParameterBackWithEscape",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--parameter-back-with-escape"
+        },
+        {
+          "id": "components-overlays-commandpalette--custom-command",
+          "name": "CustomCommand",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--custom-command"
+        },
+        {
+          "id": "components-overlays-commandpalette--keyboard-execution",
+          "name": "KeyboardExecution",
+          "url": "/storybook/?path=/story/components-overlays-commandpalette--keyboard-execution"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/components-overlays-commandpalette--docs",
       "example": {
         "story": "Default",
         "typescript": "import { AfCommandPalette } from '@argfit-ui/adaptive';",
-        "template": "<div style=\"width: min(42rem, 90vw)\">\n        <af-command-palette\n          [items]=\"items\"\n          [open]=\"open\"\n          [query]=\"query\"\n          [searchMode]=\"searchMode\"\n          [placeholder]=\"placeholder\"\n          [emptyText]=\"emptyText\"\n          [loading]=\"loading\"\n          [loadingText]=\"loadingText\"\n          [errorText]=\"errorText\"\n          [showTrigger]=\"showTrigger\"\n          [shortcutEnabled]=\"shortcutEnabled\"\n          [shortcutLabel]=\"shortcutLabel\"\n          [disabled]=\"disabled\"\n          [ariaLabel]=\"ariaLabel\"\n          [closeLabel]=\"closeLabel\"\n          (openChange)=\"openChange($event)\"\n          (queryChange)=\"queryChange($event)\"\n          (itemSelected)=\"itemSelected($event)\"\n        />\n      </div>"
+        "template": "<div style=\"width: min(42rem, 90vw)\">\n        <af-command-palette (commandExecution)=\"commandExecution($event)\" />\n      </div>"
       }
     },
     {

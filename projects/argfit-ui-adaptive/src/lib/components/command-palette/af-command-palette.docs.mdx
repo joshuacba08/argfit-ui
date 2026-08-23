@@ -1,193 +1,303 @@
-import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as CommandPaletteStories from './af-command-palette.stories';
 
 <Meta of={CommandPaletteStories} />
 
 # CommandPalette
 
-Paleta adaptativa para buscar rutas, resultados y acciones desde un único disparador. En desktop abre un overlay productivo mediante `Ctrl+K` o `Cmd+K`; en mobile ocupa la pantalla completa para conservar espacio y objetivos táctiles.
+Host global de comandos inspirado en VS Code y Spotlight. La configuración declarativa describe qué existe; los ejecutores de la aplicación deciden cómo navegar, crear, llamar APIs o generar exportaciones.
+
+<div className="af-doc-callout">
+  V2 es una API incompatible destinada a la siguiente versión mayor. Debe existir un único <code>&lt;af-command-palette /&gt;</code> por aplicación.
+</div>
 
 <div className="af-doc-tabs">
-  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-use" value="use" aria-label="Uso" defaultChecked />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-use" value="use" aria-label="Arquitectura" defaultChecked />
   <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-playground" value="playground" aria-label="Playground" />
-  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-api" value="api" aria-label="API" />
-  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-composition" value="composition" aria-label="Composición" />
-  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-states" value="states" aria-label="Estados" />
-  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-theming" value="theming" aria-label="Theming" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-composition" value="composition" aria-label="Configuración" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-api" value="api" aria-label="Registro" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-states" value="states" aria-label="Flujos" />
+  <input className="af-doc-tabs__input" type="radio" name="command-palette-doc-tabs" id="command-palette-tab-theming" value="theming" aria-label="Migración" />
 
   <div className="af-doc-tabs__list" aria-label="Secciones de CommandPalette">
-    <label className="af-doc-tabs__tab" data-tab="use" htmlFor="command-palette-tab-use">Uso</label>
+    <label className="af-doc-tabs__tab" data-tab="use" htmlFor="command-palette-tab-use">Arquitectura</label>
     <label className="af-doc-tabs__tab" data-tab="playground" htmlFor="command-palette-tab-playground">Playground</label>
-    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="command-palette-tab-api">API</label>
-    <label className="af-doc-tabs__tab" data-tab="composition" htmlFor="command-palette-tab-composition">Composición</label>
-    <label className="af-doc-tabs__tab" data-tab="states" htmlFor="command-palette-tab-states">Estados</label>
-    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="command-palette-tab-theming">Theming</label>
+    <label className="af-doc-tabs__tab" data-tab="composition" htmlFor="command-palette-tab-composition">Configuración</label>
+    <label className="af-doc-tabs__tab" data-tab="api" htmlFor="command-palette-tab-api">Registro</label>
+    <label className="af-doc-tabs__tab" data-tab="states" htmlFor="command-palette-tab-states">Flujos</label>
+    <label className="af-doc-tabs__tab" data-tab="theming" htmlFor="command-palette-tab-theming">Migración</label>
   </div>
 
   <section className="af-doc-tabs__panel" data-tab="use">
 
-## Uso
+## Arquitectura
+
+```text
+JSON/config ──► AfCommandPaletteService ──► un host visual
+                      │
+                      ├── ejecutores registrados ──► Router, APIs, exportadores
+                      └── providers registrados  ──► resultados dinámicos
+```
+
+El JSON nunca contiene callbacks. La librería valida, busca, ordena y coordina la interacción; la aplicación conserva el routing, permisos, fetching y lógica de producto.
 
 ```ts
+import { provideAfCommandPalette } from '@argfit-ui/core';
 import { AfCommandPalette } from '@argfit-ui/adaptive';
-import type { AfCommandPaletteItem } from '@argfit-ui/core';
+
+bootstrapApplication(AppComponent, {
+  providers: [provideAfCommandPalette(commandPaletteConfig)],
+});
 ```
 
 ```html
-<af-command-palette
-  [items]="commands"
-  (itemSelected)="runCommand($event)"
-/>
+<!-- Una sola vez, normalmente en el layout raíz -->
+<af-command-palette (commandExecution)="trackCommand($event)" />
 ```
 
-La aplicación interpreta `kind`, `href` y `data`; la librería nunca navega, consulta APIs ni ejecuta lógica de negocio. Al seleccionar un item, la paleta emite el objeto, se cierra y limpia la consulta.
+El atajo `Mod+K` se convierte en `Cmd+K` en macOS y `Ctrl+K` en el resto. Desde la raíz, `Escape` cierra y restaura el foco; dentro de subpaletas y parámetros, retrocede un paso.
 
-<Canvas of={CommandPaletteStories.Default} sourceState="shown" />
-
-### Teclado
-
-- `Ctrl+K` o `Cmd+K`: abre y enfoca la búsqueda desde cualquier lugar.
-- Flechas, `Home` y `End`: cambian el resultado activo omitiendo elementos deshabilitados.
-- `Enter`: selecciona; `Escape`: cierra y devuelve el foco.
-
-Debe existir una sola instancia con `shortcutEnabled` activo por documento. Desactívalo en paletas secundarias.
+<Canvas of={CommandPaletteStories.Default} sourceState="shown" story={{ inline: false, height: '38rem' }} />
 
   </section>
 
   <section className="af-doc-tabs__panel" data-tab="playground">
 
-## Playground
+## Playground V2
 
-Abre la paleta desde el disparador o con `Ctrl+K` / `Cmd+K`. Después prueba la búsqueda, los estados y el resto del contrato desde los controles. La barra superior de Storybook permite cambiar entre desktop/mobile y dark/light.
+Abre la paleta, cambia de modo, prueba `/`, `>`, búsqueda fuzzy, flechas y `Enter`. El ejemplo vive en un iframe de `38rem` para mostrar el overlay a escala real y evitar que otra story registre un segundo host.
 
-<div className="af-doc-callout">
-  El ejemplo vive en un viewport aislado y amplio para que el overlay no quede recortado por la página de documentación.
-</div>
+<Canvas of={CommandPaletteStories.OpenWithModes} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-<Canvas
-  of={CommandPaletteStories.Default}
-  sourceState="hidden"
-  story={{ inline: false, height: '38rem' }}
-/>
-<Controls of={CommandPaletteStories.Default} />
-
-  </section>
-
-  <section className="af-doc-tabs__panel" data-tab="api">
-
-## API
-
-<ArgTypes
-  of={CommandPaletteStories}
-  include={['open', 'query', 'items', 'searchMode', 'placeholder', 'emptyText', 'loading', 'loadingText', 'errorText', 'showTrigger', 'shortcutEnabled', 'shortcutLabel', 'disabled', 'ariaLabel', 'closeLabel', 'openChange', 'queryChange', 'itemSelected']}
-  sort="requiredFirst"
-/>
-
-En modo `client`, la consulta se compara sin distinguir mayúsculas ni diacríticos contra etiqueta, descripción, grupo y palabras clave. En modo `server`, `queryChange` informa la consulta y los `items` se muestran sin filtrado adicional.
+La barra de Storybook permite validar desktop/mobile y dark/light. La configuración del playground es el JSON del siguiente apartado; el host no tiene inputs locales porque todo el documento comparte un único motor global.
 
   </section>
 
   <section className="af-doc-tabs__panel" data-tab="composition">
 
-## Composición
+## Configuración JSON
 
-### Dentro de PageShell
+El helper conserva los literales de TypeScript y devuelve el mismo objeto. Para archivos `.json`, usa el schema distribuido en `@argfit-ui/core/schemas/command-palette.schema.json`.
 
-Usa el slot de acciones existente y desactiva el buscador simple del shell:
-
-```html
-<af-page-shell [showSearch]="false" ...>
-  <af-command-palette
-    afPageShellActions
-    [items]="commands"
-    (itemSelected)="runCommand($event)"
-  />
-</af-page-shell>
+```json
+{
+  "$schema": "./node_modules/@argfit-ui/core/schemas/command-palette.schema.json",
+  "version": 1,
+  "id": "argfit-main",
+  "shortcut": "Mod+K",
+  "defaultMode": "all",
+  "modes": [
+    { "id": "all", "label": "Todo" },
+    { "id": "commands", "label": "Comandos", "prefix": ">" },
+    { "id": "navigation", "label": "Navegación", "prefix": "/" }
+  ],
+  "history": {
+    "enabled": true,
+    "storageKey": "af.command-palette.history.v1",
+    "maxEntries": 50
+  },
+  "commands": [
+    {
+      "id": "navigation.players",
+      "label": "Abrir jugadores",
+      "group": "Navegación",
+      "icon": "users",
+      "keywords": ["plantilla", "equipo"],
+      "modes": ["all", "navigation"],
+      "when": "auth.loggedIn == true",
+      "enabledWhen": "team.id != null",
+      "disabledReason": "Selecciona un equipo",
+      "executorId": "navigate",
+      "payload": { "route": "/players" }
+    },
+    {
+      "id": "reports.export",
+      "label": "Exportar informe",
+      "group": "Acciones",
+      "executorId": "export-report",
+      "parameters": [
+        {
+          "id": "format",
+          "type": "select",
+          "label": "Formato",
+          "required": true,
+          "options": [
+            { "value": "pdf", "label": "PDF" },
+            { "value": "xlsx", "label": "Excel" }
+          ]
+        },
+        { "id": "from", "type": "date", "label": "Desde", "required": true },
+        { "id": "confirm", "type": "confirm", "label": "Generar exportación" }
+      ]
+    }
+  ],
+  "providers": [
+    { "id": "players-search", "modes": ["all"], "minQueryLength": 2, "debounceMs": 150 }
+  ]
+}
 ```
+
+```ts
+import { defineAfCommandPaletteConfig } from '@argfit-ui/core';
+
+export const commandPaletteConfig = defineAfCommandPaletteConfig({
+  version: 1,
+  id: 'argfit-main',
+  shortcut: 'Mod+K',
+  defaultMode: 'all',
+  modes: [{ id: 'all', label: 'Todo' }],
+  commands: [],
+});
+```
+
+`validateAfCommandPaletteConfig(value)` devuelve diagnósticos estructurados. `service.setConfig(value)` conserva la última configuración válida cuando la nueva contiene errores.
+
+  </section>
+
+  <section className="af-doc-tabs__panel" data-tab="api">
+
+## Registro Angular
+
+```ts
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import {
+  provideAfCommandExecutor,
+  provideAfCommandSearchProvider,
+} from '@argfit-ui/core';
+
+export const appConfig = {
+  providers: [
+    provideAfCommandExecutor('navigate', () => {
+      const router = inject(Router);
+      return ({ payload }) => router.navigateByUrl(String(payload?.['route']));
+    }),
+    provideAfCommandExecutor('export-report', () => async ({ parameters }) => {
+      await exportReport(parameters['format'], parameters['from']);
+    }),
+    provideAfCommandSearchProvider('players-search', () => ({
+      search: ({ query, signal }) => playersApi.search(query, { signal }),
+    })),
+  ],
+};
+```
+
+Los ejecutores reciben el comando, `payload`, parámetros y un snapshot inmutable del contexto. Pueden ser síncronos o devolver una `Promise`. La paleta se cierra al despachar; un rechazo produce un evento de error, y la aplicación decide cómo mostrar feedback.
+
+### Configuración y contexto en runtime
+
+```ts
+const palette = inject(AfCommandPaletteService);
+
+palette.setConfig(configLoadedByTheApplication);
+palette.setContext('auth.loggedIn', true);
+palette.setContext('team.id', selectedTeam.id);
+palette.removeContext('team.id');
+
+palette.open({ modeId: 'commands', query: 'exportar' });
+palette.clearHistory();
+```
+
+`registerExecutor` y `registerProvider` permiten registros en runtime y devuelven una función para desregistrarlos. Un `executorId` ausente mantiene el comando visible pero deshabilitado con un motivo accesible.
 
 ### Fila personalizada
 
-`afCommandPaletteItem` sustituye la presentación interior, pero la paleta conserva `role="option"`, estado activo, puntero y teclado.
-
 ```html
-<af-command-palette [items]="commands">
-  <ng-template afCommandPaletteItem let-item let-active="active" let-query="query">
-    <app-command-result [item]="item" [active]="active" [query]="query" />
+<af-command-palette>
+  <ng-template afCommandPaletteCommand let-result let-active="active" let-mode="modeId">
+    <app-command-result [result]="result" [active]="active" [mode]="mode" />
   </ng-template>
 </af-command-palette>
 ```
 
-No proyectes botones, enlaces ni otros controles interactivos dentro de la fila.
+La directiva solo reemplaza el interior visual; el host conserva `role="option"`, foco, puntero y teclado. No proyectes controles interactivos dentro de la fila.
 
-<Canvas of={CommandPaletteStories.CustomItem} sourceState="hidden" />
+<Canvas of={CommandPaletteStories.CustomCommand} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
+
+### API del host
+
+<ArgTypes of={CommandPaletteStories} include={['commandExecution']} sort="requiredFirst" />
 
   </section>
 
   <section className="af-doc-tabs__panel" data-tab="states">
 
-## Estados
+## Flujos completos
 
-Cada estado se muestra en su propio viewport de `38rem`: el overlay conserva su escala real y no compite con las demás variantes de la página.
+Cada flujo se ejecuta en un viewport aislado y amplio. Así no compite por el atajo global ni registra múltiples hosts en la misma página.
 
-### Abierta con grupos
+### Ranking fuzzy
 
-Los grupos conservan el orden de su primera aparición y los elementos deshabilitados siguen visibles, pero se omiten durante la navegación por teclado.
+Prioriza label exacto/prefijo, label parcial, keywords, grupo y descripción. Prioridad, fijados e historial solo aportan bonos acotados.
 
-<Canvas
-  of={CommandPaletteStories.OpenWithGroups}
-  sourceState="hidden"
-  story={{ inline: false, height: '38rem' }}
-/>
+<Canvas of={CommandPaletteStories.FuzzyRanking} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-### Cargando sin resultados
+### Atajo, prefijos e historial
 
-Cuando todavía no hay elementos, el estado de carga reemplaza la lista.
+`Mod+K` abre desde cualquier campo. Un prefijo cambia de modo sin convertirse en consulta; al borrarlo se vuelve al modo por defecto. El historial persiste únicamente ID, contador y fecha de último uso.
 
-<Canvas
-  of={CommandPaletteStories.Loading}
-  sourceState="hidden"
-  story={{ inline: false, height: '38rem' }}
-/>
+<Canvas of={CommandPaletteStories.ShortcutAndModePrefix} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-### Error
+<Canvas of={CommandPaletteStories.RecentCommands} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-El error tiene prioridad sobre resultados, carga y estado vacío.
+### Contexto y executor ausente
 
-<Canvas
-  of={CommandPaletteStories.Error}
-  sourceState="hidden"
-  story={{ inline: false, height: '38rem' }}
-/>
+`when` controla visibilidad; `enabledWhen` controla disponibilidad. Las expresiones usan un parser seguro, sin `eval`.
 
-### Sin resultados
+<Canvas of={CommandPaletteStories.ContextAndUnavailable} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-El mensaje vacío aparece únicamente cuando no existen elementos, carga ni error.
+### Provider asíncrono
 
-<Canvas
-  of={CommandPaletteStories.Empty}
-  sourceState="hidden"
-  story={{ inline: false, height: '38rem' }}
-/>
+Cada provider tiene debounce, `AbortSignal` y descarte de respuestas obsoletas. Sus errores no ocultan los resultados de otras fuentes.
 
-### Resultados gestionados por servidor
+<Canvas of={CommandPaletteStories.DynamicProvider} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-La aplicación recibe `queryChange` y mantiene los resultados anteriores visibles mientras solicita los nuevos.
+<Canvas of={CommandPaletteStories.ProviderError} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
-<Canvas
-  of={CommandPaletteStories.ServerResults}
-  sourceState="hidden"
-  story={{ inline: false, height: '38rem' }}
-/>
+### Subpaletas
+
+Los comandos padre pueden declarar `children` o `childrenProviderId`, pero no `executorId`. El breadcrumb y `Escape` regresan al nivel anterior.
+
+<Canvas of={CommandPaletteStories.NestedCommands} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
+
+### Parámetros rápidos
+
+Los parámetros `text`, `number`, `select`, `multiselect`, `date`, `boolean` y `confirm` se solicitan como pasos. Solo se despacha después de validar requeridos, límites, patrones y opciones.
+
+<Canvas of={CommandPaletteStories.ExportParameters} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
+
+<Canvas of={CommandPaletteStories.ParameterBackWithEscape} sourceState="hidden" story={{ inline: false, height: '38rem' }} />
 
   </section>
 
   <section className="af-doc-tabs__panel" data-tab="theming">
 
-## Theming
+## Migración V1 → V2
 
-El componente usa los tokens públicos existentes. Los más relevantes son `--af-input-bg`, `--af-input-border`, `--af-border-focus`, `--af-bg-elevated`, `--af-bg-interactive`, `--af-text-main`, `--af-text-muted`, `--af-radius-xl` y `--af-shadow-xl`.
+| V1 | V2 |
+| --- | --- |
+| `[items]` y `searchMode` por instancia | `provideAfCommandPalette(config)` y un catálogo global |
+| `(itemSelected)` | ejecutor registrado por `executorId`; `(commandExecution)` es telemetría del host |
+| `[(open)]` / `[(query)]` | `AfCommandPaletteService.open()`, `close()`, `toggle()` |
+| `AfCommandPaletteItem` | `AfCommandDefinition` / `AfCommandPaletteResult` |
+| `afCommandPaletteItem` | `afCommandPaletteCommand` |
+| callbacks o routing en el consumidor del evento | JSON sin callbacks + ejecutores de aplicación |
 
-<Canvas of={CommandPaletteStories.Default} sourceState="hidden" />
+El selector permanece como `<af-command-palette>`, pero ahora es el host de un servicio global. Elimina todas las instancias locales y conserva solo la del layout raíz.
+
+### Dentro de PageShell
+
+```html
+<af-page-shell [showSearch]="false">
+  <af-command-palette afPageShellActions />
+</af-page-shell>
+```
+
+No añadas documentación a `projects/argfit-ui-docs`: Storybook y la API TypeScript pública son la fuente de verdad.
+
+### Tokens
+
+El host reutiliza `--af-input-bg`, `--af-input-border`, `--af-border-focus`, `--af-bg-elevated`, `--af-bg-interactive`, `--af-text-main`, `--af-text-muted`, `--af-radius-xl` y `--af-shadow-xl`.
 
   </section>
 </div>

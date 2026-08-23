@@ -50,20 +50,18 @@ describe('ArgFit MCP protocol', () => {
     });
     const commandPaletteText = commandPalette.content.find((content) => content.type === 'text');
     expect(commandPaletteText?.type === 'text' ? commandPaletteText.text : '')
-      .toContain('itemSelected');
+      .toContain('commandExecution');
 
     const usage = await client.callTool({
       name: 'validate_usage',
       arguments: {
         snippet: `import { AfCommandPalette } from '@argfit-ui/adaptive';
-          <af-command-palette
-            [items]="commands"
-            [open]="paletteOpen"
-            [query]="query"
-            (openChange)="paletteOpen = $event"
-            (queryChange)="query = $event"
-            (itemSelected)="runCommand($event)"
-          />`,
+          import { provideAfCommandPalette, provideAfCommandExecutor } from '@argfit-ui/core';
+          const providers = [
+            provideAfCommandPalette({ version: 1, id: 'main', commands: [] }),
+            provideAfCommandExecutor('navigate', () => ({ payload }) => navigate(payload)),
+          ];
+          <af-command-palette (commandExecution)="trackCommand($event)" />`,
       },
     });
     const usageText = usage.content.find((content) => content.type === 'text');

@@ -16,9 +16,14 @@ import {
 } from '@angular/core';
 
 import type {
-  AfCommandPaletteItem,
-  AfCommandPaletteItemContext,
-  AfCommandPaletteItemTemplate,
+  AfCommandModeDefinition,
+  AfCommandPaletteEntityContext,
+  AfCommandPaletteEntityTemplate,
+  AfCommandPaletteBreadcrumb,
+  AfCommandPaletteProviderError,
+  AfCommandPaletteResult,
+  AfCommandPaletteResultContext,
+  AfCommandPaletteResultTemplate,
 } from '@argfit-ui/core';
 import {
   AfEscapeKeyDirective,
@@ -27,12 +32,14 @@ import {
   AfIconComponent,
 } from '@argfit-ui/primitives';
 
+import { AfAvatarDesktopComponent } from '../avatar/af-avatar-desktop.component';
+
 export type AfCommandPaletteNavigationIntent = 'next' | 'previous' | 'first' | 'last';
 
 export interface AfCommandPaletteRenderGroup {
   readonly id: string;
   readonly label?: string;
-  readonly items: readonly AfCommandPaletteItem[];
+  readonly items: readonly AfCommandPaletteResult[];
 }
 
 let nextAfCommandPaletteDesktopId = 0;
@@ -44,6 +51,7 @@ let nextAfCommandPaletteDesktopId = 0;
     AfFocusInitialDirective,
     AfFocusTrapDirective,
     AfIconComponent,
+    AfAvatarDesktopComponent,
     NgTemplateOutlet,
   ],
   templateUrl: './af-command-palette-desktop.component.html',
@@ -78,14 +86,27 @@ export class AfCommandPaletteDesktopComponent implements OnDestroy {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input('Paleta de comandos');
   readonly closeLabel = input('Cerrar paleta');
+  readonly backLabel = input('Volver');
+  readonly retryLabel = input('Reintentar');
+  readonly modes = input<readonly AfCommandModeDefinition[]>([]);
+  readonly modeId = input('all');
+  readonly breadcrumbs = input<readonly AfCommandPaletteBreadcrumb[]>([]);
+  readonly canGoBack = input(false, { transform: booleanAttribute });
+  readonly providerErrors = input<readonly AfCommandPaletteProviderError[]>([]);
+  readonly validationText = input<string | undefined>(undefined);
   readonly focusRequest = input(0);
-  readonly itemTemplate = input<AfCommandPaletteItemTemplate | undefined>(undefined);
+  readonly resultTemplate = input<AfCommandPaletteResultTemplate | undefined>(undefined);
+  readonly entityTemplate = input<AfCommandPaletteEntityTemplate | undefined>(undefined);
 
   readonly openChange = output<boolean>();
   readonly queryInput = output<string>();
   readonly navigation = output<AfCommandPaletteNavigationIntent>();
   readonly activeChange = output<string>();
-  readonly itemActivated = output<string>();
+  readonly resultActivated = output<string>();
+  readonly modeChange = output<string>();
+  readonly modeReset = output<void>();
+  readonly back = output<void>();
+  readonly retryProvider = output<string>();
 
   protected readonly listboxId = `af-command-palette-desktop-${this.instanceId}-listbox`;
   protected readonly statusId = `af-command-palette-desktop-${this.instanceId}-status`;
@@ -154,6 +175,9 @@ export class AfCommandPaletteDesktopComponent implements OnDestroy {
   }
 
   protected onInputKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Backspace' && !this.query()) {
+      this.modeReset.emit();
+    }
     const intent = this.navigationIntent(event.key);
     if (intent) {
       event.preventDefault();
@@ -163,7 +187,7 @@ export class AfCommandPaletteDesktopComponent implements OnDestroy {
 
     if (event.key === 'Enter' && this.activeId()) {
       event.preventDefault();
-      this.itemActivated.emit(this.activeId()!);
+      this.resultActivated.emit(this.activeId()!);
     }
   }
 
@@ -171,15 +195,15 @@ export class AfCommandPaletteDesktopComponent implements OnDestroy {
     event.preventDefault();
   }
 
-  protected onOptionPointerMove(item: AfCommandPaletteItem): void {
+  protected onOptionPointerMove(item: AfCommandPaletteResult): void {
     if (!item.disabled && item.id !== this.activeId()) {
       this.activeChange.emit(item.id);
     }
   }
 
-  protected onOptionClick(item: AfCommandPaletteItem): void {
+  protected onOptionClick(item: AfCommandPaletteResult): void {
     if (!item.disabled) {
-      this.itemActivated.emit(item.id);
+      this.resultActivated.emit(item.id);
     }
   }
 
@@ -197,17 +221,39 @@ export class AfCommandPaletteDesktopComponent implements OnDestroy {
       .reduce((total, group) => total + group.items.length, index);
   }
 
-  protected itemContext(
-    item: AfCommandPaletteItem,
+  protected resultContext(
+    item: AfCommandPaletteResult,
     itemIndex: number,
-  ): AfCommandPaletteItemContext {
+  ): AfCommandPaletteResultContext {
     return {
       $implicit: item,
-      item,
-      itemIndex,
+      result: item,
+      resultIndex: itemIndex,
+      active: item.id === this.activeId(),
+      query: this.query(),
+      modeId: this.modeId(),
+      collection: item.collection,
+      entity: item.entity,
+    };
+  }
+
+  protected entityContext(
+    item: AfCommandPaletteResult,
+    itemIndex: number,
+  ): AfCommandPaletteEntityContext {
+    return {
+      $implicit: item.entity!,
+      entity: item.entity!,
+      collection: item.collection!,
+      result: item,
+      resultIndex: itemIndex,
       active: item.id === this.activeId(),
       query: this.query(),
     };
+  }
+
+  protected requestBack(): void {
+    this.back.emit();
   }
 
   private navigationIntent(key: string): AfCommandPaletteNavigationIntent | null {

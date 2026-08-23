@@ -98,8 +98,11 @@ export {
     AfChipComponent as AfChip, AfChipComponent
 } from './lib/components/chip/af-chip.component';
 export {
-    AfCommandPaletteItemDirective
-} from './lib/components/command-palette/af-command-palette-item.directive';
+    AfCommandPaletteCommandDirective
+} from './lib/components/command-palette/af-command-palette-command.directive';
+export {
+    AfCommandPaletteEntityDirective
+} from './lib/components/command-palette/af-command-palette-entity.directive';
 export {
     AfCommandPaletteComponent as AfCommandPalette, AfCommandPaletteComponent
 } from './lib/components/command-palette/af-command-palette.component';

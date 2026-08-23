@@ -23,8 +23,30 @@
       afFocusTrap
       [afFocusTrapEnabled]="open()"
       afEscapeKey
-      (afEscape)="requestClose()"
+      (afEscape)="requestBack()"
     >
+      @if (modes().length > 1 || breadcrumbs().length) {
+        <div class="af-command-palette-desktop__context">
+          @if (canGoBack()) {
+            <button type="button" class="af-command-palette-desktop__back" [attr.aria-label]="backLabel()" (click)="requestBack()">
+              <af-icon name="arrow-left" size="sm" tone="muted" decorative />
+            </button>
+          }
+          @if (breadcrumbs().length) {
+            <div class="af-command-palette-desktop__breadcrumbs" aria-label="Ruta del comando">
+              @for (crumb of breadcrumbs(); track crumb.id) { <span>{{ crumb.label }}</span> }
+            </div>
+          } @else {
+            <div class="af-command-palette-desktop__modes" aria-label="Modo de búsqueda">
+              @for (mode of modes(); track mode.id) {
+                <button type="button" [attr.data-active]="mode.id === modeId() ? '' : null" (click)="modeChange.emit(mode.id)">
+                  @if (mode.prefix) { <kbd>{{ mode.prefix }}</kbd> } {{ mode.label }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
       <div class="af-command-palette-desktop__search">
         <af-icon name="search" size="md" tone="muted" decorative />
         <input
@@ -70,6 +92,8 @@
             <span class="af-command-palette-desktop__spinner" aria-hidden="true"></span>
             <span>{{ loadingText() }}</span>
           </div>
+        } @else if (validationText(); as validation) {
+          <div class="af-command-palette-desktop__state" role="status" [id]="statusId">{{ validation }}</div>
         } @else if (!hasItems()) {
           <div class="af-command-palette-desktop__state" role="status" [id]="statusId">
             <af-icon name="search" size="md" tone="muted" decorative />
@@ -99,13 +123,46 @@
                     [attr.aria-disabled]="item.disabled ? 'true' : null"
                     [attr.data-active]="item.id === activeId() ? '' : null"
                     [attr.data-disabled]="item.disabled ? '' : null"
+                    [attr.data-entity]="item.entity ? '' : null"
+                    [attr.data-presentation]="item.collection?.presentation ?? null"
                     [attr.title]="item.disabledReason ?? null"
                     (pointerdown)="onOptionPointerDown($event)"
                     (pointermove)="onOptionPointerMove(item)"
                     (click)="onOptionClick(item)"
                   >
-                    @if (itemTemplate(); as template) {
-                      <ng-container *ngTemplateOutlet="template; context: itemContext(item, resolvedIndex)" />
+                    @if (item.entity; as entity) {
+                      @if (entityTemplate(); as template) {
+                        <ng-container *ngTemplateOutlet="template; context: entityContext(item, resolvedIndex)" />
+                      } @else {
+                        <span class="af-command-palette-desktop__entity-media">
+                          <af-avatar-desktop
+                            [label]="entity.label"
+                            [initials]="entity.media?.initials"
+                            [imageSrc]="entity.media?.imageSrc"
+                            [icon]="entity.media?.icon ?? item.collection?.icon"
+                            [shape]="entity.media?.shape ?? 'rounded'"
+                            [ariaLabel]="''"
+                            size="lg"
+                          />
+                        </span>
+                        <span class="af-command-palette-desktop__option-copy af-command-palette-desktop__entity-copy">
+                          <span class="af-command-palette-desktop__option-label">{{ entity.label }}</span>
+                          @if (entity.description; as description) {
+                            <span class="af-command-palette-desktop__option-description">{{ description }}</span>
+                          }
+                          @if (entity.metadata?.length) {
+                            <span class="af-command-palette-desktop__entity-metadata">
+                              @for (metadata of entity.metadata; track $index) { <span>{{ metadata }}</span> }
+                            </span>
+                          }
+                          @if (entity.disabled && entity.disabledReason) {
+                            <span class="af-command-palette-desktop__option-description">{{ entity.disabledReason }}</span>
+                          }
+                        </span>
+                        <af-icon name="chevron-right" size="sm" tone="muted" decorative />
+                      }
+                    } @else if (resultTemplate(); as template) {
+                      <ng-container *ngTemplateOutlet="template; context: resultContext(item, resolvedIndex)" />
                     } @else {
                       @if (item.icon; as iconName) {
                         <span class="af-command-palette-desktop__option-icon">
@@ -121,7 +178,10 @@
                           <span class="af-command-palette-desktop__option-description">{{ item.disabledReason }}</span>
                         }
                       </span>
-                      @if (item.shortcut; as shortcut) {
+                      @if (item.selected) {
+                        <af-icon name="check" size="sm" tone="primary" decorative />
+                      }
+                      @if (item.keybinding; as shortcut) {
                         <kbd>{{ shortcut }}</kbd>
                       }
                     }
@@ -137,6 +197,12 @@
               <span>{{ loadingText() }}</span>
             </div>
           }
+        }
+        @for (providerError of providerErrors(); track providerError.providerId) {
+          <div class="af-command-palette-desktop__provider-error" role="status">
+            <span>{{ providerError.message }}</span>
+            <button type="button" (click)="retryProvider.emit(providerError.providerId)">{{ retryLabel() }}</button>
+          </div>
         }
       </div>
     </section>

@@ -42,7 +42,7 @@ describe('ArgFit catalog engine', () => {
       query: 'paleta Ctrl K para rutas y acciones',
     })[0];
     expect(result?.component.name).toBe('AfCommandPalette');
-    expect(result?.component.api.outputs.some((output) => output.name === 'itemSelected')).toBe(true);
+    expect(result?.component.api.outputs.some((output) => output.name === 'commandExecution')).toBe(true);
   });
 
   it('recommends the authentication shell composition for onboarding', () => {
