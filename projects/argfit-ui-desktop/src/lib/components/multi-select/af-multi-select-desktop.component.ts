@@ -12,6 +12,7 @@ import {
   type AfResolvedMultiSelectOption,
   type AfSelectionDensity,
 } from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
 
 import { AfPopoverDesktopComponent } from '../popover/af-popover-desktop.component';
 
@@ -19,7 +20,7 @@ let nextAfDesktopMultiSelectId = 0;
 
 @Component({
   selector: 'af-multi-select-desktop',
-  imports: [AfPopoverDesktopComponent],
+  imports: [AfIconComponent, AfPopoverDesktopComponent],
   templateUrl: './af-multi-select-desktop.component.html',
   styleUrl: './af-multi-select-desktop.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

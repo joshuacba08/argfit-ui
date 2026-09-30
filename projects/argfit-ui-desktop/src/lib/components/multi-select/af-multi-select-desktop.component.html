@@ -11,7 +11,7 @@
   <af-popover-desktop
     [open]="open()"
     [title]="label() ?? placeholder() ?? 'Seleccion multiple'"
-    placement="bottom"
+    placement="bottom-start"
     [dismissible]="true"
     [closeOnBackdrop]="true"
     [closeOnEscape]="true"
@@ -47,12 +47,13 @@
         </div>
       }
 
-      <span class="af-multi-select-desktop__summary" [attr.data-placeholder]="selectedCount() === 0 ? '' : null">
+      <span class="af-multi-select-desktop__summary" [attr.data-placeholder]="selectedCount() === 0 ? '' : null"
+        [attr.data-visually-hidden]="triggerPreview().length > 0 ? '' : null">
         {{ summaryText() }}
       </span>
     </div>
 
-    <span class="af-multi-select-desktop__caret" aria-hidden="true">⌄</span>
+    <af-icon class="af-multi-select-desktop__caret" name="chevron-down" size="sm" [decorative]="true" />
   </div>
 </ng-template>
 

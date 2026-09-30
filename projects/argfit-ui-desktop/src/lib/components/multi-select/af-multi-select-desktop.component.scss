@@ -1,16 +1,34 @@
 .af-multi-select-desktop {
   display: block;
+  font-family: var(--af-font-body);
+  min-width: 0;
+  width: 100%;
 }
 
 .af-multi-select-desktop__field {
   display: grid;
-  gap: var(--af-space-2);
+  gap: var(--af-space-1_5);
+  min-width: 0;
+}
+
+.af-multi-select-desktop__field > .af-popover-desktop,
+.af-multi-select-desktop__field > .af-popover-desktop > .af-popover-desktop__trigger {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+}
+
+.af-multi-select-desktop__field > .af-popover-desktop > .af-popover-desktop__trigger:focus-visible .af-multi-select-desktop__trigger-shell {
+  border-color: var(--af-primary);
+  box-shadow: var(--af-focus-ring);
 }
 
 .af-multi-select-desktop__label {
-  color: var(--af-text-main);
-  font-size: var(--af-text-sm);
-  font-weight: var(--af-font-weight-semibold);
+  color: var(--af-text-soft, var(--af-text-muted));
+  font-size: var(--af-text-xs);
+  font-weight: var(--af-font-weight-medium);
+  letter-spacing: var(--af-tracking-wide);
+  line-height: var(--af-line-height-tight);
   margin: 0;
 }
 
@@ -20,14 +38,18 @@
 
 .af-multi-select-desktop__trigger-shell {
   align-items: center;
-  background: color-mix(in srgb, var(--af-bg-surface) 84%, transparent);
-  border: 1px solid color-mix(in srgb, var(--af-primary) 30%, var(--af-border-soft));
-  border-radius: var(--af-radius-xl);
+  background: var(--af-bg-elevated);
+  border: 1.5px solid var(--af-border);
+  border-radius: var(--af-radius-md);
+  box-sizing: border-box;
   display: grid;
-  gap: var(--af-space-3);
+  gap: var(--af-space-2);
   grid-template-columns: minmax(0, 1fr) auto;
-  min-height: 52px;
+  min-height: var(--af-button-height-md);
+  min-width: 0;
   padding: var(--af-space-2) var(--af-space-3);
+  transition: border-color var(--af-duration-fast) var(--af-ease-out), box-shadow var(--af-duration-fast) var(--af-ease-out);
+  width: 100%;
 }
 
 .af-multi-select-desktop[data-invalid] .af-multi-select-desktop__trigger-shell {
@@ -73,9 +95,17 @@
   color: var(--af-text-muted);
 }
 
+.af-multi-select-desktop__summary[data-visually-hidden] {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .af-multi-select-desktop__caret {
-  color: var(--af-text-soft);
-  font-size: var(--af-text-lg);
+  color: var(--af-text-soft, var(--af-text-muted));
 }
 
 .af-multi-select-desktop__panel-tools {

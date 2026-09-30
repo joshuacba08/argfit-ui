@@ -85,9 +85,17 @@
   color: var(--af-text-muted);
 }
 
+.af-multi-select-mobile__summary[data-visually-hidden] {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .af-multi-select-mobile__caret {
-  color: var(--af-text-soft);
-  font-size: var(--af-text-lg);
+  color: var(--af-text-soft, var(--af-text-muted));
 }
 
 .af-multi-select-mobile__panel-tools {

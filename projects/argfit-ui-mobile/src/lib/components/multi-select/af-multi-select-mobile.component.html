@@ -30,10 +30,11 @@
         </span>
       }
 
-      <span class="af-multi-select-mobile__summary" [attr.data-placeholder]="selectedCount() === 0 ? '' : null">{{ summaryText() }}</span>
+      <span class="af-multi-select-mobile__summary" [attr.data-placeholder]="selectedCount() === 0 ? '' : null"
+        [attr.data-visually-hidden]="triggerPreview().length > 0 ? '' : null">{{ summaryText() }}</span>
     </span>
 
-    <span class="af-multi-select-mobile__caret" aria-hidden="true">⌄</span>
+    <af-icon class="af-multi-select-mobile__caret" name="chevron-down" size="sm" [decorative]="true" />
   </button>
 
   @if (errorText(); as error) {
