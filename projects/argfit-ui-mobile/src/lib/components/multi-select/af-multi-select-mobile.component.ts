@@ -12,6 +12,7 @@ import {
   type AfResolvedMultiSelectOption,
   type AfSelectionDensity,
 } from '@argfit-ui/core';
+import { AfIconComponent } from '@argfit-ui/primitives';
 
 import { AfDrawerMobileComponent } from '../drawer/af-drawer-mobile.component';
 
@@ -19,7 +20,7 @@ let nextAfMobileMultiSelectId = 0;
 
 @Component({
   selector: 'af-multi-select-mobile',
-  imports: [AfDrawerMobileComponent],
+  imports: [AfDrawerMobileComponent, AfIconComponent],
   templateUrl: './af-multi-select-mobile.component.html',
   styleUrl: './af-multi-select-mobile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

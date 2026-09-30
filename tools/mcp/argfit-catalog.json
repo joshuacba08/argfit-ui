@@ -3,9 +3,9 @@
   "library": {
     "name": "ArgFit UI",
     "version": "2.2.0",
-    "gitSha": "fd0e4ddae84d",
-    "generatedAt": "2026-08-23T13:48:20+09:00",
-    "sourceDigest": "05419bfc5aeed7d4c0ac027db15f1b2fbded5a57657fbbfbddadab99b3765096",
+    "gitSha": "e8518f3171be",
+    "generatedAt": "2026-08-23T22:07:40+09:00",
+    "sourceDigest": "08d3be068157a079a4ce3c0ce2bd972049ca02f981d1232f237c3d35f76bc8b8",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -7304,8 +7304,9 @@
         "AfChip"
       ],
       "tokens": [
-        "--af-input-border",
-        "--af-border-focus"
+        "--af-bg-elevated",
+        "--af-border",
+        "--af-primary"
       ],
       "api": {
         "inputs": [
@@ -7491,13 +7492,18 @@
           "id": "components-forms-multiselect--selection-limit",
           "name": "SelectionLimit",
           "url": "/storybook/?path=/story/components-forms-multiselect--selection-limit"
+        },
+        {
+          "id": "components-forms-multiselect--form-field",
+          "name": "FormField",
+          "url": "/storybook/?path=/story/components-forms-multiselect--form-field"
         }
       ],
       "docsUrl": "/storybook/?path=/docs/components-forms-multiselect--docs",
       "example": {
         "story": "Default",
         "typescript": "import { AfMultiSelect } from '@argfit-ui/adaptive';",
-        "template": "<af-multi-select [label]=\"label\" [placeholder]=\"placeholder\" [options]=\"options\" [optionLabel]=\"optionLabel\" [optionValue]=\"optionValue\" [value]=\"value\" [searchable]=\"searchable\" [clearable]=\"clearable\" [maxSelected]=\"maxSelected\" [disabled]=\"disabled\" (valueChange)=\"valueChange($event)\" />"
+        "template": "<div style=\"width: min(100%, 34rem)\"><af-multi-select [label]=\"label\" [placeholder]=\"placeholder\" [options]=\"options\" [optionLabel]=\"optionLabel\" [optionValue]=\"optionValue\" [value]=\"value\" [searchable]=\"searchable\" [clearable]=\"clearable\" [maxSelected]=\"maxSelected\" [disabled]=\"disabled\" (valueChange)=\"valueChange($event)\" /></div>"
       }
     },
     {

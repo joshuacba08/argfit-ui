@@ -16,6 +16,7 @@ const canonicalStoryIds = [
   'components-surfaces-card--default',
   'components-forms-input--primary',
   'components-forms-select--searchable',
+  'components-forms-multiselect--form-field',
   'components-forms-textarea--default',
   'components-identity-badge--default',
   'components-identity-avatar--default',
@@ -52,6 +53,7 @@ const criticalA11yStories = new Set([
   'components-actions-button--primary',
   'components-forms-input--primary',
   'components-forms-select--searchable',
+  'components-forms-multiselect--form-field',
   'components-overlays-dialog--default',
   'components-overlays-commandpalette--default',
   'components-forms-datepicker--default',
@@ -110,7 +112,7 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-const validatedStories = mode === '--a11y' ? criticalA11yStories.size : storyIds.length;
+const validatedStories = mode === '--a11y' ? storyIds.filter((id) => criticalA11yStories.has(id)).length : storyIds.length;
 console.log(
   'Storybook ' +
     mode.slice(2) +
