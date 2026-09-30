@@ -53,6 +53,7 @@ export * from './lib/types/empty-state.types';
 export * from './lib/types/feedback.types';
 export * from './lib/types/file-upload.types';
 export * from './lib/types/form-control.types';
+export * from './lib/types/chat.types';
 export * from './lib/types/form-field.types';
 export * from './lib/types/icon.types';
 export * from './lib/types/image-cropper.types';

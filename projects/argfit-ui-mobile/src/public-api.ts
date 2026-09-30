@@ -12,6 +12,7 @@ export * from './lib/components/button/af-button-mobile.component';
 export * from './lib/components/calendar/af-calendar-mobile.component';
 export * from './lib/components/card/af-card-mobile.component';
 export * from './lib/components/chart-card/af-chart-card-mobile.component';
+export * from './lib/components/chat-message/af-chat-message-mobile.component';
 export * from './lib/components/checkbox/af-checkbox-mobile.component';
 export * from './lib/components/chip/af-chip-mobile.component';
 export * from './lib/components/command-palette/af-command-palette-mobile.component';

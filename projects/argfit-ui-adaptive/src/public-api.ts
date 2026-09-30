@@ -92,6 +92,12 @@ export {
     AfChartCardComponent as AfChartCard, AfChartCardComponent
 } from './lib/components/chart-card/af-chart-card.component';
 export {
+    AfChatMessageComponent as AfChatMessage, AfChatMessageComponent
+} from './lib/components/chat-message/af-chat-message.component';
+export {
+    AfChatComposerComponent as AfChatComposer, AfChatComposerComponent
+} from './lib/components/chat-composer/af-chat-composer.component';
+export {
     AfCheckboxComponent as AfCheckbox, AfCheckboxComponent
 } from './lib/components/checkbox/af-checkbox.component';
 export {
