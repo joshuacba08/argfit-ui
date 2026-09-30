@@ -11,6 +11,7 @@ export * from './lib/components/button/af-button-desktop.component';
 export * from './lib/components/calendar/af-calendar-desktop.component';
 export * from './lib/components/card/af-card-desktop.component';
 export * from './lib/components/chart-card/af-chart-card-desktop.component';
+export * from './lib/components/chat-message/af-chat-message-desktop.component';
 export * from './lib/components/checkbox/af-checkbox-desktop.component';
 export * from './lib/components/chip/af-chip-desktop.component';
 export * from './lib/components/command-palette/af-command-palette-desktop.component';

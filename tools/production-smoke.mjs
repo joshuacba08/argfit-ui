@@ -7,7 +7,7 @@ import ts from 'typescript';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const smokeDirectory = resolve(repoRoot, '.tmp', 'production-smoke');
 const tarballDirectory = resolve(repoRoot, 'dist', 'production-tarballs');
-const PRODUCTION_VERSION = '2.2.0';
+const PRODUCTION_VERSION = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8')).version;
 const failures = [];
 
 const packageDefinitions = [
@@ -270,7 +270,7 @@ function validateProductionPublishWorkflowShape() {
 
 function validateDocsShape() {
   for (const [filePath, snippets] of [
-    ['package.json', ['"version": "2.2.0"', '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
+    ['package.json', [`"version": "${PRODUCTION_VERSION}"`, '"pack:production:dist"', '"release:production:check"', '"smoke:production:dist"', '"measure:production-performance:dist"']],
     ['docs/productive/quality-gates.md', ['pnpm release:production:check', 'No active budget exceptions.', '2.254 MB', '1,252 kB', '157 kB', '75 kB', '27.6 kB', '238 kB', '357 kB', '313 kB', '70 kB', 'Production tarball total']],
     ['docs/productive/scope.md', ['ArgFit UI 2.2.0 Scope', '`2.0-adaptive`']],
     ['docs/productive/public-api.md', ['Productive Public API Inventory', '2.0-renderer-specific']],

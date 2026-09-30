@@ -8,9 +8,9 @@ const catalog = loadCatalog();
 
 describe('ArgFit catalog engine', () => {
   it('indexes the complete documented adaptive API', () => {
-    expect(catalog.components).toHaveLength(70);
+    expect(catalog.components).toHaveLength(72);
     expect(catalog.components.filter((component) => component.status === 'legacy-undocumented')).toHaveLength(0);
-    expect(catalog.components.filter((component) => component.status === 'documented')).toHaveLength(68);
+    expect(catalog.components.filter((component) => component.status === 'documented')).toHaveLength(70);
     expect(catalog.components.filter((component) => component.status === 'experimental')).toHaveLength(2);
     expect(searchComponents(catalog, { query: 'accordion' })[0]?.component.name).toBe('AfAccordion');
   });

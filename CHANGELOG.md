@@ -2,6 +2,18 @@
 
 All notable changes to ArgFit UI are documented here.
 
+## 2.3.0
+
+### Added
+
+- `AfChatMessage` provides adaptive, accessible conversation surfaces with role, status, author and time labels.
+- `AfChatComposer` combines the documented textarea and button with a controlled draft value, busy state and submit event.
+- Storybook examples and MCP catalog entries describe both components for application consumers.
+
+### Release
+
+- All seven publishable packages move to `2.3.0`, with internal peer versions aligned exactly.
+
 ## 2.2.0
 
 Minor release that evolves `AfCommandPalette` into a global command system with generic entity collections.

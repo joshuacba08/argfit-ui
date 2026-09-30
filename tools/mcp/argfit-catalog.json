@@ -2,10 +2,10 @@
   "schemaVersion": "1.0.0",
   "library": {
     "name": "ArgFit UI",
-    "version": "2.2.0",
-    "gitSha": "fd0e4ddae84d",
-    "generatedAt": "2026-08-23T13:48:20+09:00",
-    "sourceDigest": "05419bfc5aeed7d4c0ac027db15f1b2fbded5a57657fbbfbddadab99b3765096",
+    "version": "2.3.0",
+    "gitSha": "e8518f3171be",
+    "generatedAt": "2026-08-23T22:07:40+09:00",
+    "sourceDigest": "47864b1b689256d6e1da3cef77afa9c3de387430daed1123bd735166ec7b801f",
     "storybookBaseUrl": "/storybook"
   },
   "components": [
@@ -3577,6 +3577,241 @@
         "story": "Default",
         "typescript": "import { AfChartCard } from '@argfit-ui/adaptive';",
         "template": "<af-chart-card\n  exportName=\"carga-acwr\"\n/>"
+      }
+    },
+    {
+      "id": "chat-composer",
+      "name": "AfChatComposer",
+      "className": "AfChatComposerComponent",
+      "selector": "af-chat-composer",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfChatComposer } from '@argfit-ui/adaptive';",
+      "title": "Components/Communication/Chat Composer",
+      "category": "Communication",
+      "status": "documented",
+      "description": "Compositor genérico. El consumidor procesa y persiste el mensaje enviado.",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "Redactar y enviar mensajes en una conversación"
+      ],
+      "avoidWhen": [
+        "Editar contenido enriquecido"
+      ],
+      "related": [
+        "AfTextarea",
+        "AfButton"
+      ],
+      "tokens": [
+        "--af-input-bg",
+        "--af-border-focus"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "busy",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "required": false,
+            "defaultValue": "false",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Tu mensaje'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "maxLength",
+            "type": "number",
+            "required": false,
+            "defaultValue": "4000",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "placeholder",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Escribe una pregunta'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "rows",
+            "type": "number",
+            "required": false,
+            "defaultValue": "3",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "submitLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Enviar'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "required": false,
+            "defaultValue": "''",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": [
+          {
+            "name": "submitted",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "valueChange",
+            "type": "string",
+            "required": false,
+            "defaultValue": null,
+            "description": "",
+            "deprecated": false
+          }
+        ]
+      },
+      "stories": [
+        {
+          "id": "components-communication-chat-composer--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/components-communication-chat-composer--default"
+        },
+        {
+          "id": "components-communication-chat-composer--disabled",
+          "name": "Disabled",
+          "url": "/storybook/?path=/story/components-communication-chat-composer--disabled"
+        },
+        {
+          "id": "components-communication-chat-composer--busy",
+          "name": "Busy",
+          "url": "/storybook/?path=/story/components-communication-chat-composer--busy"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/components-communication-chat-composer--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfChatComposer } from '@argfit-ui/adaptive';",
+        "template": "<af-chat-composer />"
+      }
+    },
+    {
+      "id": "chat-message",
+      "name": "AfChatMessage",
+      "className": "AfChatMessageComponent",
+      "selector": "af-chat-message",
+      "package": "@argfit-ui/adaptive",
+      "importStatement": "import { AfChatMessage } from '@argfit-ui/adaptive';",
+      "title": "Components/Communication/Chat Message",
+      "category": "Communication",
+      "status": "documented",
+      "description": "Presentación genérica de mensajes. El consumidor gestiona datos, permisos e historial.",
+      "platforms": [
+        "desktop",
+        "mobile"
+      ],
+      "useWhen": [
+        "Presentar un mensaje de una conversación"
+      ],
+      "avoidWhen": [
+        "Mostrar avisos globales"
+      ],
+      "related": [
+        "AfCard",
+        "AfInlineMessage"
+      ],
+      "tokens": [
+        "--af-bg-surface",
+        "--af-border-soft",
+        "--af-text-main"
+      ],
+      "api": {
+        "inputs": [
+          {
+            "name": "author",
+            "type": "string",
+            "required": false,
+            "defaultValue": "'Asistente'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "role",
+            "type": "AfChatRole",
+            "required": false,
+            "defaultValue": "'assistant'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "status",
+            "type": "AfChatStatus",
+            "required": false,
+            "defaultValue": "'complete'",
+            "description": "",
+            "deprecated": false
+          },
+          {
+            "name": "timeLabel",
+            "type": "string",
+            "required": false,
+            "defaultValue": "''",
+            "description": "",
+            "deprecated": false
+          }
+        ],
+        "outputs": []
+      },
+      "stories": [
+        {
+          "id": "components-communication-chat-message--default",
+          "name": "Default",
+          "url": "/storybook/?path=/story/components-communication-chat-message--default"
+        },
+        {
+          "id": "components-communication-chat-message--user",
+          "name": "User",
+          "url": "/storybook/?path=/story/components-communication-chat-message--user"
+        },
+        {
+          "id": "components-communication-chat-message--pending",
+          "name": "Pending",
+          "url": "/storybook/?path=/story/components-communication-chat-message--pending"
+        },
+        {
+          "id": "components-communication-chat-message--failed",
+          "name": "Failed",
+          "url": "/storybook/?path=/story/components-communication-chat-message--failed"
+        }
+      ],
+      "docsUrl": "/storybook/?path=/docs/components-communication-chat-message--docs",
+      "example": {
+        "story": "Default",
+        "typescript": "import { AfChatMessage } from '@argfit-ui/adaptive';",
+        "template": "<af-chat-message [role]=\"role\" [status]=\"status\" [author]=\"author\" [timeLabel]=\"timeLabel\">La cobertura del intervalo incluye 12 sesiones.</af-chat-message>"
       }
     },
     {

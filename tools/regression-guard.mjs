@@ -3,6 +3,7 @@ import { join } from 'node:path';
 
 const workspaceRoot = process.cwd();
 const failures = [];
+const productionVersion = JSON.parse(readFileSync(join(workspaceRoot, 'package.json'), 'utf8')).version;
 
 const expectedFiles = [
   'projects/argfit-ui-core/src/lib/types/feedback.types.ts',
@@ -563,7 +564,7 @@ expectIncludes('projects/argfit-ui-docs/src/app/pages/docs-release.page.ts', [
 ]);
 
 expectIncludes('package.json', [
-  '"version": "2.2.0"',
+  `"version": "${productionVersion}"`,
   '"start:docs"',
   '"build:docs"',
   'ng serve argfit-ui-docs --port 4300',
@@ -586,7 +587,7 @@ for (const packageManifest of [
   'projects/argfit-ui-adaptive/package.json',
 ]) {
   expectIncludes(packageManifest, [
-    '"version": "2.2.0"',
+    `"version": "${productionVersion}"`,
     '"access": "public"',
     '"tag": "latest"',
   ]);
@@ -599,7 +600,7 @@ for (const packageManifest of [
   'projects/argfit-ui-mobile/package.json',
   'projects/argfit-ui-adaptive/package.json',
 ]) {
-  expectIncludes(packageManifest, ['"@argfit-ui/core": "2.2.0"']);
+  expectIncludes(packageManifest, [`"@argfit-ui/core": "${productionVersion}"`]);
 }
 
 expectIncludes('.github/workflows/ci.yml', [
@@ -675,7 +676,7 @@ expectIncludes('tools/pack-beta-plus.mjs', [
 ]);
 
 expectIncludes('tools/pack-production.mjs', [
-  "const PRODUCTION_VERSION = '2.2.0';",
+  "const PRODUCTION_VERSION = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8')).version;",
   'dist',
   'production-tarballs',
   "tag: 'latest'",
@@ -689,7 +690,7 @@ expectIncludes('tools/production-performance.mjs', [
 ]);
 
 expectIncludes('tools/production-smoke.mjs', [
-  "const PRODUCTION_VERSION = '2.2.0';",
+  "const PRODUCTION_VERSION = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8')).version;",
   'dist',
   'production-tarballs',
   'publishConfig.tag must be latest',

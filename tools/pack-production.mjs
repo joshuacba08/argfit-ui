@@ -12,8 +12,8 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const PRODUCTION_VERSION = '2.2.0';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
+const PRODUCTION_VERSION = JSON.parse(readFileSync(resolve(repoRoot, 'package.json'), 'utf8')).version;
 const isDryRun = process.argv.includes('--dry-run');
 const tarballDestination = resolve(repoRoot, 'dist', 'production-tarballs');
 const rootLicensePath = resolve(repoRoot, 'LICENSE');
